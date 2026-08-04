@@ -213,7 +213,7 @@ function attachInterfaceEvents() {
 
 async function initialize() {
   try {
-    const response = await fetch("./data/countries.json", {
+    const response = await fetch("./countries.json", {
       cache: "no-store"
     });
 
