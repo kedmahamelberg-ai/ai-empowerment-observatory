@@ -2,257 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1"
-  >
-
-  <title>
-    AI Empowerment Observatory | Kedma Hamelberg
-  </title>
+  <title>AI Empowerment Observatory | Kedma Hamelberg</title>
 
   <meta
     name="description"
-    content="A living, source-backed map of how AI developments are changing human capability, creativity, autonomy, and public influence around the world."
+    content="A source-backed map exploring how AI developments are changing human capability, creativity, autonomy, and public influence."
   >
 
-  <!-- MapLibre map styling -->
   <link
     rel="stylesheet"
-    href="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.css"
+    href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css"
   >
-
-  <style>
-    :root {
-      --background: #f5f7f8;
-      --surface: rgba(255, 255, 255, 0.94);
-      --text: #15232d;
-      --muted: #5d6c74;
-      --border: #dce3e7;
-      --accent: #155f67;
-      --positive: #16835b;
-      --negative: #b64c45;
-      --mixed: #b47a18;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      font-family:
-        Inter,
-        ui-sans-serif,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-      color: var(--text);
-      background: var(--background);
-    }
-
-    body {
-      overflow: hidden;
-    }
-
-    .site-header {
-      position: fixed;
-      z-index: 10;
-      top: 0;
-      left: 0;
-      right: 0;
-      min-height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      padding: 14px 24px;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(12px);
-    }
-
-    .brand {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .brand strong {
-      font-size: 1.05rem;
-      letter-spacing: -0.02em;
-    }
-
-    .brand span {
-      color: var(--muted);
-      font-size: 0.78rem;
-    }
-
-    .site-nav {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-    }
-
-    .site-nav a {
-      color: var(--text);
-      font-size: 0.86rem;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .site-nav a:hover,
-    .site-nav a:focus {
-      color: var(--accent);
-    }
-
-    #map {
-      position: absolute;
-      top: 72px;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }
-
-    .intro-panel {
-      position: absolute;
-      z-index: 5;
-      top: 104px;
-      left: 24px;
-      width: min(430px, calc(100vw - 48px));
-      padding: 24px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      box-shadow: 0 16px 45px rgba(18, 37, 47, 0.14);
-      backdrop-filter: blur(12px);
-    }
-
-    .eyebrow {
-      margin: 0 0 9px;
-      color: var(--accent);
-      font-size: 0.74rem;
-      font-weight: 800;
-      letter-spacing: 0.11em;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      max-width: 390px;
-      margin: 0;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      line-height: 0.98;
-      letter-spacing: -0.055em;
-    }
-
-    .intro {
-      margin: 18px 0;
-      color: var(--muted);
-      font-size: 0.96rem;
-      line-height: 1.6;
-    }
-
-    .status {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 18px;
-      padding: 8px 11px;
-      color: var(--accent);
-      background: #e8f2f2;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 750;
-    }
-
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
-    }
-
-    .legend {
-      display: grid;
-      gap: 8px;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
-    }
-
-    .legend-row {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      color: var(--muted);
-      font-size: 0.78rem;
-    }
-
-    .legend-symbol {
-      width: 25px;
-      font-size: 1rem;
-      font-weight: 800;
-      text-align: center;
-    }
-
-    .positive {
-      color: var(--positive);
-    }
-
-    .negative {
-      color: var(--negative);
-    }
-
-    .mixed {
-      color: var(--mixed);
-    }
-
-    .prototype-note {
-      position: absolute;
-      z-index: 5;
-      right: 24px;
-      bottom: 28px;
-      max-width: 330px;
-      padding: 13px 16px;
-      color: var(--muted);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      font-size: 0.75rem;
-      line-height: 1.45;
-      box-shadow: 0 10px 32px rgba(18, 37, 47, 0.1);
-    }
-
-    @media (max-width: 700px) {
-      .site-header {
-        padding: 12px 16px;
-      }
-
-      .site-nav a:not(:last-child) {
-        display: none;
-      }
-
-      .intro-panel {
-        top: 94px;
-        left: 16px;
-        width: calc(100vw - 32px);
-        padding: 19px;
-      }
-
-      h1 {
-        font-size: 2.25rem;
-      }
-
-      .prototype-note {
-        display: none;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="./assets/css/observatory.css">
 </head>
 
 <body>
@@ -263,9 +26,11 @@
     </div>
 
     <nav class="site-nav" aria-label="Main navigation">
-      <a href="#map">Map</a>
-      <a href="#methodology">Methodology</a>
-      <a href="https://hamelberg-ai.com">About Kedma</a>
+      <button id="reset-map" class="nav-link" type="button">Map</button>
+      <button id="open-methodology" class="nav-link" type="button">
+        Methodology
+      </button>
+      <a class="nav-link" href="https://kedmahamelberg.com">About Kedma</a>
     </nav>
   </header>
 
@@ -277,85 +42,88 @@
     ></div>
 
     <section class="intro-panel">
-      <p class="eyebrow">Prototype · Global AI narratives</p>
+      <p class="eyebrow">Prototype · Three-country demonstration</p>
 
-      <h1>
-        Where is AI shifting human agency?
-      </h1>
+      <h1>Where is AI shifting human agency?</h1>
 
       <p class="intro">
-        Explore how AI-related developments are changing
-        human capability, creativity, autonomy, and public
-        influence around the world.
+        Select a highlighted country to explore four dimensions of human
+        empowerment. The current scores are illustrative interface data,
+        not empirical country assessments.
       </p>
 
       <div class="status">
         <span class="status-dot" aria-hidden="true"></span>
-        Interface prototype — sample data coming next
+        Netherlands · Brazil · United States
       </div>
 
       <div class="legend" aria-label="Map legend">
         <div class="legend-row">
-          <span class="legend-symbol positive">↑</span>
+          <span class="legend-symbol positive">●</span>
           Human empowerment expanding
         </div>
 
         <div class="legend-row">
-          <span class="legend-symbol negative">↓</span>
+          <span class="legend-symbol negative">●</span>
           Human agency contracting
         </div>
 
         <div class="legend-row">
-          <span class="legend-symbol mixed">◆</span>
+          <span class="legend-symbol mixed">●</span>
           Mixed or contested signal
         </div>
       </div>
     </section>
 
-    <aside class="prototype-note">
-      The final map will display country-level news signals,
-      four empowerment dimensions, affected stakeholders,
-      evidence strength, source headlines, and transparent
-      classification explanations.
+    <aside
+      id="country-panel"
+      class="country-panel"
+      aria-label="Selected country details"
+      aria-live="polite"
+      hidden
+    >
+      <button
+        id="close-country-panel"
+        class="close-button"
+        type="button"
+        aria-label="Close country details"
+      >
+        ×
+      </button>
+
+      <div id="country-panel-content"></div>
     </aside>
   </main>
 
-  <script
-    src="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.js"
-  ></script>
+  <dialog id="methodology-dialog" class="methodology-dialog">
+    <button
+      id="close-methodology"
+      class="close-button"
+      type="button"
+      aria-label="Close methodology"
+    >
+      ×
+    </button>
 
-  <script>
-    "use strict";
+    <p class="panel-kicker">Methodology · Prototype</p>
+    <h2>What the demonstration shows</h2>
 
-    try {
-      const map = new maplibregl.Map({
-        container: "map",
-        style: "https://demotiles.maplibre.org/globe.json",
-        center: [5, 18],
-        zoom: 1.25,
-        minZoom: 1
-      });
+    <p>
+      The observatory will classify AI-related developments across four
+      dimensions: operational, creative, agentic, and normative empowerment.
+      Directional labels will indicate whether human empowerment appears to
+      expand, contract, or remain mixed or unclear.
+    </p>
 
-      map.addControl(
-        new maplibregl.NavigationControl({
-          visualizePitch: true
-        }),
-        "bottom-right"
-      );
+    <p>
+      The three country scores currently shown are fictional interface values.
+      They exist only to test the map, interaction design, and country panel.
+      Source-backed scores and headlines will be added after the coding and
+      validation procedure is established.
+    </p>
+  </dialog>
 
-      map.on("error", (event) => {
-        console.error("Map error:", event.error);
-      });
-    } catch (error) {
-      console.error("The map could not be initialized:", error);
-
-      const mapContainer = document.getElementById("map");
-
-      mapContainer.innerHTML =
-        "<p style='padding:120px 24px'>" +
-        "The map could not load. Please refresh the page." +
-        "</p>";
-    }
-  </script>
+  <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
+  <script src="./assets/js/map.js"></script>
 </body>
 </html>
