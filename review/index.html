@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Collection Review | AI Empowerment Observatory</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="./review.css">
+</head>
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">Stage 7A · Collection review</p>
+      <h1>Real news candidates</h1>
+      <p>
+        These results are unclassified discovery candidates. They are not
+        empowerment events, country scores, or validated evidence yet.
+      </p>
+    </div>
+    <nav>
+      <a href="../">Observatory home</a>
+      <a href="../edu/">Edu</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="status" class="status-card" aria-live="polite">
+      Loading collection status…
+    </section>
+
+    <section class="controls" aria-label="Review filters">
+      <label>
+        Search
+        <input id="search-input" type="search" placeholder="Headline or publisher">
+      </label>
+
+      <label>
+        Search market
+        <select id="country-filter">
+          <option value="">All five markets</option>
+        </select>
+      </label>
+    </section>
+
+    <section id="results" class="results" aria-live="polite"></section>
+  </main>
+
+  <script src="./review.js"></script>
+</body>
+</html>
