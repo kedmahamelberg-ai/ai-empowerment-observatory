@@ -327,7 +327,6 @@ def collect_country(
         "q": country["query"],
         "gl": country["gl"],
         "hl": country["hl"],
-        "so": "1",
         "output": "json",
         "api_key": api_key,
     }
@@ -337,8 +336,23 @@ def collect_country(
         params=params,
         timeout=(10, 90),
     )
-    response.raise_for_status()
-    payload = response.json()
+
+    try:
+        payload = response.json()
+    except ValueError:
+        payload = {}
+
+    if not response.ok:
+        api_message = (
+            payload.get("error")
+            if isinstance(payload, dict)
+            else None
+        )
+        if not api_message:
+            api_message = response.text[:500] or "No response body"
+        raise RuntimeError(
+            f"SerpAPI returned HTTP {response.status_code}: {api_message}"
+        )
 
     raw_path = raw_run_dir / f"{country['iso3'].lower()}.json"
     write_json(raw_path, payload)
