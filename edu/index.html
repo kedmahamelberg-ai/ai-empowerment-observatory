@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>AI Empowerment Observatory | Kedma Hamelberg</title>
+
+  <meta
+    name="description"
+    content="A source-backed map exploring how AI developments are changing human capability, creativity, autonomy, and public influence."
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css"
+  >
+  <link rel="stylesheet" href="./observatory.css">
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="brand brand-link" href="../">
+      <strong>AI Empowerment Observatory <em>Edu</em></strong>
+      <span>A research initiative by Kedma Hamelberg</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Main navigation">
+      <button id="reset-map" class="nav-link" type="button">Map</button>
+      <button id="open-methodology" class="nav-link" type="button">
+        Methodology
+      </button>
+      <a class="nav-link" href="https://kedmahamelberg.com">About Kedma</a>
+    </nav>
+  </header>
+
+  <main>
+    <div
+      id="map"
+      role="application"
+      aria-label="Interactive global AI empowerment map"
+    ></div>
+
+    <section class="intro-panel">
+      <p class="eyebrow">Edu pilot · Guided global exploration</p>
+
+      <h1>Where is AI shifting human agency?</h1>
+
+      <p class="intro">
+        Select a highlighted country to explore four dimensions of human
+        empowerment. This interface pilot currently uses illustrative data;
+        the five-country investment edition comes next.
+      </p>
+
+      <div class="status">
+        <span class="status-dot" aria-hidden="true"></span>
+        Three-country pilot · Five-country edition next
+      </div>
+
+      <div class="legend" aria-label="Map legend">
+        <div class="legend-row">
+          <span class="legend-symbol positive">●</span>
+          Human empowerment expanding
+        </div>
+
+        <div class="legend-row">
+          <span class="legend-symbol negative">●</span>
+          Human agency contracting
+        </div>
+
+        <div class="legend-row">
+          <span class="legend-symbol mixed">●</span>
+          Mixed or contested signal
+        </div>
+      </div>
+    </section>
+
+    <aside
+      id="country-panel"
+      class="country-panel"
+      aria-label="Selected country details"
+      aria-live="polite"
+      hidden
+    >
+      <button
+        id="close-country-panel"
+        class="close-button"
+        type="button"
+        aria-label="Close country details"
+      >
+        ×
+      </button>
+
+      <div id="country-panel-content"></div>
+    </aside>
+  </main>
+
+  <dialog id="methodology-dialog" class="methodology-dialog">
+    <button
+      id="close-methodology"
+      class="close-button"
+      type="button"
+      aria-label="Close methodology"
+    >
+      ×
+    </button>
+
+    <p class="panel-kicker">Methodology · Prototype</p>
+    <h2>What the demonstration shows</h2>
+
+    <p>
+      The observatory will classify AI-related developments across four
+      dimensions: operational, creative, agentic, and normative empowerment.
+      Directional labels will indicate whether human empowerment appears to
+      expand, contract, or remain mixed or unclear.
+    </p>
+
+    <p>
+      The three country scores currently shown are fictional interface values.
+      They exist only to test the map, interaction design, and country panel.
+      Source-backed scores and headlines will be added after the coding and
+      validation procedure is established.
+    </p>
+  </dialog>
+
+
+  <dialog id="learn-dialog" class="methodology-dialog">
+    <button
+      id="close-learn"
+      class="close-button"
+      type="button"
+      aria-label="Close Learn"
+    >
+      ×
+    </button>
+
+    <p class="panel-kicker">Learn · Edu edition</p>
+    <h2>Six ideas for reading the map</h2>
+
+    <ol class="lesson-list">
+      <li><strong>Investment is not empowerment.</strong> More capital and infrastructure do not automatically mean more human control.</li>
+      <li><strong>Capability grows unevenly.</strong> AI may strengthen organisations without reaching citizens equally.</li>
+      <li><strong>Creativity has two sides.</strong> New creative tools can coexist with reduced consent or compensation for creators.</li>
+      <li><strong>Agency concerns who decides.</strong> Productivity gains can accompany a transfer of consequential decisions to automated systems.</li>
+      <li><strong>Rules redistribute power.</strong> Transparency, consultation, appeal rights, and enforcement shape who influences AI.</li>
+      <li><strong>Read the evidence, not only the score.</strong> The signal summarizes coded developments; it is not a national league table.</li>
+    </ol>
+  </dialog>
+
+  <dialog id="stories-dialog" class="methodology-dialog">
+    <button
+      id="close-stories"
+      class="close-button"
+      type="button"
+      aria-label="Close Stories"
+    >
+      ×
+    </button>
+
+    <p class="panel-kicker">Data narratives · Preview</p>
+    <h2>Stories built from the same evidence as the map</h2>
+
+    <div class="story-preview">
+      <article>
+        <span>Global · No. 01</span>
+        <h3>Investment is not empowerment</h3>
+        <p>How large AI ecosystems can expand capability while placing pressure on autonomy, creator rights, and public oversight.</p>
+      </article>
+
+      <article>
+        <span>Global · No. 02</span>
+        <h3>Who gains when AI creates?</h3>
+        <p>A stakeholder journey from users and firms to original creators and invisible data workers.</p>
+      </article>
+    </div>
+
+    <p class="coming-note">The first complete data narrative will follow the five-country Edu dataset.</p>
+  </dialog>
+
+  <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
+  <script src="./map.js"></script>
+</body>
+</html>

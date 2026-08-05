@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "title": "AI Empowerment Observatory demonstration dataset",
+    "updated": "2026-08-04",
+    "period": "Illustrative prototype",
+    "disclaimer": "All scores in this file are illustrative interface data and are not empirical country assessments."
+  },
+  "countries": [
+    {
+      "id": "nld",
+      "country": "Netherlands",
+      "iso3": "NLD",
+      "coordinates": [
+        5.2913,
+        52.1326
+      ],
+      "score": 18,
+      "change": 6,
+      "direction": "positive",
+      "evidence": "Prototype",
+      "operational": 28,
+      "creative": 16,
+      "agentic": -8,
+      "normative": 36,
+      "summary": "Illustrative pattern: stronger governance and AI-literacy narratives coexist with concerns about control in automated workplace decisions.",
+      "stories": []
+    },
+    {
+      "id": "bra",
+      "country": "Brazil",
+      "iso3": "BRA",
+      "coordinates": [
+        -51.9253,
+        -14.235
+      ],
+      "score": 7,
+      "change": 2,
+      "direction": "mixed",
+      "evidence": "Prototype",
+      "operational": 14,
+      "creative": 22,
+      "agentic": -11,
+      "normative": 3,
+      "summary": "Illustrative pattern: expanding access and creative use are accompanied by unresolved questions about inclusion, accountability, and worker protection.",
+      "stories": []
+    },
+    {
+      "id": "usa",
+      "country": "United States",
+      "iso3": "USA",
+      "coordinates": [
+        -98.5795,
+        39.8283
+      ],
+      "score": -4,
+      "change": -5,
+      "direction": "negative",
+      "evidence": "Prototype",
+      "operational": 20,
+      "creative": 31,
+      "agentic": -34,
+      "normative": -12,
+      "summary": "Illustrative pattern: rapid capability and creative expansion may coincide with pressure on human oversight, employment autonomy, and creator rights.",
+      "stories": []
+    }
+  ]
+}
