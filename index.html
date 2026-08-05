@@ -3,127 +3,142 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <title>AI Empowerment Observatory | Kedma Hamelberg</title>
-
   <meta
     name="description"
-    content="A source-backed map exploring how AI developments are changing human capability, creativity, autonomy, and public influence."
+    content="Explore how AI developments expand human capability and where they shift control away."
   >
-
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css"
-  >
-  <link rel="stylesheet" href="./observatory.css">
+  <link rel="stylesheet" href="./site.css">
 </head>
 
 <body>
-  <header class="site-header">
-    <div class="brand">
-      <strong>AI Empowerment Observatory</strong>
-      <span>A research initiative by Kedma Hamelberg</span>
-    </div>
+  <header class="landing-header">
+    <a class="wordmark" href="./">
+      <span class="wordmark-mark">AIEO</span>
+      <span>AI Empowerment Observatory</span>
+    </a>
 
-    <nav class="site-nav" aria-label="Main navigation">
-      <button id="reset-map" class="nav-link" type="button">Map</button>
-      <button id="open-methodology" class="nav-link" type="button">
-        Methodology
-      </button>
-      <a class="nav-link" href="https://kedmahamelberg.com">About Kedma</a>
+    <nav aria-label="Main navigation">
+      <a href="./edu/">Edu</a>
+      <a href="./pro/">Pro</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="https://kedmahamelberg.com">About Kedma</a>
     </nav>
   </header>
 
   <main>
-    <div
-      id="map"
-      role="application"
-      aria-label="Interactive global AI empowerment map"
-    ></div>
+    <section class="hero">
+      <div class="hero-grid" aria-hidden="true"></div>
 
-    <section class="intro-panel">
-      <p class="eyebrow">Prototype · Three-country demonstration</p>
+      <div class="hero-inner">
+        <p class="hero-kicker">A living map of AI and human agency</p>
 
-      <h1>Where is AI shifting human agency?</h1>
+        <h1>
+          See where AI expands human capability—
+          <em>and where it shifts control away.</em>
+        </h1>
 
-      <p class="intro">
-        Select a highlighted country to explore four dimensions of human
-        empowerment. The current scores are illustrative interface data,
-        not empirical country assessments.
-      </p>
+        <p class="hero-copy">
+          Explore source-backed developments through an interactive map,
+          guided lessons, and data narratives grounded in four dimensions
+          of human empowerment.
+        </p>
 
-      <div class="status">
-        <span class="status-dot" aria-hidden="true"></span>
-        Netherlands · Brazil · United States
-      </div>
-
-      <div class="legend" aria-label="Map legend">
-        <div class="legend-row">
-          <span class="legend-symbol positive">●</span>
-          Human empowerment expanding
-        </div>
-
-        <div class="legend-row">
-          <span class="legend-symbol negative">●</span>
-          Human agency contracting
-        </div>
-
-        <div class="legend-row">
-          <span class="legend-symbol mixed">●</span>
-          Mixed or contested signal
+        <div class="hero-actions">
+          <a class="button button-primary" href="./edu/">
+            Open Observatory Edu
+          </a>
+          <a class="button button-secondary" href="#how-it-works">
+            How it works
+          </a>
         </div>
       </div>
     </section>
 
-    <aside
-      id="country-panel"
-      class="country-panel"
-      aria-label="Selected country details"
-      aria-live="polite"
-      hidden
-    >
-      <button
-        id="close-country-panel"
-        class="close-button"
-        type="button"
-        aria-label="Close country details"
-      >
-        ×
-      </button>
+    <section class="product-cards" aria-label="Products">
+      <article class="product-card product-card-edu">
+        <p class="card-status">Live now · Pilot</p>
+        <h2>Observatory <em>Edu</em></h2>
+        <p>
+          The free way to understand AI empowerment: an interactive country
+          map, six guided lessons, transparent classifications, and public
+          methodology.
+        </p>
+        <p class="card-note">
+          Three-country interface pilot now. Five-country AI investment
+          edition next.
+        </p>
+        <a href="./edu/">Start exploring →</a>
+      </article>
 
-      <div id="country-panel-content"></div>
-    </aside>
+      <article class="product-card product-card-pro">
+        <p class="card-status">Coming soon</p>
+        <h2>Observatory <em>Pro</em></h2>
+        <p>
+          For researchers, policymakers, strategists, and responsible-AI
+          teams: all-country coverage, historical trends, comparisons,
+          exports, alerts, and auditable evidence.
+        </p>
+        <a href="./pro/">Preview Pro →</a>
+      </article>
+    </section>
+
+    <section id="how-it-works" class="explanation-section">
+      <div class="section-heading">
+        <p>How the signal works</p>
+        <h2>Four ways AI can change human power</h2>
+        <span>
+          The map separates capability from control so that productivity
+          gains do not automatically count as empowerment.
+        </span>
+      </div>
+
+      <div class="dimension-grid">
+        <article>
+          <span>01</span>
+          <h3>Operational</h3>
+          <p>Can people understand, access, and use AI effectively?</p>
+        </article>
+
+        <article>
+          <span>02</span>
+          <h3>Creative</h3>
+          <p>Does AI expand people’s capacity to create and innovate?</p>
+        </article>
+
+        <article>
+          <span>03</span>
+          <h3>Agentic</h3>
+          <p>Do people retain autonomy, ownership, and meaningful choice?</p>
+        </article>
+
+        <article>
+          <span>04</span>
+          <h3>Normative</h3>
+          <p>Can people influence the rules, rights, and standards governing AI?</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="principle-section">
+      <p class="principle-kicker">Public by design</p>
+      <h2>Do not put truth behind the paywall.</h2>
+      <p>
+        Edu keeps the evidence, classifications, explanations, and
+        methodology public. Pro will charge for analytical depth:
+        complete history, comparison, workflow, export, and monitoring.
+      </p>
+    </section>
   </main>
 
-  <dialog id="methodology-dialog" class="methodology-dialog">
-    <button
-      id="close-methodology"
-      class="close-button"
-      type="button"
-      aria-label="Close methodology"
-    >
-      ×
-    </button>
-
-    <p class="panel-kicker">Methodology · Prototype</p>
-    <h2>What the demonstration shows</h2>
-
-    <p>
-      The observatory will classify AI-related developments across four
-      dimensions: operational, creative, agentic, and normative empowerment.
-      Directional labels will indicate whether human empowerment appears to
-      expand, contract, or remain mixed or unclear.
-    </p>
-
-    <p>
-      The three country scores currently shown are fictional interface values.
-      They exist only to test the map, interaction design, and country panel.
-      Source-backed scores and headlines will be added after the coding and
-      validation procedure is established.
-    </p>
-  </dialog>
-
-  <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
-  <script src="./map.js"></script>
+  <footer>
+    <span>© 2026 AI Empowerment Observatory</span>
+    <nav>
+      <a href="./edu/">Edu</a>
+      <a href="./pro/">Pro</a>
+      <a href="mailto:kedma@hamelberg-ai.com">Contact</a>
+      <a href="https://kedmahamelberg.com">Kedma Hamelberg</a>
+    </nav>
+  </footer>
 </body>
 </html>
