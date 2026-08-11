@@ -1,0 +1,93 @@
+.aieo-consent {
+  position: fixed;
+  z-index: 99999;
+  right: 20px;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 18px 20px;
+  color: #172436;
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid #d6dfe4;
+  border-radius: 14px;
+  box-shadow: 0 18px 60px rgba(13, 34, 61, 0.18);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.aieo-consent__copy {
+  max-width: 690px;
+}
+
+.aieo-consent__copy strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.92rem;
+}
+
+.aieo-consent__copy p {
+  margin: 0;
+  color: #5c6877;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.aieo-consent__actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.aieo-consent__button {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.aieo-consent__button--primary {
+  color: #ffffff;
+  background: #155f67;
+  border: 1px solid #155f67;
+}
+
+.aieo-consent__button--secondary {
+  color: #374750;
+  background: #ffffff;
+  border: 1px solid #cbd5da;
+}
+
+.aieo-consent__button:hover,
+.aieo-consent__button:focus-visible {
+  transform: translateY(-1px);
+}
+
+@media (max-width: 700px) {
+  .aieo-consent {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .aieo-consent__actions {
+    width: 100%;
+  }
+
+  .aieo-consent__button {
+    flex: 1;
+  }
+}
