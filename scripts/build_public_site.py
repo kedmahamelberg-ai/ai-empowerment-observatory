@@ -9,12 +9,31 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "_site"
 
-ROOT_FILES = ["index.html", "site.css", ".nojekyll", "CNAME"]
+# Only files deliberately exposed on the public site belong here.
+ROOT_FILES = [
+    "index.html",
+    "site.css",
+    "analytics.js",
+    "analytics-consent.css",
+    ".nojekyll",
+    "CNAME",
+]
+
 PUBLIC_DIRS = ["edu", "pro", "review"]
+
 PUBLIC_DATA_FILES = [
-    (ROOT / "data" / "review" / "latest.json", SITE / "data" / "review" / "latest.json"),
-    (ROOT / "data" / "review" / "latest.csv", SITE / "data" / "review" / "latest.csv"),
-    (ROOT / "data" / "collection_status.json", SITE / "data" / "collection_status.json"),
+    (
+        ROOT / "data" / "review" / "latest.json",
+        SITE / "data" / "review" / "latest.json",
+    ),
+    (
+        ROOT / "data" / "review" / "latest.csv",
+        SITE / "data" / "review" / "latest.csv",
+    ),
+    (
+        ROOT / "data" / "collection_status.json",
+        SITE / "data" / "collection_status.json",
+    ),
 ]
 
 
@@ -36,14 +55,24 @@ def main() -> None:
     for name in PUBLIC_DIRS:
         source = ROOT / name
         if not source.exists():
-            raise FileNotFoundError(f"Required public directory is missing: {source}")
+            raise FileNotFoundError(
+                f"Required public directory is missing: {source}"
+            )
         shutil.copytree(source, SITE / name)
 
     for source, destination in PUBLIC_DATA_FILES:
         copy_required_file(source, destination)
 
     print("Built public Pages artifact at", SITE)
-    print("Excluded private paths: scripts/, config/, supabase/, data/raw/, data/review/history/")
+    print(
+        "Published analytics assets:",
+        SITE / "analytics.js",
+        SITE / "analytics-consent.css",
+    )
+    print(
+        "Excluded private paths: scripts/, config/, supabase/, "
+        "data/raw/, data/review/history/"
+    )
 
 
 if __name__ == "__main__":
