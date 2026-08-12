@@ -28,9 +28,9 @@ from typing import Any
 
 import requests
 import torch
-from huggingface_hub import HfApi
+from huggingface_hub import HfApi, snapshot_download
+from quickmt import Translator as QuickMTTranslator
 from supabase import Client, create_client
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = (
@@ -43,7 +43,7 @@ OUTPUT = (
 
 SOURCE_PROFILE = "qwen3_1_7b_en_normalization_v2"
 
-DEDICATED_MODEL = "DunnBC22/opus-mt-zh-en-Chinese_to_English"
+DEDICATED_MODEL = "quickmt/quickmt-zh-en"
 HYMT_REPO = "tencent/Hy-MT2-1.8B-GGUF"
 HYMT_QUANT = "Q4_K_M"
 QWEN4_REPO = "Qwen/Qwen3-4B-GGUF"
@@ -157,31 +157,16 @@ def select_sample(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return [item[3] for item in decorated[:TARGET_N]]
 
 
-def dedicated_translate(
-    tokenizer,
-    model,
-    headline: str,
-) -> str:
-    inputs = tokenizer(
-        [headline],
-        return_tensors="pt",
-        padding=True,
-        truncation=True,
-        max_length=192,
-    )
-
-    with torch.inference_mode():
-        generated = model.generate(
-            **inputs,
-            num_beams=4,
-            max_new_tokens=128,
-            early_stopping=True,
-        )
-
-    return tokenizer.batch_decode(
-        generated,
-        skip_special_tokens=True,
-    )[0].strip()
+def dedicated_translate(translator, headline: str) -> str:
+    result = translator(headline, beam_size=5)
+    if isinstance(result, str):
+        return result.strip()
+    if isinstance(result, list) and result:
+        return str(result[0]).strip()
+    text = str(result).strip()
+    if not text:
+        raise BenchmarkError("quickmt returned an empty translation.")
+    return text
 
 
 def wait_for_server(process: subprocess.Popen, timeout_s: int = 480) -> None:
@@ -387,16 +372,16 @@ def main() -> int:
     qwen4_revision = HfApi().model_info(QWEN4_REPO).sha or "unknown"
 
     # 1) Dedicated Chinese→English model.
-    print("Loading dedicated Chinese→English Marian model...")
-    dedicated_tokenizer = AutoTokenizer.from_pretrained(
+    print("Loading quickmt dedicated Chinese→English model...")
+    quickmt_path = snapshot_download(
         DEDICATED_MODEL,
         revision=dedicated_revision,
+        ignore_patterns=["eole-model/*"],
     )
-    dedicated_model = AutoModelForSeq2SeqLM.from_pretrained(
-        DEDICATED_MODEL,
-        revision=dedicated_revision,
+    dedicated_translator = QuickMTTranslator(
+        quickmt_path,
+        device="cpu",
     )
-    dedicated_model.eval()
 
     translations: dict[str, dict[str, str]] = {}
 
@@ -404,14 +389,12 @@ def main() -> int:
         aid = str(row["article_id"])
         translations[aid] = {
             "dedicated_zh_en": dedicated_translate(
-                dedicated_tokenizer,
-                dedicated_model,
+                dedicated_translator,
                 str(row["original_headline"]),
             )
         }
 
-    del dedicated_model
-    del dedicated_tokenizer
+    del dedicated_translator
     gc.collect()
 
     # 2) Tencent Hy-MT2 translation specialist.
@@ -503,7 +486,7 @@ def main() -> int:
                         "dedicated_zh_en": {
                             "repo": DEDICATED_MODEL,
                             "revision": dedicated_revision,
-                            "type": "dedicated Chinese-to-English Marian",
+                            "type": "dedicated Chinese-to-English CTranslate2 NMT",
                         },
                         "hymt2_1_8b": {
                             "repo": HYMT_REPO,
