@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Difficult Translation Challenge | AI Empowerment Observatory</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="./challenge.css">
+  <link rel="stylesheet" href="/analytics-consent.css">
+</head>
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">Stage 7B.2B-0d · Difficult-case benchmark</p>
+      <h1>Which translation preserves the event?</h1>
+      <p>
+        Compare Qwen3-1.7B and Qwen3-4B blind on the headlines most likely to
+        break translation: entities, places, idioms, numbers and complex wording.
+      </p>
+    </div>
+    <nav>
+      <a href="/review/translations/">Translations</a>
+      <a href="/review/events/">Events</a>
+      <a href="/">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="summary" class="summary">Loading challenge…</section>
+
+    <section class="instructions">
+      <strong>Judge event-meaning fidelity first.</strong>
+      Prefer the candidate that better preserves who/what/where, named entities,
+      numbers, negation and the actual event. Natural English matters second.
+    </section>
+
+    <section class="toolbar">
+      <div id="progress">0 / 0 labelled</div>
+      <button id="download" type="button">Download labels CSV</button>
+      <button id="clear" class="secondary" type="button">Clear labels</button>
+    </section>
+
+    <section id="items" class="items"></section>
+  </main>
+
+  <script src="./challenge.js"></script>
+  <script src="/analytics.js"></script>
+</body>
+</html>
