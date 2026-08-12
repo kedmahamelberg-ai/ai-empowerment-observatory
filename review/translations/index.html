@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Translation Review | AI Empowerment Observatory</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="./translations.css">
+  <link rel="stylesheet" href="/analytics-consent.css">
+</head>
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">Stage 7B.2B-0 · English normalization</p>
+      <h1>Original + English</h1>
+      <p>
+        Review the normalized English representation while keeping the
+        original-language headline as the evidentiary source.
+      </p>
+    </div>
+    <nav>
+      <a href="/review/events/">Event clusters</a>
+      <a href="/review/">Articles</a>
+      <a href="/">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="summary" class="summary">Loading translation results…</section>
+
+    <section class="controls">
+      <label>
+        Search
+        <input id="search" type="search" placeholder="Headline or publisher">
+      </label>
+
+      <label>
+        Show
+        <select id="filter">
+          <option value="all">All non-English</option>
+          <option value="review">Needs review</option>
+          <option value="fr">French</option>
+          <option value="zh">Chinese</option>
+          <option value="unsupported">Unsupported</option>
+        </select>
+      </label>
+    </section>
+
+    <section id="translations" class="translations"></section>
+  </main>
+
+  <script src="./translations.js"></script>
+  <script src="/analytics.js"></script>
+</body>
+</html>
