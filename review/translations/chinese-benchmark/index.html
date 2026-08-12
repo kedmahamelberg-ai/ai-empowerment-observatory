@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Chinese Translation Benchmark | AI Empowerment Observatory</title>
+
+  <meta name="robots" content="noindex">
+
+  <link rel="stylesheet" href="./benchmark.css">
+  <link rel="stylesheet" href="/analytics-consent.css">
+</head>
+
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">Stage 7B.2B-0e · Chinese-specific benchmark</p>
+
+      <h1>Which Chinese → English translation is best?</h1>
+
+      <p>
+        Compare three models blind on difficult Observatory headlines.
+        Judge preservation of the actual event, entities, places and numbers
+        before stylistic fluency.
+      </p>
+    </div>
+
+    <nav>
+      <a href="/review/translations/">Translations</a>
+      <a href="/review/events/">Events</a>
+      <a href="/">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="summary" class="summary">
+      Loading benchmark…
+    </section>
+
+    <section class="instructions">
+      <strong>Choose the most accurate candidate.</strong>
+      If two are equally accurate, choose their tie option. Use
+      “all three accurate” only when all preserve the event equally well.
+      Use “none adequate” when every candidate materially changes the source.
+    </section>
+
+    <section class="toolbar">
+      <div id="progress">0 / 0 labelled</div>
+
+      <button id="download" type="button">
+        Download labels CSV
+      </button>
+
+      <button id="clear" class="secondary" type="button">
+        Clear labels
+      </button>
+    </section>
+
+    <section id="items" class="items"></section>
+  </main>
+
+  <script src="./benchmark.js"></script>
+  <script src="/analytics.js"></script>
+</body>
+</html>
