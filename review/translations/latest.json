@@ -1,55 +1,32 @@
 {
   "meta": {
-    "stage": "7B.2B-0",
+    "stage": "7B.2B-0a",
     "status": "success",
-    "translation_run_id": "fed65338-edf9-4e7c-98ac-f730e6614e81",
-    "translation_run_key": "translate_20260812T112724Z",
+    "translation_run_id": "ee960c37-356b-4239-8b5d-393bf77c8136",
+    "translation_run_key": "translate_20260812T120950Z",
     "collection_run_key": "run_20260812T055721Z",
-    "translation_profile": "opus_en_normalization_v1",
-    "detector": "lingua-language-detector",
+    "translation_profile": "opus_en_normalization_v1.1",
+    "detector": "lingua-language-detector + search-language context + Han-script override",
     "detector_version": "2.2.0",
     "article_count": 130,
-    "passthrough": 69,
+    "passthrough": 70,
     "translated": 60,
-    "unsupported": 1,
+    "unsupported": 0,
     "failed": 0,
-    "review": 34,
+    "review": 1,
     "principle": "Original evidence is retained. English is an additional normalized representation."
   },
   "translations": [
-    {
-      "article_id": "59ae4e30103557f1f4ba466bdda8f508",
-      "publisher": "Trends-Tendances",
-      "source_language": "fr",
-      "detection_confidence": 0.7134,
-      "original_headline": "L’intelligence artificielle ne cotise pas",
-      "english_headline": "Artificial intelligence does not contribute",
-      "model_name": "Helsinki-NLP/opus-mt-fr-en",
-      "model_revision": "c4aed37b318c763fd177aa449b44e3b783cc6c02",
-      "status": "translated",
-      "requires_review": true,
-      "review_reason": "low language-detection confidence",
-      "url": "https://trends.levif.be/opinions/chroniques/lintelligence-artificielle-ne-cotise-pas"
-    },
-    {
-      "article_id": "cf3d9e5bfbd831bd84978fe0c5c7058f",
-      "publisher": "WSJ",
-      "source_language": "la",
-      "detection_confidence": 0.5085,
-      "original_headline": "Opinion | Don't Anthropomorphize Artificial Intelligence",
-      "english_headline": "Opinion | Don't Anthropomorphize Artificial Intelligence",
-      "model_name": null,
-      "model_revision": null,
-      "status": "unsupported",
-      "requires_review": true,
-      "review_reason": "language 'la' not routed in pilot translation profile",
-      "url": "https://www.wsj.com/opinion/don-t-anthropomorphize-artificial-intelligence-ad9ad358"
-    },
     {
       "article_id": "15a7197a86b327970e405907409dfcf8",
       "publisher": "BFM",
       "source_language": "fr",
       "detection_confidence": 1.0,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Les menaces de la Chine, de la Corée du Nord et de la Russie se rapprochent: le Japon veut accélérer dans l’intelligence artificielle pour moderniser son armée (avec des outils américains)",
       "english_headline": "Threats from China, North Korea and Russia are coming closer: Japan wants to accelerate in artificial intelligence to modernize its army (with American tools)",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -64,6 +41,11 @@
       "publisher": "Boursorama",
       "source_language": "fr",
       "detection_confidence": 0.8705,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Meta lance un nouveau modèle d'IA tandis que Zuckerberg prône une approche « open-weight »",
       "english_headline": "Meta launches a new AI model while Zuckerberg advocates an open-weight approach",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -78,6 +60,11 @@
       "publisher": "Boursorama",
       "source_language": "fr",
       "detection_confidence": 0.8119,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Quand l'IA et la gestion passive menacent notre discernement",
       "english_headline": "When AI and passive management threaten our discernment",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -92,6 +79,11 @@
       "publisher": "Courrier international",
       "source_language": "fr",
       "detection_confidence": 0.9933,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Le prochain défi de l’intelligence artificielle est de comprendre le monde réel",
       "english_headline": "The next challenge of artificial intelligence is to understand the real world",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -106,6 +98,11 @@
       "publisher": "Harvard Business Review France",
       "source_language": "fr",
       "detection_confidence": 0.9547,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "L'IA générative ne transformera pas vos employés en experts",
       "english_headline": "Generative AI will not turn your employees into experts",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -120,6 +117,11 @@
       "publisher": "Immobilier 2.0",
       "source_language": "fr",
       "detection_confidence": 0.9963,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "AI Act : voici les nouvelles règles à respecter concernant l’intelligence artificielle",
       "english_headline": "AI Act: Here are the new rules for artificial intelligence",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -134,6 +136,11 @@
       "publisher": "L'Humanité",
       "source_language": "fr",
       "detection_confidence": 0.9876,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Intelligence artificielle : ces zones d’ombre de l’utilisation des données par Doctolib",
       "english_headline": "Artificial intelligence: these shadow zones of data usage by Doctolib",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -148,6 +155,11 @@
       "publisher": "L'Usine Digitale",
       "source_language": "fr",
       "detection_confidence": 0.9997,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Un modèle d’IA a créé 16 virus bactériophages : une avancée scientifique majeure qui relance le débat sur le risque des armes biologiques",
       "english_headline": "An AI model has created 16 bacteriophage viruses: a major scientific breakthrough that revives the debate on the risk of biological weapons",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -162,6 +174,11 @@
       "publisher": "La Croix",
       "source_language": "fr",
       "detection_confidence": 0.9535,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Intelligence artificielle : « Le monde agricole me pousse à un éloge de la lenteur »",
       "english_headline": "Artificial intelligence: \"The agricultural world pushes me to praise the slowness\"",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -176,6 +193,11 @@
       "publisher": "Le Club de Mediapart",
       "source_language": "fr",
       "detection_confidence": 0.9722,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Les déboires boursiers de l'Intelligence Artificielle",
       "english_headline": "The scientific difficulties of Artificial Intelligence",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -190,6 +212,11 @@
       "publisher": "Le Département de la Dordogne",
       "source_language": "fr",
       "detection_confidence": 0.9934,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Une journée pour penser nos usages de l'intelligence artificielle, en famille et entre professionnels",
       "english_headline": "A day to think about our uses of artificial intelligence, in family and between professionals",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -204,6 +231,11 @@
       "publisher": "Le Figaro",
       "source_language": "fr",
       "detection_confidence": 0.9004,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Chez Google, le grand ménage à la tête de l’intelligence artificielle",
       "english_headline": "At Google, the big household head of artificial intelligence",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -218,6 +250,11 @@
       "publisher": "Le Parisien",
       "source_language": "fr",
       "detection_confidence": 0.9993,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Intelligence artificielle : de nouvelles failles de sécurité détectées chez OpenAI et Anthropic",
       "english_headline": "Artificial intelligence: new security flaws detected at OpenAI and Anthropic",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -232,6 +269,11 @@
       "publisher": "Les Echos",
       "source_language": "fr",
       "detection_confidence": 0.9822,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Meta lance un nouveau modèle d'IA semi-ouvert, Zuckerberg prône une « superintelligence personnelle pour tous",
       "english_headline": "Meta launches a new model of semi-open AI, Zuckerberg advocates a \"super personal intelligence for all",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -246,6 +288,11 @@
       "publisher": "Les Echos",
       "source_language": "fr",
       "detection_confidence": 0.9996,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Surveillance, renseignement, planification des opérations… Quand l'intelligence artificielle s'invite sur les champs de bataille",
       "english_headline": "Surveillance, intelligence, operational planning... when artificial intelligence comes to the battlefields",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -260,6 +307,11 @@
       "publisher": "Mediapart",
       "source_language": "fr",
       "detection_confidence": 0.9517,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Aux États-Unis, l’économie est dopée à l’intelligence artificielle",
       "english_headline": "In the United States, the economy is boosted by artificial intelligence",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -274,6 +326,11 @@
       "publisher": "Mediapart",
       "source_language": "fr",
       "detection_confidence": 0.982,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Pour la Chine, l’intelligence artificielle est aussi une opportunité diplomatique",
       "english_headline": "For China, artificial intelligence is also a diplomatic opportunity",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -288,6 +345,11 @@
       "publisher": "Ouest-France",
       "source_language": "fr",
       "detection_confidence": 0.9978,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "VIDÉO. En Italie, une intelligence artificielle devient conseillère municipale",
       "english_headline": "VIDEO. In Italy, artificial intelligence becomes municipal councillor",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -302,6 +364,11 @@
       "publisher": "Ouest-France",
       "source_language": "fr",
       "detection_confidence": 0.9929,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "VIDÉO. Former les élèves et les professeurs à l'intelligence artificielle - L'École du futur",
       "english_headline": "VIDEO. Train students and teachers in artificial intelligence - The School of the Future",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -316,6 +383,11 @@
       "publisher": "Outre-mer La 1ère",
       "source_language": "fr",
       "detection_confidence": 0.9988,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "À La Réunion, l'intelligence artificielle bouscule les entreprises : \"Ceux qui l'utilisent vont remplacer ceux qui ne l'utilisent pas\"",
       "english_headline": "In La Réunion, artificial intelligence pushes companies: \"Those who use it will replace those who do not use it\"",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -330,6 +402,11 @@
       "publisher": "Radio France",
       "source_language": "fr",
       "detection_confidence": 0.9813,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Incendies : pour réagir mieux et plus vite, le SDIS de Côte-d'Or se met à l'intelligence artificielle",
       "english_headline": "Fires: to react better and faster, the SDIS of Côte-d'Or starts to artificial intelligence",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -344,6 +421,11 @@
       "publisher": "Service Public",
       "source_language": "fr",
       "detection_confidence": 0.9761,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "AI Act -Généré par l’intelligence artificielle : comment s’y retrouver",
       "english_headline": "AI Act - Generated by artificial intelligence: how to find it",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -358,6 +440,11 @@
       "publisher": "Slate.fr",
       "source_language": "fr",
       "detection_confidence": 0.9999,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Les lecteurs préfèrent les histoires générées par l'intelligence artificielle",
       "english_headline": "Readers prefer stories generated by artificial intelligence",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -372,6 +459,11 @@
       "publisher": "Sud Ouest",
       "source_language": "fr",
       "detection_confidence": 0.9953,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Intelligence artificielle : Anthropic intègre un filigrane dans les textes de son robot Claude pour se conformer à Bruxelles",
       "english_headline": "Artificial Intelligence: Anthropic integrates watermark into the texts of its robot Claude to comply with Brussels",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -386,6 +478,11 @@
       "publisher": "Sud Ouest",
       "source_language": "fr",
       "detection_confidence": 0.9901,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Intelligence artificielle : l’assistant Gemini de Google franchit à son tour le milliard d’utilisateurs",
       "english_headline": "Artificial intelligence: Google's Gemini assistant in turn passes the billion users",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -396,10 +493,34 @@
       "url": "https://www.sudouest.fr/sciences-et-technologie/intelligence-artificielle/intelligence-artificielle-l-assistant-gemini-de-google-franchit-a-son-tour-le-milliard-d-utilisateurs-30225866.php"
     },
     {
+      "article_id": "59ae4e30103557f1f4ba466bdda8f508",
+      "publisher": "Trends-Tendances",
+      "source_language": "fr",
+      "detection_confidence": 0.7134,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
+      "original_headline": "L’intelligence artificielle ne cotise pas",
+      "english_headline": "Artificial intelligence does not contribute",
+      "model_name": "Helsinki-NLP/opus-mt-fr-en",
+      "model_revision": "c4aed37b318c763fd177aa449b44e3b783cc6c02",
+      "status": "translated",
+      "requires_review": false,
+      "review_reason": "",
+      "url": "https://trends.levif.be/opinions/chroniques/lintelligence-artificielle-ne-cotise-pas"
+    },
+    {
       "article_id": "754477b484f1d576a638c0c06d6b24a4",
       "publisher": "i24NEWS",
       "source_language": "fr",
       "detection_confidence": 0.9843,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Benjamin Netanyahou : « Israël deviendra une puissance mondiale de l’intelligence artificielle",
       "english_headline": "Benjamin Netanyahu: \"Israel will become a world power of artificial intelligence",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -414,6 +535,11 @@
       "publisher": "ici.fr",
       "source_language": "fr",
       "detection_confidence": 0.9991,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "\"Ça nous permet de gagner du temps\" : la caméra avec intelligence artificielle, atout précieux pour le Sdis 21",
       "english_headline": "\"It saves us time\": the camera with artificial intelligence, precious asset for the Sdis 21",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -428,6 +554,11 @@
       "publisher": "journaldunet.com",
       "source_language": "fr",
       "detection_confidence": 0.9967,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Intelligence artificielle : le vrai risque n'est plus d'être remplacé, mais de refuser d'être augmenté",
       "english_headline": "Artificial intelligence: the real risk is no longer to be replaced, but to refuse to be increased",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -442,6 +573,11 @@
       "publisher": "parismatch.com",
       "source_language": "fr",
       "detection_confidence": 0.9949,
+      "raw_detected_language": "fr",
+      "detection_method": "lingua+search_language",
+      "observed_search_languages": [
+        "fr"
+      ],
       "original_headline": "Une intelligence artificielle crée pour la première fois des virus viables dans la nature",
       "english_headline": "Artificial intelligence creates viable viruses in nature for the first time",
       "model_name": "Helsinki-NLP/opus-mt-fr-en",
@@ -456,6 +592,11 @@
       "publisher": "BBC",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "人工智能被用于设计全新病毒",
       "english_headline": "Artificial intelligence is used to design a new virus.",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -470,6 +611,11 @@
       "publisher": "IBM",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "倍增效应 | 人工智能治理至关重要 | Think Leadership",
       "english_headline": "Think Leadership is vital to the management of artificial intelligence.",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -484,6 +630,11 @@
       "publisher": "changzhou.gov.cn",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "2026中国“人工智能+”创新创业挑战赛决赛在常举行",
       "english_headline": "2026 China's A.I.+ innovation challenge finals are often held.",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -498,6 +649,11 @@
       "publisher": "jjckb.cn",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "人工智能技术快速迭代催生数据产业新机",
       "english_headline": "A.A.T. fast-evolving data industry new machines",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -512,6 +668,11 @@
       "publisher": "东方财富",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "山东生成式人工智能服务备案总数已达49款，海岱舆情大模型完成备案",
       "english_headline": "The total number of Shandong-generated artificial intelligence services has reached 49, and the seagull model has been completed.",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -526,6 +687,11 @@
       "publisher": "中国之声",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "AI时代就业新观察丨大山里的AI新岗位",
       "english_headline": "The new AI job in the mountains of the A.I. Times.",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -540,6 +706,11 @@
       "publisher": "中国科学院",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "【中国科学报】 第二届人工智能赋能的天文学开放科学会议开幕",
       "english_headline": "Opening of the Second Open Astronomy Science Conference",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -554,6 +725,11 @@
       "publisher": "中国科技网",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "AI赋能丨AI推动天文观测向“智能分析与自主发现”演进",
       "english_headline": "AI empowers AI to drive astronomical observations towards \"intelligent analysis and autonomous discovery\"",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -568,6 +744,11 @@
       "publisher": "中国科技网",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "科技新观察丨“人工智能局”相继挂牌，在下一盘什么棋？",
       "english_headline": "What's next?",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -582,6 +763,11 @@
       "publisher": "中山网",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "驾驭好人工智能这匹千里马",
       "english_headline": "Take care of the A.I. horse.",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -596,6 +782,11 @@
       "publisher": "人民日报",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "开放共赢是人工智能发展的必由之路（和音）",
       "english_headline": "Open co-winning is the only way to develop artificial intelligence.",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -610,6 +801,11 @@
       "publisher": "人民日报",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "河北开展“人工智能+制造”行动",
       "english_headline": "Hebei's campaign for artificial intelligence plus manufacturing",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -624,6 +820,11 @@
       "publisher": "人民日报",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "生成式人工智能领域新设企业增长28.0%",
       "english_headline": "28.0 per cent growth in new businesses in the area of generating artificial intelligence",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -638,6 +839,11 @@
       "publisher": "人民网",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "为什么中国大模型便宜又好用？（外国网友趣问中国⑩） --国际",
       "english_headline": "Why is the big Chinese model cheap and useful?",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -652,6 +858,11 @@
       "publisher": "北京大学医学部",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "新一代人工智能赋能创新医疗新范式——第二十一期北京大学临床科学家培养计划“大课堂”举办",
       "english_headline": "New Model for Innovative Medicines for the New Generation of Artificial Intelligent Empowerment — “Big Classrooms” of the Twenty-first Beijing University Clinical Scientists Development Programme",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -666,6 +877,11 @@
       "publisher": "复旦大学中国研究院",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "《这就是中国》第343集：人工智能的全球治理",
       "english_headline": "\"This is China,\" No. 343: Global Governance of Artificial Intelligence",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -680,6 +896,11 @@
       "publisher": "天津大学新闻网",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "《天津日报》天津大学网络安全学院党委书记魏建国：人工智能产业演进路径",
       "english_headline": "Party Secretary Wei, Tianjin University Institute of Cyber Security: The path to the evolution of the artificial intelligence industry",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -694,6 +915,11 @@
       "publisher": "新京报",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "以“人工智能+”激活高质量发展新动能",
       "english_headline": "Activate high-quality development of new kinetic energy with artificial intelligence+",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -708,6 +934,11 @@
       "publisher": "新华网",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "2026中国自动化与人工智能教育大会启幕",
       "english_headline": "2026 Opening of the China Automated and Artificial Smart Education Congress",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -722,6 +953,11 @@
       "publisher": "新华网",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "中国经济面面观丨中国方案，如何让AI行稳致远",
       "english_headline": "China’s economic outlook is a Chinese programme. How to keep AI safe.",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -736,6 +972,11 @@
       "publisher": "新华网",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "中国经济面面观丨向善而行：人工智能时代如何迈向全球治理",
       "english_headline": "China’s economic landscape is moving towards good governance: how the age of artificial intelligence moves towards global governance",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -750,6 +991,11 @@
       "publisher": "新华网",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "人工智能或可唤醒“沉睡”的文化宝藏",
       "english_headline": "Artificial intelligence may awaken the cultural treasures of \"sleeping\"",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -764,6 +1010,11 @@
       "publisher": "新华网",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "底层突破筑牢人工智能技术根基",
       "english_headline": "The bottom level breaks through the building of the roots of artificial intelligence.",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -778,6 +1029,11 @@
       "publisher": "新华网",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "雄安人工智能实训基地正式投运",
       "english_headline": "Yu An A.I.T. Base is officially on board.",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -792,6 +1048,11 @@
       "publisher": "科学网—新闻",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "AI优化视觉皮层假体电刺激模式",
       "english_headline": "AI optimizes visual cortex electro-stimulation mode",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -806,6 +1067,11 @@
       "publisher": "科学网—新闻",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "AI时代，需要怎样的机器科学家？",
       "english_headline": "What kind of machine scientists do you need in the AI era?",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -820,6 +1086,11 @@
       "publisher": "科学网—新闻",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "“向善”亦“为恶”，人工智能如何“修身立德”",
       "english_headline": "\"To the good\" is also \"to the evil\" and \"to the good\" is how artificial intelligence is \"to the good.\"",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -834,6 +1105,11 @@
       "publisher": "科学网—新闻",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "中国开源大模型海外救场，国产AI何以领跑全球？",
       "english_headline": "How can a Chinese national product, AI, lead the world?",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -848,6 +1124,11 @@
       "publisher": "科学网—新闻",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "之江实验室王坚院士：人工智能应该像纸一样便宜",
       "english_headline": "The Gang Lab Wang Kens: Artificial intelligence should be as cheap as paper.",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
@@ -862,6 +1143,11 @@
       "publisher": "通信世界网",
       "source_language": "zh",
       "detection_confidence": 1.0,
+      "raw_detected_language": "zh",
+      "detection_method": "han_script+lingua",
+      "observed_search_languages": [
+        "zh-cn"
+      ],
       "original_headline": "数智龙江 智启新程｜黑龙江省“人工智能+”赋能行业高质量发展峰会成功举办",
       "english_headline": "The Quality Development Summit for the Man-Intelligent Plus enabling industry in the province of Heilongjiang was successfully held.",
       "model_name": "Helsinki-NLP/opus-mt-zh-en",
