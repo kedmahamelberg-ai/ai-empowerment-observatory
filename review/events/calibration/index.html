@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cluster Calibration | AI Empowerment Observatory</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="./calibration.css">
+  <link rel="stylesheet" href="/analytics-consent.css">
+</head>
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">Stage 7B.2A · Method calibration</p>
+      <h1>Same event — or just the same topic?</h1>
+      <p>
+        Label each pair blind. This calibration set will tell us whether a
+        simple similarity threshold is defensible or whether the Observatory
+        needs a second-stage pair classifier.
+      </p>
+    </div>
+    <nav>
+      <a href="/review/events/">Clusters</a>
+      <a href="/review/">Articles</a>
+      <a href="/">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="summary" class="summary">Loading calibration sample…</section>
+
+    <section class="toolbar">
+      <div id="progress">0 / 0 labelled</div>
+      <button id="download" type="button">Download labels CSV</button>
+      <button id="clear" class="secondary" type="button">Clear my labels</button>
+    </section>
+
+    <section id="pairs" class="pairs"></section>
+  </main>
+
+  <script src="./calibration.js"></script>
+  <script src="/analytics.js"></script>
+</body>
+</html>
