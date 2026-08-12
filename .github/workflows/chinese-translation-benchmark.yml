@@ -29,7 +29,8 @@ jobs:
       - name: Install Observatory dependencies
         run: |
           python -m pip install -r requirements.txt
-          python -m pip install "transformers<5" sentencepiece sacremoses
+          git clone --depth 1 https://github.com/quickmt/quickmt.git /tmp/quickmt
+          python -m pip install /tmp/quickmt
 
       - name: Install llama.cpp build dependencies
         run: |
