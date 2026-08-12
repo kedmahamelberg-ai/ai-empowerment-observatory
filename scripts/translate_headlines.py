@@ -31,8 +31,8 @@ from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 ROOT = Path(__file__).resolve().parents[1]
 REVIEW_PATH = ROOT / "review" / "translations" / "latest.json"
 
-TRANSLATION_PROFILE = "opus_en_normalization_v1"
-PIPELINE_VERSION = "7B.2B-0"
+TRANSLATION_PROFILE = "opus_en_normalization_v1.1"
+PIPELINE_VERSION = "7B.2B-0a"
 
 MODEL_BY_LANGUAGE = {
     "fr": "Helsinki-NLP/opus-mt-fr-en",
@@ -40,7 +40,7 @@ MODEL_BY_LANGUAGE = {
 }
 
 TARGET_LANGUAGE = "en"
-MIN_DETECTION_CONFIDENCE = 0.75
+MIN_DETECTION_CONFIDENCE = 0.55
 BATCH_SIZE = 16
 
 
@@ -154,6 +154,124 @@ def detect_language(detector, text: str) -> tuple[str, float]:
         return "und", float(best.value)
 
     return iso.name.lower(), float(best.value)
+
+
+def normalize_search_language(value: str) -> str:
+    value = str(value or "").strip().lower()
+    if value.startswith("zh"):
+        return "zh"
+    if value.startswith("fr"):
+        return "fr"
+    if value.startswith("en"):
+        return "en"
+    return value.split("-", 1)[0] if value else ""
+
+
+def contains_han_script(text: str) -> bool:
+    # CJK Unified Ideographs + Extension A. Headlines with Han script should
+    # not be allowed to drift to unrelated Latin-script language labels.
+    return any(
+        "\u3400" <= char <= "\u4dbf" or "\u4e00" <= char <= "\u9fff"
+        for char in text
+    )
+
+
+def resolve_source_language(
+    detector,
+    text: str,
+    observed_search_languages: list[str],
+) -> dict[str, Any]:
+    detected_language, confidence = detect_language(detector, text)
+
+    hints = {
+        normalize_search_language(value)
+        for value in observed_search_languages
+        if normalize_search_language(value) in {"en", "fr", "zh"}
+    }
+    unanimous_hint = next(iter(hints)) if len(hints) == 1 else None
+
+    # Script is a stronger signal than statistical language detection for
+    # Chinese headlines.
+    if contains_han_script(text):
+        return {
+            "language": "zh",
+            "confidence": confidence,
+            "raw_detected_language": detected_language,
+            "method": "han_script+lingua",
+            "requires_review": False,
+            "review_reason": "",
+        }
+
+    # Strong agreement between Lingua and the Google News search-language
+    # context: accept even when the numeric confidence is modest. Headlines
+    # are short, and Lingua's confidence naturally drops on short strings.
+    if (
+        detected_language in {"en", "fr", "zh"}
+        and unanimous_hint == detected_language
+    ):
+        return {
+            "language": detected_language,
+            "confidence": confidence,
+            "raw_detected_language": detected_language,
+            "method": "lingua+search_language",
+            "requires_review": False,
+            "review_reason": "",
+        }
+
+    # A supported high-confidence Lingua result can stand on its own.
+    if (
+        detected_language in {"en", "fr", "zh"}
+        and confidence >= 0.65
+    ):
+        return {
+            "language": detected_language,
+            "confidence": confidence,
+            "raw_detected_language": detected_language,
+            "method": "lingua",
+            "requires_review": False,
+            "review_reason": "",
+        }
+
+    # When Lingua is uncertain and the article was observed only in one
+    # supported search-language context, use that context as a prior. Keep the
+    # item reviewable so this override remains auditable.
+    if unanimous_hint and confidence < 0.65:
+        return {
+            "language": unanimous_hint,
+            "confidence": confidence,
+            "raw_detected_language": detected_language,
+            "method": "search_language_override",
+            "requires_review": True,
+            "review_reason": (
+                f"low-confidence Lingua result '{detected_language}' "
+                f"overridden by search-language context '{unanimous_hint}'"
+            ),
+        }
+
+    # Otherwise keep Lingua's result but flag uncertainty. Unsupported labels
+    # are preserved instead of being silently translated through the wrong
+    # language model.
+    requires_review = (
+        confidence < MIN_DETECTION_CONFIDENCE
+        or detected_language not in {"en", "fr", "zh"}
+    )
+
+    reasons = []
+    if confidence < MIN_DETECTION_CONFIDENCE:
+        reasons.append("low language-detection confidence")
+    if detected_language not in {"en", "fr", "zh"}:
+        reasons.append(
+            f"language '{detected_language}' not routed in pilot translation profile"
+        )
+
+    return {
+        "language": detected_language,
+        "confidence": confidence,
+        "raw_detected_language": detected_language,
+        "method": "lingua",
+        "requires_review": requires_review,
+        "review_reason": "; ".join(reasons),
+    }
 
 
 def text_hash(text: str) -> str:
@@ -337,11 +455,20 @@ def main() -> int:
     by_language: dict[str, list[dict[str, Any]]] = defaultdict(list)
 
     for article in articles:
-        language, confidence = detect_language(detector, article["headline"])
+        resolution = resolve_source_language(
+            detector,
+            article["headline"],
+            article["observed_search_languages"],
+        )
+        language = resolution["language"]
         item = {
             **article,
             "source_language_iso2": language,
-            "detection_confidence": round(confidence, 4),
+            "detection_confidence": round(float(resolution["confidence"]), 4),
+            "raw_detected_language": resolution["raw_detected_language"],
+            "detection_method": resolution["method"],
+            "language_requires_review": bool(resolution["requires_review"]),
+            "language_review_reason": resolution["review_reason"],
         }
         detected.append(item)
         by_language[language].append(item)
@@ -358,14 +485,14 @@ def main() -> int:
     try:
         # English passthrough first.
         for item in by_language.get("en", []):
-            low_conf = item["detection_confidence"] < MIN_DETECTION_CONFIDENCE
+            language_review = item["language_requires_review"]
             payload = {
                 "article_id": item["article_id"],
                 "translation_run_id": translation_run_id,
                 "model_version_id": None,
                 "source_language_iso2": "en",
                 "detection_confidence": item["detection_confidence"],
-                "detected_by": "lingua-language-detector",
+                "detected_by": item["detection_method"],
                 "observed_search_languages": item["observed_search_languages"],
                 "target_language_iso2": TARGET_LANGUAGE,
                 "translation_profile": TRANSLATION_PROFILE,
@@ -373,16 +500,15 @@ def main() -> int:
                 "translated_headline": item["headline"],
                 "original_text_hash": text_hash(item["headline"]),
                 "status": "passthrough",
-                "requires_review": low_conf,
+                "requires_review": language_review,
                 "review_reason": (
-                    "low language-detection confidence"
-                    if low_conf else None
+                    item["language_review_reason"] or None
                 ),
                 "updated_at": iso_z(utc_now()),
             }
             upsert_translation(client, payload)
             counts["passthrough"] += 1
-            if low_conf:
+            if language_review:
                 counts["review"] += 1
 
         # Translate supported non-English languages one model at a time.
@@ -403,16 +529,15 @@ def main() -> int:
                 )
 
                 for item, english in zip(items, translated):
-                    low_conf = (
-                        item["detection_confidence"]
-                        < MIN_DETECTION_CONFIDENCE
-                    )
                     empty_translation = not english.strip()
-                    requires_review = low_conf or empty_translation
+                    requires_review = (
+                        item["language_requires_review"]
+                        or empty_translation
+                    )
 
                     reasons = []
-                    if low_conf:
-                        reasons.append("low language-detection confidence")
+                    if item["language_review_reason"]:
+                        reasons.append(item["language_review_reason"])
                     if empty_translation:
                         reasons.append("empty translation")
 
@@ -424,7 +549,7 @@ def main() -> int:
                         "model_version_id": model_version_id,
                         "source_language_iso2": language,
                         "detection_confidence": item["detection_confidence"],
-                        "detected_by": "lingua-language-detector",
+                        "detected_by": item["detection_method"],
                         "observed_search_languages": item["observed_search_languages"],
                         "target_language_iso2": TARGET_LANGUAGE,
                         "translation_profile": TRANSLATION_PROFILE,
@@ -448,6 +573,9 @@ def main() -> int:
                             "publisher": item["publisher"],
                             "source_language": language,
                             "detection_confidence": item["detection_confidence"],
+                            "raw_detected_language": item["raw_detected_language"],
+                            "detection_method": item["detection_method"],
+                            "observed_search_languages": item["observed_search_languages"],
                             "original_headline": item["headline"],
                             "english_headline": english.strip() or item["headline"],
                             "model_name": model_name,
@@ -471,7 +599,7 @@ def main() -> int:
                         "model_version_id": None,
                         "source_language_iso2": language,
                         "detection_confidence": item["detection_confidence"],
-                        "detected_by": "lingua-language-detector",
+                        "detected_by": item["detection_method"],
                         "observed_search_languages": item["observed_search_languages"],
                         "target_language_iso2": TARGET_LANGUAGE,
                         "translation_profile": TRANSLATION_PROFILE,
@@ -492,6 +620,9 @@ def main() -> int:
                             "publisher": item["publisher"],
                             "source_language": language,
                             "detection_confidence": item["detection_confidence"],
+                            "raw_detected_language": item["raw_detected_language"],
+                            "detection_method": item["detection_method"],
+                            "observed_search_languages": item["observed_search_languages"],
                             "original_headline": item["headline"],
                             "english_headline": item["headline"],
                             "model_name": model_name,
@@ -519,7 +650,7 @@ def main() -> int:
                         language if len(language) == 2 else "un"
                     ),
                     "detection_confidence": item["detection_confidence"],
-                    "detected_by": "lingua-language-detector",
+                    "detected_by": item["detection_method"],
                     "observed_search_languages": item["observed_search_languages"],
                     "target_language_iso2": TARGET_LANGUAGE,
                     "translation_profile": TRANSLATION_PROFILE,
@@ -529,7 +660,8 @@ def main() -> int:
                     "status": "unsupported",
                     "requires_review": True,
                     "review_reason": (
-                        f"language '{language}' not routed in pilot translation profile"
+                        item["language_review_reason"]
+                        or f"language '{language}' not routed in pilot translation profile"
                     ),
                     "updated_at": iso_z(utc_now()),
                 }
@@ -549,7 +681,8 @@ def main() -> int:
                         "status": "unsupported",
                         "requires_review": True,
                         "review_reason": (
-                            f"language '{language}' not routed in pilot translation profile"
+                            item["language_review_reason"]
+                            or f"language '{language}' not routed in pilot translation profile"
                         ),
                         "url": item.get("canonical_url"),
                     }
@@ -579,7 +712,10 @@ def main() -> int:
                         "translation_run_key": run_key,
                         "collection_run_key": collection["run_key"],
                         "translation_profile": TRANSLATION_PROFILE,
-                        "detector": "lingua-language-detector",
+                        "detector": (
+                            "lingua-language-detector + search-language context "
+                            "+ Han-script override"
+                        ),
                         "detector_version": detector_version,
                         "article_count": len(articles),
                         **counts,
