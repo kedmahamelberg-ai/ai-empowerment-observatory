@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Translation Benchmark | AI Empowerment Observatory</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="./benchmark.css">
+  <link rel="stylesheet" href="/analytics-consent.css">
+</head>
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">Stage 7B.2B-0b · Human-in-the-loop</p>
+      <h1>Which English translation is better?</h1>
+      <p>
+        Compare two translations blind. Model identity is hidden so the
+        Observatory chooses its normalization model from evidence, not brand.
+      </p>
+    </div>
+    <nav>
+      <a href="/review/translations/">Translations</a>
+      <a href="/review/events/">Events</a>
+      <a href="/">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="summary" class="summary">Loading benchmark…</section>
+
+    <section class="toolbar">
+      <div id="progress">0 / 0 labelled</div>
+      <button id="download" type="button">Download labels CSV</button>
+      <button id="clear" class="secondary" type="button">Clear labels</button>
+    </section>
+
+    <section id="items" class="items"></section>
+  </main>
+
+  <script src="./benchmark.js"></script>
+  <script src="/analytics.js"></script>
+</body>
+</html>
