@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Event Cluster Review | AI Empowerment Observatory</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="./events.css">
+  <link rel="stylesheet" href="/analytics-consent.css">
+</head>
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">Stage 7B.2 · Human-in-the-loop review</p>
+      <h1>Event clusters</h1>
+      <p>
+        Review whether articles grouped together are genuinely reporting the
+        same real-world AI development. These provisional clusters do not yet
+        affect the Observatory indices.
+      </p>
+    </div>
+    <nav>
+      <a href="/review/">Article review</a>
+      <a href="/edu/">Edu</a>
+      <a href="/">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="summary" class="summary">
+      Loading event-clustering results…
+    </section>
+
+    <section class="controls">
+      <label>
+        Search clusters
+        <input id="search" type="search" placeholder="Headline or publisher">
+      </label>
+
+      <label>
+        Show
+        <select id="filter">
+          <option value="all">All clusters</option>
+          <option value="multi">Multi-article only</option>
+          <option value="review">Needs review</option>
+          <option value="single">Singletons</option>
+        </select>
+      </label>
+    </section>
+
+    <section id="events" class="events"></section>
+  </main>
+
+  <script src="./events.js"></script>
+  <script src="/analytics.js"></script>
+</body>
+</html>
