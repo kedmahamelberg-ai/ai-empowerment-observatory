@@ -1,21 +1,11 @@
 #!/usr/bin/env python3
-"""Translate non-English Observatory headlines into English.
-
-Production principle:
-- Original headlines remain the evidentiary source in `articles`.
-- English translations are stored separately in `article_translations`.
-- English items are copied through unchanged.
-- This pilot routes French and Chinese to dedicated Apache-2.0 OPUS-MT models.
-- Other detected languages are retained but flagged unsupported for review.
-"""
-
 from __future__ import annotations
 
-import gc
 import hashlib
 import importlib.metadata
 import json
 import os
+import re
 import sys
 from collections import defaultdict
 from datetime import datetime, timezone
@@ -26,53 +16,48 @@ import torch
 from huggingface_hub import HfApi
 from lingua import LanguageDetectorBuilder
 from supabase import Client, create_client
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 ROOT = Path(__file__).resolve().parents[1]
 REVIEW_PATH = ROOT / "review" / "translations" / "latest.json"
 
-TRANSLATION_PROFILE = "opus_en_normalization_v1.1"
-PIPELINE_VERSION = "7B.2B-0a"
-
-MODEL_BY_LANGUAGE = {
-    "fr": "Helsinki-NLP/opus-mt-fr-en",
-    "zh": "Helsinki-NLP/opus-mt-zh-en",
-}
-
+MODEL_NAME = "Qwen/Qwen3-1.7B"
+TRANSLATION_PROFILE = "qwen3_1_7b_en_normalization_v2"
+PIPELINE_VERSION = "7B.2B-0c"
 TARGET_LANGUAGE = "en"
-MIN_DETECTION_CONFIDENCE = 0.55
-BATCH_SIZE = 16
+STRONG_DETECTION_CONFIDENCE = 0.65
+OUTPUT_ENGLISH_CONFIDENCE = 0.55
 
 
 class TranslationError(RuntimeError):
     pass
 
 
-def utc_now() -> datetime:
+def utc_now():
     return datetime.now(timezone.utc)
 
 
-def iso_z(value: datetime) -> str:
+def iso_z(value):
     return value.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
-def required_env(name: str) -> str:
+def required_env(name):
     value = str(os.environ.get(name) or "").strip()
     if not value:
-        raise TranslationError(f"{name} is missing from workflow environment.")
+        raise TranslationError(f"{name} is missing.")
     return value
 
 
-def first_row(response: Any, context: str) -> dict[str, Any]:
+def first_row(response, context):
     data = getattr(response, "data", None)
     if isinstance(data, list) and data:
         return data[0]
     if isinstance(data, dict) and data:
         return data
-    raise TranslationError(f"Supabase returned no row while {context}.")
+    raise TranslationError(f"No Supabase row while {context}.")
 
 
-def latest_collection(client: Client) -> dict[str, Any]:
+def latest_collection(client):
     response = (
         client.table("collection_runs")
         .select("run_id,run_key,started_at,status")
@@ -84,28 +69,28 @@ def latest_collection(client: Client) -> dict[str, Any]:
     return first_row(response, "reading latest collection")
 
 
-def load_articles(client: Client, run_id: str) -> list[dict[str, Any]]:
-    obs_response = (
+def load_articles(client, run_id):
+    obs = (
         client.table("article_observations")
         .select("article_id,search_language")
         .eq("run_id", run_id)
         .execute()
     )
-    observations = getattr(obs_response, "data", None) or []
+    observations = getattr(obs, "data", None) or []
     if not observations:
-        raise TranslationError("No observations found for latest collection.")
+        raise TranslationError("No observations found.")
 
-    search_languages: dict[str, set[str]] = defaultdict(set)
+    search_languages = defaultdict(set)
     for row in observations:
-        aid = str(row["article_id"])
         if row.get("search_language"):
-            search_languages[aid].add(str(row["search_language"]).lower())
+            search_languages[str(row["article_id"])].add(
+                str(row["search_language"]).lower()
+            )
 
     article_ids = sorted(search_languages)
-    rows: list[dict[str, Any]] = []
-
+    rows = []
     for start in range(0, len(article_ids), 150):
-        batch = article_ids[start:start + 150]
+        batch = article_ids[start:start+150]
         response = (
             client.table("articles")
             .select(
@@ -123,40 +108,30 @@ def load_articles(client: Client, run_id: str) -> list[dict[str, Any]]:
         if not headline:
             continue
         aid = str(row["article_id"])
-        result.append(
-            {
-                **row,
-                "headline": headline,
-                "observed_search_languages": sorted(search_languages.get(aid, set())),
-            }
-        )
-
-    if not result:
-        raise TranslationError("No usable article headlines found.")
+        result.append({
+            **row,
+            "headline": headline,
+            "observed_search_languages": sorted(search_languages.get(aid, set())),
+        })
     return result
 
 
 def build_detector():
-    # All-language detection is deliberate here: Google News localization is a
-    # useful hint, but it does not guarantee that every returned headline uses
-    # the localization language.
     return LanguageDetectorBuilder.from_all_languages().build()
 
 
-def detect_language(detector, text: str) -> tuple[str, float]:
+def detect_language(detector, text):
     values = detector.compute_language_confidence_values(text)
     if not values:
         return "und", 0.0
-
     best = values[0]
     iso = best.language.iso_code_639_1
     if iso is None:
         return "und", float(best.value)
-
     return iso.name.lower(), float(best.value)
 
 
-def normalize_search_language(value: str) -> str:
+def normalize_search_language(value):
     value = str(value or "").strip().lower()
     if value.startswith("zh"):
         return "zh"
@@ -167,155 +142,74 @@ def normalize_search_language(value: str) -> str:
     return value.split("-", 1)[0] if value else ""
 
 
-def contains_han_script(text: str) -> bool:
-    # CJK Unified Ideographs + Extension A. Headlines with Han script should
-    # not be allowed to drift to unrelated Latin-script language labels.
+def contains_han_script(text):
     return any(
-        "\u3400" <= char <= "\u4dbf" or "\u4e00" <= char <= "\u9fff"
-        for char in text
+        "\u3400" <= c <= "\u4dbf" or "\u4e00" <= c <= "\u9fff"
+        for c in text
     )
 
 
-def resolve_source_language(
-    detector,
-    text: str,
-    observed_search_languages: list[str],
-) -> dict[str, Any]:
-    detected_language, confidence = detect_language(detector, text)
-
+def resolve_source_language(detector, text, observed_search_languages):
+    detected, confidence = detect_language(detector, text)
     hints = {
-        normalize_search_language(value)
-        for value in observed_search_languages
-        if normalize_search_language(value) in {"en", "fr", "zh"}
+        normalize_search_language(v)
+        for v in observed_search_languages
+        if normalize_search_language(v)
     }
     unanimous_hint = next(iter(hints)) if len(hints) == 1 else None
 
-    # Script is a stronger signal than statistical language detection for
-    # Chinese headlines.
     if contains_han_script(text):
-        return {
-            "language": "zh",
-            "confidence": confidence,
-            "raw_detected_language": detected_language,
-            "method": "han_script+lingua",
-            "requires_review": False,
-            "review_reason": "",
-        }
+        return "zh", confidence, "han_script+lingua", False, ""
 
-    # Strong agreement between Lingua and the Google News search-language
-    # context: accept even when the numeric confidence is modest. Headlines
-    # are short, and Lingua's confidence naturally drops on short strings.
-    if (
-        detected_language in {"en", "fr", "zh"}
-        and unanimous_hint == detected_language
-    ):
-        return {
-            "language": detected_language,
-            "confidence": confidence,
-            "raw_detected_language": detected_language,
-            "method": "lingua+search_language",
-            "requires_review": False,
-            "review_reason": "",
-        }
+    if unanimous_hint and detected == unanimous_hint:
+        return detected, confidence, "lingua+search_language", False, ""
 
-    # A supported high-confidence Lingua result can stand on its own.
-    if (
-        detected_language in {"en", "fr", "zh"}
-        and confidence >= 0.65
-    ):
-        return {
-            "language": detected_language,
-            "confidence": confidence,
-            "raw_detected_language": detected_language,
-            "method": "lingua",
-            "requires_review": False,
-            "review_reason": "",
-        }
+    if confidence >= STRONG_DETECTION_CONFIDENCE:
+        return detected, confidence, "lingua", False, ""
 
-    # When Lingua is uncertain and the article was observed only in one
-    # supported search-language context, use that context as a prior. Keep the
-    # item reviewable so this override remains auditable.
-    if unanimous_hint and confidence < 0.65:
-        return {
-            "language": unanimous_hint,
-            "confidence": confidence,
-            "raw_detected_language": detected_language,
-            "method": "search_language_override",
-            "requires_review": True,
-            "review_reason": (
-                f"low-confidence Lingua result '{detected_language}' "
-                f"overridden by search-language context '{unanimous_hint}'"
-            ),
-        }
-
-    # Otherwise keep Lingua's result but flag uncertainty. Unsupported labels
-    # are preserved instead of being silently translated through the wrong
-    # language model.
-    requires_review = (
-        confidence < MIN_DETECTION_CONFIDENCE
-        or detected_language not in {"en", "fr", "zh"}
-    )
-
-    reasons = []
-    if confidence < MIN_DETECTION_CONFIDENCE:
-        reasons.append("low language-detection confidence")
-    if detected_language not in {"en", "fr", "zh"}:
-        reasons.append(
-            f"language '{detected_language}' not routed in pilot translation profile"
+    if unanimous_hint:
+        return (
+            unanimous_hint,
+            confidence,
+            "search_language_override",
+            True,
+            f"low-confidence '{detected}' overridden by '{unanimous_hint}'",
         )
 
-    return {
-        "language": detected_language,
-        "confidence": confidence,
-        "raw_detected_language": detected_language,
-        "method": "lingua",
-        "requires_review": requires_review,
-        "review_reason": "; ".join(reasons),
-    }
+    return detected if len(detected) == 2 else "un", confidence, "lingua", True, "uncertain source language"
 
 
-def text_hash(text: str) -> str:
+def text_hash(text):
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
-def register_model_version(
-    client: Client,
-    model_name: str,
-    revision: str,
-) -> str:
+def arabic_numbers(text):
+    return re.findall(r"\d+(?:[.,]\d+)?", text)
+
+
+def register_model_version(client, revision):
     response = (
         client.table("model_versions")
         .upsert(
             {
                 "provider": "huggingface",
-                "model_name": model_name,
+                "model_name": MODEL_NAME,
                 "model_revision": revision,
                 "task": "headline_translation_to_english",
-                "language_scope": "language-specific",
-                "notes": (
-                    "Apache-2.0 Helsinki-NLP OPUS-MT model used for "
-                    "English headline normalization."
-                ),
+                "language_scope": "multilingual",
+                "notes": "Selected after blind human benchmark against OPUS-MT.",
             },
             on_conflict="provider,model_name,model_revision,task",
         )
         .select("model_version_id")
         .execute()
     )
-    return str(
-        first_row(response, f"registering translation model {model_name}")[
-            "model_version_id"
-        ]
-    )
+    return str(first_row(response, "registering model")["model_version_id"])
 
 
-def start_run(
-    client: Client,
-    collection_run_id: str,
-    detector_version: str,
-) -> tuple[str, str]:
+def start_run(client, collection_run_id, detector_version):
     now = utc_now()
-    run_key = now.strftime("translate_%Y%m%dT%H%M%SZ")
+    run_key = now.strftime("translate_qwen_%Y%m%dT%H%M%SZ")
     response = (
         client.table("translation_runs")
         .insert(
@@ -325,7 +219,7 @@ def start_run(
                 "started_at": iso_z(now),
                 "status": "running",
                 "translation_profile": TRANSLATION_PROFILE,
-                "detector_name": "lingua-language-detector",
+                "detector_name": "lingua + search-language context + Han-script override",
                 "detector_version": detector_version,
                 "pipeline_version": PIPELINE_VERSION,
             }
@@ -333,24 +227,10 @@ def start_run(
         .select("translation_run_id")
         .execute()
     )
-    translation_run_id = str(
-        first_row(response, "starting translation run")["translation_run_id"]
-    )
-    return translation_run_id, run_key
+    return str(first_row(response, "starting run")["translation_run_id"]), run_key
 
 
-def finish_run(
-    client: Client,
-    *,
-    translation_run_id: str,
-    status: str,
-    article_count: int,
-    passthrough_count: int,
-    translated_count: int,
-    unsupported_count: int,
-    failed_count: int,
-    review_required_count: int,
-) -> None:
+def finish_run(client, translation_run_id, status, article_count, passthrough, translated, failed, review):
     (
         client.table("translation_runs")
         .update(
@@ -358,11 +238,11 @@ def finish_run(
                 "completed_at": iso_z(utc_now()),
                 "status": status,
                 "article_count": article_count,
-                "passthrough_count": passthrough_count,
-                "translated_count": translated_count,
-                "unsupported_count": unsupported_count,
-                "failed_count": failed_count,
-                "review_required_count": review_required_count,
+                "passthrough_count": passthrough,
+                "translated_count": translated,
+                "unsupported_count": 0,
+                "failed_count": failed,
+                "review_required_count": review,
             }
         )
         .eq("translation_run_id", translation_run_id)
@@ -370,59 +250,7 @@ def finish_run(
     )
 
 
-def translate_batch(
-    model_name: str,
-    texts: list[str],
-) -> tuple[list[str], str, str]:
-    api = HfApi()
-    revision = api.model_info(model_name).sha or "unknown"
-
-    tokenizer = AutoTokenizer.from_pretrained(model_name, revision=revision)
-    model = AutoModelForSeq2SeqLM.from_pretrained(
-        model_name,
-        revision=revision,
-    )
-    model.eval()
-
-    outputs: list[str] = []
-
-    for start in range(0, len(texts), BATCH_SIZE):
-        batch = texts[start:start + BATCH_SIZE]
-        encoded = tokenizer(
-            batch,
-            return_tensors="pt",
-            padding=True,
-            truncation=True,
-            max_length=192,
-        )
-
-        with torch.inference_mode():
-            generated = model.generate(
-                **encoded,
-                num_beams=4,
-                max_new_tokens=128,
-                early_stopping=True,
-            )
-
-        outputs.extend(
-            text.strip()
-            for text in tokenizer.batch_decode(
-                generated,
-                skip_special_tokens=True,
-            )
-        )
-
-    del model
-    del tokenizer
-    gc.collect()
-
-    return outputs, revision, model_name
-
-
-def upsert_translation(
-    client: Client,
-    payload: dict[str, Any],
-) -> None:
+def upsert_translation(client, payload):
     (
         client.table("article_translations")
         .upsert(
@@ -433,272 +261,174 @@ def upsert_translation(
     )
 
 
-def main() -> int:
-    client: Client = create_client(
+def translate_one(tokenizer, model, headline, source_language):
+    language_label = {"fr": "French", "zh": "Chinese"}.get(
+        source_language, f"language code {source_language}"
+    )
+    prompt = (
+        f"Translate this {language_label} news headline into natural, precise English. "
+        "Preserve the specific event meaning, named entities, place names, organizations, "
+        "people, numbers, negation, modality, and comparisons. Translate idioms by meaning, "
+        "not word-for-word. Do not summarize, explain, infer, or add facts. "
+        f"Return only the English headline.\n\nHeadline: {headline}"
+    )
+    text = tokenizer.apply_chat_template(
+        [{"role": "user", "content": prompt}],
+        tokenize=False,
+        add_generation_prompt=True,
+        enable_thinking=False,
+    )
+    inputs = tokenizer(text, return_tensors="pt")
+    with torch.inference_mode():
+        output_ids = model.generate(
+            **inputs,
+            max_new_tokens=128,
+            do_sample=False,
+            repetition_penalty=1.05,
+        )
+    generated = output_ids[0][inputs.input_ids.shape[1]:]
+    return tokenizer.decode(generated, skip_special_tokens=True).strip()
+
+
+def translation_qc(detector, source_language, original, translated):
+    reasons = []
+    if not translated.strip():
+        return ["empty translation"]
+    if source_language != "en" and translated.strip() == original.strip():
+        reasons.append("translation identical to non-English source")
+    if source_language == "zh" and contains_han_script(translated):
+        reasons.append("Chinese characters remain in English normalization")
+
+    out_lang, out_conf = detect_language(detector, translated)
+    if out_lang != "en" or out_conf < OUTPUT_ENGLISH_CONFIDENCE:
+        reasons.append(f"output English check uncertain: {out_lang} {out_conf:.3f}")
+
+    original_nums = arabic_numbers(original)
+    missing = [n for n in original_nums if n not in translated]
+    if missing:
+        reasons.append("numeric information not preserved: " + ", ".join(missing))
+    return reasons
+
+
+def main():
+    client = create_client(
         required_env("SUPABASE_URL"),
         required_env("SUPABASE_SECRET_KEY"),
     )
-
     collection = latest_collection(client)
     articles = load_articles(client, str(collection["run_id"]))
 
     detector_version = importlib.metadata.version("lingua-language-detector")
     detector = build_detector()
 
+    revision = HfApi().model_info(MODEL_NAME).sha or "unknown"
+    model_version_id = register_model_version(client, revision)
+
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, revision=revision)
+    model = AutoModelForCausalLM.from_pretrained(
+        MODEL_NAME,
+        revision=revision,
+        torch_dtype="auto",
+        low_cpu_mem_usage=True,
+    )
+    model.eval()
+
     translation_run_id, run_key = start_run(
-        client,
-        str(collection["run_id"]),
-        detector_version,
+        client, str(collection["run_id"]), detector_version
     )
 
-    detected: list[dict[str, Any]] = []
-    by_language: dict[str, list[dict[str, Any]]] = defaultdict(list)
-
-    for article in articles:
-        resolution = resolve_source_language(
-            detector,
-            article["headline"],
-            article["observed_search_languages"],
-        )
-        language = resolution["language"]
-        item = {
-            **article,
-            "source_language_iso2": language,
-            "detection_confidence": round(float(resolution["confidence"]), 4),
-            "raw_detected_language": resolution["raw_detected_language"],
-            "detection_method": resolution["method"],
-            "language_requires_review": bool(resolution["requires_review"]),
-            "language_review_reason": resolution["review_reason"],
-        }
-        detected.append(item)
-        by_language[language].append(item)
-
-    review_rows: list[dict[str, Any]] = []
-    counts = {
-        "passthrough": 0,
-        "translated": 0,
-        "unsupported": 0,
-        "failed": 0,
-        "review": 0,
-    }
+    counts = {"passthrough": 0, "translated": 0, "failed": 0, "review": 0}
+    review_rows = []
 
     try:
-        # English passthrough first.
-        for item in by_language.get("en", []):
-            language_review = item["language_requires_review"]
-            payload = {
-                "article_id": item["article_id"],
-                "translation_run_id": translation_run_id,
-                "model_version_id": None,
-                "source_language_iso2": "en",
-                "detection_confidence": item["detection_confidence"],
-                "detected_by": item["detection_method"],
-                "observed_search_languages": item["observed_search_languages"],
-                "target_language_iso2": TARGET_LANGUAGE,
-                "translation_profile": TRANSLATION_PROFILE,
-                "original_headline": item["headline"],
-                "translated_headline": item["headline"],
-                "original_text_hash": text_hash(item["headline"]),
-                "status": "passthrough",
-                "requires_review": language_review,
-                "review_reason": (
-                    item["language_review_reason"] or None
-                ),
-                "updated_at": iso_z(utc_now()),
-            }
-            upsert_translation(client, payload)
-            counts["passthrough"] += 1
-            if language_review:
+        for article in articles:
+            source_language, confidence, method, lang_review, lang_reason = resolve_source_language(
+                detector,
+                article["headline"],
+                article["observed_search_languages"],
+            )
+            reasons = [lang_reason] if lang_reason else []
+
+            if source_language == "en":
+                translated = article["headline"]
+                status = "passthrough"
+                used_model_version_id = None
+                counts["passthrough"] += 1
+            else:
+                try:
+                    translated = translate_one(
+                        tokenizer, model, article["headline"], source_language
+                    )
+                    reasons.extend(
+                        translation_qc(
+                            detector,
+                            source_language,
+                            article["headline"],
+                            translated,
+                        )
+                    )
+                    status = "translated" if translated else "failed"
+                    used_model_version_id = model_version_id
+                    counts[status] += 1
+                except Exception as exc:
+                    translated = article["headline"]
+                    status = "failed"
+                    used_model_version_id = model_version_id
+                    reasons.append(f"Qwen translation failure: {type(exc).__name__}")
+                    counts["failed"] += 1
+
+            requires_review = bool(reasons) or status == "failed"
+            if requires_review:
                 counts["review"] += 1
 
-        # Translate supported non-English languages one model at a time.
-        for language, model_name in MODEL_BY_LANGUAGE.items():
-            items = by_language.get(language, [])
-            if not items:
-                continue
-
-            try:
-                translated, revision, _ = translate_batch(
-                    model_name,
-                    [item["headline"] for item in items],
-                )
-                model_version_id = register_model_version(
-                    client,
-                    model_name,
-                    revision,
-                )
-
-                for item, english in zip(items, translated):
-                    empty_translation = not english.strip()
-                    requires_review = (
-                        item["language_requires_review"]
-                        or empty_translation
-                    )
-
-                    reasons = []
-                    if item["language_review_reason"]:
-                        reasons.append(item["language_review_reason"])
-                    if empty_translation:
-                        reasons.append("empty translation")
-
-                    status = "failed" if empty_translation else "translated"
-
-                    payload = {
-                        "article_id": item["article_id"],
-                        "translation_run_id": translation_run_id,
-                        "model_version_id": model_version_id,
-                        "source_language_iso2": language,
-                        "detection_confidence": item["detection_confidence"],
-                        "detected_by": item["detection_method"],
-                        "observed_search_languages": item["observed_search_languages"],
-                        "target_language_iso2": TARGET_LANGUAGE,
-                        "translation_profile": TRANSLATION_PROFILE,
-                        "original_headline": item["headline"],
-                        "translated_headline": english.strip() or item["headline"],
-                        "original_text_hash": text_hash(item["headline"]),
-                        "status": status,
-                        "requires_review": requires_review,
-                        "review_reason": "; ".join(reasons) or None,
-                        "updated_at": iso_z(utc_now()),
-                    }
-                    upsert_translation(client, payload)
-
-                    counts[status] += 1
-                    if requires_review:
-                        counts["review"] += 1
-
-                    review_rows.append(
-                        {
-                            "article_id": item["article_id"],
-                            "publisher": item["publisher"],
-                            "source_language": language,
-                            "detection_confidence": item["detection_confidence"],
-                            "raw_detected_language": item["raw_detected_language"],
-                            "detection_method": item["detection_method"],
-                            "observed_search_languages": item["observed_search_languages"],
-                            "original_headline": item["headline"],
-                            "english_headline": english.strip() or item["headline"],
-                            "model_name": model_name,
-                            "model_revision": revision,
-                            "status": status,
-                            "requires_review": requires_review,
-                            "review_reason": "; ".join(reasons),
-                            "url": item.get("canonical_url"),
-                        }
-                    )
-
-            except Exception as exc:
-                print(
-                    f"Translation failure for language {language}: {exc}",
-                    file=sys.stderr,
-                )
-                for item in items:
-                    payload = {
-                        "article_id": item["article_id"],
-                        "translation_run_id": translation_run_id,
-                        "model_version_id": None,
-                        "source_language_iso2": language,
-                        "detection_confidence": item["detection_confidence"],
-                        "detected_by": item["detection_method"],
-                        "observed_search_languages": item["observed_search_languages"],
-                        "target_language_iso2": TARGET_LANGUAGE,
-                        "translation_profile": TRANSLATION_PROFILE,
-                        "original_headline": item["headline"],
-                        "translated_headline": item["headline"],
-                        "original_text_hash": text_hash(item["headline"]),
-                        "status": "failed",
-                        "requires_review": True,
-                        "review_reason": f"translation model failure: {type(exc).__name__}",
-                        "updated_at": iso_z(utc_now()),
-                    }
-                    upsert_translation(client, payload)
-                    counts["failed"] += 1
-                    counts["review"] += 1
-                    review_rows.append(
-                        {
-                            "article_id": item["article_id"],
-                            "publisher": item["publisher"],
-                            "source_language": language,
-                            "detection_confidence": item["detection_confidence"],
-                            "raw_detected_language": item["raw_detected_language"],
-                            "detection_method": item["detection_method"],
-                            "observed_search_languages": item["observed_search_languages"],
-                            "original_headline": item["headline"],
-                            "english_headline": item["headline"],
-                            "model_name": model_name,
-                            "model_revision": None,
-                            "status": "failed",
-                            "requires_review": True,
-                            "review_reason": (
-                                f"translation model failure: {type(exc).__name__}"
-                            ),
-                            "url": item.get("canonical_url"),
-                        }
-                    )
-
-        # Unsupported languages are preserved, never silently mistranslated.
-        for language, items in by_language.items():
-            if language in {"en", *MODEL_BY_LANGUAGE.keys()}:
-                continue
-
-            for item in items:
-                payload = {
-                    "article_id": item["article_id"],
+            upsert_translation(
+                client,
+                {
+                    "article_id": article["article_id"],
                     "translation_run_id": translation_run_id,
-                    "model_version_id": None,
-                    "source_language_iso2": (
-                        language if len(language) == 2 else "un"
-                    ),
-                    "detection_confidence": item["detection_confidence"],
-                    "detected_by": item["detection_method"],
-                    "observed_search_languages": item["observed_search_languages"],
+                    "model_version_id": used_model_version_id,
+                    "source_language_iso2": source_language if len(source_language) == 2 else "un",
+                    "detection_confidence": round(float(confidence), 4),
+                    "detected_by": method,
+                    "observed_search_languages": article["observed_search_languages"],
                     "target_language_iso2": TARGET_LANGUAGE,
                     "translation_profile": TRANSLATION_PROFILE,
-                    "original_headline": item["headline"],
-                    "translated_headline": item["headline"],
-                    "original_text_hash": text_hash(item["headline"]),
-                    "status": "unsupported",
-                    "requires_review": True,
-                    "review_reason": (
-                        item["language_review_reason"]
-                        or f"language '{language}' not routed in pilot translation profile"
-                    ),
+                    "original_headline": article["headline"],
+                    "translated_headline": translated or article["headline"],
+                    "original_text_hash": text_hash(article["headline"]),
+                    "status": status,
+                    "requires_review": requires_review,
+                    "review_reason": "; ".join(reasons) or None,
                     "updated_at": iso_z(utc_now()),
-                }
-                upsert_translation(client, payload)
-                counts["unsupported"] += 1
-                counts["review"] += 1
-                review_rows.append(
-                    {
-                        "article_id": item["article_id"],
-                        "publisher": item["publisher"],
-                        "source_language": language,
-                        "detection_confidence": item["detection_confidence"],
-                        "original_headline": item["headline"],
-                        "english_headline": item["headline"],
-                        "model_name": None,
-                        "model_revision": None,
-                        "status": "unsupported",
-                        "requires_review": True,
-                        "review_reason": (
-                            item["language_review_reason"]
-                            or f"language '{language}' not routed in pilot translation profile"
-                        ),
-                        "url": item.get("canonical_url"),
-                    }
-                )
+                },
+            )
+
+            if source_language != "en" or requires_review:
+                review_rows.append({
+                    "article_id": article["article_id"],
+                    "publisher": article["publisher"],
+                    "source_language": source_language,
+                    "detection_confidence": round(float(confidence), 4),
+                    "original_headline": article["headline"],
+                    "english_headline": translated or article["headline"],
+                    "model_name": MODEL_NAME if source_language != "en" else None,
+                    "model_revision": revision if source_language != "en" else None,
+                    "status": status,
+                    "requires_review": requires_review,
+                    "review_reason": "; ".join(reasons),
+                    "url": article.get("canonical_url"),
+                })
 
         status = "success" if counts["failed"] == 0 else "partial"
         finish_run(
             client,
-            translation_run_id=translation_run_id,
-            status=status,
-            article_count=len(articles),
-            passthrough_count=counts["passthrough"],
-            translated_count=counts["translated"],
-            unsupported_count=counts["unsupported"],
-            failed_count=counts["failed"],
-            review_required_count=counts["review"],
+            translation_run_id,
+            status,
+            len(articles),
+            counts["passthrough"],
+            counts["translated"],
+            counts["failed"],
+            counts["review"],
         )
 
         REVIEW_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -712,32 +442,29 @@ def main() -> int:
                         "translation_run_key": run_key,
                         "collection_run_key": collection["run_key"],
                         "translation_profile": TRANSLATION_PROFILE,
-                        "detector": (
-                            "lingua-language-detector + search-language context "
-                            "+ Han-script override"
-                        ),
-                        "detector_version": detector_version,
+                        "model_name": MODEL_NAME,
+                        "model_revision": revision,
                         "article_count": len(articles),
-                        **counts,
-                        "principle": (
-                            "Original evidence is retained. English is an "
-                            "additional normalized representation."
-                        ),
+                        "passthrough": counts["passthrough"],
+                        "translated": counts["translated"],
+                        "unsupported": 0,
+                        "failed": counts["failed"],
+                        "review": counts["review"],
+                        "principle": "Original evidence is retained. English is an additional normalized representation.",
                     },
                     "translations": sorted(
                         review_rows,
-                        key=lambda row: (
-                            row["requires_review"] is False,
-                            row["source_language"],
-                            row["publisher"],
-                            row["original_headline"],
+                        key=lambda r: (
+                            r["requires_review"] is False,
+                            r["source_language"],
+                            r["publisher"],
+                            r["original_headline"],
                         ),
                     ),
                 },
                 ensure_ascii=False,
                 indent=2,
-            )
-            + "\n",
+            ) + "\n",
             encoding="utf-8",
         )
 
@@ -745,23 +472,20 @@ def main() -> int:
         print(f"Articles: {len(articles)}")
         print(f"English passthrough: {counts['passthrough']}")
         print(f"Translated: {counts['translated']}")
-        print(f"Unsupported: {counts['unsupported']}")
         print(f"Failed: {counts['failed']}")
         print(f"Review required: {counts['review']}")
-        print(f"Review file: {REVIEW_PATH}")
         return 0
 
     except Exception:
         finish_run(
             client,
-            translation_run_id=translation_run_id,
-            status="failed",
-            article_count=len(articles),
-            passthrough_count=counts["passthrough"],
-            translated_count=counts["translated"],
-            unsupported_count=counts["unsupported"],
-            failed_count=counts["failed"],
-            review_required_count=counts["review"],
+            translation_run_id,
+            "failed",
+            len(articles),
+            counts["passthrough"],
+            counts["translated"],
+            counts["failed"],
+            counts["review"],
         )
         raise
 
