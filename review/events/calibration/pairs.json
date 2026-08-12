@@ -1,0 +1,910 @@
+{
+  "meta": {
+    "stage": "7B.2A",
+    "purpose": "blind human calibration of same-event identity",
+    "collection_run_id": "33504572-da7a-46ab-82b2-1f31c181182b",
+    "collection_run_key": "run_20260812T055721Z",
+    "model_name": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "max_day_gap": 4,
+    "sample_size": 22,
+    "labels": [
+      "same_event",
+      "related_topic",
+      "different_event",
+      "unsure"
+    ],
+    "instruction": "Judge whether the two headlines report the same specific real-world occurrence. 'Related topic' means substantively similar subject matter but a different occurrence."
+  },
+  "pairs": [
+    {
+      "pair_id": "0abe8ae43371f46415100bec5898f8ab__ee5afb8291b03734861d09419808e472",
+      "similarity": 0.908,
+      "day_gap": 0.64,
+      "story_token_match": false,
+      "current_cluster_same": true,
+      "article_a": {
+        "article_id": "0abe8ae43371f46415100bec5898f8ab",
+        "url": "https://www.bbc.com/zhongwen/articles/crrvndrv1pyo/simp",
+        "headline": "人工智能被用于设计全新病毒",
+        "publisher": "BBC",
+        "published_at": "2026-08-07T09:30:30+00:00",
+        "first_seen_at": "2026-08-10T07:06:27.618889+00:00",
+        "story_token": null,
+        "markets": [
+          "CHN"
+        ],
+        "languages": [
+          "zh-cn"
+        ],
+        "min_rank": 2
+      },
+      "article_b": {
+        "article_id": "ee5afb8291b03734861d09419808e472",
+        "url": "https://www.bbc.com/news/articles/c5y3j3ngevmo",
+        "headline": "Artificial Intelligence used to design brand new viruses",
+        "publisher": "BBC",
+        "published_at": "2026-08-06T18:01:52+00:00",
+        "first_seen_at": "2026-08-10T07:06:27.618889+00:00",
+        "story_token": null,
+        "markets": [
+          "CAN",
+          "GBR"
+        ],
+        "languages": [
+          "en"
+        ],
+        "min_rank": 2
+      },
+      "sampling_stratum": "0.90–1.00"
+    },
+    {
+      "pair_id": "f235c57dffd9a991cfd92a9727951462__51330d8bd1d2d16f007a223a234a0c42",
+      "similarity": 0.9074,
+      "day_gap": 3.66,
+      "story_token_match": false,
+      "current_cluster_same": true,
+      "article_a": {
+        "article_id": "f235c57dffd9a991cfd92a9727951462",
+        "url": "https://www.service-public.gouv.fr/particuliers/actualites/A19029",
+        "headline": "AI Act -Généré par l’intelligence artificielle : comment s’y retrouver",
+        "publisher": "Service Public",
+        "published_at": "2026-08-06T22:00:00+00:00",
+        "first_seen_at": "2026-08-10T07:06:27.618889+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 1
+      },
+      "article_b": {
+        "article_id": "51330d8bd1d2d16f007a223a234a0c42",
+        "url": "https://immo2.pro/actualite-immobilier/ai-act-voici-les-nouvelles-regles-a-respecter-concernant-lintelligence-artificielle",
+        "headline": "AI Act : voici les nouvelles règles à respecter concernant l’intelligence artificielle",
+        "publisher": "Immobilier 2.0",
+        "published_at": "2026-08-10T13:47:32+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 3
+      },
+      "sampling_stratum": "0.90–1.00"
+    },
+    {
+      "pair_id": "cf3d9e5bfbd831bd84978fe0c5c7058f__59ae4e30103557f1f4ba466bdda8f508",
+      "similarity": 0.8977,
+      "day_gap": 2.66,
+      "story_token_match": false,
+      "current_cluster_same": true,
+      "article_a": {
+        "article_id": "cf3d9e5bfbd831bd84978fe0c5c7058f",
+        "url": "https://www.wsj.com/opinion/don-t-anthropomorphize-artificial-intelligence-ad9ad358",
+        "headline": "Opinion | Don't Anthropomorphize Artificial Intelligence",
+        "publisher": "WSJ",
+        "published_at": "2026-08-07T15:43:00+00:00",
+        "first_seen_at": "2026-08-10T07:06:27.618889+00:00",
+        "story_token": null,
+        "markets": [
+          "CAN",
+          "USA"
+        ],
+        "languages": [
+          "en"
+        ],
+        "min_rank": 4
+      },
+      "article_b": {
+        "article_id": "59ae4e30103557f1f4ba466bdda8f508",
+        "url": "https://trends.levif.be/opinions/chroniques/lintelligence-artificielle-ne-cotise-pas",
+        "headline": "L’intelligence artificielle ne cotise pas",
+        "publisher": "Trends-Tendances",
+        "published_at": "2026-08-10T07:38:54+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 14
+      },
+      "sampling_stratum": "0.86–0.90"
+    },
+    {
+      "pair_id": "9a2ac5c0e87872a1f3de7b76379b8a8d__ee5afb8291b03734861d09419808e472",
+      "similarity": 0.8942,
+      "day_gap": 0.9,
+      "story_token_match": false,
+      "current_cluster_same": true,
+      "article_a": {
+        "article_id": "9a2ac5c0e87872a1f3de7b76379b8a8d",
+        "url": "https://www.parismatch.com/actu/sciences/une-intelligence-artificielle-cree-pour-la-premiere-fois-des-virus-viables-dans-la-nature-273812",
+        "headline": "Une intelligence artificielle crée pour la première fois des virus viables dans la nature",
+        "publisher": "parismatch.com",
+        "published_at": "2026-08-07T15:44:05+00:00",
+        "first_seen_at": "2026-08-10T07:06:27.618889+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 15
+      },
+      "article_b": {
+        "article_id": "ee5afb8291b03734861d09419808e472",
+        "url": "https://www.bbc.com/news/articles/c5y3j3ngevmo",
+        "headline": "Artificial Intelligence used to design brand new viruses",
+        "publisher": "BBC",
+        "published_at": "2026-08-06T18:01:52+00:00",
+        "first_seen_at": "2026-08-10T07:06:27.618889+00:00",
+        "story_token": null,
+        "markets": [
+          "CAN",
+          "GBR"
+        ],
+        "languages": [
+          "en"
+        ],
+        "min_rank": 2
+      },
+      "sampling_stratum": "0.86–0.90"
+    },
+    {
+      "pair_id": "aa6ed427321f40e0c1d8b27500337438__560f50f4b6ac03e4e9b06c1a2622ab5b",
+      "similarity": 0.8705,
+      "day_gap": 0.03,
+      "story_token_match": false,
+      "current_cluster_same": false,
+      "article_a": {
+        "article_id": "aa6ed427321f40e0c1d8b27500337438",
+        "url": "https://www.journaldunet.com/intelligence-artificielle/1553563-intelligence-artificielle-le-vrai-risque-n-est-plus-d-etre-remplace-mais-de-refuser-d-etre-augmente",
+        "headline": "Intelligence artificielle : le vrai risque n'est plus d'être remplacé, mais de refuser d'être augmenté",
+        "publisher": "journaldunet.com",
+        "published_at": "2026-08-10T12:11:19+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 12
+      },
+      "article_b": {
+        "article_id": "560f50f4b6ac03e4e9b06c1a2622ab5b",
+        "url": "https://mronline.org/2026/08/10/artificial-intelligence-the-hype-the-dangers-and-the-resistance-part-ii",
+        "headline": "Artificial Intelligence: the hype, the dangers, and the resistance—Part II",
+        "publisher": "mronline.org",
+        "published_at": "2026-08-10T13:00:37+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "CAN",
+          "GBR"
+        ],
+        "languages": [
+          "en"
+        ],
+        "min_rank": 16
+      },
+      "sampling_stratum": "0.86–0.90"
+    },
+    {
+      "pair_id": "aa6ed427321f40e0c1d8b27500337438__59ae4e30103557f1f4ba466bdda8f508",
+      "similarity": 0.8628,
+      "day_gap": 0.19,
+      "story_token_match": false,
+      "current_cluster_same": true,
+      "article_a": {
+        "article_id": "aa6ed427321f40e0c1d8b27500337438",
+        "url": "https://www.journaldunet.com/intelligence-artificielle/1553563-intelligence-artificielle-le-vrai-risque-n-est-plus-d-etre-remplace-mais-de-refuser-d-etre-augmente",
+        "headline": "Intelligence artificielle : le vrai risque n'est plus d'être remplacé, mais de refuser d'être augmenté",
+        "publisher": "journaldunet.com",
+        "published_at": "2026-08-10T12:11:19+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 12
+      },
+      "article_b": {
+        "article_id": "59ae4e30103557f1f4ba466bdda8f508",
+        "url": "https://trends.levif.be/opinions/chroniques/lintelligence-artificielle-ne-cotise-pas",
+        "headline": "L’intelligence artificielle ne cotise pas",
+        "publisher": "Trends-Tendances",
+        "published_at": "2026-08-10T07:38:54+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 14
+      },
+      "sampling_stratum": "0.86–0.90"
+    },
+    {
+      "pair_id": "670bf321dcc9da940a4166a4451682f1__9fb86dfdfdfb4028d4e4df5315dc5964",
+      "similarity": 0.8389,
+      "day_gap": 1.01,
+      "story_token_match": false,
+      "current_cluster_same": false,
+      "article_a": {
+        "article_id": "670bf321dcc9da940a4166a4451682f1",
+        "url": "https://nebraskapublicmedia.org/en/news/news-articles/ai-in-nebraska-education-schools-debate-how-much-ai-regulation-is-enough",
+        "headline": "AI in Nebraska education: Schools debate how much AI regulation is enough",
+        "publisher": "Nebraska Public Media",
+        "published_at": "2026-08-11T11:14:44+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "USA"
+        ],
+        "languages": [
+          "en"
+        ],
+        "min_rank": 3
+      },
+      "article_b": {
+        "article_id": "9fb86dfdfdfb4028d4e4df5315dc5964",
+        "url": "https://nebraskapublicmedia.org/en/news/news-articles/ai-in-nebraska-education-parents-teachers-and-students-grapple-with-artificial-intelligence-in-schools",
+        "headline": "AI in Nebraska education: Parents, teachers and students grapple with artificial intelligence in schools",
+        "publisher": "Nebraska Public Media",
+        "published_at": "2026-08-10T11:02:41+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "USA"
+        ],
+        "languages": [
+          "en"
+        ],
+        "min_rank": 20
+      },
+      "sampling_stratum": "0.80–0.86"
+    },
+    {
+      "pair_id": "cf3d9e5bfbd831bd84978fe0c5c7058f__aa6ed427321f40e0c1d8b27500337438",
+      "similarity": 0.8343,
+      "day_gap": 2.85,
+      "story_token_match": false,
+      "current_cluster_same": true,
+      "article_a": {
+        "article_id": "cf3d9e5bfbd831bd84978fe0c5c7058f",
+        "url": "https://www.wsj.com/opinion/don-t-anthropomorphize-artificial-intelligence-ad9ad358",
+        "headline": "Opinion | Don't Anthropomorphize Artificial Intelligence",
+        "publisher": "WSJ",
+        "published_at": "2026-08-07T15:43:00+00:00",
+        "first_seen_at": "2026-08-10T07:06:27.618889+00:00",
+        "story_token": null,
+        "markets": [
+          "CAN",
+          "USA"
+        ],
+        "languages": [
+          "en"
+        ],
+        "min_rank": 4
+      },
+      "article_b": {
+        "article_id": "aa6ed427321f40e0c1d8b27500337438",
+        "url": "https://www.journaldunet.com/intelligence-artificielle/1553563-intelligence-artificielle-le-vrai-risque-n-est-plus-d-etre-remplace-mais-de-refuser-d-etre-augmente",
+        "headline": "Intelligence artificielle : le vrai risque n'est plus d'être remplacé, mais de refuser d'être augmenté",
+        "publisher": "journaldunet.com",
+        "published_at": "2026-08-10T12:11:19+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 12
+      },
+      "sampling_stratum": "0.80–0.86"
+    },
+    {
+      "pair_id": "9fb86dfdfdfb4028d4e4df5315dc5964__230d1144417e82cea6c7ebe2356b9792",
+      "similarity": 0.8326,
+      "day_gap": 3.12,
+      "story_token_match": false,
+      "current_cluster_same": true,
+      "article_a": {
+        "article_id": "9fb86dfdfdfb4028d4e4df5315dc5964",
+        "url": "https://nebraskapublicmedia.org/en/news/news-articles/ai-in-nebraska-education-parents-teachers-and-students-grapple-with-artificial-intelligence-in-schools",
+        "headline": "AI in Nebraska education: Parents, teachers and students grapple with artificial intelligence in schools",
+        "publisher": "Nebraska Public Media",
+        "published_at": "2026-08-10T11:02:41+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "USA"
+        ],
+        "languages": [
+          "en"
+        ],
+        "min_rank": 20
+      },
+      "article_b": {
+        "article_id": "230d1144417e82cea6c7ebe2356b9792",
+        "url": "https://www.ouest-france.fr/high-tech/intelligence-artificielle/video-former-les-eleves-et-les-professeurs-a-l-intelligence-artificielle-l-ecole-du-futur-97c11381-f2dc-376f-973d-58926cf5b622",
+        "headline": "VIDÉO. Former les élèves et les professeurs à l'intelligence artificielle - L'École du futur",
+        "publisher": "Ouest-France",
+        "published_at": "2026-08-07T08:07:53+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 27
+      },
+      "sampling_stratum": "0.80–0.86"
+    },
+    {
+      "pair_id": "56a4024c4578b86c1a2485026e666f3a__cf3d9e5bfbd831bd84978fe0c5c7058f",
+      "similarity": 0.8314,
+      "day_gap": 0.61,
+      "story_token_match": false,
+      "current_cluster_same": true,
+      "article_a": {
+        "article_id": "56a4024c4578b86c1a2485026e666f3a",
+        "url": "https://www.tillamookcountypioneer.net/words-of-wisdom-thoughts-on-using-artificial-intelligence",
+        "headline": "WORDS OF WISDOM: Thoughts on using Artificial Intelligence",
+        "publisher": "Tillamook County Pioneer",
+        "published_at": "2026-08-07T01:04:44+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "USA"
+        ],
+        "languages": [
+          "en"
+        ],
+        "min_rank": 8
+      },
+      "article_b": {
+        "article_id": "cf3d9e5bfbd831bd84978fe0c5c7058f",
+        "url": "https://www.wsj.com/opinion/don-t-anthropomorphize-artificial-intelligence-ad9ad358",
+        "headline": "Opinion | Don't Anthropomorphize Artificial Intelligence",
+        "publisher": "WSJ",
+        "published_at": "2026-08-07T15:43:00+00:00",
+        "first_seen_at": "2026-08-10T07:06:27.618889+00:00",
+        "story_token": null,
+        "markets": [
+          "CAN",
+          "USA"
+        ],
+        "languages": [
+          "en"
+        ],
+        "min_rank": 4
+      },
+      "sampling_stratum": "0.80–0.86"
+    },
+    {
+      "pair_id": "dcdc219de858c487f30ead4dd490e644__230d1144417e82cea6c7ebe2356b9792",
+      "similarity": 0.8314,
+      "day_gap": 3.55,
+      "story_token_match": false,
+      "current_cluster_same": false,
+      "article_a": {
+        "article_id": "dcdc219de858c487f30ead4dd490e644",
+        "url": "https://www.wsls.com/news/local/2026/08/10/ai-in-the-classroom-btr",
+        "headline": "Artificial intelligence in the classroom: what could it look like?",
+        "publisher": "WSLS",
+        "published_at": "2026-08-10T21:24:19+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "USA"
+        ],
+        "languages": [
+          "en"
+        ],
+        "min_rank": 16
+      },
+      "article_b": {
+        "article_id": "230d1144417e82cea6c7ebe2356b9792",
+        "url": "https://www.ouest-france.fr/high-tech/intelligence-artificielle/video-former-les-eleves-et-les-professeurs-a-l-intelligence-artificielle-l-ecole-du-futur-97c11381-f2dc-376f-973d-58926cf5b622",
+        "headline": "VIDÉO. Former les élèves et les professeurs à l'intelligence artificielle - L'École du futur",
+        "publisher": "Ouest-France",
+        "published_at": "2026-08-07T08:07:53+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 27
+      },
+      "sampling_stratum": "0.80–0.86"
+    },
+    {
+      "pair_id": "0abe8ae43371f46415100bec5898f8ab__9a2ac5c0e87872a1f3de7b76379b8a8d",
+      "similarity": 0.8294,
+      "day_gap": 0.26,
+      "story_token_match": false,
+      "current_cluster_same": true,
+      "article_a": {
+        "article_id": "0abe8ae43371f46415100bec5898f8ab",
+        "url": "https://www.bbc.com/zhongwen/articles/crrvndrv1pyo/simp",
+        "headline": "人工智能被用于设计全新病毒",
+        "publisher": "BBC",
+        "published_at": "2026-08-07T09:30:30+00:00",
+        "first_seen_at": "2026-08-10T07:06:27.618889+00:00",
+        "story_token": null,
+        "markets": [
+          "CHN"
+        ],
+        "languages": [
+          "zh-cn"
+        ],
+        "min_rank": 2
+      },
+      "article_b": {
+        "article_id": "9a2ac5c0e87872a1f3de7b76379b8a8d",
+        "url": "https://www.parismatch.com/actu/sciences/une-intelligence-artificielle-cree-pour-la-premiere-fois-des-virus-viables-dans-la-nature-273812",
+        "headline": "Une intelligence artificielle crée pour la première fois des virus viables dans la nature",
+        "publisher": "parismatch.com",
+        "published_at": "2026-08-07T15:44:05+00:00",
+        "first_seen_at": "2026-08-10T07:06:27.618889+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 15
+      },
+      "sampling_stratum": "0.80–0.86"
+    },
+    {
+      "pair_id": "56a4024c4578b86c1a2485026e666f3a__59ae4e30103557f1f4ba466bdda8f508",
+      "similarity": 0.8245,
+      "day_gap": 3.27,
+      "story_token_match": false,
+      "current_cluster_same": true,
+      "article_a": {
+        "article_id": "56a4024c4578b86c1a2485026e666f3a",
+        "url": "https://www.tillamookcountypioneer.net/words-of-wisdom-thoughts-on-using-artificial-intelligence",
+        "headline": "WORDS OF WISDOM: Thoughts on using Artificial Intelligence",
+        "publisher": "Tillamook County Pioneer",
+        "published_at": "2026-08-07T01:04:44+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "USA"
+        ],
+        "languages": [
+          "en"
+        ],
+        "min_rank": 8
+      },
+      "article_b": {
+        "article_id": "59ae4e30103557f1f4ba466bdda8f508",
+        "url": "https://trends.levif.be/opinions/chroniques/lintelligence-artificielle-ne-cotise-pas",
+        "headline": "L’intelligence artificielle ne cotise pas",
+        "publisher": "Trends-Tendances",
+        "published_at": "2026-08-10T07:38:54+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 14
+      },
+      "sampling_stratum": "0.80–0.86"
+    },
+    {
+      "pair_id": "59ae4e30103557f1f4ba466bdda8f508__560f50f4b6ac03e4e9b06c1a2622ab5b",
+      "similarity": 0.8225,
+      "day_gap": 0.22,
+      "story_token_match": false,
+      "current_cluster_same": false,
+      "article_a": {
+        "article_id": "59ae4e30103557f1f4ba466bdda8f508",
+        "url": "https://trends.levif.be/opinions/chroniques/lintelligence-artificielle-ne-cotise-pas",
+        "headline": "L’intelligence artificielle ne cotise pas",
+        "publisher": "Trends-Tendances",
+        "published_at": "2026-08-10T07:38:54+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 14
+      },
+      "article_b": {
+        "article_id": "560f50f4b6ac03e4e9b06c1a2622ab5b",
+        "url": "https://mronline.org/2026/08/10/artificial-intelligence-the-hype-the-dangers-and-the-resistance-part-ii",
+        "headline": "Artificial Intelligence: the hype, the dangers, and the resistance—Part II",
+        "publisher": "mronline.org",
+        "published_at": "2026-08-10T13:00:37+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "CAN",
+          "GBR"
+        ],
+        "languages": [
+          "en"
+        ],
+        "min_rank": 16
+      },
+      "sampling_stratum": "0.80–0.86"
+    },
+    {
+      "pair_id": "16b52dab6d9e9e9c856c32105226833f__15bcaf90d856694a3d3e0e37dc0bce81",
+      "similarity": 0.7653,
+      "day_gap": 2.76,
+      "story_token_match": false,
+      "current_cluster_same": false,
+      "article_a": {
+        "article_id": "16b52dab6d9e9e9c856c32105226833f",
+        "url": "http://www.news.cn/tech/20260810/1701109212dd44b7b1e8593ff442871a/c.html",
+        "headline": "2026中国自动化与人工智能教育大会启幕",
+        "publisher": "新华网",
+        "published_at": "2026-08-10T09:32:36+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "CHN"
+        ],
+        "languages": [
+          "zh-cn"
+        ],
+        "min_rank": 16
+      },
+      "article_b": {
+        "article_id": "15bcaf90d856694a3d3e0e37dc0bce81",
+        "url": "https://www.mediapart.fr/journal/international/070826/pour-la-chine-l-intelligence-artificielle-est-aussi-une-opportunite-diplomatique",
+        "headline": "Pour la Chine, l’intelligence artificielle est aussi une opportunité diplomatique",
+        "publisher": "Mediapart",
+        "published_at": "2026-08-07T15:24:13+00:00",
+        "first_seen_at": "2026-08-10T07:06:27.618889+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 11
+      },
+      "sampling_stratum": "0.72–0.80"
+    },
+    {
+      "pair_id": "0abe8ae43371f46415100bec5898f8ab__9b35623abaaa82e15de447302b884cd3",
+      "similarity": 0.7597,
+      "day_gap": 2.75,
+      "story_token_match": false,
+      "current_cluster_same": false,
+      "article_a": {
+        "article_id": "0abe8ae43371f46415100bec5898f8ab",
+        "url": "https://www.bbc.com/zhongwen/articles/crrvndrv1pyo/simp",
+        "headline": "人工智能被用于设计全新病毒",
+        "publisher": "BBC",
+        "published_at": "2026-08-07T09:30:30+00:00",
+        "first_seen_at": "2026-08-10T07:06:27.618889+00:00",
+        "story_token": null,
+        "markets": [
+          "CHN"
+        ],
+        "languages": [
+          "zh-cn"
+        ],
+        "min_rank": 2
+      },
+      "article_b": {
+        "article_id": "9b35623abaaa82e15de447302b884cd3",
+        "url": "https://www.usine-digitale.fr/recherche/un-modele-dia-a-cree-16-virus-bacteriophages-une-avancee-scientifique-majeure-qui-relance-le-debat-sur-le-risque-des-armes-biologiques.57ICIO4F7FCXDI2VODWRRCRDX4.html",
+        "headline": "Un modèle d’IA a créé 16 virus bactériophages : une avancée scientifique majeure qui relance le débat sur le risque des armes biologiques",
+        "publisher": "L'Usine Digitale",
+        "published_at": "2026-08-10T03:30:00+00:00",
+        "first_seen_at": "2026-08-10T07:06:27.618889+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 10
+      },
+      "sampling_stratum": "0.72–0.80"
+    },
+    {
+      "pair_id": "4548510af6257a7b73eec1ebd3bd1130__2f9896fc58685c2f84f2a15f12c72f9e",
+      "similarity": 0.7495,
+      "day_gap": 3.39,
+      "story_token_match": false,
+      "current_cluster_same": false,
+      "article_a": {
+        "article_id": "4548510af6257a7b73eec1ebd3bd1130",
+        "url": "https://www.morningstaronline.co.uk/article/artificial-intelligence-saviour-capitalist-system-production-or-its-executioner",
+        "headline": "Artificial intelligence — the saviour of the capitalist system of production or its executioner?",
+        "publisher": "Morning Star | The People’s Daily",
+        "published_at": "2026-08-11T01:06:49+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "GBR"
+        ],
+        "languages": [
+          "en"
+        ],
+        "min_rank": 22
+      },
+      "article_b": {
+        "article_id": "2f9896fc58685c2f84f2a15f12c72f9e",
+        "url": "https://www.mediapart.fr/journal/international/070826/aux-etats-unis-l-economie-est-dopee-l-intelligence-artificielle",
+        "headline": "Aux États-Unis, l’économie est dopée à l’intelligence artificielle",
+        "publisher": "Mediapart",
+        "published_at": "2026-08-07T15:50:46+00:00",
+        "first_seen_at": "2026-08-10T07:06:27.618889+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 19
+      },
+      "sampling_stratum": "0.72–0.80"
+    },
+    {
+      "pair_id": "3e891450e23d85b46cdd6295abbd93a1__15bcaf90d856694a3d3e0e37dc0bce81",
+      "similarity": 0.7492,
+      "day_gap": 2.69,
+      "story_token_match": false,
+      "current_cluster_same": false,
+      "article_a": {
+        "article_id": "3e891450e23d85b46cdd6295abbd93a1",
+        "url": "https://cifu.fudan.edu.cn/05/dc/c412a787932/page.htm",
+        "headline": "《这就是中国》第343集：人工智能的全球治理",
+        "publisher": "复旦大学中国研究院",
+        "published_at": "2026-08-10T07:55:56+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "CHN"
+        ],
+        "languages": [
+          "zh-cn"
+        ],
+        "min_rank": 6
+      },
+      "article_b": {
+        "article_id": "15bcaf90d856694a3d3e0e37dc0bce81",
+        "url": "https://www.mediapart.fr/journal/international/070826/pour-la-chine-l-intelligence-artificielle-est-aussi-une-opportunite-diplomatique",
+        "headline": "Pour la Chine, l’intelligence artificielle est aussi une opportunité diplomatique",
+        "publisher": "Mediapart",
+        "published_at": "2026-08-07T15:24:13+00:00",
+        "first_seen_at": "2026-08-10T07:06:27.618889+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 11
+      },
+      "sampling_stratum": "0.72–0.80"
+    },
+    {
+      "pair_id": "2f9896fc58685c2f84f2a15f12c72f9e__c5cad4da2f28c4ae6e0b7a67e9c20d3d",
+      "similarity": 0.7434,
+      "day_gap": 3.18,
+      "story_token_match": false,
+      "current_cluster_same": false,
+      "article_a": {
+        "article_id": "2f9896fc58685c2f84f2a15f12c72f9e",
+        "url": "https://www.mediapart.fr/journal/international/070826/aux-etats-unis-l-economie-est-dopee-l-intelligence-artificielle",
+        "headline": "Aux États-Unis, l’économie est dopée à l’intelligence artificielle",
+        "publisher": "Mediapart",
+        "published_at": "2026-08-07T15:50:46+00:00",
+        "first_seen_at": "2026-08-10T07:06:27.618889+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 19
+      },
+      "article_b": {
+        "article_id": "c5cad4da2f28c4ae6e0b7a67e9c20d3d",
+        "url": "https://www.ai-cio.com/news/artificial-intelligence-moving-up-the-investment-value-chain",
+        "headline": "Artificial Intelligence: Moving up the Investment Value Chain",
+        "publisher": "ai-cio.com",
+        "published_at": "2026-08-10T20:05:00+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "CAN",
+          "GBR",
+          "USA"
+        ],
+        "languages": [
+          "en"
+        ],
+        "min_rank": 14
+      },
+      "sampling_stratum": "0.72–0.80"
+    },
+    {
+      "pair_id": "51330d8bd1d2d16f007a223a234a0c42__560f50f4b6ac03e4e9b06c1a2622ab5b",
+      "similarity": 0.7394,
+      "day_gap": 0.03,
+      "story_token_match": false,
+      "current_cluster_same": false,
+      "article_a": {
+        "article_id": "51330d8bd1d2d16f007a223a234a0c42",
+        "url": "https://immo2.pro/actualite-immobilier/ai-act-voici-les-nouvelles-regles-a-respecter-concernant-lintelligence-artificielle",
+        "headline": "AI Act : voici les nouvelles règles à respecter concernant l’intelligence artificielle",
+        "publisher": "Immobilier 2.0",
+        "published_at": "2026-08-10T13:47:32+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 3
+      },
+      "article_b": {
+        "article_id": "560f50f4b6ac03e4e9b06c1a2622ab5b",
+        "url": "https://mronline.org/2026/08/10/artificial-intelligence-the-hype-the-dangers-and-the-resistance-part-ii",
+        "headline": "Artificial Intelligence: the hype, the dangers, and the resistance—Part II",
+        "publisher": "mronline.org",
+        "published_at": "2026-08-10T13:00:37+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "CAN",
+          "GBR"
+        ],
+        "languages": [
+          "en"
+        ],
+        "min_rank": 16
+      },
+      "sampling_stratum": "0.72–0.80"
+    },
+    {
+      "pair_id": "51330d8bd1d2d16f007a223a234a0c42__a919afd62e1dee48ac81b4f7603eda4a",
+      "similarity": 0.7283,
+      "day_gap": 1.17,
+      "story_token_match": false,
+      "current_cluster_same": false,
+      "article_a": {
+        "article_id": "51330d8bd1d2d16f007a223a234a0c42",
+        "url": "https://immo2.pro/actualite-immobilier/ai-act-voici-les-nouvelles-regles-a-respecter-concernant-lintelligence-artificielle",
+        "headline": "AI Act : voici les nouvelles règles à respecter concernant l’intelligence artificielle",
+        "publisher": "Immobilier 2.0",
+        "published_at": "2026-08-10T13:47:32+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 3
+      },
+      "article_b": {
+        "article_id": "a919afd62e1dee48ac81b4f7603eda4a",
+        "url": "https://knowledge.wharton.upenn.edu/article/the-different-philosophies-driving-ai-regulation-today",
+        "headline": "The Different Philosophies Driving AI Regulation Today",
+        "publisher": "Knowledge at Wharton",
+        "published_at": "2026-08-11T17:47:52+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "CAN"
+        ],
+        "languages": [
+          "en"
+        ],
+        "min_rank": 21
+      },
+      "sampling_stratum": "0.72–0.80"
+    },
+    {
+      "pair_id": "16b52dab6d9e9e9c856c32105226833f__230d1144417e82cea6c7ebe2356b9792",
+      "similarity": 0.7267,
+      "day_gap": 3.06,
+      "story_token_match": false,
+      "current_cluster_same": false,
+      "article_a": {
+        "article_id": "16b52dab6d9e9e9c856c32105226833f",
+        "url": "http://www.news.cn/tech/20260810/1701109212dd44b7b1e8593ff442871a/c.html",
+        "headline": "2026中国自动化与人工智能教育大会启幕",
+        "publisher": "新华网",
+        "published_at": "2026-08-10T09:32:36+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "CHN"
+        ],
+        "languages": [
+          "zh-cn"
+        ],
+        "min_rank": 16
+      },
+      "article_b": {
+        "article_id": "230d1144417e82cea6c7ebe2356b9792",
+        "url": "https://www.ouest-france.fr/high-tech/intelligence-artificielle/video-former-les-eleves-et-les-professeurs-a-l-intelligence-artificielle-l-ecole-du-futur-97c11381-f2dc-376f-973d-58926cf5b622",
+        "headline": "VIDÉO. Former les élèves et les professeurs à l'intelligence artificielle - L'École du futur",
+        "publisher": "Ouest-France",
+        "published_at": "2026-08-07T08:07:53+00:00",
+        "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
+        "story_token": null,
+        "markets": [
+          "FRA"
+        ],
+        "languages": [
+          "fr"
+        ],
+        "min_rank": 27
+      },
+      "sampling_stratum": "0.72–0.80"
+    }
+  ]
+}
