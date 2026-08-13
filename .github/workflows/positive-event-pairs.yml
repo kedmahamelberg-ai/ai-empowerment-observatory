@@ -1,0 +1,108 @@
+name: Generate Model Agreed Positive Event Pairs
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Observatory repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install verifier dependencies
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pip install "transformers[torch]==5.14.1" pandas
+
+      - name: Verify ModernBERT tokenizer
+        run: |
+          python - <<'PY'
+          from transformers import AutoTokenizer
+
+          tokenizer = AutoTokenizer.from_pretrained(
+              "Juanillaberia/articles-pairs-event-detection"
+          )
+
+          print("Tokenizer:", tokenizer.__class__.__name__)
+          PY
+
+      - name: Install llama.cpp build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential libcurl4-openssl-dev
+
+      - name: Build llama.cpp server
+        run: |
+          git clone --depth 1 https://github.com/ggml-org/llama.cpp.git /tmp/llama.cpp
+
+          cmake -S /tmp/llama.cpp -B /tmp/llama.cpp/build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DGGML_NATIVE=OFF \
+            -DLLAMA_CURL=ON
+
+          cmake --build /tmp/llama.cpp/build \
+            --target llama-server \
+            -j2
+
+      - name: Generate model-agreed positive pairs
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          LLAMA_SERVER_BIN: /tmp/llama.cpp/build/bin/llama-server
+        run: python scripts/generate_positive_event_pairs.py
+
+      - name: Commit positive-enrichment sample
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add review/events/positive-enrichment/latest.json
+          git add validation/event_pair_hard_negatives_v1.csv
+          git add validation/event_pair_story_coverage_v1.csv
+
+          git diff --cached --quiet || \
+            git commit -m "data: add positive event-pair enrichment sample"
+
+          git push
+
+      - name: Build public site artifact
+        run: python scripts/build_public_site.py
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: "_site"
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
