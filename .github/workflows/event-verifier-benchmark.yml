@@ -29,7 +29,22 @@ jobs:
       - name: Install benchmark dependencies
         run: |
           python -m pip install -r requirements.txt
-          python -m pip install "transformers>=4.48,<5" pandas
+          python -m pip install "transformers[torch]==5.14.1" pandas
+
+      - name: Verify Transformers tokenizer backend
+        run: |
+          python - <<'PY'
+          import transformers
+          from transformers import AutoTokenizer
+
+          print("Transformers:", transformers.__version__)
+
+          tokenizer = AutoTokenizer.from_pretrained(
+              "Juanillaberia/articles-pairs-event-detection"
+          )
+
+          print("Tokenizer:", tokenizer.__class__.__name__)
+          PY
 
       - name: Install llama.cpp build dependencies
         run: |
