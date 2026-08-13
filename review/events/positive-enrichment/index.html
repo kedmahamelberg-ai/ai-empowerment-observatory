@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>
+    Positive Event-Pair Enrichment | AI Empowerment Observatory
+  </title>
+
+  <meta name="robots" content="noindex">
+
+  <link
+    rel="stylesheet"
+    href="./positive-enrichment.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/analytics-consent.css"
+  >
+</head>
+
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">
+        Stage 7B.2E · Positive-enriched human validation
+      </p>
+
+      <h1>
+        Do these reports describe the same event?
+      </h1>
+
+      <p>
+        These pairs were selected because independent event verifiers considered
+        them plausible matches. Their predictions are hidden. Your judgment is
+        the gold label.
+      </p>
+    </div>
+
+    <nav>
+      <a href="/review/events/story-coverage/">Story coverage</a>
+      <a href="/review/events/verifier-benchmark/">Verifier</a>
+      <a href="/">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <section
+      id="summary"
+      class="summary"
+    >
+      Loading positive-enrichment sample…
+    </section>
+
+    <section class="instructions">
+      <strong>Do not assume the models are right.</strong>
+
+      <p>
+        Same event means the same specific occurrence, announcement, study
+        result, decision, launch, incident, meeting, speech, policy action, etc.
+      </p>
+
+      <p>
+        Choose Not same event if the pair only shares a topic, organization,
+        technology, country, policy area, or trend.
+      </p>
+
+      <p>
+        Use Unclear when the supplied evidence genuinely does not let you tell.
+      </p>
+    </section>
+
+    <section class="toolbar">
+      <div id="progress">
+        0 / 0 labelled
+      </div>
+
+      <button
+        id="download"
+        type="button"
+      >
+        Download labels CSV
+      </button>
+
+      <button
+        id="clear"
+        class="secondary"
+        type="button"
+      >
+        Clear labels
+      </button>
+    </section>
+
+    <section
+      id="pairs"
+      class="pairs"
+    ></section>
+  </main>
+
+  <script src="./positive-enrichment.js"></script>
+  <script src="/analytics.js"></script>
+</body>
+</html>
