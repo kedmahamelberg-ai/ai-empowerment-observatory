@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Event Identity Active Learning | AI Empowerment Observatory</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="./active-learning.css">
+  <link rel="stylesheet" href="/analytics-consent.css">
+</head>
+
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">Stage 7B.2C · Human-in-the-loop</p>
+      <h1>Same event — or not?</h1>
+      <p>
+        These are deliberately difficult, high-information article pairs.
+        Model predictions are hidden. Your labels become the next event-identity
+        gold standard.
+      </p>
+    </div>
+
+    <nav>
+      <a href="/review/events/verifier-benchmark/">Verifier benchmark</a>
+      <a href="/review/events/">Clusters</a>
+      <a href="/">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="summary" class="summary">
+      Loading active-learning sample…
+    </section>
+
+    <section class="instructions">
+      <strong>Label the specific occurrence, not the topic.</strong>
+      <p><strong>Same event:</strong> both records report the same specific occurrence, announcement, decision, incident, launch, study result, meeting, speech, etc.</p>
+      <p><strong>Not same event:</strong> related subject matter is not enough.</p>
+      <p><strong>Unclear from headlines:</strong> use this when the supplied headline/snippet evidence genuinely does not let you decide. Do not guess.</p>
+    </section>
+
+    <section class="toolbar">
+      <div id="progress">0 / 0 labelled</div>
+      <button id="download" type="button">Download labels CSV</button>
+      <button id="clear" class="secondary" type="button">Clear labels</button>
+    </section>
+
+    <section id="pairs" class="pairs"></section>
+  </main>
+
+  <script src="./active-learning.js"></script>
+  <script src="/analytics.js"></script>
+</body>
+</html>
