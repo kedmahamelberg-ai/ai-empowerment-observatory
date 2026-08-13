@@ -1,0 +1,372 @@
+{
+  "meta": {
+    "stage": "7B.2D",
+    "purpose": "human validation of same-event-enriched Google News story coverage",
+    "source": "SerpApi Google News story_token full coverage",
+    "story_tokens_discovered": 2,
+    "story_groups_attempted": 2,
+    "story_groups_fetched": 2,
+    "usable_story_groups": 2,
+    "pair_count": 8,
+    "labels": [
+      "same_event",
+      "not_same_event",
+      "unclear_from_headlines"
+    ],
+    "warning": "Google News story grouping is used only to enrich candidate positives. It is not treated as ground truth."
+  },
+  "groups": [
+    {
+      "group_id": "story_01",
+      "story_token": "CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2o4dEszbEVSRzNuVVhFd1J4TDBDZ0FQAQ",
+      "seed_title": "Google Gemini dépasse le milliard d'utilisateurs mensuels | Je lui parle en faisant la vaisselle : Google révèle la nouvelle astuce des parents sur Gemini, qui vient de dépasser le milliard d’utilisateurs | Gemini passe le milliard d'utilisateurs : 63 % lui parlent à voix haute, et le modèle phare tarde",
+      "search_country": "France",
+      "search_iso3": "FRA",
+      "search_language": "fr",
+      "coverage_size": 6,
+      "article_count_used": 6,
+      "pair_count": 4,
+      "articles": [
+        {
+          "title": "Produits tech pourquoi votre visibilité sur Gemini devient décisive",
+          "link": "https://www.objetconnecte.com/produits-tech-pourquoi-votre-visibilite-sur-gemini-devient-decisive/",
+          "normalized_url": "https://www.objetconnecte.com/produits-tech-pourquoi-votre-visibilite-sur-gemini-devient-decisive",
+          "source": "objetconnecte.com",
+          "iso_date": "2026-08-04T09:17:00Z",
+          "date": "08/04/2026, 09:17 AM, +0000 UTC",
+          "snippet": "Fiches produit, avis et Reddit renforcent votre visibilité sur Gemini et facilitent la découverte de votre marque."
+        },
+        {
+          "title": "IA: l’assistant Gemini de Google franchit à son tour le milliard d’utilisateurs",
+          "link": "https://www.lesaffaires.com/secteurs/techno-et-ia/ia-lassistant-gemini-de-google-franchit-a-son-tour-le-milliard-dutilisateurs/",
+          "normalized_url": "https://www.lesaffaires.com/secteurs/techno-et-ia/ia-lassistant-gemini-de-google-franchit-a-son-tour-le-milliard-dutilisateurs",
+          "source": "Les Affaires",
+          "iso_date": "2026-08-10T07:00:00Z",
+          "date": "08/10/2026, 07:00 AM, +0000 UTC",
+          "snippet": "Actualités Économiques, Bourse et Finances."
+        },
+        {
+          "title": "L’application Gemini de Google dépasse le milliard d’utilisateurs mensuels",
+          "link": "https://fr.investing.com/news/company-news/lapplication-gemini-de-google-depasse-le-milliard-dutilisateurs-mensuels-3550788",
+          "normalized_url": "https://fr.investing.com/news/company-news/lapplication-gemini-de-google-depasse-le-milliard-dutilisateurs-mensuels-3550788",
+          "source": "Investing.com France",
+          "iso_date": "2026-08-11T18:11:00Z",
+          "date": "08/11/2026, 06:11 PM, +0000 UTC",
+          "snippet": "Investing.com - Google a annoncé mardi que son application d'intelligence artificielle Gemini a dépassé le milliard d'utilisateurs mensuels,..."
+        },
+        {
+          "title": "Gemini, l’IA de Google, atteint 1 milliard d’utilisateurs",
+          "link": "https://kulturegeek.fr/news-356872/gemini-lia-google-atteint-1-milliard-dutilisateurs",
+          "normalized_url": "https://kulturegeek.fr/news-356872/gemini-lia-google-atteint-1-milliard-dutilisateurs",
+          "source": "KultureGeek",
+          "iso_date": "2026-08-11T18:26:00Z",
+          "date": "08/11/2026, 06:26 PM, +0000 UTC",
+          "snippet": "La voix transforme les interactions quotidiennes : 63 % des utilisateurs s'adressent désormais directement à Gemini avec la voix,..."
+        },
+        {
+          "title": "L’application Gemini dépasse le milliard d’utilisateurs mensuels, le produit à croissance la plus rapide de Google",
+          "link": "https://www.unite.ai/fr/gemini-app-tops-1-billion-monthly-users-as-googles-fastest-growing-product/",
+          "normalized_url": "https://www.unite.ai/fr/gemini-app-tops-1-billion-monthly-users-as-googles-fastest-growing-product",
+          "source": "Unite.AI",
+          "iso_date": "2026-08-11T18:31:15Z",
+          "date": "08/11/2026, 06:31 PM, +0000 UTC",
+          "snippet": "L'application Gemini a atteint 1 milliard d'utilisateurs mensuels, devenant ainsi le… Voir plus. L'application Gemini a atteint 1 milliard..."
+        },
+        {
+          "title": "L'assistant Gemini de Google franchit à son tour le milliard d'utilisateurs",
+          "link": "https://www.zonebourse.com/actualite-bourse/l-assistant-gemini-de-google-franchit-a-son-tour-le-milliard-d-utilisateurs-ce7859dbdc80f124",
+          "normalized_url": "https://www.zonebourse.com/actualite-bourse/l-assistant-gemini-de-google-franchit-a-son-tour-le-milliard-d-utilisateurs-ce7859dbdc80f124",
+          "source": "Zonebourse",
+          "iso_date": "2026-08-11T19:26:20Z",
+          "date": "08/11/2026, 07:26 PM, +0000 UTC",
+          "snippet": "L'assistant d'intelligence artificielle Gemini a dépassé le milliard d'utilisateurs mensuels, a annoncé mardi le patron de Google Sundar..."
+        }
+      ]
+    },
+    {
+      "group_id": "story_02",
+      "story_token": "CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2pyOTdMYUVSSDRJYmxKS1FpT3lTZ0FQAQ",
+      "seed_title": "L'intelligence artificielle s'invite dans les relations amoureuses | De plus en plus de Français laissent l’IA draguer à leur place | Le pourcentage de Français qui draguent avec l’IA vient d’être révélé : ils sont bien plus nombreux que vous le pensez",
+      "search_country": "France",
+      "search_iso3": "FRA",
+      "search_language": "fr",
+      "coverage_size": 6,
+      "article_count_used": 6,
+      "pair_count": 4,
+      "articles": [
+        {
+          "title": "Pourquoi les applis de rencontre misent désormais sur l'intelligence artificielle",
+          "link": "https://www.radiofrance.fr/francebleu/podcasts/a-la-une-de-la-presse/pourquoi-les-applis-de-rencontre-misent-desormais-sur-l-intelligence-artificielle-6971959",
+          "normalized_url": "https://www.radiofrance.fr/francebleu/podcasts/a-la-une-de-la-presse/pourquoi-les-applis-de-rencontre-misent-desormais-sur-l-intelligence-artificielle-6971959",
+          "source": "Radio France",
+          "iso_date": "2026-07-28T07:00:00Z",
+          "date": "07/28/2026, 07:00 AM, +0000 UTC",
+          "snippet": "Les applications de rencontre restent un moyen privilégié pour trouver l'amour, malgré un marché en ralentissement."
+        },
+        {
+          "title": "J’ai demandé des conseils amoureux à l’IA et voici ce qu’elle m’a répondu",
+          "link": "https://madame.lefigaro.fr/bien-etre/psycho/j-ai-demande-des-conseils-amoureux-a-l-ia-et-voici-ce-qu-elle-m-a-repondu-20260804",
+          "normalized_url": "https://madame.lefigaro.fr/bien-etre/psycho/j-ai-demande-des-conseils-amoureux-a-l-ia-et-voici-ce-qu-elle-m-a-repondu-20260804",
+          "source": "Madame Figaro",
+          "iso_date": "2026-08-04T16:19:54Z",
+          "date": "08/04/2026, 04:19 PM, +0000 UTC",
+          "snippet": "CHRONIQUE — À l'heure où l'IA envahit nos vies, notre journaliste s'est demandé si ChatGPT faisait un meilleur conseiller en amour que ses..."
+        },
+        {
+          "title": "Qui tombe amoureux d'une IA? L'EPFL a fait une sacrée découverte",
+          "link": "https://www.watson.ch/fr/suisse/societe/709936182-qui-tombe-amoureux-d-une-ia-l-epfl-a-fait-une-sacree-decouverte",
+          "normalized_url": "https://www.watson.ch/fr/suisse/societe/709936182-qui-tombe-amoureux-d-une-ia-l-epfl-a-fait-une-sacree-decouverte",
+          "source": "Watson",
+          "iso_date": "2026-08-04T18:50:54Z",
+          "date": "08/04/2026, 06:50 PM, +0000 UTC",
+          "snippet": "Les partenaires IA ne sont pas seulement un pansement émotionnel pour les célibataires. Selon une étude, de nombreuses personnes en couple..."
+        },
+        {
+          "title": "Rencontres en ligne : l'appli Ditto remplace le swipe par une IA matchmaker",
+          "link": "https://stephanelarue.com/rencontres-en-ligne-lappli-ditto-remplace-le-swipe-par-une-ia-matchmaker/",
+          "normalized_url": "https://stephanelarue.com/rencontres-en-ligne-lappli-ditto-remplace-le-swipe-par-une-ia-matchmaker",
+          "source": "stephanelarue.com",
+          "iso_date": "2026-08-07T15:17:10Z",
+          "date": "08/07/2026, 03:17 PM, +0000 UTC",
+          "snippet": "Ditto, appli de rencontre née à Berkeley, remplace le swipe par un matchmaking IA : un rendez-vous par semaine, 150 000 inscrits et 8 M€..."
+        },
+        {
+          "title": "L'amour en temps d'algorithmes",
+          "link": "https://www.democrata.es/fr/analyse-et-opinion/amour-en-temps-algorithmes/",
+          "normalized_url": "https://www.democrata.es/fr/analyse-et-opinion/amour-en-temps-algorithmes",
+          "source": "Demócrata",
+          "iso_date": "2026-08-10T03:00:00Z",
+          "date": "08/10/2026, 03:00 AM, +0000 UTC",
+          "snippet": "Francisco Pérez Bes, adjoint de l'Agence espagnole de protection des données : \"Peut-être faut-il commencer à être conscients que certaines..."
+        },
+        {
+          "title": "L’IA va-t-elle refermer la révolution amoureuse ouverte par les applications de rencontre ?",
+          "link": "https://usbeketrica.com/fr/article/l-ia-va-t-elle-refermer-la-revolution-amoureuse-ouverte-par-les-applications-de-rencontre",
+          "normalized_url": "https://usbeketrica.com/fr/article/l-ia-va-t-elle-refermer-la-revolution-amoureuse-ouverte-par-les-applications-de-rencontre",
+          "source": "Usbek & Rica",
+          "iso_date": "2026-08-10T05:56:35Z",
+          "date": "08/10/2026, 05:56 AM, +0000 UTC",
+          "snippet": "Pendant des siècles, notre vie amoureuse a été largement déterminée par notre environnement social. On rencontrait son partenaire à..."
+        }
+      ]
+    }
+  ],
+  "pairs": [
+    {
+      "pair_id": "743fe37a57cd7bd1e31729765ea26dc7",
+      "article_a": {
+        "title": "L’application Gemini dépasse le milliard d’utilisateurs mensuels, le produit à croissance la plus rapide de Google",
+        "link": "https://www.unite.ai/fr/gemini-app-tops-1-billion-monthly-users-as-googles-fastest-growing-product/",
+        "normalized_url": "https://www.unite.ai/fr/gemini-app-tops-1-billion-monthly-users-as-googles-fastest-growing-product",
+        "source": "Unite.AI",
+        "iso_date": "2026-08-11T18:31:15Z",
+        "date": "08/11/2026, 06:31 PM, +0000 UTC",
+        "snippet": "L'application Gemini a atteint 1 milliard d'utilisateurs mensuels, devenant ainsi le… Voir plus. L'application Gemini a atteint 1 milliard..."
+      },
+      "article_b": {
+        "title": "L'assistant Gemini de Google franchit à son tour le milliard d'utilisateurs",
+        "link": "https://www.zonebourse.com/actualite-bourse/l-assistant-gemini-de-google-franchit-a-son-tour-le-milliard-d-utilisateurs-ce7859dbdc80f124",
+        "normalized_url": "https://www.zonebourse.com/actualite-bourse/l-assistant-gemini-de-google-franchit-a-son-tour-le-milliard-d-utilisateurs-ce7859dbdc80f124",
+        "source": "Zonebourse",
+        "iso_date": "2026-08-11T19:26:20Z",
+        "date": "08/11/2026, 07:26 PM, +0000 UTC",
+        "snippet": "L'assistant d'intelligence artificielle Gemini a dépassé le milliard d'utilisateurs mensuels, a annoncé mardi le patron de Google Sundar..."
+      },
+      "story_token": "CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2o4dEszbEVSRzNuVVhFd1J4TDBDZ0FQAQ",
+      "search_country": "France",
+      "search_iso3": "FRA",
+      "search_language": "fr",
+      "seed_title": "Google Gemini dépasse le milliard d'utilisateurs mensuels | Je lui parle en faisant la vaisselle : Google révèle la nouvelle astuce des parents sur Gemini, qui vient de dépasser le milliard d’utilisateurs | Gemini passe le milliard d'utilisateurs : 63 % lui parlent à voix haute, et le modèle phare tarde",
+      "coverage_size": 6
+    },
+    {
+      "pair_id": "6e0d2314a34a18fa32b7979c99b46d93",
+      "article_a": {
+        "title": "L’IA va-t-elle refermer la révolution amoureuse ouverte par les applications de rencontre ?",
+        "link": "https://usbeketrica.com/fr/article/l-ia-va-t-elle-refermer-la-revolution-amoureuse-ouverte-par-les-applications-de-rencontre",
+        "normalized_url": "https://usbeketrica.com/fr/article/l-ia-va-t-elle-refermer-la-revolution-amoureuse-ouverte-par-les-applications-de-rencontre",
+        "source": "Usbek & Rica",
+        "iso_date": "2026-08-10T05:56:35Z",
+        "date": "08/10/2026, 05:56 AM, +0000 UTC",
+        "snippet": "Pendant des siècles, notre vie amoureuse a été largement déterminée par notre environnement social. On rencontrait son partenaire à..."
+      },
+      "article_b": {
+        "title": "J’ai demandé des conseils amoureux à l’IA et voici ce qu’elle m’a répondu",
+        "link": "https://madame.lefigaro.fr/bien-etre/psycho/j-ai-demande-des-conseils-amoureux-a-l-ia-et-voici-ce-qu-elle-m-a-repondu-20260804",
+        "normalized_url": "https://madame.lefigaro.fr/bien-etre/psycho/j-ai-demande-des-conseils-amoureux-a-l-ia-et-voici-ce-qu-elle-m-a-repondu-20260804",
+        "source": "Madame Figaro",
+        "iso_date": "2026-08-04T16:19:54Z",
+        "date": "08/04/2026, 04:19 PM, +0000 UTC",
+        "snippet": "CHRONIQUE — À l'heure où l'IA envahit nos vies, notre journaliste s'est demandé si ChatGPT faisait un meilleur conseiller en amour que ses..."
+      },
+      "story_token": "CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2pyOTdMYUVSSDRJYmxKS1FpT3lTZ0FQAQ",
+      "search_country": "France",
+      "search_iso3": "FRA",
+      "search_language": "fr",
+      "seed_title": "L'intelligence artificielle s'invite dans les relations amoureuses | De plus en plus de Français laissent l’IA draguer à leur place | Le pourcentage de Français qui draguent avec l’IA vient d’être révélé : ils sont bien plus nombreux que vous le pensez",
+      "coverage_size": 6
+    },
+    {
+      "pair_id": "a24af65340d75862995b5216b1fea223",
+      "article_a": {
+        "title": "L’IA va-t-elle refermer la révolution amoureuse ouverte par les applications de rencontre ?",
+        "link": "https://usbeketrica.com/fr/article/l-ia-va-t-elle-refermer-la-revolution-amoureuse-ouverte-par-les-applications-de-rencontre",
+        "normalized_url": "https://usbeketrica.com/fr/article/l-ia-va-t-elle-refermer-la-revolution-amoureuse-ouverte-par-les-applications-de-rencontre",
+        "source": "Usbek & Rica",
+        "iso_date": "2026-08-10T05:56:35Z",
+        "date": "08/10/2026, 05:56 AM, +0000 UTC",
+        "snippet": "Pendant des siècles, notre vie amoureuse a été largement déterminée par notre environnement social. On rencontrait son partenaire à..."
+      },
+      "article_b": {
+        "title": "Rencontres en ligne : l'appli Ditto remplace le swipe par une IA matchmaker",
+        "link": "https://stephanelarue.com/rencontres-en-ligne-lappli-ditto-remplace-le-swipe-par-une-ia-matchmaker/",
+        "normalized_url": "https://stephanelarue.com/rencontres-en-ligne-lappli-ditto-remplace-le-swipe-par-une-ia-matchmaker",
+        "source": "stephanelarue.com",
+        "iso_date": "2026-08-07T15:17:10Z",
+        "date": "08/07/2026, 03:17 PM, +0000 UTC",
+        "snippet": "Ditto, appli de rencontre née à Berkeley, remplace le swipe par un matchmaking IA : un rendez-vous par semaine, 150 000 inscrits et 8 M€..."
+      },
+      "story_token": "CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2pyOTdMYUVSSDRJYmxKS1FpT3lTZ0FQAQ",
+      "search_country": "France",
+      "search_iso3": "FRA",
+      "search_language": "fr",
+      "seed_title": "L'intelligence artificielle s'invite dans les relations amoureuses | De plus en plus de Français laissent l’IA draguer à leur place | Le pourcentage de Français qui draguent avec l’IA vient d’être révélé : ils sont bien plus nombreux que vous le pensez",
+      "coverage_size": 6
+    },
+    {
+      "pair_id": "8a6e03b08e27939d22faf3b24c026de9",
+      "article_a": {
+        "title": "L’application Gemini dépasse le milliard d’utilisateurs mensuels, le produit à croissance la plus rapide de Google",
+        "link": "https://www.unite.ai/fr/gemini-app-tops-1-billion-monthly-users-as-googles-fastest-growing-product/",
+        "normalized_url": "https://www.unite.ai/fr/gemini-app-tops-1-billion-monthly-users-as-googles-fastest-growing-product",
+        "source": "Unite.AI",
+        "iso_date": "2026-08-11T18:31:15Z",
+        "date": "08/11/2026, 06:31 PM, +0000 UTC",
+        "snippet": "L'application Gemini a atteint 1 milliard d'utilisateurs mensuels, devenant ainsi le… Voir plus. L'application Gemini a atteint 1 milliard..."
+      },
+      "article_b": {
+        "title": "IA: l’assistant Gemini de Google franchit à son tour le milliard d’utilisateurs",
+        "link": "https://www.lesaffaires.com/secteurs/techno-et-ia/ia-lassistant-gemini-de-google-franchit-a-son-tour-le-milliard-dutilisateurs/",
+        "normalized_url": "https://www.lesaffaires.com/secteurs/techno-et-ia/ia-lassistant-gemini-de-google-franchit-a-son-tour-le-milliard-dutilisateurs",
+        "source": "Les Affaires",
+        "iso_date": "2026-08-10T07:00:00Z",
+        "date": "08/10/2026, 07:00 AM, +0000 UTC",
+        "snippet": "Actualités Économiques, Bourse et Finances."
+      },
+      "story_token": "CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2o4dEszbEVSRzNuVVhFd1J4TDBDZ0FQAQ",
+      "search_country": "France",
+      "search_iso3": "FRA",
+      "search_language": "fr",
+      "seed_title": "Google Gemini dépasse le milliard d'utilisateurs mensuels | Je lui parle en faisant la vaisselle : Google révèle la nouvelle astuce des parents sur Gemini, qui vient de dépasser le milliard d’utilisateurs | Gemini passe le milliard d'utilisateurs : 63 % lui parlent à voix haute, et le modèle phare tarde",
+      "coverage_size": 6
+    },
+    {
+      "pair_id": "5493a25fd07b507f9889f20371b5a9f9",
+      "article_a": {
+        "title": "L’application Gemini dépasse le milliard d’utilisateurs mensuels, le produit à croissance la plus rapide de Google",
+        "link": "https://www.unite.ai/fr/gemini-app-tops-1-billion-monthly-users-as-googles-fastest-growing-product/",
+        "normalized_url": "https://www.unite.ai/fr/gemini-app-tops-1-billion-monthly-users-as-googles-fastest-growing-product",
+        "source": "Unite.AI",
+        "iso_date": "2026-08-11T18:31:15Z",
+        "date": "08/11/2026, 06:31 PM, +0000 UTC",
+        "snippet": "L'application Gemini a atteint 1 milliard d'utilisateurs mensuels, devenant ainsi le… Voir plus. L'application Gemini a atteint 1 milliard..."
+      },
+      "article_b": {
+        "title": "Produits tech pourquoi votre visibilité sur Gemini devient décisive",
+        "link": "https://www.objetconnecte.com/produits-tech-pourquoi-votre-visibilite-sur-gemini-devient-decisive/",
+        "normalized_url": "https://www.objetconnecte.com/produits-tech-pourquoi-votre-visibilite-sur-gemini-devient-decisive",
+        "source": "objetconnecte.com",
+        "iso_date": "2026-08-04T09:17:00Z",
+        "date": "08/04/2026, 09:17 AM, +0000 UTC",
+        "snippet": "Fiches produit, avis et Reddit renforcent votre visibilité sur Gemini et facilitent la découverte de votre marque."
+      },
+      "story_token": "CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2o4dEszbEVSRzNuVVhFd1J4TDBDZ0FQAQ",
+      "search_country": "France",
+      "search_iso3": "FRA",
+      "search_language": "fr",
+      "seed_title": "Google Gemini dépasse le milliard d'utilisateurs mensuels | Je lui parle en faisant la vaisselle : Google révèle la nouvelle astuce des parents sur Gemini, qui vient de dépasser le milliard d’utilisateurs | Gemini passe le milliard d'utilisateurs : 63 % lui parlent à voix haute, et le modèle phare tarde",
+      "coverage_size": 6
+    },
+    {
+      "pair_id": "101a8d08336e31816d39969bf6cd81cc",
+      "article_a": {
+        "title": "L’IA va-t-elle refermer la révolution amoureuse ouverte par les applications de rencontre ?",
+        "link": "https://usbeketrica.com/fr/article/l-ia-va-t-elle-refermer-la-revolution-amoureuse-ouverte-par-les-applications-de-rencontre",
+        "normalized_url": "https://usbeketrica.com/fr/article/l-ia-va-t-elle-refermer-la-revolution-amoureuse-ouverte-par-les-applications-de-rencontre",
+        "source": "Usbek & Rica",
+        "iso_date": "2026-08-10T05:56:35Z",
+        "date": "08/10/2026, 05:56 AM, +0000 UTC",
+        "snippet": "Pendant des siècles, notre vie amoureuse a été largement déterminée par notre environnement social. On rencontrait son partenaire à..."
+      },
+      "article_b": {
+        "title": "Pourquoi les applis de rencontre misent désormais sur l'intelligence artificielle",
+        "link": "https://www.radiofrance.fr/francebleu/podcasts/a-la-une-de-la-presse/pourquoi-les-applis-de-rencontre-misent-desormais-sur-l-intelligence-artificielle-6971959",
+        "normalized_url": "https://www.radiofrance.fr/francebleu/podcasts/a-la-une-de-la-presse/pourquoi-les-applis-de-rencontre-misent-desormais-sur-l-intelligence-artificielle-6971959",
+        "source": "Radio France",
+        "iso_date": "2026-07-28T07:00:00Z",
+        "date": "07/28/2026, 07:00 AM, +0000 UTC",
+        "snippet": "Les applications de rencontre restent un moyen privilégié pour trouver l'amour, malgré un marché en ralentissement."
+      },
+      "story_token": "CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2pyOTdMYUVSSDRJYmxKS1FpT3lTZ0FQAQ",
+      "search_country": "France",
+      "search_iso3": "FRA",
+      "search_language": "fr",
+      "seed_title": "L'intelligence artificielle s'invite dans les relations amoureuses | De plus en plus de Français laissent l’IA draguer à leur place | Le pourcentage de Français qui draguent avec l’IA vient d’être révélé : ils sont bien plus nombreux que vous le pensez",
+      "coverage_size": 6
+    },
+    {
+      "pair_id": "e86fa2a6b8d6e428f7c0fad5aed8074d",
+      "article_a": {
+        "title": "L’IA va-t-elle refermer la révolution amoureuse ouverte par les applications de rencontre ?",
+        "link": "https://usbeketrica.com/fr/article/l-ia-va-t-elle-refermer-la-revolution-amoureuse-ouverte-par-les-applications-de-rencontre",
+        "normalized_url": "https://usbeketrica.com/fr/article/l-ia-va-t-elle-refermer-la-revolution-amoureuse-ouverte-par-les-applications-de-rencontre",
+        "source": "Usbek & Rica",
+        "iso_date": "2026-08-10T05:56:35Z",
+        "date": "08/10/2026, 05:56 AM, +0000 UTC",
+        "snippet": "Pendant des siècles, notre vie amoureuse a été largement déterminée par notre environnement social. On rencontrait son partenaire à..."
+      },
+      "article_b": {
+        "title": "Qui tombe amoureux d'une IA? L'EPFL a fait une sacrée découverte",
+        "link": "https://www.watson.ch/fr/suisse/societe/709936182-qui-tombe-amoureux-d-une-ia-l-epfl-a-fait-une-sacree-decouverte",
+        "normalized_url": "https://www.watson.ch/fr/suisse/societe/709936182-qui-tombe-amoureux-d-une-ia-l-epfl-a-fait-une-sacree-decouverte",
+        "source": "Watson",
+        "iso_date": "2026-08-04T18:50:54Z",
+        "date": "08/04/2026, 06:50 PM, +0000 UTC",
+        "snippet": "Les partenaires IA ne sont pas seulement un pansement émotionnel pour les célibataires. Selon une étude, de nombreuses personnes en couple..."
+      },
+      "story_token": "CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2pyOTdMYUVSSDRJYmxKS1FpT3lTZ0FQAQ",
+      "search_country": "France",
+      "search_iso3": "FRA",
+      "search_language": "fr",
+      "seed_title": "L'intelligence artificielle s'invite dans les relations amoureuses | De plus en plus de Français laissent l’IA draguer à leur place | Le pourcentage de Français qui draguent avec l’IA vient d’être révélé : ils sont bien plus nombreux que vous le pensez",
+      "coverage_size": 6
+    },
+    {
+      "pair_id": "5440326fd1da70679957f79571ec83f4",
+      "article_a": {
+        "title": "L’application Gemini dépasse le milliard d’utilisateurs mensuels, le produit à croissance la plus rapide de Google",
+        "link": "https://www.unite.ai/fr/gemini-app-tops-1-billion-monthly-users-as-googles-fastest-growing-product/",
+        "normalized_url": "https://www.unite.ai/fr/gemini-app-tops-1-billion-monthly-users-as-googles-fastest-growing-product",
+        "source": "Unite.AI",
+        "iso_date": "2026-08-11T18:31:15Z",
+        "date": "08/11/2026, 06:31 PM, +0000 UTC",
+        "snippet": "L'application Gemini a atteint 1 milliard d'utilisateurs mensuels, devenant ainsi le… Voir plus. L'application Gemini a atteint 1 milliard..."
+      },
+      "article_b": {
+        "title": "L’application Gemini de Google dépasse le milliard d’utilisateurs mensuels",
+        "link": "https://fr.investing.com/news/company-news/lapplication-gemini-de-google-depasse-le-milliard-dutilisateurs-mensuels-3550788",
+        "normalized_url": "https://fr.investing.com/news/company-news/lapplication-gemini-de-google-depasse-le-milliard-dutilisateurs-mensuels-3550788",
+        "source": "Investing.com France",
+        "iso_date": "2026-08-11T18:11:00Z",
+        "date": "08/11/2026, 06:11 PM, +0000 UTC",
+        "snippet": "Investing.com - Google a annoncé mardi que son application d'intelligence artificielle Gemini a dépassé le milliard d'utilisateurs mensuels,..."
+      },
+      "story_token": "CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2o4dEszbEVSRzNuVVhFd1J4TDBDZ0FQAQ",
+      "search_country": "France",
+      "search_iso3": "FRA",
+      "search_language": "fr",
+      "seed_title": "Google Gemini dépasse le milliard d'utilisateurs mensuels | Je lui parle en faisant la vaisselle : Google révèle la nouvelle astuce des parents sur Gemini, qui vient de dépasser le milliard d’utilisateurs | Gemini passe le milliard d'utilisateurs : 63 % lui parlent à voix haute, et le modèle phare tarde",
+      "coverage_size": 6
+    }
+  ]
+}
