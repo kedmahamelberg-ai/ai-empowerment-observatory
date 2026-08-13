@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "stage": "7B.2E",
+    "purpose": "human validation of model-agreed same-event-enriched candidates",
+    "collection_run_key": "run_20260812T055721Z",
+    "candidate_pool": 1126,
+    "qwen_scored": 75,
+    "qwen_same_candidates": 1,
+    "sample_size": 1,
+    "labels": [
+      "same_event",
+      "not_same_event",
+      "unclear_from_headlines"
+    ],
+    "warning": "This is an intentionally positive-enriched development sample. It must not be used to estimate real-world same-event prevalence.",
+    "annotation_blinding": "MiniLM, ModernBERT and Qwen predictions are stored for later analysis but hidden in the web interface."
+  },
+  "pairs": [
+    {
+      "sample_id": "positive_001",
+      "pair_id": "43aa2eeb6a2e4c419f7483063f4ba754__ebc5821a44c45c7a5386a7b98a285e9f",
+      "article_a": {
+        "article_id": "43aa2eeb6a2e4c419f7483063f4ba754",
+        "original_headline": "Our WeatherNext 2 AI model demonstrated a massive leap forward in predicting cyclones.",
+        "english_headline": "Our WeatherNext 2 AI model demonstrated a massive leap forward in predicting cyclones.",
+        "publisher": "blog.google",
+        "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/weathernext-2-cyclones",
+        "snippet": "",
+        "source_language": "en"
+      },
+      "article_b": {
+        "article_id": "ebc5821a44c45c7a5386a7b98a285e9f",
+        "original_headline": "WeatherNext: AI model achieves breakthrough in forecasting cyclones",
+        "english_headline": "WeatherNext: AI model achieves breakthrough in forecasting cyclones",
+        "publisher": "Google DeepMind",
+        "url": "https://deepmind.google/blog/weathernext-ai-model-achieves-breakthrough-in-forecasting-cyclones",
+        "snippet": "",
+        "source_language": "en"
+      },
+      "day_gap": 0.024,
+      "minilm_similarity": 0.7916,
+      "modernbert_same_probability": 0.7326,
+      "qwen_relationship": "same_event",
+      "qwen_confidence": 0.95,
+      "qwen_reason": "Both articles refer to the same event: the release of an AI model (WeatherNext 2) by Google DeepMind that represents a significant advancement in predicting cyclones. The headlines and content are consistent, with only minor differences in phrasing and publication source (blog.google vs. Google DeepMind), which are likely due to different outlets reporting the same event.",
+      "story_token_match": false,
+      "cross_language": false,
+      "selection_type": "exact_model_agreement"
+    }
+  ]
+}
