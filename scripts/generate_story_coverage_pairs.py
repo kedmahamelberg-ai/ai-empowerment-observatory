@@ -149,76 +149,242 @@ def article_from_result(
     }
 
 
+AI_TEXT_TERMS = (
+    "artificial intelligence",
+    "generative ai",
+    "generative artificial intelligence",
+    "machine learning",
+    "large language model",
+    "llm",
+    "chatgpt",
+    "openai",
+    "anthropic",
+    "gemini",
+    "claude",
+    "deepmind",
+    "intelligence artificielle",
+    "intelligence artificielle générative",
+    "人工智能",
+    "生成式人工智能",
+    "大模型",
+)
+
+TECH_TOPIC_TERMS = (
+    "technology",
+    "tech",
+    "technologie",
+    "科技",
+    "技术",
+)
+
+AI_SECTION_TERMS = (
+    "artificial intelligence",
+    "ai",
+    "intelligence artificielle",
+    "人工智能",
+)
+
+
+def text_matches_any(value: str, terms: tuple[str, ...]) -> bool:
+    text = str(value or "").casefold()
+    return any(term.casefold() in text for term in terms)
+
+
+def display_text(node: dict[str, Any]) -> str:
+    candidates = [
+        node.get("title"),
+        node.get("name"),
+        node.get("label"),
+    ]
+
+    highlight = node.get("highlight")
+    if isinstance(highlight, dict):
+        candidates.append(highlight.get("title"))
+
+    stories = node.get("stories")
+    if isinstance(stories, list) and stories:
+        first = stories[0]
+        if isinstance(first, dict):
+            candidates.append(first.get("title"))
+
+    return " | ".join(
+        str(value).strip()
+        for value in candidates
+        if value and str(value).strip()
+    )
+
+
+def recursive_token_nodes(
+    value: Any,
+    token_key: str,
+) -> list[dict[str, Any]]:
+    found = []
+
+    if isinstance(value, dict):
+        if value.get(token_key):
+            found.append(value)
+
+        for child in value.values():
+            found.extend(
+                recursive_token_nodes(
+                    child,
+                    token_key,
+                )
+            )
+
+    elif isinstance(value, list):
+        for child in value:
+            found.extend(
+                recursive_token_nodes(
+                    child,
+                    token_key,
+                )
+            )
+
+    return found
+
+
 def iter_story_groups(
     news_results: list[Any],
+    *,
+    require_ai_relevance: bool = False,
 ) -> list[dict[str, Any]]:
     groups = []
 
-    for item in news_results or []:
-        if not isinstance(item, dict):
+    for node in recursive_token_nodes(
+        news_results,
+        "story_token",
+    ):
+        token = node.get("story_token")
+        if not token:
             continue
 
-        token = item.get("story_token")
+        seed_title = display_text(node)
 
-        if token:
-            groups.append(
-                {
-                    "story_token": str(token),
-                    "seed_title": str(
-                        item.get("title") or ""
-                    ).strip(),
-                    "seed_source": source_name(
-                        item.get("source")
-                    ),
-                    "embedded_stories": (
-                        item.get("stories")
-                        if isinstance(
-                            item.get("stories"),
-                            list,
-                        )
-                        else []
-                    ),
-                }
+        if (
+            require_ai_relevance
+            and not text_matches_any(
+                seed_title,
+                AI_TEXT_TERMS,
             )
+        ):
+            continue
 
-        # Some responses can nest story-bearing structures.
-        nested = item.get("stories")
+        embedded = node.get("stories")
+        if not isinstance(embedded, list):
+            embedded = []
 
-        if isinstance(nested, list):
-            for child in nested:
-                if (
-                    isinstance(child, dict)
-                    and child.get("story_token")
-                ):
-                    groups.append(
-                        {
-                            "story_token": str(
-                                child["story_token"]
-                            ),
-                            "seed_title": str(
-                                child.get("title") or ""
-                            ).strip(),
-                            "seed_source": source_name(
-                                child.get("source")
-                            ),
-                            "embedded_stories": (
-                                child.get("stories")
-                                if isinstance(
-                                    child.get("stories"),
-                                    list,
-                                )
-                                else []
-                            ),
-                        }
-                    )
+        groups.append(
+            {
+                "story_token": str(token),
+                "seed_title": seed_title,
+                "seed_source": source_name(
+                    node.get("source")
+                ),
+                "embedded_stories": embedded,
+            }
+        )
 
     deduped = {}
 
     for group in groups:
         token = group["story_token"]
-
         if token not in deduped:
             deduped[token] = group
+
+    return list(deduped.values())
+
+
+def find_topic_candidates(
+    data: dict[str, Any],
+    terms: tuple[str, ...],
+) -> list[dict[str, Any]]:
+    matches = []
+
+    for node in recursive_token_nodes(
+        data,
+        "topic_token",
+    ):
+        label = display_text(node)
+
+        if text_matches_any(
+            label,
+            terms,
+        ):
+            matches.append(
+                {
+                    "topic_token": str(
+                        node["topic_token"]
+                    ),
+                    "label": label,
+                }
+            )
+
+    deduped = {}
+
+    for item in matches:
+        deduped.setdefault(
+            item["topic_token"],
+            item,
+        )
+
+    return list(deduped.values())
+
+
+def find_ai_sections(
+    data: dict[str, Any],
+) -> list[dict[str, Any]]:
+    matches = []
+
+    def walk(value: Any) -> None:
+        if isinstance(value, dict):
+            token = value.get(
+                "section_token"
+            )
+
+            if token:
+                label = display_text(value)
+
+                if text_matches_any(
+                    label,
+                    AI_SECTION_TERMS,
+                ):
+                    matches.append(
+                        {
+                            "section_token": str(
+                                token
+                            ),
+                            "topic_token": (
+                                str(
+                                    value.get(
+                                        "topic_token"
+                                    )
+                                )
+                                if value.get(
+                                    "topic_token"
+                                )
+                                else None
+                            ),
+                            "label": label,
+                        }
+                    )
+
+            for child in value.values():
+                walk(child)
+
+        elif isinstance(value, list):
+            for child in value:
+                walk(child)
+
+    walk(data)
+
+    deduped = {}
+
+    for item in matches:
+        deduped.setdefault(
+            item["section_token"],
+            item,
+        )
 
     return list(deduped.values())
 
@@ -302,6 +468,20 @@ def rediscover_story_tokens(
     api_key: str,
     searches: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
+    """Discover story tokens through grouped topic/section pages.
+
+    Normal Google News q= searches frequently return flat article lists with no
+    story_token. Topic pages, by contrast, expose Google News story groups.
+
+    Strategy per market:
+    1. Run the existing AI query.
+       - accept any story_token if Google happens to group results
+       - inspect the response for an AI-specific topic_token
+    2. If an AI topic_token exists, fetch that topic page.
+    3. Otherwise fetch the market front page, discover Technology, then:
+       - use an AI subsection if present
+       - otherwise use Technology and retain only AI-relevant story groups
+    """
     discovered = []
 
     for search in searches:
@@ -317,15 +497,28 @@ def rediscover_story_tokens(
 
         gl, hl = market_params(search)
 
+        context = {
+            "search_country": search.get(
+                "country"
+            ),
+            "search_iso3": search.get(
+                "iso3"
+            ),
+            "search_language": search.get(
+                "language"
+            ),
+            "gl": gl,
+            "hl": hl,
+            "query": query,
+        }
+
         print(
-            f"Rediscovering story tokens: "
+            f"Discovering grouped AI stories: "
             f"{search.get('country')} ({gl}, {hl})"
         )
 
-        # `q` cannot be combined with Google News advanced parameters.
-        # `so` is valid with story_token/section_token, not with a normal
-        # query search. Relevance is already the default.
-        data = serpapi_get(
+        # Step 1 — normal AI query.
+        query_data = serpapi_get(
             api_key,
             {
                 "engine": "google_news",
@@ -335,34 +528,181 @@ def rediscover_story_tokens(
             },
         )
 
-        groups = iter_story_groups(
-            data.get("news_results") or []
+        direct_groups = iter_story_groups(
+            query_data.get(
+                "news_results"
+            ) or [],
         )
 
-        for group in groups:
+        for group in direct_groups:
             discovered.append(
                 {
                     **group,
-                    "search_country": search.get(
-                        "country"
+                    **context,
+                    "discovery_route": (
+                        "query_group"
                     ),
-                    "search_iso3": search.get(
-                        "iso3"
-                    ),
-                    "search_language": search.get(
-                        "language"
-                    ),
-                    "gl": gl,
-                    "hl": hl,
-                    "query": query,
                 }
             )
+
+        # Search responses can now surface topic metadata in sidebar/related
+        # structures. Prefer AI-specific topic tokens when present.
+        ai_topics = find_topic_candidates(
+            query_data,
+            AI_SECTION_TERMS,
+        )
+
+        route_groups = []
+
+        for topic in ai_topics[:2]:
+            print(
+                f"  AI topic route: "
+                f"{topic['label'][:80]}"
+            )
+
+            topic_data = serpapi_get(
+                api_key,
+                {
+                    "engine": "google_news",
+                    "topic_token": topic[
+                        "topic_token"
+                    ],
+                    "gl": gl,
+                    "hl": hl,
+                },
+            )
+
+            route_groups.extend(
+                iter_story_groups(
+                    topic_data.get(
+                        "news_results"
+                    ) or [],
+                )
+            )
+
+            time.sleep(
+                REQUEST_SLEEP_SECONDS
+            )
+
+        # Step 3 — fallback via Home -> Technology -> AI section.
+        if not route_groups:
+            print(
+                "  No AI topic token from query; "
+                "trying Technology topic route"
+            )
+
+            front_page = serpapi_get(
+                api_key,
+                {
+                    "engine": "google_news",
+                    "gl": gl,
+                    "hl": hl,
+                },
+            )
+
+            tech_topics = find_topic_candidates(
+                front_page,
+                TECH_TOPIC_TERMS,
+            )
+
+            for tech in tech_topics[:1]:
+                tech_data = serpapi_get(
+                    api_key,
+                    {
+                        "engine": "google_news",
+                        "topic_token": tech[
+                            "topic_token"
+                        ],
+                        "gl": gl,
+                        "hl": hl,
+                    },
+                )
+
+                ai_sections = find_ai_sections(
+                    tech_data
+                )
+
+                if ai_sections:
+                    for section in ai_sections[:1]:
+                        print(
+                            f"  AI subsection: "
+                            f"{section['label'][:80]}"
+                        )
+
+                        section_params = {
+                            "engine": "google_news",
+                            "section_token": section[
+                                "section_token"
+                            ],
+                            "gl": gl,
+                            "hl": hl,
+                        }
+
+                        # SerpApi documents section_token together with
+                        # topic_token. Prefer the section's own token when
+                        # present, otherwise use the Technology topic.
+                        section_params[
+                            "topic_token"
+                        ] = (
+                            section.get(
+                                "topic_token"
+                            )
+                            or tech[
+                                "topic_token"
+                            ]
+                        )
+
+                        section_data = serpapi_get(
+                            api_key,
+                            section_params,
+                        )
+
+                        route_groups.extend(
+                            iter_story_groups(
+                                section_data.get(
+                                    "news_results"
+                                ) or [],
+                            )
+                        )
+                else:
+                    print(
+                        "  No AI subsection exposed; "
+                        "filtering Technology story groups for AI relevance"
+                    )
+
+                    route_groups.extend(
+                        iter_story_groups(
+                            tech_data.get(
+                                "news_results"
+                            ) or [],
+                            require_ai_relevance=True,
+                        )
+                    )
+
+                time.sleep(
+                    REQUEST_SLEEP_SECONDS
+                )
+
+        for group in route_groups:
+            discovered.append(
+                {
+                    **group,
+                    **context,
+                    "discovery_route": (
+                        "ai_or_technology_topic"
+                    ),
+                }
+            )
+
+        print(
+            f"  Story tokens found so far: "
+            f"{len(discovered)}"
+        )
 
         time.sleep(
             REQUEST_SLEEP_SECONDS
         )
 
-    # Deduplicate story tokens globally.
     deduped = {}
 
     for item in discovered:
@@ -582,8 +922,8 @@ def main() -> int:
 
     if not discovered:
         raise StoryCoverageError(
-            "No Google News story_token values were discovered. "
-            "The current queries may not be returning grouped stories."
+            "No Google News story_token values were discovered even after "
+            "query, AI-topic, and Technology-topic fallback routes."
         )
 
     # Prefer groups whose seed looks AI-specific and has embedded stories.
