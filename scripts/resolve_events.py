@@ -58,7 +58,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REVIEW_PATH = ROOT / "review" / "events" / "assignments" / "latest.json"
 PUBLIC_EVENTS_PATH = ROOT / "data" / "events" / "latest.json"
 
-RESOLVER_VERSION = "7B.3"
+RESOLVER_VERSION = "7B.3a"
 METHOD_NAME = "article_to_event_v1"
 TRANSLATION_PROFILE = "validated_language_routing_v3"
 
@@ -89,8 +89,8 @@ QWEN_STRONG_MODERNBERT = 0.60
 
 # Auto-merge is intentionally strict.
 AUTO_MERGE_QWEN_CONFIDENCE = 0.90
-AUTO_MERGE_MODERNBERT = 0.45
-AUTO_MERGE_REP_SIMILARITY = 0.62
+AUTO_MERGE_MODERNBERT = 0.55
+AUTO_MERGE_REP_SIMILARITY = 0.70
 
 # Google News Full Coverage was empirically too broad to be ground truth.
 STORY_TOKEN_MODERNBERT_FLOOR = 0.35
@@ -1583,47 +1583,45 @@ def main() -> int:
             else:
                 review_reasons = []
 
-                if competing:
+                # REVIEW is reserved for genuinely plausible event matches.
+                # Retrieval similarity and competing candidates alone are not
+                # evidence that two AI-related articles report the same event.
+
+                if qwen["relationship"] == "same_event":
                     review_reasons.append(
-                        "two candidate events have very similar retrieval scores"
+                        "Qwen identifies a possible same event, but auto-merge thresholds are not met"
                     )
 
-                if story_match:
-                    review_reasons.append(
-                        "Google News story-token match requires human-safe verification"
-                    )
+                    if competing:
+                        review_reasons.append(
+                            "more than one event remains plausible"
+                        )
 
-                if qwen["relationship"] == "unclear":
-                    review_reasons.append(
-                        "Qwen event verifier is unclear"
-                    )
+                elif qwen["relationship"] == "unclear":
+                    if (
+                        story_match
+                        or top_similarity >= 0.72
+                        or modern_max >= 0.55
+                    ):
+                        review_reasons.append(
+                            "Qwen is unclear despite meaningful candidate-event evidence"
+                        )
 
-                if (
-                    qwen["relationship"] == "same_event"
-                    and not auto_merge
-                ):
-                    review_reasons.append(
-                        "possible same event, but auto-merge thresholds not met"
-                    )
+                elif qwen["relationship"] == "not_same_event":
+                    if (
+                        story_match
+                        and modern_max >= 0.60
+                    ) or (
+                        top_similarity >= 0.82
+                        and modern_max >= 0.70
+                    ):
+                        review_reasons.append(
+                            "exceptionally strong non-LLM evidence conflicts with Qwen not-same decision"
+                        )
 
-                if (
-                    qwen["relationship"] == "not_same_event"
-                    and modern_max >= AUTO_MERGE_MODERNBERT
-                ):
-                    review_reasons.append(
-                        "ModernBERT/Qwen disagreement"
-                    )
-
-                if (
-                    not should_call_qwen
-                    and (
-                        modern_max >= AUTO_MERGE_MODERNBERT
-                        or top_similarity >= 0.78
-                    )
-                ):
-                    review_reasons.append(
-                        "strong retrieval/pair signal without verifier call"
-                    )
+                # If Qwen was never called, retrieval similarity/competition
+                # alone never creates human review. The article remains a
+                # separate event.
 
                 needs_review = bool(review_reasons)
 
