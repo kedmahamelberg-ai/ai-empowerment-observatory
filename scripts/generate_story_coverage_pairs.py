@@ -186,8 +186,33 @@ AI_SECTION_TERMS = (
 
 
 def text_matches_any(value: str, terms: tuple[str, ...]) -> bool:
+    """Match AI concepts without treating acronyms as arbitrary substrings.
+
+    Example of the bug this prevents:
+      "Entertainment" contains the letters "ai" but is not the AI topic.
+    """
     text = str(value or "").casefold()
-    return any(term.casefold() in text for term in terms)
+
+    for term in terms:
+        needle = str(term).casefold().strip()
+
+        if not needle:
+            continue
+
+        # Short Latin-script acronyms must occur as standalone tokens.
+        if needle in {"ai", "llm"}:
+            if re.search(
+                rf"(?<![A-Za-z0-9_]){re.escape(needle)}(?![A-Za-z0-9_])",
+                text,
+                flags=re.I,
+            ):
+                return True
+            continue
+
+        if needle in text:
+            return True
+
+    return False
 
 
 def display_text(node: dict[str, Any]) -> str:
@@ -387,6 +412,32 @@ def find_ai_sections(
         )
 
     return list(deduped.values())
+
+
+def group_relevance_text(group: dict[str, Any]) -> str:
+    parts = [
+        str(group.get("seed_title") or ""),
+    ]
+
+    for child in group.get("embedded_stories") or []:
+        if isinstance(child, dict):
+            parts.append(
+                str(child.get("title") or "")
+            )
+
+    return " | ".join(
+        part
+        for part in parts
+        if part.strip()
+    )
+
+
+def is_ai_relevant_group(group: dict[str, Any]) -> bool:
+    """Keep only story groups whose visible coverage is actually AI-related."""
+    return text_matches_any(
+        group_relevance_text(group),
+        AI_TEXT_TERMS,
+    )
 
 
 def market_params(
@@ -720,15 +771,34 @@ def full_story_coverage(
     api_key: str,
     group: dict[str, Any],
 ) -> list[dict[str, Any]]:
-    data = serpapi_get(
-        api_key,
-        {
-            "engine": "google_news",
-            "story_token": group["story_token"],
-            "gl": group["gl"],
-            "so": "0",
-        },
-    )
+    try:
+        data = serpapi_get(
+            api_key,
+            {
+                "engine": "google_news",
+                "story_token": group["story_token"],
+                "gl": group["gl"],
+                "so": "0",
+            },
+        )
+    except StoryCoverageError as exc:
+        message = str(exc)
+
+        # Google News story groups are ephemeral. A token can disappear
+        # between discovery and the Full Coverage request. That should skip
+        # one candidate, not abort the entire calibration run.
+        if (
+            "hasn't returned any results" in message
+            or "has not returned any results" in message
+            or "no results" in message.casefold()
+        ):
+            print(
+                "  Skipping unavailable story token: "
+                f"{group['seed_title'][:90]}"
+            )
+            return []
+
+        raise
 
     articles = []
 
@@ -926,8 +996,27 @@ def main() -> int:
             "query, AI-topic, and Technology-topic fallback routes."
         )
 
-    # Prefer groups whose seed looks AI-specific and has embedded stories.
-    discovered.sort(
+    # Critical safety filter: topic discovery can surface broad sections.
+    # Only story groups whose visible seed/embedded titles contain a genuine
+    # AI concept are allowed into the positive-enrichment sample.
+    ai_discovered = [
+        group
+        for group in discovered
+        if is_ai_relevant_group(group)
+    ]
+
+    print(
+        "AI-relevant story tokens after filtering: "
+        f"{len(ai_discovered)} / {len(discovered)}"
+    )
+
+    if not ai_discovered:
+        raise StoryCoverageError(
+            "Story tokens were discovered, but none were AI-relevant after "
+            "strict title filtering."
+        )
+
+    ai_discovered.sort(
         key=lambda group: (
             -len(
                 group.get(
@@ -943,20 +1032,21 @@ def main() -> int:
         )
     )
 
-    selected_groups = discovered[
-        :MAX_STORY_TOKENS
-    ]
-
     output_groups = []
     all_pairs = []
+    attempted_groups = 0
 
-    for index, group in enumerate(
-        selected_groups,
-        start=1,
-    ):
+    # Try the ranked AI candidates until we have MAX_STORY_TOKENS usable
+    # multi-article groups. Stale/no-result tokens are simply skipped.
+    for group in ai_discovered:
+        if len(output_groups) >= MAX_STORY_TOKENS:
+            break
+
+        attempted_groups += 1
+
         print(
-            f"[{index}/{len(selected_groups)}] "
-            f"Fetching full story coverage: "
+            f"[attempt {attempted_groups}] "
+            f"Fetching AI full story coverage: "
             f"{group['seed_title'][:90]}"
         )
 
@@ -964,6 +1054,24 @@ def main() -> int:
             api_key,
             group,
         )
+
+        if not articles:
+            continue
+
+        # Defensive second relevance check on the actual Full Coverage titles.
+        coverage_text = " | ".join(
+            article["title"]
+            for article in articles
+        )
+
+        if not text_matches_any(
+            coverage_text,
+            AI_TEXT_TERMS,
+        ):
+            print(
+                "  Skipping coverage that is not AI-relevant after fetch."
+            )
+            continue
 
         articles = articles[
             :MAX_ARTICLES_PER_STORY
@@ -974,41 +1082,48 @@ def main() -> int:
             articles,
         )
 
-        if pairs:
-            all_pairs.extend(pairs)
-
-            output_groups.append(
-                {
-                    "group_id": (
-                        f"story_{index:02d}"
-                    ),
-                    "story_token": group[
-                        "story_token"
-                    ],
-                    "seed_title": group[
-                        "seed_title"
-                    ],
-                    "search_country": group[
-                        "search_country"
-                    ],
-                    "search_iso3": group[
-                        "search_iso3"
-                    ],
-                    "search_language": group[
-                        "search_language"
-                    ],
-                    "coverage_size": len(
-                        articles
-                    ),
-                    "article_count_used": len(
-                        articles
-                    ),
-                    "pair_count": len(
-                        pairs
-                    ),
-                    "articles": articles,
-                }
+        if not pairs:
+            print(
+                "  Skipping story with fewer than two usable articles."
             )
+            continue
+
+        all_pairs.extend(pairs)
+
+        group_number = len(output_groups) + 1
+
+        output_groups.append(
+            {
+                "group_id": (
+                    f"story_{group_number:02d}"
+                ),
+                "story_token": group[
+                    "story_token"
+                ],
+                "seed_title": group[
+                    "seed_title"
+                ],
+                "search_country": group[
+                    "search_country"
+                ],
+                "search_iso3": group[
+                    "search_iso3"
+                ],
+                "search_language": group[
+                    "search_language"
+                ],
+                "coverage_size": len(
+                    articles
+                ),
+                "article_count_used": len(
+                    articles
+                ),
+                "pair_count": len(
+                    pairs
+                ),
+                "articles": articles,
+            }
+        )
 
         time.sleep(
             REQUEST_SLEEP_SECONDS
@@ -1043,8 +1158,9 @@ def main() -> int:
                     "story_tokens_discovered": len(
                         discovered
                     ),
+                    "story_groups_attempted": attempted_groups,
                     "story_groups_fetched": len(
-                        selected_groups
+                        output_groups
                     ),
                     "usable_story_groups": len(
                         output_groups
@@ -1080,8 +1196,9 @@ def main() -> int:
                 "story_tokens_discovered": len(
                     discovered
                 ),
+                "story_groups_attempted": attempted_groups,
                 "story_groups_fetched": len(
-                    selected_groups
+                    output_groups
                 ),
                 "usable_story_groups": len(
                     output_groups
