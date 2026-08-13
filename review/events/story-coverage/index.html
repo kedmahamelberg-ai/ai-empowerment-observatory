@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>
+    Story Coverage Event Pairs | AI Empowerment Observatory
+  </title>
+
+  <meta name="robots" content="noindex">
+
+  <link
+    rel="stylesheet"
+    href="./story-coverage.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/analytics-consent.css"
+  >
+</head>
+
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">
+        Stage 7B.2D · Positive-candidate enrichment
+      </p>
+
+      <h1>
+        Are these reports the same event?
+      </h1>
+
+      <p>
+        These pairs come from Google News full-story coverage. The grouping
+        signal is hidden while you label and is never treated as ground truth.
+      </p>
+    </div>
+
+    <nav>
+      <a href="/review/events/active-learning/">Hard pairs</a>
+      <a href="/review/events/verifier-benchmark/">Verifier</a>
+      <a href="/">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <section
+      id="summary"
+      class="summary"
+    >
+      Loading story-coverage pairs…
+    </section>
+
+    <section class="instructions">
+      <strong>Same occurrence, not merely similar coverage.</strong>
+
+      <p>
+        Choose <strong>Same event</strong> only when both articles appear to
+        report the same specific occurrence.
+      </p>
+
+      <p>
+        Use <strong>Unclear</strong> when the headlines/snippets do not provide
+        enough evidence. Do not assume Google's grouping is correct.
+      </p>
+    </section>
+
+    <section class="toolbar">
+      <div id="progress">
+        0 / 0 labelled
+      </div>
+
+      <button
+        id="download"
+        type="button"
+      >
+        Download labels CSV
+      </button>
+
+      <button
+        id="clear"
+        class="secondary"
+        type="button"
+      >
+        Clear labels
+      </button>
+    </section>
+
+    <section
+      id="pairs"
+      class="pairs"
+    ></section>
+  </main>
+
+  <script src="./story-coverage.js"></script>
+  <script src="/analytics.js"></script>
+</body>
+</html>
