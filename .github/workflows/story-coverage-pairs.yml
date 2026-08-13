@@ -1,0 +1,74 @@
+name: Generate Story Coverage Event Pairs
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Observatory repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install collection dependencies
+        run: python -m pip install requests
+
+      - name: Generate story-coverage event pairs
+        env:
+          SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+          STORY_COVERAGE_MAX_TOKENS: "8"
+          STORY_COVERAGE_MAX_ARTICLES: "6"
+          STORY_COVERAGE_MAX_PAIRS_PER_STORY: "4"
+        run: python scripts/generate_story_coverage_pairs.py
+
+      - name: Commit story-coverage sample
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add review/events/story-coverage/latest.json
+
+          git diff --cached --quiet || \
+            git commit -m "data: generate story-coverage event pairs"
+
+          git push
+
+      - name: Build public site artifact
+        run: python scripts/build_public_site.py
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: "_site"
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
