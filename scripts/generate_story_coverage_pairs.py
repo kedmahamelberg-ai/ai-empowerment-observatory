@@ -278,9 +278,17 @@ def serpapi_get(
         timeout=60,
     )
 
-    response.raise_for_status()
+    try:
+        data = response.json()
+    except ValueError:
+        data = {}
 
-    data = response.json()
+    if not response.ok:
+        api_error = data.get("error") if isinstance(data, dict) else None
+        raise StoryCoverageError(
+            f"SerpApi HTTP {response.status_code}: "
+            f"{api_error or response.text[:500]}"
+        )
 
     if data.get("error"):
         raise StoryCoverageError(
@@ -314,6 +322,9 @@ def rediscover_story_tokens(
             f"{search.get('country')} ({gl}, {hl})"
         )
 
+        # `q` cannot be combined with Google News advanced parameters.
+        # `so` is valid with story_token/section_token, not with a normal
+        # query search. Relevance is already the default.
         data = serpapi_get(
             api_key,
             {
@@ -321,7 +332,6 @@ def rediscover_story_tokens(
                 "q": query,
                 "gl": gl,
                 "hl": hl,
-                "so": "0",
             },
         )
 
