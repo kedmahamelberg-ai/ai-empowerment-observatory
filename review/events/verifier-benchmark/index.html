@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>
+    Same-Event Verifier Benchmark | AI Empowerment Observatory
+  </title>
+
+  <meta name="robots" content="noindex">
+
+  <link
+    rel="stylesheet"
+    href="./benchmark.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/analytics-consent.css"
+  >
+</head>
+
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">
+        Stage 7B.2B · Human-gold benchmark
+      </p>
+
+      <h1>
+        Can the models tell an event from a topic?
+      </h1>
+
+      <p>
+        Your human labels are the benchmark. We compare a task-specific
+        ModernBERT verifier, Qwen3-4B, and a conservative agreement rule.
+      </p>
+    </div>
+
+    <nav>
+      <a href="/review/events/calibration/">Gold labels</a>
+      <a href="/review/events/">Clusters</a>
+      <a href="/">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <section
+      id="summary"
+      class="summary"
+    >
+      Loading verifier benchmark…
+    </section>
+
+    <section class="legend">
+      <span class="same">Human: same event</span>
+      <span class="related">Human: related topic</span>
+      <span class="different">Human: different event</span>
+      <span class="review">Ensemble: review</span>
+    </section>
+
+    <section
+      id="pairs"
+      class="pairs"
+    ></section>
+  </main>
+
+  <script src="./benchmark.js"></script>
+  <script src="/analytics.js"></script>
+</body>
+</html>
