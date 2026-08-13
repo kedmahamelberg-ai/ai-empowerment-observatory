@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Stage 7C Classification | AI Empowerment Observatory</title>
+
+  <meta name="robots" content="noindex">
+
+  <link rel="stylesheet" href="./classification.css">
+  <link rel="stylesheet" href="/analytics-consent.css">
+</head>
+
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">Stage 7C · Dual-Lens Classification</p>
+      <h1>What is AI doing to human empowerment?</h1>
+
+      <p>
+        Coverage counts every article. Event Lens counts each unique
+        development once. Narrative framing is measured separately from
+        substantive human empowerment.
+      </p>
+    </div>
+
+    <nav>
+      <a href="/review/events/assignments/">Event assignments</a>
+      <a href="/review/translations/">Translations</a>
+      <a href="/">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="indices" class="indices">
+      Loading Stage 7C…
+    </section>
+
+    <section class="method">
+      <strong>Index rule</strong>
+
+      <p>
+        Expanding = +degree/3; contracting = −degree/3; mixed and
+        non-empowerment = 0; unclear is excluded. The lens index is the
+        arithmetic mean × 100. Confidence is reported separately rather than
+        used to shrink the substantive score.
+      </p>
+    </section>
+
+    <section class="toolbar">
+      <div id="progress"></div>
+
+      <select id="filter">
+        <option value="all">Audit + model review</option>
+        <option value="model">Model review only</option>
+        <option value="audit">Quality audit only</option>
+        <option value="coverage">Coverage Lens</option>
+        <option value="event">Event Lens</option>
+      </select>
+
+      <button id="download" type="button">
+        Download audit CSV
+      </button>
+
+      <button id="clear" type="button" class="secondary">
+        Clear my choices
+      </button>
+    </section>
+
+    <section id="queue" class="queue"></section>
+  </main>
+
+  <script src="./classification.js"></script>
+  <script src="/analytics.js"></script>
+</body>
+</html>
