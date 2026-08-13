@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Event Assignment Review | AI Empowerment Observatory</title>
+  <meta name="robots" content="noindex">
+
+  <link rel="stylesheet" href="./assignments.css">
+  <link rel="stylesheet" href="/analytics-consent.css">
+</head>
+
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">Stage 7B.3 · Event Lens</p>
+      <h1>Articles → real-world events</h1>
+
+      <p>
+        Strong matches merge automatically. Ambiguous cases remain separate
+        until reviewed. False merges are treated as more harmful than false
+        splits.
+      </p>
+    </div>
+
+    <nav>
+      <a href="/review/events/">Legacy clusters</a>
+      <a href="/review/translations/">Translations</a>
+      <a href="/">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="summary" class="summary">
+      Loading event assignment run…
+    </section>
+
+    <section class="toolbar">
+      <label>
+        Show
+        <select id="filter">
+          <option value="review">Needs review</option>
+          <option value="all">All decisions</option>
+          <option value="auto_merge">Auto merges</option>
+          <option value="new_event">New events</option>
+        </select>
+      </label>
+
+      <div id="progress"></div>
+
+      <button id="download" type="button">
+        Download review decisions CSV
+      </button>
+
+      <button id="clear" class="secondary" type="button">
+        Clear my review choices
+      </button>
+    </section>
+
+    <section id="items" class="items"></section>
+  </main>
+
+  <script src="./assignments.js"></script>
+  <script src="/analytics.js"></script>
+</body>
+</html>
