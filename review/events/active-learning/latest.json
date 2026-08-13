@@ -1,0 +1,1684 @@
+{
+  "meta": {
+    "stage": "7B.2C",
+    "purpose": "active-learning expansion of binary event-identity human gold labels",
+    "collection_run_key": "run_20260812T055721Z",
+    "translation_profile": "validated_language_routing_v3",
+    "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "modernbert_model": "Juanillaberia/articles-pairs-event-detection",
+    "qwen_model": "Qwen/Qwen3-4B-GGUF",
+    "candidate_pool_size": 792,
+    "qwen_scored_candidates": 60,
+    "sample_size": 45,
+    "labels": [
+      "same_event",
+      "not_same_event",
+      "unclear_from_headlines"
+    ],
+    "instruction": "Judge whether the records report the same specific real-world occurrence. Do not infer from topic similarity. Choose unclear when the headline/snippet evidence is genuinely insufficient.",
+    "warning": "Model predictions are stored in the JSON for later analysis but deliberately hidden from the annotation interface to avoid anchoring."
+  },
+  "pairs": [
+    {
+      "sample_id": "active_001",
+      "pair_id": "6853b036f73a15eb40ba8e8e7040f4f4__cf3d9e5bfbd831bd84978fe0c5c7058f",
+      "article_a_id": "cf3d9e5bfbd831bd84978fe0c5c7058f",
+      "article_b_id": "6853b036f73a15eb40ba8e8e7040f4f4",
+      "article_a": {
+        "original_headline": "Opinion | Don't Anthropomorphize Artificial Intelligence",
+        "english_headline": "Opinion | Don't Anthropomorphize Artificial Intelligence",
+        "publisher": "WSJ",
+        "url": "https://www.wsj.com/opinion/don-t-anthropomorphize-artificial-intelligence-ad9ad358",
+        "snippet": "",
+        "published_at": "2026-08-07T15:43:00+00:00",
+        "source_language": "en"
+      },
+      "article_b": {
+        "original_headline": "之江实验室王坚院士：人工智能应该像纸一样便宜",
+        "english_headline": "Academician Wang Jian of Zhijiang Laboratory: Artificial intelligence should be as cheap as paper",
+        "publisher": "科学网—新闻",
+        "url": "https://news.sciencenet.cn/htmlnews/2026/8/569423.shtm",
+        "snippet": "",
+        "published_at": "2026-08-07T08:31:08+00:00",
+        "source_language": "zh"
+      },
+      "day_gap": 0.3,
+      "minilm_similarity": 0.7372,
+      "modernbert_same_probability": 0.6239,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 25.425
+    },
+    {
+      "sample_id": "active_002",
+      "pair_id": "5b8094972c6c23036e0cfa3dc7183f91__cf3d9e5bfbd831bd84978fe0c5c7058f",
+      "article_a_id": "cf3d9e5bfbd831bd84978fe0c5c7058f",
+      "article_b_id": "5b8094972c6c23036e0cfa3dc7183f91",
+      "article_a": {
+        "original_headline": "Opinion | Don't Anthropomorphize Artificial Intelligence",
+        "english_headline": "Opinion | Don't Anthropomorphize Artificial Intelligence",
+        "publisher": "WSJ",
+        "url": "https://www.wsj.com/opinion/don-t-anthropomorphize-artificial-intelligence-ad9ad358",
+        "snippet": "",
+        "published_at": "2026-08-07T15:43:00+00:00",
+        "source_language": "en"
+      },
+      "article_b": {
+        "original_headline": "开放共赢是人工智能发展的必由之路（和音）",
+        "english_headline": "Open and win-win cooperation is the inevitable path for the development of artificial intelligence (He Yin)",
+        "publisher": "人民日报",
+        "url": "http://paper.people.com.cn/rmrb/pc/content/202608/10/content_30173909.html",
+        "snippet": "",
+        "published_at": "2026-08-09T22:01:12+00:00",
+        "source_language": "zh"
+      },
+      "day_gap": 2.263,
+      "minilm_similarity": 0.7109,
+      "modernbert_same_probability": 0.561,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.0,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 24.9343
+    },
+    {
+      "sample_id": "active_003",
+      "pair_id": "230d1144417e82cea6c7ebe2356b9792__6853b036f73a15eb40ba8e8e7040f4f4",
+      "article_a_id": "6853b036f73a15eb40ba8e8e7040f4f4",
+      "article_b_id": "230d1144417e82cea6c7ebe2356b9792",
+      "article_a": {
+        "original_headline": "之江实验室王坚院士：人工智能应该像纸一样便宜",
+        "english_headline": "Academician Wang Jian of Zhijiang Laboratory: Artificial intelligence should be as cheap as paper",
+        "publisher": "科学网—新闻",
+        "url": "https://news.sciencenet.cn/htmlnews/2026/8/569423.shtm",
+        "snippet": "",
+        "published_at": "2026-08-07T08:31:08+00:00",
+        "source_language": "zh"
+      },
+      "article_b": {
+        "original_headline": "VIDÉO. Former les élèves et les professeurs à l'intelligence artificielle - L'École du futur",
+        "english_headline": "Video: Former Students and Teachers on Artificial Intelligence - The Future School",
+        "publisher": "Ouest-France",
+        "url": "https://www.ouest-france.fr/high-tech/intelligence-artificielle/video-former-les-eleves-et-les-professeurs-a-l-intelligence-artificielle-l-ecole-du-futur-97c11381-f2dc-376f-973d-58926cf5b622",
+        "snippet": "",
+        "published_at": "2026-08-07T08:07:53+00:00",
+        "source_language": "fr"
+      },
+      "day_gap": 0.016,
+      "minilm_similarity": 0.7023,
+      "modernbert_same_probability": 0.6456,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 24.496
+    },
+    {
+      "sample_id": "active_004",
+      "pair_id": "560f50f4b6ac03e4e9b06c1a2622ab5b__c9653c5ae136cbad0a59f335e3fcd2a4",
+      "article_a_id": "c9653c5ae136cbad0a59f335e3fcd2a4",
+      "article_b_id": "560f50f4b6ac03e4e9b06c1a2622ab5b",
+      "article_a": {
+        "original_headline": "Les déboires boursiers de l'Intelligence Artificielle",
+        "english_headline": "The Financial Troubles of Artificial Intelligence",
+        "publisher": "Le Club de Mediapart",
+        "url": "https://blogs.mediapart.fr/pierre-sassier/blog/100826/les-deboires-boursiers-de-lintelligence-artificielle",
+        "snippet": "",
+        "published_at": "2026-08-10T14:35:08+00:00",
+        "source_language": "fr"
+      },
+      "article_b": {
+        "original_headline": "Artificial Intelligence: the hype, the dangers, and the resistance—Part II",
+        "english_headline": "Artificial Intelligence: the hype, the dangers, and the resistance—Part II",
+        "publisher": "mronline.org",
+        "url": "https://mronline.org/2026/08/10/artificial-intelligence-the-hype-the-dangers-and-the-resistance-part-ii",
+        "snippet": "",
+        "published_at": "2026-08-10T13:00:37+00:00",
+        "source_language": "en"
+      },
+      "day_gap": 0.066,
+      "minilm_similarity": 0.7478,
+      "modernbert_same_probability": 0.5582,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 24.4835
+    },
+    {
+      "sample_id": "active_005",
+      "pair_id": "a65e45ad69b883eb1df31016b612ffac__c9653c5ae136cbad0a59f335e3fcd2a4",
+      "article_a_id": "a65e45ad69b883eb1df31016b612ffac",
+      "article_b_id": "c9653c5ae136cbad0a59f335e3fcd2a4",
+      "article_a": {
+        "original_headline": "Artificial Intelligence at Lowes",
+        "english_headline": "Artificial Intelligence at Lowes",
+        "publisher": "Emerj Artificial Intelligence Research",
+        "url": "https://emerj.com/artificial-intelligence-at-lowes",
+        "snippet": "",
+        "published_at": "2026-08-10T12:45:16+00:00",
+        "source_language": "en"
+      },
+      "article_b": {
+        "original_headline": "Les déboires boursiers de l'Intelligence Artificielle",
+        "english_headline": "The Financial Troubles of Artificial Intelligence",
+        "publisher": "Le Club de Mediapart",
+        "url": "https://blogs.mediapart.fr/pierre-sassier/blog/100826/les-deboires-boursiers-de-lintelligence-artificielle",
+        "snippet": "",
+        "published_at": "2026-08-10T14:35:08+00:00",
+        "source_language": "fr"
+      },
+      "day_gap": 0.076,
+      "minilm_similarity": 0.7045,
+      "modernbert_same_probability": 0.6161,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 24.481
+    },
+    {
+      "sample_id": "active_006",
+      "pair_id": "56a4024c4578b86c1a2485026e666f3a__f235c57dffd9a991cfd92a9727951462",
+      "article_a_id": "f235c57dffd9a991cfd92a9727951462",
+      "article_b_id": "56a4024c4578b86c1a2485026e666f3a",
+      "article_a": {
+        "original_headline": "AI Act -Généré par l’intelligence artificielle : comment s’y retrouver",
+        "english_headline": "AI Act - Generated by Artificial Intelligence: How to Find Your Way",
+        "publisher": "Service Public",
+        "url": "https://www.service-public.gouv.fr/particuliers/actualites/A19029",
+        "snippet": "",
+        "published_at": "2026-08-06T22:00:00+00:00",
+        "source_language": "fr"
+      },
+      "article_b": {
+        "original_headline": "WORDS OF WISDOM: Thoughts on using Artificial Intelligence",
+        "english_headline": "WORDS OF WISDOM: Thoughts on using Artificial Intelligence",
+        "publisher": "Tillamook County Pioneer",
+        "url": "https://www.tillamookcountypioneer.net/words-of-wisdom-thoughts-on-using-artificial-intelligence",
+        "snippet": "",
+        "published_at": "2026-08-07T01:04:44+00:00",
+        "source_language": "en"
+      },
+      "day_gap": 0.128,
+      "minilm_similarity": 0.7251,
+      "modernbert_same_probability": 0.6356,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 24.468
+    },
+    {
+      "sample_id": "active_007",
+      "pair_id": "15bcaf90d856694a3d3e0e37dc0bce81__fc14e9a49250ef0707f82592c50baa4f",
+      "article_a_id": "fc14e9a49250ef0707f82592c50baa4f",
+      "article_b_id": "15bcaf90d856694a3d3e0e37dc0bce81",
+      "article_a": {
+        "original_headline": "《天津日报》天津大学网络安全学院党委书记魏建国：人工智能产业演进路径",
+        "english_headline": "Wei Jianguo, Secretary of the Party Committee of the Cyber Security College of Tianjin University, Tianjin Daily: The evolution path of the artificial intelligence industry",
+        "publisher": "天津大学新闻网",
+        "url": "https://news.tju.edu.cn/info/1005/607339.htm",
+        "snippet": "",
+        "published_at": "2026-08-07T07:00:00+00:00",
+        "source_language": "zh"
+      },
+      "article_b": {
+        "original_headline": "Pour la Chine, l’intelligence artificielle est aussi une opportunité diplomatique",
+        "english_headline": "For China, artificial intelligence is also a diplomatic opportunity",
+        "publisher": "Mediapart",
+        "url": "https://www.mediapart.fr/journal/international/070826/pour-la-chine-l-intelligence-artificielle-est-aussi-une-opportunite-diplomatique",
+        "snippet": "",
+        "published_at": "2026-08-07T15:24:13+00:00",
+        "source_language": "fr"
+      },
+      "day_gap": 0.35,
+      "minilm_similarity": 0.7118,
+      "modernbert_same_probability": 0.6236,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 24.4125
+    },
+    {
+      "sample_id": "active_008",
+      "pair_id": "4548510af6257a7b73eec1ebd3bd1130__c9653c5ae136cbad0a59f335e3fcd2a4",
+      "article_a_id": "4548510af6257a7b73eec1ebd3bd1130",
+      "article_b_id": "c9653c5ae136cbad0a59f335e3fcd2a4",
+      "article_a": {
+        "original_headline": "Artificial intelligence — the saviour of the capitalist system of production or its executioner?",
+        "english_headline": "Artificial intelligence — the saviour of the capitalist system of production or its executioner?",
+        "publisher": "Morning Star | The People’s Daily",
+        "url": "https://www.morningstaronline.co.uk/article/artificial-intelligence-saviour-capitalist-system-production-or-its-executioner",
+        "snippet": "",
+        "published_at": "2026-08-11T01:06:49+00:00",
+        "source_language": "en"
+      },
+      "article_b": {
+        "original_headline": "Les déboires boursiers de l'Intelligence Artificielle",
+        "english_headline": "The Financial Troubles of Artificial Intelligence",
+        "publisher": "Le Club de Mediapart",
+        "url": "https://blogs.mediapart.fr/pierre-sassier/blog/100826/les-deboires-boursiers-de-lintelligence-artificielle",
+        "snippet": "",
+        "published_at": "2026-08-10T14:35:08+00:00",
+        "source_language": "fr"
+      },
+      "day_gap": 0.439,
+      "minilm_similarity": 0.726,
+      "modernbert_same_probability": 0.5953,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 24.3902
+    },
+    {
+      "sample_id": "active_009",
+      "pair_id": "560f50f4b6ac03e4e9b06c1a2622ab5b__5b8094972c6c23036e0cfa3dc7183f91",
+      "article_a_id": "5b8094972c6c23036e0cfa3dc7183f91",
+      "article_b_id": "560f50f4b6ac03e4e9b06c1a2622ab5b",
+      "article_a": {
+        "original_headline": "开放共赢是人工智能发展的必由之路（和音）",
+        "english_headline": "Open and win-win cooperation is the inevitable path for the development of artificial intelligence (He Yin)",
+        "publisher": "人民日报",
+        "url": "http://paper.people.com.cn/rmrb/pc/content/202608/10/content_30173909.html",
+        "snippet": "",
+        "published_at": "2026-08-09T22:01:12+00:00",
+        "source_language": "zh"
+      },
+      "article_b": {
+        "original_headline": "Artificial Intelligence: the hype, the dangers, and the resistance—Part II",
+        "english_headline": "Artificial Intelligence: the hype, the dangers, and the resistance—Part II",
+        "publisher": "mronline.org",
+        "url": "https://mronline.org/2026/08/10/artificial-intelligence-the-hype-the-dangers-and-the-resistance-part-ii",
+        "snippet": "",
+        "published_at": "2026-08-10T13:00:37+00:00",
+        "source_language": "en"
+      },
+      "day_gap": 0.625,
+      "minilm_similarity": 0.7335,
+      "modernbert_same_probability": 0.628,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 24.3438
+    },
+    {
+      "sample_id": "active_010",
+      "pair_id": "6bef5c33b3ed005dfb5701deedfa43fb__839e85b4cb9f1139f0644ad36bc07332",
+      "article_a_id": "6bef5c33b3ed005dfb5701deedfa43fb",
+      "article_b_id": "839e85b4cb9f1139f0644ad36bc07332",
+      "article_a": {
+        "original_headline": "Surveillance, renseignement, planification des opérations… Quand l'intelligence artificielle s'invite sur les champs de bataille",
+        "english_headline": "Surveillance, intelligence, operation planning... When artificial intelligence enters the battlefield",
+        "publisher": "Les Echos",
+        "url": "https://www.lesechos.fr/tech-medias/intelligence-artificielle/surveillance-renseignement-planification-des-operations-quand-lintelligence-artificielle-sinvite-sur-les-champs-de-bataille-2246581",
+        "snippet": "",
+        "published_at": "2026-08-11T05:05:08+00:00",
+        "source_language": "fr"
+      },
+      "article_b": {
+        "original_headline": "Artificial intelligence models and applications a growing target for attackers",
+        "english_headline": "Artificial intelligence models and applications a growing target for attackers",
+        "publisher": "insurance-portal.ca",
+        "url": "https://insurance-portal.ca/article/artificial-intelligence-models-and-applications-a-growing-target-for-attackers",
+        "snippet": "",
+        "published_at": "2026-08-11T20:33:34+00:00",
+        "source_language": "en"
+      },
+      "day_gap": 0.645,
+      "minilm_similarity": 0.7458,
+      "modernbert_same_probability": 0.5786,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 24.3388
+    },
+    {
+      "sample_id": "active_011",
+      "pair_id": "2f9896fc58685c2f84f2a15f12c72f9e__b276689d8fd72d7c4f846a57c24ed424",
+      "article_a_id": "b276689d8fd72d7c4f846a57c24ed424",
+      "article_b_id": "2f9896fc58685c2f84f2a15f12c72f9e",
+      "article_a": {
+        "original_headline": "Is artificial intelligence making us more productive? What the UK industry data show",
+        "english_headline": "Is artificial intelligence making us more productive? What the UK industry data show",
+        "publisher": "Bank Underground",
+        "url": "https://bankunderground.co.uk/2026/08/06/is-artificial-intelligence-making-us-more-productive-what-the-uk-industry-data-show",
+        "snippet": "",
+        "published_at": "2026-08-06T08:00:00+00:00",
+        "source_language": "en"
+      },
+      "article_b": {
+        "original_headline": "Aux États-Unis, l’économie est dopée à l’intelligence artificielle",
+        "english_headline": "In the United States, the economy is boosted by artificial intelligence",
+        "publisher": "Mediapart",
+        "url": "https://www.mediapart.fr/journal/international/070826/aux-etats-unis-l-economie-est-dopee-l-intelligence-artificielle",
+        "snippet": "",
+        "published_at": "2026-08-07T15:50:46+00:00",
+        "source_language": "fr"
+      },
+      "day_gap": 1.327,
+      "minilm_similarity": 0.7987,
+      "modernbert_same_probability": 0.5646,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "high_similarity_not_same",
+        "model_disagreement"
+      ],
+      "information_score": 24.1683
+    },
+    {
+      "sample_id": "active_012",
+      "pair_id": "56a4024c4578b86c1a2485026e666f3a__e9f2c7fe328007cf486dea1f2e9d4f3f",
+      "article_a_id": "e9f2c7fe328007cf486dea1f2e9d4f3f",
+      "article_b_id": "56a4024c4578b86c1a2485026e666f3a",
+      "article_a": {
+        "original_headline": "Intelligence artificielle : ces zones d’ombre de l’utilisation des données par Doctolib",
+        "english_headline": "Artificial Intelligence: The Shadows of Data Use by Doctolib",
+        "publisher": "L'Humanité",
+        "url": "https://www.humanite.fr/societe/cyberattaque/intelligence-artificielle-ces-zones-dombre-de-lutilisation-des-donnees-par-doctolib",
+        "snippet": "",
+        "published_at": "2026-08-05T16:00:49+00:00",
+        "source_language": "fr"
+      },
+      "article_b": {
+        "original_headline": "WORDS OF WISDOM: Thoughts on using Artificial Intelligence",
+        "english_headline": "WORDS OF WISDOM: Thoughts on using Artificial Intelligence",
+        "publisher": "Tillamook County Pioneer",
+        "url": "https://www.tillamookcountypioneer.net/words-of-wisdom-thoughts-on-using-artificial-intelligence",
+        "snippet": "",
+        "published_at": "2026-08-07T01:04:44+00:00",
+        "source_language": "en"
+      },
+      "day_gap": 1.378,
+      "minilm_similarity": 0.7193,
+      "modernbert_same_probability": 0.5877,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 24.1555
+    },
+    {
+      "sample_id": "active_013",
+      "pair_id": "56a4024c4578b86c1a2485026e666f3a__5b8094972c6c23036e0cfa3dc7183f91",
+      "article_a_id": "56a4024c4578b86c1a2485026e666f3a",
+      "article_b_id": "5b8094972c6c23036e0cfa3dc7183f91",
+      "article_a": {
+        "original_headline": "WORDS OF WISDOM: Thoughts on using Artificial Intelligence",
+        "english_headline": "WORDS OF WISDOM: Thoughts on using Artificial Intelligence",
+        "publisher": "Tillamook County Pioneer",
+        "url": "https://www.tillamookcountypioneer.net/words-of-wisdom-thoughts-on-using-artificial-intelligence",
+        "snippet": "",
+        "published_at": "2026-08-07T01:04:44+00:00",
+        "source_language": "en"
+      },
+      "article_b": {
+        "original_headline": "开放共赢是人工智能发展的必由之路（和音）",
+        "english_headline": "Open and win-win cooperation is the inevitable path for the development of artificial intelligence (He Yin)",
+        "publisher": "人民日报",
+        "url": "http://paper.people.com.cn/rmrb/pc/content/202608/10/content_30173909.html",
+        "snippet": "",
+        "published_at": "2026-08-09T22:01:12+00:00",
+        "source_language": "zh"
+      },
+      "day_gap": 2.873,
+      "minilm_similarity": 0.7037,
+      "modernbert_same_probability": 0.6205,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 23.7818
+    },
+    {
+      "sample_id": "active_014",
+      "pair_id": "560f50f4b6ac03e4e9b06c1a2622ab5b__6853b036f73a15eb40ba8e8e7040f4f4",
+      "article_a_id": "6853b036f73a15eb40ba8e8e7040f4f4",
+      "article_b_id": "560f50f4b6ac03e4e9b06c1a2622ab5b",
+      "article_a": {
+        "original_headline": "之江实验室王坚院士：人工智能应该像纸一样便宜",
+        "english_headline": "Academician Wang Jian of Zhijiang Laboratory: Artificial intelligence should be as cheap as paper",
+        "publisher": "科学网—新闻",
+        "url": "https://news.sciencenet.cn/htmlnews/2026/8/569423.shtm",
+        "snippet": "",
+        "published_at": "2026-08-07T08:31:08+00:00",
+        "source_language": "zh"
+      },
+      "article_b": {
+        "original_headline": "Artificial Intelligence: the hype, the dangers, and the resistance—Part II",
+        "english_headline": "Artificial Intelligence: the hype, the dangers, and the resistance—Part II",
+        "publisher": "mronline.org",
+        "url": "https://mronline.org/2026/08/10/artificial-intelligence-the-hype-the-dangers-and-the-resistance-part-ii",
+        "snippet": "",
+        "published_at": "2026-08-10T13:00:37+00:00",
+        "source_language": "en"
+      },
+      "day_gap": 3.187,
+      "minilm_similarity": 0.7259,
+      "modernbert_same_probability": 0.6194,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 23.7033
+    },
+    {
+      "sample_id": "active_015",
+      "pair_id": "230d1144417e82cea6c7ebe2356b9792__560f50f4b6ac03e4e9b06c1a2622ab5b",
+      "article_a_id": "230d1144417e82cea6c7ebe2356b9792",
+      "article_b_id": "560f50f4b6ac03e4e9b06c1a2622ab5b",
+      "article_a": {
+        "original_headline": "VIDÉO. Former les élèves et les professeurs à l'intelligence artificielle - L'École du futur",
+        "english_headline": "Video: Former Students and Teachers on Artificial Intelligence - The Future School",
+        "publisher": "Ouest-France",
+        "url": "https://www.ouest-france.fr/high-tech/intelligence-artificielle/video-former-les-eleves-et-les-professeurs-a-l-intelligence-artificielle-l-ecole-du-futur-97c11381-f2dc-376f-973d-58926cf5b622",
+        "snippet": "",
+        "published_at": "2026-08-07T08:07:53+00:00",
+        "source_language": "fr"
+      },
+      "article_b": {
+        "original_headline": "Artificial Intelligence: the hype, the dangers, and the resistance—Part II",
+        "english_headline": "Artificial Intelligence: the hype, the dangers, and the resistance—Part II",
+        "publisher": "mronline.org",
+        "url": "https://mronline.org/2026/08/10/artificial-intelligence-the-hype-the-dangers-and-the-resistance-part-ii",
+        "snippet": "",
+        "published_at": "2026-08-10T13:00:37+00:00",
+        "source_language": "en"
+      },
+      "day_gap": 3.203,
+      "minilm_similarity": 0.7106,
+      "modernbert_same_probability": 0.5943,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 23.6992
+    },
+    {
+      "sample_id": "active_016",
+      "pair_id": "9fb86dfdfdfb4028d4e4df5315dc5964__dcdc219de858c487f30ead4dd490e644",
+      "article_a_id": "dcdc219de858c487f30ead4dd490e644",
+      "article_b_id": "9fb86dfdfdfb4028d4e4df5315dc5964",
+      "article_a": {
+        "original_headline": "Artificial intelligence in the classroom: what could it look like?",
+        "english_headline": "Artificial intelligence in the classroom: what could it look like?",
+        "publisher": "WSLS",
+        "url": "https://www.wsls.com/news/local/2026/08/10/ai-in-the-classroom-btr",
+        "snippet": "",
+        "published_at": "2026-08-10T21:24:19+00:00",
+        "source_language": "en"
+      },
+      "article_b": {
+        "original_headline": "AI in Nebraska education: Parents, teachers and students grapple with artificial intelligence in schools",
+        "english_headline": "AI in Nebraska education: Parents, teachers and students grapple with artificial intelligence in schools",
+        "publisher": "Nebraska Public Media",
+        "url": "https://nebraskapublicmedia.org/en/news/news-articles/ai-in-nebraska-education-parents-teachers-and-students-grapple-with-artificial-intelligence-in-schools",
+        "snippet": "",
+        "published_at": "2026-08-10T11:02:41+00:00",
+        "source_language": "en"
+      },
+      "day_gap": 0.432,
+      "minilm_similarity": 0.8071,
+      "modernbert_same_probability": 0.5524,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.75,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "high_similarity_not_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.892
+    },
+    {
+      "sample_id": "active_017",
+      "pair_id": "8b38afac2e4d9e3764078e0253d94553__c5cad4da2f28c4ae6e0b7a67e9c20d3d",
+      "article_a_id": "8b38afac2e4d9e3764078e0253d94553",
+      "article_b_id": "c5cad4da2f28c4ae6e0b7a67e9c20d3d",
+      "article_a": {
+        "original_headline": "Artificial intelligence: Why firms are struggling to set prices",
+        "english_headline": "Artificial intelligence: Why firms are struggling to set prices",
+        "publisher": "BBC",
+        "url": "https://www.bbc.com/news/articles/c872r52x7jgo",
+        "snippet": "",
+        "published_at": "2026-08-11T23:03:52+00:00",
+        "source_language": "en"
+      },
+      "article_b": {
+        "original_headline": "Artificial Intelligence: Moving up the Investment Value Chain",
+        "english_headline": "Artificial Intelligence: Moving up the Investment Value Chain",
+        "publisher": "ai-cio.com",
+        "url": "https://www.ai-cio.com/news/artificial-intelligence-moving-up-the-investment-value-chain",
+        "snippet": "",
+        "published_at": "2026-08-10T20:05:00+00:00",
+        "source_language": "en"
+      },
+      "day_gap": 1.124,
+      "minilm_similarity": 0.814,
+      "modernbert_same_probability": 0.5527,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "high_similarity_not_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.719
+    },
+    {
+      "sample_id": "active_018",
+      "pair_id": "8c83e2030f495a497da4a1313891fc87__c9653c5ae136cbad0a59f335e3fcd2a4",
+      "article_a_id": "8c83e2030f495a497da4a1313891fc87",
+      "article_b_id": "c9653c5ae136cbad0a59f335e3fcd2a4",
+      "article_a": {
+        "original_headline": "驾驭好人工智能这匹千里马",
+        "english_headline": "Master the giant horse of artificial intelligence",
+        "publisher": "中山网",
+        "url": "http://www.zsnews.cn/news/index/view/cateid/37/id/780344.html?platform=mobile",
+        "snippet": "",
+        "published_at": "2026-08-06T06:28:34+00:00",
+        "source_language": "zh"
+      },
+      "article_b": {
+        "original_headline": "Les déboires boursiers de l'Intelligence Artificielle",
+        "english_headline": "The Financial Troubles of Artificial Intelligence",
+        "publisher": "Le Club de Mediapart",
+        "url": "https://blogs.mediapart.fr/pierre-sassier/blog/100826/les-deboires-boursiers-de-lintelligence-artificielle",
+        "snippet": "",
+        "published_at": "2026-08-10T14:35:08+00:00",
+        "source_language": "fr"
+      },
+      "day_gap": 4.338,
+      "minilm_similarity": 0.7201,
+      "modernbert_same_probability": 0.5767,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.33,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 23.4155
+    },
+    {
+      "sample_id": "active_019",
+      "pair_id": "4d166d276c41e99c605ad602969e56be__c9653c5ae136cbad0a59f335e3fcd2a4",
+      "article_a_id": "c9653c5ae136cbad0a59f335e3fcd2a4",
+      "article_b_id": "4d166d276c41e99c605ad602969e56be",
+      "article_a": {
+        "original_headline": "Les déboires boursiers de l'Intelligence Artificielle",
+        "english_headline": "The Financial Troubles of Artificial Intelligence",
+        "publisher": "Le Club de Mediapart",
+        "url": "https://blogs.mediapart.fr/pierre-sassier/blog/100826/les-deboires-boursiers-de-lintelligence-artificielle",
+        "snippet": "",
+        "published_at": "2026-08-10T14:35:08+00:00",
+        "source_language": "fr"
+      },
+      "article_b": {
+        "original_headline": "Artificial Intelligence – A Question of Distribution",
+        "english_headline": "Artificial Intelligence – A Question of Distribution",
+        "publisher": "Global Policy Journal",
+        "url": "https://www.globalpolicyjournal.com/blog/12/08/2026/artificial-intelligence-question-distribution",
+        "snippet": "",
+        "published_at": "2026-08-11T23:00:01+00:00",
+        "source_language": "en"
+      },
+      "day_gap": 1.351,
+      "minilm_similarity": 0.7524,
+      "modernbert_same_probability": 0.6473,
+      "qwen_relationship": "unclear",
+      "qwen_confidence": 0.25,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 23.1623
+    },
+    {
+      "sample_id": "active_020",
+      "pair_id": "0abe8ae43371f46415100bec5898f8ab__cf3d9e5bfbd831bd84978fe0c5c7058f",
+      "article_a_id": "0abe8ae43371f46415100bec5898f8ab",
+      "article_b_id": "cf3d9e5bfbd831bd84978fe0c5c7058f",
+      "article_a": {
+        "original_headline": "人工智能被用于设计全新病毒",
+        "english_headline": "Artificial intelligence is used to design new viruses.",
+        "publisher": "BBC",
+        "url": "https://www.bbc.com/zhongwen/articles/crrvndrv1pyo/simp",
+        "snippet": "",
+        "published_at": "2026-08-07T09:30:30+00:00",
+        "source_language": "zh"
+      },
+      "article_b": {
+        "original_headline": "Opinion | Don't Anthropomorphize Artificial Intelligence",
+        "english_headline": "Opinion | Don't Anthropomorphize Artificial Intelligence",
+        "publisher": "WSJ",
+        "url": "https://www.wsj.com/opinion/don-t-anthropomorphize-artificial-intelligence-ad9ad358",
+        "snippet": "",
+        "published_at": "2026-08-07T15:43:00+00:00",
+        "source_language": "en"
+      },
+      "day_gap": 0.259,
+      "minilm_similarity": 0.6008,
+      "modernbert_same_probability": 0.5627,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 22.9352
+    },
+    {
+      "sample_id": "active_021",
+      "pair_id": "2a9fa0652e87ecb275a954df167f62b0__30a57f1d8c67894be98f935b6004230a",
+      "article_a_id": "30a57f1d8c67894be98f935b6004230a",
+      "article_b_id": "2a9fa0652e87ecb275a954df167f62b0",
+      "article_a": {
+        "original_headline": "以“人工智能+”激活高质量发展新动能",
+        "english_headline": "“Artificial Intelligence+” activates new momentum for high-quality development",
+        "publisher": "新京报",
+        "url": "https://www.bjnews.com.cn/detail/1786404040129904.html",
+        "snippet": "",
+        "published_at": "2026-08-10T23:23:00+00:00",
+        "source_language": "zh"
+      },
+      "article_b": {
+        "original_headline": "Intelligence artificielle : « Le monde agricole me pousse à un éloge de la lenteur »",
+        "english_headline": "Artificial intelligence: \"The agricultural world pushes me toward a praise of slowness",
+        "publisher": "La Croix",
+        "url": "https://www.la-croix.com/a-vif/intelligence-artificielle-le-monde-agricole-me-pousse-a-un-eloge-de-la-lenteur-20260809",
+        "snippet": "",
+        "published_at": "2026-08-10T04:31:06+00:00",
+        "source_language": "fr"
+      },
+      "day_gap": 0.786,
+      "minilm_similarity": 0.5973,
+      "modernbert_same_probability": 0.5539,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 22.8035
+    },
+    {
+      "sample_id": "active_022",
+      "pair_id": "6119fd0ff75e32f117862e2fff1f69d9__cf3d9e5bfbd831bd84978fe0c5c7058f",
+      "article_a_id": "cf3d9e5bfbd831bd84978fe0c5c7058f",
+      "article_b_id": "6119fd0ff75e32f117862e2fff1f69d9",
+      "article_a": {
+        "original_headline": "Opinion | Don't Anthropomorphize Artificial Intelligence",
+        "english_headline": "Opinion | Don't Anthropomorphize Artificial Intelligence",
+        "publisher": "WSJ",
+        "url": "https://www.wsj.com/opinion/don-t-anthropomorphize-artificial-intelligence-ad9ad358",
+        "snippet": "",
+        "published_at": "2026-08-07T15:43:00+00:00",
+        "source_language": "en"
+      },
+      "article_b": {
+        "original_headline": "AI赋能丨AI推动天文观测向“智能分析与自主发现”演进",
+        "english_headline": "AI Empowerment | AI Promotes Astronomical Observations toward “Intelligent Analysis and Autonomous Discovery”",
+        "publisher": "中国科技网",
+        "url": "https://www.stdaily.com/web/gdxw/2026-08/06/content_560305.html",
+        "snippet": "",
+        "published_at": "2026-08-06T11:29:27+00:00",
+        "source_language": "zh"
+      },
+      "day_gap": 1.176,
+      "minilm_similarity": 0.5842,
+      "modernbert_same_probability": 0.5684,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 22.706
+    },
+    {
+      "sample_id": "active_023",
+      "pair_id": "15c7c8bb5359f115090875d60c7b5948__bdaeed05625f7af98bc946e15f0deeb5",
+      "article_a_id": "bdaeed05625f7af98bc946e15f0deeb5",
+      "article_b_id": "15c7c8bb5359f115090875d60c7b5948",
+      "article_a": {
+        "original_headline": "中国经济面面观丨向善而行：人工智能时代如何迈向全球治理",
+        "english_headline": "A Comprehensive View of the Chinese Economy | Moving Towards Goodness: How to Advance Global Governance in the Era of Artificial Intelligence",
+        "publisher": "新华网",
+        "url": "https://www.news.cn/20260808/3fb63406430a4d3bba93f13cb340fa7f/c.html",
+        "snippet": "",
+        "published_at": "2026-08-08T13:57:24+00:00",
+        "source_language": "zh"
+      },
+      "article_b": {
+        "original_headline": "数智龙江 智启新程｜黑龙江省“人工智能+”赋能行业高质量发展峰会成功举办",
+        "english_headline": "Digital and Intelligent Longjiang: Enabling a New Era with Intelligence | The High-Quality Development Summit on “Artificial Intelligence +” in Heilongjiang Province Successfully Held",
+        "publisher": "通信世界网",
+        "url": "https://www.cww.net.cn/article?id=612482",
+        "snippet": "",
+        "published_at": "2026-08-10T09:25:00+00:00",
+        "source_language": "zh"
+      },
+      "day_gap": 1.811,
+      "minilm_similarity": 0.7025,
+      "modernbert_same_probability": 0.6246,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 22.5473
+    },
+    {
+      "sample_id": "active_024",
+      "pair_id": "8c83e2030f495a497da4a1313891fc87__a65e45ad69b883eb1df31016b612ffac",
+      "article_a_id": "a65e45ad69b883eb1df31016b612ffac",
+      "article_b_id": "8c83e2030f495a497da4a1313891fc87",
+      "article_a": {
+        "original_headline": "Artificial Intelligence at Lowes",
+        "english_headline": "Artificial Intelligence at Lowes",
+        "publisher": "Emerj Artificial Intelligence Research",
+        "url": "https://emerj.com/artificial-intelligence-at-lowes",
+        "snippet": "",
+        "published_at": "2026-08-10T12:45:16+00:00",
+        "source_language": "en"
+      },
+      "article_b": {
+        "original_headline": "驾驭好人工智能这匹千里马",
+        "english_headline": "Master the giant horse of artificial intelligence",
+        "publisher": "中山网",
+        "url": "http://www.zsnews.cn/news/index/view/cateid/37/id/780344.html?platform=mobile",
+        "snippet": "",
+        "published_at": "2026-08-06T06:28:34+00:00",
+        "source_language": "zh"
+      },
+      "day_gap": 4.262,
+      "minilm_similarity": 0.7271,
+      "modernbert_same_probability": 0.6053,
+      "qwen_relationship": "unclear",
+      "qwen_confidence": 0.25,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 22.4345
+    },
+    {
+      "sample_id": "active_025",
+      "pair_id": "0a210232de12b02d5230a6af1e8a958a__cf3d9e5bfbd831bd84978fe0c5c7058f",
+      "article_a_id": "cf3d9e5bfbd831bd84978fe0c5c7058f",
+      "article_b_id": "0a210232de12b02d5230a6af1e8a958a",
+      "article_a": {
+        "original_headline": "Opinion | Don't Anthropomorphize Artificial Intelligence",
+        "english_headline": "Opinion | Don't Anthropomorphize Artificial Intelligence",
+        "publisher": "WSJ",
+        "url": "https://www.wsj.com/opinion/don-t-anthropomorphize-artificial-intelligence-ad9ad358",
+        "snippet": "",
+        "published_at": "2026-08-07T15:43:00+00:00",
+        "source_language": "en"
+      },
+      "article_b": {
+        "original_headline": "Intelligence artificielle : de nouvelles failles de sécurité détectées chez OpenAI et Anthropic",
+        "english_headline": "Artificial Intelligence: New security flaws detected at OpenAI and Anthropic",
+        "publisher": "Le Parisien",
+        "url": "https://www.leparisien.fr/high-tech/intelligence-artificielle-de-nouvelles-failles-de-securite-detectees-chez-openai-et-anthropic-05-08-2026-5FKQNQ2JZZCYZMDRS5NFBEGG5I.php",
+        "snippet": "",
+        "published_at": "2026-08-05T07:15:32+00:00",
+        "source_language": "fr"
+      },
+      "day_gap": 2.352,
+      "minilm_similarity": 0.6612,
+      "modernbert_same_probability": 0.5641,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 22.412
+    },
+    {
+      "sample_id": "active_026",
+      "pair_id": "15c7c8bb5359f115090875d60c7b5948__230d1144417e82cea6c7ebe2356b9792",
+      "article_a_id": "15c7c8bb5359f115090875d60c7b5948",
+      "article_b_id": "230d1144417e82cea6c7ebe2356b9792",
+      "article_a": {
+        "original_headline": "数智龙江 智启新程｜黑龙江省“人工智能+”赋能行业高质量发展峰会成功举办",
+        "english_headline": "Digital and Intelligent Longjiang: Enabling a New Era with Intelligence | The High-Quality Development Summit on “Artificial Intelligence +” in Heilongjiang Province Successfully Held",
+        "publisher": "通信世界网",
+        "url": "https://www.cww.net.cn/article?id=612482",
+        "snippet": "",
+        "published_at": "2026-08-10T09:25:00+00:00",
+        "source_language": "zh"
+      },
+      "article_b": {
+        "original_headline": "VIDÉO. Former les élèves et les professeurs à l'intelligence artificielle - L'École du futur",
+        "english_headline": "Video: Former Students and Teachers on Artificial Intelligence - The Future School",
+        "publisher": "Ouest-France",
+        "url": "https://www.ouest-france.fr/high-tech/intelligence-artificielle/video-former-les-eleves-et-les-professeurs-a-l-intelligence-artificielle-l-ecole-du-futur-97c11381-f2dc-376f-973d-58926cf5b622",
+        "snippet": "",
+        "published_at": "2026-08-07T08:07:53+00:00",
+        "source_language": "fr"
+      },
+      "day_gap": 3.054,
+      "minilm_similarity": 0.5907,
+      "modernbert_same_probability": 0.6132,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 22.2365
+    },
+    {
+      "sample_id": "active_027",
+      "pair_id": "51330d8bd1d2d16f007a223a234a0c42__a65e45ad69b883eb1df31016b612ffac",
+      "article_a_id": "a65e45ad69b883eb1df31016b612ffac",
+      "article_b_id": "51330d8bd1d2d16f007a223a234a0c42",
+      "article_a": {
+        "original_headline": "Artificial Intelligence at Lowes",
+        "english_headline": "Artificial Intelligence at Lowes",
+        "publisher": "Emerj Artificial Intelligence Research",
+        "url": "https://emerj.com/artificial-intelligence-at-lowes",
+        "snippet": "",
+        "published_at": "2026-08-10T12:45:16+00:00",
+        "source_language": "en"
+      },
+      "article_b": {
+        "original_headline": "AI Act : voici les nouvelles règles à respecter concernant l’intelligence artificielle",
+        "english_headline": "AI Act: Here are the new rules to follow regarding artificial intelligence",
+        "publisher": "Immobilier 2.0",
+        "url": "https://immo2.pro/actualite-immobilier/ai-act-voici-les-nouvelles-regles-a-respecter-concernant-lintelligence-artificielle",
+        "snippet": "",
+        "published_at": "2026-08-10T13:47:32+00:00",
+        "source_language": "fr"
+      },
+      "day_gap": 0.043,
+      "minilm_similarity": 0.6254,
+      "modernbert_same_probability": 0.5723,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.9893
+    },
+    {
+      "sample_id": "active_028",
+      "pair_id": "008212d70041c391b6f8684694438406__6bef5c33b3ed005dfb5701deedfa43fb",
+      "article_a_id": "6bef5c33b3ed005dfb5701deedfa43fb",
+      "article_b_id": "008212d70041c391b6f8684694438406",
+      "article_a": {
+        "original_headline": "Surveillance, renseignement, planification des opérations… Quand l'intelligence artificielle s'invite sur les champs de bataille",
+        "english_headline": "Surveillance, intelligence, operation planning... When artificial intelligence enters the battlefield",
+        "publisher": "Les Echos",
+        "url": "https://www.lesechos.fr/tech-medias/intelligence-artificielle/surveillance-renseignement-planification-des-operations-quand-lintelligence-artificielle-sinvite-sur-les-champs-de-bataille-2246581",
+        "snippet": "",
+        "published_at": "2026-08-11T05:05:08+00:00",
+        "source_language": "fr"
+      },
+      "article_b": {
+        "original_headline": "Artificial intelligence in corporate decision-making: why human oversight still matters",
+        "english_headline": "Artificial intelligence in corporate decision-making: why human oversight still matters",
+        "publisher": "Dentons",
+        "url": "https://www.dentons.com/en/insights/articles/2026/august/11/artificial-intelligence-in-corporate-decision-making-why-human-oversight-still-matters",
+        "snippet": "",
+        "published_at": "2026-08-11T06:07:23+00:00",
+        "source_language": "en"
+      },
+      "day_gap": 0.043,
+      "minilm_similarity": 0.5986,
+      "modernbert_same_probability": 0.5618,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.9893
+    },
+    {
+      "sample_id": "active_029",
+      "pair_id": "9f4f13291ded02d56762d00dabfdb0ca__ef5a1ccbf308dfdcbc46bd243e21b43f",
+      "article_a_id": "9f4f13291ded02d56762d00dabfdb0ca",
+      "article_b_id": "ef5a1ccbf308dfdcbc46bd243e21b43f",
+      "article_a": {
+        "original_headline": "底层突破筑牢人工智能技术根基",
+        "english_headline": "Breakthrough at the bottom to strengthen the foundation of artificial intelligence technology",
+        "publisher": "新华网",
+        "url": "http://www.news.cn/tech/20260806/3688e40a3ab94efeb486c97c5ba5ef65/c.html",
+        "snippet": "",
+        "published_at": "2026-08-06T01:21:15+00:00",
+        "source_language": "zh"
+      },
+      "article_b": {
+        "original_headline": "Chez Google, le grand ménage à la tête de l’intelligence artificielle",
+        "english_headline": "At Google, a major cleanup at the head of artificial intelligence",
+        "publisher": "Le Figaro",
+        "url": "https://www.lefigaro.fr/secteur/high-tech/chez-google-le-grand-menage-a-la-tete-de-l-intelligence-artificielle-20260806",
+        "snippet": "",
+        "published_at": "2026-08-05T23:51:58+00:00",
+        "source_language": "fr"
+      },
+      "day_gap": 0.062,
+      "minilm_similarity": 0.6657,
+      "modernbert_same_probability": 0.6098,
+      "qwen_relationship": "unclear",
+      "qwen_confidence": 0.33,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.9845
+    },
+    {
+      "sample_id": "active_030",
+      "pair_id": "a0fb2b8f515265622fdcde75e36f7241__a65e45ad69b883eb1df31016b612ffac",
+      "article_a_id": "a65e45ad69b883eb1df31016b612ffac",
+      "article_b_id": "a0fb2b8f515265622fdcde75e36f7241",
+      "article_a": {
+        "original_headline": "Artificial Intelligence at Lowes",
+        "english_headline": "Artificial Intelligence at Lowes",
+        "publisher": "Emerj Artificial Intelligence Research",
+        "url": "https://emerj.com/artificial-intelligence-at-lowes",
+        "snippet": "",
+        "published_at": "2026-08-10T12:45:16+00:00",
+        "source_language": "en"
+      },
+      "article_b": {
+        "original_headline": "Le prochain défi de l’intelligence artificielle est de comprendre le monde réel",
+        "english_headline": "The next challenge of artificial intelligence is to understand the real world",
+        "publisher": "Courrier international",
+        "url": "https://www.courrierinternational.com/une/une-du-jour-le-prochain-defi-de-l-intelligence-artificielle-est-de-comprendre-le-monde-reel_257486",
+        "snippet": "",
+        "published_at": "2026-08-10T14:42:02+00:00",
+        "source_language": "fr"
+      },
+      "day_gap": 0.081,
+      "minilm_similarity": 0.6148,
+      "modernbert_same_probability": 0.5601,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.9797
+    },
+    {
+      "sample_id": "active_031",
+      "pair_id": "56a4024c4578b86c1a2485026e666f3a__e542a1f7d6dd5b1fa6d81dadd54b9019",
+      "article_a_id": "56a4024c4578b86c1a2485026e666f3a",
+      "article_b_id": "e542a1f7d6dd5b1fa6d81dadd54b9019",
+      "article_a": {
+        "original_headline": "WORDS OF WISDOM: Thoughts on using Artificial Intelligence",
+        "english_headline": "WORDS OF WISDOM: Thoughts on using Artificial Intelligence",
+        "publisher": "Tillamook County Pioneer",
+        "url": "https://www.tillamookcountypioneer.net/words-of-wisdom-thoughts-on-using-artificial-intelligence",
+        "snippet": "",
+        "published_at": "2026-08-07T01:04:44+00:00",
+        "source_language": "en"
+      },
+      "article_b": {
+        "original_headline": "“向善”亦“为恶”，人工智能如何“修身立德”",
+        "english_headline": "“Being good” is also “being evil”. How does artificial intelligence “cultivate oneself and uphold virtue”?",
+        "publisher": "科学网—新闻",
+        "url": "https://news.sciencenet.cn/sbhtmlnews/2026/8/390797.shtm",
+        "snippet": "",
+        "published_at": "2026-08-07T03:30:03+00:00",
+        "source_language": "zh"
+      },
+      "day_gap": 0.101,
+      "minilm_similarity": 0.688,
+      "modernbert_same_probability": 0.618,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.9748
+    },
+    {
+      "sample_id": "active_032",
+      "pair_id": "ee5afb8291b03734861d09419808e472__f235c57dffd9a991cfd92a9727951462",
+      "article_a_id": "f235c57dffd9a991cfd92a9727951462",
+      "article_b_id": "ee5afb8291b03734861d09419808e472",
+      "article_a": {
+        "original_headline": "AI Act -Généré par l’intelligence artificielle : comment s’y retrouver",
+        "english_headline": "AI Act - Generated by Artificial Intelligence: How to Find Your Way",
+        "publisher": "Service Public",
+        "url": "https://www.service-public.gouv.fr/particuliers/actualites/A19029",
+        "snippet": "",
+        "published_at": "2026-08-06T22:00:00+00:00",
+        "source_language": "fr"
+      },
+      "article_b": {
+        "original_headline": "Artificial Intelligence used to design brand new viruses",
+        "english_headline": "Artificial Intelligence used to design brand new viruses",
+        "publisher": "BBC",
+        "url": "https://www.bbc.com/news/articles/c5y3j3ngevmo",
+        "snippet": "",
+        "published_at": "2026-08-06T18:01:52+00:00",
+        "source_language": "en"
+      },
+      "day_gap": 0.165,
+      "minilm_similarity": 0.6473,
+      "modernbert_same_probability": 0.6432,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.9588
+    },
+    {
+      "sample_id": "active_033",
+      "pair_id": "3251c09a8a956439d28461adce06afe7__6bef5c33b3ed005dfb5701deedfa43fb",
+      "article_a_id": "3251c09a8a956439d28461adce06afe7",
+      "article_b_id": "6bef5c33b3ed005dfb5701deedfa43fb",
+      "article_a": {
+        "original_headline": "科技新观察丨“人工智能局”相继挂牌，在下一盘什么棋？",
+        "english_headline": "Tech New Observation | The “Artificial Intelligence Bureau” has been established one after another. What game is being played next?",
+        "publisher": "中国科技网",
+        "url": "https://www.stdaily.com/web/2026-08/07/content_560381.html",
+        "snippet": "",
+        "published_at": "2026-08-06T23:59:00+00:00",
+        "source_language": "zh"
+      },
+      "article_b": {
+        "original_headline": "Surveillance, renseignement, planification des opérations… Quand l'intelligence artificielle s'invite sur les champs de bataille",
+        "english_headline": "Surveillance, intelligence, operation planning... When artificial intelligence enters the battlefield",
+        "publisher": "Les Echos",
+        "url": "https://www.lesechos.fr/tech-medias/intelligence-artificielle/surveillance-renseignement-planification-des-operations-quand-lintelligence-artificielle-sinvite-sur-les-champs-de-bataille-2246581",
+        "snippet": "",
+        "published_at": "2026-08-11T05:05:08+00:00",
+        "source_language": "fr"
+      },
+      "day_gap": 4.213,
+      "minilm_similarity": 0.6049,
+      "modernbert_same_probability": 0.6169,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.75,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.9467
+    },
+    {
+      "sample_id": "active_034",
+      "pair_id": "2e65029c9f825d7570f7c12f51b52bce__8c83e2030f495a497da4a1313891fc87",
+      "article_a_id": "8c83e2030f495a497da4a1313891fc87",
+      "article_b_id": "2e65029c9f825d7570f7c12f51b52bce",
+      "article_a": {
+        "original_headline": "驾驭好人工智能这匹千里马",
+        "english_headline": "Master the giant horse of artificial intelligence",
+        "publisher": "中山网",
+        "url": "http://www.zsnews.cn/news/index/view/cateid/37/id/780344.html?platform=mobile",
+        "snippet": "",
+        "published_at": "2026-08-06T06:28:34+00:00",
+        "source_language": "zh"
+      },
+      "article_b": {
+        "original_headline": "An African vision of artificial intelligence",
+        "english_headline": "An African vision of artificial intelligence",
+        "publisher": "The Economist",
+        "url": "https://www.economist.com/middle-east-and-africa/2026/08/06/an-african-vision-of-artificial-intelligence",
+        "snippet": "",
+        "published_at": "2026-08-06T13:00:25+00:00",
+        "source_language": "en"
+      },
+      "day_gap": 0.272,
+      "minilm_similarity": 0.6761,
+      "modernbert_same_probability": 0.5958,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.932
+    },
+    {
+      "sample_id": "active_035",
+      "pair_id": "15bcaf90d856694a3d3e0e37dc0bce81__6853b036f73a15eb40ba8e8e7040f4f4",
+      "article_a_id": "6853b036f73a15eb40ba8e8e7040f4f4",
+      "article_b_id": "15bcaf90d856694a3d3e0e37dc0bce81",
+      "article_a": {
+        "original_headline": "之江实验室王坚院士：人工智能应该像纸一样便宜",
+        "english_headline": "Academician Wang Jian of Zhijiang Laboratory: Artificial intelligence should be as cheap as paper",
+        "publisher": "科学网—新闻",
+        "url": "https://news.sciencenet.cn/htmlnews/2026/8/569423.shtm",
+        "snippet": "",
+        "published_at": "2026-08-07T08:31:08+00:00",
+        "source_language": "zh"
+      },
+      "article_b": {
+        "original_headline": "Pour la Chine, l’intelligence artificielle est aussi une opportunité diplomatique",
+        "english_headline": "For China, artificial intelligence is also a diplomatic opportunity",
+        "publisher": "Mediapart",
+        "url": "https://www.mediapart.fr/journal/international/070826/pour-la-chine-l-intelligence-artificielle-est-aussi-une-opportunite-diplomatique",
+        "snippet": "",
+        "published_at": "2026-08-07T15:24:13+00:00",
+        "source_language": "fr"
+      },
+      "day_gap": 0.287,
+      "minilm_similarity": 0.6723,
+      "modernbert_same_probability": 0.5836,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.9283
+    },
+    {
+      "sample_id": "active_036",
+      "pair_id": "560f50f4b6ac03e4e9b06c1a2622ab5b__c5cad4da2f28c4ae6e0b7a67e9c20d3d",
+      "article_a_id": "c5cad4da2f28c4ae6e0b7a67e9c20d3d",
+      "article_b_id": "560f50f4b6ac03e4e9b06c1a2622ab5b",
+      "article_a": {
+        "original_headline": "Artificial Intelligence: Moving up the Investment Value Chain",
+        "english_headline": "Artificial Intelligence: Moving up the Investment Value Chain",
+        "publisher": "ai-cio.com",
+        "url": "https://www.ai-cio.com/news/artificial-intelligence-moving-up-the-investment-value-chain",
+        "snippet": "",
+        "published_at": "2026-08-10T20:05:00+00:00",
+        "source_language": "en"
+      },
+      "article_b": {
+        "original_headline": "Artificial Intelligence: the hype, the dangers, and the resistance—Part II",
+        "english_headline": "Artificial Intelligence: the hype, the dangers, and the resistance—Part II",
+        "publisher": "mronline.org",
+        "url": "https://mronline.org/2026/08/10/artificial-intelligence-the-hype-the-dangers-and-the-resistance-part-ii",
+        "snippet": "",
+        "published_at": "2026-08-10T13:00:37+00:00",
+        "source_language": "en"
+      },
+      "day_gap": 0.295,
+      "minilm_similarity": 0.7013,
+      "modernbert_same_probability": 0.5879,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.9262
+    },
+    {
+      "sample_id": "active_037",
+      "pair_id": "6119fd0ff75e32f117862e2fff1f69d9__f235c57dffd9a991cfd92a9727951462",
+      "article_a_id": "f235c57dffd9a991cfd92a9727951462",
+      "article_b_id": "6119fd0ff75e32f117862e2fff1f69d9",
+      "article_a": {
+        "original_headline": "AI Act -Généré par l’intelligence artificielle : comment s’y retrouver",
+        "english_headline": "AI Act - Generated by Artificial Intelligence: How to Find Your Way",
+        "publisher": "Service Public",
+        "url": "https://www.service-public.gouv.fr/particuliers/actualites/A19029",
+        "snippet": "",
+        "published_at": "2026-08-06T22:00:00+00:00",
+        "source_language": "fr"
+      },
+      "article_b": {
+        "original_headline": "AI赋能丨AI推动天文观测向“智能分析与自主发现”演进",
+        "english_headline": "AI Empowerment | AI Promotes Astronomical Observations toward “Intelligent Analysis and Autonomous Discovery”",
+        "publisher": "中国科技网",
+        "url": "https://www.stdaily.com/web/gdxw/2026-08/06/content_560305.html",
+        "snippet": "",
+        "published_at": "2026-08-06T11:29:27+00:00",
+        "source_language": "zh"
+      },
+      "day_gap": 0.438,
+      "minilm_similarity": 0.6307,
+      "modernbert_same_probability": 0.5723,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.8905
+    },
+    {
+      "sample_id": "active_038",
+      "pair_id": "109b0284c2c3cbb93adbddf68ba7e0bf__6bef5c33b3ed005dfb5701deedfa43fb",
+      "article_a_id": "109b0284c2c3cbb93adbddf68ba7e0bf",
+      "article_b_id": "6bef5c33b3ed005dfb5701deedfa43fb",
+      "article_a": {
+        "original_headline": "60th World Day of Peace theme: 'Artificial intelligence must be disarmed'",
+        "english_headline": "60th World Day of Peace theme: 'Artificial intelligence must be disarmed'",
+        "publisher": "Independent Catholic News",
+        "url": "https://www.indcatholicnews.com/news/55637",
+        "snippet": "",
+        "published_at": "2026-08-11T17:20:01+00:00",
+        "source_language": "en"
+      },
+      "article_b": {
+        "original_headline": "Surveillance, renseignement, planification des opérations… Quand l'intelligence artificielle s'invite sur les champs de bataille",
+        "english_headline": "Surveillance, intelligence, operation planning... When artificial intelligence enters the battlefield",
+        "publisher": "Les Echos",
+        "url": "https://www.lesechos.fr/tech-medias/intelligence-artificielle/surveillance-renseignement-planification-des-operations-quand-lintelligence-artificielle-sinvite-sur-les-champs-de-bataille-2246581",
+        "snippet": "",
+        "published_at": "2026-08-11T05:05:08+00:00",
+        "source_language": "fr"
+      },
+      "day_gap": 0.51,
+      "minilm_similarity": 0.643,
+      "modernbert_same_probability": 0.6341,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.75,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.8725
+    },
+    {
+      "sample_id": "active_039",
+      "pair_id": "2f9896fc58685c2f84f2a15f12c72f9e__e542a1f7d6dd5b1fa6d81dadd54b9019",
+      "article_a_id": "e542a1f7d6dd5b1fa6d81dadd54b9019",
+      "article_b_id": "2f9896fc58685c2f84f2a15f12c72f9e",
+      "article_a": {
+        "original_headline": "“向善”亦“为恶”，人工智能如何“修身立德”",
+        "english_headline": "“Being good” is also “being evil”. How does artificial intelligence “cultivate oneself and uphold virtue”?",
+        "publisher": "科学网—新闻",
+        "url": "https://news.sciencenet.cn/sbhtmlnews/2026/8/390797.shtm",
+        "snippet": "",
+        "published_at": "2026-08-07T03:30:03+00:00",
+        "source_language": "zh"
+      },
+      "article_b": {
+        "original_headline": "Aux États-Unis, l’économie est dopée à l’intelligence artificielle",
+        "english_headline": "In the United States, the economy is boosted by artificial intelligence",
+        "publisher": "Mediapart",
+        "url": "https://www.mediapart.fr/journal/international/070826/aux-etats-unis-l-economie-est-dopee-l-intelligence-artificielle",
+        "snippet": "",
+        "published_at": "2026-08-07T15:50:46+00:00",
+        "source_language": "fr"
+      },
+      "day_gap": 0.514,
+      "minilm_similarity": 0.587,
+      "modernbert_same_probability": 0.6469,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.8715
+    },
+    {
+      "sample_id": "active_040",
+      "pair_id": "56a4024c4578b86c1a2485026e666f3a__6119fd0ff75e32f117862e2fff1f69d9",
+      "article_a_id": "56a4024c4578b86c1a2485026e666f3a",
+      "article_b_id": "6119fd0ff75e32f117862e2fff1f69d9",
+      "article_a": {
+        "original_headline": "WORDS OF WISDOM: Thoughts on using Artificial Intelligence",
+        "english_headline": "WORDS OF WISDOM: Thoughts on using Artificial Intelligence",
+        "publisher": "Tillamook County Pioneer",
+        "url": "https://www.tillamookcountypioneer.net/words-of-wisdom-thoughts-on-using-artificial-intelligence",
+        "snippet": "",
+        "published_at": "2026-08-07T01:04:44+00:00",
+        "source_language": "en"
+      },
+      "article_b": {
+        "original_headline": "AI赋能丨AI推动天文观测向“智能分析与自主发现”演进",
+        "english_headline": "AI Empowerment | AI Promotes Astronomical Observations toward “Intelligent Analysis and Autonomous Discovery”",
+        "publisher": "中国科技网",
+        "url": "https://www.stdaily.com/web/gdxw/2026-08/06/content_560305.html",
+        "snippet": "",
+        "published_at": "2026-08-06T11:29:27+00:00",
+        "source_language": "zh"
+      },
+      "day_gap": 0.566,
+      "minilm_similarity": 0.621,
+      "modernbert_same_probability": 0.5647,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.8585
+    },
+    {
+      "sample_id": "active_041",
+      "pair_id": "51330d8bd1d2d16f007a223a234a0c42__5b8094972c6c23036e0cfa3dc7183f91",
+      "article_a_id": "5b8094972c6c23036e0cfa3dc7183f91",
+      "article_b_id": "51330d8bd1d2d16f007a223a234a0c42",
+      "article_a": {
+        "original_headline": "开放共赢是人工智能发展的必由之路（和音）",
+        "english_headline": "Open and win-win cooperation is the inevitable path for the development of artificial intelligence (He Yin)",
+        "publisher": "人民日报",
+        "url": "http://paper.people.com.cn/rmrb/pc/content/202608/10/content_30173909.html",
+        "snippet": "",
+        "published_at": "2026-08-09T22:01:12+00:00",
+        "source_language": "zh"
+      },
+      "article_b": {
+        "original_headline": "AI Act : voici les nouvelles règles à respecter concernant l’intelligence artificielle",
+        "english_headline": "AI Act: Here are the new rules to follow regarding artificial intelligence",
+        "publisher": "Immobilier 2.0",
+        "url": "https://immo2.pro/actualite-immobilier/ai-act-voici-les-nouvelles-regles-a-respecter-concernant-lintelligence-artificielle",
+        "snippet": "",
+        "published_at": "2026-08-10T13:47:32+00:00",
+        "source_language": "fr"
+      },
+      "day_gap": 0.657,
+      "minilm_similarity": 0.6524,
+      "modernbert_same_probability": 0.5729,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.8358
+    },
+    {
+      "sample_id": "active_042",
+      "pair_id": "5b8094972c6c23036e0cfa3dc7183f91__a0fb2b8f515265622fdcde75e36f7241",
+      "article_a_id": "5b8094972c6c23036e0cfa3dc7183f91",
+      "article_b_id": "a0fb2b8f515265622fdcde75e36f7241",
+      "article_a": {
+        "original_headline": "开放共赢是人工智能发展的必由之路（和音）",
+        "english_headline": "Open and win-win cooperation is the inevitable path for the development of artificial intelligence (He Yin)",
+        "publisher": "人民日报",
+        "url": "http://paper.people.com.cn/rmrb/pc/content/202608/10/content_30173909.html",
+        "snippet": "",
+        "published_at": "2026-08-09T22:01:12+00:00",
+        "source_language": "zh"
+      },
+      "article_b": {
+        "original_headline": "Le prochain défi de l’intelligence artificielle est de comprendre le monde réel",
+        "english_headline": "The next challenge of artificial intelligence is to understand the real world",
+        "publisher": "Courrier international",
+        "url": "https://www.courrierinternational.com/une/une-du-jour-le-prochain-defi-de-l-intelligence-artificielle-est-de-comprendre-le-monde-reel_257486",
+        "snippet": "",
+        "published_at": "2026-08-10T14:42:02+00:00",
+        "source_language": "fr"
+      },
+      "day_gap": 0.695,
+      "minilm_similarity": 0.6843,
+      "modernbert_same_probability": 0.6378,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.75,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.8262
+    },
+    {
+      "sample_id": "active_043",
+      "pair_id": "6bef5c33b3ed005dfb5701deedfa43fb__8b38afac2e4d9e3764078e0253d94553",
+      "article_a_id": "8b38afac2e4d9e3764078e0253d94553",
+      "article_b_id": "6bef5c33b3ed005dfb5701deedfa43fb",
+      "article_a": {
+        "original_headline": "Artificial intelligence: Why firms are struggling to set prices",
+        "english_headline": "Artificial intelligence: Why firms are struggling to set prices",
+        "publisher": "BBC",
+        "url": "https://www.bbc.com/news/articles/c872r52x7jgo",
+        "snippet": "",
+        "published_at": "2026-08-11T23:03:52+00:00",
+        "source_language": "en"
+      },
+      "article_b": {
+        "original_headline": "Surveillance, renseignement, planification des opérations… Quand l'intelligence artificielle s'invite sur les champs de bataille",
+        "english_headline": "Surveillance, intelligence, operation planning... When artificial intelligence enters the battlefield",
+        "publisher": "Les Echos",
+        "url": "https://www.lesechos.fr/tech-medias/intelligence-artificielle/surveillance-renseignement-planification-des-operations-quand-lintelligence-artificielle-sinvite-sur-les-champs-de-bataille-2246581",
+        "snippet": "",
+        "published_at": "2026-08-11T05:05:08+00:00",
+        "source_language": "fr"
+      },
+      "day_gap": 0.749,
+      "minilm_similarity": 0.5925,
+      "modernbert_same_probability": 0.6425,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.8127
+    },
+    {
+      "sample_id": "active_044",
+      "pair_id": "2e65029c9f825d7570f7c12f51b52bce__6853b036f73a15eb40ba8e8e7040f4f4",
+      "article_a_id": "6853b036f73a15eb40ba8e8e7040f4f4",
+      "article_b_id": "2e65029c9f825d7570f7c12f51b52bce",
+      "article_a": {
+        "original_headline": "之江实验室王坚院士：人工智能应该像纸一样便宜",
+        "english_headline": "Academician Wang Jian of Zhijiang Laboratory: Artificial intelligence should be as cheap as paper",
+        "publisher": "科学网—新闻",
+        "url": "https://news.sciencenet.cn/htmlnews/2026/8/569423.shtm",
+        "snippet": "",
+        "published_at": "2026-08-07T08:31:08+00:00",
+        "source_language": "zh"
+      },
+      "article_b": {
+        "original_headline": "An African vision of artificial intelligence",
+        "english_headline": "An African vision of artificial intelligence",
+        "publisher": "The Economist",
+        "url": "https://www.economist.com/middle-east-and-africa/2026/08/06/an-african-vision-of-artificial-intelligence",
+        "snippet": "",
+        "published_at": "2026-08-06T13:00:25+00:00",
+        "source_language": "en"
+      },
+      "day_gap": 0.813,
+      "minilm_similarity": 0.611,
+      "modernbert_same_probability": 0.626,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.95,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.7967
+    },
+    {
+      "sample_id": "active_045",
+      "pair_id": "230d1144417e82cea6c7ebe2356b9792__bd12c3ab34f7c18ade5c3a1d0967e7fb",
+      "article_a_id": "bd12c3ab34f7c18ade5c3a1d0967e7fb",
+      "article_b_id": "230d1144417e82cea6c7ebe2356b9792",
+      "article_a": {
+        "original_headline": "新一代人工智能赋能创新医疗新范式——第二十一期北京大学临床科学家培养计划“大课堂”举办",
+        "english_headline": "The new generation of artificial intelligence enables a new paradigm in innovative medicine — The 21st “Big Classroom” of Peking University Clinical Scientists Training Program was held.",
+        "publisher": "北京大学医学部",
+        "url": "https://bynews.bjmu.edu.cn/zhxw/2026/a36bbbd6e37747a886084ec8fe6e6c7d.htm",
+        "snippet": "",
+        "published_at": "2026-08-06T02:10:49+00:00",
+        "source_language": "zh"
+      },
+      "article_b": {
+        "original_headline": "VIDÉO. Former les élèves et les professeurs à l'intelligence artificielle - L'École du futur",
+        "english_headline": "Video: Former Students and Teachers on Artificial Intelligence - The Future School",
+        "publisher": "Ouest-France",
+        "url": "https://www.ouest-france.fr/high-tech/intelligence-artificielle/video-former-les-eleves-et-les-professeurs-a-l-intelligence-artificielle-l-ecole-du-futur-97c11381-f2dc-376f-973d-58926cf5b622",
+        "snippet": "",
+        "published_at": "2026-08-07T08:07:53+00:00",
+        "source_language": "fr"
+      },
+      "day_gap": 1.248,
+      "minilm_similarity": 0.6512,
+      "modernbert_same_probability": 0.5754,
+      "qwen_relationship": "not_same_event",
+      "qwen_confidence": 0.33,
+      "story_token_match": false,
+      "current_same_cluster": false,
+      "selection_reasons": [
+        "cross_language",
+        "low_similarity_same",
+        "model_disagreement"
+      ],
+      "information_score": 21.688
+    }
+  ]
+}
