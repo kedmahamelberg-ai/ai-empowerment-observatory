@@ -61,8 +61,7 @@ function renderIndices() {
       <strong>${signed(c.empowerment_index)}</strong>
       <small>
         ${escapeHTML(c.unit_count_ai_relevant)}
-        AI-relevant articles ·
-        mean confidence ${escapeHTML(c.mean_confidence ?? "—")}
+        AI-relevant articles · confidence not used
       </small>
     </div>
 
@@ -71,8 +70,7 @@ function renderIndices() {
       <strong>${signed(e.empowerment_index)}</strong>
       <small>
         ${escapeHTML(e.unit_count_ai_relevant)}
-        unique AI events ·
-        mean confidence ${escapeHTML(e.mean_confidence ?? "—")}
+        unique AI events · confidence not used
       </small>
     </div>
 
@@ -244,7 +242,8 @@ function render() {
           <strong>Model reasoning</strong>
           <p>${escapeHTML(item.reasoning)}</p>
           <small>
-            Confidence ${escapeHTML(item.confidence)}
+            Model self-rating ${escapeHTML(item.confidence)}
+            (diagnostic only)
             · Topic ${escapeHTML(item.topic)}
             · AI authority ${escapeHTML(item.ai_authority_shift)}
           </small>
