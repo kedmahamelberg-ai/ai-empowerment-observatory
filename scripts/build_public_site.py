@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Build the intentionally public GitHub Pages artifact."""
+"""Build the intentionally public Observatory site artifact.
+
+The public site contains aggregate outputs, methodology, report assets, and
+public-facing pages. It deliberately excludes scripts, migrations, raw data,
+classification review pages, prompts, thresholds, and private QA artifacts.
+"""
 
 from __future__ import annotations
 
@@ -9,37 +14,50 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "_site"
 
-# Only files deliberately exposed on the public site belong here.
 ROOT_FILES = [
     "index.html",
     "site.css",
+    "site.js",
     "analytics.js",
     "analytics-consent.css",
     ".nojekyll",
     "CNAME",
 ]
 
-PUBLIC_DIRS = ["edu", "pro", "review"]
+PUBLIC_DIRS = [
+    "edu",
+    "pro",
+    "report",
+    "reports",
+    "methodology",
+    "status",
+    "privacy",
+]
 
-PUBLIC_DATA_FILES = [
-    (
-        ROOT / "data" / "review" / "latest.json",
-        SITE / "data" / "review" / "latest.json",
-    ),
-    (
-        ROOT / "data" / "review" / "latest.csv",
-        SITE / "data" / "review" / "latest.csv",
-    ),
-    (
-        ROOT / "data" / "collection_status.json",
-        SITE / "data" / "collection_status.json",
-    ),
+REQUIRED_DATA_FILES = [
+    "data/lenses/latest.json",
+    "data/events/latest.json",
+    "data/methodology/latest.json",
+    "data/status/latest.json",
+    "data/site-config.json",
+]
+
+OPTIONAL_DATA_FILES = [
+    "data/reports/latest.json",
+    "data/public-config.json",
 ]
 
 
 def copy_required_file(source: Path, destination: Path) -> None:
     if not source.exists():
         raise FileNotFoundError(f"Required public file is missing: {source}")
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(source, destination)
+
+
+def copy_optional_file(source: Path, destination: Path) -> None:
+    if not source.exists():
+        return
     destination.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(source, destination)
 
@@ -55,23 +73,19 @@ def main() -> None:
     for name in PUBLIC_DIRS:
         source = ROOT / name
         if not source.exists():
-            raise FileNotFoundError(
-                f"Required public directory is missing: {source}"
-            )
+            raise FileNotFoundError(f"Required public directory is missing: {source}")
         shutil.copytree(source, SITE / name)
 
-    for source, destination in PUBLIC_DATA_FILES:
-        copy_required_file(source, destination)
+    for relative in REQUIRED_DATA_FILES:
+        copy_required_file(ROOT / relative, SITE / relative)
+
+    for relative in OPTIONAL_DATA_FILES:
+        copy_optional_file(ROOT / relative, SITE / relative)
 
     print("Built public Pages artifact at", SITE)
     print(
-        "Published analytics assets:",
-        SITE / "analytics.js",
-        SITE / "analytics-consent.css",
-    )
-    print(
-        "Excluded private paths: scripts/, config/, supabase/, "
-        "data/raw/, data/review/history/"
+        "Excluded private paths: scripts/, config/, supabase/, validation/, "
+        "review/, data/raw/, data/review/, prompts and internal QA artifacts."
     )
 
 
