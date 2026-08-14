@@ -359,3 +359,45 @@ footer {
   .report-cta { align-items: flex-start; flex-direction: column; padding: 26px; }
   footer { flex-direction: column; }
 }
+
+
+.home-cta-strip {
+  width: min(1120px, calc(100% - 32px));
+  margin: 70px auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.home-cta-strip article {
+  padding: 22px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.home-cta-strip span {
+  color: var(--teal);
+  font-size: .66rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.home-cta-strip strong {
+  display: block;
+  margin: 9px 0 16px;
+  line-height: 1.4;
+}
+
+.home-cta-strip a {
+  color: var(--teal);
+  font-size: .78rem;
+  font-weight: 850;
+  text-decoration: none;
+}
+
+@media (max-width: 760px) {
+  .home-cta-strip {
+    grid-template-columns: 1fr;
+  }
+}
