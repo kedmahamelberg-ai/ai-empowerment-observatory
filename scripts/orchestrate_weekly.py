@@ -20,6 +20,8 @@ WORKFLOWS = [
     "Resolve AI News Into Events",
     "Classify Coverage and Event Lenses",
     "Finalize Stage 7C Residual Rule",
+    "Generate Public Observatory Insights",
+    "Generate Public Observatory Brief",
     "Publish Observatory Release",
 ]
 
@@ -28,6 +30,8 @@ TIMEOUT_MINUTES = {
     "Resolve AI News Into Events": 240,
     "Classify Coverage and Event Lenses": 360,
     "Finalize Stage 7C Residual Rule": 60,
+    "Generate Public Observatory Insights": 60,
+    "Generate Public Observatory Brief": 60,
     "Publish Observatory Release": 60,
 }
 
