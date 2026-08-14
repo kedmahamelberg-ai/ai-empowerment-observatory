@@ -6,6 +6,15 @@ function signed(value) {
   return `${number > 0 ? "+" : ""}${number.toFixed(2)}`;
 }
 
+
+function releaseName(value) {
+  const text = String(value || "");
+  if (text.startsWith("human_audited")) return "Human-audited baseline";
+  if (text.includes("audited")) return "Audited public release";
+  if (text.includes("provisional")) return "Provisional automated release";
+  return text ? text.replaceAll("_", " ") : "—";
+}
+
 function list(items) {
   return (items || [])
     .map(item => `<li>${String(item)}</li>`)
@@ -29,7 +38,7 @@ async function init() {
   document.getElementById("signal").innerHTML = `
     <article class="card">
       <span>Release</span>
-      <strong>${data.release_status || "—"}</strong>
+      <strong>${releaseName(data.release_status)}</strong>
     </article>
     <article class="card">
       <span>Coverage Index</span>
