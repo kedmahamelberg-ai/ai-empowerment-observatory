@@ -1,10 +1,11 @@
 {
   "meta": {
-    "stage": "7C.1a",
+    "stage": "7C.1b",
     "provisional": true,
     "classification_run_id": "c7e442f1-b54e-403d-9140-42726069375b",
     "run_key": "dual_lens_20260814T063523Z",
     "confidence_calibrated": false,
+    "residual_normalized_count": 92,
     "confidence_note": "Model self-confidence is excluded from index weighting and quality-review selection.",
     "method": {
       "coverage_lens": "one weight per observed AI-relevant article",
@@ -21,16 +22,16 @@
       "country_iso3": null,
       "unit_count_total": 130,
       "unit_count_ai_relevant": 129,
-      "unit_count_scored": 81,
-      "review_required_count": 48,
-      "empowerment_index": 2.4691,
+      "unit_count_scored": 127,
+      "review_required_count": 2,
+      "empowerment_index": 1.5748,
       "mean_confidence": null,
       "status_distribution": {
         "expanding": 0.031,
         "contracting": 0.0078,
         "mixed": 0.0,
-        "non_empowerment": 0.5891,
-        "unclear": 0.3721
+        "non_empowerment": 0.9457,
+        "unclear": 0.0155
       },
       "narrative_distribution": {
         "opportunity": 0.0543,
@@ -59,16 +60,16 @@
       "country_iso3": null,
       "unit_count_total": 125,
       "unit_count_ai_relevant": 124,
-      "unit_count_scored": 76,
-      "review_required_count": 48,
-      "empowerment_index": 3.5088,
+      "unit_count_scored": 122,
+      "review_required_count": 2,
+      "empowerment_index": 2.1858,
       "mean_confidence": null,
       "status_distribution": {
         "expanding": 0.0403,
         "contracting": 0.0081,
         "mixed": 0.0,
-        "non_empowerment": 0.5645,
-        "unclear": 0.3871
+        "non_empowerment": 0.9355,
+        "unclear": 0.0161
       },
       "narrative_distribution": {
         "opportunity": 0.0645,
@@ -94,9 +95,9 @@
     "amplification": {
       "scope": "global",
       "country_iso3": null,
-      "coverage_index": 2.4691,
-      "event_index": 3.5088,
-      "directional_amplification_gap": -1.0397,
+      "coverage_index": 1.5748,
+      "event_index": 2.1858,
+      "directional_amplification_gap": -0.611,
       "coverage_unit_count": 129,
       "event_unit_count": 124,
       "coverage_event_ratio": 1.0403,
