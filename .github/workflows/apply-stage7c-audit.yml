@@ -1,0 +1,76 @@
+name: Apply Stage 7C Human Audit
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Observatory repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install Supabase client
+        run: python -m pip install "supabase>=2.18,<3"
+
+      - name: Apply the completed Stage 7C audit
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: python scripts/apply_stage7c_audit.py
+
+      - name: Commit audited lens outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add validation/aieo-stage7c-classification-audit.csv
+          git add validation/stage7c-corrections-v1.json
+          git add review/classification/latest.json
+          git add data/lenses/latest.json
+          git add data/methodology/latest.json
+
+          git diff --cached --quiet || \
+            git commit -m "data: apply Stage 7C human governance audit"
+
+          git push
+
+      - name: Build public site artifact
+        run: python scripts/build_public_site.py
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: "_site"
+
+  deploy:
+    needs: apply
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
