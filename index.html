@@ -3,144 +3,224 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Empowerment Observatory | Kedma Hamelberg</title>
+  <title>AI Empowerment Observatory | Public signal</title>
   <meta
     name="description"
-    content="Explore how AI developments expand human capability and where they shift control away."
+    content="Track how AI developments expand, contract, mix, or leave unchanged human capability, agency, rights, and participation—and how news volume may amplify the picture."
   >
   <link rel="stylesheet" href="./site.css">
   <link rel="stylesheet" href="/analytics-consent.css">
 </head>
-
 <body>
-  <header class="landing-header">
-    <a class="wordmark" href="./">
-      <span class="wordmark-mark">AIEO</span>
-      <span>AI Empowerment Observatory</span>
+  <header class="site-header">
+    <a class="brand" href="./">
+      <span class="brand-mark">AIEO</span>
+      <span>
+        <strong>AI Empowerment Observatory</strong>
+        <small>A research initiative by Kedma Hamelberg</small>
+      </span>
     </a>
 
     <nav aria-label="Main navigation">
-      <a href="./edu/">Edu</a>
+      <a href="./edu/">Current signal</a>
+      <a href="./report/">Reports</a>
+      <a href="./methodology/">Methodology</a>
       <a href="./pro/">Pro</a>
-      <a href="#how-it-works">How it works</a>
-      <a href="https://kedmahamelberg.com">About Kedma</a>
     </nav>
   </header>
 
   <main>
     <section class="hero">
-      <div class="hero-grid" aria-hidden="true"></div>
-
-      <div class="hero-inner">
-        <p class="hero-kicker">A living map of AI and human agency</p>
-
+      <div class="hero-copy">
+        <p class="kicker" id="release-badge">Loading current release…</p>
         <h1>
-          See where AI expands human capability—
-          <em>and where it shifts control away.</em>
+          See what AI is changing for people—
+          <em>and what news attention may be amplifying.</em>
         </h1>
-
-        <p class="hero-copy">
-          Explore source-backed developments through an interactive map,
-          guided lessons, and data narratives grounded in four dimensions
-          of human empowerment.
+        <p class="hero-lead">
+          The Observatory separates article volume from unique real-world
+          developments, then tracks whether human empowerment is expanding,
+          contracting, mixed, or not materially affected.
         </p>
 
         <div class="hero-actions">
-          <a class="button button-primary" href="./edu/">
-            Open Observatory Edu
-          </a>
-          <a class="button button-secondary" href="#how-it-works">
-            How it works
-          </a>
+          <a class="button primary" href="./edu/">Explore the current signal</a>
+          <a class="button secondary" href="./report/">Get the 3-page brief</a>
         </div>
+
+        <div class="scope-strip" id="scope-strip">
+          <strong>Live public data</strong>
+          <span>Loading observation window and scope…</span>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-label="Coverage and Event Lens comparison">
+        <p class="visual-label">Two lenses on the same news environment</p>
+
+        <div class="count-comparison">
+          <article>
+            <span>Coverage Lens</span>
+            <strong id="home-coverage-count">—</strong>
+            <small>AI-relevant articles</small>
+            <div class="bar-track"><div id="home-coverage-bar" class="bar coverage"></div></div>
+          </article>
+
+          <article>
+            <span>Event Lens</span>
+            <strong id="home-event-count">—</strong>
+            <small>unique real-world developments</small>
+            <div class="bar-track"><div id="home-event-bar" class="bar event"></div></div>
+          </article>
+        </div>
+
+        <div class="mini-index-grid">
+          <article>
+            <span>Coverage Index</span>
+            <strong id="home-coverage-index">—</strong>
+          </article>
+          <article>
+            <span>Event Index</span>
+            <strong id="home-event-index">—</strong>
+          </article>
+          <article>
+            <span>Amplification Gap</span>
+            <strong id="home-gap">—</strong>
+          </article>
+        </div>
+
+        <p class="visual-note">
+          Coverage measures attention. Event Lens measures what happened once.
+          The gap shows whether repetition changes the direction of the public picture.
+        </p>
       </div>
     </section>
 
-    <section class="product-cards" aria-label="Products">
-      <article class="product-card product-card-edu">
-        <p class="card-status">Live now · Pilot</p>
-        <h2>Observatory <em>Edu</em></h2>
-        <p>
-          The free way to understand AI empowerment: an interactive country
-          map, six guided lessons, transparent classifications, and public
-          methodology.
-        </p>
-        <p class="card-note">
-          Three-country interface pilot now. Five-country AI investment
-          edition next.
-        </p>
-        <a href="./edu/">Start exploring →</a>
-      </article>
+    <section class="snapshot-section">
+      <div class="section-heading">
+        <p>Current release</p>
+        <h2>A global signal with evidence-threshold country views</h2>
+        <span id="snapshot-period">Loading data range…</span>
+      </div>
 
-      <article class="product-card product-card-pro">
-        <p class="card-status">Coming soon</p>
-        <h2>Observatory <em>Pro</em></h2>
-        <p>
-          For researchers, policymakers, strategists, and responsible-AI
-          teams: all-country coverage, historical trends, comparisons,
-          exports, alerts, and auditable evidence.
-        </p>
-        <a href="./pro/">Preview Pro →</a>
-      </article>
+      <div class="snapshot-grid">
+        <article class="snapshot-card">
+          <span>Observation window</span>
+          <strong id="observation-window">—</strong>
+          <p>Derived from the dated real-world events in the current release.</p>
+        </article>
+
+        <article class="snapshot-card">
+          <span>Discovery scope</span>
+          <strong>Five search markets</strong>
+          <p>United States, China, United Kingdom, France, and Canada.</p>
+        </article>
+
+        <article class="snapshot-card">
+          <span>Country interpretation</span>
+          <strong>Evidence threshold first</strong>
+          <p>Search market is not event country. Country signals appear only when supported.</p>
+        </article>
+      </div>
     </section>
 
-    <section id="how-it-works" class="explanation-section">
+    <section class="lens-section">
       <div class="section-heading">
-        <p>How the signal works</p>
-        <h2>Four ways AI can change human power</h2>
-        <span>
-          The map separates capability from control so that productivity
-          gains do not automatically count as empowerment.
-        </span>
+        <p>Why the two lenses matter</p>
+        <h2>Separate media attention from unique developments</h2>
+      </div>
+
+      <div class="lens-grid">
+        <article>
+          <span>01 · Coverage Lens</span>
+          <h3>What receives attention?</h3>
+          <p>
+            Each article receives one weight. Repeated reporting is retained to
+            measure media volume and framing.
+          </p>
+        </article>
+
+        <article>
+          <span>02 · Event Lens</span>
+          <h3>What happened?</h3>
+          <p>
+            Each resolved real-world development receives one weight, regardless
+            of how many articles cover it.
+          </p>
+        </article>
+
+        <article>
+          <span>03 · Amplification Gap</span>
+          <h3>How does repetition shift the picture?</h3>
+          <p>
+            Coverage Index minus Event Index reveals whether article volume
+            makes the news environment look more expansionary or more contractionary.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="dimensions-section">
+      <div class="section-heading">
+        <p>Human empowerment</p>
+        <h2>Four parallel dimensions</h2>
+        <span>Operational is substantive; non-empowerment is the residual.</span>
       </div>
 
       <div class="dimension-grid">
-        <article>
-          <span>01</span>
-          <h3>Operational</h3>
-          <p>Can people understand, access, and use AI effectively?</p>
-        </article>
-
-        <article>
-          <span>02</span>
-          <h3>Creative</h3>
-          <p>Does AI expand people’s capacity to create and innovate?</p>
-        </article>
-
-        <article>
-          <span>03</span>
-          <h3>Agentic</h3>
-          <p>Do people retain autonomy, ownership, and meaningful choice?</p>
-        </article>
-
-        <article>
-          <span>04</span>
-          <h3>Normative</h3>
-          <p>Can people influence the rules, rights, and standards governing AI?</p>
-        </article>
+        <article><span>01</span><h3>Operational</h3><p>Can people understand, access, and use AI effectively?</p></article>
+        <article><span>02</span><h3>Creative</h3><p>Does AI expand people’s capacity to create and innovate?</p></article>
+        <article><span>03</span><h3>Agentic</h3><p>Do people retain autonomy, control, ownership, and meaningful choice?</p></article>
+        <article><span>04</span><h3>Normative</h3><p>Can people influence and benefit from rules, rights, standards, and accountability?</p></article>
       </div>
     </section>
 
-    <section class="principle-section">
-      <p class="principle-kicker">Public by design</p>
-      <h2>Do not put truth behind the paywall.</h2>
-      <p>
-        Edu keeps the evidence, classifications, explanations, and
-        methodology public. Pro will charge for analytical depth:
-        complete history, comparison, workflow, export, and monitoring.
-      </p>
+    <section class="report-cta">
+      <div>
+        <p class="kicker">Evidence in three pages</p>
+        <h2>Download the AI Empowerment Pulse</h2>
+        <p>
+          A concise, visual brief covering the observation window, Coverage vs
+          Event comparison, empowerment direction, narrative framing, and limitations.
+        </p>
+      </div>
+      <a class="button report-button" href="./report/">View the report page</a>
+    </section>
+
+    <section class="product-grid">
+      <article class="public-product">
+        <p class="product-status">Live now · Public edition</p>
+        <h2>Public Observatory</h2>
+        <p>
+          Current global signal, Coverage and Event lenses, source-backed evidence,
+          downloadable briefs, and public methodology.
+        </p>
+        <a href="./edu/">Open the public signal →</a>
+      </article>
+
+      <article class="pro-product">
+        <p class="product-status">Professional layer · In development</p>
+        <h2>Observatory Pro</h2>
+        <p>
+          Historical depth, evidence-threshold comparisons, exports, alerts,
+          tailored briefings, and organisational workflows.
+        </p>
+        <a href="./pro/">See the professional roadmap →</a>
+      </article>
     </section>
   </main>
 
   <footer>
     <span>© 2026 AI Empowerment Observatory</span>
     <nav>
-      <a href="./edu/">Edu</a>
-      <a href="./pro/">Pro</a>
+      <a href="./edu/">Current signal</a>
+      <a href="./report/">Reports</a>
+      <a href="./methodology/">Methodology</a>
+      <a href="./privacy/">Privacy</a>
       <a href="mailto:kedma@hamelberg-ai.com">Contact</a>
-      <a href="https://kedmahamelberg.com">Kedma Hamelberg</a>
     </nav>
   </footer>
+
+  <script src="./site.js"></script>
   <script src="/analytics.js"></script>
 </body>
 </html>
