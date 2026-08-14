@@ -1,0 +1,30 @@
+{
+  "generated_at": "2026-08-14T13:19:50.795020Z",
+  "system_status": "operational",
+  "release_status": "human_audited_pilot",
+  "human_audited": true,
+  "structural_gate": "passed",
+  "latest": {
+    "coverage_units": 130,
+    "event_units": 125,
+    "active_events": 119,
+    "coverage_empowerment_index": 1.5504,
+    "event_empowerment_index": 1.6129,
+    "directional_amplification_gap": -0.0625,
+    "review_queue_count": 0
+  },
+  "governance": {
+    "weekly_publication_blocks_on": [
+      "missing or invalid artifacts",
+      "unassigned coverage units",
+      "null or out-of-range indices",
+      "workflow or storage failure"
+    ],
+    "weekly_publication_does_not_block_on": [
+      "pending stratified classification audit",
+      "ambiguous event merge review",
+      "ordinary model-confidence uncertainty"
+    ],
+    "human_role": "asynchronous governance, periodic stratified audit, high-risk review and methodology version approval"
+  }
+}
