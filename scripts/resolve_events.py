@@ -58,7 +58,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REVIEW_PATH = ROOT / "review" / "events" / "assignments" / "latest.json"
 PUBLIC_EVENTS_PATH = ROOT / "data" / "events" / "latest.json"
 
-RESOLVER_VERSION = "7B.3a"
+RESOLVER_VERSION = "7B.4-launch"
 METHOD_NAME = "article_to_event_v1"
 TRANSLATION_PROFILE = "validated_language_routing_v3"
 
@@ -1631,7 +1631,7 @@ def main() -> int:
                         client,
                         resolution_run_id=resolution_run_id,
                         article=article,
-                        state="pending_review",
+                        state="active",
                         requires_review=True,
                         review_reason="; ".join(review_reasons),
                     )
@@ -1644,6 +1644,9 @@ def main() -> int:
                         canonical=True,
                     )
 
+                    # The ambiguous article remains a separate ACTIVE event.
+                    # Human governance may merge it later, but weekly publication
+                    # is never blocked by the review queue.
                     counts["review"] += 1
 
                     decision = "review"
