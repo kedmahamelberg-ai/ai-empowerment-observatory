@@ -3,185 +3,196 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>Observatory Edu | AI Empowerment Observatory</title>
-
+  <title>Current Signal | AI Empowerment Observatory</title>
   <meta
     name="description"
-    content="A source-backed map exploring how AI developments are changing human capability, creativity, autonomy, and public influence."
-  >
-
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css"
+    content="Explore the current AI Empowerment Observatory signal across the Coverage and Event lenses."
   >
   <link rel="stylesheet" href="./observatory.css">
   <link rel="stylesheet" href="/analytics-consent.css">
 </head>
-
 <body>
   <header class="site-header">
-    <a class="brand brand-link" href="../">
-      <strong>AI Empowerment Observatory <em>Edu</em></strong>
-      <span>A research initiative by Kedma Hamelberg</span>
+    <a class="brand" href="../">
+      <span class="brand-mark">AIEO</span>
+      <span>
+        <strong>AI Empowerment Observatory</strong>
+        <small>Public edition</small>
+      </span>
     </a>
 
-    <nav class="site-nav" aria-label="Main navigation">
-      <button id="reset-map" class="nav-link" type="button">Explore</button>
-      <button id="open-learn" class="nav-link" type="button">Learn</button>
-      <button id="open-stories" class="nav-link" type="button">Stories</button>
-      <button id="open-methodology" class="nav-link" type="button">
-        Methodology
-      </button>
-      <a class="nav-link" href="../pro/">Pro</a>
+    <nav aria-label="Main navigation">
+      <a href="#overview">Overview</a>
+      <a href="#attention">Coverage vs Event</a>
+      <a href="#evidence">Evidence</a>
+      <a href="#learn">Learn</a>
+      <a href="../methodology/">Methodology</a>
+      <a href="../report/">Reports</a>
     </nav>
   </header>
 
   <main>
-    <div
-      id="map"
-      role="application"
-      aria-label="Interactive global AI empowerment map"
-    ></div>
-
-    <section class="intro-panel">
-      <p class="eyebrow">Edu pilot · Guided global exploration</p>
-
-      <h1>Where is AI shifting human agency?</h1>
-
-      <p class="intro">
-        Select a highlighted country to explore four dimensions of human
-        empowerment. This interface pilot currently uses illustrative data;
-        the five-country investment edition comes next.
-      </p>
-
-      <div class="status">
-        <span class="status-dot" aria-hidden="true"></span>
-        Three-country pilot · Five-country edition next
+    <section id="overview" class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow" id="release-label">Loading release…</p>
+        <h1>What is AI doing to human empowerment?</h1>
+        <p>
+          This live public view separates how much an AI development is covered
+          from how many distinct developments actually occurred.
+        </p>
       </div>
 
-      <div class="legend" aria-label="Map legend">
-        <div class="legend-row">
-          <span class="legend-symbol positive">●</span>
-          Human empowerment expanding
-        </div>
-
-        <div class="legend-row">
-          <span class="legend-symbol negative">●</span>
-          Human agency contracting
-        </div>
-
-        <div class="legend-row">
-          <span class="legend-symbol mixed">●</span>
-          Mixed or contested signal
-        </div>
+      <div class="scope-card">
+        <span>Observation window</span>
+        <strong id="data-window">—</strong>
+        <p id="data-scope">Loading search-market scope…</p>
       </div>
     </section>
 
-    <aside
-      id="country-panel"
-      class="country-panel"
-      aria-label="Selected country details"
-      aria-live="polite"
-      hidden
-    >
-      <button
-        id="close-country-panel"
-        class="close-button"
-        type="button"
-        aria-label="Close country details"
-      >
-        ×
-      </button>
+    <section class="index-grid" aria-label="Current indices">
+      <article>
+        <span>Coverage Empowerment Index</span>
+        <strong id="coverage-index">—</strong>
+        <small>article weighted</small>
+      </article>
+      <article>
+        <span>Event Empowerment Index</span>
+        <strong id="event-index">—</strong>
+        <small>unique-event weighted</small>
+      </article>
+      <article>
+        <span>Directional Amplification Gap</span>
+        <strong id="amplification-gap">—</strong>
+        <small>Coverage minus Event</small>
+      </article>
+      <article>
+        <span>Coverage/Event ratio</span>
+        <strong id="coverage-event-ratio">—</strong>
+        <small>attention relative to unique events</small>
+      </article>
+    </section>
 
-      <div id="country-panel-content"></div>
-    </aside>
+    <section id="attention" class="panel attention-panel">
+      <div class="section-heading">
+        <p>Attention versus developments</p>
+        <h2>Volume and unique news are not the same thing</h2>
+        <span>
+          Article repetition can change the public picture even when the
+          underlying event mix changes little.
+        </span>
+      </div>
+
+      <div class="count-chart">
+        <article>
+          <div class="chart-head">
+            <span>Coverage Lens</span>
+            <strong id="coverage-count">—</strong>
+          </div>
+          <div class="track"><div id="coverage-count-bar" class="fill coverage"></div></div>
+          <p>Every AI-relevant article receives one weight.</p>
+        </article>
+
+        <article>
+          <div class="chart-head">
+            <span>Event Lens</span>
+            <strong id="event-count">—</strong>
+          </div>
+          <div class="track"><div id="event-count-bar" class="fill event"></div></div>
+          <p>Every resolved real-world development receives one weight.</p>
+        </article>
+      </div>
+
+      <div class="interpretation" id="gap-interpretation">
+        Loading amplification interpretation…
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <p>Narrative climate</p>
+        <h2>How AI is being communicated</h2>
+        <span>Narrative framing is measured separately from substantive human empowerment.</span>
+      </div>
+      <div id="narrative-chart" class="grouped-chart"></div>
+    </section>
+
+    <section class="panel split-panel">
+      <div>
+        <div class="section-heading compact">
+          <p>Empowerment direction</p>
+          <h2>What the units indicate</h2>
+        </div>
+        <div id="status-chart" class="stack-list"></div>
+      </div>
+
+      <div>
+        <div class="section-heading compact">
+          <p>Four dimensions</p>
+          <h2>Where effects appear</h2>
+        </div>
+        <div id="dimension-chart" class="stack-list"></div>
+      </div>
+    </section>
+
+    <section class="panel country-panel">
+      <div class="section-heading">
+        <p>Country interpretation</p>
+        <h2>Only publish what the evidence can support</h2>
+        <span>
+          The five search markets describe discovery coverage. They are not five
+          country scores. Country cards appear only when event geography is supported
+          and the minimum evidence threshold is reached.
+        </span>
+      </div>
+      <div id="country-signals" class="country-grid"></div>
+    </section>
+
+    <section id="evidence" class="panel">
+      <div class="section-heading">
+        <p>Source-backed evidence</p>
+        <h2>Recent unique developments</h2>
+        <span>These are Event Lens records, not a ranking of importance.</span>
+      </div>
+      <div id="event-list" class="event-list"></div>
+    </section>
+
+    <section id="learn" class="panel learn-panel">
+      <div class="section-heading">
+        <p>Six ideas for reading the signal</p>
+        <h2>Use the index as a guide, not a league table</h2>
+      </div>
+      <ol>
+        <li><strong>Investment is not empowerment.</strong> Capital and infrastructure do not automatically mean more human control.</li>
+        <li><strong>Capability grows unevenly.</strong> AI may strengthen organisations without reaching citizens equally.</li>
+        <li><strong>Creativity has two sides.</strong> New tools can coexist with reduced consent or compensation.</li>
+        <li><strong>Agency concerns who decides.</strong> Productivity gains can accompany transfers of consequential decisions to automated systems.</li>
+        <li><strong>Rules redistribute power.</strong> Transparency, appeal, consultation, and enforcement shape who influences AI.</li>
+        <li><strong>Read the evidence, not only the score.</strong> The signal summarises coded developments; it is not a national ranking.</li>
+      </ol>
+    </section>
+
+    <section class="report-cta">
+      <div>
+        <span>Current visual brief</span>
+        <h2>Get the three-page AI Empowerment Pulse</h2>
+        <p>Download the observation window, lens comparison, key takeaways, and methodology in one concise brief.</p>
+      </div>
+      <a href="../report/">Open report page</a>
+    </section>
   </main>
 
-  <dialog id="methodology-dialog" class="methodology-dialog">
-    <button
-      id="close-methodology"
-      class="close-button"
-      type="button"
-      aria-label="Close methodology"
-    >
-      ×
-    </button>
+  <footer>
+    <span>© 2026 AI Empowerment Observatory</span>
+    <nav>
+      <a href="../">Home</a>
+      <a href="../methodology/">Methodology</a>
+      <a href="../status/">Status</a>
+      <a href="../privacy/">Privacy</a>
+      <a href="mailto:kedma@hamelberg-ai.com">Contact</a>
+    </nav>
+  </footer>
 
-    <p class="panel-kicker">Methodology · Prototype</p>
-    <h2>What the demonstration shows</h2>
-
-    <p>
-      The observatory will classify AI-related developments across four
-      dimensions: operational, creative, agentic, and normative empowerment.
-      Directional labels will indicate whether human empowerment appears to
-      expand, contract, or remain mixed or unclear.
-    </p>
-
-    <p>
-      The three country scores currently shown are fictional interface values.
-      They exist only to test the map, interaction design, and country panel.
-      Source-backed scores and headlines will be added after the coding and
-      validation procedure is established.
-    </p>
-  </dialog>
-
-
-  <dialog id="learn-dialog" class="methodology-dialog">
-    <button
-      id="close-learn"
-      class="close-button"
-      type="button"
-      aria-label="Close Learn"
-    >
-      ×
-    </button>
-
-    <p class="panel-kicker">Learn · Edu edition</p>
-    <h2>Six ideas for reading the map</h2>
-
-    <ol class="lesson-list">
-      <li><strong>Investment is not empowerment.</strong> More capital and infrastructure do not automatically mean more human control.</li>
-      <li><strong>Capability grows unevenly.</strong> AI may strengthen organisations without reaching citizens equally.</li>
-      <li><strong>Creativity has two sides.</strong> New creative tools can coexist with reduced consent or compensation for creators.</li>
-      <li><strong>Agency concerns who decides.</strong> Productivity gains can accompany a transfer of consequential decisions to automated systems.</li>
-      <li><strong>Rules redistribute power.</strong> Transparency, consultation, appeal rights, and enforcement shape who influences AI.</li>
-      <li><strong>Read the evidence, not only the score.</strong> The signal summarizes coded developments; it is not a national league table.</li>
-    </ol>
-  </dialog>
-
-  <dialog id="stories-dialog" class="methodology-dialog">
-    <button
-      id="close-stories"
-      class="close-button"
-      type="button"
-      aria-label="Close Stories"
-    >
-      ×
-    </button>
-
-    <p class="panel-kicker">Data narratives · Preview</p>
-    <h2>Stories built from the same evidence as the map</h2>
-
-    <div class="story-preview">
-      <article>
-        <span>Global · No. 01</span>
-        <h3>Investment is not empowerment</h3>
-        <p>How large AI ecosystems can expand capability while placing pressure on autonomy, creator rights, and public oversight.</p>
-      </article>
-
-      <article>
-        <span>Global · No. 02</span>
-        <h3>Who gains when AI creates?</h3>
-        <p>A stakeholder journey from users and firms to original creators and invisible data workers.</p>
-      </article>
-    </div>
-
-    <p class="coming-note">The first complete data narrative will follow the five-country Edu dataset.</p>
-  </dialog>
-
-  <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
-  <script src="./map.js"></script>
+  <script src="./dashboard.js"></script>
   <script src="/analytics.js"></script>
 </body>
 </html>
