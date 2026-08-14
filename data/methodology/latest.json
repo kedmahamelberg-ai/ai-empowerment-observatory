@@ -1,0 +1,78 @@
+{
+  "methodology_version": "public_v1.0",
+  "release_status": "human_audited_pilot",
+  "last_updated": "2026-08-14T13:02:14.306617Z",
+  "classification_run_id": "c7e442f1-b54e-403d-9140-42726069375b",
+  "public_disclosure": {
+    "published": [
+      "data-source categories and update cadence",
+      "Coverage Lens and Event Lens unit definitions",
+      "empowerment-status and degree definitions",
+      "four parallel empowerment dimensions",
+      "index and Amplification Gap formulae",
+      "model families and versioned run identifiers",
+      "unit counts, exclusions and human-audit summary",
+      "known limitations and methodology changelog"
+    ],
+    "kept_private": [
+      "full production prompts and prompt-routing logic",
+      "exact merge/review thresholds",
+      "source code and orchestration implementation",
+      "private validation examples and anti-gaming rules",
+      "database credentials and internal schema operations"
+    ],
+    "principle": "The Observatory is auditable through versioned inputs, definitions, formulas, run provenance, aggregate outputs and human-audit records; it is not fully open-sourced."
+  },
+  "method": {
+    "coverage_lens": "Each observed article receives one weight. Repetition intentionally captures coverage volume.",
+    "event_lens": "Each resolved real-world development receives one weight.",
+    "empowerment_statuses": [
+      "expanding",
+      "contracting",
+      "mixed",
+      "non_empowerment",
+      "unclear"
+    ],
+    "dimensions_parallel": [
+      "operational",
+      "creative",
+      "agentic",
+      "normative"
+    ],
+    "residual_rule": "Non-empowerment is the residual; operational is substantive.",
+    "unit_score": {
+      "expanding": "+degree/3",
+      "contracting": "-degree/3",
+      "mixed": "0",
+      "non_empowerment": "0",
+      "unclear": "excluded"
+    },
+    "lens_index": "arithmetic mean of unit scores x 100",
+    "amplification_gap": "Coverage Empowerment Index - Event Empowerment Index",
+    "confidence_policy": "Model self-confidence is diagnostic only and is not used as an index weight."
+  },
+  "audit": {
+    "audit_version": "stage7c_human_audit_v1",
+    "classification_run_id": "c7e442f1-b54e-403d-9140-42726069375b",
+    "completed_at": "2026-08-14T13:02:14.305132Z",
+    "reviewer": "Kedma Hamelberg",
+    "sample_size": 20,
+    "accepted_count": 6,
+    "corrected_count": 14,
+    "selection_note": "Stratified quality audit plus multi-source Event Lens cases. Correction share is not a population accuracy estimate.",
+    "representativeness_note": "This stratified audit is a governance and error-discovery sample. The correction share must not be interpreted as a population-level model accuracy estimate."
+  },
+  "current_signal": {
+    "coverage_empowerment_index": 1.5504,
+    "event_empowerment_index": 1.6129,
+    "directional_amplification_gap": -0.0625,
+    "coverage_event_ratio": 1.0403
+  },
+  "limitations": [
+    "Pilot data are headline- and snippet-led.",
+    "The present country sample is not a population-weighted world estimate.",
+    "Automated weekly releases are provisional until a governance audit is completed.",
+    "Coverage volume measures attention, not objective event importance.",
+    "The public methodology supports scrutiny without disclosing proprietary implementation details."
+  ]
+}
