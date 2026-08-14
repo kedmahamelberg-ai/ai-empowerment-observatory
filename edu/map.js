@@ -1,1 +1,1 @@
-/* Retired Stage 6 prototype map. The live public edition uses dashboard.js. */
+/* Historical prototype file retained intentionally. Live globe logic is in dashboard.js. */
