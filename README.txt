@@ -1,156 +1,172 @@
-AI Empowerment Observatory — Stage 7B.3a COMPLETE PACKAGE
-Precision-first Article → Event Assignment
-=============================================================
+AI Empowerment Observatory — Live Public Experience v1
+=======================================================
 
-THIS PACKAGE IS SELF-CONTAINED FOR STAGE 7B.3a.
+WHY THIS PATCH EXISTS
+---------------------
+The current public pages still contain the legacy Stage 6 interface prototype:
+- three hard-coded illustrative countries;
+- promises of a five-country edition;
+- prototype/fictitious scores;
+- no real Coverage-vs-Event visual;
+- no clear observation window;
+- no report acquisition page;
+- a Pro page that overpromises all-country coverage.
 
-It includes:
-- original Stage 7B.3 Supabase schema migration
-- corrected Stage 7B.3a resolver
-- one-time reset for the first 7B.3 pilot
-- event-review application script
-- both GitHub Actions workflows
-- complete event-assignment review UI
-- data/events placeholder folder
-
-WHY 7B.3a
----------
-The first Stage 7B.3 production run produced:
-
-  130 coverage articles
-  66 active events
-  1 auto merge
-  66 new events
-  63 review cases
-  63 pending events
-
-The resolver itself ran successfully, but its HUMAN-REVIEW trigger was too
-broad. Generic AI semantic similarity and competing retrieval candidates were
-creating human review work even when there was no credible same-event signal.
-
-7B.3a fixes ONLY that decision policy.
-
-FINAL 7B.3a POLICY
-------------------
-AUTO MERGE
-  Requires a strong Qwen SAME decision plus strong independent evidence.
-
-REVIEW
-  Only if:
-  - Qwen says SAME but auto-merge is not safe; OR
-  - Qwen says UNCLEAR and there is meaningful supporting evidence; OR
-  - Qwen says NOT-SAME but exceptionally strong independent evidence conflicts
-    with that conclusion.
-
-NEW EVENT
-  - Qwen says NOT-SAME under normal conditions
-  - Qwen is not called
-  - embedding/event similarity alone
-  - competing candidate events alone
-  - ordinary ModernBERT positive signal alone
-
-Core rule:
-  RETRIEVAL FINDS CANDIDATES.
-  RETRIEVAL DOES NOT CREATE HUMAN WORK.
-
-FILES
------
-.github/workflows/
-  resolve-events.yml
-  apply-event-reviews.yml
-
-scripts/
-  resolve_events.py                    <-- corrected 7B.3a resolver
-  apply_event_assignment_reviews.py
-
-supabase/migrations/
-  009_event_assignment.sql             <-- persistent schema migration
-
-supabase/one_time/
-  reset_first_7b3_pilot.sql            <-- run ONCE before rerunning 7B.3a
-
-review/events/assignments/
-  index.html
-  assignments.css
-  assignments.js
-
-data/events/
-  placeholder.txt
-
-FIRST-TIME SCHEMA NOTE
+THE CORRECT LIVE SCOPE
 ----------------------
-If you have ALREADY successfully run 009_event_assignment.sql, DO NOT run it
-again just for 7B.3a.
+- Five SEARCH MARKETS: United States, China, United Kingdom, France, Canada.
+- One current GLOBAL signal based on the real Coverage and Event Lens outputs.
+- Search market is not event country.
+- Country signals appear only when supported event geography reaches the
+  evidence threshold.
+- There is no public three-country or five-country league table in this release.
 
-If you have NOT run it, run:
-  supabase/migrations/009_event_assignment.sql
+WHAT THIS PACKAGE REPLACES
+--------------------------
+Root:
+  index.html
+  site.css
+  site.js
 
-YOUR CURRENT NEXT STEPS
------------------------
-Because the first Stage 7B.3 pilot already ran:
+Public signal:
+  edu/index.html
+  edu/observatory.css
+  edu/dashboard.js
 
-1. Supabase -> SQL Editor -> New query
+Public governance pages:
+  methodology/index.html
+  methodology/methodology.css
+  methodology/methodology.js
+  status/index.html
+  status/status.css
+  status/status.js
 
-   Run ONCE:
-   supabase/one_time/reset_first_7b3_pilot.sql
+Professional roadmap:
+  pro/index.html
 
-   This:
-   - deletes only event_articles links belonging to article_to_event_v1 events
-   - retires only the first production pilot's active/pending events
-   - DOES NOT delete raw articles
-   - DOES NOT delete collection history
-   - DOES NOT delete translation history
-   - DOES NOT delete Stage 7B.2 legacy_provisional clusters
-   - DOES NOT delete old resolution decisions/runs (provenance remains)
+Report acquisition:
+  report/index.html
+  report/report.css
+  report/report.js
+  privacy/index.html
 
-2. GitHub -> scripts/
+Public data configuration:
+  data/site-config.json
 
-   Replace:
-   resolve_events.py
+Public build:
+  scripts/build_public_site.py
 
-   The other Stage 7B.3 files you already uploaded do not need changing.
+WHAT THIS PACKAGE ADDS
+----------------------
+Three-page dynamic report:
+  scripts/generate_public_brief.py
+  .github/workflows/generate-public-brief.yml
+  reports/placeholder.txt
+  data/reports/placeholder.txt
 
-3. Commit:
-   Reduce Stage 7B.3 event-review queue
+Optional report/newsletter capture:
+  supabase/migrations/013_public_report_requests.sql
+  data/public-config.example.json
 
-4. Start a NEW workflow run:
+LIVE VISUALS
+------------
+The public signal page reads the real JSON produced by Stage 7C and shows:
+- observation window;
+- last successful update;
+- five search-market discovery scope;
+- Coverage article count vs unique Event count;
+- Coverage Index vs Event Index;
+- Directional Amplification Gap;
+- Coverage/Event ratio;
+- narrative distributions for both lenses;
+- Event Lens empowerment-status distribution;
+- four-dimension distribution;
+- only evidence-supported country cards;
+- source-linked recent events.
 
-   Actions
-   -> Resolve AI News Into Events
-   -> Run workflow
-   -> main
+The old map and countries.json are no longer used. You may delete:
+  edu/countries.json
+  edu/map.js
 
-   Do NOT use "Re-run jobs" on the old commit.
+INSTALL
+-------
+1. Replace/upload every file in this package at the same repository path.
 
-5. When green, open:
+2. Existing data folder:
+   upload data/site-config.json.
 
-   https://observatory.hamelberg-ai.com/review/events/assignments/
+3. Replace scripts/build_public_site.py.
+   This public builder intentionally excludes review pages, raw data, scripts,
+   migrations, validation sets, prompts, thresholds and private QA artifacts.
 
-6. DO NOT REVIEW CASES YET.
+4. Commit:
+   Replace prototype site with live data experience
 
-   Send ChatGPT only:
-   - coverage articles
-   - active events
-   - auto merges
-   - new events
-   - review cases
-   - verifier calls
-   - pending events
+5. Run:
+   Actions -> Publish Observatory Release -> Run workflow -> main
 
-HARD STOP RULE
---------------
-This is the final resolver-policy rerun.
+6. Generate the current 3-page brief:
+   Actions -> Generate Public Observatory Brief -> Run workflow -> main
 
-PASS:
-  Review queue is small and cases are genuinely plausible same-event matches.
-  Then human-review those few cases and advance to Event/Coverage classification.
+7. Check:
+   https://observatory.hamelberg-ai.com/
+   https://observatory.hamelberg-ai.com/edu/
+   https://observatory.hamelberg-ai.com/report/
+   https://observatory.hamelberg-ai.com/pro/
 
-FAIL:
-  Review queue is still bloated or obviously nonsensical.
-  Do NOT tune again.
-  Permanently simplify to:
-    strong verified SAME -> merge
-    everything else -> separate event
-  and proceed to classification.
+OPTIONAL NEWSLETTER/REPORT-REQUEST STORAGE
+------------------------------------------
+The report downloads even when signup storage is not configured.
 
-No more model benchmarking or positive-sample hunting after this rerun.
+To store report requests and newsletter consent:
+1. Run once in Supabase SQL Editor:
+   supabase/migrations/013_public_report_requests.sql
+
+2. In Supabase, copy the PUBLIC anon/publishable key (not the service-role key).
+
+3. Create data/public-config.json from data/public-config.example.json:
+   {
+     "supabase_url": "https://YOUR-PROJECT.supabase.co",
+     "supabase_anon_key": "YOUR-PUBLIC-KEY"
+   }
+
+4. Commit and redeploy.
+
+GA4 already measures page views. The report page also emits:
+  quarterly_report_download
+
+The public report_requests table provides consent-based lead counts. Public
+roles have INSERT-only access; they cannot read the table.
+
+PRO POSITIONING
+---------------
+The public core remains free:
+- current global signal;
+- aggregate data;
+- evidence examples;
+- methodology;
+- downloadable current-window brief and future quarterly editions.
+
+Pro charges for workflow and depth:
+- historical archive;
+- evidence-threshold comparisons;
+- approved exports/API;
+- monitoring and alerts;
+- evidence-linked executive briefs;
+- in-company talks and training.
+
+REPOSITORY PRIVACY
+------------------
+A public GitHub repository still exposes the implementation and commit history.
+For genuine implementation protection, use one of these architectures:
+
+A. Upgrade the organisation so GitHub Pages can run from a private repository.
+
+B. Recommended on the free plan:
+   - private processing repository: scripts, prompts, workflows, thresholds,
+     migrations, raw data and QA;
+   - clean public site repository: only the built _site artifact, aggregate JSON
+     and public PDFs.
+
+Changing the current repository's web navigation does not protect public source
+code already visible on GitHub.
