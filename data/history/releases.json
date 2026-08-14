@@ -4,5 +4,39 @@
     "cumulative": false,
     "note": "History starts with the first generated public insight release."
   },
-  "points": []
+  "points": [
+    {
+      "release_id": "c7e442f1-b54e-403d-9140-42726069375b",
+      "window_start": "2026-08-05",
+      "window_end": "2026-08-12",
+      "coverage_count": 129,
+      "event_count": 124,
+      "extra_article_instances": 5,
+      "coverage_index": 1.5504,
+      "event_index": 1.6129,
+      "amplification_gap": -0.0625,
+      "coverage_event_ratio": 1.0403,
+      "event_status_distribution": {
+        "expanding": 0.0484,
+        "contracting": 0.0323,
+        "mixed": 0.0,
+        "non_empowerment": 0.9194,
+        "unclear": 0.0
+      },
+      "coverage_narrative_distribution": {
+        "opportunity": 0.0698,
+        "threat": 0.062,
+        "contested": 0.1473,
+        "descriptive_neutral": 0.7209,
+        "unclear": 0.0
+      },
+      "event_narrative_distribution": {
+        "opportunity": 0.0726,
+        "threat": 0.0645,
+        "contested": 0.1452,
+        "descriptive_neutral": 0.7177,
+        "unclear": 0.0
+      }
+    }
+  ]
 }
