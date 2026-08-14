@@ -1,0 +1,18 @@
+{
+  "search_markets": [
+    "United States",
+    "China",
+    "United Kingdom",
+    "France",
+    "Canada"
+  ],
+  "scope_label": "Five search markets",
+  "scope_note": "Search markets define discovery coverage. They are not country scores and do not establish where an event occurred.",
+  "country_rule": "Country-level signals are published only when event geography is supported and the minimum evidence threshold is met.",
+  "report": {
+    "title": "AI Empowerment Pulse",
+    "edition": "Current-window baseline brief",
+    "download_path": "/reports/ai-empowerment-pulse-latest.pdf",
+    "metadata_path": "/data/reports/latest.json"
+  }
+}
