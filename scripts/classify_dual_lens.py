@@ -44,8 +44,8 @@ ROOT = Path(__file__).resolve().parents[1]
 REVIEW_OUTPUT = ROOT / "review" / "classification" / "latest.json"
 PUBLIC_OUTPUT = ROOT / "data" / "lenses" / "latest.json"
 
-CLASSIFIER_VERSION = "7C.0"
-CODEBOOK_VERSION = "observatory_dual_lens_v1.0"
+CLASSIFIER_VERSION = "7C.1"
+CODEBOOK_VERSION = "observatory_dual_lens_v1.1"
 EVENT_METHOD = "article_to_event_v1"
 TRANSLATION_PROFILE = "validated_language_routing_v3"
 
@@ -127,6 +127,80 @@ VALID_CONTENT_BASIS = {
     "article_summary",
     "multiple_sources",
     "full_text",
+}
+
+CLASSIFICATION_JSON_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "ai_relevant": {"type": "boolean"},
+        "empowerment_status": {
+            "type": "string",
+            "enum": ["expanding", "contracting", "mixed", "non_empowerment", "unclear"]
+        },
+        "empowerment_degree": {"type": "integer", "minimum": 0, "maximum": 3},
+        "narrative_frame": {
+            "type": "string",
+            "enum": ["opportunity", "threat", "contested", "descriptive_neutral", "unclear"]
+        },
+        "distribution_breadth": {
+            "type": "string",
+            "enum": ["broad", "targeted", "concentrated", "unclear"]
+        },
+        "dominant_dimension": {
+            "type": "string",
+            "enum": ["operational", "creative", "agentic", "normative", "none"]
+        },
+        "dimensions": {
+            "type": "object",
+            "properties": {
+                name: {
+                    "type": "object",
+                    "properties": {
+                        "present": {"type": "boolean"},
+                        "direction": {
+                            "type": "string",
+                            "enum": ["expanding", "contracting", "mixed", "unclear", "not_present"]
+                        },
+                        "degree": {"type": "integer", "minimum": 0, "maximum": 3},
+                        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+                        "reasoning": {"type": "string"}
+                    },
+                    "required": ["present", "direction", "degree", "confidence", "reasoning"],
+                    "additionalProperties": False
+                }
+                for name in ["operational", "creative", "agentic", "normative"]
+            },
+            "required": ["operational", "creative", "agentic", "normative"],
+            "additionalProperties": False
+        },
+        "ai_authority_shift": {
+            "type": "string",
+            "enum": ["increasing", "decreasing", "unchanged", "unclear"]
+        },
+        "topic": {
+            "type": "string",
+            "enum": [
+                "work_employment", "business_productivity", "consumer_services",
+                "creativity_ip", "education_research", "healthcare",
+                "government_regulation", "privacy_security",
+                "infrastructure_investment", "other"
+            ]
+        },
+        "geographic_scope": {
+            "type": "string",
+            "enum": ["country", "multi_country", "global", "unclear"]
+        },
+        "country_iso3s": {"type": "array", "items": {"type": "string"}},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "reasoning": {"type": "string"}
+    },
+    "required": [
+        "ai_relevant", "empowerment_status", "empowerment_degree",
+        "narrative_frame", "distribution_breadth", "dominant_dimension",
+        "dimensions", "ai_authority_shift", "topic", "geographic_scope",
+        "country_iso3s", "confidence", "reasoning"
+    ],
+    "additionalProperties": False
 }
 
 
@@ -731,16 +805,25 @@ def clean_iso3s(values: Any) -> list[str]:
     return result
 
 
-def clean_confidence(value: Any) -> float:
+def clean_confidence(value: Any, *, field_name: str = "confidence") -> float:
+    if value is None:
+        raise ClassificationError(
+            f"Structured output omitted required {field_name}."
+        )
+
     try:
         value = float(value)
-    except Exception:
-        return 0.0
+    except Exception as exc:
+        raise ClassificationError(
+            f"Structured output returned non-numeric {field_name}: {value!r}"
+        ) from exc
 
-    return max(
-        0.0,
-        min(1.0, value),
-    )
+    if not (0.0 <= value <= 1.0):
+        raise ClassificationError(
+            f"Structured output returned out-of-range {field_name}: {value}"
+        )
+
+    return value
 
 
 def score_unit(
@@ -819,16 +902,16 @@ def validate_output(
         breadth = "unclear"
         issues.append("invalid distribution_breadth")
 
-    dominant = output.get(
-        "dominant_dimension"
-    )
+    dominant_raw = str(
+        output.get("dominant_dimension") or "none"
+    ).strip()
 
-    if dominant is not None:
-        dominant = str(dominant).strip()
+    dominant = None if dominant_raw == "none" else dominant_raw
 
-        if dominant not in VALID_DIMENSIONS:
-            dominant = None
-            issues.append("invalid dominant_dimension")
+    if dominant is not None and dominant not in VALID_DIMENSIONS:
+        raise ClassificationError(
+            f"Structured output returned invalid dominant_dimension: {dominant_raw!r}"
+        )
 
     authority = str(
         output.get("ai_authority_shift")
@@ -873,17 +956,15 @@ def validate_output(
             "country scope without supported ISO3 country"
         )
 
-    content_basis = str(
-        output.get("content_basis")
-        or "headline_only"
-    ).strip()
+    content_basis = "headline_only"
 
     if content_basis not in VALID_CONTENT_BASIS:
         content_basis = "headline_only"
         issues.append("invalid content_basis")
 
     confidence = clean_confidence(
-        output.get("confidence")
+        output.get("confidence"),
+        field_name="overall confidence",
     )
 
     reasoning = str(
@@ -926,35 +1007,37 @@ def validate_output(
             dim_degree = 0
 
         else:
+            if direction == "not_present":
+                raise ClassificationError(
+                    f"{dimension} is present but direction=not_present."
+                )
+
             if direction not in {
                 "expanding",
                 "contracting",
                 "mixed",
                 "unclear",
             }:
-                direction = "unclear"
-                issues.append(
-                    f"invalid {dimension} direction"
+                raise ClassificationError(
+                    f"Structured output returned invalid {dimension} direction: {direction!r}"
                 )
 
             try:
-                dim_degree = int(
-                    item.get("degree", 1)
-                )
-            except Exception:
-                dim_degree = 1
+                dim_degree = int(item.get("degree", 1))
+            except Exception as exc:
+                raise ClassificationError(
+                    f"Structured output returned invalid {dimension} degree."
+                ) from exc
 
-            dim_degree = max(
-                1,
-                min(3, dim_degree),
-            )
+            dim_degree = max(1, min(3, dim_degree))
 
         dimensions[dimension] = {
             "present": present,
             "direction": direction,
             "degree": dim_degree,
             "confidence": clean_confidence(
-                item.get("confidence")
+                item.get("confidence"),
+                field_name=f"{dimension} confidence",
             ),
             "reasoning": str(
                 item.get("reasoning")
@@ -990,38 +1073,25 @@ def validate_output(
         )
         dominant = None
 
-    # Stage 7C review burden is intentionally restrained.
-    # Model self-review is advisory; deterministic core ambiguity is decisive.
+    # Human review is for core ambiguity, not every moderately uncertain
+    # headline-only item. Confidence remains visible and is checked through
+    # the stratified audit.
     requires_review = bool(
-        confidence < 0.72
+        confidence < 0.50
         or status == "unclear"
         or issues
     )
 
-    model_review_reason = str(
-        output.get("review_reason")
-        or ""
-    ).strip()
-
     review_parts = list(issues)
 
-    if confidence < 0.72:
+    if confidence < 0.50:
         review_parts.append(
-            f"low confidence ({confidence:.2f})"
+            f"very low confidence ({confidence:.2f})"
         )
 
     if status == "unclear":
         review_parts.append(
             "empowerment status unclear"
-        )
-
-    if (
-        bool(output.get("requires_review"))
-        and model_review_reason
-        and requires_review
-    ):
-        review_parts.append(
-            model_review_reason
         )
 
     normalized = {
@@ -1066,6 +1136,7 @@ def call_classifier(
     codebook_prompt: str,
     lens: str,
     evidence_text: str,
+    content_basis: str,
 ) -> dict[str, Any]:
     lens_note = (
         "COVERAGE LENS: classify this one article exactly as communicated."
@@ -1116,8 +1187,9 @@ Return only the required JSON object.
             ],
             "temperature": 0.0,
             "top_p": 1.0,
-            "max_tokens": 700,
+            "max_tokens": 1000,
             "stream": False,
+            "json_schema": CLASSIFICATION_JSON_SCHEMA,
         },
         timeout=240,
     )
@@ -1139,6 +1211,13 @@ Return only the required JSON object.
     normalized, _ = validate_output(
         raw_json
     )
+
+    if content_basis not in VALID_CONTENT_BASIS:
+        raise ClassificationError(
+            f"Invalid deterministic content_basis: {content_basis}"
+        )
+
+    normalized["content_basis"] = content_basis
 
     normalized["_raw_model_output"] = raw_json
 
@@ -1927,6 +2006,11 @@ def main() -> int:
                 evidence_text=article_evidence(
                     article
                 ),
+                content_basis=(
+                    "headline_and_snippet"
+                    if article.get("snippet")
+                    else "headline_only"
+                ),
             )
 
             classification_id = (
@@ -1966,6 +2050,16 @@ def main() -> int:
             )
 
             classified_count += 1
+
+            if index == 8:
+                if max(
+                    row["confidence"]
+                    for row in coverage_results
+                ) == 0:
+                    raise ClassificationError(
+                        "Structured-output sanity check failed: "
+                        "first 8 classifications all have zero confidence."
+                    )
 
         coverage_by_article = {
             row["_unit_id"]: row
@@ -2029,6 +2123,7 @@ def main() -> int:
                         event,
                         members,
                     ),
+                    content_basis="multiple_sources",
                 )
 
                 derived_from = None
@@ -2302,7 +2397,7 @@ def main() -> int:
             json.dumps(
                 {
                     "meta": {
-                        "stage": "7C.0",
+                        "stage": "7C.1",
                         "classification_run_id": classification_run_id,
                         "run_key": run_key,
                         "collection_run_key": collection[
@@ -2365,7 +2460,7 @@ def main() -> int:
             json.dumps(
                 {
                     "meta": {
-                        "stage": "7C.0",
+                        "stage": "7C.1",
                         "provisional": True,
                         "classification_run_id": classification_run_id,
                         "run_key": run_key,
