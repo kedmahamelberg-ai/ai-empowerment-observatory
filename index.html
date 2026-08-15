@@ -3,14 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Empowerment Observatory | Public signal</title>
+
+  <title>AI Empowerment Observatory | Less noise. More signal.</title>
+
   <meta
     name="description"
-    content="Track how AI developments expand, contract, mix, or leave unchanged human capability, agency, rights, and participation—and how news volume may amplify the picture."
+    content="A calmer way to understand AI news: what happened, what was repeated, and what it means for human capability and control."
   >
+
   <link rel="stylesheet" href="./site.css">
   <link rel="stylesheet" href="/analytics-consent.css">
 </head>
+
 <body>
   <header class="site-header">
     <a class="brand" href="./">
@@ -22,220 +26,147 @@
     </a>
 
     <nav aria-label="Main navigation">
-      <a href="./edu/">Current signal</a>
+      <a href="./edu/">This week</a>
       <a href="./report/">Reports</a>
       <a href="./methodology/">Methodology</a>
       <a href="./pro/">Pro</a>
-      <a href="https://kedmahamelberg.com/" target="_blank" rel="noopener noreferrer">About Kedma ↗</a>
+      <a
+        href="https://kedmahamelberg.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        About Kedma ↗
+      </a>
     </nav>
   </header>
 
   <main>
-    <section class="hero">
-      <div class="hero-copy">
-        <p class="kicker" id="release-badge">Loading current release…</p>
+    <section class="home-hero">
+      <div>
+        <p id="release-badge" class="kicker">Loading current release…</p>
+
         <h1>
-          See what AI is changing for people—
-          <em>and what news attention may be amplifying.</em>
+          Less AI news.
+          <em>More signal.</em>
         </h1>
-        <p class="hero-lead">
-          The Observatory separates article volume from unique real-world
-          developments, then tracks whether human empowerment is expanding,
-          contracting, mixed, or not materially affected.
+
+        <p>
+          AIEO turns a crowded week of AI headlines into something you can
+          understand: <strong>what actually happened</strong>, what was repeated,
+          and what it means for people’s capability and control.
         </p>
 
         <div class="hero-actions">
-          <a class="button primary" href="./edu/">Explore the current signal</a>
-          <a class="button secondary" href="./report/">Get the 3-page brief</a>
+          <a class="button primary" href="./edu/">See this week’s signal →</a>
+          <a class="button secondary" href="./report/">Get the 3-page Pulse</a>
         </div>
 
-        <div class="scope-strip" id="scope-strip">
-          <strong>Live public data</strong>
-          <span>Loading observation window and scope…</span>
+        <div id="scope-strip" class="scope-strip">
+          Loading observation window…
         </div>
       </div>
 
-      <div class="hero-visual" aria-label="Coverage and Event Lens comparison">
-        <p class="visual-label">Two lenses on the same news environment</p>
+      <aside class="home-summary">
+        <span>This week</span>
 
-        <div class="count-comparison">
+        <div class="home-counts">
           <article>
-            <span>Coverage Lens</span>
             <strong id="home-coverage-count">—</strong>
-            <small>AI-relevant articles</small>
-            <div class="bar-track"><div id="home-coverage-bar" class="bar coverage"></div></div>
+            <small>AI news articles</small>
           </article>
 
+          <b>→</b>
+
           <article>
-            <span>Event Lens</span>
             <strong id="home-event-count">—</strong>
-            <small>unique real-world developments</small>
-            <div class="bar-track"><div id="home-event-bar" class="bar event"></div></div>
+            <small>unique developments</small>
           </article>
         </div>
 
-        <div class="mini-index-grid">
-          <article>
-            <span>Coverage Index</span>
-            <strong id="home-coverage-index">—</strong>
-          </article>
-          <article>
-            <span>Event Index</span>
-            <strong id="home-event-index">—</strong>
-          </article>
-          <article>
-            <span>Amplification Gap</span>
-            <strong id="home-gap">—</strong>
-          </article>
-        </div>
-
-        <p class="visual-note">
-          Coverage measures attention. Event Lens measures what happened once.
-          The gap shows whether repetition changes the direction of the public picture.
+        <p id="home-summary-text">
+          Loading this week’s takeaway…
         </p>
-      </div>
+
+        <a href="./edu/#trend">See the weekly trend →</a>
+      </aside>
     </section>
 
-    <section class="snapshot-section">
-      <div class="section-heading">
-        <p>Current release</p>
-        <h2>A global signal with evidence-threshold country views</h2>
-        <span id="snapshot-period">Loading data range…</span>
-      </div>
+    <section class="home-value">
+      <article>
+        <span>1</span>
+        <h2>What happened?</h2>
+        <p>Repeated reporting about the same development is counted once.</p>
+      </article>
 
-      <div class="snapshot-grid">
-        <article class="snapshot-card">
-          <span>Observation window</span>
-          <strong id="observation-window">—</strong>
-          <p>Derived from the dated real-world events in the current release.</p>
-        </article>
+      <article>
+        <span>2</span>
+        <h2>What got amplified?</h2>
+        <p>Compare news volume with unique developments over time.</p>
+      </article>
 
-        <article class="snapshot-card">
-          <span>Discovery scope</span>
-          <strong>Five search markets</strong>
-          <p>United States, China, United Kingdom, France, and Canada.</p>
-        </article>
-
-        <article class="snapshot-card">
-          <span>Country interpretation</span>
-          <strong>Evidence threshold first</strong>
-          <p>Search market is not event country. Country signals appear only when supported.</p>
-        </article>
-      </div>
+      <article>
+        <span>3</span>
+        <h2>What changed for people?</h2>
+        <p>Track capability, creativity, autonomy, rights, and control.</p>
+      </article>
     </section>
 
-    <section class="lens-section">
-      <div class="section-heading">
-        <p>Why the two lenses matter</p>
-        <h2>Separate media attention from unique developments</h2>
-      </div>
-
-      <div class="lens-grid">
-        <article>
-          <span>01 · Coverage Lens</span>
-          <h3>What receives attention?</h3>
-          <p>
-            Each article receives one weight. Repeated reporting is retained to
-            measure media volume and framing.
-          </p>
-        </article>
-
-        <article>
-          <span>02 · Event Lens</span>
-          <h3>What happened?</h3>
-          <p>
-            Each resolved real-world development receives one weight, regardless
-            of how many articles cover it.
-          </p>
-        </article>
-
-        <article>
-          <span>03 · Amplification Gap</span>
-          <h3>How does repetition shift the picture?</h3>
-          <p>
-            Coverage Index minus Event Index reveals whether article volume
-            makes the news environment look more expansionary or more contractionary.
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <section class="dimensions-section">
-      <div class="section-heading">
-        <p>Human empowerment</p>
-        <h2>Four parallel dimensions</h2>
-        <span>Operational is substantive; non-empowerment is the residual.</span>
-      </div>
-
-      <div class="dimension-grid">
-        <article><span>01</span><h3>Operational</h3><p>Can people understand, access, and use AI effectively?</p></article>
-        <article><span>02</span><h3>Creative</h3><p>Does AI expand people’s capacity to create and innovate?</p></article>
-        <article><span>03</span><h3>Agentic</h3><p>Do people retain autonomy, control, ownership, and meaningful choice?</p></article>
-        <article><span>04</span><h3>Normative</h3><p>Can people influence and benefit from rules, rights, standards, and accountability?</p></article>
-      </div>
-    </section>
-
-    <section class="report-cta">
+    <section class="home-report-card">
       <div>
-        <p class="kicker">Evidence in three pages</p>
-        <h2>Download the AI Empowerment Pulse</h2>
+        <span>Public report</span>
+        <h2>A three-page shortcut through the week</h2>
         <p>
-          A concise, visual brief covering the observation window, Coverage vs
-          Event comparison, empowerment direction, narrative framing, and limitations.
+          Download the current AI Empowerment Pulse. Full quarterly editions
+          will aggregate the weekly history once a complete quarter exists.
         </p>
       </div>
-      <a class="button report-button" href="./report/">View the report page</a>
+
+      <a href="./report/">Open reports →</a>
     </section>
 
-    <section class="home-cta-strip">
+    <section class="home-bottom-grid">
       <article>
-        <span>Understand the evidence</span>
-        <strong>See the live weekly trend, source list, and unique developments.</strong>
-        <a href="./edu/">Explore the live signal →</a>
-      </article>
-      <article>
-        <span>Quarterly public report</span>
-        <strong>Get the three-page Pulse now and future quarterly editions.</strong>
-        <a href="./report/">Open reports →</a>
-      </article>
-      <article>
-        <span>Research & executive briefings</span>
-        <strong>Connect the Observatory to strategy, governance, and responsible AI.</strong>
-        <a href="https://kedmahamelberg.com/" target="_blank" rel="noopener noreferrer">About Kedma ↗</a>
-      </article>
-    </section>
-
-    <section class="product-grid">
-      <article class="public-product">
-        <p class="product-status">Live now · Public edition</p>
-        <h2>Public Observatory</h2>
-        <p>
-          Current global signal, Coverage and Event lenses, source-backed evidence,
-          downloadable briefs, and public methodology.
-        </p>
-        <a href="./edu/">Open the public signal →</a>
+        <span>Research</span>
+        <h2>Built from a research programme on human empowerment and AI</h2>
+        <a
+          href="https://kedmahamelberg.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          About Kedma Hamelberg ↗
+        </a>
       </article>
 
-      <article class="pro-product">
-        <p class="product-status">Professional layer · In development</p>
-        <h2>Observatory Pro</h2>
-        <p>
-          Historical depth, evidence-threshold comparisons, exports, alerts,
-          tailored briefings, and organisational workflows.
-        </p>
-        <a href="./pro/">See the professional roadmap →</a>
+      <article>
+        <span>For organisations</span>
+        <h2>Need monitoring, deeper history, or an executive briefing?</h2>
+        <div>
+          <a href="./pro/">See Pro →</a>
+          <a
+            href="mailto:kedma@hamelberg-ai.com?subject=AI%20Empowerment%20Observatory%20briefing"
+          >
+            Book a briefing →
+          </a>
+        </div>
       </article>
     </section>
   </main>
 
   <footer>
     <span>© 2026 AI Empowerment Observatory</span>
+
     <nav>
-      <a href="./edu/">Current signal</a>
+      <a href="./edu/">This week</a>
       <a href="./report/">Reports</a>
       <a href="./methodology/">Methodology</a>
       <a href="./privacy/">Privacy</a>
-      <a href="https://kedmahamelberg.com/" target="_blank" rel="noopener noreferrer">Kedma Hamelberg ↗</a>
+      <a
+        href="https://kedmahamelberg.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Kedma Hamelberg ↗
+      </a>
       <a href="mailto:kedma@hamelberg-ai.com">Contact</a>
     </nav>
   </footer>

@@ -1,104 +1,236 @@
 "use strict";
 
-const paths = {
-  lenses: "/data/lenses/latest.json",
-  events: "/data/events/latest.json",
-  status: "/data/status/latest.json",
-  config: "/data/site-config.json"
-};
+async function fetchJSON(path) {
+  const response =
+    await fetch(
+      path,
+      { cache: "no-store" }
+    );
 
-async function safeJSON(path) {
-  try {
-    const response = await fetch(path, { cache: "no-store" });
-    if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
-    return await response.json();
-  } catch (error) {
-    console.error(error);
-    return null;
+  if (!response.ok) {
+    throw new Error(
+      `HTTP ${response.status}`
+    );
   }
+
+  return response.json();
 }
 
-function signed(value, digits = 2) {
-  if (value == null || Number.isNaN(Number(value))) return "—";
-  const number = Number(value);
-  return `${number > 0 ? "+" : ""}${number.toFixed(digits)}`;
+function formatNumber(value) {
+  return Number(
+    value || 0
+  ).toLocaleString("en-GB");
 }
 
-function isoDate(value) {
-  if (!value) return null;
-  const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? null : date;
+function signed(value) {
+  if (
+    value == null
+    || Number.isNaN(Number(value))
+  ) {
+    return "—";
+  }
+
+  const number =
+    Number(value);
+
+  return (
+    `${number > 0 ? "+" : ""}`
+    + number.toFixed(2)
+  );
+}
+
+function signalLabel(value) {
+  const number =
+    Number(value || 0);
+
+  if (number <= -20) {
+    return "more human constraint";
+  }
+
+  if (number < -5) {
+    return "leaning toward constraint";
+  }
+
+  if (number <= 5) {
+    return "near neutral";
+  }
+
+  if (number < 20) {
+    return "leaning toward empowerment";
+  }
+
+  return "more human empowerment";
 }
 
 function dateRange(eventsPayload) {
   const values = [];
-  for (const event of eventsPayload?.events || []) {
-    if (event.event_date) values.push(event.event_date);
-    for (const source of event.sources || []) {
-      if (source.published_at) values.push(source.published_at);
+
+  for (
+    const event
+    of eventsPayload?.events || []
+  ) {
+    if (event.event_date) {
+      values.push(
+        new Date(
+          event.event_date
+        )
+      );
+    }
+
+    for (
+      const source
+      of event.sources || []
+    ) {
+      if (source.published_at) {
+        values.push(
+          new Date(
+            source.published_at
+          )
+        );
+      }
     }
   }
-  const dates = values.map(isoDate).filter(Boolean).sort((a, b) => a - b);
-  if (!dates.length) return null;
-  return { start: dates[0], end: dates[dates.length - 1] };
+
+  const valid =
+    values
+    .filter(
+      date => !Number.isNaN(
+        date.getTime()
+      )
+    )
+    .sort(
+      (a, b) => a - b
+    );
+
+  if (!valid.length) {
+    return null;
+  }
+
+  return {
+    start: valid[0],
+    end: valid[
+      valid.length - 1
+    ]
+  };
 }
 
 function formatDate(date) {
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric"
-  }).format(date);
-}
-
-function releaseLabel(lenses, status) {
-  const value = lenses?.meta?.release_status || status?.release_status || "provisional_automated";
-  if (String(value).startsWith("human_audited")) return "Live now · Human-audited public release";
-  if (String(value).includes("audited")) return "Live now · Audited public release";
-  return "Live now · Provisional automated release";
+  return new Intl.DateTimeFormat(
+    "en-GB",
+    {
+      day: "numeric",
+      month: "short",
+      year: "numeric"
+    }
+  ).format(date);
 }
 
 async function init() {
-  const [lenses, events, status, config] = await Promise.all([
-    safeJSON(paths.lenses),
-    safeJSON(paths.events),
-    safeJSON(paths.status),
-    safeJSON(paths.config)
+  const [
+    lenses,
+    events
+  ] = await Promise.all([
+    fetchJSON(
+      "/data/lenses/latest.json"
+    ),
+    fetchJSON(
+      "/data/events/latest.json"
+    )
   ]);
 
-  if (!lenses?.global) {
-    document.getElementById("release-badge").textContent = "Current data temporarily unavailable";
-    return;
+  const coverage =
+    lenses.global.coverage;
+
+  const event =
+    lenses.global.event;
+
+  const amplification =
+    lenses.global.amplification;
+
+  const coverageCount =
+    Number(
+      coverage
+      .unit_count_ai_relevant
+      || 0
+    );
+
+  const eventCount =
+    Number(
+      event
+      .unit_count_ai_relevant
+      || 0
+    );
+
+  const extra =
+    Math.max(
+      0,
+      coverageCount
+      - eventCount
+    );
+
+  document.getElementById(
+    "home-coverage-count"
+  ).textContent =
+    formatNumber(
+      coverageCount
+    );
+
+  document.getElementById(
+    "home-event-count"
+  ).textContent =
+    formatNumber(
+      eventCount
+    );
+
+  const index =
+    Number(
+      event.empowerment_index
+      || 0
+    );
+
+  document.getElementById(
+    "home-summary-text"
+  ).textContent =
+    `${extra} extra article instance${extra === 1 ? "" : "s"} `
+    + `of repeated coverage this week. The unique-development human-power `
+    + `signal is ${signalLabel(index)} (${signed(index)}).`;
+
+  const range =
+    dateRange(events);
+
+  if (range) {
+    document.getElementById(
+      "scope-strip"
+    ).textContent =
+      `${formatDate(range.start)}–${formatDate(range.end)} · `
+      + "5 discovery markets · source-backed public release";
   }
 
-  const coverage = lenses.global.coverage || {};
-  const event = lenses.global.event || {};
-  const amplification = lenses.global.amplification || {};
-  const coverageCount = Number(coverage.unit_count_ai_relevant || coverage.unit_count_total || 0);
-  const eventCount = Number(event.unit_count_ai_relevant || event.unit_count_total || 0);
-  const maximum = Math.max(coverageCount, eventCount, 1);
-  const range = dateRange(events);
+  const releaseStatus =
+    String(
+      lenses.meta
+      ?.release_status
+      || ""
+    );
 
-  document.getElementById("release-badge").textContent = releaseLabel(lenses, status);
-  document.getElementById("home-coverage-count").textContent = coverageCount.toLocaleString("en-GB");
-  document.getElementById("home-event-count").textContent = eventCount.toLocaleString("en-GB");
-  document.getElementById("home-coverage-index").textContent = signed(coverage.empowerment_index);
-  document.getElementById("home-event-index").textContent = signed(event.empowerment_index);
-  document.getElementById("home-gap").textContent = signed(amplification.directional_amplification_gap);
-  document.getElementById("home-coverage-bar").style.width = `${coverageCount / maximum * 100}%`;
-  document.getElementById("home-event-bar").style.width = `${eventCount / maximum * 100}%`;
-
-  const markets = config?.search_markets || [];
-  const windowText = range
-    ? `${formatDate(range.start)}–${formatDate(range.end)}`
-    : "current observation window";
-
-  document.getElementById("scope-strip").innerHTML = `
-    <strong>${windowText}</strong>
-    <span>${markets.length || 5} search markets · ${coverageCount} AI-relevant articles · ${eventCount} unique events</span>
-  `;
-  document.getElementById("observation-window").textContent = windowText;
-  document.getElementById("snapshot-period").textContent = `Current release covers ${windowText}; last updated ${status?.generated_at ? formatDate(new Date(status.generated_at)) : "with the latest successful pipeline run"}.`;
+  document.getElementById(
+    "release-badge"
+  ).textContent =
+    releaseStatus
+    .startsWith(
+      "human_audited"
+    )
+      ? "Human-audited public release"
+      : "Current public release";
 }
 
-init();
+init().catch(
+  error => {
+    console.error(error);
+
+    document.getElementById(
+      "release-badge"
+    ).textContent =
+      "AI Empowerment Observatory";
+  }
+);
