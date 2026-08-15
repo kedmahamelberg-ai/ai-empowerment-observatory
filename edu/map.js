@@ -1,1 +1,1 @@
-/* Historical prototype file retained intentionally. Live globe logic is in dashboard.js. */
+/* Historical prototype retired. Live map interaction is in dashboard.js. */

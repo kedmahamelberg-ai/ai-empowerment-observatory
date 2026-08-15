@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Current AI Empowerment Signal | AIEO</title>
+  <title>This week in AI | AI Empowerment Observatory</title>
 
   <meta
     name="description"
-    content="See the current AI Empowerment Observatory signal: news volume, unique developments, recent trends, sources, human-impact direction, and evidence."
+    content="A calmer way to understand AI news: what happened, what was repeated, and what it means for human capability and control."
   >
 
   <link
@@ -25,339 +25,465 @@
       <span class="brand-mark">AIEO</span>
       <span>
         <strong>AI Empowerment Observatory</strong>
-        <small>Public edition · a research initiative by Kedma Hamelberg</small>
+        <small>Making AI news easier to understand</small>
       </span>
     </a>
 
     <nav aria-label="Main navigation">
-      <a href="#overview">Overview</a>
+      <a href="#overview">This week</a>
       <a href="#trend">Trends</a>
-      <a href="#globe">Globe</a>
-      <a href="#sources">Sources</a>
+      <a href="#explore">Explore</a>
       <a href="#evidence">Evidence</a>
-      <a href="../methodology/">Methodology</a>
       <a href="../report/">Reports</a>
-      <a href="https://kedmahamelberg.com/" target="_blank" rel="noopener noreferrer">About Kedma ↗</a>
+      <a href="../methodology/">Methodology</a>
     </nav>
   </header>
 
   <main>
-    <section id="overview" class="live-hero">
-      <p id="release-label" class="eyebrow">Loading current release…</p>
+    <section id="overview" class="calm-hero">
+      <div class="hero-main">
+        <p id="release-label" class="eyebrow">Loading release…</p>
 
-      <h1>What is AI doing to people’s capability and control?</h1>
+        <h1>AI news is noisy. Start with the signal.</h1>
 
-      <p class="hero-intro">
-        Start with two simple questions:
-        <strong>How much was reported?</strong> and
-        <strong>how many different things actually happened?</strong>
-        The Observatory then asks whether those developments expand or reduce
-        people’s ability, autonomy, rights, and influence.
-      </p>
+        <p class="hero-lead">
+          See <strong>what actually happened</strong>, what was repeated in the
+          news, and whether those developments changed people’s capability,
+          autonomy, rights, or control.
+        </p>
 
-      <div class="data-context">
-        <article>
-          <span>Observation window</span>
-          <strong id="data-window">—</strong>
-        </article>
-        <article>
-          <span>Discovery scope</span>
-          <strong id="data-scope">—</strong>
-        </article>
-      </div>
-
-      <div class="plain-metric-grid">
-        <article>
-          <span>News volume</span>
-          <strong id="coverage-count">—</strong>
-          <p><em>Coverage Lens</em> · AI-relevant articles found this release.</p>
-        </article>
-
-        <article>
-          <span>Unique developments</span>
-          <strong id="event-count">—</strong>
-          <p><em>Event Lens</em> · each real-world development counted once.</p>
-        </article>
-
-        <article>
-          <span>Extra coverage</span>
-          <strong id="extra-coverage-count">—</strong>
-          <p>Articles above the unique-development count. This shows repetition.</p>
-        </article>
-
-        <article>
-          <span>Media amplification gap</span>
-          <strong id="amplification-gap">—</strong>
-          <p>Does repeated coverage change the direction of the empowerment signal?</p>
-        </article>
-      </div>
-
-      <details class="quick-definition">
-        <summary>What do “Coverage Lens”, “Event Lens”, and “Amplification Gap” mean?</summary>
-        <div class="definition-grid">
-          <p><strong>Coverage Lens = news volume.</strong> Every article counts.</p>
-          <p><strong>Event Lens = unique developments.</strong> Repeated reporting about the same event counts once.</p>
-          <p><strong>Amplification Gap = the difference between the two.</strong> It tells us whether repetition makes the news picture look more empowering or more constraining.</p>
+        <div class="hero-actions">
+          <a class="primary-action" href="#weekly-summary">See this week in 30 seconds ↓</a>
+          <button id="open-tour" type="button" class="quiet-action">How to read AIEO</button>
         </div>
-      </details>
-    </section>
 
-    <section id="attention" class="section">
-      <div class="section-heading">
-        <p>Current week</p>
-        <h2>News volume versus what actually happened</h2>
-        <span id="gap-interpretation">
-          Loading the current comparison…
-        </span>
+        <div class="quiet-meta">
+          <span id="data-window">—</span>
+          <span>·</span>
+          <span id="market-count">—</span>
+          <button id="open-scope" type="button">What is covered?</button>
+        </div>
       </div>
 
-      <div class="count-bars">
-        <article>
-          <div>
-            <span>News volume · Coverage Lens</span>
-            <strong id="coverage-count-2">—</strong>
-          </div>
-          <div class="count-track">
-            <div id="coverage-count-bar" class="count-fill coverage"></div>
-          </div>
-        </article>
+      <aside id="weekly-summary" class="week-card">
+        <span class="card-kicker">This week in 30 seconds</span>
 
-        <article>
-          <div>
-            <span>Unique developments · Event Lens</span>
-            <strong id="event-count-2">—</strong>
-          </div>
-          <div class="count-track">
-            <div id="event-count-bar" class="count-fill event"></div>
-          </div>
-        </article>
-      </div>
+        <div class="week-stat">
+          <strong id="coverage-count">—</strong>
+          <span>AI news articles</span>
+        </div>
+
+        <div class="arrow-row">↓</div>
+
+        <div class="week-stat">
+          <strong id="event-count">—</strong>
+          <span>unique developments</span>
+        </div>
+
+        <p id="repetition-summary" class="week-takeaway">
+          Loading repetition summary…
+        </p>
+
+        <div class="signal-pill">
+          <span>Human-power signal</span>
+          <strong id="signal-label">—</strong>
+          <small id="signal-score">—</small>
+        </div>
+      </aside>
     </section>
 
-    <section id="trend" class="section trend-section">
+    <section class="key-takeaway">
+      <span>What should I remember?</span>
+      <strong id="one-sentence-summary">Loading this week’s takeaway…</strong>
+      <button id="open-technical" type="button">See the numbers</button>
+    </section>
+
+    <section id="trend" class="calm-section">
       <div class="section-heading">
-        <p>Weekly history</p>
-        <h2>A Google-Trends-style view of attention versus unique developments</h2>
+        <p>Trend</p>
+        <h2>Is attention growing faster than the number of new developments?</h2>
         <span>
-          Each point is one weekly release. Counts are <strong>not cumulative</strong>.
-          Use the buttons to change how much history is visible.
+          Think of this like Google Trends for the Observatory:
+          one line for news volume, one for unique developments.
         </span>
       </div>
 
-      <div class="trend-toolbar" aria-label="Trend period">
-        <button type="button" data-trend-limit="4">Last 4 releases</button>
-        <button type="button" data-trend-limit="12" class="active">Last 12 releases</button>
-        <button type="button" data-trend-limit="all">All history</button>
+      <div class="trend-toolbar">
+        <button type="button" data-trend-limit="4">4 releases</button>
+        <button type="button" data-trend-limit="12" class="active">12 releases</button>
+        <button type="button" data-trend-limit="all">All</button>
       </div>
 
-      <div id="trend-chart" class="trend-chart">
-        Loading weekly history…
-      </div>
-
+      <div id="trend-chart" class="trend-chart"></div>
       <p id="trend-note" class="chart-note"></p>
     </section>
 
-    <section id="globe" class="section globe-section">
+    <section id="explore" class="calm-section">
       <div class="section-heading">
-        <p>Global discovery</p>
-        <h2>The globe is back—but without fictional country scores</h2>
-        <span>
-          Hollow markers show the five markets used to discover AI news.
-          They are <strong>search markets, not country scores</strong>.
-          Evidence-based country signals are published separately only after the
-          minimum evidence threshold is met.
-        </span>
+        <p>Explore</p>
+        <h2>Choose what you want to understand</h2>
+        <span>Only one view is shown at a time, so you do not have to process everything at once.</span>
       </div>
 
-      <div class="globe-shell">
-        <div
-          id="globe-map"
-          role="application"
-          aria-label="Interactive globe showing AI news discovery markets"
-        ></div>
+      <div class="explore-tabs" role="tablist" aria-label="Explore the weekly signal">
+        <button
+          type="button"
+          class="active"
+          role="tab"
+          aria-selected="true"
+          data-explore-tab="impact"
+        >
+          Human impact
+        </button>
 
-        <div class="globe-legend">
-          <span><i class="market-dot"></i> Discovery market</span>
-          <span><i class="signal-dot"></i> Evidence-ready country signal</span>
-        </div>
+        <button
+          type="button"
+          role="tab"
+          aria-selected="false"
+          data-explore-tab="tone"
+        >
+          News tone
+        </button>
+
+        <button
+          type="button"
+          role="tab"
+          aria-selected="false"
+          data-explore-tab="themes"
+        >
+          What AI news was about
+        </button>
+
+        <button
+          type="button"
+          role="tab"
+          aria-selected="false"
+          data-explore-tab="globe"
+        >
+          Globe
+        </button>
       </div>
-    </section>
 
-    <section class="section">
-      <div class="section-heading">
-        <p>How the news talks about AI</p>
-        <h2>Narrative climate</h2>
-        <span>
-          This is about the tone of reporting—not whether AI actually empowers people.
-        </span>
-      </div>
-      <div id="narrative-chart" class="grouped-chart"></div>
-    </section>
+      <div class="explore-stage">
+        <section
+          id="panel-impact"
+          class="explore-panel active"
+          data-panel="impact"
+        >
+          <div class="impact-overview">
+            <article>
+              <span>Clear direct human-power shift</span>
+              <strong id="clear-shift-share">—</strong>
+              <p>
+                Developments with evidence of expansion, contraction, or a mixed effect.
+              </p>
+            </article>
 
-    <section class="section non-emp-section">
-      <div class="section-heading">
-        <p>Human impact</p>
-        <h2>What does “non-empowerment” actually contain?</h2>
-        <span>
-          “Non-empowerment” does <strong>not</strong> mean “AI has no impact” or
-          “the story is unimportant.” It means the available headline/snippet
-          does not establish a direct change in human capability, autonomy,
-          rights, protection, participation, or influence.
-        </span>
-      </div>
-
-      <div class="impact-grid">
-        <article class="impact-summary">
-          <span>No clear human-empowerment effect in available evidence</span>
-          <strong id="non-emp-share">—</strong>
-          <p id="non-emp-count-note"></p>
-        </article>
-
-        <article>
-          <h3>What are those developments about?</h3>
-          <div class="lens-toggle" role="group" aria-label="Non-empowerment breakdown lens">
-            <button type="button" data-breakdown-lens="event" class="active">Unique developments</button>
-            <button type="button" data-breakdown-lens="coverage">News articles</button>
+            <article>
+              <span>No direct shift identified</span>
+              <strong id="non-emp-share">—</strong>
+              <p>
+                Important AI developments where the available evidence does not establish
+                a direct change in human capability or control.
+              </p>
+            </article>
           </div>
-          <div id="non-emp-topic-chart" class="topic-chart"></div>
-        </article>
+
+          <div id="impact-status-chart" class="status-chart"></div>
+
+          <details class="disclosure-card">
+            <summary>What does “no direct shift identified” mean?</summary>
+            <p>
+              The formal code is <strong>non-empowerment</strong>. It does not mean
+              “AI has no impact.” It means the available headline/snippet does not
+              establish a direct change in people’s capability, autonomy, rights,
+              protection, participation, or influence.
+            </p>
+
+            <div class="inline-toggle">
+              <button
+                type="button"
+                class="active"
+                data-nonemp-lens="event"
+              >
+                Unique developments
+              </button>
+              <button
+                type="button"
+                data-nonemp-lens="coverage"
+              >
+                News articles
+              </button>
+            </div>
+
+            <div id="non-emp-theme-chart" class="theme-chart"></div>
+          </details>
+
+          <details class="disclosure-card">
+            <summary>What are the four dimensions?</summary>
+            <div class="dimension-grid">
+              <article>
+                <span>Operational</span>
+                <h3>Can people use AI better?</h3>
+                <p>Access, understanding, skills, productivity, and effective use.</p>
+                <strong id="dim-operational">—</strong>
+              </article>
+              <article>
+                <span>Creative</span>
+                <h3>Can people create more?</h3>
+                <p>Ideas, invention, design, expression, and creative production.</p>
+                <strong id="dim-creative">—</strong>
+              </article>
+              <article>
+                <span>Agentic</span>
+                <h3>Who stays in control?</h3>
+                <p>Autonomy, ownership, meaningful choice, and decision authority.</p>
+                <strong id="dim-agentic">—</strong>
+              </article>
+              <article>
+                <span>Normative</span>
+                <h3>Can people shape the rules?</h3>
+                <p>Rights, safety, privacy, transparency, standards, and accountability.</p>
+                <strong id="dim-normative">—</strong>
+              </article>
+            </div>
+          </details>
+        </section>
+
+        <section
+          id="panel-tone"
+          class="explore-panel"
+          data-panel="tone"
+          hidden
+        >
+          <div class="panel-intro">
+            <h3>How is AI being talked about?</h3>
+            <p>
+              News tone is separate from human impact. A positive headline does not
+              automatically mean people gained control or capability.
+            </p>
+          </div>
+
+          <div id="narrative-chart" class="narrative-chart"></div>
+
+          <details class="disclosure-card">
+            <summary>Why compare news volume with unique developments?</summary>
+            <p id="tone-gap-detail"></p>
+          </details>
+        </section>
+
+        <section
+          id="panel-themes"
+          class="explore-panel"
+          data-panel="themes"
+          hidden
+        >
+          <div class="panel-intro">
+            <h3>What was AI news actually about?</h3>
+            <p>
+              These themes are descriptive navigation labels. They do not affect
+              the empowerment index.
+            </p>
+          </div>
+
+          <div class="inline-toggle">
+            <button
+              type="button"
+              class="active"
+              data-theme-lens="event"
+            >
+              Unique developments
+            </button>
+
+            <button
+              type="button"
+              data-theme-lens="coverage"
+            >
+              News articles
+            </button>
+          </div>
+
+          <div id="theme-chart" class="theme-chart"></div>
+        </section>
+
+        <section
+          id="panel-globe"
+          class="explore-panel"
+          data-panel="globe"
+          hidden
+        >
+          <div class="panel-intro">
+            <h3>Explore where the Observatory discovers AI news</h3>
+            <p>
+              Click a market to zoom in and see how much AI news was observed there,
+              how many sources appeared, and which publications were most visible.
+            </p>
+          </div>
+
+          <div class="globe-layout">
+            <div class="globe-map-wrap">
+              <div
+                id="globe-map"
+                role="application"
+                aria-label="Interactive globe of AI news discovery markets"
+              ></div>
+
+              <button
+                id="reset-globe"
+                type="button"
+                class="map-reset"
+              >
+                Reset globe
+              </button>
+            </div>
+
+            <aside id="market-panel" class="market-panel">
+              <span class="panel-kicker">Choose a market</span>
+              <h3>Click a marker on the globe</h3>
+              <p>
+                Discovery-market statistics describe where news was found.
+                They are not country empowerment scores.
+              </p>
+            </aside>
+          </div>
+
+          <details class="disclosure-card">
+            <summary>Are there country empowerment scores?</summary>
+            <div id="country-signal-note"></div>
+          </details>
+        </section>
       </div>
     </section>
 
-    <section class="section">
+    <section id="evidence" class="calm-section evidence-section">
       <div class="section-heading">
-        <p>Four ways human power can change</p>
-        <h2>Plain-language dimension guide</h2>
-      </div>
-
-      <div class="dimension-explainer-grid">
-        <article>
-          <span>Operational</span>
-          <h3>Can people use AI better?</h3>
-          <p>Access, understanding, skills, productivity, and effective use.</p>
-          <strong id="dim-operational">—</strong>
-        </article>
-        <article>
-          <span>Creative</span>
-          <h3>Can people create more?</h3>
-          <p>Ideas, invention, design, expression, and creative production.</p>
-          <strong id="dim-creative">—</strong>
-        </article>
-        <article>
-          <span>Agentic</span>
-          <h3>Who stays in control?</h3>
-          <p>Autonomy, ownership, meaningful choice, and decision authority.</p>
-          <strong id="dim-agentic">—</strong>
-        </article>
-        <article>
-          <span>Normative</span>
-          <h3>Can people shape the rules?</h3>
-          <p>Rights, safety, privacy, transparency, appeal, standards, and accountability.</p>
-          <strong id="dim-normative">—</strong>
-        </article>
-      </div>
-    </section>
-
-    <section id="sources" class="section">
-      <div class="section-heading">
-        <p>Source transparency</p>
-        <h2>Which publications and organisations appeared in this release?</h2>
+        <p>Evidence</p>
+        <h2>Open the stories behind the signal</h2>
         <span>
-          The Observatory does not use a fixed whitelist of journals.
-          News is discovered dynamically across the five search markets.
-          This list shows the sources actually observed in the current release.
+          Start with a few recent unique developments. Expand only if you want more.
         </span>
       </div>
 
-      <div class="source-summary">
-        <strong id="unique-source-count">—</strong>
-        <span>unique publications / organisations observed</span>
-      </div>
-
-      <label class="source-search">
-        Search source list
-        <input id="source-filter" type="search" placeholder="e.g. BBC, university, government">
-      </label>
-
-      <div id="source-list" class="source-list"></div>
-    </section>
-
-    <section id="country" class="section">
-      <div class="section-heading">
-        <p>Country interpretation</p>
-        <h2>Only publish what the evidence can support</h2>
-        <span>
-          Search market is not event country. Country cards appear only when
-          event geography is supported and the minimum evidence threshold is reached.
-        </span>
-      </div>
-      <div id="country-signals" class="country-grid"></div>
-    </section>
-
-    <section id="evidence" class="section evidence-section">
-      <div class="section-heading">
-        <p>Trace the signal back to evidence</p>
-        <h2>Recent unique developments</h2>
-        <span>
-          These are Event Lens records. Open the source links to inspect the evidence yourself.
-        </span>
-      </div>
       <div id="event-list" class="event-list"></div>
+
+      <button
+        id="toggle-events"
+        type="button"
+        class="show-more"
+      >
+        Show more developments
+      </button>
     </section>
 
-    <section id="learn" class="section learn-section">
+    <section class="calm-section source-section">
       <div class="section-heading">
-        <p>Six ideas for reading the signal</p>
-        <h2>Use the index as a guide, not a league table</h2>
+        <p>Sources</p>
+        <h2>Where did this week’s AI news come from?</h2>
+        <span id="source-summary-text">
+          Loading the current source inventory…
+        </span>
       </div>
 
-      <ol class="lesson-list">
-        <li><strong>Investment is not empowerment.</strong> More capital and infrastructure do not automatically mean more human control.</li>
-        <li><strong>Capability grows unevenly.</strong> AI may strengthen organisations without reaching citizens equally.</li>
-        <li><strong>Creativity has two sides.</strong> New tools can coexist with reduced consent or compensation.</li>
-        <li><strong>Agency asks who decides.</strong> Productivity gains can happen while people lose decision authority.</li>
-        <li><strong>Rules redistribute power.</strong> Transparency, appeal, consultation, and enforcement affect who can influence AI.</li>
-        <li><strong>Read the evidence, not only the score.</strong> The Observatory summarises coded developments; it is not a country ranking.</li>
-      </ol>
+      <div id="top-source-list" class="top-source-list"></div>
+
+      <details id="all-sources" class="disclosure-card">
+        <summary id="all-sources-summary">Search all sources</summary>
+
+        <label class="source-search">
+          Search publications and organisations
+          <input
+            id="source-filter"
+            type="search"
+            placeholder="BBC, university, government…"
+          >
+        </label>
+
+        <div id="source-list" class="source-list"></div>
+      </details>
     </section>
 
-    <section class="cta-grid">
-      <article class="report-cta">
-        <span>Public report</span>
-        <h2>Download the current 3-page Pulse</h2>
-        <p>
-          The first full quarterly edition will aggregate the weekly release
-          history once a complete quarter is available.
-        </p>
+    <section class="closing-actions">
+      <article>
+        <span>3-minute read</span>
+        <h2>Take the signal with you</h2>
+        <p>Download the current three-page AI Empowerment Pulse.</p>
         <a href="../report/">Open reports →</a>
       </article>
 
-      <article class="research-cta">
+      <article>
         <span>Research & talks</span>
-        <h2>See the research behind the Observatory</h2>
+        <h2>Go deeper without more noise</h2>
         <p>
-          Visit Kedma Hamelberg’s research profile or discuss an executive
-          briefing, talk, or responsible-AI workshop.
+          Explore Kedma Hamelberg’s research or discuss an executive briefing,
+          responsible-AI workshop, or talk.
         </p>
+
         <div>
-          <a href="https://kedmahamelberg.com/" target="_blank" rel="noopener noreferrer">About Kedma ↗</a>
-          <a href="mailto:kedma@hamelberg-ai.com?subject=AI%20Empowerment%20Observatory%20briefing">Book a briefing →</a>
+          <a
+            href="https://kedmahamelberg.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            About Kedma ↗
+          </a>
+
+          <a
+            href="mailto:kedma@hamelberg-ai.com?subject=AI%20Empowerment%20Observatory%20briefing"
+          >
+            Book a briefing →
+          </a>
         </div>
       </article>
     </section>
+
+    <details class="reading-guide">
+      <summary>How should I read the Observatory?</summary>
+
+      <ol>
+        <li><strong>Investment is not empowerment.</strong> More money or infrastructure does not automatically mean more human control.</li>
+        <li><strong>Capability grows unevenly.</strong> AI may help organisations without helping everyone equally.</li>
+        <li><strong>Creativity has two sides.</strong> New tools can coexist with less consent or compensation.</li>
+        <li><strong>Agency asks who decides.</strong> Productivity can rise while people lose decision authority.</li>
+        <li><strong>Rules redistribute power.</strong> Transparency, appeal, standards, and enforcement matter.</li>
+        <li><strong>Read evidence, not only scores.</strong> AIEO is a structured signal—not a league table.</li>
+      </ol>
+    </details>
   </main>
 
   <footer>
-    <span>© 2026 AI Empowerment Observatory · Research initiative by Kedma Hamelberg</span>
+    <span>
+      © 2026 AI Empowerment Observatory ·
+      Research initiative by Kedma Hamelberg
+    </span>
+
     <nav>
       <a href="../">Home</a>
       <a href="../report/">Reports</a>
       <a href="../methodology/">Methodology</a>
       <a href="../status/">Status</a>
-      <a href="https://kedmahamelberg.com/" target="_blank" rel="noopener noreferrer">Kedma Hamelberg ↗</a>
+      <a
+        href="https://kedmahamelberg.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Kedma Hamelberg ↗
+      </a>
       <a href="mailto:kedma@hamelberg-ai.com">Contact</a>
     </nav>
   </footer>
+
+  <dialog id="info-dialog">
+    <button
+      id="close-dialog"
+      type="button"
+      class="dialog-close"
+      aria-label="Close"
+    >
+      ×
+    </button>
+
+    <div id="dialog-content"></div>
+  </dialog>
 
   <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
   <script src="./dashboard.js"></script>
