@@ -22,6 +22,10 @@ ROOT_FILES = [
     "analytics-consent.css",
     ".nojekyll",
     "CNAME",
+    "favicon.svg",
+    "favicon-96x96.png",
+    "favicon.ico",
+    "apple-touch-icon.png",
 ]
 
 PUBLIC_DIRS = [
