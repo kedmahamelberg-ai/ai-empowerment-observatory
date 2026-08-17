@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v6
@@ -41,13 +43,12 @@ jobs:
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
         run: python scripts/benchmark_translation.py
 
-      - name: Commit benchmark sample
+      - name: Commit benchmark sample safely
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add review/translations/benchmark/latest.json
-          git diff --cached --quiet || git commit -m "data: generate blind translation benchmark"
-          git push
+          bash scripts/commit_generated_file.sh \
+            review/translations/benchmark/latest.json \
+            "data: generate blind translation benchmark" \
+            main
 
       - name: Build public site artifact
         run: python scripts/build_public_site.py
