@@ -44,7 +44,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REVIEW_OUTPUT = ROOT / "review" / "classification" / "latest.json"
 PUBLIC_OUTPUT = ROOT / "data" / "lenses" / "latest.json"
 
-CLASSIFIER_VERSION = "7C.2"
+CLASSIFIER_VERSION = "7C.3"
 CODEBOOK_VERSION = "observatory_dual_lens_v1.1"
 EVENT_METHOD = "article_to_event_v1"
 TRANSLATION_PROFILE = "validated_language_routing_v3"
@@ -597,9 +597,9 @@ def register_model(client: Client) -> tuple[str, str]:
                 "language_scope": "original_plus_english",
                 "notes": (
                     "Qwen3-4B GGUF Q4_K_M via llama.cpp. "
-                    "Schema-constrained JSON via response_format; "
-                    "non-thinking mode; diagnostic self-confidence is "
-                    "reported but does not control the index or review queue. "
+                    "JSON-object mode with prompt-only fallback and client-side validation; "
+                    "diagnostic self-confidence is reported but does not "
+                    "control the index or review queue. "
                     "Coverage articles classified once; singleton events "
                     "inherit article classification."
                 ),
@@ -710,7 +710,7 @@ def start_server() -> tuple[subprocess.Popen, Any]:
             "--port",
             "8080",
             "-c",
-            "8192",
+            "12288",
             "-np",
             "1",
             "--jinja",
@@ -1160,6 +1160,25 @@ def validate_output(
     return normalized, issues
 
 
+def _http_error_detail(response: requests.Response) -> str:
+    """Return a compact llama.cpp error body for actionable CI logs."""
+    body = str(response.text or "").strip()
+
+    if not body:
+        return "<empty response body>"
+
+    try:
+        parsed = response.json()
+        body = json.dumps(
+            parsed,
+            ensure_ascii=False,
+        )
+    except Exception:
+        pass
+
+    return body[:3000]
+
+
 def call_classifier(
     *,
     codebook_prompt: str,
@@ -1195,7 +1214,18 @@ of how much source text was available. Headline-only evidence does not by
 itself require confidence 0. Use confidence 0 only when no defensible
 categorical judgement can be made.
 
-Return only the required JSON object.
+Return exactly one JSON object and no surrounding prose.
+
+Required top-level keys:
+ai_relevant, empowerment_status, empowerment_degree, narrative_frame,
+distribution_breadth, dominant_dimension, dimensions, ai_authority_shift,
+topic, geographic_scope, country_iso3s, confidence, reasoning.
+
+The dimensions object must contain exactly:
+operational, creative, agentic, normative.
+
+Each dimension must contain:
+present, direction, degree, confidence, reasoning.
 
 ## EVIDENCE
 
@@ -1207,56 +1237,80 @@ Return only the required JSON object.
             f"Invalid deterministic content_basis: {content_basis}"
         )
 
+    # Do not make the weekly release depend on llama.cpp's conversion of a
+    # large nested JSON Schema into a grammar. The first mode requests a plain
+    # JSON object. If that interface is rejected by a particular llama.cpp
+    # build, the second and third modes rely on the prompt and the existing
+    # strict client-side validator below.
+    request_modes = [
+        {
+            "name": "json_object",
+            "extra": {
+                "response_format": {
+                    "type": "json_object",
+                },
+            },
+            "temperature": 0.2,
+        },
+        {
+            "name": "prompt_only",
+            "extra": {},
+            "temperature": 0.2,
+        },
+        {
+            "name": "prompt_only_retry",
+            "extra": {},
+            "temperature": 0.5,
+        },
+    ]
+
     last_error: Exception | None = None
 
-    for attempt in range(2):
+    for attempt, mode in enumerate(
+        request_modes,
+        start=1,
+    ):
         try:
+            payload = {
+                "model": f"{QWEN_REPO}:{QWEN_QUANT}",
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": (
+                            "You are a conservative research coder for the "
+                            "AI Empowerment Observatory. Follow the supplied "
+                            "codebook exactly and return only JSON."
+                        ),
+                    },
+                    {
+                        "role": "user",
+                        "content": prompt,
+                    },
+                ],
+                "temperature": mode["temperature"],
+                "top_p": 0.8,
+                "max_tokens": 1100,
+                "stream": False,
+                **mode["extra"],
+            }
+
             response = requests.post(
                 SERVER_URL,
-                json={
-                    "model": f"{QWEN_REPO}:{QWEN_QUANT}",
-                    "messages": [
-                        {
-                            "role": "system",
-                            "content": (
-                                "You are a conservative research coder for the "
-                                "AI Empowerment Observatory. Follow the supplied "
-                                "codebook exactly."
-                            ),
-                        },
-                        {
-                            "role": "user",
-                            "content": prompt,
-                        },
-                    ],
-                    # Qwen3 explicitly discourages greedy decoding. The recommended non-thinking
-                    # sampling plus a fixed seed preserves repeatability while avoiding
-                    # the pathological defaults seen with temperature 0.
-                    "temperature": 0.7,
-                    "top_p": 0.8,
-                    "top_k": 20,
-                    "min_p": 0.0,
-                    "seed": 20260817 + attempt,
-                    "max_tokens": 1400,
-                    "stream": False,
-                    # llama.cpp applies schema constraints through
-                    # response_format, not a top-level json_schema field.
-                    "response_format": {
-                        "type": "json_object",
-                        "schema": CLASSIFICATION_JSON_SCHEMA,
-                    },
-                    "chat_template_kwargs": {
-                        "enable_thinking": False,
-                    },
-                    "reasoning_format": "none",
-                },
+                json=payload,
                 timeout=300,
             )
 
-            response.raise_for_status()
+            if not response.ok:
+                raise ClassificationError(
+                    f"llama.cpp HTTP {response.status_code} "
+                    f"in {mode['name']} mode: "
+                    f"{_http_error_detail(response)}"
+                )
+
+            response_data = response.json()
 
             raw_text = str(
-                response.json()[
+                response_data[
                     "choices"
                 ][0][
                     "message"
@@ -1269,6 +1323,16 @@ Return only the required JSON object.
             normalized, _ = validate_output(raw_json)
             normalized["content_basis"] = content_basis
             normalized["_raw_model_output"] = raw_json
+            normalized["_structured_output_mode"] = mode["name"]
+
+            if attempt > 1:
+                print(
+                    "Stage 7C structured output recovered with "
+                    f"{mode['name']} mode.",
+                    file=sys.stderr,
+                    flush=True,
+                )
+
             return normalized
 
         except (
@@ -1280,18 +1344,19 @@ Return only the required JSON object.
         ) as exc:
             last_error = exc
             print(
-                "Warning: Stage 7C structured classification attempt "
-                f"{attempt + 1}/2 failed: {exc}",
+                "Warning: Stage 7C classification request "
+                f"{attempt}/{len(request_modes)} "
+                f"({mode['name']}) failed: {exc}",
                 file=sys.stderr,
                 flush=True,
             )
 
-            if attempt == 0:
+            if attempt < len(request_modes):
                 time.sleep(2)
 
     raise ClassificationError(
-        "Qwen failed to return a valid structured classification after "
-        f"two attempts: {last_error}"
+        "Qwen failed to return a valid classification after all "
+        f"fallback modes: {last_error}"
     )
 
 def article_evidence(article: dict[str, Any]) -> str:
@@ -2502,7 +2567,7 @@ def main() -> int:
             json.dumps(
                 {
                     "meta": {
-                        "stage": "7C.1",
+                        "stage": CLASSIFIER_VERSION,
                         "classification_run_id": classification_run_id,
                         "run_key": run_key,
                         "collection_run_key": collection[
@@ -2565,7 +2630,7 @@ def main() -> int:
             json.dumps(
                 {
                     "meta": {
-                        "stage": "7C.1",
+                        "stage": CLASSIFIER_VERSION,
                         "provisional": True,
                         "classification_run_id": classification_run_id,
                         "run_key": run_key,
