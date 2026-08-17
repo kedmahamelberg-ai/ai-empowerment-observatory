@@ -611,31 +611,65 @@ def stop_llama_server(
             pass
 
 
-def extract_json(text: str) -> dict[str, Any]:
-    text = re.sub(
+def clean_model_output(text: str) -> str:
+    """Remove reasoning/code-fence wrappers without altering JSON content."""
+    cleaned = re.sub(
         r"<think>.*?</think>",
         "",
-        text,
-        flags=re.S,
+        str(text or ""),
+        flags=re.S | re.I,
     ).strip()
 
+    cleaned = re.sub(
+        r"^```(?:json)?\s*",
+        "",
+        cleaned,
+        flags=re.I,
+    )
+    cleaned = re.sub(
+        r"\s*```$",
+        "",
+        cleaned,
+    )
+
+    return cleaned.strip()
+
+
+def extract_json(text: str) -> dict[str, Any]:
+    """Parse one JSON object even when the model adds harmless wrapper text."""
+    cleaned = clean_model_output(text)
+
+    if not cleaned:
+        raise ResolverError("Qwen verifier returned an empty response.")
+
     try:
-        return json.loads(text)
+        value = json.loads(cleaned)
+        if isinstance(value, dict):
+            return value
     except json.JSONDecodeError:
         pass
 
-    match = re.search(
-        r"\{.*\}",
-        text,
-        flags=re.S,
+    # Do not use a greedy {.*} regex: braces or quoted text inside the reason
+    # can cause it to select an invalid span. Instead, try raw JSON decoding at
+    # each opening brace and accept the first complete object.
+    decoder = json.JSONDecoder()
+
+    for index, character in enumerate(cleaned):
+        if character != "{":
+            continue
+
+        try:
+            value, _ = decoder.raw_decode(cleaned[index:])
+        except json.JSONDecodeError:
+            continue
+
+        if isinstance(value, dict):
+            return value
+
+    raise ResolverError(
+        "Qwen verifier output was not valid JSON. "
+        f"Raw output: {cleaned[:1000]}"
     )
-
-    if not match:
-        raise ResolverError(
-            f"Qwen output contained no JSON: {text}"
-        )
-
-    return json.loads(match.group(0))
 
 
 def qwen_verify_event(
@@ -698,69 +732,112 @@ Event representation similarity: {rep_similarity:.4f}
 ModernBERT strongest pair score: {modernbert_max:.4f}
 Google News story-token match: {str(story_token_match).lower()}
 
-Return ONLY JSON:
+Return one syntactically valid JSON object and nothing else:
 {{
   "relationship": "same_event | not_same_event | unclear",
   "confidence": 0.00,
   "reason": ""
 }}
+
+The reason must be one short sentence, on one line, with no quotation marks.
 """.strip()
 
-    response = requests.post(
-        SERVER_URL,
-        json={
-            "model": f"{QWEN_REPO}:{QWEN_QUANT}",
-            "messages": [
-                {
-                    "role": "system",
-                    "content": (
-                        "You are a conservative real-world news-event verifier. "
-                        "False merges are more harmful than false splits."
-                    ),
-                },
-                {
-                    "role": "user",
-                    "content": prompt,
-                },
-            ],
-            "temperature": 0.0,
-            "top_p": 1.0,
-            "max_tokens": 230,
-            "stream": False,
-        },
-        timeout=180,
-    )
+    last_parse_error = ""
 
-    response.raise_for_status()
+    for attempt in range(1, 3):
+        attempt_prompt = prompt
 
-    result = extract_json(
-        str(
+        if attempt > 1:
+            attempt_prompt += (
+                "\n\nSTRICT RETRY: the previous response was malformed. "
+                "Return exactly one valid JSON object. Do not use markdown, "
+                "code fences, line breaks inside strings, or quotation marks "
+                "inside the reason."
+            )
+
+        response = requests.post(
+            SERVER_URL,
+            json={
+                "model": f"{QWEN_REPO}:{QWEN_QUANT}",
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": (
+                            "You are a conservative real-world news-event verifier. "
+                            "False merges are more harmful than false splits."
+                        ),
+                    },
+                    {
+                        "role": "user",
+                        "content": attempt_prompt,
+                    },
+                ],
+                "temperature": 0.0,
+                "top_p": 1.0,
+                "max_tokens": 230,
+                "stream": False,
+                # llama.cpp supports JSON-constrained chat output. We still
+                # validate locally because model/server versions can vary.
+                "response_format": {"type": "json_object"},
+            },
+            timeout=180,
+        )
+
+        response.raise_for_status()
+
+        raw_output = str(
             response.json()["choices"][0]["message"]["content"]
         )
-    )
 
-    relationship = str(
-        result.get("relationship") or ""
-    ).strip()
+        try:
+            result = extract_json(raw_output)
 
-    if relationship not in {
-        "same_event",
-        "not_same_event",
-        "unclear",
-    }:
-        raise ResolverError(
-            f"Unexpected Qwen relationship: {relationship}"
-        )
+            relationship = str(
+                result.get("relationship") or ""
+            ).strip()
 
-    try:
-        confidence = float(result.get("confidence", 0.0))
-    except Exception:
-        confidence = 0.0
+            if relationship not in {
+                "same_event",
+                "not_same_event",
+                "unclear",
+            }:
+                raise ResolverError(
+                    f"Unexpected Qwen relationship: {relationship}"
+                )
 
+            try:
+                confidence = float(result.get("confidence", 0.0))
+            except Exception:
+                confidence = 0.0
+
+            return {
+                "relationship": relationship,
+                "confidence": max(0.0, min(1.0, confidence)),
+                "reason": str(result.get("reason") or "").strip(),
+                "parse_fallback": False,
+            }
+
+        except ResolverError as exc:
+            last_parse_error = str(exc)
+            print(
+                "Warning: Qwen verifier returned malformed structured output "
+                f"on attempt {attempt}/2. {last_parse_error}",
+                file=sys.stderr,
+                flush=True,
+            )
+
+    # Precision-first fail-safe: malformed verifier text must never crash the
+    # weekly release and must never create an automatic merge. Treat it as an
+    # uncertain judgement so strong non-LLM evidence can enter human review;
+    # otherwise the article remains a separate event.
     return {
-        "relationship": relationship,
-        "confidence": max(0.0, min(1.0, confidence)),
-        "reason": str(result.get("reason") or ""),
+        "relationship": "unclear",
+        "confidence": 0.0,
+        "reason": (
+            "Verifier returned malformed JSON after two attempts; "
+            "conservative unclear fallback applied."
+        ),
+        "parse_fallback": True,
     }
 
 
@@ -1352,6 +1429,7 @@ def main() -> int:
         "new_event": 0,
         "review": 0,
         "verifier_calls": 0,
+        "verifier_parse_fallbacks": 0,
     }
 
     review_items = []
@@ -1511,6 +1589,7 @@ def main() -> int:
                 "relationship": None,
                 "confidence": None,
                 "reason": "",
+                "parse_fallback": False,
             }
 
             if should_call_qwen:
@@ -1524,6 +1603,9 @@ def main() -> int:
                     modernbert_max=modern_max,
                     story_token_match=story_match,
                 )
+
+                if qwen.get("parse_fallback"):
+                    counts["verifier_parse_fallbacks"] += 1
 
             auto_merge = False
 
@@ -1745,6 +1827,9 @@ def main() -> int:
                             top_event,
                             evidence,
                         ),
+                        "verifier_parse_fallback": bool(
+                            qwen.get("parse_fallback")
+                        ),
                     },
                 },
             )
@@ -1788,6 +1873,9 @@ def main() -> int:
                         else None
                     ),
                     "qwen_reason": qwen["reason"],
+                    "qwen_parse_fallback": bool(
+                        qwen.get("parse_fallback")
+                    ),
                     "story_token_match": story_match,
                     "competing_candidate": competing,
                 },
@@ -1850,6 +1938,9 @@ def main() -> int:
                 "new_event_count": counts["new_event"],
                 "review_count": counts["review"],
                 "verifier_call_count": counts["verifier_calls"],
+                "verifier_parse_fallback_count": counts[
+                    "verifier_parse_fallbacks"
+                ],
                 "active_event_count": active_event_count,
                 "pending_event_count": pending_event_count,
                 "method": METHOD_NAME,
