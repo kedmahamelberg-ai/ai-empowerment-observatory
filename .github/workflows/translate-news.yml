@@ -15,9 +15,12 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v6
@@ -44,8 +47,7 @@ jobs:
           git clone --depth 1 https://github.com/ggml-org/llama.cpp.git /tmp/llama.cpp
           cmake -S /tmp/llama.cpp -B /tmp/llama.cpp/build \
             -DCMAKE_BUILD_TYPE=Release \
-            -DGGML_NATIVE=OFF \
-            -DLLAMA_CURL=ON
+            -DGGML_NATIVE=OFF
           cmake --build /tmp/llama.cpp/build --target llama-server -j2
 
       - name: Run validated language routing
@@ -55,13 +57,12 @@ jobs:
           LLAMA_SERVER_BIN: /tmp/llama.cpp/build/bin/llama-server
         run: python scripts/translate_headlines.py
 
-      - name: Commit translation review
+      - name: Commit translation review safely
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add review/translations/latest.json
-          git diff --cached --quiet || git commit -m "data: refresh validated English normalization [$(date -u +%Y-%m-%d)]"
-          git push
+          bash scripts/commit_generated_file.sh \
+            review/translations/latest.json \
+            "data: refresh validated English normalization [$(date -u +%Y-%m-%d)]" \
+            main
 
       - name: Build public site artifact
         run: python scripts/build_public_site.py
@@ -74,13 +75,17 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+
     permissions:
       pages: write
       id-token: write
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Deploy GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
