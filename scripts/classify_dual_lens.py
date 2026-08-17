@@ -44,7 +44,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REVIEW_OUTPUT = ROOT / "review" / "classification" / "latest.json"
 PUBLIC_OUTPUT = ROOT / "data" / "lenses" / "latest.json"
 
-CLASSIFIER_VERSION = "7C.1"
+CLASSIFIER_VERSION = "7C.2"
 CODEBOOK_VERSION = "observatory_dual_lens_v1.1"
 EVENT_METHOD = "article_to_event_v1"
 TRANSLATION_PROFILE = "validated_language_routing_v3"
@@ -162,7 +162,16 @@ CLASSIFICATION_JSON_SCHEMA = {
                             "enum": ["expanding", "contracting", "mixed", "unclear", "not_present"]
                         },
                         "degree": {"type": "integer", "minimum": 0, "maximum": 3},
-                        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+                        "confidence": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1,
+                            "description": (
+                                "Diagnostic certainty about this dimension's "
+                                "categorical coding. Use 0 only when the model "
+                                "cannot support any dimension-level judgement."
+                            ),
+                        },
                         "reasoning": {"type": "string"}
                     },
                     "required": ["present", "direction", "degree", "confidence", "reasoning"],
@@ -191,7 +200,16 @@ CLASSIFICATION_JSON_SCHEMA = {
             "enum": ["country", "multi_country", "global", "unclear"]
         },
         "country_iso3s": {"type": "array", "items": {"type": "string"}},
-        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": (
+                "Diagnostic self-rating of categorical certainty. Headline-only "
+                "evidence does not automatically imply zero confidence. Use 0 "
+                "only when no defensible categorical judgement can be made."
+            ),
+        },
         "reasoning": {"type": "string"}
     },
     "required": [
@@ -579,8 +597,11 @@ def register_model(client: Client) -> tuple[str, str]:
                 "language_scope": "original_plus_english",
                 "notes": (
                     "Qwen3-4B GGUF Q4_K_M via llama.cpp. "
-                    "Temperature 0. Coverage articles classified once; "
-                    "singleton events inherit article classification."
+                    "Schema-constrained JSON via response_format; "
+                    "non-thinking mode; diagnostic self-confidence is "
+                    "reported but does not control the index or review queue. "
+                    "Coverage articles classified once; singleton events "
+                    "inherit article classification."
                 ),
             },
             on_conflict=(
@@ -767,24 +788,38 @@ def extract_json(text: str) -> dict[str, Any]:
         flags=re.S,
     ).strip()
 
+    # Remove common Markdown fences without assuming the model used them.
+    text = re.sub(
+        r"^```(?:json)?\s*|\s*```$",
+        "",
+        text,
+        flags=re.I | re.S,
+    ).strip()
+
     try:
-        return json.loads(text)
+        value = json.loads(text)
+        if isinstance(value, dict):
+            return value
     except json.JSONDecodeError:
         pass
 
-    match = re.search(
-        r"\{.*\}",
-        text,
-        flags=re.S,
+    # Do not use a greedy {.*} match: braces or quoted text inside reasoning
+    # can otherwise make an invalid oversized fragment. Instead, scan for the
+    # first independently decodable JSON object.
+    decoder = json.JSONDecoder()
+
+    for match in re.finditer(r"\{", text):
+        try:
+            value, _ = decoder.raw_decode(text[match.start():])
+        except json.JSONDecodeError:
+            continue
+
+        if isinstance(value, dict):
+            return value
+
+    raise ClassificationError(
+        f"No valid JSON object in model output: {text[:1000]}"
     )
-
-    if not match:
-        raise ClassificationError(
-            f"No JSON object in model output: {text[:800]}"
-        )
-
-    return json.loads(match.group(0))
-
 
 def clean_iso3s(values: Any) -> list[str]:
     if not isinstance(values, list):
@@ -1073,21 +1108,15 @@ def validate_output(
         )
         dominant = None
 
-    # Human review is for core ambiguity, not every moderately uncertain
-    # headline-only item. Confidence remains visible and is checked through
-    # the stratified audit.
+    # Confidence is an uncalibrated model self-rating. It remains visible for
+    # diagnostics and stratified quality assessment, but it does not create a
+    # routine manual-review burden or change the substantive score.
     requires_review = bool(
-        confidence < 0.50
-        or status == "unclear"
+        status == "unclear"
         or issues
     )
 
     review_parts = list(issues)
-
-    if confidence < 0.50:
-        review_parts.append(
-            f"very low confidence ({confidence:.2f})"
-        )
 
     if status == "unclear":
         review_parts.append(
@@ -1160,6 +1189,12 @@ def call_classifier(
 Do not use external knowledge.
 Do not use publisher location as event geography unless the evidence itself
 locates the development there.
+
+Confidence is a diagnostic self-rating of categorical certainty, not a rating
+of how much source text was available. Headline-only evidence does not by
+itself require confidence 0. Use confidence 0 only when no defensible
+categorical judgement can be made.
+
 Return only the required JSON object.
 
 ## EVIDENCE
@@ -1167,62 +1202,97 @@ Return only the required JSON object.
 {evidence_text}
 """.strip()
 
-    response = requests.post(
-        SERVER_URL,
-        json={
-            "model": f"{QWEN_REPO}:{QWEN_QUANT}",
-            "messages": [
-                {
-                    "role": "system",
-                    "content": (
-                        "You are a conservative research coder for the "
-                        "AI Empowerment Observatory. Follow the supplied "
-                        "codebook exactly."
-                    ),
-                },
-                {
-                    "role": "user",
-                    "content": prompt,
-                },
-            ],
-            "temperature": 0.0,
-            "top_p": 1.0,
-            "max_tokens": 1000,
-            "stream": False,
-            "json_schema": CLASSIFICATION_JSON_SCHEMA,
-        },
-        timeout=240,
-    )
-
-    response.raise_for_status()
-
-    raw_text = str(
-        response.json()[
-            "choices"
-        ][0][
-            "message"
-        ][
-            "content"
-        ]
-    )
-
-    raw_json = extract_json(raw_text)
-
-    normalized, _ = validate_output(
-        raw_json
-    )
-
     if content_basis not in VALID_CONTENT_BASIS:
         raise ClassificationError(
             f"Invalid deterministic content_basis: {content_basis}"
         )
 
-    normalized["content_basis"] = content_basis
+    last_error: Exception | None = None
 
-    normalized["_raw_model_output"] = raw_json
+    for attempt in range(2):
+        try:
+            response = requests.post(
+                SERVER_URL,
+                json={
+                    "model": f"{QWEN_REPO}:{QWEN_QUANT}",
+                    "messages": [
+                        {
+                            "role": "system",
+                            "content": (
+                                "You are a conservative research coder for the "
+                                "AI Empowerment Observatory. Follow the supplied "
+                                "codebook exactly."
+                            ),
+                        },
+                        {
+                            "role": "user",
+                            "content": prompt,
+                        },
+                    ],
+                    # Qwen3 explicitly discourages greedy decoding. The recommended non-thinking
+                    # sampling plus a fixed seed preserves repeatability while avoiding
+                    # the pathological defaults seen with temperature 0.
+                    "temperature": 0.7,
+                    "top_p": 0.8,
+                    "top_k": 20,
+                    "min_p": 0.0,
+                    "seed": 20260817 + attempt,
+                    "max_tokens": 1400,
+                    "stream": False,
+                    # llama.cpp applies schema constraints through
+                    # response_format, not a top-level json_schema field.
+                    "response_format": {
+                        "type": "json_object",
+                        "schema": CLASSIFICATION_JSON_SCHEMA,
+                    },
+                    "chat_template_kwargs": {
+                        "enable_thinking": False,
+                    },
+                    "reasoning_format": "none",
+                },
+                timeout=300,
+            )
 
-    return normalized
+            response.raise_for_status()
 
+            raw_text = str(
+                response.json()[
+                    "choices"
+                ][0][
+                    "message"
+                ][
+                    "content"
+                ]
+            )
+
+            raw_json = extract_json(raw_text)
+            normalized, _ = validate_output(raw_json)
+            normalized["content_basis"] = content_basis
+            normalized["_raw_model_output"] = raw_json
+            return normalized
+
+        except (
+            requests.RequestException,
+            KeyError,
+            TypeError,
+            ValueError,
+            ClassificationError,
+        ) as exc:
+            last_error = exc
+            print(
+                "Warning: Stage 7C structured classification attempt "
+                f"{attempt + 1}/2 failed: {exc}",
+                file=sys.stderr,
+                flush=True,
+            )
+
+            if attempt == 0:
+                time.sleep(2)
+
+    raise ClassificationError(
+        "Qwen failed to return a valid structured classification after "
+        f"two attempts: {last_error}"
+    )
 
 def article_evidence(article: dict[str, Any]) -> str:
     basis = (
@@ -2013,6 +2083,14 @@ def main() -> int:
                 ),
             )
 
+            print(
+                "  -> "
+                f"status={result['empowerment_status']} "
+                f"frame={result['narrative_frame']} "
+                f"confidence={result['confidence']:.2f}",
+                flush=True,
+            )
+
             classification_id = (
                 insert_classification(
                     client,
@@ -2056,9 +2134,36 @@ def main() -> int:
                     row["confidence"]
                     for row in coverage_results
                 ) == 0:
+                    print(
+                        "Warning: first 8 Qwen confidence self-ratings are 0. "
+                        "Confidence is diagnostic only; Stage 7C will continue.",
+                        file=sys.stderr,
+                        flush=True,
+                    )
+
+                def is_default_collapse(row: dict[str, Any]) -> bool:
+                    return bool(
+                        row["empowerment_status"] == "unclear"
+                        and row["narrative_frame"] == "unclear"
+                        and row["distribution_breadth"] == "unclear"
+                        and row["dominant_dimension"] is None
+                        and row["ai_authority_shift"] == "unclear"
+                        and row["topic"] == "other"
+                        and not row["country_iso3s"]
+                        and not row["reasoning"].strip()
+                        and all(
+                            not item["present"]
+                            for item in row["dimensions"].values()
+                        )
+                    )
+
+                if all(
+                    is_default_collapse(row)
+                    for row in coverage_results
+                ):
                     raise ClassificationError(
-                        "Structured-output sanity check failed: "
-                        "first 8 classifications all have zero confidence."
+                        "Structured-output sanity check failed: first 8 "
+                        "classifications collapsed to empty/default labels."
                     )
 
         coverage_by_article = {
