@@ -1,5 +1,10 @@
 <!doctype html>
 <html lang="en">
+<script
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+  async
+  defer
+></script>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -90,7 +95,13 @@
           <input id="newsletter-opt-in" name="newsletter_opt_in" type="checkbox">
           <span>Send me the quarterly AI Empowerment Report and occasional Observatory updates.</span>
         </label>
-
+        <div
+          class="cf-turnstile"
+          data-sitekey="0x4AAAAAAEV--6Q7-b8hKVOF"
+          data-appearance="interaction-only"
+          data-theme="auto"
+          data-size="flexible"
+        ></div>
         <button type="submit">Download the current 3-page brief</button>
         <p id="form-status" class="form-status" role="status"></p>
       </form>
