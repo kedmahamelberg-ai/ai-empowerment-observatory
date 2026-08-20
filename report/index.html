@@ -1,36 +1,113 @@
 <!doctype html>
 <html lang="en">
-<script
-  src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-  async
-  defer
-></script>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Empowerment Pulse | Reports</title>
+
+  <title>AI Empowerment Pulse | Monthly Reports</title>
+
   <meta
     name="description"
-    content="Download the AI Empowerment Observatory's concise visual brief on article volume, unique AI developments, empowerment direction, and narrative framing."
+    content="Register for the monthly AI Empowerment Pulse: a concise, evidence-linked overview of AI news volume, unique developments, human empowerment, and narrative framing."
   >
+
+  <link rel="canonical" href="https://observatory.hamelberg-ai.com/report/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AI Empowerment Observatory">
+  <meta property="og:title" content="AI Empowerment Pulse | Monthly Reports">
+  <meta
+    property="og:description"
+    content="One concise, evidence-linked overview of the AI news environment each month."
+  >
+  <meta property="og:url" content="https://observatory.hamelberg-ai.com/report/">
+
   <link rel="stylesheet" href="./report.css">
   <link rel="stylesheet" href="/analytics-consent.css">
+
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96">
   <link rel="shortcut icon" href="/favicon.ico">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-</head>
-<script>
-  window.AIEO_NEWSLETTER_CONFIG = {
-    projectRef: "tricsbvxamjzfeckivhz"
-  };
-</script>
 
-<script src="/report/newsletter-client.js"></script>
+  <script
+    src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+    async
+    defer
+  ></script>
+
+  <style>
+    .monthly-release-card {
+      display: grid;
+      gap: 0.3rem;
+      margin-top: 1.25rem;
+      padding: 1rem 1.1rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 12px;
+    }
+
+    .monthly-release-card span,
+    .monthly-release-card small {
+      opacity: 0.8;
+    }
+
+    .monthly-release-card strong {
+      font-size: 1.1rem;
+    }
+
+    .field-note {
+      margin-left: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      opacity: 0.72;
+    }
+
+    .report-form select {
+      width: 100%;
+      min-height: 46px;
+      padding: 0.75rem 0.85rem;
+      color: inherit;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      font: inherit;
+    }
+
+    .newsletter-honeypot {
+      position: absolute !important;
+      left: -10000px !important;
+      top: auto !important;
+      width: 1px !important;
+      height: 1px !important;
+      overflow: hidden !important;
+    }
+
+    #monthly-pulse-status {
+      margin: 0.75rem 0 0;
+      font-weight: 650;
+      line-height: 1.45;
+    }
+
+    #monthly-pulse-status[data-state="success"] {
+      color: #8ce2c1;
+    }
+
+    #monthly-pulse-status[data-state="error"] {
+      color: #ffaaa5;
+    }
+
+    #monthly-pulse-status[data-state="working"] {
+      color: #d3dce5;
+    }
+  </style>
+</head>
+
 <body>
   <header class="report-header">
     <a href="../">AI Empowerment Observatory</a>
-    <nav>
+
+    <nav aria-label="Report navigation">
       <a href="../edu/">Current signal</a>
       <a href="../methodology/">Methodology</a>
       <a href="../pro/">Pro</a>
@@ -40,17 +117,23 @@
   <main>
     <section class="report-hero">
       <div class="report-copy">
-        <p class="eyebrow">Three-page visual brief</p>
-        <h1 id="report-title">AI Empowerment Pulse</h1>
-        <p class="report-period" id="report-period">Loading observation window…</p>
+        <p class="eyebrow">Monthly evidence brief</p>
 
-        <div class="report-cover" aria-hidden="true">
+        <h1 id="report-title">AI Empowerment Pulse</h1>
+
+        <p class="report-period" id="report-period">
+          Loading the current evidence window…
+        </p>
+
+        <div class="report-cover" aria-label="Current evidence base">
           <div class="cover-lens coverage">
             <span>Coverage</span>
             <strong id="cover-coverage-count">—</strong>
-            <small>articles</small>
+            <small>AI news articles</small>
           </div>
-          <div class="cover-divider">vs</div>
+
+          <div class="cover-divider" aria-hidden="true">vs</div>
+
           <div class="cover-lens event">
             <span>Event</span>
             <strong id="cover-event-count">—</strong>
@@ -59,49 +142,111 @@
         </div>
 
         <p>
-          The brief explains what the current AI news environment says about
-          human empowerment—and how the answer changes when article volume is
-          separated from unique real-world developments.
+          Each monthly Pulse brings the weekly observation history together
+          into one concise, evidence-linked overview: what happened, what was
+          repeated, and what changed for people’s capability, autonomy, rights,
+          and control.
         </p>
+
+        <div class="monthly-release-card" aria-live="polite">
+          <span>Next monthly edition</span>
+          <strong id="next-edition-date">Loading release window…</strong>
+          <small id="monthly-pulse-countdown"></small>
+        </div>
       </div>
 
-      <form id="report-form" class="report-form">
-        <h2>Get the brief</h2>
+      <form id="monthly-pulse-form" class="report-form">
+        <p class="eyebrow">Monthly delivery</p>
+
+        <h2>Receive the next Pulse</h2>
+
         <p>
-          Download the current three-page Pulse now. The first full-quarter
-          edition will aggregate the weekly release history after the quarter closes.
-          Tick the optional box below if you want future quarterly editions by email.
+          One concise report per month. Confirm your email once, then receive
+          each new edition when it is released. No daily news stream and no
+          added noise.
         </p>
 
-        <div class="form-grid">
-          <label>
-            First name
-            <input id="first-name" name="first_name" type="text" autocomplete="given-name" required>
-          </label>
+        <label for="monthly-pulse-email">
+          Email address
+          <input
+            id="monthly-pulse-email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+          >
+        </label>
 
-          <label>
-            Last name
-            <input id="last-name" name="last_name" type="text" autocomplete="family-name" required>
-          </label>
-        </div>
+        <label for="monthly-pulse-first-name">
+          First name
+          <span class="field-note">Optional</span>
+          <input
+            id="monthly-pulse-first-name"
+            name="first_name"
+            type="text"
+            autocomplete="given-name"
+            maxlength="80"
+          >
+        </label>
 
-        <label>
-          Work email
-          <input id="work-email" name="email" type="email" autocomplete="email" required>
+        <label for="audience-role">
+          Which best describes you?
+          <select
+            id="audience-role"
+            name="audience_role"
+            required
+          >
+            <option value="" selected disabled>Select one</option>
+            <option value="industry">Industry</option>
+            <option value="academia">Academia</option>
+            <option value="policy">Policy / government</option>
+            <option value="media">Media / journalism</option>
+            <option value="student">Student</option>
+            <option value="other">Other</option>
+          </select>
+        </label>
+
+        <label
+          id="monthly-pulse-other-wrap"
+          for="audience-role-other"
+          hidden
+        >
+          Please briefly describe your role
+          <input
+            id="audience-role-other"
+            name="audience_role_other"
+            type="text"
+            autocomplete="organization-title"
+            maxlength="100"
+          >
+        </label>
+
+        <label class="newsletter-honeypot" aria-hidden="true">
+          Website
+          <input
+            name="website"
+            type="text"
+            tabindex="-1"
+            autocomplete="off"
+          >
         </label>
 
         <label class="consent-row">
-          <input id="privacy-acknowledged" name="privacy_acknowledged" type="checkbox" required>
+          <input
+            id="monthly-pulse-consent"
+            name="consent"
+            type="checkbox"
+            required
+          >
+
           <span>
-            I acknowledge the <a href="../privacy/">Privacy Notice</a> and
-            understand that my details are used to provide this report.
+            Send me the monthly AI Empowerment Pulse. I consent to AIEO using
+            my email address for this purpose. I have read the
+            <a href="../privacy/">Privacy Notice</a> and understand that I can
+            unsubscribe at any time.
           </span>
         </label>
 
-        <label class="consent-row optional-consent">
-          <input id="newsletter-opt-in" name="newsletter_opt_in" type="checkbox">
-          <span>Send me the quarterly AI Empowerment Report and occasional Observatory updates.</span>
-        </label>
         <div
           class="cf-turnstile"
           data-sitekey="0x4AAAAAAEV--6Q7-b8hKVOF"
@@ -109,40 +254,83 @@
           data-theme="auto"
           data-size="flexible"
         ></div>
-        <button type="submit">Download the current 3-page brief</button>
-        <p id="form-status" class="form-status" role="status"></p>
+
+        <button type="submit">
+          Send me the Monthly Pulse →
+        </button>
+
+        <p
+          id="monthly-pulse-status"
+          class="form-status"
+          role="status"
+          aria-live="polite"
+          hidden
+        ></p>
       </form>
     </section>
 
-    <section class="release-facts">
-      <article><span>Observation window</span><strong id="fact-window">—</strong></article>
-      <article><span>Search markets</span><strong>5</strong></article>
-      <article><span>Coverage units</span><strong id="fact-coverage">—</strong></article>
-      <article><span>Unique events</span><strong id="fact-events">—</strong></article>
+    <section class="release-facts" aria-label="Current evidence facts">
+      <article>
+        <span>Current observation window</span>
+        <strong id="fact-window">—</strong>
+      </article>
+
+      <article>
+        <span>Discovery markets</span>
+        <strong>5</strong>
+      </article>
+
+      <article>
+        <span>Coverage units</span>
+        <strong id="fact-coverage">—</strong>
+      </article>
+
+      <article>
+        <span>Unique events</span>
+        <strong id="fact-events">—</strong>
+      </article>
     </section>
 
     <section class="takeaways">
-      <p class="eyebrow">What the current brief covers</p>
-      <h2>Four key takeaways</h2>
+      <p class="eyebrow">Current evidence preview</p>
+      <h2>Four signals feeding the next monthly edition</h2>
       <div id="takeaway-grid" class="takeaway-grid"></div>
     </section>
 
     <section class="report-details">
       <div>
-        <h2>Inside the three pages</h2>
+        <h2>Inside each monthly Pulse</h2>
+
         <ol>
-          <li><strong>State of the signal:</strong> data range, scope, Coverage Index, Event Index, and Amplification Gap.</li>
-          <li><strong>Attention versus developments:</strong> article volume, unique events, narrative climate, and empowerment distribution.</li>
-          <li><strong>Interpretation and governance:</strong> dimensions, evidence examples, methodology, audit, and limitations.</li>
+          <li>
+            <strong>State of the signal:</strong>
+            observation period, scope, Coverage Index, Event Index, and
+            Amplification Gap.
+          </li>
+
+          <li>
+            <strong>Attention versus developments:</strong>
+            article volume, unique events, narrative climate, topic mix, and
+            human-empowerment direction.
+          </li>
+
+          <li>
+            <strong>Interpretation and governance:</strong>
+            source-linked examples, methodology, audit information,
+            limitations, and what changed across the month.
+          </li>
         </ol>
       </div>
 
       <div class="briefing-box">
         <h2>Need this for your organisation?</h2>
+
         <p>
-          The Observatory also supports in-company talks, executive briefings,
-          and training on AI opportunity, human agency, narrative risk, and governance.
+          AIEO also supports tailored in-company talks, executive briefings,
+          and hands-on workshops on AI opportunity, human agency, narrative
+          risk, decision intelligence, and responsible governance.
         </p>
+
         <a href="mailto:kedma@hamelberg-ai.com?subject=AI%20Empowerment%20Observatory%20briefing">
           Discuss a briefing
         </a>
@@ -152,13 +340,92 @@
 
   <footer>
     <span>© 2026 AI Empowerment Observatory</span>
-    <nav>
+
+    <nav aria-label="Footer navigation">
       <a href="../">Home</a>
+      <a href="../methodology/">Methodology</a>
       <a href="../privacy/">Privacy</a>
       <a href="mailto:kedma@hamelberg-ai.com">Contact</a>
     </nav>
   </footer>
 
+  <script>
+    window.AIEO_NEWSLETTER_CONFIG = {
+      projectRef: "tricsbvxamjzfeckivhz"
+    };
+  </script>
+
+  <script>
+    (() => {
+      const roleSelect = document.getElementById("audience-role");
+      const otherWrap = document.getElementById(
+        "monthly-pulse-other-wrap"
+      );
+      const otherInput = document.getElementById(
+        "audience-role-other"
+      );
+
+      const syncOtherRole = () => {
+        const showOther = roleSelect?.value === "other";
+
+        if (otherWrap) {
+          otherWrap.hidden = !showOther;
+        }
+
+        if (otherInput) {
+          otherInput.required = showOther;
+
+          if (!showOther) {
+            otherInput.value = "";
+          }
+        }
+      };
+
+      roleSelect?.addEventListener("change", syncOtherRole);
+      syncOtherRole();
+
+      const now = new Date();
+
+      const nextMonthStart = new Date(
+        now.getFullYear(),
+        now.getMonth() + 1,
+        1
+      );
+
+      const daysUntilClose = Math.max(
+        1,
+        Math.ceil(
+          (nextMonthStart.getTime() - now.getTime()) /
+          (1000 * 60 * 60 * 24)
+        )
+      );
+
+      const nextMonthLabel = new Intl.DateTimeFormat("en-GB", {
+        month: "long",
+        year: "numeric"
+      }).format(nextMonthStart);
+
+      const nextEdition = document.getElementById(
+        "next-edition-date"
+      );
+
+      const countdown = document.getElementById(
+        "monthly-pulse-countdown"
+      );
+
+      if (nextEdition) {
+        nextEdition.textContent = `Early ${nextMonthLabel}`;
+      }
+
+      if (countdown) {
+        countdown.textContent =
+          `${daysUntilClose} day${daysUntilClose === 1 ? "" : "s"} ` +
+          "until the current monthly evidence window closes.";
+      }
+    })();
+  </script>
+
+  <script src="/report/newsletter-client.js"></script>
   <script src="./report.js"></script>
   <script src="/analytics.js"></script>
 </body>
