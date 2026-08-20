@@ -124,3 +124,6 @@ footer { width: min(1130px, calc(100% - 32px)); margin: 0 auto; padding: 25px 0 
   .report-cover { grid-template-columns: 1fr; }
   .cover-divider { display: none; }
 }
+#monthly-pulse-other-wrap[hidden] {
+  display: none !important;
+}
