@@ -15,6 +15,7 @@
     if (status) {
       status.textContent = "Subscription is temporarily unavailable.";
       status.dataset.state = "error";
+      status.hidden = false;
     }
     return;
   }
@@ -43,12 +44,14 @@
       : button.dataset.defaultLabel;
   }
 
+  function selectedRole() {
+    if (!form) return "";
+    return String(new FormData(form).get("audience_role") || "");
+  }
+
   function syncOtherRole() {
     if (!form || !otherWrap || !otherInput) return;
-    const checked = form.querySelector(
-      "input[name='audience_role']:checked"
-    );
-    const isOther = checked?.value === "other";
+    const isOther = selectedRole() === "other";
     otherWrap.hidden = !isOther;
     otherInput.required = isOther;
     if (!isOther) otherInput.value = "";
@@ -79,7 +82,11 @@
 
     try {
       const payload = await postJson("newsletter-confirm", { token });
-      showStatus(payload.message, "success");
+      showStatus(
+        payload.message ||
+          "You are confirmed. The next Monthly Pulse will arrive by email.",
+        "success"
+      );
       url.searchParams.delete("confirm");
       window.history.replaceState({}, "", url.toString());
     } catch (error) {
@@ -94,7 +101,6 @@
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
-      showStatus("", "info");
 
       if (!form.reportValidity()) return;
 
@@ -109,6 +115,7 @@
       }
 
       setSubmitting(true);
+      showStatus("Sending your confirmation email…", "working");
 
       try {
         const payload = await postJson("newsletter-subscribe", {
@@ -123,7 +130,11 @@
           turnstile_token: turnstileToken,
         });
 
-        showStatus(payload.message, "success");
+        showStatus(
+          payload.message ||
+            "Almost there — check your inbox to confirm your subscription.",
+          "success"
+        );
         form.reset();
         syncOtherRole();
 
