@@ -70,7 +70,7 @@ function renderIndices() {
       <strong>${signed(e.empowerment_index)}</strong>
       <small>
         ${escapeHTML(e.unit_count_ai_relevant)}
-        unique AI events · confidence not used
+        resolved event records · confidence not used
       </small>
     </div>
 
