@@ -18,12 +18,13 @@
 <body>
   <header>
     <div>
-      <p class="eyebrow">Public Methodology · v1.0</p>
+      <p class="eyebrow">Public Methodology · pilot v1.1</p>
       <h1>Auditable, governed, and versioned</h1>
       <p>
         The Observatory publishes its concepts, scoring rules, provenance,
-        limitations and audit outcomes without open-sourcing proprietary
-        prompts, thresholds or orchestration code.
+        limitations and audit outcomes. Proprietary prompts, thresholds and
+        orchestration code remain private to protect research integrity and
+        reduce the risk of gaming.
       </p>
     </div>
     <nav>
@@ -44,17 +45,36 @@
           <span>Coverage Lens</span>
           <p>
             Each observed article receives one weight. Repetition is retained
-            because this lens measures attention and framing.
+            because this lens measures attention, repetition and framing.
           </p>
         </article>
         <article>
           <span>Event Lens</span>
           <p>
-            Each resolved real-world development receives one weight, regardless
-            of how many articles cover it.
+            Each resolved event record receives one weight, regardless of how
+            many articles are currently assigned to it. Event resolution is
+            precision-first: ambiguous possible matches remain separate until
+            reviewed. Event-record counts are therefore not yet claims of
+            perfectly validated unique developments.
           </p>
         </article>
       </div>
+    </section>
+
+    <section class="panel">
+      <h2>What the signal measures</h2>
+      <p>
+        Narrative framing and substantive human empowerment are classified
+        separately. An article can frame AI as an opportunity or threat without
+        documenting a direct change in people’s capability, creativity,
+        autonomy, rights or control.
+      </p>
+      <p>
+        The empowerment assessment covers four dimensions: operational,
+        creative, agentic and normative. A unit can affect more than one
+        dimension, but its index contribution follows the overall direction and
+        degree supported by the available evidence.
+      </p>
     </section>
 
     <section class="panel">
@@ -77,8 +97,10 @@
         Mixed: 0 · Non-empowerment: 0 · Unclear: excluded
       </div>
       <p>
-        The lens index is the arithmetic mean of unit scores × 100.
-        The Directional Amplification Gap is Coverage minus Event.
+        The lens index is the arithmetic mean of unit scores × 100. The
+        theoretical range is −100 to +100. The Directional Amplification Gap is
+        Coverage minus Event. These are evidence indices, not sentiment scores
+        and not estimates of AI’s total social benefit or harm.
       </p>
     </section>
 
@@ -86,14 +108,30 @@
       <h2>Human governance</h2>
       <div id="audit"></div>
       <p>
-        Automated weekly releases may appear as provisional. Human governance
-        reviews a stratified sample and high-risk cases asynchronously, so
-        publication does not wait for manual approval.
+        The launch baseline used a 20-case stratified human audit: 6 model
+        outputs were accepted and 14 were corrected. That correction share is a
+        diagnostic of the audited cases, not a population accuracy estimate.
+        The corrected launch release is therefore described as a human-audited
+        baseline; later automated releases remain provisional until their audit
+        results are incorporated.
+      </p>
+      <p>
+        Model self-confidence is diagnostic only. It is not used to weight the
+        index or, by itself, to decide which routine cases receive human review.
+        Human governance combines stratified sampling with review of higher-risk
+        and methodologically informative cases.
       </p>
     </section>
 
     <section class="panel">
       <h2>Limitations</h2>
+      <p>
+        Current results describe the Observatory’s monitored source set and
+        discovery markets. They should not be interpreted as a census of all AI
+        developments or all global news coverage. Cross-market source coverage,
+        event resolution and classification performance will be expanded and
+        re-audited as the longitudinal series grows.
+      </p>
       <ul id="limitations"></ul>
     </section>
   </main>
