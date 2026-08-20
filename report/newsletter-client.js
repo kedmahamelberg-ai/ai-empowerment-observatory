@@ -51,10 +51,16 @@
 
   function syncOtherRole() {
     if (!form || !otherWrap || !otherInput) return;
+  
     const isOther = selectedRole() === "other";
+  
     otherWrap.hidden = !isOther;
+    otherInput.disabled = !isOther;
     otherInput.required = isOther;
-    if (!isOther) otherInput.value = "";
+  
+    if (!isOther) {
+      otherInput.value = "";
+    }
   }
 
   async function postJson(path, body) {
