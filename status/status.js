@@ -27,8 +27,8 @@ async function init() {
       · structural gate ${data.structural_gate}
     </div>
     <div class="card">
-      ${latest.coverage_units ?? "—"} coverage units ·
-      ${latest.event_units ?? "—"} event units ·
+      ${latest.coverage_units ?? "—"} article units ·
+      ${latest.event_units ?? "—"} resolved event records ·
       ${latest.review_queue_count ?? "—"} asynchronous review cases
     </div>
     <div class="card">
