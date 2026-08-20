@@ -51,6 +51,12 @@ OPTIONAL_DATA_FILES = [
     "data/public-config.json",
     "data/insights/latest.json",
     "data/history/releases.json",
+    "data/releases/current.json",
+    "data/releases/index.json",
+]
+
+OPTIONAL_PUBLIC_DATA_DIRS = [
+    "data/releases/weekly",
 ]
 
 
@@ -66,6 +72,18 @@ def copy_optional_file(source: Path, destination: Path) -> None:
         return
     destination.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(source, destination)
+
+
+def copy_optional_json_tree(source: Path, destination: Path) -> None:
+    """Copy only JSON files from an optional public release directory."""
+    if not source.exists():
+        return
+
+    for item in source.rglob("*.json"):
+        relative = item.relative_to(source)
+        target = destination / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(item, target)
 
 
 def main() -> None:
@@ -87,6 +105,9 @@ def main() -> None:
 
     for relative in OPTIONAL_DATA_FILES:
         copy_optional_file(ROOT / relative, SITE / relative)
+
+    for relative in OPTIONAL_PUBLIC_DATA_DIRS:
+        copy_optional_json_tree(ROOT / relative, SITE / relative)
 
     print("Built public Pages artifact at", SITE)
     print(
