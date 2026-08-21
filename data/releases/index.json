@@ -1,0 +1,37 @@
+{
+  "schema_version": "aieo_release_index_v2.0",
+  "updated_at": "2026-08-21T00:43:59.101341Z",
+  "release_count": 1,
+  "current_release_id": "2026-W33",
+  "weekly": [
+    {
+      "release_id": "2026-W33",
+      "release_type": "weekly",
+      "period_start": "2026-08-10",
+      "period_end": "2026-08-16",
+      "generated_at": "2026-08-21T00:43:59.012893Z",
+      "articles": 120,
+      "event_records": 117,
+      "new_event_records": 13,
+      "recurring_event_records": 104,
+      "extra_coverage": 3,
+      "coverage_index": 0.9132,
+      "event_index": 0.9524,
+      "amplification_gap": -0.0392,
+      "audit_status": "pending",
+      "validation_status": "passed"
+    }
+  ],
+  "cumulative_since_launch": {
+    "distinct_articles": 120,
+    "distinct_event_records": 117,
+    "release_count": 1,
+    "period_start": "2026-08-10",
+    "period_end": "2026-08-16"
+  },
+  "month_to_date": {
+    "month": "2026-08",
+    "distinct_articles": 120,
+    "distinct_event_records": 117
+  }
+}
