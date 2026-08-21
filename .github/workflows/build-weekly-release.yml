@@ -1,0 +1,179 @@
+name: Build Weekly Observatory Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      period_start:
+        description: "Optional period start (YYYY-MM-DD). Leave both dates blank for the previous complete Monday-Sunday week."
+        required: false
+        type: string
+      period_end:
+        description: "Optional period end (YYYY-MM-DD). Leave both dates blank for the previous complete Monday-Sunday week."
+        required: false
+        type: string
+      replace:
+        description: "Create a new revision when this weekly release already exists"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aieo-weekly-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-weekly-release:
+    runs-on: ubuntu-latest
+
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      PERIOD_START: ${{ inputs.period_start }}
+      PERIOD_END: ${{ inputs.period_end }}
+      REPLACE_EXISTING: ${{ inputs.replace }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install release dependency
+        run: python -m pip install "supabase>=2,<3"
+
+      - name: Validate workflow inputs and secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${SUPABASE_URL:-}" ]]; then
+            echo "SUPABASE_URL repository secret is missing."
+            exit 1
+          fi
+
+          if [[ -z "${SUPABASE_SECRET_KEY:-}" && -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]]; then
+            echo "Add SUPABASE_SECRET_KEY or SUPABASE_SERVICE_ROLE_KEY as a repository secret."
+            exit 1
+          fi
+
+          if [[ -n "${PERIOD_START:-}" && -z "${PERIOD_END:-}" ]]; then
+            echo "Provide period_end when period_start is supplied."
+            exit 1
+          fi
+
+          if [[ -z "${PERIOD_START:-}" && -n "${PERIOD_END:-}" ]]; then
+            echo "Provide period_start when period_end is supplied."
+            exit 1
+          fi
+
+      - name: Build immutable weekly release
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=()
+
+          if [[ -n "${PERIOD_START:-}" ]]; then
+            args+=(--period-start "$PERIOD_START")
+            args+=(--period-end "$PERIOD_END")
+          fi
+
+          if [[ "${REPLACE_EXISTING:-false}" == "true" ]]; then
+            args+=(--replace)
+          fi
+
+          python scripts/build_weekly_release.py "${args[@]}"
+
+      - name: Validate generated release files
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("data/releases")
+          current_path = root / "current.json"
+          index_path = root / "index.json"
+
+          if not current_path.exists():
+              raise SystemExit("data/releases/current.json was not created")
+          if not index_path.exists():
+              raise SystemExit("data/releases/index.json was not created")
+
+          current = json.loads(current_path.read_text(encoding="utf-8"))
+          index = json.loads(index_path.read_text(encoding="utf-8"))
+
+          required_release = {
+              "release_id",
+              "release_type",
+              "period_start",
+              "period_end",
+              "counts",
+              "lenses",
+              "amplification",
+              "content_sha256",
+          }
+          missing = sorted(required_release - set(current))
+          if missing:
+              raise SystemExit(f"current.json is missing keys: {missing}")
+
+          if current.get("release_type") != "weekly":
+              raise SystemExit("current.json is not a weekly release")
+
+          counts = current.get("counts", {})
+          articles = int(counts.get("ai_relevant_articles", -1))
+          events = int(counts.get("ai_relevant_event_records", -1))
+          extra = int(counts.get("extra_coverage", -1))
+          if min(articles, events, extra) < 0:
+              raise SystemExit("release counts are absent or negative")
+          if extra != articles - events:
+              raise SystemExit(
+                  f"extra_coverage mismatch: {extra} != {articles} - {events}"
+              )
+
+          if index.get("current_release_id") != current.get("release_id"):
+              raise SystemExit("release index does not point to current.json")
+
+          weekly_path = root / "weekly" / f"{current['release_id']}.json"
+          if not weekly_path.exists():
+              raise SystemExit(f"immutable weekly file is missing: {weekly_path}")
+
+          print(
+              "Validated",
+              current["release_id"],
+              f"articles={articles}",
+              f"event_records={events}",
+              f"extra_coverage={extra}",
+          )
+          PY
+
+      - name: Commit generated weekly release
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/releases
+
+          if git diff --cached --quiet; then
+            echo "No generated release changes to commit."
+            exit 0
+          fi
+
+          release_id="$(python - <<'PY'
+          import json
+          print(json.load(open("data/releases/current.json"))["release_id"])
+          PY
+          )"
+
+          git commit -m "Build Observatory weekly release ${release_id}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
