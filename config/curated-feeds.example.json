@@ -1,0 +1,21 @@
+{
+  "version": "curated_feeds_v1",
+  "status": "example_only",
+  "note": "AIEO should not claim newsletter or specialist-feed coverage until these feeds are explicitly configured, collected and audited. Do not put private paid-feed URLs in the public repository.",
+  "feeds": [
+    {
+      "name": "Example official AI laboratory feed",
+      "url_secret_name": "CURATED_FEED_01_URL",
+      "source_stratum": "primary_official",
+      "language": "en",
+      "enabled": false
+    },
+    {
+      "name": "Example independent AI newsletter feed",
+      "url_secret_name": "CURATED_FEED_02_URL",
+      "source_stratum": "independent_newsletter",
+      "language": "en",
+      "enabled": false
+    }
+  ]
+}

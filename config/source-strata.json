@@ -1,0 +1,198 @@
+{
+  "version": "source_strata_v1_2026-08",
+  "description": "Transparent source-type diagnostics. This is not a quality ranking or whitelist. Unmatched sources remain unclassified and must be reviewed before AIEO claims comprehensive coverage.",
+  "strata": {
+    "primary_official": "Companies, governments, regulators, universities, laboratories and professional bodies publishing first-party material.",
+    "general_news": "National or international general-news organisations.",
+    "specialist": "Technology, business, legal, finance, health or industry-specialist publications.",
+    "regional_local": "Regional, local or subnational reporting.",
+    "research_policy": "Research institutes, think tanks, academic media and policy journals.",
+    "independent_newsletter": "Independent analysis, newsletters, blogs and creator-led publications.",
+    "unclassified": "Not yet assigned to a transparent source stratum."
+  },
+  "rules": [
+    {
+      "stratum": "primary_official",
+      "publisher_patterns": [
+        "google deepmind",
+        "blog.google",
+        "ibm",
+        "service public",
+        "lawrence livermore national laboratory",
+        "miami university",
+        "university of delaware",
+        "washu",
+        "中国科学院",
+        "北京大学",
+        "天津大学",
+        "复旦大学",
+        "changzhou.gov.cn",
+        "hlj.gov.cn"
+      ],
+      "domain_patterns": [
+        "deepmind.google",
+        "blog.google",
+        "ibm.com",
+        "service-public.fr",
+        "llnl.gov",
+        "miamioh.edu",
+        "udel.edu",
+        "wustl.edu",
+        "changzhou.gov.cn",
+        "hlj.gov.cn"
+      ],
+      "domain_suffixes": [".gov", ".gov.cn", ".edu", ".ac.uk"]
+    },
+    {
+      "stratum": "general_news",
+      "publisher_patterns": [
+        "bbc",
+        "the new york times",
+        "financial times",
+        "the guardian",
+        "the economist",
+        "al jazeera",
+        "le figaro",
+        "le parisien",
+        "la croix",
+        "ouest-france",
+        "sud ouest",
+        "les echos",
+        "radio france",
+        "courrier international",
+        "人民日报",
+        "人民网",
+        "新华网",
+        "新京报"
+      ],
+      "domain_patterns": [
+        "bbc.",
+        "nytimes.com",
+        "ft.com",
+        "theguardian.com",
+        "economist.com",
+        "aljazeera.com",
+        "lefigaro.fr",
+        "leparisien.fr",
+        "la-croix.com",
+        "ouest-france.fr",
+        "sudouest.fr",
+        "lesechos.fr",
+        "radiofrance.fr",
+        "news.cn",
+        "people.com.cn"
+      ]
+    },
+    {
+      "stratum": "specialist",
+      "publisher_patterns": [
+        "national technology news",
+        "csoonline",
+        "decrypt",
+        "insurance journal",
+        "ai-cio",
+        "it brief",
+        "l'usine digitale",
+        "journaldunet",
+        "physics world",
+        "cancernetwork",
+        "rdhmag",
+        "the fast mode",
+        "global seafood alliance",
+        "immobilier 2.0",
+        "financier worldwide",
+        "investing.com",
+        "boursorama",
+        "fortuneo"
+      ],
+      "domain_patterns": [
+        "nationaltechnology.co.uk",
+        "csoonline.com",
+        "decrypt.co",
+        "insurancejournal.com",
+        "ai-cio.com",
+        "itbrief.co.uk",
+        "usine-digitale.fr",
+        "journaldunet.com",
+        "physicsworld.com",
+        "cancernetwork.com",
+        "rdhmag.com",
+        "thefastmode.com",
+        "boursorama.com",
+        "fortuneo.fr"
+      ]
+    },
+    {
+      "stratum": "regional_local",
+      "publisher_patterns": [
+        "citynews",
+        "nbc 5 dallas",
+        "wral",
+        "wsls",
+        "wunc",
+        "chester standard",
+        "nebraska public media",
+        "outre-mer la 1ère",
+        "ici.fr",
+        "the detroit news",
+        "spectrum news",
+        "tillamook county pioneer",
+        "中山网"
+      ],
+      "domain_patterns": [
+        "citynews.ca",
+        "nbcdfw.com",
+        "wral.com",
+        "wsls.com",
+        "wunc.org",
+        "chesterstandard.co.uk",
+        "nebraskapublicmedia.org",
+        "franceinfo.fr",
+        "ici.fr",
+        "detroitnews.com",
+        "spectrumnews1.com"
+      ]
+    },
+    {
+      "stratum": "research_policy",
+      "publisher_patterns": [
+        "rand corporation",
+        "phys.org",
+        "the conversation",
+        "knowledge at wharton",
+        "global policy journal",
+        "bank underground",
+        "warontherocks",
+        "global network on extremism and technology",
+        "科学网",
+        "中国科技网"
+      ],
+      "domain_patterns": [
+        "rand.org",
+        "phys.org",
+        "theconversation.com",
+        "knowledge.wharton.upenn.edu",
+        "globalpolicyjournal.com",
+        "bankunderground.co.uk",
+        "warontherocks.com",
+        "gnet-research.org",
+        "sciencenet.cn"
+      ]
+    },
+    {
+      "stratum": "independent_newsletter",
+      "publisher_patterns": [
+        "whatever.scalzi.com",
+        "emergj artificial intelligence research",
+        "le club de mediapart",
+        "mronline.org"
+      ],
+      "domain_patterns": [
+        "whatever.scalzi.com",
+        "emerj.com",
+        "blogs.mediapart.fr",
+        "mronline.org"
+      ]
+    }
+  ]
+}
