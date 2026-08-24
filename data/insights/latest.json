@@ -1,11 +1,11 @@
 {
   "meta": {
     "version": "public_insights_v3",
-    "generated_at": "2026-08-15T07:47:36.773649Z",
+    "generated_at": "2026-08-24T11:08:10.018320Z",
     "classification_run_id": "c7e442f1-b54e-403d-9140-42726069375b",
     "collection_run_id": "33504572-da7a-46ab-82b2-1f31c181182b",
     "observation_start": "2026-08-05",
-    "observation_end": "2026-08-12",
+    "observation_end": "2026-08-24",
     "source_method": "Publications and organisations are dynamically observed through the current discovery workflow; this is not a fixed journal whitelist.",
     "theme_method": "Descriptive themes are a separate navigation layer. They do not affect the empowerment index."
   },
@@ -172,7 +172,7 @@
     }
   ],
   "sources": {
-    "unique_publishers": 102,
+    "unique_publishers": 103,
     "rows": [
       {
         "publisher": "新华网",
@@ -590,7 +590,7 @@
         "unique_event_count": 1
       },
       {
-        "publisher": "warontherocks.com",
+        "publisher": "War on the Rocks",
         "article_count": 1,
         "unique_event_count": 1
       },
@@ -682,6 +682,11 @@
       {
         "publisher": "通信世界网",
         "article_count": 1,
+        "unique_event_count": 1
+      },
+      {
+        "publisher": "CityNews Halifax",
+        "article_count": 0,
         "unique_event_count": 1
       }
     ]
@@ -815,8 +820,8 @@
     "themes": [
       {
         "label": "Other AI developments",
-        "count": 42,
-        "share": 0.3387
+        "count": 38,
+        "share": 0.3065
       },
       {
         "label": "Education & research",
@@ -830,8 +835,8 @@
       },
       {
         "label": "Business, markets & investment",
-        "count": 9,
-        "share": 0.0726
+        "count": 10,
+        "share": 0.0806
       },
       {
         "label": "AI products & model releases",
@@ -840,6 +845,11 @@
       },
       {
         "label": "Science & research",
+        "count": 7,
+        "share": 0.0565
+      },
+      {
+        "label": "Government, rights & regulation",
         "count": 6,
         "share": 0.0484
       },
@@ -850,11 +860,6 @@
       },
       {
         "label": "Events & ecosystem",
-        "count": 4,
-        "share": 0.0323
-      },
-      {
-        "label": "Government, rights & regulation",
         "count": 4,
         "share": 0.0323
       },
@@ -1033,8 +1038,8 @@
       "themes": [
         {
           "label": "Other AI developments",
-          "count": 42,
-          "share": 0.3684
+          "count": 38,
+          "share": 0.3333
         },
         {
           "label": "Safety, security & misinformation",
@@ -1042,14 +1047,14 @@
           "share": 0.1053
         },
         {
-          "label": "Education & research",
+          "label": "Business, markets & investment",
           "count": 10,
           "share": 0.0877
         },
         {
-          "label": "Business, markets & investment",
-          "count": 9,
-          "share": 0.0789
+          "label": "Education & research",
+          "count": 10,
+          "share": 0.0877
         },
         {
           "label": "AI products & model releases",
@@ -1058,16 +1063,16 @@
         },
         {
           "label": "Science & research",
+          "count": 7,
+          "share": 0.0614
+        },
+        {
+          "label": "Government, rights & regulation",
           "count": 6,
           "share": 0.0526
         },
         {
           "label": "Events & ecosystem",
-          "count": 4,
-          "share": 0.0351
-        },
-        {
-          "label": "Government, rights & regulation",
           "count": 4,
           "share": 0.0351
         },
