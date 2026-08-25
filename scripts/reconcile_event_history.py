@@ -58,7 +58,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_OUTPUT = ROOT / "data" / "releases" / "reconciliation" / "latest.json"
 PRIVATE_REVIEW = ROOT / "review" / "events" / "longitudinal" / "latest.json"
 
-RECONCILER_VERSION = "longitudinal_v1.2"
+RECONCILER_VERSION = "longitudinal_v1.3"
 MANUAL_DECISIONS_PATH = ROOT / "review" / "events" / "longitudinal" / "manual-decisions.json"
 RECENT_TRACK_DAYS = float(os.environ.get("AIEO_RECENT_TRACK_DAYS", "21"))
 RESURFACE_DAYS = float(os.environ.get("AIEO_RESURFACE_DAYS", "28"))
@@ -79,6 +79,14 @@ FOLLOW_ON_QWEN = float(os.environ.get("AIEO_FOLLOW_ON_QWEN_CONF", "0.86"))
 # enabled or an accepted manual decision exists.
 AUTO_LINK_MODEL_FOLLOW_ON = str(
     os.environ.get("AIEO_AUTO_LINK_MODEL_FOLLOW_ON", "false")
+).strip().casefold() in {"1", "true", "yes", "on"}
+
+# During the pilot, even strict model-proposed same-event merges remain
+# proposals unless a versioned human decision accepts the pair. This prevents
+# semantically similar commentary, opinion or generic AI headlines from being
+# collapsed into one real-world event merely because they share a date/topic.
+AUTO_APPLY_MODEL_SAME_EVENT = str(
+    os.environ.get("AIEO_AUTO_APPLY_MODEL_SAME_EVENT", "false")
 ).strip().casefold() in {"1", "true", "yes", "on"}
 COMPETING_MARGIN = float(os.environ.get("AIEO_LONGITUDINAL_COMPETING_MARGIN", "0.03"))
 
@@ -1298,6 +1306,9 @@ def main() -> int:
     counts = {
         "candidates": 0,
         "auto_merges": 0,
+        "human_merges": 0,
+        "model_merges": 0,
+        "same_event_review": 0,
         "follow_on": 0,
         "follow_on_review": 0,
         "review": 0,
@@ -1452,18 +1463,19 @@ def main() -> int:
                 manual_override is not None
                 and result["relationship"] == "same_event"
             )
+            model_same_passes_strict_gate = bool(
+                result["relationship"] == "same_event"
+                and float(result["confidence"]) >= AUTO_MERGE_QWEN
+                and not competing
+                and top.similarity >= AUTO_MERGE_SIMILARITY
+                and (
+                    pair_max >= AUTO_MERGE_PAIR
+                    or (top.token_match and pair_max >= TOKEN_MERGE_PAIR)
+                )
+            )
             strict_same = bool(
                 manual_same
-                or (
-                    result["relationship"] == "same_event"
-                    and float(result["confidence"]) >= AUTO_MERGE_QWEN
-                    and not competing
-                    and top.similarity >= AUTO_MERGE_SIMILARITY
-                    and (
-                        pair_max >= AUTO_MERGE_PAIR
-                        or (top.token_match and pair_max >= TOKEN_MERGE_PAIR)
-                    )
-                )
+                or (AUTO_APPLY_MODEL_SAME_EVENT and model_same_passes_strict_gate)
             )
             manual_follow_on = bool(
                 manual_override is not None
@@ -1538,6 +1550,53 @@ def main() -> int:
                             "reason": result["reason"],
                         }
                 counts["auto_merges"] += 1
+                if manual_same:
+                    counts["human_merges"] += 1
+                else:
+                    counts["model_merges"] += 1
+            elif result["relationship"] == "same_event":
+                # Model-only same-event decisions are proposals during the pilot.
+                # A manual decision can accept them in a later audited run.
+                action = "review_same_event"
+                counts["same_event_review"] += 1
+                counts["review"] += 1
+                possible_matches[candidate.event_id] = {
+                    "candidate_event_id": top.event.event_id,
+                    "track": top.track,
+                    "confidence": float(result["confidence"]),
+                    "gap_days": top.gap_days,
+                    "reason": result["reason"] or "model-proposed same-event match requires human acceptance",
+                    "proposed_relationship": "same_event",
+                    "passed_strict_model_gate": model_same_passes_strict_gate,
+                }
+                if not args.dry_run:
+                    upsert_relationship(
+                        client,
+                        from_event_id=candidate.event_id,
+                        to_event_id=top.event.event_id,
+                        relationship_type="possible_same_event",
+                        confidence=float(result["confidence"]),
+                        status="proposed",
+                        resolution_run_id=candidate.resolution_run_id,
+                        reconciliation_run_id=run_id,
+                        story_family_id=None,
+                        evidence={
+                            **evidence,
+                            "passed_strict_model_gate": model_same_passes_strict_gate,
+                        },
+                    )
+                    (
+                        client.table("events")
+                        .update(
+                            {
+                                "requires_cluster_review": True,
+                                "cluster_review_reason": "model-proposed longitudinal same-event match",
+                                "last_reconciled_at": iso_z(utc_now()),
+                            }
+                        )
+                        .eq("event_id", candidate.event_id)
+                        .execute()
+                    )
             elif strict_follow_on:
                 action = "linked_follow_on_development"
                 if not args.dry_run:
@@ -1669,7 +1728,7 @@ def main() -> int:
         merge_lags = [
             float(item["gap_days"])
             for item in decisions
-            if item.get("action") == "auto_merge_same_event"
+            if item.get("action") in {"auto_merge_same_event", "human_merge_same_event"}
         ]
         public_payload = {
             "schema_version": "aieo_reconciliation_v1.0",
@@ -1681,6 +1740,9 @@ def main() -> int:
             "summary": {
                 "candidate_events_checked": counts["candidates"],
                 "same_event_merges": counts["auto_merges"],
+                "same_event_merges_human": counts["human_merges"],
+                "same_event_merges_model": counts["model_merges"],
+                "same_event_candidates_for_review": counts["same_event_review"],
                 "follow_on_story_links": counts["follow_on"],
                 "follow_on_candidates_for_review": counts["follow_on_review"],
                 "possible_matches_for_review": counts["review"],
@@ -1693,8 +1755,8 @@ def main() -> int:
             "disclosure": (
                 "New means new relative to the historical event pool shown here. "
                 "Repeated reporting can add coverage without adding a new event. "
-                "During the pilot, model-proposed follow-on links require an accepted "
-                "human decision before a story family is created."
+                "During the pilot, model-proposed same-event merges and follow-on links "
+                "require an accepted human decision before event history is changed."
             ),
         }
         write_json(PUBLIC_OUTPUT, public_payload)
@@ -1723,6 +1785,7 @@ def main() -> int:
                 "verifier_calls": counts["verifier_calls"],
                 "manual_decisions": manual_decision_meta,
                 "auto_link_model_follow_on": AUTO_LINK_MODEL_FOLLOW_ON,
+                "auto_apply_model_same_event": AUTO_APPLY_MODEL_SAME_EVENT,
             },
         )
         print(json.dumps({"mode": mode, **counts, "registry_snapshot_id": snapshot_id}, indent=2))
