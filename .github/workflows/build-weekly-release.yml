@@ -16,6 +16,15 @@ on:
         required: true
         default: false
         type: boolean
+      revision_reason:
+        description: "Required when replace is true; shown in the public revision ledger"
+        required: false
+        type: string
+      rebuild_index_only:
+        description: "Rebuild publication history from existing release files without contacting Supabase"
+        required: true
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -27,7 +36,6 @@ concurrency:
 jobs:
   build-weekly-release:
     runs-on: ubuntu-latest
-
     env:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
@@ -35,6 +43,8 @@ jobs:
       PERIOD_START: ${{ inputs.period_start }}
       PERIOD_END: ${{ inputs.period_end }}
       REPLACE_EXISTING: ${{ inputs.replace }}
+      REVISION_REASON: ${{ inputs.revision_reason }}
+      REBUILD_INDEX_ONLY: ${{ inputs.rebuild_index_only }}
 
     steps:
       - name: Check out repository
@@ -50,49 +60,45 @@ jobs:
       - name: Install release dependency
         run: python -m pip install "supabase>=2,<3"
 
-      - name: Validate workflow inputs and secrets
+      - name: Validate inputs and secrets
         shell: bash
         run: |
           set -euo pipefail
-
-          if [[ -z "${SUPABASE_URL:-}" ]]; then
-            echo "SUPABASE_URL repository secret is missing."
+          if [[ "${REBUILD_INDEX_ONLY:-false}" != "true" ]]; then
+            test -n "${SUPABASE_URL:-}" || { echo "SUPABASE_URL is missing"; exit 1; }
+            if [[ -z "${SUPABASE_SECRET_KEY:-}" && -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]]; then
+              echo "Add SUPABASE_SECRET_KEY or SUPABASE_SERVICE_ROLE_KEY."
+              exit 1
+            fi
+          fi
+          if [[ -n "${PERIOD_START:-}" && -z "${PERIOD_END:-}" ]] || \
+             [[ -z "${PERIOD_START:-}" && -n "${PERIOD_END:-}" ]]; then
+            echo "Provide both period_start and period_end, or leave both blank."
+            exit 1
+          fi
+          if [[ "${REPLACE_EXISTING:-false}" == "true" && -z "${REVISION_REASON:-}" ]]; then
+            echo "revision_reason is required when replace is true."
             exit 1
           fi
 
-          if [[ -z "${SUPABASE_SECRET_KEY:-}" && -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]]; then
-            echo "Add SUPABASE_SECRET_KEY or SUPABASE_SERVICE_ROLE_KEY as a repository secret."
-            exit 1
-          fi
-
-          if [[ -n "${PERIOD_START:-}" && -z "${PERIOD_END:-}" ]]; then
-            echo "Provide period_end when period_start is supplied."
-            exit 1
-          fi
-
-          if [[ -z "${PERIOD_START:-}" && -n "${PERIOD_END:-}" ]]; then
-            echo "Provide period_start when period_end is supplied."
-            exit 1
-          fi
-
-      - name: Build immutable weekly release
+      - name: Build weekly release
         shell: bash
         run: |
           set -euo pipefail
           args=()
-
-          if [[ -n "${PERIOD_START:-}" ]]; then
-            args+=(--period-start "$PERIOD_START")
-            args+=(--period-end "$PERIOD_END")
+          if [[ "${REBUILD_INDEX_ONLY:-false}" == "true" ]]; then
+            args+=(--rebuild-index-only)
+          else
+            if [[ -n "${PERIOD_START:-}" ]]; then
+              args+=(--period-start "$PERIOD_START" --period-end "$PERIOD_END")
+            fi
+            if [[ "${REPLACE_EXISTING:-false}" == "true" ]]; then
+              args+=(--replace --revision-reason "$REVISION_REASON")
+            fi
           fi
-
-          if [[ "${REPLACE_EXISTING:-false}" == "true" ]]; then
-            args+=(--replace)
-          fi
-
           python scripts/build_weekly_release.py "${args[@]}"
 
-      - name: Validate generated release files
+      - name: Validate release contract
         shell: bash
         run: |
           set -euo pipefail
@@ -103,77 +109,83 @@ jobs:
           root = Path("data/releases")
           current_path = root / "current.json"
           index_path = root / "index.json"
-
-          if not current_path.exists():
-              raise SystemExit("data/releases/current.json was not created")
-          if not index_path.exists():
-              raise SystemExit("data/releases/index.json was not created")
-
+          if not current_path.exists() or not index_path.exists():
+              raise SystemExit("current.json or index.json is missing")
           current = json.loads(current_path.read_text(encoding="utf-8"))
           index = json.loads(index_path.read_text(encoding="utf-8"))
 
-          required_release = {
-              "release_id",
-              "release_type",
-              "period_start",
-              "period_end",
-              "counts",
-              "lenses",
-              "amplification",
-              "content_sha256",
+          required = {
+              "release_id", "revision", "period_start", "period_end", "counts",
+              "lenses", "amplification", "content_sha256"
           }
-          missing = sorted(required_release - set(current))
+          missing = sorted(required - set(current))
           if missing:
-              raise SystemExit(f"current.json is missing keys: {missing}")
-
-          if current.get("release_type") != "weekly":
-              raise SystemExit("current.json is not a weekly release")
+              raise SystemExit(f"current.json missing {missing}")
 
           counts = current.get("counts", {})
           articles = int(counts.get("ai_relevant_articles", -1))
           events = int(counts.get("ai_relevant_event_records", -1))
           extra = int(counts.get("extra_coverage", -1))
-          if min(articles, events, extra) < 0:
-              raise SystemExit("release counts are absent or negative")
-          if extra != articles - events:
+          if min(articles, events, extra) < 0 or extra != articles - events:
+              raise SystemExit("Top-line coverage/event reconciliation failed")
+
+          if not bool(current.get("historical_pool", {}).get("all_prior_events_considered")):
+              raise SystemExit("Release was built without an accepted longitudinal reconciliation")
+
+          novelty_total = sum(int(counts.get(key, 0)) for key in (
+              "first_time_event_records", "follow_on_event_records",
+              "recurring_event_records", "possible_historical_match_event_records",
+              "unclassified_novelty_event_records",
+          ))
+          if novelty_total != events:
               raise SystemExit(
-                  f"extra_coverage mismatch: {extra} != {articles} - {events}"
+                  f"Novelty categories ({novelty_total}) do not reconcile to event records ({events})"
               )
 
-          if index.get("current_release_id") != current.get("release_id"):
-              raise SystemExit("release index does not point to current.json")
+          dynamics = current.get("dynamics", {})
+          for key in (
+              "coverage_episode_count", "recurring_event_appearances",
+              "resurfaced_event_appearances", "rediscovered_article_records"
+          ):
+              if int(dynamics.get(key, 0)) < 0:
+                  raise SystemExit(f"Negative dynamics value: {key}")
 
+          if index.get("current_release_id") != current.get("release_id"):
+              raise SystemExit("index does not point to current release")
           weekly_path = root / "weekly" / f"{current['release_id']}.json"
           if not weekly_path.exists():
-              raise SystemExit(f"immutable weekly file is missing: {weekly_path}")
+              raise SystemExit(f"Missing weekly release {weekly_path}")
+
+          for item in index.get("historical_snapshots", []):
+              if item.get("connect_to_previous") is not False:
+                  raise SystemExit("Historical baseline must not connect to weekly series")
 
           print(
-              "Validated",
-              current["release_id"],
-              f"articles={articles}",
-              f"event_records={events}",
-              f"extra_coverage={extra}",
+              "Validated", current["release_id"], f"revision={current['revision']}",
+              f"articles={articles}", f"events={events}", f"extra={extra}"
           )
           PY
 
-      - name: Commit generated weekly release
+      - name: Commit generated release
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -f data/releases
-
           if git diff --cached --quiet; then
             echo "No generated release changes to commit."
             exit 0
           fi
-
           release_id="$(python - <<'PY'
           import json
-          print(json.load(open("data/releases/current.json"))["release_id"])
+          print(json.load(open('data/releases/current.json'))['release_id'])
           PY
           )"
-
-          git commit -m "Build Observatory weekly release ${release_id}"
+          revision="$(python - <<'PY'
+          import json
+          print(json.load(open('data/releases/current.json')).get('revision', 1))
+          PY
+          )"
+          git commit -m "Build Observatory weekly release ${release_id} r${revision}"
           git push origin "HEAD:${GITHUB_REF_NAME}"

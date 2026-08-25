@@ -1,0 +1,119 @@
+name: Reconcile Observatory History
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Reconciliation depth. Auto uses weekly/monthly/quarterly/annual cadence."
+        required: true
+        default: auto
+        type: choice
+        options: [auto, weekly, monthly, quarterly, annual, manual]
+      dry_run:
+        description: "Review candidates without applying event/story changes"
+        required: true
+        default: false
+        type: boolean
+permissions:
+  contents: write
+
+concurrency:
+  group: aieo-history-reconciliation-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 420
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || 'auto' }}
+      DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}
+      LLAMA_SERVER_BIN: /tmp/llama.cpp/build/bin/llama-server
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install \
+            "supabase>=2,<3" \
+            "sentence-transformers>=3,<6" \
+            "transformers>=4.45,<5" \
+            "torch>=2.4,<3" \
+            "huggingface-hub>=0.25,<1" \
+            "requests>=2.32,<3"
+
+      - name: Build llama.cpp server
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --depth 1 https://github.com/ggml-org/llama.cpp /tmp/llama.cpp
+          cmake -S /tmp/llama.cpp -B /tmp/llama.cpp/build \
+            -DLLAMA_BUILD_SERVER=ON \
+            -DLLAMA_CURL=OFF \
+            -DBUILD_SHARED_LIBS=OFF
+          cmake --build /tmp/llama.cpp/build --config Release -j2 --target llama-server
+          test -x "$LLAMA_SERVER_BIN"
+
+      - name: Validate secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${SUPABASE_URL:-}" || { echo "SUPABASE_URL is missing"; exit 1; }
+          if [[ -z "${SUPABASE_SECRET_KEY:-}" && -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]]; then
+            echo "SUPABASE_SECRET_KEY or SUPABASE_SERVICE_ROLE_KEY is missing"
+            exit 1
+          fi
+
+      - name: Reconcile long-term event memory
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(--mode "$MODE")
+          if [[ "$DRY_RUN" == "true" ]]; then
+            args+=(--dry-run)
+          fi
+          python scripts/reconcile_event_history.py "${args[@]}"
+
+      - name: Restate affected weekly releases
+        if: ${{ env.DRY_RUN != 'true' }}
+        run: |
+          python scripts/restate_release_history.py --all \
+            --reason "Longitudinal reconciliation changed new-versus-recurring assignments."
+
+      - name: Upload private reconciliation review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: longitudinal-reconciliation-review-${{ github.run_id }}
+          path: review/events/longitudinal/latest.json
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Commit public reconciliation and revised releases
+        if: ${{ env.DRY_RUN != 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/releases
+          if git diff --cached --quiet; then
+            echo "No public reconciliation or release changes to commit."
+            exit 0
+          fi
+          git commit -m "Reconcile Observatory event history"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

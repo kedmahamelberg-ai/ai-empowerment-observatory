@@ -1,0 +1,66 @@
+name: Backfill Observatory Event Occurrences
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Calculate the historical ledger without writing to Supabase"
+        required: true
+        default: true
+        type: boolean
+      replace:
+        description: "Recalculate occurrence rows that already exist"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: aieo-occurrence-backfill-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      DRY_RUN: ${{ inputs.dry_run }}
+      REPLACE: ${{ inputs.replace }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependency
+        run: python -m pip install "supabase>=2,<3"
+
+      - name: Validate secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${SUPABASE_URL:-}" || { echo "SUPABASE_URL is missing"; exit 1; }
+          if [[ -z "${SUPABASE_SECRET_KEY:-}" && -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]]; then
+            echo "SUPABASE_SECRET_KEY or SUPABASE_SERVICE_ROLE_KEY is missing"
+            exit 1
+          fi
+
+      - name: Reconstruct historical article-event occurrences
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=()
+          if [[ "$DRY_RUN" == "true" ]]; then args+=(--dry-run); fi
+          if [[ "$REPLACE" == "true" ]]; then args+=(--replace); fi
+          python scripts/backfill_event_occurrences.py "${args[@]}"

@@ -1,0 +1,65 @@
+name: Build Observatory Period Summaries
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aieo-period-summaries-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install shared release dependency
+        run: python -m pip install "supabase>=2,<3"
+
+      - name: Build monthly, quarterly and annual summaries
+        run: python scripts/build_period_summaries.py
+
+      - name: Validate period index
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path("data/releases/period-index.json")
+          if not path.exists():
+              raise SystemExit("period-index.json was not generated")
+          data = json.loads(path.read_text(encoding="utf-8"))
+          if data.get("schema_version") != "aieo_period_index_v1.0":
+              raise SystemExit("Unexpected period-index schema")
+          if not data.get("summaries"):
+              raise SystemExit("No period summaries were generated")
+          for row in data["summaries"]:
+              if not str(row.get("path") or "").startswith("/data/releases/"):
+                  raise SystemExit(f"Invalid period path: {row}")
+          print("Validated", len(data["summaries"]), "period summaries")
+          PY
+
+      - name: Commit period summaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/releases/monthly data/releases/quarterly \
+            data/releases/annual data/releases/period-index.json
+          if git diff --cached --quiet; then
+            echo "No period-summary changes to commit."
+            exit 0
+          fi
+          git commit -m "Update Observatory period summaries"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
