@@ -1,8 +1,37 @@
 {
-  "schema_version": "aieo_release_index_v2.0",
-  "updated_at": "2026-08-21T00:43:59.101341Z",
+  "schema_version": "aieo_release_index_v3.0",
+  "updated_at": "2026-08-21T00:43:59.012893Z",
   "release_count": 1,
+  "weekly_release_count": 1,
+  "historical_snapshot_count": 1,
+  "publication_snapshot_count": 2,
   "current_release_id": "2026-W33",
+  "current_revision": 1,
+  "data_current_through": null,
+  "historical_pool": null,
+  "revision_archives": {},
+  "historical_snapshots": [
+    {
+      "snapshot_id": "launch-baseline-2026-08-05_2026-08-12",
+      "snapshot_type": "launch_baseline",
+      "label": "Launch baseline",
+      "series_kind": "historical_snapshot",
+      "period_start": "2026-08-05",
+      "period_end": "2026-08-12",
+      "generated_at": "2026-08-15T07:48:21.189157Z",
+      "articles": 129,
+      "event_records": 124,
+      "extra_coverage": 5,
+      "coverage_index": 1.5504,
+      "event_index": 1.6129,
+      "amplification_gap": -0.0625,
+      "audit_status": "human_audited_baseline",
+      "validation_status": "published",
+      "comparable_to_weekly_series": false,
+      "connect_to_previous": false,
+      "note": "The launch baseline overlaps the first standardized weekly release on 10-12 August 2026. It is retained as publication history and is not connected to the standardized weekly line."
+    }
+  ],
   "weekly": [
     {
       "release_id": "2026-W33",
@@ -12,26 +41,98 @@
       "generated_at": "2026-08-21T00:43:59.012893Z",
       "articles": 120,
       "event_records": 117,
+      "revision": 1,
       "new_event_records": 13,
+      "first_time_event_records": 13,
       "recurring_event_records": 104,
+      "resurfaced_event_records": 0,
+      "follow_on_event_records": 0,
+      "rediscovered_article_records": 0,
       "extra_coverage": 3,
       "coverage_index": 0.9132,
       "event_index": 0.9524,
       "amplification_gap": -0.0392,
       "audit_status": "pending",
-      "validation_status": "passed"
+      "validation_status": "passed",
+      "possible_historical_match_event_records": 0,
+      "unclassified_novelty_event_records": 0
     }
   ],
-  "cumulative_since_launch": {
+  "display_series": [
+    {
+      "snapshot_id": "launch-baseline-2026-08-05_2026-08-12",
+      "snapshot_type": "launch_baseline",
+      "label": "Launch baseline",
+      "series_kind": "historical_snapshot",
+      "period_start": "2026-08-05",
+      "period_end": "2026-08-12",
+      "generated_at": "2026-08-15T07:48:21.189157Z",
+      "articles": 129,
+      "event_records": 124,
+      "extra_coverage": 5,
+      "coverage_index": 1.5504,
+      "event_index": 1.6129,
+      "amplification_gap": -0.0625,
+      "audit_status": "human_audited_baseline",
+      "validation_status": "published",
+      "comparable_to_weekly_series": false,
+      "connect_to_previous": false,
+      "note": "The launch baseline overlaps the first standardized weekly release on 10-12 August 2026. It is retained as publication history and is not connected to the standardized weekly line."
+    },
+    {
+      "release_id": "2026-W33",
+      "release_type": "weekly",
+      "period_start": "2026-08-10",
+      "period_end": "2026-08-16",
+      "generated_at": "2026-08-21T00:43:59.012893Z",
+      "articles": 120,
+      "event_records": 117,
+      "revision": 1,
+      "new_event_records": 13,
+      "first_time_event_records": 13,
+      "recurring_event_records": 104,
+      "resurfaced_event_records": 0,
+      "follow_on_event_records": 0,
+      "rediscovered_article_records": 0,
+      "extra_coverage": 3,
+      "coverage_index": 0.9132,
+      "event_index": 0.9524,
+      "amplification_gap": -0.0392,
+      "audit_status": "pending",
+      "validation_status": "passed",
+      "series_kind": "weekly",
+      "label": "Week ending 2026-08-16",
+      "comparable_to_weekly_series": true,
+      "connect_to_previous": false,
+      "possible_historical_match_event_records": 0,
+      "unclassified_novelty_event_records": 0
+    }
+  ],
+  "cumulative_standardized_series": {
     "distinct_articles": 120,
     "distinct_event_records": 117,
     "release_count": 1,
     "period_start": "2026-08-10",
     "period_end": "2026-08-16"
   },
+  "cumulative_since_launch": {
+    "distinct_articles": 120,
+    "distinct_event_records": 117,
+    "release_count": 1,
+    "period_start": "2026-08-10",
+    "period_end": "2026-08-16",
+    "scope": "standardized_weekly_releases_only",
+    "historical_snapshots_excluded": 1
+  },
   "month_to_date": {
     "month": "2026-08",
     "distinct_articles": 120,
     "distinct_event_records": 117
+  },
+  "comparison_rule": {
+    "weekly_series": "Connect only consecutive, non-overlapping Monday-Sunday releases.",
+    "historical_snapshots": "Show as separate reference points and never connect them to the weekly line.",
+    "recurrence": "Repeated coverage changes attention volume but does not create another effective event.",
+    "revisions": "The current series uses the latest accepted revision; earlier revisions remain accessible in the archive."
   }
 }
