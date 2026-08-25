@@ -1,1 +1,136 @@
-
+{
+  "schema_version": "aieo_longitudinal_manual_decisions_v1",
+  "reviewed_at": "2026-08-25T14:00:00+02:00",
+  "review_basis": "Dry-run artifact registry_f6985e39d9f85166cfe5 plus source-title and source-page verification. These decisions address only the nine relationships that the v1.1 reconciler would otherwise have applied automatically.",
+  "reviewed_by": "AIEO Phase 5.2 implementation audit; acceptance is recorded by committing this file to the repository",
+  "source_artifact": "longitudinal-reconciliation-review-32830645895.zip",
+  "decisions": [
+    {
+      "decision_id": "phase5-2-gemini-billion-users",
+      "status": "accepted",
+      "event_a_id": "1a38f917-f5c1-440b-a436-bd7e93140f21",
+      "event_b_id": "876698e8-a001-4a36-aab0-285d3eff79ba",
+      "relationship": "same_event",
+      "canonical_event_id": "876698e8-a001-4a36-aab0-285d3eff79ba",
+      "confidence": 1.0,
+      "reason": "Both records report the same concrete milestone: Google Gemini crossing one billion users. Different publishers and later publication do not create a new development.",
+      "evidence_urls": [
+        "https://www.sudouest.fr/sciences-et-technologie/intelligence-artificielle/intelligence-artificielle-l-assistant-gemini-de-google-franchit-a-son-tour-le-milliard-d-utilisateurs-30225866.php",
+        "https://www.leparisien.fr/high-tech/gemini-lassistant-dintelligence-artificielle-de-google-franchit-a-son-tour-le-milliard-dutilisateurs-11-08-2026-RTGXLDZZ55HPRJDSXSBAF3BIKA.php"
+      ]
+    },
+    {
+      "decision_id": "phase5-2-stripe-openrouter-acquisition",
+      "status": "accepted",
+      "event_a_id": "d6dfb005-651b-440f-8c41-b987fecc3e01",
+      "event_b_id": "a4c54097-862e-49ab-a0c7-4cdc9738e7ca",
+      "relationship": "same_event",
+      "canonical_event_id": "a4c54097-862e-49ab-a0c7-4cdc9738e7ca",
+      "confidence": 1.0,
+      "reason": "Both records concern the same Stripe–OpenRouter acquisition agreement. The later confirmation and updated valuation are disclosure stages of one transaction, not a second acquisition.",
+      "evidence_urls": [
+        "https://siliconangle.com/2026/08/16/stripe-reportedly-finalizes-deal-to-buy-ai-model-router-openrouter-for-more-than-7b/",
+        "https://siliconangle.com/2026/08/19/stripe-buys-ai-model-router-openrouter-in-reported-7-5b-deal/"
+      ]
+    },
+    {
+      "decision_id": "phase5-2-ai-designed-viruses",
+      "status": "accepted",
+      "event_a_id": "24abf4af-08db-4bf4-b169-c06b7f7c3e72",
+      "event_b_id": "8d82ce09-4c0e-4b86-8cf5-386f71d71b26",
+      "relationship": "same_event",
+      "canonical_event_id": "8d82ce09-4c0e-4b86-8cf5-386f71d71b26",
+      "confidence": 1.0,
+      "reason": "Both records report the same Stanford/Arc Institute study in which AI-designed genomes produced viable bacteriophages. “Designed viruses” and “created viable viruses” are descriptions of one research result.",
+      "evidence_urls": [
+        "https://www.bbc.com/news/articles/c5y3j3ngevmo",
+        "https://www.parismatch.com/actu/sciences/une-intelligence-artificielle-cree-pour-la-premiere-fois-des-virus-viables-dans-la-nature-273812"
+      ]
+    },
+    {
+      "decision_id": "phase5-2-openai-astra-pause",
+      "status": "accepted",
+      "event_a_id": "96b531e9-8fdd-4065-802d-38622652f73f",
+      "event_b_id": "4e1c3e29-20b6-41e0-a7ac-a5f65cad0822",
+      "relationship": "same_event",
+      "canonical_event_id": "4e1c3e29-20b6-41e0-a7ac-a5f65cad0822",
+      "confidence": 1.0,
+      "reason": "Both records report OpenAI pausing Astra work because of critical cybersecurity capability concerns. The later article adds detail but does not report a new company action.",
+      "evidence_urls": [
+        "https://www.theguardian.com/technology/2026/aug/08/openai-astra-security-concerns",
+        "https://decrypt.co/375210/openai-pause-astra-ai-model-critical-cyber-capabilities"
+      ]
+    },
+    {
+      "decision_id": "phase5-2-twitch-training-geekwire",
+      "status": "accepted",
+      "event_a_id": "28a92d4d-3ae5-4d45-ac8c-fc46fe2aeb82",
+      "event_b_id": "385639fc-de7a-4287-8078-57df6354f72a",
+      "relationship": "same_event",
+      "canonical_event_id": "385639fc-de7a-4287-8078-57df6354f72a",
+      "confidence": 1.0,
+      "reason": "Both records report the same Twitch policy enabling streamer content to train Amazon generative AI. Backlash in the later headline is coverage framing, not a new real-world occurrence.",
+      "evidence_urls": [
+        "https://www.ouest-france.fr/high-tech/intelligence-artificielle/twitch-va-utiliser-le-contenu-diffuse-par-les-streameurs-pour-entrainer-lia-generative-damazon-23a452c0-9718-11f1-9ee8-a50506a5291a",
+        "https://www.geekwire.com/2026/amazons-twitch-is-using-livestreams-to-train-its-generative-ai-and-nobodys-happy-with-it"
+      ]
+    },
+    {
+      "decision_id": "phase5-2-twitch-training-bbc",
+      "status": "accepted",
+      "event_a_id": "54cc89e6-9356-4f3b-ba1a-5a25f90c415e",
+      "event_b_id": "385639fc-de7a-4287-8078-57df6354f72a",
+      "relationship": "same_event",
+      "canonical_event_id": "385639fc-de7a-4287-8078-57df6354f72a",
+      "confidence": 1.0,
+      "reason": "The BBC video and the earlier article report the same Twitch/Amazon training-policy occurrence. A new format or publisher adds coverage volume, not a new event.",
+      "evidence_urls": [
+        "https://www.ouest-france.fr/high-tech/intelligence-artificielle/twitch-va-utiliser-le-contenu-diffuse-par-les-streameurs-pour-entrainer-lia-generative-damazon-23a452c0-9718-11f1-9ee8-a50506a5291a",
+        "https://www.bbc.co.uk/news/videos/cwyq22g0ylxo"
+      ]
+    },
+    {
+      "decision_id": "phase5-2-chatgpt-for-teens-launch",
+      "status": "accepted",
+      "event_a_id": "52d0d4d6-f2aa-4eb9-ad64-329d37cdafb9",
+      "event_b_id": "c57a3b10-cb27-4937-bded-939883794306",
+      "relationship": "same_event",
+      "canonical_event_id": "c57a3b10-cb27-4937-bded-939883794306",
+      "confidence": 1.0,
+      "reason": "Both records describe OpenAI’s 18 August launch of ChatGPT for Teens and its stronger restrictions and safeguards. The next-day article is repeated reporting of the same launch.",
+      "evidence_urls": [
+        "https://openai.com/index/chatgpt-for-teens/",
+        "https://www.sudouest.fr/sciences-et-technologie/intelligence-artificielle-openai-encadre-l-usage-de-chatgpt-par-les-adolescents-30295160.php",
+        "https://www.la-croix.com/societe/intelligence-artificielle-openai-deploie-une-version-pour-ados-de-chatgpt-censee-en-raisonner-l-usage-20260819"
+      ]
+    },
+    {
+      "decision_id": "phase5-2-china-ai-governance-commentary",
+      "status": "accepted",
+      "event_a_id": "9cd276f5-fa7c-4a94-897d-ea591804943d",
+      "event_b_id": "545f355d-b12b-450e-92f8-fb3a43a042ff",
+      "relationship": "same_topic_only",
+      "canonical_event_id": null,
+      "confidence": 1.0,
+      "reason": "A television/program episode and a separate governance commentary share a subject but do not constitute a causal sequence of real-world actions. They remain separate topic-related records.",
+      "evidence_urls": [
+        "https://cifu.fudan.edu.cn/05/dc/c412a787932/page.htm",
+        "https://www.news.cn/20260808/3fb63406430a4d3bba93f13cb340fa7f/c.html"
+      ]
+    },
+    {
+      "decision_id": "phase5-2-ai-editorial-series",
+      "status": "accepted",
+      "event_a_id": "4c4279f8-e4e9-453a-9d3f-f8eaf5136a0b",
+      "event_b_id": "eafe403b-0802-4026-be4b-df9a20470615",
+      "relationship": "same_topic_only",
+      "canonical_event_id": null,
+      "confidence": 1.0,
+      "reason": "Parts II and III are consecutive installments of an editorial series, not separately datable real-world developments. They may be related content, but should not create a real-world story-family progression.",
+      "evidence_urls": [
+        "https://mronline.org/2026/08/10/artificial-intelligence-the-hype-the-dangers-and-the-resistance-part-ii",
+        "https://mronline.org/2026/08/15/artificial-intelligence-the-hype-the-dangers-and-the-resistance-part-iii"
+      ]
+    }
+  ]
+}
