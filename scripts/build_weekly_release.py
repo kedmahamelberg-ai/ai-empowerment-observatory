@@ -11,8 +11,9 @@ from __future__ import annotations
 import argparse
 import json
 from collections import Counter, defaultdict
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
+from statistics import median
 from typing import Any
 
 from release_common import (
@@ -43,6 +44,9 @@ from release_common import (
     utc_now,
     write_json,
 )
+
+BASELINE_DIR = ROOT / "data" / "releases" / "baselines"
+RESURFACE_DAYS = 28.0
 
 
 def latest_successful_classification(client) -> dict[str, Any]:
@@ -192,7 +196,8 @@ def load_events(client, event_ids: list[str]) -> dict[str, dict[str, Any]]:
                 "event_id,event_title,event_summary,event_date,first_seen_at,"
                 "last_seen_at,event_state,clustering_method,cluster_confidence,"
                 "requires_cluster_review,cluster_review_reason,"
-                "primary_country_iso3,additional_country_iso3"
+                "primary_country_iso3,additional_country_iso3,story_family_id,"
+                "canonical_event_id,canonicalized_at,last_reconciled_at,registry_version"
             )
             .in_("event_id", batch)
             .eq("event_state", "active")
@@ -296,6 +301,184 @@ def load_resolution_decisions(
     return {str(row["article_id"]): row for row in rows}
 
 
+def reconciliation_row(client, collection_run_id: str) -> dict[str, Any] | None:
+    response = (
+        client.table("event_reconciliation_runs")
+        .select(
+            "reconciliation_run_id,run_key,mode,pool_start_at,pool_considered_through,"
+            "started_at,completed_at,status,registry_snapshot_id,dry_run,metadata"
+        )
+        .eq("collection_run_id", collection_run_id)
+        .eq("status", "success")
+        .eq("dry_run", False)
+        .order("completed_at", desc=True)
+        .limit(1)
+        .execute()
+    )
+    rows = getattr(response, "data", None) or []
+    return rows[0] if rows else None
+
+
+def load_occurrences(client, collection_run_id: str) -> list[dict[str, Any]]:
+    response = (
+        client.table("event_occurrences")
+        .select(
+            "occurrence_id,event_id,effective_event_id,story_family_id,article_id,"
+            "collection_run_id,release_id,appearance_type,article_published_at,"
+            "observed_at,previous_event_coverage_at,days_since_event_first_seen,"
+            "days_since_previous_coverage,publisher,source_domain,search_markets,"
+            "first_source_appearance,first_market_appearances,resolution_track,"
+            "relationship_confidence,metadata"
+        )
+        .eq("collection_run_id", collection_run_id)
+        .execute()
+    )
+    return getattr(response, "data", None) or []
+
+
+def percentile(values: list[float], proportion: float) -> float | None:
+    if not values:
+        return None
+    ordered = sorted(values)
+    if len(ordered) == 1:
+        return round(ordered[0], 2)
+    index = (len(ordered) - 1) * proportion
+    low = int(index)
+    high = min(low + 1, len(ordered) - 1)
+    fraction = index - low
+    return round(ordered[low] + (ordered[high] - ordered[low]) * fraction, 2)
+
+
+def novelty_status(appearance_types: set[str]) -> str:
+    """Return one event-level novelty status with a clear precedence rule."""
+    if "follow_on_development" in appearance_types:
+        return "follow_on_development"
+    if "first_event_coverage" in appearance_types:
+        return "first_time"
+    if "same_event_new_coverage" in appearance_types or "same_article_rediscovered" in appearance_types:
+        return "recurring"
+    if "possible_historical_match" in appearance_types:
+        return "possible_historical_match"
+    return "unclassified"
+
+
+def occurrence_dynamics(
+    occurrences: list[dict[str, Any]],
+    article_rows: dict[str, dict[str, Any]],
+    period: Period,
+    *,
+    ai_article_ids: set[str],
+    ai_event_ids: set[str],
+) -> dict[str, Any]:
+    current_rows: list[dict[str, Any]] = []
+    rediscovered = 0
+    rediscovery_lags: list[float] = []
+    by_event: dict[str, list[dict[str, Any]]] = defaultdict(list)
+
+    for row in occurrences:
+        article_id = str(row.get("article_id") or "")
+        appearance = str(row.get("appearance_type") or "")
+        effective_event_id = str(row.get("effective_event_id") or row.get("event_id") or "")
+        article = article_rows.get(article_id) or {}
+        article_date = date_for_article(article)
+
+        # Rediscovery is an explicit discovery-system signal. The old page is
+        # never added to newly published article volume.
+        if appearance == "same_article_rediscovered":
+            rediscovered += 1
+            try:
+                rediscovery_lag = float(row.get("days_since_previous_coverage"))
+            except (TypeError, ValueError):
+                rediscovery_lag = None
+            if rediscovery_lag is not None and rediscovery_lag >= 0:
+                rediscovery_lags.append(rediscovery_lag)
+
+        if (
+            article_id in ai_article_ids
+            and effective_event_id in ai_event_ids
+            and article_date
+            and period.contains(article_date)
+        ):
+            current_rows.append(row)
+            by_event[effective_event_id].append(row)
+
+    event_statuses: dict[str, str] = {}
+    recurring_ids: set[str] = set()
+    resurfaced_ids: set[str] = set()
+    follow_on_ids: set[str] = set()
+    first_time_ids: set[str] = set()
+    possible_ids: set[str] = set()
+    lag_values: list[float] = []
+    recurring_article_count = 0
+
+    for event_id, rows in by_event.items():
+        types = {str(row.get("appearance_type") or "") for row in rows}
+        status = novelty_status(types)
+        event_statuses[event_id] = status
+        if status == "follow_on_development":
+            follow_on_ids.add(event_id)
+        elif status == "first_time":
+            first_time_ids.add(event_id)
+        elif status == "recurring":
+            recurring_ids.add(event_id)
+        elif status == "possible_historical_match":
+            possible_ids.add(event_id)
+
+        # Replication delay describes genuinely recurring attention. Additional
+        # articles within a first-time or follow-on episode remain extra
+        # coverage, but do not become a long-term replication delay.
+        if status == "recurring":
+            for row in rows:
+                if row.get("appearance_type") != "same_event_new_coverage":
+                    continue
+                recurring_article_count += 1
+                try:
+                    lag = float(row.get("days_since_previous_coverage"))
+                except (TypeError, ValueError):
+                    continue
+                if lag < 0:
+                    continue
+                lag_values.append(lag)
+                if lag >= RESURFACE_DAYS:
+                    resurfaced_ids.add(event_id)
+
+    return {
+        "coverage_episode_count": len(current_rows),
+        "first_time_event_appearances": len(first_time_ids),
+        "follow_on_developments": len(follow_on_ids),
+        "recurring_event_appearances": len(recurring_ids),
+        "possible_historical_matches": len(possible_ids),
+        "resurfaced_event_appearances": len(resurfaced_ids),
+        "same_event_new_coverage_articles": recurring_article_count,
+        "rediscovered_article_records": rediscovered,
+        "resurface_threshold_days": RESURFACE_DAYS,
+        "event_novelty_statuses": event_statuses,
+        "replication_lag_days": {
+            "count": len(lag_values),
+            "median": round(median(lag_values), 2) if lag_values else None,
+            "p75": percentile(lag_values, 0.75),
+            "p90": percentile(lag_values, 0.90),
+            "values": [round(value, 3) for value in sorted(lag_values)],
+        },
+        "article_rediscovery_lag_days": {
+            "count": len(rediscovery_lags),
+            "median": round(median(rediscovery_lags), 2) if rediscovery_lags else None,
+            "p75": percentile(rediscovery_lags, 0.75),
+            "p90": percentile(rediscovery_lags, 0.90),
+            "values": [round(value, 3) for value in sorted(rediscovery_lags)],
+        },
+    }
+
+
+def attach_release_to_occurrences(client, collection_run_id: str, release_id: str) -> None:
+    (
+        client.table("event_occurrences")
+        .update({"release_id": release_id, "updated_at": iso_z(utc_now())})
+        .eq("collection_run_id", collection_run_id)
+        .execute()
+    )
+
+
 def public_classification(row: dict[str, Any]) -> dict[str, Any]:
     return {
         "ai_relevant": bool(row.get("ai_relevant")),
@@ -321,16 +504,41 @@ def public_classification(row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def build_release(period: Period, *, replace: bool = False) -> tuple[dict[str, Any], Path]:
+def build_release(
+    period: Period,
+    *,
+    replace: bool = False,
+    revision_reason: str | None = None,
+) -> tuple[dict[str, Any], Path]:
     client = supabase_admin()
     classification_run = latest_successful_classification(client)
     collection = collection_row(client, str(classification_run["collection_run_id"]))
     resolution = resolution_row(client, str(classification_run["collection_run_id"]))
+    reconciliation = reconciliation_row(client, str(collection["run_id"]))
 
     observations = load_collection_observations(client, str(collection["run_id"]))
     all_article_ids = sorted(observations)
     article_rows = load_articles(client, all_article_ids)
     translations = load_translations(client, all_article_ids)
+    if not reconciliation:
+        raise ReleaseError(
+            "No accepted longitudinal reconciliation exists for this collection. "
+            "Run ‘Reconcile Observatory History’ before building the weekly release."
+        )
+
+    occurrences = load_occurrences(client, str(collection["run_id"]))
+    occurrence_article_ids = {str(row.get("article_id") or "") for row in occurrences}
+    missing_occurrences = [article_id for article_id in all_article_ids if article_id not in occurrence_article_ids]
+    if missing_occurrences:
+        raise ReleaseError(
+            f"{len(missing_occurrences)} collection article(s) are missing from the "
+            "longitudinal occurrence ledger. Run reconciliation/backfill first."
+        )
+    occurrence_by_article = {
+        str(row.get("article_id")): row
+        for row in occurrences
+        if row.get("article_id")
+    }
 
     selected_ids = []
     for aid in all_article_ids:
@@ -403,6 +611,18 @@ def build_release(period: Period, *, replace: bool = False) -> tuple[dict[str, A
             {
                 "article_id": aid,
                 "event_id": event_id,
+                "effective_event_id": str(
+                    (occurrence_by_article.get(aid) or {}).get("effective_event_id")
+                    or event_id
+                ),
+                "story_family_id": (
+                    (occurrence_by_article.get(aid) or {}).get("story_family_id")
+                    or (event_rows.get(event_id) or {}).get("story_family_id")
+                ),
+                "appearance_type": (occurrence_by_article.get(aid) or {}).get("appearance_type"),
+                "days_since_previous_coverage": (
+                    (occurrence_by_article.get(aid) or {}).get("days_since_previous_coverage")
+                ),
                 "published_date": article_date.isoformat() if article_date else None,
                 "published_at": article.get("published_at"),
                 "first_seen_at": article.get("first_seen_at"),
@@ -450,16 +670,25 @@ def build_release(period: Period, *, replace: bool = False) -> tuple[dict[str, A
             key=lambda item: (item.get("published_date") or "", item.get("publisher") or ""),
         )
         first_seen = parse_date(event.get("first_seen_at"))
+        appearance_types = {
+            str((occurrence_by_article.get(str(item["article_id"])) or {}).get("appearance_type"))
+            for item in members
+            if (occurrence_by_article.get(str(item["article_id"])) or {}).get("appearance_type")
+        }
+        event_novelty = novelty_status(appearance_types)
         event_units.append(
             {
                 "event_id": eid,
+                "effective_event_id": eid,
+                "story_family_id": event.get("story_family_id"),
+                "registry_version": event.get("registry_version"),
+                "last_reconciled_at": event.get("last_reconciled_at"),
                 "event_title": normalize_name(event.get("event_title")),
                 "event_summary": normalize_name(event.get("event_summary")),
                 "event_date": str(event.get("event_date") or ""),
                 "first_seen_at": event.get("first_seen_at"),
                 "last_seen_at": event.get("last_seen_at"),
                 "first_seen_date": first_seen.isoformat() if first_seen else None,
-                "new_in_period": bool(first_seen and period.contains(first_seen)),
                 "member_article_ids": [str(item["article_id"]) for item in members],
                 "member_article_count": len(members),
                 "sources": [
@@ -476,6 +705,13 @@ def build_release(period: Period, *, replace: bool = False) -> tuple[dict[str, A
                 "cluster_confidence": event.get("cluster_confidence"),
                 "possible_duplicate_record": bool(event.get("requires_cluster_review")),
                 "possible_duplicate_reason": event.get("cluster_review_reason"),
+                "appearance_types": sorted(appearance_types),
+                "novelty_status": event_novelty,
+                "new_in_period": event_novelty in {"first_time", "follow_on_development"},
+                "first_time_in_period": event_novelty == "first_time",
+                "recurring_in_period": event_novelty == "recurring",
+                "follow_on_development": event_novelty == "follow_on_development",
+                "possible_historical_match": event_novelty == "possible_historical_match",
                 "classification": public_classification(event_class[eid]),
             }
         )
@@ -525,14 +761,40 @@ def build_release(period: Period, *, replace: bool = False) -> tuple[dict[str, A
     )
     source_data = source_summary(coverage_ai)
     governance = governance_for(str(classification_run["classification_run_id"]))
+    dynamics = occurrence_dynamics(
+        occurrences,
+        article_rows,
+        period,
+        ai_article_ids=coverage_ai_ids,
+        ai_event_ids=event_ai_ids,
+    )
 
     counts = {
         "observed_article_records": len(coverage_units),
         "ai_relevant_articles": len(coverage_ai),
         "represented_event_records": len(event_units),
         "ai_relevant_event_records": len(event_ai),
-        "new_event_records": sum(bool(item["new_in_period"]) for item in event_ai),
-        "recurring_event_records": sum(not bool(item["new_in_period"]) for item in event_ai),
+        "new_event_records": sum(
+            item.get("novelty_status") in {"first_time", "follow_on_development"}
+            for item in event_ai
+        ),
+        "first_time_event_records": sum(
+            item.get("novelty_status") == "first_time" for item in event_ai
+        ),
+        "follow_on_event_records": sum(
+            item.get("novelty_status") == "follow_on_development" for item in event_ai
+        ),
+        "recurring_event_records": sum(
+            item.get("novelty_status") == "recurring" for item in event_ai
+        ),
+        "possible_historical_match_event_records": sum(
+            item.get("novelty_status") == "possible_historical_match" for item in event_ai
+        ),
+        "unclassified_novelty_event_records": sum(
+            item.get("novelty_status") == "unclassified" for item in event_ai
+        ),
+        "resurfaced_event_records": int(dynamics["resurfaced_event_appearances"]),
+        "rediscovered_article_records": int(dynamics["rediscovered_article_records"]),
         "extra_coverage": len(coverage_ai) - len(event_ai),
         "extra_coverage_from_memberships": extra_coverage_memberships,
         "singleton_event_records": sum(
@@ -562,7 +824,7 @@ def build_release(period: Period, *, replace: bool = False) -> tuple[dict[str, A
     revision = int((previous or {}).get("revision") or 0) + 1 if previous else 1
 
     release = {
-        "schema_version": "aieo_public_release_v2.0",
+        "schema_version": "aieo_public_release_v3.0",
         "release_id": release_id,
         "release_type": "weekly",
         "revision": revision,
@@ -583,14 +845,40 @@ def build_release(period: Period, *, replace: bool = False) -> tuple[dict[str, A
             "classifier_version": classification_run.get("classifier_version"),
         },
         "definitions": {
-            "coverage_lens": "Each AI-relevant article in this declared weekly period receives one weight.",
-            "event_lens": "Each active resolved event record represented by those weekly articles receives one weight.",
-            "extra_coverage": "AI-relevant article records minus represented AI-relevant event records for the same period.",
-            "new_event_record": "An event record whose first_seen_at date falls inside this period.",
-            "recurring_event_record": "An event record first seen before this period and represented again now.",
+            "coverage_lens": "Each newly published AI-relevant article in this declared weekly period receives one weight.",
+            "event_lens": "Each effective resolved event represented by those articles receives one weight.",
+            "extra_coverage": "AI-relevant published articles minus effective represented events for the same period.",
+            "new_event_record": "A first-time event or a genuine follow-on occurrence not collapsed into earlier reality.",
+            "recurring_event_record": "A previously observed effective event represented again by newly published coverage.",
+            "resurfaced_event_record": "A recurring event receiving new coverage after at least 28 days without observed coverage.",
+            "rediscovered_article_record": "A previously stored article page returned to the discovery results; it is not counted as a newly published article.",
+            "follow_on_development": "A genuinely new occurrence linked to an earlier event through a continuing story family.",
             "event_record_caveat": "AIEO uses a precision-first resolver. Ambiguous possible duplicates remain separate until governance resolves them.",
         },
+        "observation_period": {
+            "start": period.start.isoformat(),
+            "end": period.end.isoformat(),
+            "basis": "publication date, with first-seen date used only when publication date is unavailable",
+        },
+        "historical_pool": {
+            "starts_at": reconciliation.get("pool_start_at") if reconciliation else None,
+            "considered_through": reconciliation.get("pool_considered_through") if reconciliation else collection.get("completed_at"),
+            "registry_snapshot_id": reconciliation.get("registry_snapshot_id") if reconciliation else None,
+            "all_prior_events_considered": True,
+            "disclosure": "New means new relative to this historical matching pool.",
+        },
+        "reconciliation": {
+            "run_id": reconciliation.get("reconciliation_run_id") if reconciliation else None,
+            "run_key": reconciliation.get("run_key") if reconciliation else None,
+            "mode": reconciliation.get("mode") if reconciliation else None,
+            "completed_at": reconciliation.get("completed_at") if reconciliation else None,
+            "status": reconciliation.get("status") if reconciliation else "not_available",
+        },
+        "data_current_through": (
+            reconciliation.get("completed_at") if reconciliation else collection.get("completed_at")
+        ),
         "counts": counts,
+        "dynamics": dynamics,
         "lenses": {
             "coverage": coverage_summary,
             "event": event_summary,
@@ -635,6 +923,8 @@ def build_release(period: Period, *, replace: bool = False) -> tuple[dict[str, A
                 ) if counts["ai_relevant_event_records"] else 0.0,
                 "possible_duplicate_records": counts["possible_duplicate_event_records"],
                 "same_event_recall_validated": False,
+                "longitudinal_event_memory_active": True,
+                "historical_pool_disclosed": True,
             },
             "denominators": {
                 "coverage_total": coverage_summary["unit_count_total"],
@@ -662,34 +952,147 @@ def build_release(period: Period, *, replace: bool = False) -> tuple[dict[str, A
             "event_records": event_units,
         },
     }
+    if previous and replace:
+        if not revision_reason:
+            raise ReleaseError("--revision-reason is required with --replace.")
+        prior_history = list(previous.get("revision_history") or [])
+        prior_history.append(
+            {
+                "revision": revision,
+                "changed_at": generated_at,
+                "reason": revision_reason,
+                "previous_revision": int(previous.get("revision") or 1),
+            }
+        )
+        release["revision_reason"] = revision_reason
+        release["revision_history"] = prior_history
+        release["previous_revision_path"] = (
+            f"/data/releases/weekly/archive/{release_id}/"
+            f"revision-{int(previous.get('revision') or 1)}.json"
+        )
     release["content_sha256"] = stable_hash(
         {key: value for key, value in release.items() if key != "content_sha256"}
     )
 
     output_path = WEEKLY_DIR / f"{release_id}.json"
     if previous and not replace:
+        if measurement_hash(previous) == measurement_hash(release):
+            # Scheduled reruns are safe: keep the immutable release byte-for-byte
+            # stable, refresh the current pointer, and rebuild the public index.
+            write_json(CURRENT_RELEASE, previous)
+            attach_release_to_occurrences(client, str(collection["run_id"]), release_id)
+            update_index()
+            return previous, output_path
         raise ReleaseError(
-            f"{output_path.relative_to(ROOT)} already exists. Re-run with --replace "
-            "to create a new revision while preserving the previous revision."
+            f"{output_path.relative_to(ROOT)} already exists with different "
+            "measurement content. Re-run with --replace to create a new "
+            "revision while preserving the previous revision."
         )
     if previous and replace:
-        archive = WEEKLY_DIR / "archive" / f"{release_id}-r{previous.get('revision', 1)}.json"
+        archive = (
+            WEEKLY_DIR / "archive" / release_id
+            / f"revision-{int(previous.get('revision') or 1)}.json"
+        )
         if not archive.exists():
             write_json(archive, previous)
 
     write_json(output_path, release)
     write_json(CURRENT_RELEASE, release)
+    attach_release_to_occurrences(client, str(collection["run_id"]), release_id)
     update_index()
     return release, output_path
 
 
+def substantive_release_payload(release: dict[str, Any]) -> dict[str, Any]:
+    """Return the measurement-bearing release content for idempotency checks."""
+    return {
+        key: value
+        for key, value in release.items()
+        if key not in {
+            "generated_at", "revision", "content_sha256", "revision_reason",
+            "revision_history", "previous_revision_path", "restated_at",
+            "restatement_version",
+        }
+    }
+
+
+def measurement_hash(release: dict[str, Any]) -> str:
+    return stable_hash(substantive_release_payload(release))
+
+
+def load_historical_snapshots() -> list[dict[str, Any]]:
+    snapshots: list[dict[str, Any]] = []
+    if not BASELINE_DIR.exists():
+        return snapshots
+    for path in sorted(BASELINE_DIR.glob("*.json")):
+        item = load_json(path)
+        if not isinstance(item, dict):
+            continue
+        required = {"snapshot_id", "period_start", "period_end", "articles", "event_records"}
+        missing = sorted(required - set(item))
+        if missing:
+            raise ReleaseError(
+                f"Historical snapshot {path.relative_to(ROOT)} is missing: {missing}"
+            )
+        snapshots.append(item)
+    snapshots.sort(key=lambda item: (item["period_end"], item["snapshot_id"]))
+    return snapshots
+
+
+def snapshot_summary(item: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "snapshot_id": item["snapshot_id"],
+        "snapshot_type": item.get("snapshot_type", "historical_snapshot"),
+        "label": item.get("label", "Historical snapshot"),
+        "series_kind": "historical_snapshot",
+        "period_start": item["period_start"],
+        "period_end": item["period_end"],
+        "generated_at": item.get("generated_at"),
+        "articles": int(item["articles"]),
+        "event_records": int(item["event_records"]),
+        "extra_coverage": int(item.get("extra_coverage", int(item["articles"]) - int(item["event_records"]))),
+        "coverage_index": item.get("coverage_index"),
+        "event_index": item.get("event_index"),
+        "amplification_gap": item.get("amplification_gap"),
+        "audit_status": item.get("audit_status"),
+        "validation_status": item.get("validation_status"),
+        "comparable_to_weekly_series": False,
+        "connect_to_previous": False,
+        "note": item.get("note"),
+    }
+
+
+def weekly_display_series(releases: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    series: list[dict[str, Any]] = []
+    previous_end: date | None = None
+    for release in releases:
+        summary = release_summary(release)
+        start = date.fromisoformat(str(summary["period_start"]))
+        end = date.fromisoformat(str(summary["period_end"]))
+        connected = bool(previous_end and start == previous_end + timedelta(days=1))
+        series.append(
+            {
+                **summary,
+                "series_kind": "weekly",
+                "label": f"Week ending {summary['period_end']}",
+                "comparable_to_weekly_series": True,
+                "connect_to_previous": connected,
+            }
+        )
+        previous_end = end
+    return series
+
+
 def update_index() -> dict[str, Any]:
-    weekly_files = sorted(
-        path for path in WEEKLY_DIR.glob("*.json") if path.is_file()
-    )
+    weekly_files = sorted(path for path in WEEKLY_DIR.glob("*.json") if path.is_file())
     releases = [load_json(path) for path in weekly_files]
     releases = [item for item in releases if isinstance(item, dict)]
     releases.sort(key=lambda item: (item["period_end"], item["release_id"]))
+
+    historical = load_historical_snapshots()
+    historical_summaries = [snapshot_summary(item) for item in historical]
+    weekly_summaries = [release_summary(item) for item in releases]
+    weekly_series = weekly_display_series(releases)
 
     all_article_ids: set[str] = set()
     all_event_ids: set[str] = set()
@@ -700,7 +1103,7 @@ def update_index() -> dict[str, Any]:
             if row.get("classification", {}).get("ai_relevant")
         )
         all_event_ids.update(
-            str(row["event_id"])
+            str(row.get("effective_event_id") or row["event_id"])
             for row in release.get("units", {}).get("event_records", [])
             if row.get("classification", {}).get("ai_relevant")
         )
@@ -724,25 +1127,80 @@ def update_index() -> dict[str, Any]:
                     str(source.get("published_date") or "").startswith(current_month)
                     for source in row.get("sources", [])
                 ):
-                    month_to_date_events.add(str(row["event_id"]))
+                    month_to_date_events.add(str(row.get("effective_event_id") or row["event_id"]))
+
+    generated_values = [
+        str(item.get("generated_at"))
+        for item in [*historical_summaries, *weekly_summaries]
+        if item.get("generated_at")
+    ]
+    updated_at = max(generated_values) if generated_values else iso_z(utc_now())
+
+    display_series = sorted(
+        [*historical_summaries, *weekly_series],
+        key=lambda item: (item["period_end"], item.get("snapshot_id") or item.get("release_id") or ""),
+    )
+
+    standardized_cumulative = {
+        "distinct_articles": len(all_article_ids),
+        "distinct_event_records": len(all_event_ids),
+        "release_count": len(releases),
+        "period_start": releases[0]["period_start"] if releases else None,
+        "period_end": releases[-1]["period_end"] if releases else None,
+    }
+
+    revision_archives: dict[str, list[dict[str, Any]]] = {}
+    archive_root = WEEKLY_DIR / "archive"
+    if archive_root.exists():
+        for release_dir in sorted(path for path in archive_root.iterdir() if path.is_dir()):
+            rows = []
+            for path in sorted(release_dir.glob("revision-*.json")):
+                item = load_json(path)
+                if not isinstance(item, dict):
+                    continue
+                rows.append({
+                    "revision": int(item.get("revision") or 1),
+                    "generated_at": item.get("generated_at"),
+                    "path": "/" + str(path.relative_to(ROOT)).replace("\\", "/"),
+                    "content_sha256": item.get("content_sha256"),
+                })
+            if rows:
+                revision_archives[release_dir.name] = rows
 
     index = {
-        "schema_version": "aieo_release_index_v2.0",
-        "updated_at": iso_z(utc_now()),
+        "schema_version": "aieo_release_index_v3.0",
+        "updated_at": updated_at,
+        # Backward-compatible: release_count continues to mean standardized weeks.
         "release_count": len(releases),
+        "weekly_release_count": len(releases),
+        "historical_snapshot_count": len(historical_summaries),
+        "publication_snapshot_count": len(releases) + len(historical_summaries),
         "current_release_id": current.get("release_id") if current else None,
-        "weekly": [release_summary(item) for item in releases],
+        "current_revision": int(current.get("revision") or 1) if current else None,
+        "data_current_through": (
+            current.get("data_current_through") if current else None
+        ),
+        "historical_pool": current.get("historical_pool") if current else None,
+        "revision_archives": revision_archives,
+        "historical_snapshots": historical_summaries,
+        "weekly": weekly_summaries,
+        "display_series": display_series,
+        "cumulative_standardized_series": standardized_cumulative,
         "cumulative_since_launch": {
-            "distinct_articles": len(all_article_ids),
-            "distinct_event_records": len(all_event_ids),
-            "release_count": len(releases),
-            "period_start": releases[0]["period_start"] if releases else None,
-            "period_end": releases[-1]["period_end"] if releases else None,
+            **standardized_cumulative,
+            "scope": "standardized_weekly_releases_only",
+            "historical_snapshots_excluded": len(historical_summaries),
         },
         "month_to_date": {
             "month": current["period_end"][:7] if current else None,
             "distinct_articles": len(month_to_date_articles),
             "distinct_event_records": len(month_to_date_events),
+        },
+        "comparison_rule": {
+            "weekly_series": "Connect only consecutive, non-overlapping Monday-Sunday releases.",
+            "historical_snapshots": "Show as separate reference points and never connect them to the weekly line.",
+            "recurrence": "Repeated coverage changes attention volume but does not create another effective event.",
+            "revisions": "The current series uses the latest accepted revision; earlier revisions remain accessible in the archive.",
         },
     }
     write_json(RELEASE_INDEX, index)
@@ -754,11 +1212,36 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--period-start", type=date.fromisoformat)
     parser.add_argument("--period-end", type=date.fromisoformat)
     parser.add_argument("--replace", action="store_true")
+    parser.add_argument(
+        "--revision-reason",
+        help="Required with --replace. Published in the revision ledger.",
+    )
+    parser.add_argument(
+        "--rebuild-index-only",
+        action="store_true",
+        help="Rebuild data/releases/index.json without contacting Supabase.",
+    )
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
+    if args.rebuild_index_only:
+        index = update_index()
+        print(
+            json.dumps(
+                {
+                    "weekly_release_count": index["weekly_release_count"],
+                    "historical_snapshot_count": index["historical_snapshot_count"],
+                    "publication_snapshot_count": index["publication_snapshot_count"],
+                    "current_release_id": index["current_release_id"],
+                    "output": str(RELEASE_INDEX.relative_to(ROOT)),
+                },
+                indent=2,
+            )
+        )
+        return 0
+
     if bool(args.period_start) != bool(args.period_end):
         raise ReleaseError("Provide both --period-start and --period-end.")
     period = (
@@ -769,7 +1252,13 @@ def main() -> int:
     if period.start > period.end:
         raise ReleaseError("period_start must not be later than period_end.")
 
-    release, path = build_release(period, replace=args.replace)
+    if args.replace and not str(args.revision_reason or "").strip():
+        raise ReleaseError("--revision-reason is required when --replace is used.")
+    release, path = build_release(
+        period,
+        replace=args.replace,
+        revision_reason=str(args.revision_reason or "").strip() or None,
+    )
     print(
         json.dumps(
             {

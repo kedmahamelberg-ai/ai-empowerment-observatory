@@ -30,6 +30,10 @@ EVENT_METHOD = "article_to_event_v1"
 
 WEEKLY_DIR = ROOT / "data" / "releases" / "weekly"
 MONTHLY_DIR = ROOT / "data" / "releases" / "monthly"
+QUARTERLY_DIR = ROOT / "data" / "releases" / "quarterly"
+ANNUAL_DIR = ROOT / "data" / "releases" / "annual"
+PERIOD_INDEX = ROOT / "data" / "releases" / "period-index.json"
+RECONCILIATION_LATEST = ROOT / "data" / "releases" / "reconciliation" / "latest.json"
 RELEASE_INDEX = ROOT / "data" / "releases" / "index.json"
 CURRENT_RELEASE = ROOT / "data" / "releases" / "current.json"
 REPORT_INDEX = ROOT / "data" / "reports" / "index.json"
@@ -454,8 +458,19 @@ def release_summary(release: dict[str, Any]) -> dict[str, Any]:
         "generated_at": release["generated_at"],
         "articles": counts.get("ai_relevant_articles", 0),
         "event_records": counts.get("ai_relevant_event_records", 0),
+        "revision": int(release.get("revision") or 1),
         "new_event_records": counts.get("new_event_records", 0),
+        "first_time_event_records": counts.get("first_time_event_records", counts.get("new_event_records", 0)),
         "recurring_event_records": counts.get("recurring_event_records", 0),
+        "resurfaced_event_records": counts.get("resurfaced_event_records", 0),
+        "follow_on_event_records": counts.get("follow_on_event_records", 0),
+        "possible_historical_match_event_records": counts.get(
+            "possible_historical_match_event_records", 0
+        ),
+        "unclassified_novelty_event_records": counts.get(
+            "unclassified_novelty_event_records", 0
+        ),
+        "rediscovered_article_records": counts.get("rediscovered_article_records", 0),
         "extra_coverage": counts.get("extra_coverage", 0),
         "coverage_index": coverage.get("empowerment_index"),
         "event_index": event.get("empowerment_index"),
