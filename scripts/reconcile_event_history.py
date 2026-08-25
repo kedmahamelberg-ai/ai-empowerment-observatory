@@ -58,7 +58,8 @@ ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_OUTPUT = ROOT / "data" / "releases" / "reconciliation" / "latest.json"
 PRIVATE_REVIEW = ROOT / "review" / "events" / "longitudinal" / "latest.json"
 
-RECONCILER_VERSION = "longitudinal_v1.1"
+RECONCILER_VERSION = "longitudinal_v1.2"
+MANUAL_DECISIONS_PATH = ROOT / "review" / "events" / "longitudinal" / "manual-decisions.json"
 RECENT_TRACK_DAYS = float(os.environ.get("AIEO_RECENT_TRACK_DAYS", "21"))
 RESURFACE_DAYS = float(os.environ.get("AIEO_RESURFACE_DAYS", "28"))
 TOP_CANDIDATES = int(os.environ.get("AIEO_LONGITUDINAL_TOP_CANDIDATES", "5"))
@@ -73,6 +74,12 @@ AUTO_MERGE_SIMILARITY = float(os.environ.get("AIEO_LONGITUDINAL_MERGE_SIM", "0.7
 AUTO_MERGE_PAIR = float(os.environ.get("AIEO_LONGITUDINAL_MERGE_PAIR", "0.55"))
 TOKEN_MERGE_PAIR = float(os.environ.get("AIEO_LONGITUDINAL_TOKEN_PAIR", "0.45"))
 FOLLOW_ON_QWEN = float(os.environ.get("AIEO_FOLLOW_ON_QWEN_CONF", "0.86"))
+# Follow-on links remain human-gated during the pilot. Model output can propose
+# a relationship, but cannot create a story family unless this is explicitly
+# enabled or an accepted manual decision exists.
+AUTO_LINK_MODEL_FOLLOW_ON = str(
+    os.environ.get("AIEO_AUTO_LINK_MODEL_FOLLOW_ON", "false")
+).strip().casefold() in {"1", "true", "yes", "on"}
 COMPETING_MARGIN = float(os.environ.get("AIEO_LONGITUDINAL_COMPETING_MARGIN", "0.03"))
 
 
@@ -190,6 +197,93 @@ def write_json(path: Path, value: Any) -> None:
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     temporary.replace(path)
+
+
+def decision_pair_key(left_event_id: str, right_event_id: str) -> tuple[str, str]:
+    return tuple(sorted((str(left_event_id), str(right_event_id))))
+
+
+def load_manual_decisions(path: Path = MANUAL_DECISIONS_PATH) -> tuple[dict[tuple[str, str], dict[str, Any]], dict[str, Any]]:
+    if not path.exists():
+        return {}, {"schema_version": None, "decision_count": 0, "path": str(path.relative_to(ROOT))}
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    rows = payload.get("decisions") or []
+    if not isinstance(rows, list):
+        raise ReconciliationError(f"Invalid manual decision list: {path}")
+    allowed = {"same_event", "follow_on_development", "same_topic_only", "keep_separate"}
+    decisions: dict[tuple[str, str], dict[str, Any]] = {}
+    for row in rows:
+        if not isinstance(row, dict) or str(row.get("status") or "").strip() != "accepted":
+            continue
+        left = str(row.get("event_a_id") or "").strip()
+        right = str(row.get("event_b_id") or "").strip()
+        relationship = str(row.get("relationship") or "").strip()
+        if not left or not right or left == right or relationship not in allowed:
+            raise ReconciliationError(f"Invalid accepted manual decision: {row}")
+        key = decision_pair_key(left, right)
+        if key in decisions:
+            raise ReconciliationError(f"Duplicate manual decision for {key}")
+        canonical = str(row.get("canonical_event_id") or "").strip() or None
+        if relationship == "same_event" and canonical not in {left, right}:
+            raise ReconciliationError(
+                f"same_event decision for {key} must name one pair member as canonical_event_id"
+            )
+        decisions[key] = {**row, "canonical_event_id": canonical}
+    return decisions, {
+        "schema_version": payload.get("schema_version"),
+        "decision_count": len(decisions),
+        "reviewed_at": payload.get("reviewed_at"),
+        "review_basis": payload.get("review_basis"),
+        "path": str(path.relative_to(ROOT)),
+    }
+
+
+def event_descriptor(event: EventMemory) -> dict[str, Any]:
+    return {
+        "event_id": event.event_id,
+        "title": event.event_title,
+        "event_date": event.event_date,
+        "first_seen_at": event.first_seen_at,
+        "last_seen_at": event.last_seen_at,
+        "article_count": len(event.evidence),
+        "sources": [
+            {
+                "article_id": item.article_id,
+                "publisher": item.publisher,
+                "headline": item.english_headline,
+                "published_at": item.published_at,
+                "url": item.canonical_url,
+            }
+            for item in event.evidence[:MAX_EVIDENCE]
+        ],
+    }
+
+
+def choose_merge_direction(
+    left: EventMemory,
+    right: EventMemory,
+    preferred_canonical_event_id: str | None = None,
+) -> tuple[EventMemory, EventMemory]:
+    if preferred_canonical_event_id:
+        if preferred_canonical_event_id == left.event_id:
+            return right, left
+        if preferred_canonical_event_id == right.event_id:
+            return left, right
+        raise ReconciliationError(
+            f"Preferred canonical event {preferred_canonical_event_id} is not in the merge pair"
+        )
+    # The underlying occurrence is anchored to the earliest published evidence.
+    # Observation time is the secondary criterion, then event_id for stability.
+    canonical = min(
+        (left, right),
+        key=lambda event: (
+            event.first_evidence_at,
+            parse_datetime(event.first_seen_at) or event.first_evidence_at,
+            event.event_id,
+        ),
+    )
+    alias = right if canonical.event_id == left.event_id else left
+    return alias, canonical
 
 
 def latest_resolution(client: Client) -> dict[str, Any]:
@@ -519,12 +613,26 @@ actor or topic is not enough to merge events.
 
 Choose exactly one:
 - same_event: the same concrete occurrence, announcement, decision, launch,
-  incident, study result, meeting or policy action is being reported again.
-- follow_on_development: a genuinely new occurrence that implements, changes,
-  reverses, responds to or advances the earlier event.
+  incident, study result, meeting or policy action is being reported again. A
+  later article that adds detail, reaction, criticism, confirmation, a video
+  treatment, or a different headline is still the same event unless a new actor
+  performs a new dated action.
+- follow_on_development: a genuinely new, separately datable occurrence that
+  implements, changes, reverses, legally responds to, or materially advances the
+  earlier event. It requires a new action or outcome, not merely another article.
 - same_topic_only: related subject or actor, but not the same occurrence and not
-  a concrete follow-on development.
+  a concrete follow-on development. Commentary, explainers, television episodes,
+  and consecutive parts of an editorial series belong here unless they report a
+  new real-world action.
 - unclear: the available evidence does not support a safe decision.
+
+Decision checks:
+1. Ask whether both headlines could truthfully be citations for one underlying
+   occurrence. If yes, choose same_event.
+2. Do not use publication date, semantic similarity, or shared actors as proof of
+   a follow-on. Identify the new actor action/outcome explicitly.
+3. "More detail", "backlash", "criticism", "confirmation", or a new publisher
+   does not by itself create a follow-on development.
 
 NEW EVENT
 Title: {candidate.event_title}
@@ -738,15 +846,28 @@ def merge_event(
         .execute()
     )
     latest = max(target.latest_evidence_at, candidate.latest_evidence_at)
+    first_seen_values = [
+        value
+        for value in (parse_datetime(target.first_seen_at), parse_datetime(candidate.first_seen_at))
+        if value is not None
+    ]
+    event_date_values = [
+        value
+        for value in (parse_datetime(target.event_date), parse_datetime(candidate.event_date))
+        if value is not None
+    ]
+    target_update = {
+        "last_seen_at": iso_z(latest),
+        "last_reconciled_at": now,
+        "registry_version": "event_registry_v2_longitudinal",
+    }
+    if first_seen_values:
+        target_update["first_seen_at"] = iso_z(min(first_seen_values))
+    if event_date_values:
+        target_update["event_date"] = min(event_date_values).date().isoformat()
     (
         client.table("events")
-        .update(
-            {
-                "last_seen_at": iso_z(latest),
-                "last_reconciled_at": now,
-                "registry_version": "event_registry_v2_longitudinal",
-            }
-        )
+        .update(target_update)
         .eq("event_id", target.event_id)
         .execute()
     )
@@ -1138,6 +1259,11 @@ def parse_args() -> argparse.Namespace:
         default="auto",
     )
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument(
+        "--manual-decisions",
+        default=str(MANUAL_DECISIONS_PATH),
+        help="Versioned accepted human decisions. Missing file is allowed.",
+    )
     return parser.parse_args()
 
 
@@ -1152,6 +1278,7 @@ def main() -> int:
 
     now = utc_now()
     mode = choose_mode(args.mode, now)
+    manual_decisions, manual_decision_meta = load_manual_decisions(Path(args.manual_decisions))
     candidate_lookback_start = lookback_start(mode, now)
     pool_start = registry_pool_start(client)
     resolution = latest_resolution(client)
@@ -1172,8 +1299,10 @@ def main() -> int:
         "candidates": 0,
         "auto_merges": 0,
         "follow_on": 0,
+        "follow_on_review": 0,
         "review": 0,
         "same_topic": 0,
+        "manual_decisions": 0,
         "occurrences": 0,
         "verifier_calls": 0,
     }
@@ -1241,7 +1370,18 @@ def main() -> int:
                 continue
             counts["candidates"] += 1
             top = retrieved[0]
-            second = retrieved[1] if len(retrieved) > 1 else None
+            manual_override = None
+            for retrieved_candidate in retrieved:
+                possible_override = manual_decisions.get(
+                    decision_pair_key(candidate.event_id, retrieved_candidate.event.event_id)
+                )
+                if possible_override is not None:
+                    top = retrieved_candidate
+                    manual_override = possible_override
+                    counts["manual_decisions"] += 1
+                    break
+            remaining = [item for item in retrieved if item.event.event_id != top.event.event_id]
+            second = remaining[0] if remaining else None
             competing = bool(
                 second
                 and not top.token_match
@@ -1260,7 +1400,15 @@ def main() -> int:
                 "confidence": 0.0,
                 "reason": "verification gate not reached",
             }
-            if should_verify:
+            decision_source = "model"
+            if manual_override is not None:
+                decision_source = "human_override"
+                result = {
+                    "relationship": str(manual_override["relationship"]),
+                    "confidence": float(manual_override.get("confidence", 1.0)),
+                    "reason": clean_text(manual_override.get("reason")),
+                }
+            elif should_verify:
                 counts["verifier_calls"] += 1
                 result = verify_relationship(
                     candidate=candidate,
@@ -1287,6 +1435,12 @@ def main() -> int:
                 "qwen_relationship": result["relationship"],
                 "qwen_confidence": round(float(result["confidence"]), 4),
                 "reason": result["reason"],
+                "decision_source": decision_source,
+                "manual_decision_id": (
+                    manual_override.get("decision_id") if manual_override is not None else None
+                ),
+                "candidate_event": event_descriptor(candidate),
+                "target_event": event_descriptor(top.event),
                 "reconciler_version": RECONCILER_VERSION,
                 "model_revisions": {
                     "embedding": embedding_revision,
@@ -1294,46 +1448,90 @@ def main() -> int:
                     "verifier": verifier_revision,
                 },
             }
+            manual_same = bool(
+                manual_override is not None
+                and result["relationship"] == "same_event"
+            )
             strict_same = bool(
-                result["relationship"] == "same_event"
-                and float(result["confidence"]) >= AUTO_MERGE_QWEN
-                and not competing
-                and top.similarity >= AUTO_MERGE_SIMILARITY
-                and (
-                    pair_max >= AUTO_MERGE_PAIR
-                    or (top.token_match and pair_max >= TOKEN_MERGE_PAIR)
+                manual_same
+                or (
+                    result["relationship"] == "same_event"
+                    and float(result["confidence"]) >= AUTO_MERGE_QWEN
+                    and not competing
+                    and top.similarity >= AUTO_MERGE_SIMILARITY
+                    and (
+                        pair_max >= AUTO_MERGE_PAIR
+                        or (top.token_match and pair_max >= TOKEN_MERGE_PAIR)
+                    )
                 )
             )
+            manual_follow_on = bool(
+                manual_override is not None
+                and result["relationship"] == "follow_on_development"
+            )
             strict_follow_on = bool(
-                result["relationship"] == "follow_on_development"
-                and float(result["confidence"]) >= FOLLOW_ON_QWEN
-                and not competing
+                manual_follow_on
+                or (
+                    AUTO_LINK_MODEL_FOLLOW_ON
+                    and result["relationship"] == "follow_on_development"
+                    and float(result["confidence"]) >= FOLLOW_ON_QWEN
+                    and not competing
+                )
             )
 
             action = "kept_separate"
             if strict_same:
-                action = "auto_merge_same_event"
+                action = (
+                    "human_merge_same_event" if manual_same else "auto_merge_same_event"
+                )
+                merge_from, merge_into = choose_merge_direction(
+                    candidate,
+                    top.event,
+                    (manual_override or {}).get("canonical_event_id"),
+                )
+                evidence["merge_from_event_id"] = merge_from.event_id
+                evidence["merge_into_event_id"] = merge_into.event_id
                 if not args.dry_run:
                     moved = merge_event(
                         client,
-                        candidate=candidate,
-                        target=top.event,
+                        candidate=merge_from,
+                        target=merge_into,
                         reconciliation_run_id=run_id,
                         confidence=float(result["confidence"]),
                         evidence=evidence,
                     )
                     # Update the in-memory registry immediately so later
                     # candidates in this reconciliation see one canonical event.
-                    top.event.evidence.extend(candidate.evidence)
-                    top.event.last_seen_at = iso_z(
-                        max(top.event.latest_evidence_at, candidate.latest_evidence_at)
+                    merge_into.evidence.extend(merge_from.evidence)
+                    first_seen_values = [
+                        value
+                        for value in (
+                            parse_datetime(merge_into.first_seen_at),
+                            parse_datetime(merge_from.first_seen_at),
+                        )
+                        if value is not None
+                    ]
+                    if first_seen_values:
+                        merge_into.first_seen_at = iso_z(min(first_seen_values))
+                    event_date_values = [
+                        value
+                        for value in (
+                            parse_datetime(merge_into.event_date),
+                            parse_datetime(merge_from.event_date),
+                        )
+                        if value is not None
+                    ]
+                    if event_date_values:
+                        merge_into.event_date = min(event_date_values).date().isoformat()
+                    merge_into.last_seen_at = iso_z(
+                        max(merge_into.latest_evidence_at, merge_from.latest_evidence_at)
                     )
-                    top.event.rebuild()
-                    memories.pop(candidate.event_id, None)
+                    merge_into.rebuild()
+                    memories.pop(merge_from.event_id, None)
                     for article_id in moved:
                         merged_articles[article_id] = {
-                            "candidate_event_id": candidate.event_id,
-                            "effective_event_id": top.event.event_id,
+                            "candidate_event_id": merge_from.event_id,
+                            "effective_event_id": merge_into.event_id,
                             "track": top.track,
                             "confidence": float(result["confidence"]),
                             "gap_days": top.gap_days,
@@ -1360,8 +1558,51 @@ def main() -> int:
                         "reason": result["reason"],
                     }
                 counts["follow_on"] += 1
+            elif result["relationship"] == "follow_on_development":
+                action = "review_follow_on_development"
+                counts["follow_on_review"] += 1
+                counts["review"] += 1
+                possible_matches[candidate.event_id] = {
+                    "candidate_event_id": top.event.event_id,
+                    "track": top.track,
+                    "confidence": float(result["confidence"]),
+                    "gap_days": top.gap_days,
+                    "reason": result["reason"] or "possible follow-on requires human acceptance",
+                    "proposed_relationship": "follow_on_development",
+                }
+                if not args.dry_run:
+                    upsert_relationship(
+                        client,
+                        from_event_id=candidate.event_id,
+                        to_event_id=top.event.event_id,
+                        relationship_type="follow_on_development",
+                        confidence=float(result["confidence"]),
+                        status="proposed",
+                        resolution_run_id=candidate.resolution_run_id,
+                        reconciliation_run_id=run_id,
+                        story_family_id=None,
+                        evidence=evidence,
+                    )
+                    (
+                        client.table("events")
+                        .update(
+                            {
+                                "requires_cluster_review": True,
+                                "cluster_review_reason": "possible longitudinal follow-on development",
+                                "last_reconciled_at": iso_z(utc_now()),
+                            }
+                        )
+                        .eq("event_id", candidate.event_id)
+                        .execute()
+                    )
+            elif result["relationship"] == "keep_separate":
+                action = "human_keep_separate"
             elif result["relationship"] == "same_topic_only":
-                action = "same_topic_only"
+                action = (
+                    "human_same_topic_only"
+                    if manual_override is not None
+                    else "same_topic_only"
+                )
                 counts["same_topic"] += 1
                 if not args.dry_run and float(result["confidence"]) >= 0.90:
                     upsert_relationship(
@@ -1441,7 +1682,9 @@ def main() -> int:
                 "candidate_events_checked": counts["candidates"],
                 "same_event_merges": counts["auto_merges"],
                 "follow_on_story_links": counts["follow_on"],
+                "follow_on_candidates_for_review": counts["follow_on_review"],
                 "possible_matches_for_review": counts["review"],
+                "manual_decisions_applied": counts["manual_decisions"],
                 "same_topic_only": counts["same_topic"],
                 "occurrences_recorded": counts["occurrences"],
                 "strict_merge_lag_days_median": round(median(merge_lags), 2) if merge_lags else None,
@@ -1449,7 +1692,9 @@ def main() -> int:
             },
             "disclosure": (
                 "New means new relative to the historical event pool shown here. "
-                "Repeated reporting can add coverage without adding a new event."
+                "Repeated reporting can add coverage without adding a new event. "
+                "During the pilot, model-proposed follow-on links require an accepted "
+                "human decision before a story family is created."
             ),
         }
         write_json(PUBLIC_OUTPUT, public_payload)
@@ -1458,6 +1703,7 @@ def main() -> int:
             {
                 **public_payload,
                 "decisions": decisions,
+                "manual_decisions": manual_decision_meta,
                 "models": {
                     "embedding": {"name": EMBEDDING_MODEL, "revision": embedding_revision},
                     "pair": {"name": MODERNBERT_MODEL, "revision": pair_revision},
@@ -1475,6 +1721,8 @@ def main() -> int:
                 "dry_run": args.dry_run,
                 "reconciler_version": RECONCILER_VERSION,
                 "verifier_calls": counts["verifier_calls"],
+                "manual_decisions": manual_decision_meta,
+                "auto_link_model_follow_on": AUTO_LINK_MODEL_FOLLOW_ON,
             },
         )
         print(json.dumps({"mode": mode, **counts, "registry_snapshot_id": snapshot_id}, indent=2))
