@@ -33,6 +33,9 @@ jobs:
       MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || 'auto' }}
       DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}
       LLAMA_SERVER_BIN: /tmp/llama.cpp/build/bin/llama-server
+      # Pilot governance: models propose; accepted decisions change history.
+      AIEO_AUTO_APPLY_MODEL_SAME_EVENT: "false"
+      AIEO_AUTO_LINK_MODEL_FOLLOW_ON: "false"
 
     steps:
       - name: Check out repository
