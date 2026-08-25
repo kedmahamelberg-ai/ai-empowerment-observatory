@@ -1,9 +1,9 @@
 {
   "schema_version": "aieo_longitudinal_manual_decisions_v1",
-  "reviewed_at": "2026-08-25T14:00:00+02:00",
-  "review_basis": "Dry-run artifact registry_f6985e39d9f85166cfe5 plus source-title and source-page verification. These decisions address only the nine relationships that the v1.1 reconciler would otherwise have applied automatically.",
-  "reviewed_by": "AIEO Phase 5.2 implementation audit; acceptance is recorded by committing this file to the repository",
-  "source_artifact": "longitudinal-reconciliation-review-32830645895.zip",
+  "reviewed_at": "2026-08-25T18:00:00+02:00",
+  "review_basis": "Dry-run artifacts registry_f6985e39d9f85166cfe5 from runs 32830645895 and 32847027780. Decisions use the event titles, dates, publishers, URLs and verifier explanations contained in those artifacts. The versioned file keeps model-only same-event merges and follow-on links human-gated during the pilot.",
+  "reviewed_by": "AIEO Phase 5.3 artifact audit; acceptance is recorded by the repository commit",
+  "source_artifact": "longitudinal-reconciliation-review-32847027780.zip",
   "decisions": [
     {
       "decision_id": "phase5-2-gemini-billion-users",
@@ -130,6 +130,208 @@
       "evidence_urls": [
         "https://mronline.org/2026/08/10/artificial-intelligence-the-hype-the-dangers-and-the-resistance-part-ii",
         "https://mronline.org/2026/08/15/artificial-intelligence-the-hype-the-dangers-and-the-resistance-part-iii"
+      ]
+    },
+    {
+      "decision_id": "phase5-3-wang-jian-vs-tillamook",
+      "status": "accepted",
+      "event_a_id": "5315f934-32b4-4ce5-aa42-9e8cf0ed024b",
+      "event_b_id": "c0e3b7b9-fc53-41a1-9483-b4df73b08893",
+      "relationship": "keep_separate",
+      "canonical_event_id": null,
+      "confidence": 1.0,
+      "reason": "The artifact contains no shared concrete occurrence. One source reports Academician Wang Jian saying AI should be cheap as paper; the other is a separate Tillamook County commentary. The model reason incorrectly attributes Wang Jian to both records.",
+      "evidence_urls": [
+        "https://news.sciencenet.cn/htmlnews/2026/8/569423.shtm",
+        "https://www.tillamookcountypioneer.net/words-of-wisdom-thoughts-on-using-artificial-intelligence"
+      ]
+    },
+    {
+      "decision_id": "phase5-3-open-heritage-vs-cssn",
+      "status": "accepted",
+      "event_a_id": "f00b288f-e491-4dc6-ade9-acac09ea5cbe",
+      "event_b_id": "feb17dd1-41ee-4293-8960-0de0181cab68",
+      "relationship": "keep_separate",
+      "canonical_event_id": null,
+      "confidence": 1.0,
+      "reason": "The records are separate essays from Creative Commons and the Chinese Social Sciences Network. A shared date and generic language about AI, knowledge and value do not establish one real-world occurrence.",
+      "evidence_urls": [
+        "https://creativecommons.org/2026/08/19/open-heritage-in-the-age-of-artificial-intelligence",
+        "https://www.cssn.cn/skgz/bwyc/202608/t20260819_6063743.shtml"
+      ]
+    },
+    {
+      "decision_id": "phase5-3-fda-generative-ai-public-input",
+      "status": "accepted",
+      "event_a_id": "22409762-f53c-4a40-a183-4d9c8ce35851",
+      "event_b_id": "b84a96e6-1caa-4e02-b919-4ba0c3059693",
+      "relationship": "same_event",
+      "canonical_event_id": "b84a96e6-1caa-4e02-b919-4ba0c3059693",
+      "confidence": 1.0,
+      "reason": "All four articles report the same FDA request for public input on regulatory considerations for generative-AI-enabled medical devices. Later publication adds coverage, not a new agency action.",
+      "evidence_urls": [
+        "https://www.todaysmedicaldevelopments.com/news/fda-seeks-public-feedback-regulating-generative-ai-medical-devices",
+        "https://radiologybusiness.com/topics/artificial-intelligence/fda-wants-feedback-how-regulate-generative-ai-medicine",
+        "https://www.appliedclinicaltrialsonline.com/view/fda-seeks-public-input-regulatory-framework-generative-ai-enabled-medical-devices",
+        "https://ascopost.com/news/august-2026/fda-seeks-public-input-relating-to-regulatory-considerations-for-generative-ai-enabled-medical-devices"
+      ]
+    },
+    {
+      "decision_id": "phase5-3-doctolib-vs-openai-security",
+      "status": "accepted",
+      "event_a_id": "c80218c8-b64e-4760-a82a-68e6f5d591a0",
+      "event_b_id": "810cc9bc-0c85-4a97-a777-8c2626db33f9",
+      "relationship": "keep_separate",
+      "canonical_event_id": null,
+      "confidence": 1.0,
+      "reason": "Doctolib data-use concerns and security flaws at OpenAI/Anthropic involve different organisations and occurrences.",
+      "evidence_urls": [
+        "https://www.humanite.fr/societe/cyberattaque/intelligence-artificielle-ces-zones-dombre-de-lutilisation-des-donnees-par-doctolib",
+        "https://www.leparisien.fr/high-tech/intelligence-artificielle-de-nouvelles-failles-de-securite-detectees-chez-openai-et-anthropic-05-08-2026-5FKQNQ2JZZCYZMDRS5NFBEGG5I.php"
+      ]
+    },
+    {
+      "decision_id": "phase5-3-google-leadership-vs-doctolib",
+      "status": "accepted",
+      "event_a_id": "8ed753f8-b5a0-4bf7-99ca-02a32a7ca576",
+      "event_b_id": "c80218c8-b64e-4760-a82a-68e6f5d591a0",
+      "relationship": "keep_separate",
+      "canonical_event_id": null,
+      "confidence": 1.0,
+      "reason": "A Google AI leadership reorganisation and Doctolib data-use concerns are different occurrences.",
+      "evidence_urls": [
+        "https://www.lefigaro.fr/secteur/high-tech/chez-google-le-grand-menage-a-la-tete-de-l-intelligence-artificielle-20260806",
+        "https://www.humanite.fr/societe/cyberattaque/intelligence-artificielle-ces-zones-dombre-de-lutilisation-des-donnees-par-doctolib"
+      ]
+    },
+    {
+      "decision_id": "phase5-3-ai-virtue-vs-tillamook-commentary",
+      "status": "accepted",
+      "event_a_id": "c4b42b7e-ac32-4fc5-a051-ae5069114917",
+      "event_b_id": "c0e3b7b9-fc53-41a1-9483-b4df73b08893",
+      "relationship": "keep_separate",
+      "canonical_event_id": null,
+      "confidence": 1.0,
+      "reason": "These are separate commentaries from different publishers. Similar ethical language and a shared date do not identify one concrete event.",
+      "evidence_urls": [
+        "https://news.sciencenet.cn/sbhtmlnews/2026/8/390797.shtm",
+        "https://www.tillamookcountypioneer.net/words-of-wisdom-thoughts-on-using-artificial-intelligence"
+      ]
+    },
+    {
+      "decision_id": "phase5-3-wsj-anthropomorphism-vs-tillamook",
+      "status": "accepted",
+      "event_a_id": "9695e1af-3ca3-4e7e-b4e7-e8f027cabb01",
+      "event_b_id": "c0e3b7b9-fc53-41a1-9483-b4df73b08893",
+      "relationship": "keep_separate",
+      "canonical_event_id": null,
+      "confidence": 1.0,
+      "reason": "The WSJ opinion on anthropomorphising AI and the Tillamook commentary are separate editorial publications, not one occurrence.",
+      "evidence_urls": [
+        "https://www.wsj.com/opinion/don-t-anthropomorphize-artificial-intelligence-ad9ad358",
+        "https://www.tillamookcountypioneer.net/words-of-wisdom-thoughts-on-using-artificial-intelligence"
+      ]
+    },
+    {
+      "decision_id": "phase5-3-meta-open-weight-model-launch",
+      "status": "accepted",
+      "event_a_id": "79c068d7-7afa-4440-8d17-3345f8b55f13",
+      "event_b_id": "7a9e7e0f-a780-4966-89dc-1362ffad7f11",
+      "relationship": "same_event",
+      "canonical_event_id": "7a9e7e0f-a780-4966-89dc-1362ffad7f11",
+      "confidence": 1.0,
+      "reason": "The records report Meta’s same 10 August open/semi-open local AI-model launch and Zuckerberg’s open-weight framing. Different headlines emphasise different features of one announcement.",
+      "evidence_urls": [
+        "https://www.boursorama.com/bourse/actualites-amp/meta-lance-un-nouveau-modele-d-ia-tandis-que-zuckerberg-prone-une-approche-open-weight-f4642596f9e7f952aef6267d20bebcee",
+        "https://nationaltechnology.co.uk/Meta_Unveils_Local_AI_Model_That_Runs_On_Consumer_Hardware.php",
+        "https://www.lesechos.fr/tech-medias/intelligence-artificielle/meta-lance-un-nouveau-modele-dia-semi-ouvert-zuckerberg-prone-une-superintelligence-personnelle-pour-tous-2246565",
+        "https://www.nytimes.com/2026/08/10/technology/meta-ai-open-source.html"
+      ]
+    },
+    {
+      "decision_id": "phase5-3-investment-value-chain-vs-financial-troubles",
+      "status": "accepted",
+      "event_a_id": "c5b6ac74-dc59-4027-a294-284dd198b6e3",
+      "event_b_id": "87321012-058b-4dc5-ac33-5e85941411f8",
+      "relationship": "keep_separate",
+      "canonical_event_id": null,
+      "confidence": 1.0,
+      "reason": "An investment-strategy article and a separate article about AI financial troubles are not the same occurrence.",
+      "evidence_urls": [
+        "https://www.ai-cio.com/news/artificial-intelligence-moving-up-the-investment-value-chain",
+        "https://blogs.mediapart.fr/pierre-sassier/blog/100826/les-deboires-boursiers-de-lintelligence-artificielle"
+      ]
+    },
+    {
+      "decision_id": "phase5-3-twitch-policy-opt-out",
+      "status": "accepted",
+      "event_a_id": "385639fc-de7a-4287-8078-57df6354f72a",
+      "event_b_id": "3262a06f-5d4b-4330-baf5-783518198298",
+      "relationship": "same_event",
+      "canonical_event_id": "385639fc-de7a-4287-8078-57df6354f72a",
+      "confidence": 1.0,
+      "reason": "Both records describe the same 13 August Twitch/Amazon training-policy disclosure; the opt-out mechanism is a detail of that policy, not a separate event.",
+      "evidence_urls": [
+        "https://www.ouest-france.fr/high-tech/intelligence-artificielle/twitch-va-utiliser-le-contenu-diffuse-par-les-streameurs-pour-entrainer-lia-generative-damazon-23a452c0-9718-11f1-9ee8-a50506a5291a",
+        "https://musically.com/2026/08/13/twitch-discusses-opt-out-system-for-amazon-ai-model-training"
+      ]
+    },
+    {
+      "decision_id": "phase5-3-heilongjiang-vs-xiongan-training-base",
+      "status": "accepted",
+      "event_a_id": "c691c8ee-e765-4b96-91fe-e30826875126",
+      "event_b_id": "b029ce08-70f0-493c-bcc8-c79063f21b84",
+      "relationship": "keep_separate",
+      "canonical_event_id": null,
+      "confidence": 1.0,
+      "reason": "The Heilongjiang education research centre and the Xiong’an training base are different initiatives in different locations.",
+      "evidence_urls": [
+        "https://news.eol.cn/yaowen/202608/t20260814_2765256.shtml",
+        "https://www.hlj.gov.cn/hlj/c107857/202608/c00_31967174.shtml",
+        "https://www.news.cn/20260806/64eb7b52c28041248e8b9c6f26a4c3a0/c.html"
+      ]
+    },
+    {
+      "decision_id": "phase5-3-separate-ai-book-reviews",
+      "status": "accepted",
+      "event_a_id": "6cec6bd1-2853-4647-8105-fe4a53770d4a",
+      "event_b_id": "3d679626-d028-4a28-bf04-d9d0e120ca6e",
+      "relationship": "keep_separate",
+      "canonical_event_id": null,
+      "confidence": 1.0,
+      "reason": "The records review different works and do not report one shared real-world event.",
+      "evidence_urls": [
+        "https://www.counterfire.org/article/the-reverse-centaurs-guide-to-life-after-ai-how-to-think-about-artificial-intelligence-before-its-too-late-book-review",
+        "https://www.lecanardenchaine.fr/technologie-sciences/54571-comment-l-ia-nous-rend-stupides"
+      ]
+    },
+    {
+      "decision_id": "phase5-3-alibaba-ten-billion-financing",
+      "status": "accepted",
+      "event_a_id": "6bcdb799-ab80-4aa1-a837-8efe8d47b29d",
+      "event_b_id": "71a35eba-befc-4511-b281-3dec1350cbe8",
+      "relationship": "same_event",
+      "canonical_event_id": "71a35eba-befc-4511-b281-3dec1350cbe8",
+      "confidence": 1.0,
+      "reason": "All three articles report the same 23 August Alibaba $10 billion Hong Kong fundraising/share-placement plan for AI spending.",
+      "evidence_urls": [
+        "https://www.sudouest.fr/economie/intelligence-artificielle-alibaba-prevoit-une-levee-de-fonds-de-10-milliards-de-dollars-pour-financer-son-plan-mondial-pour-l-ia-30341575.php",
+        "https://www.latribune.fr/article/tech/intelligence-artificielle/91731965461225/alibaba-leve-10-milliards-de-dollars-pour-accelerer-dans-l-intelligence-artificielle",
+        "https://www.boursorama.com/bourse/actualites-amp/alibaba-prevoit-un-placement-d-actions-a-hong-kong-de-10-milliards-de-dollars-afin-de-financer-ses-depenses-en-intelligence-artificielle-82cc7dbf72fa6a1e9383ef0a5ca60882"
+      ]
+    },
+    {
+      "decision_id": "phase5-3-twitch-streamers-lawsuit-follow-on",
+      "status": "accepted",
+      "event_a_id": "6d705e54-1817-41ad-ae2b-a2d06e9cebbf",
+      "event_b_id": "385639fc-de7a-4287-8078-57df6354f72a",
+      "relationship": "follow_on_development",
+      "canonical_event_id": null,
+      "confidence": 1.0,
+      "reason": "The 21 August lawsuit is a new, separately datable legal action by streamers in response to the earlier Twitch/Amazon training policy. It belongs to the same continuing story but remains a distinct event.",
+      "evidence_urls": [
+        "https://www.courthousenews.com/online-streamers-sue-twitch-amazon-over-generative-ai-training",
+        "https://www.ouest-france.fr/high-tech/intelligence-artificielle/twitch-va-utiliser-le-contenu-diffuse-par-les-streameurs-pour-entrainer-lia-generative-damazon-23a452c0-9718-11f1-9ee8-a50506a5291a"
       ]
     }
   ]
