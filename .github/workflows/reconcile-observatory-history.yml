@@ -36,25 +36,72 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+          cache: "pip"
 
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install \
-            "supabase>=2,<3" \
-            "sentence-transformers>=3,<6" \
-            "transformers>=4.45,<5" \
-            "torch>=2.4,<3" \
-            "huggingface-hub>=0.25,<1" \
-            "requests>=2.32,<3"
+          python -m pip install -r requirements.txt
+          # The event-pair checkpoint now declares the Transformers v5
+          # TokenizersBackend class. Keep reconciliation on the same tested
+          # stack as the production resolver instead of allowing a v4 install.
+          python -m pip install "transformers[torch]==5.14.1"
+          python - <<'PY'
+          import sentence_transformers
+          import torch
+          import transformers
+
+          print("transformers", transformers.__version__)
+          print("sentence-transformers", sentence_transformers.__version__)
+          print("torch", torch.__version__)
+          PY
+
+      - name: Verify ModernBERT pair model stack
+        run: |
+          python - <<'PY'
+          import torch
+          from huggingface_hub import HfApi
+          from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+          model_name = "Juanillaberia/articles-pairs-event-detection"
+          revision = HfApi().model_info(model_name).sha or "main"
+
+          tokenizer = AutoTokenizer.from_pretrained(
+              model_name,
+              revision=revision,
+          )
+          model = AutoModelForSequenceClassification.from_pretrained(
+              model_name,
+              revision=revision,
+          )
+          model.eval()
+
+          inputs = tokenizer(
+              text="Government announces an AI policy",
+              text_pair="A new AI policy is announced by the government",
+              return_tensors="pt",
+              truncation=True,
+              max_length=32,
+          )
+          with torch.inference_mode():
+              logits = model(**inputs).logits
+
+          if logits.ndim != 2 or logits.shape[-1] < 2:
+              raise RuntimeError(f"Unexpected pair-model logits shape: {tuple(logits.shape)}")
+
+          print("Tokenizer:", tokenizer.__class__.__name__)
+          print("Pair model:", model.__class__.__name__)
+          print("Revision:", revision)
+          print("Logits shape:", tuple(logits.shape))
+          PY
 
       - name: Build llama.cpp server
         shell: bash
