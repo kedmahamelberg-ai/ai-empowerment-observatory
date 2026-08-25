@@ -1,0 +1,26 @@
+{
+  "schema_version": "aieo_historical_snapshot_v1.0",
+  "snapshot_id": "launch-baseline-2026-08-05_2026-08-12",
+  "snapshot_type": "launch_baseline",
+  "label": "Launch baseline",
+  "period_start": "2026-08-05",
+  "period_end": "2026-08-12",
+  "generated_at": "2026-08-15T07:48:21.189157Z",
+  "articles": 129,
+  "event_records": 124,
+  "extra_coverage": 5,
+  "coverage_index": 1.5504,
+  "event_index": 1.6129,
+  "amplification_gap": -0.0625,
+  "coverage_event_ratio": 1.0403,
+  "audit_status": "human_audited_baseline",
+  "validation_status": "published",
+  "comparable_to_weekly_series": false,
+  "connect_to_previous": false,
+  "source_paths": [
+    "data/history/releases.json",
+    "data/reports/latest.json",
+    "reports/ai-empowerment-pulse-latest.pdf"
+  ],
+  "note": "The launch baseline overlaps the first standardized weekly release on 10-12 August 2026. It is retained as publication history and is not connected to the standardized weekly line."
+}
