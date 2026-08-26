@@ -1,5 +1,5 @@
 {
-  "version": "aieo_discovery_markets_v1.0",
+  "version": "aieo_discovery_markets_v1.1",
   "markets": {
     "CAN": {
       "name": "Canada",
@@ -36,5 +36,23 @@
       "latitude": 39.8283,
       "zoom": 2.25
     }
+  },
+  "selection": {
+    "label": "Five-market pilot",
+    "summary": "AIEO follows five leading AI ecosystems across English, French and Chinese Google News environments. This is a research sample, not a claim that these are the definitive top five AI countries.",
+    "ranking_context": "The 2026 Global AI Index ranks the United States 1st, China 2nd, the United Kingdom 3rd, France 6th and Canada 8th. The five markets were selected for leadership relevance, language coverage and cross-system comparison.",
+    "search_market_note": "A discovery market is the country and language setting used for the Google News search. It does not necessarily identify where the reported development happened.",
+    "sources": [
+      {
+        "name": "Global AI Index 2026 rankings",
+        "url": "https://globalaiindex.org/",
+        "note": "Comparative national AI capability ranking. The five AIEO markets rank within the top eight."
+      },
+      {
+        "name": "Stanford Global AI Vibrancy Tool",
+        "url": "https://hai.stanford.edu/news/global-ai-power-rankings-stanford-hai-tool-ranks-36-countries-ai",
+        "note": "Independent context on national AI ecosystems, research, investment, models and patents."
+      }
+    ]
   }
 }

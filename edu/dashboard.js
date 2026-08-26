@@ -32,6 +32,15 @@ const TOPIC_LABELS = {
   infrastructure_investment: "Infrastructure and investment",
   other: "Other",
 };
+const SOURCE_TYPE_LABELS = {
+  general_news: "newspapers and broadcasters",
+  specialist: "specialist publications",
+  primary_official: "government, university and other official pages",
+  research_policy: "research and policy outlets",
+  regional_local: "local and regional news",
+  independent_newsletter: "independent newsletters",
+  unclassified: "other sources still being categorized",
+};
 
 const dateLong = new Intl.DateTimeFormat("en-GB", {
   day: "numeric",
@@ -58,6 +67,7 @@ let globe = null;
 let selectedMarket = null;
 let evidenceLimit = 6;
 let historyMode = "all";
+let evidenceView = "all";
 
 function escapeHTML(value) {
   return String(value ?? "")
@@ -105,7 +115,7 @@ function plural(value, singular, pluralForm = `${singular}s`) {
 }
 
 function signed(value) {
-  if (value == null || Number.isNaN(Number(value))) return "—";
+  if (value == null || Number.isNaN(Number(value))) return "Not available";
   const number = Number(value);
   return `${number > 0 ? "+" : ""}${number.toFixed(2)}`;
 }
@@ -117,7 +127,7 @@ function percent(value) {
 
 function setText(id, value) {
   const element = document.getElementById(id);
-  if (element) element.textContent = String(value ?? "—");
+  if (element) element.textContent = String(value ?? "Not available");
 }
 
 async function fetchJSON(url, optional = false) {
@@ -150,6 +160,32 @@ function counts() {
   };
 }
 
+function sourceMixCopy() {
+  const strata = currentRelease?.sources?.strata || {};
+  const represented = Object.entries(strata)
+    .filter(([, row]) => Number(row?.articles || 0) > 0)
+    .map(([key]) => SOURCE_TYPE_LABELS[key])
+    .filter(Boolean);
+  const unique = [...new Set(represented)];
+  const mix = unique.length
+    ? unique.join(", ")
+    : "newsrooms, official pages, specialist publications, research and policy outlets";
+  return `A coverage item is an AI-related page returned by AIEO's Google News searches and dated within the weekly period. The source mix includes ${mix}. It is not limited to academic journal articles. A development is one real-world occurrence after pages about the same thing are grouped together. The database stores each development as an event record.`;
+}
+
+function renderMarketSelection(selection) {
+  setText("edu-market-selection-summary", selection?.summary || "AIEO uses a five-market pilot to compare several leading AI ecosystems and news environments.");
+  setText("edu-market-selection-context", selection?.ranking_context || "The market set is a research sample, not a definitive global top-five ranking.");
+  const container = document.getElementById("edu-market-selection-sources");
+  if (!container) return;
+  const rows = Array.isArray(selection?.sources) ? selection.sources : [];
+  container.innerHTML = rows.map((row) => `
+    <a href="${escapeHTML(safeUrl(row.url))}" target="_blank" rel="noopener noreferrer">
+      ${escapeHTML(row.name || "Open external source")}
+    </a>
+  `).join("");
+}
+
 function poolCopy() {
   const pool = currentRelease?.historical_pool || {};
   const start = formatDateTime(pool.starts_at) || "5 August 2026";
@@ -163,6 +199,10 @@ function poolCopy() {
 function renderOpening() {
   const c = counts();
   const period = formatRange(currentRelease.period_start, currentRelease.period_end);
+  const pending = Math.max(0, c.events - c.newDevelopments - c.recurring);
+  const computedExtra = Math.max(0, c.articles - c.events);
+  const extra = c.extra === computedExtra ? c.extra : computedExtra;
+
   setText("week-badge", `Current weekly signal · ${period}`);
   setText("count-articles", c.articles);
   setText("count-new", c.newDevelopments);
@@ -170,13 +210,26 @@ function renderOpening() {
   setText("count-resurfaced", c.resurfaced);
   setText(
     "week-intro",
-    `${c.articles} published ${plural(c.articles, "article")} represented ${c.events} resolved event ${plural(c.events, "record")}. AIEO separates new developments from coverage of things already in memory.${c.possible + c.unclassified ? ` ${c.possible + c.unclassified} ${plural(c.possible + c.unclassified, "record remains", "records remain")} under novelty review.` : ""}`,
+    pending
+      ? `AIEO found ${c.articles} AI-related coverage items and grouped them into ${c.events} developments. ${c.newDevelopments} were new to the disclosed historical pool, ${c.recurring} had been seen before, and ${pending} remained under novelty review.`
+      : `AIEO found ${c.articles} AI-related coverage items and grouped them into ${c.events} developments. ${c.newDevelopments} were new to the disclosed historical pool and ${c.recurring} had been seen before.`,
   );
+  setText(
+    "week-equation-coverage",
+    `${c.articles} coverage items = ${c.events} distinct developments + ${extra} additional ${plural(extra, "report")} about developments already counted.`,
+  );
+  setText(
+    "week-equation-novelty",
+    pending
+      ? `${c.events} developments = ${c.newDevelopments} new to AIEO + ${c.recurring} already in AIEO's history + ${pending} still under novelty review.`
+      : `${c.events} developments = ${c.newDevelopments} new to AIEO + ${c.recurring} already in AIEO's history.`,
+  );
+  setText("week-definition-copy", sourceMixCopy());
   setText(
     "remember-copy",
     c.resurfaced
-      ? `${c.newDevelopments} developments were new to the week’s reality view. ${c.recurring} previously seen developments received new attention, including ${c.resurfaced} that resurfaced after at least four weeks.`
-      : `${c.newDevelopments} developments were new to the week’s reality view, while ${c.recurring} previously seen developments received new coverage. Repetition adds attention, not another development.`,
+      ? `${c.newDevelopments} developments were new to AIEO. ${c.recurring} previously seen developments received new attention, including ${c.resurfaced} that returned after at least four weeks.`
+      : `${c.newDevelopments} developments were new to AIEO, while ${c.recurring} previously seen developments received new coverage. Repetition adds attention, not another development.`,
   );
   setText("pool-copy", poolCopy());
 
@@ -185,11 +238,11 @@ function renderOpening() {
   setText("story-index", signed(currentRelease.lenses?.event?.empowerment_index));
   setText(
     "story-coverage-copy",
-    `${c.extra} ${plural(c.extra, "article was", "articles were")} additional coverage of developments already represented in the week.`,
+    `${extra} ${plural(extra, "coverage item was", "coverage items were")} another report about a development already counted.`,
   );
   setText(
     "story-recurrence-copy",
-    `${c.recurring} prior developments returned to the coverage. ${c.followOn ? `${c.followOn} follow-on ${plural(c.followOn, "development was", "developments were")} kept separate but linked to an existing story.` : "Genuine follow-on actions remain separate developments rather than being collapsed into the original event."}`,
+    `${c.recurring} prior developments returned to the coverage. ${c.followOn ? `${c.followOn} follow-on ${plural(c.followOn, "development was", "developments were")} kept separate and linked to an existing story.` : "Genuine later actions remain separate developments and can be linked to the continuing story."}`,
   );
   setText(
     "story-human-copy",
@@ -239,32 +292,34 @@ function renderMarketCard() {
 
   if (!selectedMarket || !markets[selectedMarket]) {
     card.innerHTML = `
-      <h3>Choose a market</h3>
-      <p>See how much coverage appeared there and which publications were most visible.</p>
+      <h3>Choose a search market</h3>
+      <p>See how much AI-related coverage the market search found and which publications were most visible.</p>
+      <p class="market-caveat">A search market is where AIEO looked for coverage. It is not automatically the location of the reported development.</p>
     `;
     clear.hidden = true;
-    setText("evidence-scope", "The most visible current event records are shown first.");
+    setText("evidence-scope", evidenceScopeCopy());
     return;
   }
 
   const market = markets[selectedMarket];
   const rows = coverageRowsForMarket(selectedMarket);
   const fallback = Number(currentRelease.sources?.discovery_markets?.[selectedMarket] || 0);
-  const articles = rows.length || fallback;
+  const items = rows.length || fallback;
   const ranking = publisherRanking(rows);
   const publications = new Set(rows.map((row) => row.publisher).filter(Boolean)).size;
-  const visible = ranking.slice(0, 3).map(([name, count]) => `${escapeHTML(name)} (${count})`).join(" · ");
+  const visible = ranking.slice(0, 3).map(([name, count]) => `${escapeHTML(name)} (${count})`).join(", ");
   card.innerHTML = `
-    <p class="eyebrow">${escapeHTML(market.name)}</p>
-    <h3>${articles} observed ${plural(articles, "article")}</h3>
+    <p class="eyebrow">${escapeHTML(market.name)} search</p>
+    <h3>${items} AI-related coverage ${plural(items, "item")} found</h3>
     <dl>
-      <div><dt>Publications</dt><dd>${publications || "—"}</dd></div>
-      <div><dt>Share of week</dt><dd>${counts().articles ? Math.round((articles / counts().articles) * 100) : 0}%</dd></div>
+      <div><dt>Publications</dt><dd>${publications || "Not available"}</dd></div>
+      <div><dt>Share of week</dt><dd>${counts().articles ? Math.round((items / counts().articles) * 100) : 0}%</dd></div>
     </dl>
     <p>Most visible: ${visible || "Source detail will appear with the next standardized release."}</p>
+    <p class="market-caveat">These items were found through the ${escapeHTML(market.name)} Google News search. Their stories may concern another country or a global issue.</p>
   `;
   clear.hidden = false;
-  setText("evidence-scope", `Showing source-linked event records discovered through ${market.name}.`);
+  setText("evidence-scope", evidenceScopeCopy());
 }
 
 function selectMarket(iso3) {
@@ -476,14 +531,78 @@ function renderHistoryChart() {
     : "Consecutive Monday–Sunday releases connect automatically; gaps remain visible.";
 }
 
+function articleMarketMap() {
+  return new Map(
+    (currentRelease.units?.coverage_articles || []).map((row) => [
+      String(row.article_id),
+      Array.isArray(row.search_markets) ? row.search_markets : [],
+    ]),
+  );
+}
+
+function eventDiscoveryMarkets(event) {
+  const byArticle = articleMarketMap();
+  const found = new Set();
+  (event.member_article_ids || []).forEach((articleId) => {
+    (byArticle.get(String(articleId)) || []).forEach((iso3) => found.add(iso3));
+  });
+  return [...found].filter((iso3) => markets[iso3]);
+}
+
+function eventMatchesView(event) {
+  const novelty = String(event.novelty_status || "unclassified");
+  if (evidenceView === "new") {
+    return novelty === "first_time" || novelty === "follow_on_development";
+  }
+  if (evidenceView === "recurring") return novelty === "recurring";
+  if (evidenceView === "resurfaced") {
+    return Boolean(event.resurfaced_in_period)
+      || Number(event.replication_lag_days || 0) >= 28;
+  }
+  return true;
+}
+
+function storyLocation(event) {
+  const classification = event.classification || {};
+  if (classification.geographic_scope === "global") return "Global";
+  const codes = Array.isArray(classification.country_iso3s)
+    ? classification.country_iso3s.filter(Boolean)
+    : [];
+  if (codes.length) {
+    return codes.map((code) => markets[code]?.name || code).join(", ");
+  }
+  return "Not established from the available evidence";
+}
+
+function evidenceScopeCopy(total = null) {
+  const marketName = selectedMarket && markets[selectedMarket]
+    ? ` found through the ${markets[selectedMarket].name} search`
+    : "";
+  const viewLabel = evidenceView === "new"
+    ? "new developments"
+    : evidenceView === "recurring"
+      ? "previously seen developments"
+      : evidenceView === "resurfaced"
+        ? "developments that resurfaced after at least four weeks"
+        : "all developments";
+  const countCopy = total == null ? "" : `${total} ${plural(total, "development")} shown: `;
+  return `${countCopy}${viewLabel}${marketName}. Search market and story location are shown separately.`;
+}
+
+function setupEvidenceFilters() {
+  const requested = new URLSearchParams(window.location.search).get("view");
+  evidenceView = ["all", "new", "recurring", "resurfaced"].includes(requested)
+    ? requested
+    : "all";
+  document.querySelectorAll("[data-evidence-view]").forEach((link) => {
+    const active = link.dataset.evidenceView === evidenceView;
+    link.setAttribute("aria-current", active ? "true" : "false");
+  });
+}
+
 function eventMatchesMarket(event) {
   if (!selectedMarket) return true;
-  const marketByArticle = new Map(
-    (currentRelease.units?.coverage_articles || []).map((row) => [String(row.article_id), row.search_markets || []]),
-  );
-  return (event.member_article_ids || []).some((articleId) => (
-    (marketByArticle.get(String(articleId)) || []).includes(selectedMarket)
-  ));
+  return eventDiscoveryMarkets(event).includes(selectedMarket);
 }
 
 function evidenceStatus(classification) {
@@ -497,51 +616,79 @@ function renderEvidence() {
   if (!container || !more) return;
   const events = (currentRelease.evidence || [])
     .filter(eventMatchesMarket)
+    .filter(eventMatchesView)
     .sort((a, b) => Number(b.member_article_count || 0) - Number(a.member_article_count || 0));
   const visible = events.slice(0, evidenceLimit);
+  setText("evidence-scope", evidenceScopeCopy(events.length));
+
+  document.querySelectorAll("[data-evidence-view]").forEach((link) => {
+    link.setAttribute("aria-current", String(link.dataset.evidenceView === evidenceView));
+  });
 
   if (!visible.length) {
-    container.innerHTML = "<p>No source-linked event record matches this market in the current release.</p>";
+    container.innerHTML = "<p>No source-linked development matches this evidence view and search market in the current release.</p>";
     more.hidden = true;
     return;
   }
 
-  container.innerHTML = visible.map((event) => {
+  container.innerHTML = visible.map((event, index) => {
     const classification = event.classification || {};
     const sources = event.sources || [];
+    const discoveryMarkets = eventDiscoveryMarkets(event);
     const novelty = String(event.novelty_status || "unclassified");
     const recurrence = novelty === "recurring"
-      ? '<span class="evidence-pill">Previously seen development</span>'
+      ? '<span class="evidence-pill">Seen before</span>'
       : novelty === "follow_on_development"
         ? '<span class="evidence-pill">New follow-on development</span>'
         : novelty === "possible_historical_match"
           ? '<span class="evidence-pill">Possible historical match</span>'
           : novelty === "first_time"
-            ? '<span class="evidence-pill">First-time in pool</span>'
+            ? '<span class="evidence-pill">New to AIEO</span>'
             : '<span class="evidence-pill">Novelty under review</span>';
     const duplicateNote = event.possible_duplicate_record
-      ? `<p><strong>Resolver note:</strong> ${escapeHTML(event.possible_duplicate_reason || "This record may duplicate another unresolved event record.")}</p>`
+      ? `<p><strong>Resolver note:</strong> ${escapeHTML(event.possible_duplicate_reason || "This record may duplicate another unresolved development.")}</p>`
       : "";
+    const discoveryButtons = discoveryMarkets.length
+      ? discoveryMarkets.map((iso3) => `
+          <button type="button" class="market-evidence-chip" data-globe-market="${escapeHTML(iso3)}">
+            ${escapeHTML(markets[iso3]?.name || iso3)} search
+          </button>
+        `).join("")
+      : '<span class="evidence-pill">Search market not available</span>';
+    const shouldOpen = evidenceView === "new" && events.length === 1 && index === 0;
+
     return `
-      <details class="evidence-card">
+      <details class="evidence-card" ${shouldOpen ? "open" : ""}>
         <summary>
           <div>
-            <h3>${escapeHTML(event.event_title || "Untitled event record")}</h3>
+            <h3>${escapeHTML(event.event_title || "Untitled development")}</h3>
             <div class="evidence-meta">
               <span>${escapeHTML(formatRange(event.event_date, event.event_date))}</span>
-              <span class="evidence-pill">${sources.length} source ${plural(sources.length, "article")}</span>
+              <span class="evidence-pill">${sources.length} source ${plural(sources.length, "item")}</span>
               ${recurrence}
               <span class="evidence-pill">${escapeHTML(evidenceStatus(classification))}</span>
             </div>
           </div>
         </summary>
         <div class="evidence-body">
+          <div class="location-clarity">
+            <div>
+              <strong>Found through AIEO search in</strong>
+              <div class="market-evidence-chips">${discoveryButtons}</div>
+              <small>Click a search market to move the globe. This shows where AIEO found the coverage.</small>
+            </div>
+            <div>
+              <strong>Story location</strong>
+              <p>${escapeHTML(storyLocation(event))}</p>
+              <small>This is what the available evidence says the development concerns.</small>
+            </div>
+          </div>
           ${classification.reasoning ? `<p>${escapeHTML(classification.reasoning)}</p>` : ""}
           ${duplicateNote}
           <div class="source-links">
             ${sources.map((source) => `
               <a href="${escapeHTML(safeUrl(source.url))}" target="_blank" rel="noopener noreferrer">
-                <span><strong>${escapeHTML(source.publisher || "Publication")}</strong> — ${escapeHTML(source.headline || "Open source")}</span>
+                <span><strong>${escapeHTML(source.publisher || "Publication")}</strong>: ${escapeHTML(source.headline || "Open source")}</span>
                 <small>${escapeHTML(source.published_date || "")}</small>
               </a>
             `).join("")}
@@ -550,6 +697,15 @@ function renderEvidence() {
       </details>
     `;
   }).join("");
+
+  container.querySelectorAll("button[data-globe-market]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const iso3 = button.dataset.globeMarket;
+      selectMarket(iso3);
+      globe?.selectMarket(iso3, { notify: false });
+      document.getElementById("explore")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
 
   more.hidden = visible.length >= events.length;
   more.textContent = `Show ${Math.min(6, events.length - visible.length)} more`;
@@ -598,6 +754,7 @@ async function initialiseGlobe() {
 
 async function init() {
   setupTabs();
+  setupEvidenceFilters();
   setupEvidenceMore();
   try {
     const [release, index, countryData] = await Promise.all([
@@ -610,6 +767,7 @@ async function init() {
     markets = countryData.markets || {};
 
     renderOpening();
+    renderMarketSelection(countryData.selection || {});
     renderLenses();
     renderHistoryControls();
     renderHistoryChart();

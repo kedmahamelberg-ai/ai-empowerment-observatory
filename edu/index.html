@@ -38,16 +38,26 @@
   <main id="main-content">
     <section class="week-opening" aria-labelledby="week-title">
       <div class="week-copy">
-        <p id="week-badge" class="eyebrow">Loading the current release…</p>
+        <p id="week-badge" class="eyebrow">Loading the current release...</p>
         <h1 id="week-title">This week,<br>without the noise.</h1>
-        <p id="week-intro" class="lede">Loading the clearest summary of the week…</p>
+        <p id="week-intro" class="lede">Loading the clearest summary of the week...</p>
 
         <div class="week-metrics" aria-label="Current weekly counts">
-          <article><strong id="count-articles">—</strong><span>published articles</span></article>
-          <article><strong id="count-new">—</strong><span>new developments</span></article>
-          <article><strong id="count-recurring">—</strong><span>previously seen developments</span></article>
-          <article><strong id="count-resurfaced">—</strong><span>resurfaced after 4+ weeks</span></article>
+          <a href="?view=all#evidence"><strong id="count-articles">Loading</strong><span>AI-related coverage items</span><small>Open source list</small></a>
+          <a href="?view=new#evidence"><strong id="count-new">Loading</strong><span>new developments</span><small>See what was new</small></a>
+          <a href="?view=recurring#evidence"><strong id="count-recurring">Loading</strong><span>developments seen before</span><small>See repeated attention</small></a>
+          <a href="?view=resurfaced#evidence"><strong id="count-resurfaced">Loading</strong><span>resurfaced after 4+ weeks</span><small>See long-gap returns</small></a>
         </div>
+
+        <div class="week-equations" aria-label="How the weekly counts fit together">
+          <p id="week-equation-coverage">Loading the coverage calculation.</p>
+          <p id="week-equation-novelty">Loading the new and previously seen calculation.</p>
+        </div>
+
+        <details class="week-definition">
+          <summary>What is counted?</summary>
+          <p id="week-definition-copy">Loading the plain-language definitions.</p>
+        </details>
 
         <div class="opening-actions">
           <a class="button primary" href="#explore">Play with the globe →</a>
@@ -57,10 +67,10 @@
 
       <aside class="remember-card">
         <p class="eyebrow">What should I remember?</p>
-        <p id="remember-copy">Loading the weekly takeaway…</p>
+        <p id="remember-copy">Loading the weekly takeaway...</p>
         <details>
           <summary>How “new” was decided</summary>
-          <p id="pool-copy">Loading the historical matching scope…</p>
+          <p id="pool-copy">Loading the historical matching scope...</p>
         </details>
       </aside>
     </section>
@@ -71,7 +81,7 @@
           <p class="eyebrow">Explore</p>
           <h2 id="explore-title">See where this week’s coverage was found</h2>
         </div>
-        <p>Move the globe or choose a market. The map shows discovery coverage—not country empowerment scores.</p>
+        <p>Move the globe or choose a market. The map shows discovery coverage, not country empowerment scores.</p>
       </div>
 
       <div class="explore-grid">
@@ -89,6 +99,12 @@
         <aside class="market-panel">
           <p class="eyebrow">Discovery markets</p>
           <div id="edu-market-buttons" class="market-list"></div>
+          <details class="market-rationale edu-market-rationale">
+            <summary>Why these five markets?</summary>
+            <p id="edu-market-selection-summary">Loading the market selection rationale.</p>
+            <p id="edu-market-selection-context"></p>
+            <div id="edu-market-selection-sources" class="market-source-links"></div>
+          </details>
           <article id="edu-market-card" class="selected-market" aria-live="polite">
             <h3>Choose a market</h3>
             <p>See how much coverage appeared there and which publications were most visible.</p>
@@ -112,8 +128,8 @@
           <span>1</span>
           <div>
             <p class="eyebrow">What appeared?</p>
-            <h3><strong id="story-articles">—</strong> articles</h3>
-            <p id="story-coverage-copy">Loading coverage volume…</p>
+            <h3><strong id="story-articles">Loading</strong> coverage items</h3>
+            <p id="story-coverage-copy">Loading coverage volume...</p>
           </div>
         </article>
         <i aria-hidden="true">→</i>
@@ -121,8 +137,8 @@
           <span>2</span>
           <div>
             <p class="eyebrow">What was genuinely new?</p>
-            <h3><strong id="story-new">—</strong> new developments</h3>
-            <p id="story-recurrence-copy">Loading recurrence dynamics…</p>
+            <h3><strong id="story-new">Loading</strong> new developments</h3>
+            <p id="story-recurrence-copy">Loading recurrence dynamics...</p>
           </div>
         </article>
         <i aria-hidden="true">→</i>
@@ -130,8 +146,8 @@
           <span>3</span>
           <div>
             <p class="eyebrow">What changed for people?</p>
-            <h3><strong id="story-index">—</strong> Event Lens</h3>
-            <p id="story-human-copy">Loading the human-empowerment signal…</p>
+            <h3><strong id="story-index">Loading</strong> Event Lens</h3>
+            <p id="story-human-copy">Loading the human-empowerment signal...</p>
           </div>
         </article>
       </div>
@@ -155,8 +171,8 @@
       <div id="human-panel" class="lens-panel" role="tabpanel" aria-labelledby="human-tab">
         <div class="signal-number">
           <span>Event-lens signal</span>
-          <strong id="human-index">—</strong>
-          <small id="human-denominator">Loading scored evidence…</small>
+          <strong id="human-index">Loading</strong>
+          <small id="human-denominator">Loading scored evidence...</small>
         </div>
         <div id="human-bars" class="bar-list"></div>
       </div>
@@ -174,7 +190,7 @@
           <p class="eyebrow">Publication history</p>
           <h2 id="history-title">Watch attention and developments separate over time</h2>
         </div>
-        <p id="history-explainer">Loading the available history…</p>
+        <p id="history-explainer">Loading the available history...</p>
       </div>
 
       <div id="history-controls" class="history-controls" aria-label="History range" hidden></div>
@@ -200,7 +216,13 @@
           <p class="eyebrow">Source-linked evidence</p>
           <h2 id="evidence-title">Open the developments behind the signal</h2>
         </div>
-        <p id="evidence-scope">The most visible current event records are shown first.</p>
+        <p id="evidence-scope">The most visible current developments are shown first.</p>
+      </div>
+      <div id="evidence-filters" class="evidence-filters" aria-label="Filter developments">
+        <a href="?view=all#evidence" data-evidence-view="all">All developments</a>
+        <a href="?view=new#evidence" data-evidence-view="new">New this week</a>
+        <a href="?view=recurring#evidence" data-evidence-view="recurring">Seen before</a>
+        <a href="?view=resurfaced#evidence" data-evidence-view="resurfaced">Resurfaced</a>
       </div>
       <div id="evidence-list" class="evidence-list"></div>
       <button id="show-more-evidence" class="button outline" type="button" hidden>Show more evidence</button>
