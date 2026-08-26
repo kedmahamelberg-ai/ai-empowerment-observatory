@@ -2,10 +2,10 @@
   "schema_version": "aieo_public_release_v3.0",
   "release_id": "2026-W33",
   "release_type": "weekly",
-  "revision": 3,
+  "revision": 2,
   "period_start": "2026-08-10",
   "period_end": "2026-08-16",
-  "generated_at": "2026-08-26T08:10:44.383437Z",
+  "generated_at": "2026-08-25T21:47:23.700618Z",
   "public_label": "Model-coded, human-governed pilot release",
   "lineage": {
     "collection_run_id": "8383ed52-fea7-45d0-8a60-ff42c0181d8a",
@@ -20,14 +20,11 @@
     "classifier_version": "7C.3"
   },
   "definitions": {
-    "coverage_lens": "Each newly published AI-relevant article in this declared weekly period receives one weight.",
-    "event_lens": "Each effective resolved event represented by those articles receives one weight.",
-    "extra_coverage": "AI-relevant published articles minus effective represented events for the same period.",
-    "new_event_record": "A first-time event or a genuine follow-on occurrence not collapsed into earlier reality.",
-    "recurring_event_record": "A previously observed effective event represented again by newly published coverage.",
-    "resurfaced_event_record": "A recurring event receiving new coverage after at least 28 days without observed coverage.",
-    "rediscovered_article_record": "A previously stored article page returned to the discovery results; it is not counted as a newly published article.",
-    "follow_on_development": "A genuinely new occurrence linked to an earlier event through a continuing story family.",
+    "coverage_lens": "Each AI-relevant article in this declared weekly period receives one weight.",
+    "event_lens": "Each active resolved event record represented by those weekly articles receives one weight.",
+    "extra_coverage": "AI-relevant article records minus represented AI-relevant event records for the same period.",
+    "new_event_record": "An event record whose first_seen_at date falls inside this period.",
+    "recurring_event_record": "An event record first seen before this period and represented again now.",
     "event_record_caveat": "AIEO uses a precision-first resolver. Ambiguous possible duplicates remain separate until governance resolves them."
   },
   "counts": {
@@ -1176,14 +1173,10 @@
       "coverage_claim": "Observed discovery coverage; not a comprehensive census of AI news."
     },
     "event_diagnostics": {
-      "singleton_share": 0.964602,
-      "multi_source_share": 0.035398,
+      "singleton_share": 0.982906,
+      "multi_source_share": 0.017094,
       "possible_duplicate_records": 4,
-      "same_event_recall_validated": false,
-      "longitudinal_event_memory_active": true,
-      "historical_pool_disclosed": true,
-      "longitudinal_reconciliation_status": "success",
-      "registry_snapshot_id": "registry_c18a1ff3c1949eda75ed"
+      "same_event_recall_validated": false
     },
     "denominators": {
       "coverage_total": 121,
@@ -1191,9 +1184,9 @@
       "coverage_scored": 73,
       "coverage_excluded_unclear": 47,
       "coverage_not_ai_relevant": 1,
-      "event_total": 114,
-      "event_ai_relevant": 113,
-      "event_scored": 66,
+      "event_total": 118,
+      "event_ai_relevant": 117,
+      "event_scored": 70,
       "event_excluded_unclear": 47,
       "event_not_ai_relevant": 1
     }
@@ -2207,6 +2200,7 @@
       },
       "effective_event_id": "876698e8-a001-4a36-aab0-285d3eff79ba",
       "original_event_ids": [
+        "1a38f917-f5c1-440b-a436-bd7e93140f21",
         "876698e8-a001-4a36-aab0-285d3eff79ba"
       ],
       "story_family_id": null,
@@ -4813,7 +4807,10 @@
       },
       "effective_event_id": "385639fc-de7a-4287-8078-57df6354f72a",
       "original_event_ids": [
-        "385639fc-de7a-4287-8078-57df6354f72a"
+        "28a92d4d-3ae5-4d45-ac8c-fc46fe2aeb82",
+        "3262a06f-5d4b-4330-baf5-783518198298",
+        "385639fc-de7a-4287-8078-57df6354f72a",
+        "54cc89e6-9356-4f3b-ba1a-5a25f90c415e"
       ],
       "story_family_id": "429ef5f4-f10c-42f3-90f3-dcf98f9968c9",
       "registry_version": "event_registry_v2_longitudinal",
@@ -12639,7 +12636,7 @@
           "audit_selected": true,
           "audit_reason": "stratified quality audit"
         },
-        "original_event_id": "385639fc-de7a-4287-8078-57df6354f72a",
+        "original_event_id": "54cc89e6-9356-4f3b-ba1a-5a25f90c415e",
         "effective_event_id": "385639fc-de7a-4287-8078-57df6354f72a",
         "story_family_id": "429ef5f4-f10c-42f3-90f3-dcf98f9968c9",
         "appearance_type": "first_event_coverage",
@@ -14913,7 +14910,7 @@
           "audit_selected": false,
           "audit_reason": null
         },
-        "original_event_id": "385639fc-de7a-4287-8078-57df6354f72a",
+        "original_event_id": "28a92d4d-3ae5-4d45-ac8c-fc46fe2aeb82",
         "effective_event_id": "385639fc-de7a-4287-8078-57df6354f72a",
         "story_family_id": "429ef5f4-f10c-42f3-90f3-dcf98f9968c9",
         "appearance_type": "first_event_coverage",
@@ -18165,7 +18162,7 @@
           "audit_selected": false,
           "audit_reason": null
         },
-        "original_event_id": "876698e8-a001-4a36-aab0-285d3eff79ba",
+        "original_event_id": "1a38f917-f5c1-440b-a436-bd7e93140f21",
         "effective_event_id": "876698e8-a001-4a36-aab0-285d3eff79ba",
         "story_family_id": null,
         "appearance_type": "same_article_rediscovered",
@@ -18572,7 +18569,7 @@
           "audit_selected": true,
           "audit_reason": "stratified quality audit"
         },
-        "original_event_id": "385639fc-de7a-4287-8078-57df6354f72a",
+        "original_event_id": "3262a06f-5d4b-4330-baf5-783518198298",
         "effective_event_id": "385639fc-de7a-4287-8078-57df6354f72a",
         "story_family_id": "429ef5f4-f10c-42f3-90f3-dcf98f9968c9",
         "appearance_type": "first_event_coverage",
@@ -22512,6 +22509,7 @@
         },
         "effective_event_id": "876698e8-a001-4a36-aab0-285d3eff79ba",
         "original_event_ids": [
+          "1a38f917-f5c1-440b-a436-bd7e93140f21",
           "876698e8-a001-4a36-aab0-285d3eff79ba"
         ],
         "story_family_id": null,
@@ -25210,7 +25208,10 @@
         },
         "effective_event_id": "385639fc-de7a-4287-8078-57df6354f72a",
         "original_event_ids": [
-          "385639fc-de7a-4287-8078-57df6354f72a"
+          "28a92d4d-3ae5-4d45-ac8c-fc46fe2aeb82",
+          "3262a06f-5d4b-4330-baf5-783518198298",
+          "385639fc-de7a-4287-8078-57df6354f72a",
+          "54cc89e6-9356-4f3b-ba1a-5a25f90c415e"
         ],
         "story_family_id": "429ef5f4-f10c-42f3-90f3-dcf98f9968c9",
         "registry_version": "event_registry_v2_longitudinal",
@@ -32064,7 +32065,7 @@
       }
     ]
   },
-  "content_sha256": "aa866b728cabdef470798cb363046814db6294a979a3226183a41a92fe5d0cd7",
+  "content_sha256": "70ff2f29199e86286c1c216b21c1569fb14ec25f88c0efda8cf5f4b03fbdf71d",
   "dynamics": {
     "coverage_episode_count": 120,
     "first_time_event_appearances": 102,
@@ -32235,8 +32236,8 @@
     "completed_at": "2026-08-25T21:47:18.123224+00:00",
     "status": "success"
   },
-  "restated_at": "2026-08-26T08:10:44.383437Z",
-  "revision_reason": "Corrected release definitions and reliability metadata after longitudinal restatement; substantive counts unchanged.",
+  "restated_at": "2026-08-25T21:47:23.700618Z",
+  "revision_reason": "Longitudinal reconciliation changed new-versus-recurring assignments.",
   "revision_history": [
     {
       "revision": 2,
@@ -32268,77 +32269,8 @@
         "replication_lag_count_after": 3
       },
       "reconciliation_run_id": "bd238e15-f4f0-4f34-ab20-b8e5b8d2742d"
-    },
-    {
-      "revision": 3,
-      "changed_at": "2026-08-26T08:10:44.383437Z",
-      "reason": "Corrected release definitions and reliability metadata after longitudinal restatement; substantive counts unchanged.",
-      "change_summary": {
-        "coverage_articles_reassigned": 0,
-        "event_records_before": 113,
-        "event_records_after": 113,
-        "event_record_change": 0,
-        "new_event_records_before": 101,
-        "new_event_records_after": 101,
-        "recurring_event_records_before": 12,
-        "recurring_event_records_after": 12,
-        "follow_on_event_records_after": 0,
-        "possible_historical_match_records_after": 0,
-        "merged_event_ids": [],
-        "effective_event_ids_added": [],
-        "follow_on_event_records_before": 0,
-        "possible_historical_match_records_before": 0,
-        "rediscovered_article_records_before": 10,
-        "rediscovered_article_records_after": 10,
-        "replication_lag_count_before": 3,
-        "replication_lag_count_after": 3,
-        "definitions_changed": true,
-        "reliability_denominators_changed": true,
-        "event_diagnostics_changed": true,
-        "reliability_denominators_before": {
-          "coverage_total": 121,
-          "coverage_ai_relevant": 120,
-          "coverage_scored": 73,
-          "coverage_excluded_unclear": 47,
-          "coverage_not_ai_relevant": 1,
-          "event_total": 118,
-          "event_ai_relevant": 117,
-          "event_scored": 70,
-          "event_excluded_unclear": 47,
-          "event_not_ai_relevant": 1
-        },
-        "reliability_denominators_after": {
-          "coverage_total": 121,
-          "coverage_ai_relevant": 120,
-          "coverage_scored": 73,
-          "coverage_excluded_unclear": 47,
-          "coverage_not_ai_relevant": 1,
-          "event_total": 114,
-          "event_ai_relevant": 113,
-          "event_scored": 66,
-          "event_excluded_unclear": 47,
-          "event_not_ai_relevant": 1
-        },
-        "event_diagnostics_before": {
-          "singleton_share": 0.982906,
-          "multi_source_share": 0.017094,
-          "possible_duplicate_records": 4,
-          "same_event_recall_validated": false
-        },
-        "event_diagnostics_after": {
-          "singleton_share": 0.964602,
-          "multi_source_share": 0.035398,
-          "possible_duplicate_records": 4,
-          "same_event_recall_validated": false,
-          "longitudinal_event_memory_active": true,
-          "historical_pool_disclosed": true,
-          "longitudinal_reconciliation_status": "success",
-          "registry_snapshot_id": "registry_c18a1ff3c1949eda75ed"
-        }
-      },
-      "reconciliation_run_id": "bd238e15-f4f0-4f34-ab20-b8e5b8d2742d"
     }
   ],
-  "previous_revision_path": "/data/releases/weekly/archive/2026-W33/revision-2.json",
-  "restatement_version": "release_restatement_v1.2"
+  "previous_revision_path": "/data/releases/weekly/archive/2026-W33/revision-1.json",
+  "restatement_version": "release_restatement_v1.1"
 }
