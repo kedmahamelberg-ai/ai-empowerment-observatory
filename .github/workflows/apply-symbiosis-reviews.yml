@@ -1,0 +1,43 @@
+name: Apply Symbiosis Human Reviews
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Validate decisions without writing to Supabase"
+        required: true
+        default: true
+        type: boolean
+      strict:
+        description: "Require a complete workbench export and exact matches"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - name: Apply reviewed decisions
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: |
+          args=()
+          if [[ "${{ inputs.dry_run }}" == "true" ]]; then args+=(--dry-run); fi
+          if [[ "${{ inputs.strict }}" == "true" ]]; then args+=(--strict); fi
+          python scripts/apply_symbiosis_reviews.py "${args[@]}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: symbiosis-review-application-${{ github.run_id }}
+          path: review/symbiosis/apply-summary.json
+          retention-days: 30

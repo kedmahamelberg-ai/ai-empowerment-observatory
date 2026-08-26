@@ -1,0 +1,72 @@
+name: Classify Current Human-AI Relationship Patterns
+
+on:
+  workflow_dispatch:
+    inputs:
+      lens:
+        description: "Classify both lenses or one lens only"
+        required: true
+        default: both
+        type: choice
+        options:
+          - both
+          - event
+          - coverage
+      replace:
+        description: "Reclassify units that already have this codebook version"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  classify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install Python dependencies
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pip install "huggingface_hub>=0.34,<2"
+      - name: Install llama.cpp build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential libcurl4-openssl-dev
+      - name: Build llama.cpp server
+        run: |
+          git clone --depth 1 https://github.com/ggml-org/llama.cpp.git /tmp/llama.cpp
+          cmake -S /tmp/llama.cpp -B /tmp/llama.cpp/build \
+            -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=OFF -DLLAMA_CURL=ON
+          cmake --build /tmp/llama.cpp/build --target llama-server -j2
+      - name: Classify current relationship patterns
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          LLAMA_SERVER_BIN: /tmp/llama.cpp/build/bin/llama-server
+        run: |
+          args=(--scope latest --lens "${{ inputs.lens }}")
+          if [[ "${{ inputs.replace }}" == "true" ]]; then args+=(--replace); fi
+          python scripts/classify_symbiosis.py "${args[@]}"
+      - name: Build self-contained review workbench
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: python scripts/build_symbiosis_review_workbench.py --scope latest
+      - name: Upload review workbench
+        uses: actions/upload-artifact@v4
+        with:
+          name: current-symbiosis-review-${{ github.run_id }}
+          path: |
+            review/symbiosis/workbench.html
+            review/symbiosis/workbench-data.json
+            review/symbiosis/latest.json
+          retention-days: 30

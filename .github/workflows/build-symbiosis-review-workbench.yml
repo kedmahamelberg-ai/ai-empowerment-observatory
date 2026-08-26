@@ -1,0 +1,40 @@
+name: Build Symbiosis Review Workbench
+
+on:
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: "Which classifications to include"
+        required: true
+        default: all
+        type: choice
+        options:
+          - all
+          - history
+          - latest
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - name: Build self-contained review workbench
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: python scripts/build_symbiosis_review_workbench.py --scope "${{ inputs.scope }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: symbiosis-review-workbench-${{ github.run_id }}
+          path: |
+            review/symbiosis/workbench.html
+            review/symbiosis/workbench-data.json
+          retention-days: 30

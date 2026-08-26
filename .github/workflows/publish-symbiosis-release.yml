@@ -1,0 +1,50 @@
+name: Build Symbiosis Relationship Lens
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_id:
+        description: "Weekly release ID, or leave blank for current"
+        required: false
+        default: ""
+        type: string
+      require_complete:
+        description: "Fail unless every coverage and event unit has human review"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aieo-symbiosis-public-artifact
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - name: Build versioned public relationship artifact
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: |
+          args=()
+          if [[ -n "${{ inputs.release_id }}" ]]; then args+=(--release-id "${{ inputs.release_id }}"); fi
+          if [[ "${{ inputs.require_complete }}" == "true" ]]; then args+=(--require-complete); fi
+          python scripts/publish_symbiosis_release.py "${args[@]}"
+      - name: Commit relationship artifact
+        run: |
+          bash scripts/commit_generated_files.sh \
+            "Publish reviewed AIEO relationship lens [$(date -u +%Y-%m-%d)]" \
+            main \
+            data/symbiosis
