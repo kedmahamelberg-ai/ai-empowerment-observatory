@@ -1,0 +1,146 @@
+name: Repair Observatory Release Metadata
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Preview the metadata-only revision without writing files"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aieo-release-metadata-repair-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      DRY_RUN: ${{ inputs.dry_run }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install release dependency
+        run: python -m pip install "supabase>=2,<3"
+
+      - name: Validate secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${SUPABASE_URL:-}" || { echo "SUPABASE_URL is missing"; exit 1; }
+          if [[ -z "${SUPABASE_SECRET_KEY:-}" && -z "${SUPABASE_SERVICE_ROLE_KEY:-}" ]]; then
+            echo "SUPABASE_SECRET_KEY or SUPABASE_SERVICE_ROLE_KEY is missing"
+            exit 1
+          fi
+
+      - name: Repair restated release metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(
+            --all
+            --reason
+            "Corrected release definitions and reliability metadata after longitudinal restatement; substantive counts unchanged."
+          )
+          if [[ "${DRY_RUN:-true}" == "true" ]]; then
+            args+=(--dry-run)
+          fi
+          python scripts/restate_release_history.py "${args[@]}"
+
+      - name: Validate repaired public contract
+        if: ${{ env.DRY_RUN != 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          release = json.loads(
+              Path("data/releases/current.json").read_text(encoding="utf-8")
+          )
+          counts = release["counts"]
+          lenses = release["lenses"]
+          reliability = release["reliability"]
+          denominators = reliability["denominators"]
+          diagnostics = reliability["event_diagnostics"]
+          definitions = release["definitions"]
+
+          coverage = lenses["coverage"]
+          event = lenses["event"]
+          expected_denominators = {
+              "coverage_total": coverage["unit_count_total"],
+              "coverage_ai_relevant": coverage["unit_count_ai_relevant"],
+              "coverage_scored": coverage["unit_count_scored"],
+              "coverage_excluded_unclear": coverage["unit_count_excluded_unclear"],
+              "coverage_not_ai_relevant": coverage["unit_count_not_ai_relevant"],
+              "event_total": event["unit_count_total"],
+              "event_ai_relevant": event["unit_count_ai_relevant"],
+              "event_scored": event["unit_count_scored"],
+              "event_excluded_unclear": event["unit_count_excluded_unclear"],
+              "event_not_ai_relevant": event["unit_count_not_ai_relevant"],
+          }
+          if denominators != expected_denominators:
+              raise SystemExit(
+                  f"Reliability denominators are stale: {denominators} != {expected_denominators}"
+              )
+
+          event_ai = int(event["unit_count_ai_relevant"])
+          singleton = round(int(counts["singleton_event_records"]) / event_ai, 6)
+          multi = round(int(counts["multi_source_event_records"]) / event_ai, 6)
+          if diagnostics.get("singleton_share") != singleton:
+              raise SystemExit("singleton_share does not match current event records")
+          if diagnostics.get("multi_source_share") != multi:
+              raise SystemExit("multi_source_share does not match current event records")
+          if not diagnostics.get("longitudinal_event_memory_active"):
+              raise SystemExit("longitudinal_event_memory_active is not disclosed")
+          if not diagnostics.get("historical_pool_disclosed"):
+              raise SystemExit("historical_pool_disclosed is false")
+
+          if "first_seen_at date falls inside" in definitions.get("new_event_record", ""):
+              raise SystemExit("Legacy first_seen_at novelty definition remains")
+          if int(counts["ai_relevant_event_records"]) != int(event["unit_count_ai_relevant"]):
+              raise SystemExit("Top-line and Event Lens counts disagree")
+
+          print(
+              "Validated metadata repair:",
+              release["release_id"],
+              f"revision={release['revision']}",
+              f"event_total={event['unit_count_total']}",
+              f"event_ai={event['unit_count_ai_relevant']}",
+              f"event_scored={event['unit_count_scored']}",
+          )
+          PY
+
+      - name: Commit repaired release metadata
+        if: ${{ env.DRY_RUN != 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/releases
+          if git diff --cached --quiet; then
+            echo "No release metadata changes to commit."
+            exit 0
+          fi
+          git commit -m "Repair Observatory release metadata"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
