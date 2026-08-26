@@ -39,7 +39,7 @@ jobs:
           if not path.exists():
               raise SystemExit("period-index.json was not generated")
           data = json.loads(path.read_text(encoding="utf-8"))
-          if data.get("schema_version") != "aieo_period_index_v1.0":
+          if data.get("schema_version") != "aieo_period_index_v1.1":
               raise SystemExit("Unexpected period-index schema")
           if not data.get("summaries"):
               raise SystemExit("No period summaries were generated")
