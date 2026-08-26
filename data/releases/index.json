@@ -1,18 +1,19 @@
 {
   "schema_version": "aieo_release_index_v3.0",
-  "updated_at": "2026-08-26T08:10:44.383437Z",
-  "release_count": 1,
-  "weekly_release_count": 1,
+  "updated_at": "2026-08-26T13:19:01.967089Z",
+  "release_count": 2,
+  "weekly_release_count": 2,
   "historical_snapshot_count": 1,
-  "publication_snapshot_count": 2,
-  "current_release_id": "2026-W33",
-  "current_revision": 3,
+  "publication_snapshot_count": 3,
+  "current_release_id": "2026-W34",
+  "current_revision": 1,
   "data_current_through": "2026-08-25T21:47:18.123224+00:00",
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
     "considered_through": "2026-08-24T07:09:27.039332+00:00",
     "registry_snapshot_id": "registry_c18a1ff3c1949eda75ed",
-    "all_prior_events_considered": true
+    "all_prior_events_considered": true,
+    "disclosure": "New means new relative to this historical matching pool."
   },
   "revision_archives": {
     "2026-W33": [
@@ -76,6 +77,30 @@
       "amplification_gap": -0.0969,
       "audit_status": "pending",
       "validation_status": "passed"
+    },
+    {
+      "release_id": "2026-W34",
+      "release_type": "weekly",
+      "period_start": "2026-08-17",
+      "period_end": "2026-08-23",
+      "generated_at": "2026-08-26T13:19:01.967089Z",
+      "articles": 131,
+      "event_records": 123,
+      "revision": 1,
+      "new_event_records": 1,
+      "first_time_event_records": 0,
+      "recurring_event_records": 122,
+      "resurfaced_event_records": 0,
+      "follow_on_event_records": 1,
+      "possible_historical_match_event_records": 0,
+      "unclassified_novelty_event_records": 0,
+      "rediscovered_article_records": 128,
+      "extra_coverage": 8,
+      "coverage_index": 0.8439,
+      "event_index": 1.7544,
+      "amplification_gap": -0.9105,
+      "audit_status": "pending",
+      "validation_status": "passed"
     }
   ],
   "display_series": [
@@ -126,28 +151,56 @@
       "label": "Week ending 2026-08-16",
       "comparable_to_weekly_series": true,
       "connect_to_previous": false
+    },
+    {
+      "release_id": "2026-W34",
+      "release_type": "weekly",
+      "period_start": "2026-08-17",
+      "period_end": "2026-08-23",
+      "generated_at": "2026-08-26T13:19:01.967089Z",
+      "articles": 131,
+      "event_records": 123,
+      "revision": 1,
+      "new_event_records": 1,
+      "first_time_event_records": 0,
+      "recurring_event_records": 122,
+      "resurfaced_event_records": 0,
+      "follow_on_event_records": 1,
+      "possible_historical_match_event_records": 0,
+      "unclassified_novelty_event_records": 0,
+      "rediscovered_article_records": 128,
+      "extra_coverage": 8,
+      "coverage_index": 0.8439,
+      "event_index": 1.7544,
+      "amplification_gap": -0.9105,
+      "audit_status": "pending",
+      "validation_status": "passed",
+      "series_kind": "weekly",
+      "label": "Week ending 2026-08-23",
+      "comparable_to_weekly_series": true,
+      "connect_to_previous": true
     }
   ],
   "cumulative_standardized_series": {
-    "distinct_articles": 120,
-    "distinct_event_records": 113,
-    "release_count": 1,
+    "distinct_articles": 251,
+    "distinct_event_records": 236,
+    "release_count": 2,
     "period_start": "2026-08-10",
-    "period_end": "2026-08-16"
+    "period_end": "2026-08-23"
   },
   "cumulative_since_launch": {
-    "distinct_articles": 120,
-    "distinct_event_records": 113,
-    "release_count": 1,
+    "distinct_articles": 251,
+    "distinct_event_records": 236,
+    "release_count": 2,
     "period_start": "2026-08-10",
-    "period_end": "2026-08-16",
+    "period_end": "2026-08-23",
     "scope": "standardized_weekly_releases_only",
     "historical_snapshots_excluded": 1
   },
   "month_to_date": {
     "month": "2026-08",
-    "distinct_articles": 120,
-    "distinct_event_records": 113
+    "distinct_articles": 251,
+    "distinct_event_records": 236
   },
   "comparison_rule": {
     "weekly_series": "Connect only consecutive, non-overlapping Monday-Sunday releases.",
