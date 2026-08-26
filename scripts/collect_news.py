@@ -31,7 +31,7 @@ REVIEW_DIR = DATA_DIR / "review"
 STATUS_PATH = DATA_DIR / "collection_status.json"
 
 SERPAPI_ENDPOINT = "https://serpapi.com/search"
-COLLECTOR_VERSION = "7A.2"
+COLLECTOR_VERSION = "7A.3"
 TRACKING_PARAMS = {
     "utm_source",
     "utm_medium",
@@ -149,6 +149,9 @@ def normalize_item(
         "publisher": source_name(item) or "Unknown source",
         "iso_date": normalize_space(item.get("iso_date")) or None,
         "displayed_date": normalize_space(item.get("date")) or None,
+        "snippet": normalize_space(
+            item.get("snippet") or item.get("description")
+        ) or None,
         "thumbnail": normalize_space(
             item.get("thumbnail_small") or item.get("thumbnail")
         )
@@ -217,6 +220,7 @@ def write_csv(path: Path, records: list[dict[str, Any]]) -> None:
         "publisher",
         "iso_date",
         "displayed_date",
+        "snippet",
         "link",
         "matched_countries",
         "matched_languages",
@@ -238,6 +242,7 @@ def write_csv(path: Path, records: list[dict[str, Any]]) -> None:
                     "publisher": record.get("publisher"),
                     "iso_date": record.get("iso_date"),
                     "displayed_date": record.get("displayed_date"),
+                    "snippet": record.get("snippet"),
                     "link": record.get("link"),
                     "matched_countries": "; ".join(
                         sorted({entry["country"] for entry in searches})

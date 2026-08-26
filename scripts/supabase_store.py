@@ -197,23 +197,38 @@ class SupabaseStore:
 
         article_ids = list(by_article_id)
         existing_first_seen: dict[str, str] = {}
+        existing_source_metadata: dict[str, dict[str, Any]] = {}
         for start in range(0, len(article_ids), 200):
             batch_ids = article_ids[start : start + 200]
             response = (
                 self.client.table("articles")
-                .select("article_id,first_seen_at")
+                .select("article_id,first_seen_at,source_metadata")
                 .in_("article_id", batch_ids)
                 .execute()
             )
             for row in getattr(response, "data", None) or []:
-                existing_first_seen[str(row["article_id"])] = str(
-                    row["first_seen_at"]
+                article_key = str(row["article_id"])
+                existing_first_seen[article_key] = str(row["first_seen_at"])
+                metadata = row.get("source_metadata")
+                existing_source_metadata[article_key] = (
+                    dict(metadata) if isinstance(metadata, dict) else {}
                 )
 
         article_rows: list[dict[str, Any]] = []
         observation_rows: list[dict[str, Any]] = []
 
         for article_id, record in by_article_id.items():
+            source_metadata = dict(existing_source_metadata.get(article_id, {}))
+            observed_metadata = {
+                "thumbnail": record.get("thumbnail"),
+                "result_type": record.get("result_type"),
+                "story_token": record.get("story_token"),
+                "snippet": record.get("snippet"),
+            }
+            source_metadata.update(
+                {key: value for key, value in observed_metadata.items() if value is not None}
+            )
+
             article_rows.append(
                 {
                     "article_id": article_id,
@@ -227,11 +242,7 @@ class SupabaseStore:
                         article_id, observed_at
                     ),
                     "last_seen_at": observed_at,
-                    "source_metadata": {
-                        "thumbnail": record.get("thumbnail"),
-                        "result_type": record.get("result_type"),
-                        "story_token": record.get("story_token"),
-                    },
+                    "source_metadata": source_metadata,
                     "updated_at": observed_at,
                 }
             )

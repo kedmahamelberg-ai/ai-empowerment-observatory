@@ -1,0 +1,849 @@
+#!/usr/bin/env python3
+"""Classify weekly AIEO coverage and developments with a two-sided symbiosis lens.
+
+The unit of interpretation is release-specific:
+
+- Coverage Lens: one published page represented in a weekly release.
+- Event Lens: one resolved development as represented by the source evidence in
+  that same weekly release.
+
+This matters longitudinally. A stable event can receive different framing in a
+later week, so Event Lens unit keys include the release ID. Every model result is
+written with review_status=pending and cannot become a reviewed public signal
+until a human explicitly accepts or corrects it.
+
+Scopes:
+- latest: the current weekly release JSON;
+- history: the next unclassified units across all standardized weekly releases.
+
+The classifier describes source representations. It does not claim objective
+system performance, consciousness, intentions, or biological fitness.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import subprocess
+import sys
+import time
+from collections import defaultdict
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+import requests
+from huggingface_hub import HfApi
+from supabase import Client, create_client
+
+from symbiosis_common import (
+    CLASSIFIER_VERSION,
+    CODEBOOK_VERSION,
+    EVIDENCE_POLICY_VERSION,
+    validate_model_payload,
+)
+
+ROOT = Path(__file__).resolve().parents[1]
+RELEASES_DIR = ROOT / "data" / "releases"
+OUTPUT_PATH = ROOT / "review" / "symbiosis" / "latest.json"
+
+QWEN_REPO = os.environ.get("SYMBIOSIS_QWEN_REPO", "Qwen/Qwen3-4B-GGUF")
+QWEN_QUANT = os.environ.get("SYMBIOSIS_QWEN_QUANT", "Q4_K_M")
+LLAMA_SERVER_BIN = os.environ.get(
+    "LLAMA_SERVER_BIN",
+    "/tmp/llama.cpp/build/bin/llama-server",
+)
+SERVER_URL = "http://127.0.0.1:8080/v1/chat/completions"
+HEALTH_URL = "http://127.0.0.1:8080/health"
+TRANSLATION_PROFILE = "validated_language_routing_v3"
+
+
+class SymbiosisClassificationError(RuntimeError):
+    pass
+
+
+def utc_now() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+def iso_z(value: datetime) -> str:
+    return value.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
+
+
+def required_env(name: str) -> str:
+    value = str(os.environ.get(name) or "").strip()
+    if not value:
+        raise SymbiosisClassificationError(f"{name} is missing.")
+    return value
+
+
+def first_row(response: Any, context: str) -> dict[str, Any]:
+    data = getattr(response, "data", None)
+    if isinstance(data, list) and data:
+        return data[0]
+    if isinstance(data, dict) and data:
+        return data
+    raise SymbiosisClassificationError(f"Supabase returned no row while {context}.")
+
+
+def read_json(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        raise SymbiosisClassificationError(f"Missing release JSON: {path}")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise SymbiosisClassificationError(f"Release file is not a JSON object: {path}")
+    return payload
+
+
+def current_release_path(release_id: str = "") -> Path:
+    if release_id:
+        return RELEASES_DIR / "weekly" / f"{release_id}.json"
+    return RELEASES_DIR / "current.json"
+
+
+def historical_release_paths(release_id: str = "") -> list[Path]:
+    roots = [RELEASES_DIR / "baselines", RELEASES_DIR / "weekly"]
+    if release_id:
+        for root in roots:
+            path = root / f"{release_id}.json"
+            if path.exists():
+                return [path]
+        return []
+    paths = [path for root in roots for path in root.glob("*.json") if path.is_file()]
+    return sorted(paths, key=lambda path: (path.parent.name, path.stem))
+
+
+def selected_releases(scope: str, release_id: str = "") -> list[dict[str, Any]]:
+    paths = [current_release_path(release_id)] if scope == "latest" else historical_release_paths(release_id)
+    releases: list[dict[str, Any]] = []
+    for path in paths:
+        payload = read_json(path)
+        # Current publication is weekly. Historical review also includes the
+        # launch baseline because it contains public source evidence that should
+        # not remain outside the human-review gate.
+        if scope == "latest" and payload.get("release_type") != "weekly":
+            continue
+        if not payload.get("release_id"):
+            raise SymbiosisClassificationError(f"Release lacks release_id: {path}")
+        payload["_source_path"] = str(path.relative_to(ROOT))
+        releases.append(payload)
+    if not releases:
+        raise SymbiosisClassificationError("No standardized weekly releases were selected.")
+    return releases
+
+
+def paged_table(
+    client: Client,
+    table: str,
+    select: str,
+    *,
+    page_size: int = 1000,
+    apply: Any | None = None,
+) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    start = 0
+    while True:
+        query = client.table(table).select(select)
+        if apply is not None:
+            query = apply(query)
+        response = query.range(start, start + page_size - 1).execute()
+        batch = getattr(response, "data", None) or []
+        rows.extend(batch)
+        if len(batch) < page_size:
+            break
+        start += page_size
+    return rows
+
+
+def load_translation_map(client: Client, article_ids: list[str]) -> dict[str, dict[str, Any]]:
+    result: dict[str, dict[str, Any]] = {}
+    for start in range(0, len(article_ids), 150):
+        response = (
+            client.table("article_translations")
+            .select("article_id,source_language_iso2,translated_headline,created_at")
+            .eq("translation_profile", TRANSLATION_PROFILE)
+            .in_("article_id", article_ids[start:start + 150])
+            .order("created_at", desc=True)
+            .execute()
+        )
+        for row in getattr(response, "data", None) or []:
+            result.setdefault(str(row["article_id"]), row)
+    return result
+
+
+def parse_metadata(value: Any) -> dict[str, Any]:
+    return dict(value) if isinstance(value, dict) else {}
+
+
+def evidence_from_metadata(metadata: dict[str, Any]) -> tuple[str, str]:
+    for key, basis in (
+        ("human_evidence_summary", "article_summary"),
+        ("article_summary", "article_summary"),
+        ("summary", "article_summary"),
+        ("snippet", "headline_and_snippet"),
+        ("description", "headline_and_snippet"),
+        ("source_snippet", "headline_and_snippet"),
+    ):
+        value = metadata.get(key)
+        if value and str(value).strip():
+            return str(value).strip(), basis
+    return "", "headline_only"
+
+
+def article_ids_from_release(release: dict[str, Any]) -> list[str]:
+    found: set[str] = set()
+    for row in release.get("units", {}).get("coverage_articles", []) or []:
+        if isinstance(row, dict) and row.get("article_id"):
+            found.add(str(row["article_id"]))
+    for event in release.get("evidence") or []:
+        if not isinstance(event, dict):
+            continue
+        for article_id in event.get("member_article_ids") or []:
+            if article_id:
+                found.add(str(article_id))
+        for source in event.get("sources") or []:
+            if isinstance(source, dict) and source.get("article_id"):
+                found.add(str(source["article_id"]))
+    return sorted(found)
+
+
+def load_observation_meta(client: Client, article_ids: list[str]) -> dict[str, dict[str, Any]]:
+    meta: dict[str, dict[str, Any]] = defaultdict(
+        lambda: {"search_markets": set(), "search_languages": set(), "min_rank": 9999}
+    )
+    for start in range(0, len(article_ids), 150):
+        response = (
+            client.table("article_observations")
+            .select("article_id,search_country_iso3,search_language,search_rank")
+            .in_("article_id", article_ids[start:start + 150])
+            .execute()
+        )
+        for row in getattr(response, "data", None) or []:
+            article_id = str(row["article_id"])
+            if row.get("search_country_iso3"):
+                meta[article_id]["search_markets"].add(str(row["search_country_iso3"]))
+            if row.get("search_language"):
+                meta[article_id]["search_languages"].add(str(row["search_language"]))
+            if row.get("search_rank") is not None:
+                meta[article_id]["min_rank"] = min(meta[article_id]["min_rank"], int(row["search_rank"]))
+    return meta
+
+
+def load_articles(client: Client, article_ids: list[str]) -> dict[str, dict[str, Any]]:
+    if not article_ids:
+        return {}
+    rows: list[dict[str, Any]] = []
+    for start in range(0, len(article_ids), 150):
+        response = (
+            client.table("articles")
+            .select(
+                "article_id,canonical_url,headline,publisher,published_at,displayed_date,"
+                "language,first_seen_at,last_seen_at,source_metadata"
+            )
+            .in_("article_id", article_ids[start:start + 150])
+            .execute()
+        )
+        rows.extend(getattr(response, "data", None) or [])
+    translations = load_translation_map(client, article_ids)
+    observation_meta = load_observation_meta(client, article_ids)
+    result: dict[str, dict[str, Any]] = {}
+    for row in rows:
+        article_id = str(row["article_id"])
+        original = str(row.get("headline") or "").strip()
+        if not original:
+            continue
+        translation = translations.get(article_id) or {}
+        metadata = parse_metadata(row.get("source_metadata"))
+        evidence_text, content_basis = evidence_from_metadata(metadata)
+        result[article_id] = {
+            "article_id": article_id,
+            "headline_original": original,
+            "headline_english": str(translation.get("translated_headline") or original).strip(),
+            "publisher": str(row.get("publisher") or "Unknown source"),
+            "url": str(row.get("canonical_url") or ""),
+            "date": str(row.get("published_at") or row.get("first_seen_at") or ""),
+            "source_language": str(translation.get("source_language_iso2") or row.get("language") or "en"),
+            "evidence_text": evidence_text,
+            "content_basis": content_basis,
+            "search_markets": sorted(observation_meta[article_id]["search_markets"]),
+            "search_languages": sorted(observation_meta[article_id]["search_languages"]),
+            "min_rank": observation_meta[article_id]["min_rank"],
+        }
+    return result
+
+
+def fallback_article(source: dict[str, Any]) -> dict[str, Any] | None:
+    article_id = str(source.get("article_id") or "").strip()
+    headline = str(source.get("headline") or "").strip()
+    if not article_id or not headline:
+        return None
+    return {
+        "article_id": article_id,
+        "headline_original": headline,
+        "headline_english": headline,
+        "publisher": str(source.get("publisher") or "Unknown source"),
+        "url": str(source.get("url") or ""),
+        "date": str(source.get("published_date") or ""),
+        "source_language": str(source.get("source_language") or "en"),
+        "evidence_text": "",
+        "content_basis": "headline_only",
+        "search_markets": [],
+        "search_languages": [],
+        "min_rank": 9999,
+    }
+
+
+def release_units(
+    client: Client,
+    release: dict[str, Any],
+    *,
+    lens: str,
+) -> list[tuple[str, dict[str, Any]]]:
+    release_id = str(release["release_id"])
+    period_start = str(release.get("period_start") or "")
+    period_end = str(release.get("period_end") or "")
+    article_ids = article_ids_from_release(release)
+    article_map = load_articles(client, article_ids)
+
+    # Fill a missing private article row from the deliberately public release
+    # evidence so that the review queue remains complete and auditable.
+    for event in release.get("evidence") or []:
+        if not isinstance(event, dict):
+            continue
+        for source in event.get("sources") or []:
+            if not isinstance(source, dict):
+                continue
+            article_id = str(source.get("article_id") or "")
+            if article_id and article_id not in article_map:
+                fallback = fallback_article(source)
+                if fallback:
+                    article_map[article_id] = fallback
+
+    units: list[tuple[str, dict[str, Any]]] = []
+    if lens in {"both", "coverage"}:
+        included_ids: set[str] = set()
+        coverage_rows = release.get("units", {}).get("coverage_articles", []) or []
+        for row in coverage_rows:
+            if not isinstance(row, dict) or not row.get("article_id"):
+                continue
+            if row.get("classification", {}).get("ai_relevant") is False:
+                continue
+            included_ids.add(str(row["article_id"]))
+        if not coverage_rows:
+            included_ids.update(article_map)
+        for article_id in sorted(included_ids):
+            article = article_map.get(article_id)
+            if not article:
+                continue
+            units.append(
+                (
+                    "coverage",
+                    {
+                        **article,
+                        "unit_key": f"coverage:{release_id}:{article_id}",
+                        "release_id": release_id,
+                        "period_start": period_start,
+                        "period_end": period_end,
+                    },
+                )
+            )
+
+    if lens in {"both", "event"}:
+        for event in release.get("evidence") or []:
+            if not isinstance(event, dict):
+                continue
+            if event.get("classification", {}).get("ai_relevant") is False:
+                continue
+            event_id = str(event.get("effective_event_id") or event.get("event_id") or "").strip()
+            if not event_id:
+                continue
+            member_ids = [str(value) for value in (event.get("member_article_ids") or []) if value]
+            if not member_ids:
+                member_ids = [
+                    str(source.get("article_id"))
+                    for source in (event.get("sources") or [])
+                    if isinstance(source, dict) and source.get("article_id")
+                ]
+            members = [article_map[value] for value in member_ids if value in article_map]
+            if not members:
+                continue
+            event_summary = str(event.get("event_summary") or "").strip()
+            content_basis = "multiple_sources" if len(members) > 1 else members[0]["content_basis"]
+            if event_summary and content_basis == "headline_only":
+                content_basis = "article_summary"
+            units.append(
+                (
+                    "event",
+                    {
+                        "unit_key": f"event:{release_id}:{event_id}",
+                        "release_id": release_id,
+                        "period_start": period_start,
+                        "period_end": period_end,
+                        "event_id": event_id,
+                        "event_title": str(event.get("event_title") or "Untitled development"),
+                        "event_summary": event_summary,
+                        "event_date": str(event.get("event_date") or period_end),
+                        "content_basis": content_basis,
+                        "member_articles": members,
+                    },
+                )
+            )
+    return units
+
+
+def successful_existing_unit_keys(client: Client) -> set[str]:
+    rows = paged_table(
+        client,
+        "symbiosis_classifications",
+        "unit_key,codebook_version,symbiosis_run_id,symbiosis_classification_runs!inner(status)",
+        apply=lambda query: (
+            query.eq("codebook_version", CODEBOOK_VERSION)
+            .eq("symbiosis_classification_runs.status", "success")
+        ),
+    )
+    return {str(row["unit_key"]) for row in rows if row.get("unit_key")}
+
+
+def start_run(
+    client: Client,
+    *,
+    scope: str,
+    target_release_id: str | None,
+    collection_run_id: str | None,
+    empowerment_run_id: str | None,
+    model_revision: str,
+) -> tuple[str, str]:
+    now = utc_now()
+    run_key = now.strftime("symbiosis_%Y%m%dT%H%M%SZ")
+    response = (
+        client.table("symbiosis_classification_runs")
+        .insert(
+            {
+                "run_key": run_key,
+                "scope": scope,
+                "target_release_id": target_release_id,
+                "collection_run_id": collection_run_id,
+                "empowerment_classification_run_id": empowerment_run_id,
+                "started_at": iso_z(now),
+                "status": "running",
+                "classifier_version": CLASSIFIER_VERSION,
+                "codebook_version": CODEBOOK_VERSION,
+                "evidence_policy_version": EVIDENCE_POLICY_VERSION,
+                "model_name": QWEN_REPO,
+                "model_revision": model_revision,
+                "notes": "Release-specific model proposals. Every row requires explicit human review.",
+            }
+        )
+        .select("symbiosis_run_id")
+        .execute()
+    )
+    return str(first_row(response, "starting symbiosis run")["symbiosis_run_id"]), run_key
+
+
+def finish_run(client: Client, run_id: str, *, status: str, rows: list[dict[str, Any]]) -> None:
+    configurations = [str(row["model_configuration"]) for row in rows]
+    complete = {"mutualism", "ai_benefiting_parasitism", "human_benefiting_parasitism", "competition"}
+    partial = {"human_enabling_only", "human_constraining_only", "ai_enabling_only", "ai_constraining_only"}
+    payload = {
+        "completed_at": iso_z(utc_now()),
+        "status": status,
+        "coverage_unit_count": sum(1 for row in rows if row["lens"] == "coverage"),
+        "event_unit_count": sum(1 for row in rows if row["lens"] == "event"),
+        "complete_configuration_count": sum(value in complete for value in configurations),
+        "partial_signal_count": sum(value in partial for value in configurations),
+        "no_clear_signal_count": configurations.count("no_clear_relational_signal"),
+        "insufficient_evidence_count": configurations.count("insufficient_evidence"),
+        "review_required_count": len(rows),
+    }
+    client.table("symbiosis_classification_runs").update(payload).eq("symbiosis_run_id", run_id).execute()
+
+
+def start_server() -> tuple[subprocess.Popen[Any], Any]:
+    log_path = Path("/tmp/aieo-symbiosis-qwen.log")
+    handle = log_path.open("w", encoding="utf-8")
+    process = subprocess.Popen(
+        [
+            LLAMA_SERVER_BIN,
+            "-hf",
+            f"{QWEN_REPO}:{QWEN_QUANT}",
+            "--host",
+            "127.0.0.1",
+            "--port",
+            "8080",
+            "-c",
+            "12288",
+            "-np",
+            "1",
+            "--jinja",
+            "-ngl",
+            "0",
+        ],
+        stdout=handle,
+        stderr=subprocess.STDOUT,
+    )
+    deadline = time.time() + 480
+    while time.time() < deadline:
+        if process.poll() is not None:
+            handle.flush()
+            try:
+                print(log_path.read_text(encoding="utf-8")[-12000:], file=sys.stderr)
+            except Exception:
+                pass
+            raise SymbiosisClassificationError("Qwen server exited during startup.")
+        try:
+            response = requests.get(HEALTH_URL, timeout=3)
+            if response.ok:
+                return process, handle
+        except requests.RequestException:
+            pass
+        time.sleep(2)
+    raise SymbiosisClassificationError("Qwen server did not become healthy.")
+
+
+def stop_server(process: subprocess.Popen[Any] | None, handle: Any | None) -> None:
+    if process is not None and process.poll() is None:
+        process.terminate()
+        try:
+            process.wait(timeout=20)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait(timeout=10)
+    if handle is not None:
+        handle.close()
+
+
+def extract_json(text: str) -> dict[str, Any]:
+    raw = text.strip()
+    if raw.startswith("```"):
+        raw = raw.strip("`")
+        if raw.startswith("json"):
+            raw = raw[4:].strip()
+    try:
+        payload = json.loads(raw)
+        if isinstance(payload, dict):
+            return payload
+    except json.JSONDecodeError:
+        pass
+    start = raw.find("{")
+    end = raw.rfind("}")
+    if start >= 0 and end > start:
+        payload = json.loads(raw[start:end + 1])
+        if isinstance(payload, dict):
+            return payload
+    raise SymbiosisClassificationError("Model response did not contain a JSON object.")
+
+
+def classifier_prompt(*, lens: str, evidence: str, content_basis: str) -> str:
+    lens_note = (
+        "COVERAGE LENS: classify how this one published page represents the relationship."
+        if lens == "coverage"
+        else "EVENT LENS: classify the resolved development from the evidence represented in this weekly release. Do not copy the Coverage Lens label automatically."
+    )
+    return f"""
+/no_think
+
+You are a conservative research coder for the AI Empowerment Observatory.
+Classify how the supplied source evidence represents the relation between
+people and the AI system, operator, or ecosystem side. This is a discourse
+classification, not an objective claim about system performance, consciousness,
+intentions, or biological fitness.
+
+{lens_note}
+
+Code two dimensions independently.
+
+HUMAN EXPERIENCE TYPE
+- extension: people project or exercise an existing capacity through AI or through a response to AI
+- expansion: people gain a new capability, resource, access, protection, or opportunity
+- restriction: autonomy, control, ownership, choice, consent, or participation is limited
+- reduction: an existing skill, capacity, livelihood, protection, or outcome is diminished
+- neutral: enough evidence is available, but no human enabling or constraining signal is described
+- unclear: a human-side relation is suggested, but its direction cannot be supported
+
+AI EXPRESSIVE ROLE
+- ai_extension: the AI system is represented as functioning, producing useful output, or extending its operative reach
+- ai_expansion: the AI system or operator side gains data, learning, adoption, resources, market reach, or capability
+- ai_restriction: the AI system or operator is blocked, limited, contained, appealed, regulated, or otherwise constrained
+- ai_reduction: the AI system is represented as degraded, failing, hallucinating, losing capability, or being withdrawn
+- neutral: enough evidence is available, but no AI-side enabling or constraining signal is described
+- unclear: an AI-side relation is suggested, but its direction cannot be supported
+
+EVIDENCE STATUS
+- sufficient: the evidence supports both selected component labels
+- partial: the evidence supports one side while the other side is neutral
+- insufficient: the available headline or text cannot support a defensible relationship judgement
+
+Important rules
+1. Do not force every AI story into mutualism, parasitism, or competition.
+2. Investment, a model launch, or an institutional announcement is not itself a human-AI relationship signal.
+3. Distinguish no clear relational signal from insufficient evidence. Use neutral when enough text shows no relation. Use unclear or insufficient when the evidence is too thin.
+4. Allegations remain allegations. A lawsuit or complaint is a real human action, but it does not prove liability or a court outcome.
+5. When a source reports that human work, data, likeness, or creative output feeds AI training without consent, control, or compensation, human restriction or reduction and AI expansion may be supported.
+6. For a lawsuit event, the filing itself may show human extension or expansion while the AI side remains neutral unless the filing has already constrained the system or operator.
+7. Do not use the search market as story location.
+8. Return only one JSON object.
+
+Required keys:
+ai_relevant, evidence_status, relational_signal, human_experience_type,
+ai_expressive_role, human_reasoning, ai_reasoning, summary, confidence,
+topic, geographic_scope, country_iso3s.
+
+Allowed relational_signal values: complete, human_only, ai_only, none, unclear.
+Allowed geographic_scope values: country, multi_country, global, unclear.
+Use three-letter ISO country codes only when directly supported by the evidence.
+
+Content basis: {content_basis}
+
+EVIDENCE
+{evidence}
+""".strip()
+
+
+def call_classifier(*, lens: str, evidence: str, content_basis: str) -> dict[str, Any]:
+    prompt = classifier_prompt(lens=lens, evidence=evidence, content_basis=content_basis)
+    modes = [
+        ("json_object", {"response_format": {"type": "json_object"}}, 0.1),
+        ("prompt_only", {}, 0.1),
+        ("retry", {}, 0.4),
+    ]
+    last_error: Exception | None = None
+    for index, (name, extra, temperature) in enumerate(modes, start=1):
+        try:
+            response = requests.post(
+                SERVER_URL,
+                json={
+                    "model": f"{QWEN_REPO}:{QWEN_QUANT}",
+                    "messages": [
+                        {
+                            "role": "system",
+                            "content": "Return only valid JSON. False certainty is more harmful than an insufficient-evidence label.",
+                        },
+                        {"role": "user", "content": prompt},
+                    ],
+                    "temperature": temperature,
+                    "top_p": 0.8,
+                    "max_tokens": 900,
+                    "stream": False,
+                    **extra,
+                },
+                timeout=300,
+            )
+            response.raise_for_status()
+            text = str(response.json()["choices"][0]["message"]["content"])
+            raw = extract_json(text)
+            normalized = validate_model_payload(raw)
+            normalized["raw_output"] = raw
+            normalized["structured_output_mode"] = name
+            return normalized
+        except Exception as exc:
+            last_error = exc
+            print(f"Warning: symbiosis request {index}/{len(modes)} failed: {exc}", file=sys.stderr)
+            if index < len(modes):
+                time.sleep(2)
+    raise SymbiosisClassificationError(f"Model failed after all modes: {last_error}")
+
+
+def article_evidence(article: dict[str, Any]) -> str:
+    lines = [
+        f"Publisher: {article['publisher']}",
+        f"Publication date: {article['date']}",
+        f"Headline: {article['headline_english']}",
+    ]
+    if article.get("evidence_text"):
+        lines.append(f"Available source summary or snippet: {article['evidence_text']}")
+    else:
+        lines.append("No source summary or snippet is stored. Classify cautiously from the headline only.")
+    return "\n".join(lines)
+
+
+def event_evidence(event: dict[str, Any]) -> str:
+    lines = [
+        f"Development title: {event['event_title']}",
+        f"Development date: {event['event_date']}",
+    ]
+    if event.get("event_summary"):
+        lines.append(f"Stored development summary: {event['event_summary']}")
+    lines.append("Source evidence represented in this weekly release:")
+    for article in event["member_articles"]:
+        line = f"- {article['publisher']}: {article['headline_english']} ({article['date']})"
+        if article.get("evidence_text"):
+            line += f" | {article['evidence_text']}"
+        lines.append(line)
+    return "\n".join(lines)
+
+
+def insert_result(
+    client: Client,
+    *,
+    run_id: str,
+    lens: str,
+    unit: dict[str, Any],
+    result: dict[str, Any],
+) -> dict[str, Any]:
+    payload = {
+        "symbiosis_run_id": run_id,
+        "codebook_version": CODEBOOK_VERSION,
+        "lens": lens,
+        "unit_key": unit["unit_key"],
+        "release_id": unit["release_id"],
+        "period_start": unit["period_start"],
+        "period_end": unit["period_end"],
+        "article_id": unit.get("article_id") if lens == "coverage" else None,
+        "event_id": unit.get("event_id") if lens == "event" else None,
+        "ai_relevant": result["ai_relevant"],
+        "content_basis": unit["content_basis"],
+        "evidence_status": result["evidence_status"],
+        "relational_signal": result["relational_signal"],
+        "model_human_experience_type": result["human_experience_type"],
+        "model_ai_expressive_role": result["ai_expressive_role"],
+        "model_human_direction": result["human_direction"],
+        "model_ai_direction": result["ai_direction"],
+        "model_configuration": result["configuration"],
+        "model_plain_label": result["plain_label"],
+        "model_human_reasoning": result["human_reasoning"],
+        "model_ai_reasoning": result["ai_reasoning"],
+        "model_summary": result["summary"],
+        "model_confidence": result["confidence"],
+        "topic": result["topic"],
+        "geographic_scope": result["geographic_scope"],
+        "country_iso3s": result["country_iso3s"],
+        "raw_output": result["raw_output"],
+        "review_status": "pending",
+        "updated_at": iso_z(utc_now()),
+    }
+    response = client.table("symbiosis_classifications").insert(payload).select("*").execute()
+    return first_row(response, f"writing {lens} classification")
+
+
+def write_output(payload: dict[str, Any]) -> None:
+    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    temporary = OUTPUT_PATH.with_suffix(".json.tmp")
+    temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    temporary.replace(OUTPUT_PATH)
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--scope", choices=["latest", "history"], default="latest")
+    parser.add_argument("--lens", choices=["both", "coverage", "event"], default="both")
+    parser.add_argument("--release-id", default="", help="Optional weekly release ID")
+    parser.add_argument("--limit", type=int, default=0, help="Maximum units in this batch; 0 means all selected units")
+    parser.add_argument("--replace", action="store_true", help="Reclassify release-specific units already coded under this codebook")
+    return parser.parse_args()
+
+
+def main() -> int:
+    args = parse_args()
+    releases = selected_releases(args.scope, args.release_id)
+    client: Client = create_client(required_env("SUPABASE_URL"), required_env("SUPABASE_SECRET_KEY"))
+
+    units: list[tuple[str, dict[str, Any]]] = []
+    for release in releases:
+        units.extend(release_units(client, release, lens=args.lens))
+
+    if not args.replace:
+        existing = successful_existing_unit_keys(client)
+        units = [(lens, unit) for lens, unit in units if unit["unit_key"] not in existing]
+
+    units.sort(key=lambda item: item[1]["unit_key"])
+    if args.limit > 0:
+        units = units[:args.limit]
+
+    if not units:
+        payload = {
+            "status": "nothing_to_classify",
+            "scope": args.scope,
+            "selected_release_ids": [str(release["release_id"]) for release in releases],
+            "codebook_version": CODEBOOK_VERSION,
+            "remaining_note": "All selected release-specific units already have a successful classification under this codebook.",
+        }
+        write_output(payload)
+        print(json.dumps(payload, indent=2))
+        return 0
+
+    try:
+        model_revision = HfApi().model_info(QWEN_REPO).sha or "unknown"
+    except Exception as exc:
+        print(f"Warning: could not resolve model revision: {exc}", file=sys.stderr)
+        model_revision = "unknown"
+
+    one_release = len({unit["release_id"] for _, unit in units}) == 1
+    target_release_id = units[0][1]["release_id"] if one_release else None
+    selected_release = next((release for release in releases if release["release_id"] == target_release_id), None)
+    lineage = selected_release.get("lineage", {}) if selected_release else {}
+    run_id, run_key = start_run(
+        client,
+        scope="latest_release" if args.scope == "latest" else "historical_releases",
+        target_release_id=target_release_id,
+        collection_run_id=str(lineage.get("collection_run_id")) if lineage.get("collection_run_id") else None,
+        empowerment_run_id=str(lineage.get("classification_run_id")) if lineage.get("classification_run_id") else None,
+        model_revision=model_revision,
+    )
+
+    process: subprocess.Popen[Any] | None = None
+    handle: Any | None = None
+    written: list[dict[str, Any]] = []
+    review_rows: list[dict[str, Any]] = []
+    try:
+        process, handle = start_server()
+        for position, (lens, unit) in enumerate(units, start=1):
+            print(f"[{position}/{len(units)}] {lens}: {unit['unit_key']}", flush=True)
+            evidence = article_evidence(unit) if lens == "coverage" else event_evidence(unit)
+            result = call_classifier(lens=lens, evidence=evidence, content_basis=unit["content_basis"])
+            row = insert_result(client, run_id=run_id, lens=lens, unit=unit, result=result)
+            written.append(row)
+            review_rows.append(
+                {
+                    "symbiosis_classification_id": row["symbiosis_classification_id"],
+                    "release_id": unit["release_id"],
+                    "lens": lens,
+                    "unit_key": unit["unit_key"],
+                    "title": unit.get("headline_english") or unit.get("event_title"),
+                    "sources": (
+                        [{"publisher": unit["publisher"], "url": unit["url"]}]
+                        if lens == "coverage"
+                        else [
+                            {"publisher": article["publisher"], "url": article["url"]}
+                            for article in unit["member_articles"]
+                        ]
+                    ),
+                    "content_basis": unit["content_basis"],
+                    "model": result,
+                }
+            )
+        finish_run(client, run_id, status="success", rows=written)
+        payload = {
+            "status": "success",
+            "scope": args.scope,
+            "run_key": run_key,
+            "symbiosis_run_id": run_id,
+            "selected_release_ids": sorted({unit["release_id"] for _, unit in units}),
+            "codebook_version": CODEBOOK_VERSION,
+            "classifier_version": CLASSIFIER_VERSION,
+            "classified_units": len(written),
+            "coverage_units": sum(row["lens"] == "coverage" for row in written),
+            "event_units": sum(row["lens"] == "event" for row in written),
+            "all_require_human_review": True,
+            "review_rows": review_rows,
+        }
+        write_output(payload)
+        print(json.dumps({key: value for key, value in payload.items() if key != "review_rows"}, indent=2))
+        return 0
+    except Exception:
+        try:
+            client.table("symbiosis_classifications").delete().eq("symbiosis_run_id", run_id).execute()
+            finish_run(client, run_id, status="failed", rows=[])
+        except Exception as cleanup_exc:
+            print(f"Warning: cleanup failed: {cleanup_exc}", file=sys.stderr)
+        raise
+    finally:
+        stop_server(process, handle)
+
+
+if __name__ == "__main__":
+    try:
+        raise SystemExit(main())
+    except SymbiosisClassificationError as exc:
+        print(f"Symbiosis classification failed: {exc}", file=sys.stderr)
+        raise SystemExit(1)
