@@ -14,24 +14,43 @@ API = "https://api.github.com"
 REPO = os.environ["GITHUB_REPOSITORY"]
 TOKEN = os.environ["GITHUB_TOKEN"]
 REF = os.environ.get("PIPELINE_REF", "main")
+VALIDATE_ONLY = os.environ.get("PIPELINE_VALIDATE_ONLY", "false").strip().lower() in {
+    "1", "true", "yes", "on",
+}
 
 WORKFLOWS = [
     "Translate AI News to English",
     "Resolve AI News Into Events",
+    "Reconcile Observatory History",
     "Classify Coverage and Event Lenses",
     "Finalize Stage 7C Residual Rule",
+    "Build Weekly Observatory Release",
+    "Build Observatory Period Summaries",
     "Generate Public Observatory Insights",
-    "Generate Public Observatory Brief",
     "Publish Observatory Release",
 ]
+
+WORKFLOW_INPUTS: dict[str, dict[str, str]] = {
+    # Explicit values are safer than relying on workflow_dispatch defaults.
+    "Reconcile Observatory History": {
+        "mode": "auto",
+        "dry_run": "false",
+    },
+    "Build Weekly Observatory Release": {
+        "replace": "false",
+        "rebuild_index_only": "false",
+    },
+}
 
 TIMEOUT_MINUTES = {
     "Translate AI News to English": 180,
     "Resolve AI News Into Events": 240,
+    "Reconcile Observatory History": 420,
     "Classify Coverage and Event Lenses": 360,
     "Finalize Stage 7C Residual Rule": 60,
+    "Build Weekly Observatory Release": 90,
+    "Build Observatory Period Summaries": 30,
     "Generate Public Observatory Insights": 60,
-    "Generate Public Observatory Brief": 60,
     "Publish Observatory Release": 60,
 }
 
@@ -78,10 +97,22 @@ def workflow_map() -> dict[str, dict[str, Any]]:
 
 
 def dispatch(workflow: dict[str, Any]) -> int:
+    workflow_name = str(workflow["name"])
+    created_after = datetime.now(timezone.utc).timestamp() - 5
+    payload: dict[str, Any] = {"ref": REF}
+    inputs = WORKFLOW_INPUTS.get(workflow_name)
+    if inputs:
+        payload["inputs"] = inputs
+
+    print(
+        f"Dispatch inputs for {workflow_name}: "
+        f"{json.dumps(inputs or {}, sort_keys=True)}",
+        flush=True,
+    )
     response = api(
         "POST",
         f"/actions/workflows/{workflow['id']}/dispatches",
-        json={"ref": REF},
+        json=payload,
     )
 
     # Current GitHub may return a run identifier; older behavior returned 204.
@@ -93,9 +124,7 @@ def dispatch(workflow: dict[str, Any]) -> int:
         except ValueError:
             pass
 
-    created_after = datetime.now(timezone.utc).timestamp() - 5
-
-    for _ in range(30):
+    for _ in range(60):
         runs = api(
             "GET",
             (
@@ -171,12 +200,31 @@ def main() -> int:
             + ", ".join(missing)
         )
 
+    disabled = [
+        name for name in WORKFLOWS
+        if str(workflows[name].get("state") or "active") != "active"
+    ]
+    if disabled:
+        raise OrchestrationError(
+            "Required workflows are disabled: " + ", ".join(disabled)
+        )
+
+    if VALIDATE_ONLY:
+        print("Weekly pipeline configuration is valid. No workflows were dispatched.")
+        for position, name in enumerate(WORKFLOWS, start=1):
+            print(
+                f"{position}. {name} "
+                f"(id={workflows[name]['id']}, "
+                f"inputs={json.dumps(WORKFLOW_INPUTS.get(name, {}), sort_keys=True)})"
+            )
+        return 0
+
     for name in WORKFLOWS:
         print(f"\nDispatching: {name}", flush=True)
         run_id = dispatch(workflows[name])
         wait_for_run(name, run_id)
 
-    print("\nWeekly Observatory pipeline completed successfully.")
+    print("\nWeekly Observatory pipeline completed successfully, including longitudinal reconciliation and period summaries.")
     return 0
 
 
