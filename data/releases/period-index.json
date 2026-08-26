@@ -1,0 +1,83 @@
+{
+  "schema_version": "aieo_period_index_v1.1",
+  "generated_at": "2026-08-26T13:31:24.782494Z",
+  "current": {
+    "monthly": "2026-08",
+    "quarterly": "2026-Q3",
+    "annual": "2026"
+  },
+  "summaries": [
+    {
+      "period_id": "2026",
+      "period_type": "annual",
+      "status": "accumulating",
+      "period_start": "2026-01-01",
+      "period_end": "2026-12-31",
+      "observed_week_start": "2026-08-10",
+      "observed_week_end": "2026-08-23",
+      "generated_at": "2026-08-26T13:31:24.780108Z",
+      "revision": 1,
+      "revision_reason": null,
+      "previous_revision_path": null,
+      "path": "/data/releases/annual/2026.json",
+      "articles": 251,
+      "distinct_event_records": 236,
+      "new_developments": 102,
+      "first_time_event_records": 101,
+      "follow_on_developments": 1,
+      "recurring_event_appearances": 134,
+      "resurfaced_event_appearances": 0,
+      "content_sha256": "ec4bb70c49ad62ed33716bb6cc89b00651228f7496f9a370c287f72e181435ce"
+    },
+    {
+      "period_id": "2026-08",
+      "period_type": "monthly",
+      "status": "accumulating",
+      "period_start": "2026-08-01",
+      "period_end": "2026-08-31",
+      "observed_week_start": "2026-08-10",
+      "observed_week_end": "2026-08-23",
+      "generated_at": "2026-08-26T13:31:24.781385Z",
+      "revision": 1,
+      "revision_reason": null,
+      "previous_revision_path": null,
+      "path": "/data/releases/monthly/2026-08.json",
+      "articles": 251,
+      "distinct_event_records": 236,
+      "new_developments": 102,
+      "first_time_event_records": 101,
+      "follow_on_developments": 1,
+      "recurring_event_appearances": 134,
+      "resurfaced_event_appearances": 0,
+      "content_sha256": "97a11a98f416d160c65ba9d86ecfceb212f2c0bf62a0c36b35476f5e42768ee7"
+    },
+    {
+      "period_id": "2026-Q3",
+      "period_type": "quarterly",
+      "status": "accumulating",
+      "period_start": "2026-07-01",
+      "period_end": "2026-09-30",
+      "observed_week_start": "2026-08-10",
+      "observed_week_end": "2026-08-23",
+      "generated_at": "2026-08-26T13:31:24.782494Z",
+      "revision": 1,
+      "revision_reason": null,
+      "previous_revision_path": null,
+      "path": "/data/releases/quarterly/2026-Q3.json",
+      "articles": 251,
+      "distinct_event_records": 236,
+      "new_developments": 102,
+      "first_time_event_records": 101,
+      "follow_on_developments": 1,
+      "recurring_event_appearances": 134,
+      "resurfaced_event_appearances": 0,
+      "content_sha256": "42dd64d44704bf3dd77f51cd313b553d4cb3417ff3c52b644ba92c29bdefde30"
+    }
+  ],
+  "composition_rule": {
+    "reality": "Deduplicate across weekly releases by effective event ID.",
+    "attention": "Retain article volume, event appearances, rediscoveries and resurfacing.",
+    "baseline": "Overlapping launch baselines are excluded from standardized period totals."
+  },
+  "content_sha256": "abb732611047489cdc684aa9f5f5cae2d5a1fb0cb6a751539950df938ecd978e"
+}
