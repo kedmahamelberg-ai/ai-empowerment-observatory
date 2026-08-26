@@ -1,0 +1,64 @@
+{
+  "schema_version": "aieo_symbiosis_reviews_v1",
+  "codebook_version": "aieo_news_symbiosis_v0.1",
+  "generated_at": "2026-08-26T00:00:00Z",
+  "reviewer_name": "Kedma Hamelberg",
+  "expected_unit_count": 2,
+  "reviewed_unit_count": 2,
+  "decisions": [
+    {
+      "decision_id": "symbiosis-coverage-2026-W34-f51dda7103095d8deeb8fd14942552dc-v1",
+      "lens": "coverage",
+      "unit_key": "coverage:2026-W34:f51dda7103095d8deeb8fd14942552dc",
+      "article_id": "f51dda7103095d8deeb8fd14942552dc",
+      "event_id": null,
+      "review_status": "corrected",
+      "reviewer_name": "Kedma Hamelberg",
+      "notes": "Full Courthouse News source reviewed. Allegations are coded as reported allegations, not adjudicated facts.",
+      "source_urls": [
+        "https://www.courthousenews.com/online-streamers-sue-twitch-amazon-over-generative-ai-training/"
+      ],
+      "final": {
+        "human_experience_type": "restriction",
+        "ai_expressive_role": "ai_expansion",
+        "evidence_status": "sufficient",
+        "story_country_iso3s": [
+          "USA"
+        ],
+        "evidence_summary": "The report says a Twitch creator filed a proposed class action alleging that Twitch and Amazon used creator streams and videos for AI training without permission or compensation. It also reports an opt-out setting and claims of lost control over creative work.",
+        "reasoning": "The source represents creators as constrained in consent, control, ownership, and compensation, while the AI or operator side is represented as gaining training data and model-development value. This is a source-framing classification, not a finding of legal liability.",
+        "empowerment_status": "mixed",
+        "empowerment_degree": 2,
+        "empowerment_reasoning": "The article reports alleged losses of control and compensation, while also reporting a formal legal action through which creators seek remedy and enforcement. Contraction and contestation coexist."
+      },
+      "release_id": "2026-W34"
+    },
+    {
+      "decision_id": "symbiosis-event-2026-W34-6d705e54-1817-41ad-ae2b-a2d06e9cebbf-v1",
+      "lens": "event",
+      "unit_key": "event:2026-W34:6d705e54-1817-41ad-ae2b-a2d06e9cebbf",
+      "article_id": null,
+      "event_id": "6d705e54-1817-41ad-ae2b-a2d06e9cebbf",
+      "review_status": "corrected",
+      "reviewer_name": "Kedma Hamelberg",
+      "notes": "The new development is the filing of the proposed class action, not the earlier Twitch training-policy disclosure.",
+      "source_urls": [
+        "https://www.courthousenews.com/online-streamers-sue-twitch-amazon-over-generative-ai-training/"
+      ],
+      "final": {
+        "human_experience_type": "extension",
+        "ai_expressive_role": "neutral",
+        "evidence_status": "partial",
+        "story_country_iso3s": [
+          "USA"
+        ],
+        "evidence_summary": "A Twitch creator filed a proposed class action in the Northern District of California alleging use of creator content for generative AI training without permission or compensation and seeking injunctive and monetary relief.",
+        "reasoning": "The filing is a concrete human-side act of formal contestation and attempted enforcement. The source does not establish that the lawsuit has already constrained the AI system or operator side, so the event is a human-enabling one-sided signal rather than a complete parasitic configuration.",
+        "empowerment_status": "expanding",
+        "empowerment_degree": 1,
+        "empowerment_reasoning": "The filing modestly expands formal contestation and access to remedy, but no ruling, injunction, compensation, or platform change has yet occurred."
+      },
+      "release_id": "2026-W34"
+    }
+  ]
+}
