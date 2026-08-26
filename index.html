@@ -56,32 +56,43 @@
   <main id="main-content">
     <section class="hero-shell" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p id="release-badge" class="eyebrow">Loading the current weekly signal…</p>
+        <p id="release-badge" class="eyebrow">Loading the current weekly signal...</p>
         <h1 id="hero-title">Less noise.<br><em>More signal.</em></h1>
         <p class="hero-intro">
-          AIEO follows the difference between <strong>new reality</strong> and
-          <strong>repeated attention</strong>—then asks what the developments mean
-          for people’s capability, autonomy, rights and control.
+          AIEO separates developments not seen before from renewed coverage of
+          developments already in its history. It then asks what those developments
+          mean for people’s capability, autonomy, rights and control.
         </p>
 
         <div class="hero-metrics" aria-label="Current weekly overview">
-          <article>
-            <strong id="metric-articles">—</strong>
-            <span>published articles</span>
-          </article>
-          <article>
-            <strong id="metric-new">—</strong>
+          <a id="metric-articles-link" class="metric-card" href="/edu/?view=all#evidence">
+            <strong id="metric-articles">Loading</strong>
+            <span>AI-related coverage items</span>
+            <small>Open the source list</small>
+          </a>
+          <a id="metric-new-link" class="metric-card" href="/edu/?view=new#evidence">
+            <strong id="metric-new">Loading</strong>
             <span>new developments</span>
-          </article>
-          <article>
-            <strong id="metric-recurring">—</strong>
-            <span>previously seen developments</span>
-          </article>
+            <small id="metric-new-action">See what was new</small>
+          </a>
+          <a id="metric-recurring-link" class="metric-card" href="/edu/?view=recurring#evidence">
+            <strong id="metric-recurring">Loading</strong>
+            <span>developments seen before</span>
+            <small>See repeated attention</small>
+          </a>
         </div>
 
-        <p id="hero-takeaway" class="hero-takeaway" aria-live="polite">
-          Loading this week’s clearest takeaway…
-        </p>
+        <div class="hero-equations" aria-label="How the weekly counts fit together">
+          <p id="equation-coverage">Loading the coverage calculation.</p>
+          <p id="equation-novelty">Loading the new and previously seen calculation.</p>
+        </div>
+
+        <details class="count-definition">
+          <summary>What is a coverage item or a development?</summary>
+          <p id="hero-takeaway" aria-live="polite">
+            Loading the plain-language definitions.
+          </p>
+        </details>
 
         <div class="hero-actions">
           <a class="button primary" href="#globe">Explore the globe →</a>
@@ -102,7 +113,7 @@
             <p class="eyebrow">Discovery map</p>
             <h2 id="globe-title">See where this week’s coverage was found</h2>
           </div>
-          <p>Drag the globe or choose a market. These are discovery markets—not country scores.</p>
+          <p>Drag the globe or choose a market. These are discovery markets, not country scores.</p>
         </div>
 
         <div class="globe-stage home-globe-stage">
@@ -117,6 +128,13 @@
         </div>
 
         <div id="market-buttons" class="market-buttons" aria-label="Choose a discovery market"></div>
+
+        <details class="market-rationale">
+          <summary>Why these five markets?</summary>
+          <p id="market-selection-summary">Loading the market selection rationale.</p>
+          <p id="market-selection-context"></p>
+          <div id="market-selection-sources" class="market-source-links"></div>
+        </details>
 
         <article id="market-card" class="market-card" aria-live="polite">
           <div>
@@ -166,7 +184,7 @@
         <p class="eyebrow">What should I remember?</p>
         <h2 id="remember-title">The week in one sentence</h2>
       </div>
-      <p id="remember-copy">Loading the current weekly overview…</p>
+      <p id="remember-copy">Loading the current weekly overview...</p>
       <a class="button light" href="/edu/">Open this week’s signal →</a>
     </section>
 
