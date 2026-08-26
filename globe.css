@@ -1,0 +1,106 @@
+.globe-stage {
+  position: relative;
+  min-height: 440px;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #dff2f7;
+  isolation: isolate;
+}
+
+.globe-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.globe-topline {
+  position: absolute;
+  z-index: 4;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.globe-prompt,
+.globe-toggle {
+  border: 1px solid rgba(15, 38, 63, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 8px 30px rgba(21, 53, 78, 0.12);
+  backdrop-filter: blur(8px);
+}
+
+.globe-prompt {
+  max-width: min(72%, 380px);
+  padding: 10px 14px;
+  color: #18354d;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.globe-toggle {
+  min-height: 40px;
+  padding: 0 14px;
+  color: #0b5965;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.market-marker {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: #087985;
+  box-shadow: 0 0 0 5px rgba(8, 121, 133, 0.16), 0 4px 13px rgba(10, 44, 64, 0.28);
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.market-marker:hover,
+.market-marker:focus-visible,
+.market-marker[aria-current="true"] {
+  transform: scale(1.28);
+  box-shadow: 0 0 0 8px rgba(28, 200, 196, 0.22), 0 5px 16px rgba(10, 44, 64, 0.35);
+  outline: none;
+}
+
+.globe-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-content: center;
+  padding: 32px;
+  color: #17344b;
+  text-align: center;
+  background: #e8f4f7;
+}
+
+.globe-fallback[hidden] { display: none; }
+
+.globe-stage .maplibregl-ctrl-bottom-left,
+.globe-stage .maplibregl-ctrl-bottom-right {
+  z-index: 3;
+}
+
+.globe-stage .maplibregl-ctrl-attrib {
+  font-size: 9px;
+  opacity: 0.72;
+}
+
+@media (max-width: 760px) {
+  .globe-stage { min-height: 390px; border-radius: 18px; }
+  .globe-topline { top: 12px; left: 12px; right: 12px; }
+  .globe-prompt { max-width: 65%; font-size: 0.75rem; }
+  .globe-toggle { padding-inline: 11px; }
+}

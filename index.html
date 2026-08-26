@@ -3,23 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <title>AI Empowerment Observatory | Less noise. More signal.</title>
-
-  <meta
-    name="description"
-    content="A calmer way to understand AI news: what happened, what was repeated, and what it means for human capability and control."
-  >
-
-  <link rel="stylesheet" href="./site.css">
+  <meta name="description" content="A calmer way to understand AI news: what happened, what was repeated, where coverage was found, and what it means for human capability and control.">
+  <link rel="canonical" href="https://observatory.hamelberg-ai.com/">
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@6.5.0/dist/maplibre-gl.css">
+  <link rel="stylesheet" href="/globe.css">
+  <link rel="stylesheet" href="/site.css">
   <link rel="stylesheet" href="/analytics-consent.css">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96">
   <link rel="shortcut icon" href="/favicon.ico">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
   <meta property="og:site_name" content="AI Empowerment Observatory">
-
+  <meta property="og:title" content="AI Empowerment Observatory | Less noise. More signal.">
+  <meta property="og:description" content="See what happened, what was repeated, and what changed for people.">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -27,173 +24,197 @@
     "@id": "https://observatory.hamelberg-ai.com/#website",
     "url": "https://observatory.hamelberg-ai.com/",
     "name": "AI Empowerment Observatory",
-    "alternateName": [
-      "AIEO",
-      "AI Empowerment Observatory by Kedma Hamelberg"
-    ]
+    "alternateName": ["AIEO", "AI Empowerment Observatory by Kedma Hamelberg"]
   }
   </script>
 </head>
-
 <body>
+  <a class="skip-link" href="#main-content">Skip to the current signal</a>
+
   <header class="site-header">
-    <a class="brand" href="./">
-      <span class="brand-mark">AIEO</span>
-      <span>
+    <a class="brand" href="/" aria-label="AI Empowerment Observatory home">
+      <span class="brand-mark" aria-hidden="true">AIEO</span>
+      <span class="brand-copy">
         <strong>AI Empowerment Observatory</strong>
         <small>A research initiative by Kedma Hamelberg</small>
       </span>
     </a>
 
-    <nav aria-label="Main navigation">
-      <a href="./edu/">This week</a>
-      <a href="./report/">Reports</a>
-      <a href="./methodology/">Methodology</a>
-      <a href="./pro/">Pro</a>
-      <a
-        href="https://kedmahamelberg.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        About Kedma ↗
-      </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">
+      Menu
+    </button>
+
+    <nav id="main-nav" aria-label="Main navigation">
+      <a href="/edu/">This week</a>
+      <a href="/reports/">Reports</a>
+      <a href="/methodology/">Methodology</a>
+      <a href="/pro/">Pro</a>
+      <a class="nav-cta" href="#globe">Explore this week</a>
     </nav>
   </header>
 
-  <main>
-    <section class="home-hero">
-      <div>
-        <p id="release-badge" class="kicker">Loading current release…</p>
+  <main id="main-content">
+    <section class="hero-shell" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p id="release-badge" class="eyebrow">Loading the current weekly signal…</p>
+        <h1 id="hero-title">Less noise.<br><em>More signal.</em></h1>
+        <p class="hero-intro">
+          AIEO follows the difference between <strong>new reality</strong> and
+          <strong>repeated attention</strong>—then asks what the developments mean
+          for people’s capability, autonomy, rights and control.
+        </p>
 
-        <h1>
-          Less noise.
-          <em>More signal.</em>
-        </h1>
+        <div class="hero-metrics" aria-label="Current weekly overview">
+          <article>
+            <strong id="metric-articles">—</strong>
+            <span>published articles</span>
+          </article>
+          <article>
+            <strong id="metric-new">—</strong>
+            <span>new developments</span>
+          </article>
+          <article>
+            <strong id="metric-recurring">—</strong>
+            <span>previously seen developments</span>
+          </article>
+        </div>
 
-        <p>
-          AIEO turns a crowded week of AI headlines into something you can
-          understand: <strong>what actually happened</strong>, what was repeated,
-          and what it means for people’s capability and control.
+        <p id="hero-takeaway" class="hero-takeaway" aria-live="polite">
+          Loading this week’s clearest takeaway…
         </p>
 
         <div class="hero-actions">
-          <a class="button primary" href="./edu/">See this week’s signal →</a>
-          <a class="button secondary" href="./report/">Get the monthly Pulse</a>
+          <a class="button primary" href="#globe">Explore the globe →</a>
+          <a class="button secondary" href="/edu/#evidence">See the evidence</a>
         </div>
 
-        <div id="scope-strip" class="scope-strip">
-          Loading observation window…
-        </div>
+        <details class="scope-disclosure">
+          <summary>What does “new” mean here?</summary>
+          <p id="historical-pool-copy">
+            New means not previously matched in the Observatory’s disclosed historical evidence pool.
+          </p>
+        </details>
       </div>
 
-      <aside class="home-summary">
-        <span>This week</span>
-
-        <div class="home-counts">
-          <article>
-            <strong id="home-coverage-count">—</strong>
-            <small>AI news articles</small>
-          </article>
-
-          <b>→</b>
-
-          <article>
-            <strong id="home-event-count">—</strong>
-            <small>resolved event records</small>
-          </article>
+      <div id="globe" class="hero-globe" aria-labelledby="globe-title">
+        <div class="globe-heading">
+          <div>
+            <p class="eyebrow">Discovery map</p>
+            <h2 id="globe-title">See where this week’s coverage was found</h2>
+          </div>
+          <p>Drag the globe or choose a market. These are discovery markets—not country scores.</p>
         </div>
 
-        <p id="home-summary-text">
-          Loading this week’s takeaway…
-        </p>
+        <div class="globe-stage home-globe-stage">
+          <div id="home-globe" class="globe-canvas" aria-label="Interactive globe of AIEO discovery markets"></div>
+          <div class="globe-topline">
+            <span id="home-globe-prompt" class="globe-prompt">Drag the globe or choose a market</span>
+            <button id="home-globe-toggle" class="globe-toggle" type="button" aria-pressed="true">Pause globe</button>
+          </div>
+          <div id="home-globe-fallback" class="globe-fallback" hidden>
+            The interactive map could not load. Choose a market below instead.
+          </div>
+        </div>
 
-        <a href="./edu/#trend">See the weekly trend →</a>
-      </aside>
+        <div id="market-buttons" class="market-buttons" aria-label="Choose a discovery market"></div>
+
+        <article id="market-card" class="market-card" aria-live="polite">
+          <div>
+            <p class="eyebrow">Choose a market</p>
+            <h3>Start anywhere on the globe</h3>
+            <p>Select a marker or country name to see the coverage AIEO observed there.</p>
+          </div>
+          <a id="market-evidence-cta" class="text-link" href="/edu/#evidence">See all source-linked evidence →</a>
+        </article>
+      </div>
     </section>
 
-    <section class="home-value">
-      <article>
-        <span>1</span>
-        <h2>What happened?</h2>
-        <p>Articles assigned to the same resolved event record are counted once in the Event Lens.</p>
-      </article>
-
-      <article>
-        <span>2</span>
-        <h2>What got amplified?</h2>
-        <p>Compare news volume with resolved event records over time.</p>
-      </article>
-
-      <article>
-        <span>3</span>
-        <h2>What changed for people?</h2>
-        <p>Track capability, creativity, autonomy, rights, and control.</p>
-      </article>
+    <section class="story-flow" aria-labelledby="story-title">
+      <div class="section-heading compact">
+        <p class="eyebrow">One connected story</p>
+        <h2 id="story-title">From headlines to something you can use</h2>
+      </div>
+      <div class="flow-track">
+        <article>
+          <span class="flow-number">1</span>
+          <div>
+            <h3>Observe</h3>
+            <p>Keep every newly published article and every later rediscovery visible.</p>
+          </div>
+        </article>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <article>
+          <span class="flow-number">2</span>
+          <div>
+            <h3>Remember</h3>
+            <p>Match reporting to the historical event pool, so old developments are not presented as new.</p>
+          </div>
+        </article>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <article>
+          <span class="flow-number">3</span>
+          <div>
+            <h3>Interpret</h3>
+            <p>Separate attention from real-world change and trace what shifted for people.</p>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <section class="home-report-card">
+    <section class="current-story" aria-labelledby="remember-title">
       <div>
-        <span>Monthly evidence brief</span>
-        <h2>One useful signal, once a month</h2>
+        <p class="eyebrow">What should I remember?</p>
+        <h2 id="remember-title">The week in one sentence</h2>
+      </div>
+      <p id="remember-copy">Loading the current weekly overview…</p>
+      <a class="button light" href="/edu/">Open this week’s signal →</a>
+    </section>
+
+    <section class="pulse-card" aria-labelledby="pulse-title">
+      <div>
+        <p class="eyebrow">Monthly evidence brief</p>
+        <h2 id="pulse-title">One useful signal, once a month</h2>
         <p>
-          The AI Empowerment Pulse brings the Observatory’s weekly evidence
-          together into one concise, source-linked monthly report. The next
-          edition will be released on 3 September 2026. Quarterly editions will
-          synthesise the accumulated history once a complete quarter is available.
+          The AI Empowerment Pulse turns the weekly history into one concise,
+          source-linked narrative. Monthly and quarterly summaries deduplicate
+          developments across the whole period while preserving recurring attention.
         </p>
       </div>
-
-      <a href="./report/">Receive the next Pulse →</a>
+      <a class="button primary" href="/report/">Receive the next Pulse →</a>
     </section>
 
     <section class="home-bottom-grid">
       <article>
-        <span>Research</span>
-        <h2>Built from a research programme on human empowerment and AI</h2>
-        <a
-          href="https://kedmahamelberg.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          About Kedma Hamelberg ↗
-        </a>
+        <p class="eyebrow">Research</p>
+        <h2>Built as an auditable research programme on human empowerment and AI</h2>
+        <a class="text-link" href="/methodology/">See how the evidence is built →</a>
       </article>
-
       <article>
-        <span>For organisations</span>
-        <h2>Need monitoring, deeper history, or an executive briefing?</h2>
-        <div>
-          <a href="./pro/">See Pro →</a>
-          <a
-            href="mailto:kedma@hamelberg-ai.com?subject=AI%20Empowerment%20Observatory%20briefing"
-          >
-            Book a briefing →
-          </a>
+        <p class="eyebrow">For organisations</p>
+        <h2>Need deeper history, monitoring or an executive briefing?</h2>
+        <div class="inline-links">
+          <a class="text-link" href="/pro/">See Pro →</a>
+          <a class="text-link" href="mailto:kedma@hamelberg-ai.com?subject=AI%20Empowerment%20Observatory%20briefing">Book a briefing →</a>
         </div>
       </article>
     </section>
   </main>
 
+  <a id="mobile-globe-cta" class="mobile-sticky-cta" href="#globe">Explore this week’s globe →</a>
+
   <footer>
     <span>© 2026 AI Empowerment Observatory</span>
-
-    <nav>
-      <a href="./edu/">This week</a>
-      <a href="./report/">Reports</a>
-      <a href="./methodology/">Methodology</a>
-      <a href="./privacy/">Privacy</a>
-      <a
-        href="https://kedmahamelberg.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Kedma Hamelberg ↗
-      </a>
+    <nav aria-label="Footer navigation">
+      <a href="/edu/">This week</a>
+      <a href="/reports/">Reports</a>
+      <a href="/methodology/">Methodology</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="https://kedmahamelberg.com/" target="_blank" rel="noopener noreferrer">Kedma Hamelberg ↗</a>
       <a href="mailto:kedma@hamelberg-ai.com">Contact</a>
     </nav>
   </footer>
 
-  <script src="./site.js"></script>
+  <script type="module" src="/site.js"></script>
   <script src="/analytics.js"></script>
 </body>
 </html>
