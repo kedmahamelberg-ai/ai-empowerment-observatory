@@ -270,7 +270,7 @@
         );
       } else {
         setFormStatus(
-          `Almost there — check your inbox to confirm. ` +
+          `Almost there. Check your inbox to confirm. ` +
             `The next Pulse is scheduled for ${nextEditionLabel}.`,
           "success"
         );

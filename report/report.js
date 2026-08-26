@@ -31,14 +31,14 @@ function plural(value, singular, pluralForm = `${singular}s`) {
 }
 
 function signed(value) {
-  if (value == null || Number.isNaN(Number(value))) return "—";
+  if (value == null || Number.isNaN(Number(value))) return "Not available";
   const number = Number(value);
   return `${number > 0 ? "+" : ""}${number.toFixed(2)}`;
 }
 
 function setText(id, value) {
   const element = document.getElementById(id);
-  if (element) element.textContent = String(value ?? "—");
+  if (element) element.textContent = String(value ?? "Not available");
 }
 
 async function fetchJSON(url) {
@@ -127,7 +127,7 @@ function renderScope(current, index) {
       ? `${start} through ${through}`
       : "Pilot pool begins 5 August 2026; longitudinal scope is provisional",
   );
-  setText("scope-through", formatDateTime(current.data_current_through || current.generated_at) || "—");
+  setText("scope-through", formatDateTime(current.data_current_through || current.generated_at) || "Not available");
   setText("scope-revision", `Revision ${Number(current.revision || index.current_revision || 1)}`);
 }
 
