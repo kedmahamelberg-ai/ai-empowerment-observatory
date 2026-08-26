@@ -4,11 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Methodology | AI Empowerment Observatory</title>
-  <meta
-    name="description"
-    content="Public methodology, governance and audit record for the AI Empowerment Observatory."
-  >
-  <link rel="stylesheet" href="./methodology.css">
+  <meta name="description" content="How the AI Empowerment Observatory separates new reality from repeated attention, tracks long-term news memory, measures human empowerment and publishes visible revisions.">
+  <link rel="stylesheet" href="/methodology/methodology.css">
   <link rel="stylesheet" href="/analytics-consent.css">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96">
@@ -16,127 +13,172 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 <body>
-  <header>
-    <div>
-      <p class="eyebrow">Public Methodology · pilot v1.1</p>
-      <h1>Auditable, governed, and versioned</h1>
-      <p>
-        The Observatory publishes its concepts, scoring rules, provenance,
-        limitations and audit outcomes. Proprietary prompts, thresholds and
-        orchestration code remain private to protect research integrity and
-        reduce the risk of gaming.
-      </p>
-    </div>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/edu/">Current signal</a>
-      <a href="/report/">Reports</a>
-      <a href="/status/">System status</a>
-    </nav>
+  <header class="site-header">
+    <a class="brand" href="/"><span class="brand-mark">AIEO</span><span><strong>AI Empowerment Observatory</strong><small>Public methodology · versioned</small></span></a>
+    <nav aria-label="Main navigation"><a href="/edu/">This week</a><a href="/reports/">Reports</a><a aria-current="page" href="/methodology/">Methodology</a><a class="nav-cta" href="/report/">Get the Pulse</a></nav>
   </header>
 
   <main>
-    <section id="signal" class="cards">Loading current signal…</section>
+    <section class="method-hero">
+      <div>
+        <p class="eyebrow">Public methodology · v2.0</p>
+        <h1>How AIEO remembers what the news forgets.</h1>
+        <p>
+          The method is built around one simple rule: <strong>repeated attention
+          is evidence, but it is not automatically a new event.</strong>
+        </p>
+        <div class="hero-actions"><a class="button primary" href="#example">See one example →</a><a class="button secondary" href="#method-flow">Follow the five steps</a></div>
+      </div>
+      <aside>
+        <p class="eyebrow">Current public scope</p>
+        <dl>
+          <div><dt>Observation period</dt><dd id="method-period">—</dd></div>
+          <div><dt>Historical pool</dt><dd id="method-pool">—</dd></div>
+          <div><dt>Data current through</dt><dd id="method-through">—</dd></div>
+          <div><dt>Release revision</dt><dd id="method-revision">—</dd></div>
+        </dl>
+      </aside>
+    </section>
 
-    <section class="panel">
-      <h2>Two lenses, two questions</h2>
-      <div class="two">
+    <section id="example" class="example-section" aria-labelledby="example-title">
+      <div class="section-heading">
+        <p class="eyebrow">One story across time</p>
+        <h2 id="example-title">Three appearances do not necessarily mean three developments</h2>
+      </div>
+      <div class="example-track">
         <article>
-          <span>Coverage Lens</span>
-          <p>
-            Each observed article receives one weight. Repetition is retained
-            because this lens measures attention, repetition and framing.
-          </p>
+          <span>Week 1</span>
+          <h3>An organisation announces a new AI system</h3>
+          <p><strong>New article · new event</strong></p>
+          <small>The development enters the historical event pool.</small>
         </article>
+        <i aria-hidden="true">→</i>
         <article>
-          <span>Event Lens</span>
-          <p>
-            Each resolved event record receives one weight, regardless of how
-            many articles are currently assigned to it. Event resolution is
-            precision-first: ambiguous possible matches remain separate until
-            reviewed. Event-record counts are therefore not yet claims of
-            perfectly validated unique developments.
-          </p>
+          <span>Week 5</span>
+          <h3>Another publication reports the same announcement</h3>
+          <p><strong>New article · same event</strong></p>
+          <small>Coverage volume rises. The event count does not.</small>
+        </article>
+        <i aria-hidden="true">→</i>
+        <article>
+          <span>Week 10</span>
+          <h3>A regulator takes a new action on the system</h3>
+          <p><strong>New article · follow-on event</strong></p>
+          <small>A separate event is linked to the continuing story.</small>
         </article>
       </div>
     </section>
 
-    <section class="panel">
-      <h2>What the signal measures</h2>
-      <p>
-        Narrative framing and substantive human empowerment are classified
-        separately. An article can frame AI as an opportunity or threat without
-        documenting a direct change in people’s capability, creativity,
-        autonomy, rights or control.
-      </p>
-      <p>
-        The empowerment assessment covers four dimensions: operational,
-        creative, agentic and normative. A unit can affect more than one
-        dimension, but its index contribution follows the overall direction and
-        degree supported by the available evidence.
-      </p>
-    </section>
-
-    <section class="panel">
-      <h2>What is public</h2>
-      <ul id="public-list"></ul>
-
-      <h2>What remains private</h2>
-      <p>
-        Auditability does not require publishing the full implementation recipe.
-        Private components are protected to preserve research integrity,
-        prevent gaming and avoid straightforward replication.
-      </p>
-      <ul id="private-list"></ul>
-    </section>
-
-    <section class="panel">
-      <h2>Scoring</h2>
-      <div class="formula">
-        Expanding: +degree/3 · Contracting: −degree/3 ·
-        Mixed: 0 · Non-empowerment: 0 · Unclear: excluded
+    <section id="method-flow" class="method-flow" aria-labelledby="flow-title">
+      <div class="section-heading split">
+        <div><p class="eyebrow">The evidence journey</p><h2 id="flow-title">Five steps, one connected chain</h2></div>
+        <p>Technical detail is available, but the public method can be followed without reading code or model output.</p>
       </div>
-      <p>
-        The lens index is the arithmetic mean of unit scores × 100. The
-        theoretical range is −100 to +100. The Directional Amplification Gap is
-        Coverage minus Event. These are evidence indices, not sentiment scores
-        and not estimates of AI’s total social benefit or harm.
-      </p>
+
+      <div class="method-steps">
+        <article>
+          <span>1</span>
+          <div><h3>Observe</h3><p>AIEO stores each canonical article once and records every later search observation separately. An old page returning to search is visibility persistence—not a newly published article.</p></div>
+        </article>
+        <article>
+          <span>2</span>
+          <div><h3>Resolve</h3><p>Articles are matched to concrete real-world events. Same topic, country, organisation or technology is not enough to merge two records.</p></div>
+        </article>
+        <article>
+          <span>3</span>
+          <div><h3>Remember</h3><p>New candidates are compared with the full disclosed historical event pool. A long delay lowers confidence; it does not stop comparison.</p></div>
+        </article>
+        <article>
+          <span>4</span>
+          <div><h3>Interpret</h3><p>Coverage Lens counts articles. Event Lens counts resolved developments. Human empowerment and narrative tone are measured separately.</p></div>
+        </article>
+        <article>
+          <span>5</span>
+          <div><h3>Revise</h3><p>Later evidence can merge, unlink or connect records. The current series is restated, while the original published revision remains archived.</p></div>
+        </article>
+      </div>
     </section>
 
-    <section class="panel">
-      <h2>Human governance</h2>
-      <div id="audit"></div>
-      <p>
-        The launch baseline used a 20-case stratified human audit: 6 model
-        outputs were accepted and 14 were corrected. That correction share is a
-        diagnostic of the audited cases, not a population accuracy estimate.
-        The corrected launch release is therefore described as a human-audited
-        baseline; later automated releases remain provisional until their audit
-        results are incorporated.
-      </p>
-      <p>
-        Model self-confidence is diagnostic only. It is not used to weight the
-        index or, by itself, to decide which routine cases receive human review.
-        Human governance combines stratified sampling with review of higher-risk
-        and methodologically informative cases.
-      </p>
+    <section class="two-lenses" aria-labelledby="lenses-title">
+      <div class="section-heading"><p class="eyebrow">Two lenses</p><h2 id="lenses-title">Attention and reality answer different questions</h2></div>
+      <div class="lens-grid">
+        <article>
+          <p class="eyebrow">Coverage Lens</p>
+          <h3>What received attention?</h3>
+          <p>Each newly published AI-relevant article receives one weight. Repetition stays visible because attention and framing matter.</p>
+        </article>
+        <article>
+          <p class="eyebrow">Event Lens</p>
+          <h3>What actually happened?</h3>
+          <p>Each effective resolved event receives one weight, even when many articles or markets cover it.</p>
+        </article>
+      </div>
+      <p class="formula">Directional Amplification Gap = Coverage-Lens human-empowerment index − Event-Lens human-empowerment index</p>
     </section>
 
-    <section class="panel">
-      <h2>Limitations</h2>
-      <p>
-        Current results describe the Observatory’s monitored source set and
-        discovery markets. They should not be interpreted as a census of all AI
-        developments or all global news coverage. Cross-market source coverage,
-        event resolution and classification performance will be expanded and
-        re-audited as the longitudinal series grows.
-      </p>
-      <ul id="limitations"></ul>
+    <section class="occurrence-section" aria-labelledby="occurrence-title">
+      <div class="section-heading split">
+        <div><p class="eyebrow">Longitudinal memory</p><h2 id="occurrence-title">Every return leaves a trace</h2></div>
+        <p>This occurrence history is what will make replication-delay and media-memory analysis possible after more evidence accumulates.</p>
+      </div>
+      <div class="occurrence-grid">
+        <article><strong>First coverage</strong><p>The first observed publication attached to an event.</p></article>
+        <article><strong>New coverage of an old event</strong><p>A new publication instance, but not a new development.</p></article>
+        <article><strong>Old article rediscovered</strong><p>The same stored page reappears in search; no new publication is counted.</p></article>
+        <article><strong>Follow-on development</strong><p>A genuinely new occurrence linked to the same continuing story.</p></article>
+      </div>
     </section>
+
+    <section id="revision-policy" class="revision-section" aria-labelledby="revision-title">
+      <div>
+        <p class="eyebrow">Revision policy</p>
+        <h2 id="revision-title">Corrections accumulate. They do not disappear.</h2>
+        <p>
+          Weekly releases are checked again as the evidence pool grows. Month,
+          quarter and year summaries use the latest accepted event history and
+          state exactly which weekly revisions they include.
+        </p>
+      </div>
+      <ol>
+        <li><strong>Weekly:</strong> initial precision-first publication</li>
+        <li><strong>T+7:</strong> recheck the prior week against new evidence</li>
+        <li><strong>Month close:</strong> reconcile the complete month</li>
+        <li><strong>Quarter close:</strong> re-run cross-week and story-family matching</li>
+        <li><strong>Annual:</strong> full-history reconciliation and replication-delay analysis</li>
+      </ol>
+    </section>
+
+    <section class="scoring-section" aria-labelledby="scoring-title">
+      <div class="section-heading split">
+        <div><p class="eyebrow">Human empowerment</p><h2 id="scoring-title">What changed for people?</h2></div>
+        <p>Model confidence is diagnostic only. It does not weight the index or replace human audit.</p>
+      </div>
+      <div class="score-grid">
+        <article><strong>Expanding</strong><span>+ degree / 3</span><p>AI materially expands capability, creativity, autonomy, rights or control.</p></article>
+        <article><strong>Contracting</strong><span>− degree / 3</span><p>AI materially reduces capability, autonomy, rights, protection or control.</p></article>
+        <article><strong>Mixed or no direct change</strong><span>0</span><p>Effects offset one another, or no supported empowerment mechanism is present.</p></article>
+        <article><strong>Unclear</strong><span>Excluded</span><p>The evidence is insufficient; the unit does not enter the index denominator.</p></article>
+      </div>
+    </section>
+
+    <section class="limitations-section">
+      <div>
+        <p class="eyebrow">Limits worth keeping visible</p>
+        <h2>Useful signal, not a census or a final truth</h2>
+      </div>
+      <ul>
+        <li>Discovery markets describe where searches were run, not the location or empowerment score of an event.</li>
+        <li>The source pool is observed coverage, not every AI article published worldwide.</li>
+        <li>Precision-first resolution prefers temporary false splits over harmful false merges.</li>
+        <li>Same-event recall remains a validation target; later evidence may revise counts.</li>
+      </ul>
+    </section>
+
+    <section class="method-cta"><div><p class="eyebrow">See the method working</p><h2>Move from the rules to this week’s evidence.</h2></div><a class="button primary" href="/edu/">Open the current signal →</a></section>
   </main>
 
-  <script src="./methodology.js"></script>
+  <footer><span>© 2026 AI Empowerment Observatory</span><nav><a href="/">Home</a><a href="/edu/">This week</a><a href="/reports/">Reports</a><a href="/privacy/">Privacy</a><a href="mailto:kedma@hamelberg-ai.com">Contact</a></nav></footer>
+  <script src="/methodology/methodology.js"></script>
   <script src="/analytics.js"></script>
 </body>
 </html>
