@@ -8,10 +8,20 @@ on:
       - completed
 
   workflow_dispatch:
+    inputs:
+      validate_only:
+        description: "Check workflow names, states and dispatch inputs without running the pipeline"
+        required: true
+        default: true
+        type: boolean
 
 permissions:
   actions: write
   contents: read
+
+concurrency:
+  group: aieo-weekly-pipeline
+  cancel-in-progress: false
 
 jobs:
   orchestrate:
@@ -45,4 +55,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PIPELINE_REF: main
+          PIPELINE_VALIDATE_ONLY: ${{ github.event_name == 'workflow_dispatch' && inputs.validate_only || false }}
         run: python scripts/orchestrate_weekly.py
