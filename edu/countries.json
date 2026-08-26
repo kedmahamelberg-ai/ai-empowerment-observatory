@@ -1,4 +1,40 @@
 {
-  "deprecated": true,
-  "message": "The illustrative three-country prototype was retired. The live public edition reads aggregate real data from /data/lenses/latest.json and publishes country signals only when evidence thresholds are met."
+  "version": "aieo_discovery_markets_v1.0",
+  "markets": {
+    "CAN": {
+      "name": "Canada",
+      "short_name": "Canada",
+      "longitude": -106.3468,
+      "latitude": 56.1304,
+      "zoom": 2.25
+    },
+    "CHN": {
+      "name": "China",
+      "short_name": "China",
+      "longitude": 104.1954,
+      "latitude": 35.8617,
+      "zoom": 2.25
+    },
+    "FRA": {
+      "name": "France",
+      "short_name": "France",
+      "longitude": 2.2137,
+      "latitude": 46.2276,
+      "zoom": 3.35
+    },
+    "GBR": {
+      "name": "United Kingdom",
+      "short_name": "United Kingdom",
+      "longitude": -3.436,
+      "latitude": 55.3781,
+      "zoom": 3.35
+    },
+    "USA": {
+      "name": "United States",
+      "short_name": "United States",
+      "longitude": -98.5795,
+      "latitude": 39.8283,
+      "zoom": 2.25
+    }
+  }
 }

@@ -1,1 +1,1 @@
-/* Historical prototype retired. Live map interaction is in dashboard.js. */
+export { initDiscoveryGlobe } from "/globe.js";
