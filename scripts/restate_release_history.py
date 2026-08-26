@@ -34,7 +34,7 @@ from release_common import (
 )
 
 ARCHIVE_DIR = WEEKLY_DIR / "archive"
-RESTATE_VERSION = "release_restatement_v1.1"
+RESTATE_VERSION = "release_restatement_v1.2"
 
 
 class RestatementError(RuntimeError):
@@ -104,6 +104,166 @@ def date_value(value: Any) -> date | None:
 
 def is_ai(row: dict[str, Any]) -> bool:
     return bool((row.get("classification") or {}).get("ai_relevant"))
+
+
+def canonical_definitions() -> dict[str, str]:
+    """Return the public counting contract used by new weekly releases.
+
+    Restated releases must use the same terminology as newly generated
+    releases. In particular, first-time versus recurring status is determined
+    from the longitudinal occurrence ledger and historical event pool—not from
+    whether a collection timestamp happens to fall inside the publication week.
+    """
+
+    return {
+        "coverage_lens": (
+            "Each newly published AI-relevant article in this declared weekly "
+            "period receives one weight."
+        ),
+        "event_lens": (
+            "Each effective resolved event represented by those articles "
+            "receives one weight."
+        ),
+        "extra_coverage": (
+            "AI-relevant published articles minus effective represented events "
+            "for the same period."
+        ),
+        "new_event_record": (
+            "A first-time event or a genuine follow-on occurrence not collapsed "
+            "into earlier reality."
+        ),
+        "recurring_event_record": (
+            "A previously observed effective event represented again by newly "
+            "published coverage."
+        ),
+        "resurfaced_event_record": (
+            "A recurring event receiving new coverage after at least 28 days "
+            "without observed coverage."
+        ),
+        "rediscovered_article_record": (
+            "A previously stored article page returned to the discovery results; "
+            "it is not counted as a newly published article."
+        ),
+        "follow_on_development": (
+            "A genuinely new occurrence linked to an earlier event through a "
+            "continuing story family."
+        ),
+        "event_record_caveat": (
+            "AIEO uses a precision-first resolver. Ambiguous possible duplicates "
+            "remain separate until governance resolves them."
+        ),
+    }
+
+
+def refresh_public_metadata(release: dict[str, Any]) -> dict[str, Any]:
+    """Synchronize definitions and reliability metadata with recalculated units.
+
+    The substantive counts and indices are already recalculated elsewhere in
+    this module. This helper prevents copied revision-1 denominators or shares
+    from surviving after accepted event aliases change the Event Lens.
+    """
+
+    before_definitions = copy.deepcopy(release.get("definitions") or {})
+    reliability = copy.deepcopy(release.get("reliability") or {})
+    before_denominators = copy.deepcopy(reliability.get("denominators") or {})
+    before_event_diagnostics = copy.deepcopy(
+        reliability.get("event_diagnostics") or {}
+    )
+
+    release["definitions"] = canonical_definitions()
+
+    counts = release.get("counts") or {}
+    lenses = release.get("lenses") or {}
+    coverage = lenses.get("coverage") or {}
+    event = lenses.get("event") or {}
+    event_ai = int(event.get("unit_count_ai_relevant") or 0)
+
+    event_diagnostics = copy.deepcopy(before_event_diagnostics)
+    event_diagnostics.update(
+        {
+            "singleton_share": (
+                round(
+                    int(counts.get("singleton_event_records") or 0) / event_ai,
+                    6,
+                )
+                if event_ai
+                else 0.0
+            ),
+            "multi_source_share": (
+                round(
+                    int(counts.get("multi_source_event_records") or 0) / event_ai,
+                    6,
+                )
+                if event_ai
+                else 0.0
+            ),
+            "possible_duplicate_records": int(
+                counts.get("possible_duplicate_event_records") or 0
+            ),
+            # Keep this conservative research-validation flag false until a
+            # labelled recall benchmark exists. Reconciliation is disclosed
+            # separately below.
+            "same_event_recall_validated": bool(
+                before_event_diagnostics.get("same_event_recall_validated", False)
+            ),
+            "longitudinal_event_memory_active": True,
+            "historical_pool_disclosed": bool(
+                (release.get("historical_pool") or {}).get(
+                    "all_prior_events_considered"
+                )
+            ),
+            "longitudinal_reconciliation_status": str(
+                (release.get("reconciliation") or {}).get("status")
+                or "not_available"
+            ),
+            "registry_snapshot_id": (
+                (release.get("historical_pool") or {}).get(
+                    "registry_snapshot_id"
+                )
+            ),
+        }
+    )
+
+    denominators = {
+        "coverage_total": int(coverage.get("unit_count_total") or 0),
+        "coverage_ai_relevant": int(
+            coverage.get("unit_count_ai_relevant") or 0
+        ),
+        "coverage_scored": int(coverage.get("unit_count_scored") or 0),
+        "coverage_excluded_unclear": int(
+            coverage.get("unit_count_excluded_unclear") or 0
+        ),
+        "coverage_not_ai_relevant": int(
+            coverage.get("unit_count_not_ai_relevant") or 0
+        ),
+        "event_total": int(event.get("unit_count_total") or 0),
+        "event_ai_relevant": event_ai,
+        "event_scored": int(event.get("unit_count_scored") or 0),
+        "event_excluded_unclear": int(
+            event.get("unit_count_excluded_unclear") or 0
+        ),
+        "event_not_ai_relevant": int(
+            event.get("unit_count_not_ai_relevant") or 0
+        ),
+    }
+
+    reliability["event_diagnostics"] = event_diagnostics
+    reliability["denominators"] = denominators
+    release["reliability"] = reliability
+
+    return {
+        "definitions_changed": before_definitions != release["definitions"],
+        "reliability_denominators_changed": (
+            before_denominators != denominators
+        ),
+        "event_diagnostics_changed": (
+            before_event_diagnostics != event_diagnostics
+        ),
+        "reliability_denominators_before": before_denominators,
+        "reliability_denominators_after": denominators,
+        "event_diagnostics_before": before_event_diagnostics,
+        "event_diagnostics_after": event_diagnostics,
+    }
 
 
 def choose_base_row(rows: list[dict[str, Any]], canonical_id: str) -> dict[str, Any]:
@@ -461,6 +621,8 @@ def recalculate(
             "status": reconciliation.get("status"),
         }
 
+    metadata_summary = refresh_public_metadata(updated)
+
     before_ids = {
         str(row.get("effective_event_id") or row.get("event_id") or "")
         for row in original_event_rows
@@ -486,6 +648,7 @@ def recalculate(
         "rediscovered_article_records_after": int((updated.get("counts") or {}).get("rediscovered_article_records") or 0),
         "replication_lag_count_before": int((((release.get("dynamics") or {}).get("replication_lag_days") or {}).get("count")) or 0),
         "replication_lag_count_after": int((((updated.get("dynamics") or {}).get("replication_lag_days") or {}).get("count")) or 0),
+        **metadata_summary,
     }
     return updated, summary
 
@@ -500,6 +663,9 @@ def meaningful(summary: dict[str, Any]) -> bool:
         or summary.get("possible_historical_match_records_before") != summary.get("possible_historical_match_records_after")
         or summary.get("rediscovered_article_records_before") != summary.get("rediscovered_article_records_after")
         or summary.get("replication_lag_count_before") != summary.get("replication_lag_count_after")
+        or summary.get("definitions_changed")
+        or summary.get("reliability_denominators_changed")
+        or summary.get("event_diagnostics_changed")
     )
 
 
