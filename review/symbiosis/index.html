@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AIEO Symbiosis Review Workbench</title>
+  <meta name="robots" content="noindex">
+  <style>/* populated in the self-contained artifact */</style>
+</head>
+<body>
+  <header>
+    <h1>AIEO relationship-pattern review</h1>
+    <p>Every item requires an explicit human decision before its symbiosis classification is public.</p>
+  </header>
+  <main>
+    <section id="summary" class="summary"></section>
+    <section class="toolbar">
+      <select id="filter-lens"><option value="all">Both lenses</option><option value="event">Developments</option><option value="coverage">Coverage items</option></select>
+      <select id="filter-status"><option value="all">All review states</option><option value="pending">Pending only</option><option value="reviewed">Reviewed only</option></select>
+      <select id="filter-config">
+        <option value="all">All relationship patterns</option>
+        <option value="mutualism">Mutualism</option>
+        <option value="ai_benefiting_parasitism">AI-benefiting parasitism</option>
+        <option value="human_benefiting_parasitism">Human-benefiting parasitism</option>
+        <option value="competition">Competition or co-constraint</option>
+        <option value="human_enabling_only">Human enabling only</option>
+        <option value="human_constraining_only">Human constraining only</option>
+        <option value="ai_enabling_only">AI enabling only</option>
+        <option value="ai_constraining_only">AI constraining only</option>
+        <option value="no_clear_relational_signal">No clear relational signal</option>
+        <option value="ambiguous_relational_signal">Ambiguous</option>
+        <option value="insufficient_evidence">Insufficient evidence</option>
+      </select>
+      <input id="filter-text" type="search" placeholder="Search title or publisher">
+      <button id="download" class="primary" type="button">Download reviewed decisions</button>
+      <button id="import" class="secondary" type="button">Import prior decisions</button>
+      <input id="import-file" type="file" accept="application/json,.json" hidden>
+      <button id="clear-all" class="secondary" type="button">Clear local reviews</button>
+      <span id="progress" class="progress"></span>
+    </section>
+    <section id="queue" class="queue"></section>
+  </main>
+  <footer>Download the JSON decision file after each session. You can import it into a later workbench to continue the full historical review.</footer>
+  <script>window.AIEO_SYMBIOSIS_PAYLOAD = {"codebook_version":"loading","items":[]};</script>
+  <script>/* populated in the self-contained artifact */</script>
+</body>
+</html>
