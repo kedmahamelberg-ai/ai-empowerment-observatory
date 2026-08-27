@@ -8,6 +8,7 @@ claim objective system performance, consciousness, or biological fitness.
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any
 
 CODEBOOK_VERSION = "aieo_news_symbiosis_v0.1"
@@ -39,6 +40,84 @@ EMPOWERMENT_STATUSES = {
     "non_empowerment",
     "unclear",
 }
+
+def release_identifier(payload: dict[str, Any], source_path: str | Path | None = None) -> str:
+    """Return a stable publication identifier for weekly releases and references."""
+    for key in ("release_id", "snapshot_id"):
+        value = str(payload.get(key) or "").strip()
+        if value:
+            return value
+    if source_path is not None:
+        return Path(source_path).stem
+    return ""
+
+
+def release_unit_ids(payload: dict[str, Any]) -> tuple[list[str], list[str]]:
+    """Return public coverage and event IDs available for item-level review."""
+    articles: set[str] = set()
+    events: set[str] = set()
+
+    coverage_rows = payload.get("units", {}).get("coverage_articles", []) or []
+    for row in coverage_rows:
+        if not isinstance(row, dict) or not row.get("article_id"):
+            continue
+        if row.get("classification", {}).get("ai_relevant") is False:
+            continue
+        articles.add(str(row["article_id"]))
+
+    for event in payload.get("evidence") or []:
+        if not isinstance(event, dict):
+            continue
+        if event.get("classification", {}).get("ai_relevant") is False:
+            continue
+        event_id = str(event.get("effective_event_id") or event.get("event_id") or "").strip()
+        if event_id:
+            events.add(event_id)
+        if not coverage_rows:
+            for article_id in event.get("member_article_ids") or []:
+                if article_id:
+                    articles.add(str(article_id))
+            for source in event.get("sources") or []:
+                if isinstance(source, dict) and source.get("article_id"):
+                    articles.add(str(source["article_id"]))
+
+    return sorted(articles), sorted(events)
+
+
+def release_review_scope(
+    payload: dict[str, Any],
+    source_path: str | Path | None = None,
+) -> dict[str, Any]:
+    """Describe whether a publication contains evidence that can be reviewed."""
+    release_id = release_identifier(payload, source_path)
+    article_ids, event_ids = release_unit_ids(payload)
+    reviewable = bool(article_ids or event_ids)
+    schema_version = str(payload.get("schema_version") or "")
+    snapshot_type = str(payload.get("snapshot_type") or "")
+    aggregate_reference = bool(
+        not reviewable
+        and (
+            schema_version.startswith("aieo_historical_snapshot_")
+            or snapshot_type
+            or payload.get("review_scope") == "aggregate_reference_only"
+        )
+    )
+    if reviewable:
+        reason = "unit_level_evidence_available"
+    elif aggregate_reference:
+        reason = "aggregate_reference_without_unit_level_evidence"
+    else:
+        reason = "publication_without_reviewable_unit_ids"
+    return {
+        "release_id": release_id,
+        "reviewable": reviewable,
+        "aggregate_reference": aggregate_reference,
+        "reason": reason,
+        "coverage_units": len(article_ids),
+        "event_units": len(event_ids),
+        "source_path": str(source_path or ""),
+    }
+
 
 HUMAN_DIRECTION = {
     "extension": "enabling",

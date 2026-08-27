@@ -41,6 +41,8 @@ from symbiosis_common import (
     CLASSIFIER_VERSION,
     CODEBOOK_VERSION,
     EVIDENCE_POLICY_VERSION,
+    release_identifier,
+    release_review_scope,
     validate_model_payload,
 )
 
@@ -114,23 +116,46 @@ def historical_release_paths(release_id: str = "") -> list[Path]:
     return sorted(paths, key=lambda path: (path.parent.name, path.stem))
 
 
-def selected_releases(scope: str, release_id: str = "") -> list[dict[str, Any]]:
+def selected_releases(
+    scope: str,
+    release_id: str = "",
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     paths = [current_release_path(release_id)] if scope == "latest" else historical_release_paths(release_id)
     releases: list[dict[str, Any]] = []
+    skipped: list[dict[str, Any]] = []
+
     for path in paths:
         payload = read_json(path)
-        # Current publication is weekly. Historical review also includes the
-        # launch baseline because it contains public source evidence that should
-        # not remain outside the human-review gate.
+        source_path = str(path.relative_to(ROOT))
+        stable_id = release_identifier(payload, path)
+        if not stable_id:
+            raise SymbiosisClassificationError(f"Publication lacks a stable identifier: {path}")
+
         if scope == "latest" and payload.get("release_type") != "weekly":
             continue
-        if not payload.get("release_id"):
-            raise SymbiosisClassificationError(f"Release lacks release_id: {path}")
-        payload["_source_path"] = str(path.relative_to(ROOT))
+
+        payload["release_id"] = stable_id
+        payload["_source_path"] = source_path
+        review_scope = release_review_scope(payload, source_path)
+        if not review_scope["reviewable"]:
+            if scope == "latest":
+                raise SymbiosisClassificationError(
+                    "Current weekly release has no item-level coverage or event evidence: "
+                    f"{path}"
+                )
+            skipped.append(review_scope)
+            print(
+                "Skipping publication reference without item-level evidence: "
+                f"{stable_id} ({review_scope['reason']})",
+                flush=True,
+            )
+            continue
+
         releases.append(payload)
-    if not releases:
-        raise SymbiosisClassificationError("No standardized weekly releases were selected.")
-    return releases
+
+    if not releases and not skipped:
+        raise SymbiosisClassificationError("No publication files were selected.")
+    return releases, skipped
 
 
 def paged_table(
@@ -735,7 +760,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
-    releases = selected_releases(args.scope, args.release_id)
+    releases, skipped_references = selected_releases(args.scope, args.release_id)
     client: Client = create_client(required_env("SUPABASE_URL"), required_env("SUPABASE_SECRET_KEY"))
 
     units: list[tuple[str, dict[str, Any]]] = []
@@ -755,8 +780,13 @@ def main() -> int:
             "status": "nothing_to_classify",
             "scope": args.scope,
             "selected_release_ids": [str(release["release_id"]) for release in releases],
+            "excluded_aggregate_references": skipped_references,
             "codebook_version": CODEBOOK_VERSION,
-            "remaining_note": "All selected release-specific units already have a successful classification under this codebook.",
+            "remaining_note": (
+                "All reviewable release-specific units already have a successful classification "
+                "under this codebook. Aggregate publication references without item-level "
+                "evidence are disclosed but are not forced into a relationship classification."
+            ),
         }
         write_output(payload)
         print(json.dumps(payload, indent=2))
@@ -819,6 +849,7 @@ def main() -> int:
             "run_key": run_key,
             "symbiosis_run_id": run_id,
             "selected_release_ids": sorted({unit["release_id"] for _, unit in units}),
+            "excluded_aggregate_references": skipped_references,
             "codebook_version": CODEBOOK_VERSION,
             "classifier_version": CLASSIFIER_VERSION,
             "classified_units": len(written),

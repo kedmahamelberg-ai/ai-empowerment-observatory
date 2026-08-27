@@ -13,7 +13,12 @@ from typing import Any
 
 from supabase import Client, create_client
 
-from symbiosis_common import CODEBOOK_VERSION, final_payload_from_classification
+from symbiosis_common import (
+    CODEBOOK_VERSION,
+    final_payload_from_classification,
+    release_identifier,
+    release_review_scope,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 RELEASES_DIR = ROOT / "data" / "releases"
@@ -38,9 +43,33 @@ def read_json(path: Path) -> dict[str, Any]:
     return payload
 
 
-def historical_release_ids() -> list[str]:
+def historical_release_catalog() -> tuple[list[str], list[dict[str, Any]]]:
     roots = [RELEASES_DIR / "baselines", RELEASES_DIR / "weekly"]
-    return sorted({path.stem for root in roots for path in root.glob("*.json") if path.is_file()})
+    reviewable_ids: set[str] = set()
+    excluded: list[dict[str, Any]] = []
+    for root in roots:
+        for path in root.glob("*.json"):
+            if not path.is_file():
+                continue
+            payload = read_json(path)
+            source_path = str(path.relative_to(ROOT))
+            release_id = release_identifier(payload, path)
+            scope = release_review_scope(payload, source_path)
+            if scope["reviewable"]:
+                reviewable_ids.add(release_id)
+            else:
+                excluded.append(scope)
+    return sorted(reviewable_ids), sorted(excluded, key=lambda row: str(row.get("release_id") or ""))
+
+
+def historical_release_ids() -> list[str]:
+    return historical_release_catalog()[0]
+
+
+def excluded_references_for_scope(scope: str) -> list[dict[str, Any]]:
+    if scope == "latest":
+        return []
+    return historical_release_catalog()[1]
 
 
 def current_release_id() -> str:
@@ -427,6 +456,7 @@ def build_payload(client: Client, *, scope: str) -> dict[str, Any]:
         "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         "scope": scope,
         "release_ids": release_ids,
+        "excluded_aggregate_references": excluded_references_for_scope(scope),
         "codebook_version": CODEBOOK_VERSION,
         "default_reviewer": "Kedma Hamelberg",
         "item_count": len(items),

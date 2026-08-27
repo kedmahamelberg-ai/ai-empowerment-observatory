@@ -12,7 +12,11 @@ from pathlib import Path
 from supabase import Client, create_client
 
 from publish_symbiosis_release import latest_rows, read_json, unit_ids
-from symbiosis_common import final_payload_from_classification
+from symbiosis_common import (
+    final_payload_from_classification,
+    release_identifier,
+    release_review_scope,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 RELEASES_DIR = ROOT / "data" / "releases"
@@ -49,11 +53,30 @@ def main() -> int:
     args = parse_args()
     client: Client = create_client(required_env("SUPABASE_URL"), required_env("SUPABASE_SECRET_KEY"))
     releases = []
+    excluded_references: list[dict[str, object]] = []
     total_expected = 0
     total_reviewed = 0
+    reviewable_release_count = 0
+
     for path in release_paths():
         release = read_json(path)
-        release_id = str(release.get("release_id") or path.stem)
+        source_path = str(path.relative_to(ROOT))
+        release_id = release_identifier(release, path)
+        scope = release_review_scope(release, source_path)
+
+        if not scope["reviewable"]:
+            excluded = {
+                **scope,
+                "period_start": release.get("period_start"),
+                "period_end": release.get("period_end"),
+                "review_scope": "aggregate_reference_only",
+                "complete": None,
+            }
+            excluded_references.append(excluded)
+            releases.append(excluded)
+            continue
+
+        reviewable_release_count += 1
         article_ids, event_ids, _ = unit_ids(release)
         coverage_rows = latest_rows(client, release_id=release_id, lens="coverage", ids=article_ids)
         event_rows = latest_rows(client, release_id=release_id, lens="event", ids=event_ids)
@@ -72,9 +95,10 @@ def main() -> int:
         releases.append(
             {
                 "release_id": release_id,
-                "source_path": str(path.relative_to(ROOT)),
+                "source_path": source_path,
                 "period_start": release.get("period_start"),
                 "period_end": release.get("period_end"),
+                "review_scope": "unit_level",
                 "coverage_expected": len(article_ids),
                 "coverage_classified": sum(1 for unit_id in article_ids if unit_id in coverage_rows),
                 "coverage_reviewed": coverage_reviewed,
@@ -86,13 +110,16 @@ def main() -> int:
         )
 
     payload = {
-        "schema_version": "aieo_symbiosis_review_completion_v1",
+        "schema_version": "aieo_symbiosis_review_completion_v1.1",
         "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
-        "release_count": len(releases),
+        "publication_count": len(releases),
+        "reviewable_release_count": reviewable_release_count,
+        "aggregate_reference_count": len(excluded_references),
+        "excluded_aggregate_references": excluded_references,
         "expected_units": total_expected,
         "reviewed_units": total_reviewed,
         "pending_units": total_expected - total_reviewed,
-        "complete": total_expected > 0 and total_reviewed == total_expected,
+        "complete": reviewable_release_count > 0 and total_expected > 0 and total_reviewed == total_expected,
         "releases": releases,
     }
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
