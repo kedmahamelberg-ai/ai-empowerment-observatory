@@ -2,6 +2,7 @@
 
 const CURRENT_URL = "/data/releases/current.json";
 const INDEX_URL = "/data/releases/index.json";
+const SYMBIOSIS_URL = "/data/symbiosis/current.json";
 
 const dateLong = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric" });
 const dateTime = new Intl.DateTimeFormat("en-GB", {
@@ -30,12 +31,6 @@ function plural(value, singular, pluralForm = `${singular}s`) {
   return Number(value) === 1 ? singular : pluralForm;
 }
 
-function signed(value) {
-  if (value == null || Number.isNaN(Number(value))) return "Not available";
-  const number = Number(value);
-  return `${number > 0 ? "+" : ""}${number.toFixed(2)}`;
-}
-
 function setText(id, value) {
   const element = document.getElementById(id);
   if (element) element.textContent = String(value ?? "Not available");
@@ -45,6 +40,15 @@ async function fetchJSON(url) {
   const response = await fetch(url, { cache: "no-store" });
   if (!response.ok) throw new Error(`${url} returned HTTP ${response.status}`);
   return response.json();
+}
+
+async function fetchOptionalJSON(url) {
+  try {
+    return await fetchJSON(url);
+  } catch (error) {
+    console.info(`${url} is not available yet`, error);
+    return null;
+  }
 }
 
 function updateNextEdition() {
@@ -79,16 +83,52 @@ function periodCounts(current) {
     followOn,
     newDevelopments,
     recurring: Number(raw.recurring_event_records ?? Math.max(0, events - newDevelopments)),
-    resurfaced: Number(raw.resurfaced_event_records ?? current.dynamics?.resurfaced_event_appearances ?? 0),
     possible: Number(raw.possible_historical_match_event_records || 0),
     unclassified: Number(raw.unclassified_novelty_event_records || 0),
     extra: Number(raw.extra_coverage || 0),
   };
 }
 
-function renderPreview(current) {
+function relationshipCard(symbiosis) {
+  const complete = Boolean(symbiosis?.review?.complete);
+  if (!complete) {
+    const reviewed = Number(symbiosis?.review?.event_reviewed || 0);
+    const total = Number(symbiosis?.review?.event_total || 0);
+    return {
+      label: "Human-AI relationship lens",
+      title: total ? `${reviewed} of ${total} developments reviewed` : "Relationship review is being prepared",
+      body: "The monthly brief will lead with who is represented as gaining or being constrained only after the complete current-week review is finished. Model-only labels are not shown as public findings.",
+    };
+  }
+
+  const counts = symbiosis?.event?.configuration_counts || {};
+  const candidates = [
+    ["mutualism", Number(counts.mutualism || 0)],
+    ["ai_benefiting_parasitism", Number(counts.ai_benefiting_parasitism || 0)],
+    ["human_benefiting_parasitism", Number(counts.human_benefiting_parasitism || 0)],
+    ["competition", Number(counts.competition || 0)],
+  ];
+  candidates.sort((a, b) => b[1] - a[1]);
+  const [key, count] = candidates[0];
+  const labels = {
+    mutualism: "Both people and the AI side gain",
+    ai_benefiting_parasitism: "The AI or operator side gains while people are constrained",
+    human_benefiting_parasitism: "People gain while the AI system is constrained",
+    competition: "People and the AI side are both constrained",
+  };
+  const completeCount = Number(symbiosis?.event?.complete_configuration_count || 0);
+  const noClear = Number(symbiosis?.event?.no_clear_relational_signal_count || 0);
+  const partial = Number(symbiosis?.event?.partial_signal_count || 0);
+  return {
+    label: "Human-AI relationship lens",
+    title: count ? `${count} ${plural(count, "development")} showed: ${labels[key]}` : "No complete two-sided pattern dominated",
+    body: `${completeCount} developments had a complete two-sided relationship signal. ${partial} had a one-sided signal and ${noClear} described no clear human-AI relationship. Human empowerment remains a secondary reviewed lens.`,
+  };
+}
+
+function renderPreview(current, symbiosis) {
   const c = periodCounts(current);
-  const eventIndex = current.lenses?.event?.empowerment_index;
+  const relationship = relationshipCard(symbiosis);
   const cards = [
     {
       label: "New reality",
@@ -98,15 +138,9 @@ function renderPreview(current) {
     {
       label: "Recurring attention",
       title: `${c.recurring} previously seen ${plural(c.recurring, "development")}`,
-      body: c.resurfaced
-        ? `${c.resurfaced} resurfaced after at least four weeks without observed coverage.${c.possible + c.unclassified ? ` ${c.possible + c.unclassified} novelty ${plural(c.possible + c.unclassified, "decision remains", "decisions remain")} under review.` : ""}`
-        : `Repeated coverage remains visible without being counted as another new development.${c.possible + c.unclassified ? ` ${c.possible + c.unclassified} novelty ${plural(c.possible + c.unclassified, "decision remains", "decisions remain")} under review.` : ""}`,
+      body: `${c.recurring} previously seen ${plural(c.recurring, "development received", "developments received")} coverage in this release without being counted as new again. AIEO stores exact recurrence timing where available instead of applying a fixed public cut-off.${c.possible + c.unclassified ? ` ${c.possible + c.unclassified} novelty ${plural(c.possible + c.unclassified, "decision remains", "decisions remain")} under review.` : ""}`,
     },
-    {
-      label: "Human-empowerment signal",
-      title: `${signed(eventIndex)} on the Event Lens`,
-      body: "Narrative tone is measured separately, so positive framing is not automatically treated as human empowerment.",
-    },
+    relationship,
   ];
   const grid = document.getElementById("takeaway-grid");
   if (grid) {
@@ -134,14 +168,18 @@ function renderScope(current, index) {
 async function init() {
   updateNextEdition();
   try {
-    const [current, index] = await Promise.all([fetchJSON(CURRENT_URL), fetchJSON(INDEX_URL)]);
+    const [current, index, symbiosis] = await Promise.all([
+      fetchJSON(CURRENT_URL),
+      fetchJSON(INDEX_URL),
+      fetchOptionalJSON(SYMBIOSIS_URL),
+    ]);
     const c = periodCounts(current);
     const period = formatRange(current.period_start, current.period_end);
     setText("report-period", `Current weekly evidence feeding the next monthly edition · ${period}`);
     setText("cover-coverage-count", c.articles);
     setText("preview-new", c.newDevelopments);
     setText("preview-recurring", c.recurring);
-    renderPreview(current);
+    renderPreview(current, symbiosis);
     renderScope(current, index);
   } catch (error) {
     console.error("Monthly Pulse preview could not be loaded", error);
