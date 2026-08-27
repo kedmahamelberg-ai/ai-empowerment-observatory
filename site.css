@@ -152,3 +152,8 @@ footer a { text-decoration: none; }
   html { scroll-behavior: auto; }
   *,*::before,*::after { transition-duration: .01ms !important; animation-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+
+/* v5.9.1 data-state hardening */
+.data-error { color: #9a2b2b; }
+.signal-tape > .data-error { grid-column: 1 / -1; padding: 18px; }
+.signal-tape > .data-error a { color: var(--teal-dark); font-weight: 850; }

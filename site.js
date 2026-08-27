@@ -1,13 +1,18 @@
 "use strict";
 
-import { initDiscoveryGlobe } from "/globe.js";
+import { initDiscoveryGlobe } from "/globe.js?v=5.9.1";
 
+const BUILD_ID = "5.9.1";
 const CURRENT_URL = "/data/releases/current.json";
 const INDEX_URL = "/data/releases/index.json";
 const COUNTRIES_URL = "/edu/countries.json";
 const SYMBIOSIS_URL = "/data/symbiosis/current.json";
 
-const dateLong = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric" });
+const dateLong = new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
 
 function escapeHTML(value) {
   return String(value ?? "")
@@ -16,15 +21,6 @@ function escapeHTML(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
-}
-
-function safeExternalUrl(value) {
-  try {
-    const url = new URL(String(value || ""));
-    return ["http:", "https:"].includes(url.protocol) ? url.href : "#";
-  } catch {
-    return "#";
-  }
 }
 
 function parseDate(value) {
@@ -36,8 +32,11 @@ function formatRange(startValue, endValue) {
   const start = parseDate(startValue);
   const end = parseDate(endValue);
   if (!start || !end) return "Date unavailable";
-  const sameMonth = start.getUTCMonth() === end.getUTCMonth() && start.getUTCFullYear() === end.getUTCFullYear();
-  return sameMonth ? `${start.getUTCDate()}-${dateLong.format(end)}` : `${dateLong.format(start)}-${dateLong.format(end)}`;
+  const sameMonth = start.getUTCMonth() === end.getUTCMonth()
+    && start.getUTCFullYear() === end.getUTCFullYear();
+  return sameMonth
+    ? `${start.getUTCDate()}-${dateLong.format(end)}`
+    : `${dateLong.format(start)}-${dateLong.format(end)}`;
 }
 
 function plural(value, singular, pluralForm = `${singular}s`) {
@@ -49,18 +48,14 @@ function setText(id, value) {
   if (element) element.textContent = String(value ?? "Not available");
 }
 
-async function fetchJSON(url, optional = false) {
-  try {
-    const response = await fetch(url, { cache: "no-store" });
-    if (!response.ok) throw new Error(`${url} returned HTTP ${response.status}`);
-    return response.json();
-  } catch (error) {
-    if (optional) {
-      console.info(`${url} is not available yet`, error);
-      return null;
-    }
-    throw error;
-  }
+async function fetchJSON(url) {
+  const separator = url.includes("?") ? "&" : "?";
+  const response = await fetch(`${url}${separator}build=${encodeURIComponent(BUILD_ID)}&t=${Date.now()}`, {
+    cache: "no-store",
+    headers: { Accept: "application/json" },
+  });
+  if (!response.ok) throw new Error(`${url} returned HTTP ${response.status}`);
+  return response.json();
 }
 
 function releaseCounts(release) {
@@ -72,9 +67,24 @@ function releaseCounts(release) {
   const newDevelopments = Number(raw.new_event_records ?? (first + followOn));
   const possible = Number(raw.possible_historical_match_event_records || 0);
   const unclassified = Number(raw.unclassified_novelty_event_records || 0);
-  const recurring = Number(raw.recurring_event_records ?? Math.max(0, events - newDevelopments - possible - unclassified));
-  const extra = Number.isFinite(Number(raw.extra_coverage)) ? Number(raw.extra_coverage) : Math.max(0, articles - events);
-  return { articles, events, first, followOn, newDevelopments, recurring, possible, unclassified, extra };
+  const recurring = Number(raw.recurring_event_records
+    ?? Math.max(0, events - newDevelopments - possible - unclassified));
+  const declaredExtra = Number(raw.extra_coverage);
+  const computedExtra = Math.max(0, articles - events);
+  const extra = Number.isFinite(declaredExtra) && declaredExtra >= 0
+    ? declaredExtra
+    : computedExtra;
+  return {
+    articles,
+    events,
+    first,
+    followOn,
+    newDevelopments,
+    recurring,
+    possible,
+    unclassified,
+    extra,
+  };
 }
 
 function weeklyRows(index) {
@@ -86,7 +96,7 @@ function rowNumber(row, keys) {
   for (const key of keys) {
     if (row && row[key] != null && Number.isFinite(Number(row[key]))) return Number(row[key]);
   }
-  return 0;
+  return null;
 }
 
 function changeMeta(current, previous) {
@@ -96,48 +106,55 @@ function changeMeta(current, previous) {
   return {
     className: delta > 0 ? "up" : "down",
     arrow: delta > 0 ? "↑" : "↓",
-    text: `${Math.abs(delta)}`,
+    text: String(Math.abs(delta)),
   };
 }
 
 function renderSignalTape(release, index) {
   const container = document.getElementById("home-signal-tape");
   if (!container) return;
+  if (!release) {
+    container.innerHTML = '<p class="loading-line data-error">Weekly comparison is temporarily unavailable. <a href="/edu/">Open this week</a></p>';
+    return;
+  }
+
   const counts = releaseCounts(release);
   const rows = weeklyRows(index);
   const currentRow = rows.find((row) => row.release_id === release.release_id) || rows.at(-1) || null;
-  const currentIndex = currentRow ? rows.indexOf(currentRow) : rows.length - 1;
+  const currentIndex = currentRow ? rows.indexOf(currentRow) : -1;
   const previous = currentIndex > 0 ? rows[currentIndex - 1] : null;
+
   const values = [
     {
       label: "Coverage",
       value: counts.articles,
-      previous: previous ? rowNumber(previous, ["articles", "ai_relevant_articles"]) : NaN,
+      previous: previous ? rowNumber(previous, ["articles", "ai_relevant_articles"]) : null,
       note: "source items this week",
       href: "/edu/?view=all#evidence",
     },
     {
       label: "Developments",
       value: counts.events,
-      previous: previous ? rowNumber(previous, ["event_records", "ai_relevant_event_records"]) : NaN,
+      previous: previous ? rowNumber(previous, ["event_records", "ai_relevant_event_records"]) : null,
       note: "distinct occurrences",
       href: "/edu/#history",
     },
     {
       label: "Additional reports",
       value: counts.extra,
-      previous: previous ? rowNumber(previous, ["extra_coverage"]) : NaN,
+      previous: previous ? rowNumber(previous, ["extra_coverage"]) : null,
       note: "attention, not another event",
       href: "/edu/?view=recurring#evidence",
     },
     {
       label: "New to AIEO",
       value: counts.newDevelopments,
-      previous: NaN,
+      previous: null,
       note: "not in the disclosed history",
       href: "/edu/?view=new#evidence",
     },
   ];
+
   container.innerHTML = values.map((item) => {
     const change = changeMeta(item.value, item.previous);
     return `
@@ -152,6 +169,14 @@ function renderSignalTape(release, index) {
 }
 
 function renderRelease(release) {
+  if (!release) {
+    setText("release-badge", "Current signal temporarily unavailable");
+    setText("hero-summary", "The latest weekly data could not be loaded. Open the current-week page to try again.");
+    setText("hero-fact-new", "New-development count unavailable");
+    setText("hero-fact-repeat", "Repeated-attention count unavailable");
+    return;
+  }
+
   const counts = releaseCounts(release);
   const period = formatRange(release.period_start, release.period_end);
   setText("release-badge", `Current weekly signal | ${period}`);
@@ -176,10 +201,34 @@ function renderRelease(release) {
 
 function relationshipCell(key, count, complete) {
   const definitions = {
-    mutualism: { cls: "mutualism", people: "People ↑", ai: "AI ↑", label: "Both gain", technical: "Mutualism" },
-    ai_benefiting_parasitism: { cls: "ai-benefit", people: "People ↓", ai: "AI ↑", label: "AI side gains, people are constrained", technical: "AI-benefiting parasitism" },
-    human_benefiting_parasitism: { cls: "human-benefit", people: "People ↑", ai: "AI ↓", label: "People gain, AI side is constrained", technical: "Human-benefiting parasitism" },
-    competition: { cls: "competition", people: "People ↓", ai: "AI ↓", label: "Both are constrained", technical: "Competition or co-constraint" },
+    mutualism: {
+      cls: "mutualism",
+      people: "People ↑",
+      ai: "AI ↑",
+      label: "Both gain",
+      technical: "Mutualism",
+    },
+    ai_benefiting_parasitism: {
+      cls: "ai-benefit",
+      people: "People ↓",
+      ai: "AI ↑",
+      label: "AI side gains, people are constrained",
+      technical: "AI-benefiting parasitism",
+    },
+    human_benefiting_parasitism: {
+      cls: "human-benefit",
+      people: "People ↑",
+      ai: "AI ↓",
+      label: "People gain, AI side is constrained",
+      technical: "Human-benefiting parasitism",
+    },
+    competition: {
+      cls: "competition",
+      people: "People ↓",
+      ai: "AI ↓",
+      label: "Both are constrained",
+      technical: "Competition or co-constraint",
+    },
   };
   const row = definitions[key];
   const share = complete ? (count / complete) * 100 : 0;
@@ -193,9 +242,15 @@ function relationshipCell(key, count, complete) {
   `;
 }
 
-function renderRelationship(symbiosis) {
+function renderRelationship(symbiosis, error = null) {
   const ticker = document.getElementById("relationship-ticker");
   if (!ticker) return;
+  if (error) {
+    ticker.innerHTML = '<p class="loading-line data-error">The reviewed relationship signal is temporarily unavailable.</p>';
+    setText("relationship-denominator", "Signal unavailable");
+    setText("relationship-other-summary", "Weekly counts and source evidence remain available.");
+    return;
+  }
   if (!symbiosis || symbiosis.public_status !== "human_reviewed" || !symbiosis.review?.event_complete) {
     ticker.innerHTML = '<p class="loading-line">The relationship signal is still under review for this release.</p>';
     setText("relationship-denominator", "Review in progress");
@@ -223,7 +278,10 @@ function renderRelationship(symbiosis) {
 }
 
 function marketRows(release, iso3) {
-  return (release.units?.coverage_articles || []).filter((row) => row.classification?.ai_relevant && (row.search_markets || []).includes(iso3));
+  return (release?.units?.coverage_articles || []).filter((row) => (
+    row.classification?.ai_relevant
+    && (row.search_markets || []).includes(iso3)
+  ));
 }
 
 function topPublishers(rows) {
@@ -232,38 +290,46 @@ function topPublishers(rows) {
     const publisher = String(row.publisher || "Unknown publication");
     counts.set(publisher, (counts.get(publisher) || 0) + 1);
   });
-  return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 3);
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, 3);
 }
 
 function renderMarketCard(release, markets, iso3) {
   const card = document.getElementById("market-card");
-  const cta = document.getElementById("market-evidence-cta");
-  if (!card || !cta) return;
-  if (!iso3 || !markets[iso3]) {
-    card.innerHTML = '<div><strong>Choose a market</strong><p>See the coverage found through that Google News search.</p></div><a id="market-evidence-cta" class="text-link" href="/edu/#evidence">All evidence</a>';
+  if (!card) return;
+  if (!iso3 || !markets?.[iso3]) {
+    card.innerHTML = '<div><strong>Choose a market</strong><p>See the coverage found through that Google News search.</p></div><a class="text-link" href="/edu/#evidence">All evidence</a>';
     return;
   }
   const market = markets[iso3];
   const rows = marketRows(release, iso3);
-  const fallbackCount = Number(release.sources?.discovery_markets?.[iso3] || 0);
+  const fallbackCount = Number(release?.sources?.discovery_markets?.[iso3] || 0);
   const count = rows.length || fallbackCount;
   const leaders = topPublishers(rows).map(([name, value]) => `${name} (${value})`).join(", ");
   card.innerHTML = `
-    <div><strong>${count} coverage ${plural(count, "item")} found through ${escapeHTML(market.name)}</strong><p>${leaders ? `Most visible: ${escapeHTML(leaders)}.` : "Open the evidence list for source details."}</p></div>
-    <a id="market-evidence-cta" class="text-link" href="/edu/?market=${encodeURIComponent(iso3)}&view=all#evidence">Open evidence</a>
+    <div>
+      <strong>${count} coverage ${plural(count, "item")} found through ${escapeHTML(market.name)}</strong>
+      <p>${leaders ? `Most visible: ${escapeHTML(leaders)}.` : "Open the evidence list for source details."}</p>
+    </div>
+    <a class="text-link" href="/edu/?market=${encodeURIComponent(iso3)}&view=all#evidence">Open evidence</a>
   `;
 }
 
 function renderMarketButtons(release, markets, globe) {
   const container = document.getElementById("market-buttons");
-  if (!container) return;
-  let selected = null;
+  if (!container) return null;
   const select = (iso3) => {
-    selected = iso3;
-    container.querySelectorAll("button[data-market]").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.market === iso3)));
+    container.querySelectorAll("button[data-market]").forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.dataset.market === iso3));
+    });
     renderMarketCard(release, markets, iso3);
   };
-  container.innerHTML = Object.entries(markets).map(([iso3, market]) => `<button type="button" data-market="${escapeHTML(iso3)}" aria-pressed="false">${escapeHTML(market.short_name || market.name)}</button>`).join("");
+  container.innerHTML = Object.entries(markets || {}).map(([iso3, market]) => `
+    <button type="button" data-market="${escapeHTML(iso3)}" aria-pressed="false">
+      ${escapeHTML(market.short_name || market.name)}
+    </button>
+  `).join("");
   container.querySelectorAll("button[data-market]").forEach((button) => {
     button.addEventListener("click", () => {
       select(button.dataset.market);
@@ -291,20 +357,48 @@ function setupInfoPopovers() {
   });
 }
 
-async function init() {
-  setupNavigation();
-  setupInfoPopovers();
+async function loadRelease() {
   try {
-    const [release, index, countries, symbiosis] = await Promise.all([
-      fetchJSON(CURRENT_URL),
-      fetchJSON(INDEX_URL),
-      fetchJSON(COUNTRIES_URL),
-      fetchJSON(SYMBIOSIS_URL, true),
-    ]);
-    renderSignalTape(release, index);
+    const release = await fetchJSON(CURRENT_URL);
     renderRelease(release);
+    return release;
+  } catch (error) {
+    console.error("Current weekly release could not be loaded", error);
+    renderRelease(null);
+    return null;
+  }
+}
+
+async function loadSignalTape(releasePromise) {
+  const release = await releasePromise;
+  if (!release) {
+    renderSignalTape(null, null);
+    return;
+  }
+  try {
+    const index = await fetchJSON(INDEX_URL);
+    renderSignalTape(release, index);
+  } catch (error) {
+    console.warn("Weekly comparison index could not be loaded", error);
+    renderSignalTape(release, null);
+  }
+}
+
+async function loadRelationship() {
+  try {
+    const symbiosis = await fetchJSON(SYMBIOSIS_URL);
     renderRelationship(symbiosis);
-    const markets = countries.markets || {};
+  } catch (error) {
+    console.warn("Relationship artifact could not be loaded", error);
+    renderRelationship(null, error);
+  }
+}
+
+async function loadGlobe(releasePromise) {
+  const release = await releasePromise;
+  try {
+    const countries = await fetchJSON(COUNTRIES_URL);
+    const markets = countries?.markets || {};
     let selectMarket = null;
     let globe = null;
     try {
@@ -322,10 +416,26 @@ async function init() {
     selectMarket = renderMarketButtons(release, markets, globe);
     renderMarketCard(release, markets, null);
   } catch (error) {
-    console.error("Homepage data could not be loaded", error);
-    setText("release-badge", "Current signal temporarily unavailable");
-    setText("hero-summary", "The latest release could not be loaded. Please try again shortly.");
+    console.error("Discovery-market data could not be loaded", error);
+    const fallback = document.getElementById("home-globe-fallback");
+    if (fallback) {
+      fallback.hidden = false;
+      fallback.textContent = "The discovery map is temporarily unavailable. Open the source evidence to continue.";
+    }
+    renderMarketCard(release, {}, null);
   }
+}
+
+async function init() {
+  console.info(`AIEO public interface build ${BUILD_ID}`);
+  setupNavigation();
+  setupInfoPopovers();
+  const releasePromise = loadRelease();
+  await Promise.allSettled([
+    loadSignalTape(releasePromise),
+    loadRelationship(),
+    loadGlobe(releasePromise),
+  ]);
 }
 
 init();
