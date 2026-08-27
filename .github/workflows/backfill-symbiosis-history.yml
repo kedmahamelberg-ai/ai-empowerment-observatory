@@ -32,6 +32,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+      - name: Validate historical publication inputs
+        run: python3 scripts/validate_symbiosis_release_inputs.py --scope history
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
