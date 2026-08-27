@@ -4,8 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Reports | AI Empowerment Observatory</title>
-  <meta name="description" content="Monthly, quarterly and annual AI Empowerment Observatory summaries: distinct developments, recurring attention, replication delay and revision history.">
-  <link rel="stylesheet" href="/reports/reports.css">
+  <meta name="description" content="Monthly, quarterly and annual AI Empowerment Observatory summaries built from standardized weekly evidence.">
+  <link rel="canonical" href="https://observatory.hamelberg-ai.com/reports/">
+  <link rel="stylesheet" href="/reports/reports.css?v=5.9.1">
   <link rel="stylesheet" href="/analytics-consent.css">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96">
@@ -13,9 +14,18 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to the reports</a>
+
   <header class="site-header">
-    <a class="brand" href="/"><span class="brand-mark">AIEO</span><span><strong>AI Empowerment Observatory</strong><small>Less noise. More signal.</small></span></a>
-    <nav aria-label="Main navigation">
+    <a class="brand" href="/" aria-label="AI Empowerment Observatory home">
+      <span class="brand-mark" aria-hidden="true">AIEO</span>
+      <span class="brand-copy">
+        <strong>AI Empowerment Observatory</strong>
+        <small>Less noise. More signal.</small>
+      </span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
+    <nav id="main-nav" aria-label="Main navigation">
       <a href="/edu/">This week</a>
       <a aria-current="page" href="/reports/">Reports</a>
       <a href="/methodology/">Methodology</a>
@@ -23,66 +33,78 @@
     </nav>
   </header>
 
-  <main>
-    <section class="reports-hero">
-      <div>
-        <p class="eyebrow">Report archive</p>
-        <h1>The story gets stronger over time.</h1>
-        <p>
-          Weekly releases preserve what appeared. Monthly, quarterly and annual
-          views then separate <strong>distinct developments</strong> from
-          <strong>recurring attention</strong> across the whole period.
-        </p>
+  <main id="main-content">
+    <section class="reports-hero" aria-labelledby="reports-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Evidence over time</p>
+        <h1 id="reports-title">One history.<br>Three useful views.</h1>
+        <p>Monthly, quarterly and annual summaries use the same accepted event history. They count each development once while keeping repeated attention visible.</p>
         <div class="hero-actions">
-          <a class="button primary" href="/report/">Receive the next Pulse →</a>
-          <a class="button secondary" href="/edu/#history">See weekly history</a>
+          <a class="button primary" href="/report/">Receive the next Pulse</a>
+          <a class="button secondary" href="/edu/#history">Compare weekly releases</a>
         </div>
       </div>
-      <aside>
-        <p class="eyebrow">Current reporting principle</p>
-        <strong>Count reality once.<br>Keep attention visible.</strong>
-        <p>A development that returns in weeks 5 and 10 remains one development with three coverage episodes.</p>
+
+      <aside class="archive-overview" aria-live="polite">
+        <p class="eyebrow">Archive now</p>
+        <strong id="summary-count">Loading summaries...</strong>
+        <p id="weekly-basis">Reading the standardized weekly history.</p>
+        <details class="info-popover">
+          <summary aria-label="Explain the three reporting views">i</summary>
+          <div class="info-card">
+            <strong>Same evidence, different distance</strong>
+            <p>Monthly views are concise. Quarterly views reveal recurring patterns. Annual views preserve the longest history and revision trail.</p>
+          </div>
+        </details>
       </aside>
     </section>
 
-    <section class="report-flow" aria-labelledby="flow-title">
-      <div class="section-heading">
-        <p class="eyebrow">One evidence history</p>
-        <h2 id="flow-title">The same data, viewed at three useful distances</h2>
+    <section class="current-section" aria-labelledby="current-title">
+      <div class="section-heading split">
+        <div>
+          <p class="eyebrow">Current reporting windows</p>
+          <h2 id="current-title">Open the period that fits your question</h2>
+        </div>
+        <p id="archive-status">Loading report history...</p>
       </div>
-      <div class="flow-grid">
-        <article><span>1</span><h3>Monthly</h3><p>One concise narrative of what entered the pool and what returned.</p></article>
-        <article><span>2</span><h3>Quarterly</h3><p>Patterns across weeks, including resurfacing and replication delay.</p></article>
-        <article><span>3</span><h3>Annual</h3><p>A fuller view of news memory, diffusion, persistence and revised event history.</p></article>
-      </div>
+      <div id="current-periods" class="period-dashboard" aria-live="polite"></div>
     </section>
 
-    <section class="archive-section" aria-labelledby="archive-title">
+    <section id="archive-section" class="archive-section" aria-labelledby="archive-title" hidden>
       <div class="section-heading split">
-        <div><p class="eyebrow">Available summaries</p><h2 id="archive-title">Open one period at a time</h2></div>
-        <p id="archive-status">Loading report history…</p>
+        <div>
+          <p class="eyebrow">Earlier periods</p>
+          <h2 id="archive-title">Past summaries remain available</h2>
+        </div>
+        <p>Open only the period you need.</p>
       </div>
-      <div id="report-groups" class="report-groups"></div>
+      <div id="archive-periods" class="archive-grid"></div>
     </section>
 
     <section class="revision-card" aria-labelledby="revision-title">
       <div>
-        <p class="eyebrow">Living evidence, visible corrections</p>
-        <h2 id="revision-title">Reports use the latest accepted event history without erasing what was first published.</h2>
+        <p class="eyebrow">Visible corrections</p>
+        <h2 id="revision-title">New evidence can revise the current view without erasing the earlier one.</h2>
       </div>
-      <div>
-        <p id="revision-copy">Loading the current revision status…</p>
-        <a href="/methodology/#revision-policy">See the revision policy →</a>
+      <div class="revision-copy-wrap">
+        <p id="revision-copy">Loading revision status...</p>
+        <a href="/methodology/#revision-policy">See the revision policy</a>
       </div>
     </section>
   </main>
 
   <footer>
     <span>© 2026 AI Empowerment Observatory</span>
-    <nav><a href="/">Home</a><a href="/edu/">This week</a><a href="/methodology/">Methodology</a><a href="/privacy/">Privacy</a><a href="mailto:kedma@hamelberg-ai.com">Contact</a></nav>
+    <nav aria-label="Footer navigation">
+      <a href="/">Home</a>
+      <a href="/edu/">This week</a>
+      <a href="/methodology/">Methodology</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:kedma@hamelberg-ai.com">Contact</a>
+    </nav>
   </footer>
 
-  <script src="/reports/reports.js"></script>
+  <script src="/reports/reports.js?v=5.9.1"></script>
   <script src="/analytics.js"></script>
 </body>
 </html>
