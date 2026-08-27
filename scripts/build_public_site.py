@@ -64,6 +64,7 @@ OPTIONAL_DATA_FILES = [
 # weekly archives, future monthly releases, and deliberate release revisions.
 OPTIONAL_PUBLIC_JSON_DIRS = [
     "data/releases",
+    "data/symbiosis",
 ]
 
 
