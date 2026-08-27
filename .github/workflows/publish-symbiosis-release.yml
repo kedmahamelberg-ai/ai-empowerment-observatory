@@ -43,8 +43,23 @@ jobs:
           if [[ "${{ inputs.require_complete }}" == "true" ]]; then args+=(--require-complete); fi
           python scripts/publish_symbiosis_release.py "${args[@]}"
       - name: Commit relationship artifact
+        shell: bash
         run: |
+          set -euo pipefail
+
+          mapfile -t generated_files < <(
+            find data/symbiosis -type f -name '*.json' -print | sort
+          )
+
+          if (( ${#generated_files[@]} == 0 )); then
+            echo "::error::No generated symbiosis JSON files were found."
+            exit 1
+          fi
+
+          echo "Generated relationship files:"
+          printf '  %s\n' "${generated_files[@]}"
+
           bash scripts/commit_generated_files.sh \
             "Publish reviewed AIEO relationship lens [$(date -u +%Y-%m-%d)]" \
             main \
-            data/symbiosis
+            "${generated_files[@]}"
