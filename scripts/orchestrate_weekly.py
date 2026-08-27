@@ -25,6 +25,8 @@ WORKFLOWS = [
     "Classify Coverage and Event Lenses",
     "Finalize Stage 7C Residual Rule",
     "Build Weekly Observatory Release",
+    "Classify Current Human-AI Relationship Patterns",
+    "Build Symbiosis Relationship Lens",
     "Build Observatory Period Summaries",
     "Generate Public Observatory Insights",
     "Publish Observatory Release",
@@ -36,9 +38,17 @@ WORKFLOW_INPUTS: dict[str, dict[str, str]] = {
         "mode": "auto",
         "dry_run": "false",
     },
+    "Classify Current Human-AI Relationship Patterns": {
+        "lens": "both",
+        "replace": "false",
+    },
     "Build Weekly Observatory Release": {
         "replace": "false",
         "rebuild_index_only": "false",
+    },
+    "Build Symbiosis Relationship Lens": {
+        "release_id": "",
+        "require_complete": "false",
     },
 }
 
@@ -48,7 +58,9 @@ TIMEOUT_MINUTES = {
     "Reconcile Observatory History": 420,
     "Classify Coverage and Event Lenses": 360,
     "Finalize Stage 7C Residual Rule": 60,
+    "Classify Current Human-AI Relationship Patterns": 360,
     "Build Weekly Observatory Release": 90,
+    "Build Symbiosis Relationship Lens": 30,
     "Build Observatory Period Summaries": 30,
     "Generate Public Observatory Insights": 60,
     "Publish Observatory Release": 60,
@@ -224,7 +236,7 @@ def main() -> int:
         run_id = dispatch(workflows[name])
         wait_for_run(name, run_id)
 
-    print("\nWeekly Observatory pipeline completed successfully, including longitudinal reconciliation and period summaries.")
+    print("\nWeekly Observatory pipeline completed successfully, including longitudinal reconciliation, the human-gated relationship lens, and period summaries.")
     return 0
 
 
