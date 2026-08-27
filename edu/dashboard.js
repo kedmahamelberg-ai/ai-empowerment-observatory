@@ -5,6 +5,7 @@ import { initDiscoveryGlobe } from "/edu/map.js";
 const CURRENT_URL = "/data/releases/current.json";
 const INDEX_URL = "/data/releases/index.json";
 const COUNTRIES_URL = "/edu/countries.json";
+const SYMBIOSIS_URL = "/data/symbiosis/current.json";
 
 const STATUS_LABELS = {
   expanding: "Expanding capability or control",
@@ -32,6 +33,21 @@ const TOPIC_LABELS = {
   infrastructure_investment: "Infrastructure and investment",
   other: "Other",
 };
+
+const RELATIONSHIP_LABELS = {
+  mutualism: "Both people and the AI side gain",
+  ai_benefiting_parasitism: "The AI or operator side gains while people are constrained",
+  human_benefiting_parasitism: "People gain while the AI system is constrained",
+  competition: "People and the AI side are both constrained",
+  human_enabling_only: "Human-side enabling signal only",
+  human_constraining_only: "Human-side constraining signal only",
+  ai_enabling_only: "AI-side enabling signal only",
+  ai_constraining_only: "AI-side constraining signal only",
+  no_clear_relational_signal: "No clear human-AI relationship signal",
+  ambiguous_relational_signal: "Relationship direction unclear",
+  insufficient_evidence: "Insufficient source evidence",
+};
+
 const SOURCE_TYPE_LABELS = {
   general_news: "newspapers and broadcasters",
   specialist: "specialist publications",
@@ -61,6 +77,7 @@ const dateTime = new Intl.DateTimeFormat("en-GB", {
 });
 
 let currentRelease = null;
+let currentSymbiosis = null;
 let releaseIndex = null;
 let markets = {};
 let globe = null;
@@ -151,12 +168,36 @@ function counts() {
     first,
     newDevelopments,
     recurring: Number(raw.recurring_event_records ?? Math.max(0, events - newDevelopments)),
-    resurfaced: Number(raw.resurfaced_event_records ?? currentRelease?.dynamics?.resurfaced_event_appearances ?? 0),
     followOn,
     rediscovered: Number(raw.rediscovered_article_records ?? currentRelease?.dynamics?.rediscovered_article_records ?? 0),
     possible: Number(raw.possible_historical_match_event_records || 0),
     unclassified: Number(raw.unclassified_novelty_event_records || 0),
-    extra: Number(raw.extra_coverage || 0),
+    declaredExtra: Number(raw.extra_coverage || 0),
+  };
+}
+
+function validatedWeeklyArithmetic(c) {
+  const computedExtra = Math.max(0, c.articles - c.events);
+  const underReview = Math.max(0, c.events - c.newDevelopments - c.recurring);
+  const declaredUnderReview = c.possible + c.unclassified;
+  const issues = [];
+
+  if (c.declaredExtra !== computedExtra) {
+    issues.push(`extra coverage was declared as ${c.declaredExtra}, but articles minus developments equals ${computedExtra}`);
+  }
+  if (declaredUnderReview > underReview) {
+    issues.push("declared novelty review categories exceed the unresolved novelty total");
+  }
+  if (c.newDevelopments + c.recurring + underReview !== c.events) {
+    issues.push("new, recurring and unresolved developments do not reconcile to the total");
+  }
+  if (issues.length) {
+    console.warn("AIEO weekly arithmetic check", issues);
+  }
+  return {
+    extra: computedExtra,
+    underReview,
+    valid: issues.length === 0,
   };
 }
 
@@ -196,60 +237,119 @@ function poolCopy() {
   return "The pilot history begins on 5 August 2026. Longitudinal matching is being activated, so the current new/recurring distinction should be read as provisional until the historical pool is disclosed in the next release.";
 }
 
+function relationshipEventById(event) {
+  if (!currentSymbiosis || currentSymbiosis.release_id !== currentRelease?.release_id) return null;
+  if (!currentSymbiosis.review?.complete) return null;
+  const eventId = String(event?.effective_event_id || event?.event_id || "");
+  return (currentSymbiosis.evidence || []).find((row) => String(row.event_id) === eventId) || null;
+}
+
+function renderRelationship() {
+  const banner = document.getElementById("relationship-review-banner");
+  const core = document.getElementById("relationship-core");
+  const other = document.getElementById("relationship-other");
+  if (!banner || !core || !other) return;
+
+  if (!currentSymbiosis || currentSymbiosis.release_id !== currentRelease?.release_id) {
+    banner.hidden = false;
+    banner.textContent = "The relationship-pattern review has not yet been published for this weekly release. Counts, novelty, the globe, and source evidence remain available.";
+    core.hidden = true;
+    other.hidden = true;
+    setText("relationship-scope", "Relationship classifications are human-gated and are not shown until the matching review artifact exists.");
+    setText("story-index", "Review pending");
+    setText("story-human-copy", "AIEO will show the two-sided relationship signal after the current release has a matching human-reviewed artifact.");
+    return;
+  }
+
+  const review = currentSymbiosis.review || {};
+  const eventSummary = currentSymbiosis.event || {};
+  if (!review.complete) {
+    banner.hidden = false;
+    banner.textContent = `Human review is in progress: ${Number(review.event_reviewed || 0)} of ${Number(review.event_total || 0)} developments and ${Number(review.coverage_reviewed || 0)} of ${Number(review.coverage_total || 0)} coverage items have been reviewed.`;
+    core.hidden = true;
+    other.hidden = true;
+    setText("relationship-scope", "AIEO does not publish a partial relationship distribution because every development and coverage item must pass the same explicit human-review gate.");
+    setText("story-index", `${Number(review.event_reviewed || 0)}/${Number(review.event_total || 0)}`);
+    setText("story-human-copy", "The primary relationship lens remains under human review for this week.");
+    return;
+  }
+
+  banner.hidden = true;
+  core.hidden = false;
+  other.hidden = false;
+  const counts = eventSummary.configuration_counts || {};
+  setText("relationship-mutualism", Number(counts.mutualism || 0));
+  setText("relationship-ai-benefit", Number(counts.ai_benefiting_parasitism || 0));
+  setText("relationship-human-benefit", Number(counts.human_benefiting_parasitism || 0));
+  setText("relationship-competition", Number(counts.competition || 0));
+  setText("relationship-partial", Number(eventSummary.partial_signal_count || 0));
+  setText("relationship-none", Number(eventSummary.no_clear_relational_signal_count || 0));
+  setText("relationship-insufficient", Number(eventSummary.insufficient_evidence_count || 0));
+  setText(
+    "relationship-scope",
+    `${Number(review.event_reviewed || 0)} developments were human reviewed. The four large cards count complete two-sided configurations. One-sided, no-clear-signal, ambiguous, and insufficient-evidence cases are kept outside that denominator.`,
+  );
+  setText("story-index", Number(review.event_reviewed || 0));
+  const coreCounts = [
+    ["mutualism", Number(counts.mutualism || 0)],
+    ["ai_benefiting_parasitism", Number(counts.ai_benefiting_parasitism || 0)],
+    ["human_benefiting_parasitism", Number(counts.human_benefiting_parasitism || 0)],
+    ["competition", Number(counts.competition || 0)],
+  ].sort((a, b) => b[1] - a[1]);
+  const dominant = coreCounts[0];
+  setText(
+    "story-human-copy",
+    dominant && dominant[1] > 0
+      ? `${dominant[1]} reviewed complete configurations were most often coded as: ${RELATIONSHIP_LABELS[dominant[0]]}. One-sided and no-clear-signal cases remain separate.`
+      : "No complete two-sided relationship configuration was established in the reviewed event evidence. One-sided and no-clear-signal cases remain visible instead of being forced into a category.",
+  );
+}
+
 function renderOpening() {
   const c = counts();
+  const arithmetic = validatedWeeklyArithmetic(c);
   const period = formatRange(currentRelease.period_start, currentRelease.period_end);
-  const pending = Math.max(0, c.events - c.newDevelopments - c.recurring);
-  const computedExtra = Math.max(0, c.articles - c.events);
-  const extra = c.extra === computedExtra ? c.extra : computedExtra;
 
   setText("week-badge", `Current weekly signal · ${period}`);
   setText("count-articles", c.articles);
   setText("count-new", c.newDevelopments);
   setText("count-recurring", c.recurring);
-  setText("count-resurfaced", c.resurfaced);
+  setText("count-extra", arithmetic.extra);
   setText(
     "week-intro",
-    pending
-      ? `AIEO found ${c.articles} AI-related coverage items and grouped them into ${c.events} developments. ${c.newDevelopments} were new to the disclosed historical pool, ${c.recurring} had been seen before, and ${pending} remained under novelty review.`
-      : `AIEO found ${c.articles} AI-related coverage items and grouped them into ${c.events} developments. ${c.newDevelopments} were new to the disclosed historical pool and ${c.recurring} had been seen before.`,
+    arithmetic.underReview
+      ? `AIEO found ${c.articles} AI-related coverage items and grouped them into ${c.events} developments represented in this weekly release. ${c.newDevelopments} were new to the disclosed historical pool, ${c.recurring} had been seen before, and ${arithmetic.underReview} remained under novelty review.`
+      : `AIEO found ${c.articles} AI-related coverage items and grouped them into ${c.events} developments represented in this weekly release. ${c.newDevelopments} were new to the disclosed historical pool and ${c.recurring} had been seen before.`,
   );
   setText(
     "week-equation-coverage",
-    `${c.articles} coverage items = ${c.events} distinct developments + ${extra} additional ${plural(extra, "report")} about developments already counted.`,
+    `${c.articles} coverage items = ${c.events} distinct developments + ${arithmetic.extra} additional ${plural(arithmetic.extra, "report")} about developments already counted.`,
   );
   setText(
     "week-equation-novelty",
-    pending
-      ? `${c.events} developments = ${c.newDevelopments} new to AIEO + ${c.recurring} already in AIEO's history + ${pending} still under novelty review.`
+    arithmetic.underReview
+      ? `${c.events} developments = ${c.newDevelopments} new to AIEO + ${c.recurring} already in AIEO's history + ${arithmetic.underReview} still under novelty review.`
       : `${c.events} developments = ${c.newDevelopments} new to AIEO + ${c.recurring} already in AIEO's history.`,
   );
   setText("week-definition-copy", sourceMixCopy());
   setText(
     "remember-copy",
-    c.resurfaced
-      ? `${c.newDevelopments} developments were new to AIEO. ${c.recurring} previously seen developments received new attention, including ${c.resurfaced} that returned after at least four weeks.`
-      : `${c.newDevelopments} developments were new to AIEO, while ${c.recurring} previously seen developments received new coverage. Repetition adds attention, not another development.`,
+    `${c.newDevelopments} ${plural(c.newDevelopments, "development was", "developments were")} new to AIEO in this weekly release. ${c.recurring} ${plural(c.recurring, "development had", "developments had")} appeared in AIEO's history before and received coverage again this week.`,
   );
   setText("pool-copy", poolCopy());
 
   setText("story-articles", c.articles);
   setText("story-new", c.newDevelopments);
-  setText("story-index", signed(currentRelease.lenses?.event?.empowerment_index));
   setText(
     "story-coverage-copy",
-    `${extra} ${plural(extra, "coverage item was", "coverage items were")} another report about a development already counted.`,
+    `${arithmetic.extra} ${plural(arithmetic.extra, "coverage item was", "coverage items were")} another report about a development already counted.`,
   );
   setText(
     "story-recurrence-copy",
-    `${c.recurring} prior developments returned to the coverage. ${c.followOn ? `${c.followOn} follow-on ${plural(c.followOn, "development was", "developments were")} kept separate and linked to an existing story.` : "Genuine later actions remain separate developments and can be linked to the continuing story."}`,
+    `${c.recurring} prior ${plural(c.recurring, "development was", "developments were")} represented again in this week's coverage. ${c.followOn ? `${c.followOn} follow-on ${plural(c.followOn, "development was", "developments were")} kept separate and linked to an existing story.` : "Genuine later actions remain separate developments and can be linked to a continuing story."}`,
   );
-  setText(
-    "story-human-copy",
-    `The scored Event Lens was ${signed(currentRelease.lenses?.event?.empowerment_index)}. Narrative framing is measured separately, so hopeful language is not automatically treated as human empowerment.`,
-  );
+  renderRelationship();
 }
-
 function coverageRowsForMarket(iso3) {
   return (currentRelease.units?.coverage_articles || []).filter((row) => (
     row.classification?.ai_relevant && (row.search_markets || []).includes(iso3)
@@ -357,15 +457,30 @@ function renderBars(containerId, rows, labels) {
 }
 
 function renderLenses() {
-  const eventLens = currentRelease.lenses?.event || {};
-  setText("human-index", signed(eventLens.empowerment_index));
+  const review = currentSymbiosis?.release_id === currentRelease?.release_id
+    ? (currentSymbiosis.review || {})
+    : {};
+  const secondary = currentSymbiosis?.secondary_empowerment?.event || null;
+
+  if (!review.complete || !secondary) {
+    setText("human-index", "Review pending");
+    setText(
+      "human-denominator",
+      `${Number(review.event_reviewed || 0)} of ${Number(review.event_total || 0)} developments and ${Number(review.coverage_reviewed || 0)} of ${Number(review.coverage_total || 0)} coverage items have completed the explicit review gate.`,
+    );
+    const container = document.getElementById("human-bars");
+    if (container) {
+      container.innerHTML = "<p>The secondary empowerment distribution will appear after the full relationship-review queue is complete. Legacy model-only empowerment scores are not shown here.</p>";
+    }
+    return;
+  }
+
+  setText("human-index", signed(secondary.empowerment_index));
   setText(
     "human-denominator",
-    `${Number(eventLens.unit_count_scored || 0)} scored event ${plural(eventLens.unit_count_scored || 0, "record")} · ${Number(eventLens.unit_count_excluded_unclear || 0)} unclear and excluded from the index`,
+    `${Number(secondary.scored_units || 0)} human-reviewed developments in the index; ${Number(secondary.excluded_unclear || 0)} unclear and excluded.`,
   );
-  renderBars("human-bars", barRows(eventLens.status_distribution, STATUS_LABELS), STATUS_LABELS);
-  renderBars("tone-bars", barRows(eventLens.narrative_distribution, TONE_LABELS), TONE_LABELS);
-  renderBars("topic-bars", barRows(eventLens.topic_distribution, TOPIC_LABELS, 7), TOPIC_LABELS);
+  renderBars("human-bars", barRows(secondary.status_distribution, STATUS_LABELS), STATUS_LABELS);
 }
 
 function setupTabs() {
@@ -414,13 +529,19 @@ function normaliseHistory() {
   return [...historical, ...weekly].sort((a, b) => String(a.period_end).localeCompare(String(b.period_end)));
 }
 
+function historicalReferences() {
+  return normaliseHistory().filter((row) => row.series_kind !== "weekly");
+}
+
+function weeklyHistory() {
+  return normaliseHistory().filter((row) => row.series_kind === "weekly");
+}
+
 function filteredHistory() {
-  const all = normaliseHistory();
-  const historical = all.filter((row) => row.series_kind !== "weekly");
-  const weekly = all.filter((row) => row.series_kind === "weekly");
-  if (historyMode === "4") return [...historical, ...weekly.slice(-4)];
-  if (historyMode === "12") return [...historical, ...weekly.slice(-12)];
-  return all;
+  const weekly = weeklyHistory();
+  if (historyMode === "4") return weekly.slice(-4);
+  if (historyMode === "12") return weekly.slice(-12);
+  return weekly;
 }
 
 function renderHistoryControls() {
@@ -455,23 +576,62 @@ function svgElement(name, attributes = {}, text = null) {
   return element;
 }
 
+function periodsOverlap(a, b) {
+  const aStart = parseDate(a?.period_start);
+  const aEnd = parseDate(a?.period_end);
+  const bStart = parseDate(b?.period_start);
+  const bEnd = parseDate(b?.period_end);
+  if (!aStart || !aEnd || !bStart || !bEnd) return false;
+  return aStart <= bEnd && bStart <= aEnd;
+}
+
+function renderHistoryBaseline() {
+  const container = document.getElementById("history-baseline");
+  if (!container) return;
+  const baseline = historicalReferences()[0];
+  const firstWeekly = weeklyHistory()[0];
+  if (!baseline) {
+    container.hidden = true;
+    container.innerHTML = "";
+    return;
+  }
+  const overlapCopy = firstWeekly && periodsOverlap(baseline, firstWeekly)
+    ? `It overlaps the first standardized week (${formatRange(firstWeekly.period_start, firstWeekly.period_end, true)}), so connecting the points would suggest a week-to-week comparison that the data do not support.`
+    : "It is shown separately because it was collected before the standardized Monday-to-Sunday series.";
+  container.innerHTML = `
+    <div>
+      <p class="eyebrow">Launch reference</p>
+      <h3>${escapeHTML(formatRange(baseline.period_start, baseline.period_end, true))}</h3>
+      <p>${escapeHTML(overlapCopy)}</p>
+    </div>
+    <dl>
+      <div><dt>Coverage items</dt><dd>${escapeHTML(baseline.articles ?? "Not available")}</dd></div>
+      <div><dt>Developments</dt><dd>${escapeHTML(baseline.event_records ?? "Not available")}</dd></div>
+    </dl>
+  `;
+  container.hidden = false;
+}
+
 function renderHistoryChart() {
   const svg = document.getElementById("history-chart");
   const note = document.getElementById("history-note");
   const explainer = document.getElementById("history-explainer");
   if (!svg || !note || !explainer) return;
   const rows = filteredHistory();
+  const allWeekly = weeklyHistory();
+  const historical = historicalReferences();
+  renderHistoryBaseline();
   svg.querySelectorAll(":scope > :not(title):not(desc)").forEach((node) => node.remove());
 
-  const weekly = normaliseHistory().filter((row) => row.series_kind === "weekly");
-  const historical = normaliseHistory().filter((row) => row.series_kind !== "weekly");
-  explainer.textContent = weekly.length < 2
-    ? `${historical.length + weekly.length} published snapshots are visible. The launch reference overlaps the first standardized week, so they are shown separately rather than joined as a trend.`
-    : `${weekly.length} standardized weeks are available. Only consecutive Monday–Sunday weeks are connected; historical references remain separate.`;
+  explainer.textContent = allWeekly.length < 2
+    ? `${allWeekly.length} standardized weekly release is available. A launch reference is shown separately above the chart.`
+    : `${allWeekly.length} standardized weeks are available. Consecutive Monday-to-Sunday weeks are connected. The overlapping launch reference is shown separately above the chart.`;
 
   if (!rows.length) {
-    svg.appendChild(svgElement("text", { x: 500, y: 210, "text-anchor": "middle", fill: "#5f7181" }, "No publication history is available yet."));
-    note.textContent = "The first history point will appear after publication.";
+    svg.appendChild(svgElement("text", { x: 500, y: 210, "text-anchor": "middle", fill: "#5f7181" }, "No standardized weekly history is available yet."));
+    note.textContent = historical.length
+      ? "The launch reference is preserved above. The weekly line begins with the first standardized release."
+      : "The first weekly point will appear after publication.";
     return;
   }
 
@@ -493,29 +653,25 @@ function renderHistoryChart() {
     svg.appendChild(svgElement("text", { x: pad.left - 12, y: yy + 4, "text-anchor": "end", fill: "#667987", "font-size": 12 }, Math.round(value)));
   }
 
-  const weeklyIndices = rows.map((row, index) => ({ row, index })).filter(({ row }) => row.series_kind === "weekly");
-  for (let position = 1; position < weeklyIndices.length; position += 1) {
-    const previous = weeklyIndices[position - 1];
-    const current = weeklyIndices[position];
-    if (!current.row.connect_to_previous) continue;
+  for (let index = 1; index < rows.length; index += 1) {
+    const previous = rows[index - 1];
+    const current = rows[index];
+    if (!current.connect_to_previous) continue;
     [["articles", "#719cf5"], ["event_records", "#087985"]].forEach(([key, color]) => {
       svg.appendChild(svgElement("line", {
-        x1: x(previous.index), y1: y(previous.row[key]),
-        x2: x(current.index), y2: y(current.row[key]),
+        x1: x(index - 1), y1: y(previous[key]),
+        x2: x(index), y2: y(current[key]),
         stroke: color, "stroke-width": 3, "stroke-linecap": "round",
       }));
     });
   }
 
   rows.forEach((row, index) => {
-    const baseline = row.series_kind !== "weekly";
     const xx = x(index);
     [["articles", "#719cf5", -5], ["event_records", "#087985", 5]].forEach(([key, color, offset]) => {
       svg.appendChild(svgElement("circle", {
-        cx: xx + offset, cy: y(row[key]), r: baseline ? 6 : 7,
-        fill: baseline ? "#fff" : color,
-        stroke: color, "stroke-width": baseline ? 3 : 1,
-        "stroke-dasharray": baseline ? "3 2" : "none",
+        cx: xx + offset, cy: y(row[key]), r: 7,
+        fill: color, stroke: color, "stroke-width": 1,
       }));
       svg.appendChild(svgElement("text", {
         x: xx + offset, y: y(row[key]) - 12, "text-anchor": "middle", fill: color, "font-size": 11, "font-weight": 800,
@@ -523,14 +679,11 @@ function renderHistoryChart() {
     });
     const label = formatRange(row.period_start, row.period_end, true);
     svg.appendChild(svgElement("text", { x: xx, y: height - 52, "text-anchor": "middle", fill: "#415767", "font-size": 12, "font-weight": 800 }, label));
-    svg.appendChild(svgElement("text", { x: xx, y: height - 34, "text-anchor": "middle", fill: "#71808a", "font-size": 10 }, baseline ? "Launch reference" : String(row.release_id || "Weekly release")));
+    svg.appendChild(svgElement("text", { x: xx, y: height - 34, "text-anchor": "middle", fill: "#71808a", "font-size": 10 }, String(row.release_id || "Weekly release")));
   });
 
-  note.textContent = historical.length
-    ? "The launch reference and first standardized week overlap in time and are not connected. Future non-overlapping weekly releases connect automatically."
-    : "Consecutive Monday–Sunday releases connect automatically; gaps remain visible.";
+  note.textContent = "Only consecutive standardized Monday-to-Sunday releases are connected. The launch reference is preserved separately because it overlaps the first standardized week.";
 }
-
 function articleMarketMap() {
   return new Map(
     (currentRelease.units?.coverage_articles || []).map((row) => [
@@ -555,43 +708,35 @@ function eventMatchesView(event) {
     return novelty === "first_time" || novelty === "follow_on_development";
   }
   if (evidenceView === "recurring") return novelty === "recurring";
-  if (evidenceView === "resurfaced") {
-    return Boolean(event.resurfaced_in_period)
-      || Number(event.replication_lag_days || 0) >= 28;
-  }
   return true;
 }
 
 function storyLocation(event) {
-  const classification = event.classification || {};
-  if (classification.geographic_scope === "global") return "Global";
-  const codes = Array.isArray(classification.country_iso3s)
-    ? classification.country_iso3s.filter(Boolean)
+  const relationship = relationshipEventById(event);
+  if (!relationship?.reviewed) return "Story location review pending";
+  const reviewedCodes = Array.isArray(relationship.story_country_iso3s)
+    ? relationship.story_country_iso3s.filter(Boolean)
     : [];
-  if (codes.length) {
-    return codes.map((code) => markets[code]?.name || code).join(", ");
-  }
-  return "Not established from the available evidence";
+  if (reviewedCodes.length) return reviewedCodes.map((code) => markets[code]?.name || code).join(", ");
+  return "Not established by the human-reviewed source evidence";
 }
 
 function evidenceScopeCopy(total = null) {
+  const period = formatRange(currentRelease.period_start, currentRelease.period_end);
   const marketName = selectedMarket && markets[selectedMarket]
     ? ` found through the ${markets[selectedMarket].name} search`
     : "";
   const viewLabel = evidenceView === "new"
-    ? "new developments"
+    ? "developments that were new to AIEO in this weekly release"
     : evidenceView === "recurring"
-      ? "previously seen developments"
-      : evidenceView === "resurfaced"
-        ? "developments that resurfaced after at least four weeks"
-        : "all developments";
-  const countCopy = total == null ? "" : `${total} ${plural(total, "development")} shown: `;
-  return `${countCopy}${viewLabel}${marketName}. Search market and story location are shown separately.`;
+      ? "developments represented this week that AIEO had seen before"
+      : "all developments represented in this weekly release";
+  const countCopy = total == null ? "" : `${total} ${plural(total, "development")} shown. `;
+  return `${countCopy}Scope: ${period}. This view contains ${viewLabel}${marketName}. Search market and story location are shown separately.`;
 }
-
 function setupEvidenceFilters() {
   const requested = new URLSearchParams(window.location.search).get("view");
-  evidenceView = ["all", "new", "recurring", "resurfaced"].includes(requested)
+  evidenceView = ["all", "new", "recurring"].includes(requested)
     ? requested
     : "all";
   document.querySelectorAll("[data-evidence-view]").forEach((link) => {
@@ -626,13 +771,14 @@ function renderEvidence() {
   });
 
   if (!visible.length) {
-    container.innerHTML = "<p>No source-linked development matches this evidence view and search market in the current release.</p>";
+    container.innerHTML = "<p>No development in the current weekly release matches this filter and search market. Choose another current-week view or clear the market selection.</p>";
     more.hidden = true;
     return;
   }
 
   container.innerHTML = visible.map((event, index) => {
-    const classification = event.classification || {};
+    const relationship = relationshipEventById(event);
+    const reviewedEmpowerment = relationship?.reviewed ? relationship.empowerment_secondary : null;
     const sources = event.sources || [];
     const discoveryMarkets = eventDiscoveryMarkets(event);
     const novelty = String(event.novelty_status || "unclassified");
@@ -645,6 +791,10 @@ function renderEvidence() {
           : novelty === "first_time"
             ? '<span class="evidence-pill">New to AIEO</span>'
             : '<span class="evidence-pill">Novelty under review</span>';
+    const lagDays = Number(event.replication_lag_days || 0);
+    const recurrenceTiming = novelty === "recurring" && Number.isFinite(lagDays) && lagDays > 0
+      ? `<span class="evidence-pill">Covered again after ${lagDays} ${plural(lagDays, "day")}</span>`
+      : "";
     const duplicateNote = event.possible_duplicate_record
       ? `<p><strong>Resolver note:</strong> ${escapeHTML(event.possible_duplicate_reason || "This record may duplicate another unresolved development.")}</p>`
       : "";
@@ -666,7 +816,9 @@ function renderEvidence() {
               <span>${escapeHTML(formatRange(event.event_date, event.event_date))}</span>
               <span class="evidence-pill">${sources.length} source ${plural(sources.length, "item")}</span>
               ${recurrence}
-              <span class="evidence-pill">${escapeHTML(evidenceStatus(classification))}</span>
+              ${recurrenceTiming}
+              <span class="relationship-badge">${escapeHTML(relationship?.reviewed ? (RELATIONSHIP_LABELS[relationship.configuration] || relationship.plain_label) : "Relationship review pending")}</span>
+              <span class="evidence-pill">Secondary empowerment: ${escapeHTML(reviewedEmpowerment?.status ? (STATUS_LABELS[reviewedEmpowerment.status] || reviewedEmpowerment.status) : "review pending")}</span>
             </div>
           </div>
         </summary>
@@ -683,7 +835,15 @@ function renderEvidence() {
               <small>This is what the available evidence says the development concerns.</small>
             </div>
           </div>
-          ${classification.reasoning ? `<p>${escapeHTML(classification.reasoning)}</p>` : ""}
+          ${relationship?.reviewed ? `
+            <div class="relationship-evidence-grid">
+              <div><strong>People side</strong><span>${escapeHTML(String(relationship.human_experience_type || "not established").replaceAll("_", " "))}</span></div>
+              <div><strong>AI or operator side</strong><span>${escapeHTML(String(relationship.ai_expressive_role || "not established").replaceAll("_", " "))}</span></div>
+            </div>
+            ${relationship.evidence_summary ? `<p><strong>Human-reviewed evidence summary:</strong> ${escapeHTML(relationship.evidence_summary)}</p>` : ""}
+            ${relationship.reasoning ? `<p><strong>Why this relationship pattern:</strong> ${escapeHTML(relationship.reasoning)}</p>` : ""}
+          ` : `<p><strong>Relationship lens:</strong> Human review is still pending for this development.</p>`}
+          ${reviewedEmpowerment?.reasoning ? `<details><summary>Secondary empowerment reasoning</summary><p>${escapeHTML(reviewedEmpowerment.reasoning)}</p></details>` : ""}
           ${duplicateNote}
           <div class="source-links">
             ${sources.map((source) => `
@@ -757,12 +917,14 @@ async function init() {
   setupEvidenceFilters();
   setupEvidenceMore();
   try {
-    const [release, index, countryData] = await Promise.all([
+    const [release, index, countryData, symbiosis] = await Promise.all([
       fetchJSON(CURRENT_URL),
       fetchJSON(INDEX_URL),
       fetchJSON(COUNTRIES_URL),
+      fetchJSON(SYMBIOSIS_URL, true),
     ]);
     currentRelease = release;
+    currentSymbiosis = symbiosis;
     releaseIndex = index;
     markets = countryData.markets || {};
 

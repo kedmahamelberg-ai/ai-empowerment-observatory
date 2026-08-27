@@ -46,7 +46,7 @@
           <a href="?view=all#evidence"><strong id="count-articles">Loading</strong><span>AI-related coverage items</span><small>Open source list</small></a>
           <a href="?view=new#evidence"><strong id="count-new">Loading</strong><span>new developments</span><small>See what was new</small></a>
           <a href="?view=recurring#evidence"><strong id="count-recurring">Loading</strong><span>developments seen before</span><small>See repeated attention</small></a>
-          <a href="?view=resurfaced#evidence"><strong id="count-resurfaced">Loading</strong><span>resurfaced after 4+ weeks</span><small>See long-gap returns</small></a>
+          <a href="?view=all#evidence"><strong id="count-extra">Loading</strong><span>additional reports</span><small>See repeated coverage</small></a>
         </div>
 
         <div class="week-equations" aria-label="How the weekly counts fit together">
@@ -60,31 +60,20 @@
         </details>
 
         <div class="opening-actions">
-          <a class="button primary" href="#explore">Play with the globe →</a>
-          <a class="button secondary" href="#evidence">See source-linked evidence</a>
+          <a class="button primary" href="#evidence">Open this week’s developments →</a>
+          <a class="button secondary" href="#history">See publication history</a>
         </div>
       </div>
 
-      <aside class="remember-card">
-        <p class="eyebrow">What should I remember?</p>
-        <p id="remember-copy">Loading the weekly takeaway...</p>
-        <details>
-          <summary>How “new” was decided</summary>
-          <p id="pool-copy">Loading the historical matching scope...</p>
-        </details>
-      </aside>
-    </section>
-
-    <section id="explore" class="explore-section" aria-labelledby="explore-title">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Explore</p>
-          <h2 id="explore-title">See where this week’s coverage was found</h2>
+      <aside id="explore" class="week-globe-panel" aria-labelledby="explore-title">
+        <div class="week-globe-heading">
+          <div>
+            <p class="eyebrow">Discovery map</p>
+            <h2 id="explore-title">Play with this week’s coverage</h2>
+          </div>
+          <p>Drag the globe or choose a search market. It shows where AIEO found coverage, not where every development happened.</p>
         </div>
-        <p>Move the globe or choose a market. The map shows discovery coverage, not country empowerment scores.</p>
-      </div>
 
-      <div class="explore-grid">
         <div class="globe-stage edu-globe-stage">
           <div id="edu-globe" class="globe-canvas" aria-label="Interactive globe of AIEO discovery markets"></div>
           <div class="globe-topline">
@@ -96,22 +85,85 @@
           </div>
         </div>
 
-        <aside class="market-panel">
-          <p class="eyebrow">Discovery markets</p>
-          <div id="edu-market-buttons" class="market-list"></div>
+        <div id="edu-market-buttons" class="market-list hero-market-list"></div>
+
+        <article id="edu-market-card" class="selected-market hero-selected-market" aria-live="polite">
+          <h3>Choose a market</h3>
+          <p>See how much coverage appeared there and which publications were most visible.</p>
+        </article>
+
+        <div class="week-globe-footer">
           <details class="market-rationale edu-market-rationale">
             <summary>Why these five markets?</summary>
             <p id="edu-market-selection-summary">Loading the market selection rationale.</p>
             <p id="edu-market-selection-context"></p>
             <div id="edu-market-selection-sources" class="market-source-links"></div>
           </details>
-          <article id="edu-market-card" class="selected-market" aria-live="polite">
-            <h3>Choose a market</h3>
-            <p>See how much coverage appeared there and which publications were most visible.</p>
-          </article>
           <button id="clear-market" class="quiet-button" type="button" hidden>Show all markets</button>
-        </aside>
+        </div>
+      </aside>
+    </section>
+
+    <section class="remember-strip" aria-labelledby="remember-title">
+      <div>
+        <p class="eyebrow">What should I remember?</p>
+        <p id="remember-copy">Loading the weekly takeaway...</p>
       </div>
+      <details>
+        <summary id="remember-title">How “new” was decided</summary>
+        <p id="pool-copy">Loading the historical matching scope...</p>
+      </details>
+    </section>
+
+    <section id="relationship" class="relationship-section" aria-labelledby="relationship-title">
+      <div class="section-heading narrow">
+        <div>
+          <p class="eyebrow">Primary relationship lens</p>
+          <h2 id="relationship-title">How were people and the AI side positioned?</h2>
+        </div>
+        <p id="relationship-scope">Loading the human-reviewed relationship signal...</p>
+      </div>
+
+      <div id="relationship-review-banner" class="relationship-review-banner" hidden></div>
+
+      <div id="relationship-core" class="relationship-core-grid" hidden>
+        <article>
+          <span class="relationship-arrows">People ↑ &nbsp; AI ↑</span>
+          <strong id="relationship-mutualism">0</strong>
+          <h3>Both gain</h3>
+          <p>Mutualism</p>
+        </article>
+        <article>
+          <span class="relationship-arrows">People ↓ &nbsp; AI ↑</span>
+          <strong id="relationship-ai-benefit">0</strong>
+          <h3>AI side gains, people are constrained</h3>
+          <p>AI-benefiting parasitism</p>
+        </article>
+        <article>
+          <span class="relationship-arrows">People ↑ &nbsp; AI ↓</span>
+          <strong id="relationship-human-benefit">0</strong>
+          <h3>People gain, the AI system is constrained</h3>
+          <p>Human-benefiting parasitism</p>
+        </article>
+        <article>
+          <span class="relationship-arrows">People ↓ &nbsp; AI ↓</span>
+          <strong id="relationship-competition">0</strong>
+          <h3>Both are constrained</h3>
+          <p>Competition or co-constraint</p>
+        </article>
+      </div>
+
+      <div id="relationship-other" class="relationship-other" hidden>
+        <p><strong id="relationship-partial">0</strong> one-sided signals</p>
+        <p><strong id="relationship-none">0</strong> no-clear-relationship cases</p>
+        <p><strong id="relationship-insufficient">0</strong> insufficient-evidence cases</p>
+      </div>
+
+      <details class="relationship-method-note">
+        <summary>How should I read this?</summary>
+        <p>AIEO codes the human side and the AI system or operator side independently, then derives the relationship pattern. It classifies how source evidence represents the relation. It does not claim that AI is conscious or that the source proves objective system performance.</p>
+        <p>Not every AI story contains a two-sided relationship. One-sided signals, no-clear-relationship cases, and insufficient evidence remain visible instead of being forced into the four configurations.</p>
+      </details>
     </section>
 
     <section class="story-section" aria-labelledby="story-title">
@@ -145,9 +197,9 @@
         <article>
           <span>3</span>
           <div>
-            <p class="eyebrow">What changed for people?</p>
-            <h3><strong id="story-index">Loading</strong> Event Lens</h3>
-            <p id="story-human-copy">Loading the human-empowerment signal...</p>
+            <p class="eyebrow">What relationship pattern appeared?</p>
+            <h3><strong id="story-index">Loading</strong> reviewed developments</h3>
+            <p id="story-human-copy">Loading the primary relationship signal...</p>
           </div>
         </article>
       </div>
@@ -156,32 +208,21 @@
     <section class="lens-section" aria-labelledby="lens-title">
       <div class="section-heading narrow">
         <div>
-          <p class="eyebrow">Look at the same week another way</p>
-          <h2 id="lens-title">Three views, one at a time</h2>
+          <p class="eyebrow">Secondary lenses</p>
+          <h2 id="lens-title">What changed for people</h2>
         </div>
-        <p>Choose the question that matters to you. The underlying evidence stays the same.</p>
+        <p>Empowerment remains a secondary, human-centred lens. It is shown only from the same explicit human review used for the relationship pattern.</p>
       </div>
 
-      <div class="lens-tabs" role="tablist" aria-label="Weekly evidence views">
-        <button role="tab" aria-selected="true" aria-controls="human-panel" id="human-tab" data-panel="human-panel">Human impact</button>
-        <button role="tab" aria-selected="false" aria-controls="tone-panel" id="tone-tab" data-panel="tone-panel" tabindex="-1">News tone</button>
-        <button role="tab" aria-selected="false" aria-controls="topics-panel" id="topics-tab" data-panel="topics-panel" tabindex="-1">Topics</button>
-      </div>
-
-      <div id="human-panel" class="lens-panel" role="tabpanel" aria-labelledby="human-tab">
+      <div id="human-panel" class="lens-panel reviewed-secondary-lens">
         <div class="signal-number">
-          <span>Event-lens signal</span>
+          <span>Human empowerment, secondary lens</span>
           <strong id="human-index">Loading</strong>
-          <small id="human-denominator">Loading scored evidence...</small>
+          <small id="human-denominator">Loading human-reviewed evidence...</small>
         </div>
         <div id="human-bars" class="bar-list"></div>
       </div>
-      <div id="tone-panel" class="lens-panel" role="tabpanel" aria-labelledby="tone-tab" hidden>
-        <div id="tone-bars" class="bar-list wide"></div>
-      </div>
-      <div id="topics-panel" class="lens-panel" role="tabpanel" aria-labelledby="topics-tab" hidden>
-        <div id="topic-bars" class="bar-list wide"></div>
-      </div>
+      <p class="secondary-lens-note">News tone and topic labels are not shown in this transition release because they are not yet part of the complete human-review gate.</p>
     </section>
 
     <section id="history" class="history-section" aria-labelledby="history-title">
@@ -193,12 +234,12 @@
         <p id="history-explainer">Loading the available history...</p>
       </div>
 
+      <div id="history-baseline" class="history-baseline" hidden></div>
       <div id="history-controls" class="history-controls" aria-label="History range" hidden></div>
       <div class="history-card">
         <div class="legend" aria-hidden="true">
           <span><i class="coverage-key"></i> Published articles</span>
-          <span><i class="event-key"></i> Resolved event records</span>
-          <span><i class="baseline-key"></i> Launch reference</span>
+          <span><i class="event-key"></i> Resolved developments</span>
         </div>
         <div class="chart-scroll">
           <svg id="history-chart" role="img" aria-labelledby="history-chart-title history-chart-desc" viewBox="0 0 1000 420">
@@ -216,14 +257,14 @@
           <p class="eyebrow">Source-linked evidence</p>
           <h2 id="evidence-title">Open the developments behind the signal</h2>
         </div>
-        <p id="evidence-scope">The most visible current developments are shown first.</p>
+        <p id="evidence-scope">Every filter below refers to the current weekly release. “Seen before” means this week’s coverage matched a development already stored in AIEO’s historical pool.</p>
       </div>
-      <div id="evidence-filters" class="evidence-filters" aria-label="Filter developments">
-        <a href="?view=all#evidence" data-evidence-view="all">All developments</a>
+      <div id="evidence-filters" class="evidence-filters" aria-label="Filter developments in the current weekly release">
+        <a href="?view=all#evidence" data-evidence-view="all">All this week</a>
         <a href="?view=new#evidence" data-evidence-view="new">New this week</a>
-        <a href="?view=recurring#evidence" data-evidence-view="recurring">Seen before</a>
-        <a href="?view=resurfaced#evidence" data-evidence-view="resurfaced">Resurfaced</a>
+        <a href="?view=recurring#evidence" data-evidence-view="recurring">Seen before, covered this week</a>
       </div>
+      <p class="evidence-filter-note">These are current-week developments. The historical pool is used only to decide whether each one is new to AIEO or has been seen before.</p>
       <div id="evidence-list" class="evidence-list"></div>
       <button id="show-more-evidence" class="button outline" type="button" hidden>Show more evidence</button>
     </section>
