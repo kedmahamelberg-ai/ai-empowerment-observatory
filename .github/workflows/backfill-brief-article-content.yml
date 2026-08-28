@@ -4,20 +4,29 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Inspect fetch outcomes without writing snapshots"
-        required: true
-        default: true
-        type: boolean
-      limit:
-        description: "Maximum number of articles in this run. Use 0 for all."
-        required: true
-        default: "25"
-        type: string
-      retry_existing:
-        description: "Retry articles that already have a current full-text snapshot"
+        description: "Inspect outcomes without writing snapshots or attempt rows"
         required: true
         default: false
         type: boolean
+      limit:
+        description: "Maximum articles this run. Use 0 for as many as fit inside the runtime budget."
+        required: true
+        default: "0"
+        type: string
+      retry_mode:
+        description: "Previously attempted articles eligible for retry"
+        required: true
+        default: "none"
+        type: choice
+        options:
+          - none
+          - retryable
+          - all
+      max_runtime_minutes:
+        description: "Graceful stop before GitHub's job timeout"
+        required: true
+        default: "150"
+        type: string
 
 permissions:
   contents: read
@@ -29,13 +38,16 @@ concurrency:
 jobs:
   backfill:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 175
+
     steps:
       - uses: actions/checkout@v6
+
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
+
       - name: Install extraction dependencies
         run: |
           python -m pip install \
@@ -43,6 +55,7 @@ jobs:
             "requests>=2.32,<3" \
             "beautifulsoup4>=4.12,<5" \
             "trafilatura>=2,<3"
+
       - name: Validate secrets
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -50,6 +63,7 @@ jobs:
         run: |
           test -n "$SUPABASE_URL"
           test -n "$SUPABASE_SECRET_KEY"
+
       - name: Backfill article bodies
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -57,14 +71,20 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          args=(--limit "${{ inputs.limit }}")
-          if [[ "${{ inputs.dry_run }}" == "true" ]]; then args+=(--dry-run); fi
-          if [[ "${{ inputs.retry_existing }}" == "true" ]]; then args+=(--retry-existing); fi
-          python scripts/brief_backfill_article_content.py "${args[@]}"
+          args=(
+            --limit "${{ inputs.limit }}"
+            --retry-mode "${{ inputs.retry_mode }}"
+            --max-runtime-minutes "${{ inputs.max_runtime_minutes }}"
+          )
+          if [[ "${{ inputs.dry_run }}" == "true" ]]; then
+            args+=(--dry-run)
+          fi
+          python scripts/brief_backfill_article_content_resumable.py "${args[@]}"
+
       - name: Audit stored snapshots
         if: ${{ inputs.dry_run == false }}
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
         run: |
-          python scripts/audit_brief_article_content.py --limit 20
+          python scripts/audit_brief_article_content.py --limit 30
