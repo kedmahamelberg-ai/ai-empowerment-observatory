@@ -31,7 +31,7 @@ REVIEW_DIR = DATA_DIR / "review"
 STATUS_PATH = DATA_DIR / "collection_status.json"
 
 SERPAPI_ENDPOINT = "https://serpapi.com/search"
-COLLECTOR_VERSION = "7A.3"
+COLLECTOR_VERSION = "7A.3-snippet-aware"
 TRACKING_PARAMS = {
     "utm_source",
     "utm_medium",
@@ -149,15 +149,18 @@ def normalize_item(
         "publisher": source_name(item) or "Unknown source",
         "iso_date": normalize_space(item.get("iso_date")) or None,
         "displayed_date": normalize_space(item.get("date")) or None,
-        "snippet": normalize_space(
-            item.get("snippet") or item.get("description")
-        ) or None,
         "thumbnail": normalize_space(
             item.get("thumbnail_small") or item.get("thumbnail")
         )
         or None,
         "result_type": normalize_space(item.get("type")) or None,
         "story_token": normalize_space(item.get("story_token")) or None,
+        "snippet": normalize_space(
+            item.get("snippet")
+            or item.get("description")
+            or item.get("summary")
+            or item.get("source_snippet")
+        ) or None,
         "search_rank": rank,
         "search_country": country["country"],
         "search_country_iso2": country["iso2"],
@@ -220,8 +223,8 @@ def write_csv(path: Path, records: list[dict[str, Any]]) -> None:
         "publisher",
         "iso_date",
         "displayed_date",
-        "snippet",
         "link",
+        "snippet",
         "matched_countries",
         "matched_languages",
         "collected_at",
@@ -242,8 +245,8 @@ def write_csv(path: Path, records: list[dict[str, Any]]) -> None:
                     "publisher": record.get("publisher"),
                     "iso_date": record.get("iso_date"),
                     "displayed_date": record.get("displayed_date"),
-                    "snippet": record.get("snippet"),
                     "link": record.get("link"),
+                    "snippet": record.get("snippet"),
                     "matched_countries": "; ".join(
                         sorted({entry["country"] for entry in searches})
                     ),
