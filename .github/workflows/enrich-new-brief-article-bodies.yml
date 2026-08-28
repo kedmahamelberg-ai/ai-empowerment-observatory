@@ -1,0 +1,58 @@
+name: Enrich New AIEO Brief Article Bodies
+
+on:
+  workflow_run:
+    workflows:
+      - Update AI News Collection
+    types:
+      - completed
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: aieo-brief-current-source-enrichment
+  cancel-in-progress: false
+
+jobs:
+  enrich:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install source extraction dependencies
+        run: |
+          python -m pip install \
+            "supabase>=2,<3" \
+            "requests>=2.32,<3" \
+            "beautifulsoup4>=4.12,<5" \
+            "trafilatura>=2,<3"
+
+      - name: Enrich never-attempted article bodies
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: |
+          python scripts/brief_backfill_article_content_resumable.py \
+            --limit 0 \
+            --retry-mode none \
+            --max-runtime-minutes 30
+
+      - name: Audit newly stored content
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: python scripts/audit_brief_article_content.py --limit 30
