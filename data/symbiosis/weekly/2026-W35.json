@@ -2,10 +2,10 @@
   "schema_version": "aieo_symbiosis_public_v1.0",
   "release_id": "2026-W35",
   "release_type": "weekly_relationship_lens",
-  "revision": 3,
+  "revision": 4,
   "period_start": "2026-08-24",
   "period_end": "2026-08-30",
-  "generated_at": "2026-08-31T20:16:12.210935Z",
+  "generated_at": "2026-08-31T22:07:00.296510Z",
   "codebook_version": "aieo_news_symbiosis_v0.1",
   "source_release_sha256": "0217b03f92a9252e715c1845adbb8d142598770b59554980bebb707674df5992",
   "public_status": "model_coded_provisional",
@@ -60,7 +60,7 @@
     "display_basis": "model_coded_with_reviewed_corrections",
     "display_classified_units": 111,
     "display_configuration_counts": {
-      "mutualism": 17,
+      "mutualism": 18,
       "ai_benefiting_parasitism": 1,
       "human_benefiting_parasitism": 0,
       "competition": 1,
@@ -70,18 +70,18 @@
       "ai_constraining_only": 2,
       "no_clear_relational_signal": 1,
       "ambiguous_relational_signal": 0,
-      "insufficient_evidence": 74
+      "insufficient_evidence": 73
     },
-    "display_complete_configuration_count": 19,
+    "display_complete_configuration_count": 20,
     "display_partial_signal_count": 17,
     "display_no_clear_relational_signal_count": 1,
     "display_ambiguous_relational_signal_count": 0,
-    "display_insufficient_evidence_count": 74,
+    "display_insufficient_evidence_count": 73,
     "display_core_four_distribution": {
-      "ai_benefiting_parasitism": 0.052632,
-      "competition": 0.052632,
+      "ai_benefiting_parasitism": 0.05,
+      "competition": 0.05,
       "human_benefiting_parasitism": 0.0,
-      "mutualism": 0.894737
+      "mutualism": 0.9
     },
     "denominator_note": "The live weekly display is model-coded and incorporates accepted human corrections as they arrive. The finalized human-reviewed fields remain separate until every required review is complete."
   },
@@ -251,8 +251,8 @@
       "story_country_iso3s": [
         "USA"
       ],
-      "evidence_summary": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem. The headline focuses on a stock price movement and a new AI model, but does not describe any human-AI interaction or impact.",
-      "reasoning": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem. The headline focuses on a stock price movement and a new AI model, but does not describe any human-AI interaction or impact.",
+      "evidence_summary": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
+      "reasoning": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -289,8 +289,8 @@
         "FRA",
         "USA"
       ],
-      "evidence_summary": "The evidence provided is a title of a video that discusses the threat of AI to information, but no specific human-AI relationship is described in the headline or text. There is no clear indication of how people interact with the AI system, operator, or ecosystem.",
-      "reasoning": "The evidence provided is a title of a video that discusses the threat of AI to information, but no specific human-AI relationship is described in the headline or text. There is no clear indication of how people interact with the AI system, operator, or ecosystem.",
+      "evidence_summary": "The evidence provided is insufficient to determine the relationship between people and the AI system, operator, or ecosystem. The title of the video does not provide enough information to classify the human experience or AI expressive role.",
+      "reasoning": "The evidence provided is insufficient to determine the relationship between people and the AI system, operator, or ecosystem. The title of the video does not provide enough information to classify the human experience or AI expressive role.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -325,8 +325,8 @@
       "story_country_iso3s": [
         "CHN"
       ],
-      "evidence_summary": "The event is a company announcing a full campus recruitment for the 2027 class, which does not provide direct evidence of a human-AI relationship or interaction.",
-      "reasoning": "The event is a company announcing a full campus recruitment for the 2027 class, which does not provide direct evidence of a human-AI relationship or interaction.",
+      "evidence_summary": "The evidence describes a company launching full campus recruitment for a specific class, but there is no direct or indirect mention of AI systems, operators, or ecosystems. The event is focused on recruitment and does not provide any information about AI systems or their interaction with humans.",
+      "reasoning": "The evidence describes a company launching full campus recruitment for a specific class, but there is no direct or indirect mention of AI systems, operators, or ecosystems. The event is focused on recruitment and does not provide any information about AI systems or their interaction with humans.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -397,8 +397,8 @@
       "story_country_iso3s": [
         "GB"
       ],
-      "evidence_summary": "The evidence is a financial comparison of two AI-related stocks, with no information about human-AI relationships, interactions, or impacts.",
-      "reasoning": "The evidence is a financial comparison of two AI-related stocks, with no information about human-AI relationships, interactions, or impacts.",
+      "evidence_summary": "The evidence is a financial comparison of two AI-related stocks, with no information about human-AI relationships or interactions.",
+      "reasoning": "The evidence is a financial comparison of two AI-related stocks, with no information about human-AI relationships or interactions.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -471,8 +471,8 @@
         "UK",
         "DE"
       ],
-      "evidence_summary": "The article discusses the use of AI in materials discovery, suggesting that humans are using AI to extend their capacity in this field while the AI system is functioning and extending its reach.",
-      "reasoning": "The article discusses the use of AI in materials discovery, suggesting that humans are using AI to extend their capacity in this field while the AI system is functioning and extending its reach.",
+      "evidence_summary": "The article discusses the use of AI in materials discovery, suggesting that humans are using AI to extend their existing capacity in this field while the AI system is functioning and extending its operative reach.",
+      "reasoning": "The article discusses the use of AI in materials discovery, suggesting that humans are using AI to extend their existing capacity in this field while the AI system is functioning and extending its operative reach.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -541,10 +541,10 @@
       "ai_direction": "neutral",
       "evidence_status": "insufficient",
       "story_country_iso3s": [
-        "GBR"
+        "GB"
       ],
-      "evidence_summary": "The headline does not provide sufficient evidence to determine the relationship between people and the AI system, operator, or ecosystem.",
-      "reasoning": "The headline does not provide sufficient evidence to determine the relationship between people and the AI system, operator, or ecosystem.",
+      "evidence_summary": "The headline does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
+      "reasoning": "The headline does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -615,8 +615,8 @@
       "story_country_iso3s": [
         "USA"
       ],
-      "evidence_summary": "The evidence provided is a headline that mentions Anthropic and its potential IPO, but does not provide specific details about the relationship between people, the AI system, or the ecosystem. There is no clear indication of how people interact with the AI system or how the AI system is being used in a context that involves human-AI relationships.",
-      "reasoning": "The evidence provided is a headline that mentions Anthropic and its potential IPO, but does not provide specific details about the relationship between people, the AI system, or the ecosystem. There is no clear indication of how people interact with the AI system or how the AI system is being used in a context that involves human-AI relationships.",
+      "evidence_summary": "The evidence provided is insufficient to determine the relationship between people, the AI system, or the ecosystem. The headline mentions Anthropic and its potential IPO, but does not provide specific details about the relationship between people and the AI system.",
+      "reasoning": "The evidence provided is insufficient to determine the relationship between people, the AI system, or the ecosystem. The headline mentions Anthropic and its potential IPO, but does not provide specific details about the relationship between people and the AI system.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -688,8 +688,8 @@
         "USA",
         "CHN"
       ],
-      "evidence_summary": "The source provides information about the geographic distribution of AI figures in a list, but does not describe any specific human-AI interaction, relationship, or impact on people. There is no explicit or implicit signal about how people are affected by or interacting with the AI system, operator, or ecosystem.",
-      "reasoning": "The source provides information about the geographic distribution of AI figures in a list, but does not describe any specific human-AI interaction, relationship, or impact on people. There is no explicit or implicit signal about how people are affected by or interacting with the AI system, operator, or ecosystem.",
+      "evidence_summary": "The source reports on the geographic distribution of AI figures in a list, but does not provide any information about the relationship between people and the AI system, operator, or ecosystem.",
+      "reasoning": "The source reports on the geographic distribution of AI figures in a list, but does not provide any information about the relationship between people and the AI system, operator, or ecosystem.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -724,8 +724,8 @@
       "story_country_iso3s": [
         "USA"
       ],
-      "evidence_summary": "The evidence provided is a title and date of a report by McKinsey & Company about the state of AI in 2026. There is no specific content or details provided in the source evidence that directly describes the relationship between people, the AI system, or the ecosystem.",
-      "reasoning": "The evidence provided is a title and date of a report by McKinsey & Company about the state of AI in 2026. There is no specific content or details provided in the source evidence that directly describes the relationship between people, the AI system, or the ecosystem.",
+      "evidence_summary": "The evidence provided is insufficient to determine the relationship between people and the AI system, operator, or ecosystem. The report title and date do not provide enough information to classify the human-AI relationship.",
+      "reasoning": "The evidence provided is insufficient to determine the relationship between people and the AI system, operator, or ecosystem. The report title and date do not provide enough information to classify the human-AI relationship.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -760,8 +760,8 @@
       "story_country_iso3s": [
         "USA"
       ],
-      "evidence_summary": "The headline reports that the Trump administration's sanctions against Anthropic were canceled by a federal judge. This event does not provide clear evidence of how people interact with the AI system, operator, or ecosystem.",
-      "reasoning": "The headline reports that the Trump administration's sanctions against Anthropic were canceled by a federal judge. This event does not provide clear evidence of how people interact with the AI system, operator, or ecosystem.",
+      "evidence_summary": "The cancellation of sanctions against Anthropic by a federal judge is reported, but no explicit human-AI relationship is described in the evidence.",
+      "reasoning": "The cancellation of sanctions against Anthropic by a federal judge is reported, but no explicit human-AI relationship is described in the evidence.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -794,7 +794,7 @@
       "ai_direction": "neutral",
       "evidence_status": "insufficient",
       "story_country_iso3s": [
-        "USA"
+        "FRA"
       ],
       "evidence_summary": "The headline does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
       "reasoning": "The headline does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
@@ -934,17 +934,16 @@
       "configuration": "mutualism",
       "plain_label": "Both people and the AI side are represented as gaining",
       "technical_label": "Mutualism",
-      "human_experience_type": "expansion",
-      "ai_expressive_role": "ai_expansion",
+      "human_experience_type": "extension",
+      "ai_expressive_role": "ai_extension",
       "human_direction": "enabling",
       "ai_direction": "enabling",
       "evidence_status": "sufficient",
       "story_country_iso3s": [
-        "USA",
         "CHN"
       ],
-      "evidence_summary": "The development of digital intelligence productivity is initiating a new cycle for AI, suggesting that people are gaining new capabilities through AI while the AI system is expanding its reach and capabilities.",
-      "reasoning": "The development of digital intelligence productivity is initiating a new cycle for AI, suggesting that people are gaining new capabilities through AI while the AI system is expanding its reach and capabilities.",
+      "evidence_summary": "The development marks the beginning of a new cycle for AI, with digital intelligence productivity being enhanced through AI. This suggests that people are extending their existing capacity through AI, while the AI system is functioning and producing useful output, extending its operative reach.",
+      "reasoning": "The development marks the beginning of a new cycle for AI, with digital intelligence productivity being enhanced through AI. This suggests that people are extending their existing capacity through AI, while the AI system is functioning and producing useful output, extending its operative reach.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -979,8 +978,8 @@
       "story_country_iso3s": [
         "USA"
       ],
-      "evidence_summary": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem. The headline only states that AI in electronic health records still needs fine tuning, without describing any human-AI relationship signals.",
-      "reasoning": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem. The headline only states that AI in electronic health records still needs fine tuning, without describing any human-AI relationship signals.",
+      "evidence_summary": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
+      "reasoning": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -1085,12 +1084,10 @@
       "ai_direction": "neutral",
       "evidence_status": "insufficient",
       "story_country_iso3s": [
-        "USA",
-        "CHN",
-        "FRA"
+        "GBR"
       ],
-      "evidence_summary": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
-      "reasoning": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
+      "evidence_summary": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem. The event is described as a school holding a special report meeting on artificial intelligence empowering higher education, but no specific details about human-AI interactions are provided.",
+      "reasoning": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem. The event is described as a school holding a special report meeting on artificial intelligence empowering higher education, but no specific details about human-AI interactions are provided.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -1125,8 +1122,8 @@
       "story_country_iso3s": [
         "USA"
       ],
-      "evidence_summary": "The article discusses how generative AI is changing education, suggesting that people are using AI to gain new insights or capabilities in the educational context. The AI system is being used to provide information and insights about how generative AI is impacting education.",
-      "reasoning": "The article discusses how generative AI is changing education, suggesting that people are using AI to gain new insights or capabilities in the educational context. The AI system is being used to provide information and insights about how generative AI is impacting education.",
+      "evidence_summary": "The article explores how generative AI is influencing the educational sector, with a focus on how people are using AI to extend their existing capacities in education.",
+      "reasoning": "The article explores how generative AI is influencing the educational sector, with a focus on how people are using AI to extend their existing capacities in education.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -1161,8 +1158,8 @@
       "story_country_iso3s": [
         "CHN"
       ],
-      "evidence_summary": "Henan hosts an artificial intelligence session of 'Longzi Lake Science and Innovation Roadshow' as part of a science and innovation event. The event does not provide explicit information about human-AI interaction, but the AI system is represented as functioning and extending its reach.",
-      "reasoning": "Henan hosts an artificial intelligence session of 'Longzi Lake Science and Innovation Roadshow' as part of a science and innovation event. The event does not provide explicit information about human-AI interaction, but the AI system is represented as functioning and extending its reach.",
+      "evidence_summary": "Henan hosts an artificial intelligence session of 'Longzi Lake Science and Innovation Roadshow' as part of a science and innovation event. The event does not provide explicit information about human-AI interaction, capabilities, or constraints. The AI system is being used or extended in a public or institutional setting.",
+      "reasoning": "Henan hosts an artificial intelligence session of 'Longzi Lake Science and Innovation Roadshow' as part of a science and innovation event. The event does not provide explicit information about human-AI interaction, capabilities, or constraints. The AI system is being used or extended in a public or institutional setting.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -1306,146 +1303,8 @@
       "evidence_status": "insufficient",
       "story_country_iso3s": [
         "USA",
-        "CAN",
-        "FRA",
         "GBR",
-        "DEU",
-        "NLD",
-        "CHL",
-        "IDN",
-        "IND",
-        "BRA",
-        "ZAF",
-        "RSA",
-        "MYS",
-        "SGP",
-        "PHL",
-        "HUN",
-        "POL",
-        "SVN",
-        "CZE",
-        "LUX",
-        "ESP",
-        "FRA",
-        "CHE",
-        "LBN",
-        "JOR",
-        "QAT",
-        "KWT",
-        "ARE",
-        "BHR",
-        "OMN",
-        "IRQ",
-        "IRL",
-        "PRT",
-        "BLM",
-        "TUR",
-        "TUN",
-        "DZA",
-        "EGY",
-        "SDN",
-        "SYR",
-        "LKA",
-        "MMR",
-        "THA",
-        "VNM",
-        "KOR",
-        "JPN",
-        "CHN",
-        "USA",
-        "CAN",
-        "FRA",
-        "GBR",
-        "DEU",
-        "NLD",
-        "CHL",
-        "IDN",
-        "IND",
-        "BRA",
-        "ZAF",
-        "RSA",
-        "MYS",
-        "SGP",
-        "PHL",
-        "HUN",
-        "POL",
-        "SVN",
-        "CZE",
-        "LUX",
-        "ESP",
-        "FRA",
-        "CHE",
-        "LBN",
-        "JOR",
-        "QAT",
-        "KWT",
-        "ARE",
-        "BHR",
-        "OMN",
-        "IRQ",
-        "IRL",
-        "PRT",
-        "BLM",
-        "TUR",
-        "TUN",
-        "DZA",
-        "EGY",
-        "SDN",
-        "SYR",
-        "LKA",
-        "MMR",
-        "THA",
-        "VNM",
-        "KOR",
-        "JPN",
-        "CHN",
-        "USA",
-        "CAN",
-        "FRA",
-        "GBR",
-        "DEU",
-        "NLD",
-        "CHL",
-        "IDN",
-        "IND",
-        "BRA",
-        "ZAF",
-        "RSA",
-        "MYS",
-        "SGP",
-        "PHL",
-        "HUN",
-        "POL",
-        "SVN",
-        "CZE",
-        "LUX",
-        "ESP",
-        "FRA",
-        "CHE",
-        "LBN",
-        "JOR",
-        "QAT",
-        "KWT",
-        "ARE",
-        "BHR",
-        "OMN",
-        "IRQ",
-        "IRL",
-        "PRT",
-        "BLM",
-        "TUR",
-        "TUN",
-        "DZA",
-        "EGY",
-        "SDN",
-        "SYR",
-        "LKA",
-        "MMR",
-        "THA",
-        "VNM",
-        "KOR",
-        "JPN",
-        "CHN"
+        "FRA"
       ],
       "evidence_summary": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem. The headline mentions 'Ban AI' and 'Free Software Developers Reject Artificial Intelligence,' but no specific details are provided about the interaction between people and the AI system, operator, or ecosystem.",
       "reasoning": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem. The headline mentions 'Ban AI' and 'Free Software Developers Reject Artificial Intelligence,' but no specific details are provided about the interaction between people and the AI system, operator, or ecosystem.",
@@ -1483,8 +1342,8 @@
       "story_country_iso3s": [
         "USA"
       ],
-      "evidence_summary": "Douglas County, Wis., has adopted an AI policy for officials and staff. The policy is likely designed to allow the AI system to function, produce useful output, and extend its operative reach within the county's administrative processes. However, the evidence does not provide specific information about how humans are affected by the AI system or how the AI system is interacting with humans.",
-      "reasoning": "Douglas County, Wis., has adopted an AI policy for officials and staff. The policy is likely designed to allow the AI system to function, produce useful output, and extend its operative reach within the county's administrative processes. However, the evidence does not provide specific information about how humans are affected by the AI system or how the AI system is interacting with humans.",
+      "evidence_summary": "Douglas County, Wis., adopts an AI policy for officials and staff, indicating the extension of the AI system into the operational framework of the county.",
+      "reasoning": "Douglas County, Wis., adopts an AI policy for officials and staff, indicating the extension of the AI system into the operational framework of the county.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -1519,8 +1378,8 @@
       "story_country_iso3s": [
         "USA"
       ],
-      "evidence_summary": "The article reports that US futures are higher as the artificial intelligence business booms, indicating that the AI system or operator is expanding its market reach and influence.",
-      "reasoning": "The article reports that US futures are higher as the artificial intelligence business booms, indicating that the AI system or operator is expanding its market reach and influence.",
+      "evidence_summary": "The article discusses the growth of the AI business and its impact on financial markets, suggesting that the AI system or operator is expanding its reach and influence. However, there is no specific evidence of how humans are interacting with or being affected by the AI system.",
+      "reasoning": "The article discusses the growth of the AI business and its impact on financial markets, suggesting that the AI system or operator is expanding its reach and influence. However, there is no specific evidence of how humans are interacting with or being affected by the AI system.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -1553,10 +1412,10 @@
       "ai_direction": "neutral",
       "evidence_status": "insufficient",
       "story_country_iso3s": [
-        "GBR"
+        "FRA"
       ],
-      "evidence_summary": "The evidence provided is a title of an article without additional content. There is no specific information about the relationship between people and the AI system, operator, or ecosystem.",
-      "reasoning": "The evidence provided is a title of an article without additional content. There is no specific information about the relationship between people and the AI system, operator, or ecosystem.",
+      "evidence_summary": "The evidence provided is insufficient to determine the nature of the relationship between people, the AI system, or the ecosystem. The title suggests a thematic focus but does not provide enough information to classify the human-AI relationship.",
+      "reasoning": "The evidence provided is insufficient to determine the nature of the relationship between people, the AI system, or the ecosystem. The title suggests a thematic focus but does not provide enough information to classify the human-AI relationship.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -1589,10 +1448,12 @@
       "ai_direction": "enabling",
       "evidence_status": "sufficient",
       "story_country_iso3s": [
-        "CHN"
+        "USA",
+        "CHN",
+        "GBR"
       ],
-      "evidence_summary": "The article discusses the expansion of AI technology in China, suggesting that the AI system is growing in terms of development and application.",
-      "reasoning": "The article discusses the expansion of AI technology in China, suggesting that the AI system is growing in terms of development and application.",
+      "evidence_summary": "The article discusses the expansion of AI capabilities in robotics, with a focus on how China's AI robot revolution is outpacing the West.",
+      "reasoning": "The article discusses the expansion of AI capabilities in robotics, with a focus on how China's AI robot revolution is outpacing the West.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -1625,12 +1486,10 @@
       "ai_direction": "enabling",
       "evidence_status": "sufficient",
       "story_country_iso3s": [
-        "GBR",
-        "USA",
-        "CHN"
+        "GBR"
       ],
-      "evidence_summary": "The event involves people using AI to diagnose issues in manufacturing, extending their existing capacity through AI and the AI system is functioning to facilitate this process.",
-      "reasoning": "The event involves people using AI to diagnose issues in manufacturing, extending their existing capacity through AI and the AI system is functioning to facilitate this process.",
+      "evidence_summary": "The event involves the use of AI in a manufacturing context, where people are extending their existing capacity through AI to diagnose or evaluate aspects of manufacturing.",
+      "reasoning": "The event involves the use of AI in a manufacturing context, where people are extending their existing capacity through AI to diagnose or evaluate aspects of manufacturing.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -1807,8 +1666,8 @@
       "story_country_iso3s": [
         "CHN"
       ],
-      "evidence_summary": "The evidence shows that Guangzhou's private enterprises are using AI to promote various industries, indicating that people are gaining new capabilities and opportunities through AI, while the AI system is being represented as functioning and producing useful output.",
-      "reasoning": "The evidence shows that Guangzhou's private enterprises are using AI to promote various industries, indicating that people are gaining new capabilities and opportunities through AI, while the AI system is being represented as functioning and producing useful output.",
+      "evidence_summary": "The evidence shows that Guangzhou's private enterprises are using AI to promote various industries, indicating that people are gaining new capabilities and opportunities through AI, while the AI system is being represented as functioning and producing useful output to extend its operative reach.",
+      "reasoning": "The evidence shows that Guangzhou's private enterprises are using AI to promote various industries, indicating that people are gaining new capabilities and opportunities through AI, while the AI system is being represented as functioning and producing useful output to extend its operative reach.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -1845,8 +1704,8 @@
         "USA",
         "FRA"
       ],
-      "evidence_summary": "The evidence provided is insufficient to determine the human-AI relationship. The title of the development does not contain enough information to classify the relationship between people and the AI system, operator, or ecosystem.",
-      "reasoning": "The evidence provided is insufficient to determine the human-AI relationship. The title of the development does not contain enough information to classify the relationship between people and the AI system, operator, or ecosystem.",
+      "evidence_summary": "The evidence provided is a title of a development without additional context or details about the relationship between people, the AI system, or the ecosystem. There is no explicit information about how people interact with the AI system or how the AI system is being used in relation to people.",
+      "reasoning": "The evidence provided is a title of a development without additional context or details about the relationship between people, the AI system, or the ecosystem. There is no explicit information about how people interact with the AI system or how the AI system is being used in relation to people.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -1917,8 +1776,8 @@
       "story_country_iso3s": [
         "GBR"
       ],
-      "evidence_summary": "The headline states that more than a third of the Web is written by AI, but it does not provide specific information about how this affects human experience or the AI system's role in the relationship.",
-      "reasoning": "The headline states that more than a third of the Web is written by AI, but it does not provide specific information about how this affects human experience or the AI system's role in the relationship.",
+      "evidence_summary": "The headline indicates that more than a third of the Web is written by AI, but it does not provide specific information about the relationship between people and the AI system or the AI system and operator.",
+      "reasoning": "The headline indicates that more than a third of the Web is written by AI, but it does not provide specific information about the relationship between people and the AI system or the AI system and operator.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -1951,12 +1810,10 @@
       "ai_direction": "enabling",
       "evidence_status": "sufficient",
       "story_country_iso3s": [
-        "C",
-        "H",
-        "N"
+        "CN"
       ],
-      "evidence_summary": "Guangxi is using AI to extend its field research capabilities across various industries, representing both a human extension and an AI extension.",
-      "reasoning": "Guangxi is using AI to extend its field research capabilities across various industries, representing both a human extension and an AI extension.",
+      "evidence_summary": "Guangxi launches AI-driven field research in various industries, with humans using AI to extend their existing capacity through AI.",
+      "reasoning": "Guangxi launches AI-driven field research in various industries, with humans using AI to extend their existing capacity through AI.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -2027,10 +1884,12 @@
       "ai_direction": "neutral",
       "evidence_status": "insufficient",
       "story_country_iso3s": [
-        "GBR"
+        "USA",
+        "GBR",
+        "FRA"
       ],
-      "evidence_summary": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem. The title of the development is a general statement about a systematic review on patient factors in medical AI, but no specific human-AI interaction or relationship is described.",
-      "reasoning": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem. The title of the development is a general statement about a systematic review on patient factors in medical AI, but no specific human-AI interaction or relationship is described.",
+      "evidence_summary": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
+      "reasoning": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -2065,8 +1924,8 @@
       "story_country_iso3s": [
         "GBR"
       ],
-      "evidence_summary": "The headline indicates that teenagers will have to grow up with artificial intelligence, suggesting a human-AI relationship where people are projecting an existing capacity through AI or responding to AI, and the AI system is extending its operative reach.",
-      "reasoning": "The headline indicates that teenagers will have to grow up with artificial intelligence, suggesting a human-AI relationship where people are projecting an existing capacity through AI or responding to AI, and the AI system is extending its operative reach.",
+      "evidence_summary": "The headline suggests that teenagers will have to grow up with artificial intelligence, indicating that people are projecting an existing capacity through AI or responding to AI, while the AI system is represented as functioning and extending its operative reach.",
+      "reasoning": "The headline suggests that teenagers will have to grow up with artificial intelligence, indicating that people are projecting an existing capacity through AI or responding to AI, while the AI system is represented as functioning and extending its operative reach.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -2101,8 +1960,8 @@
       "story_country_iso3s": [
         "USA"
       ],
-      "evidence_summary": "The headline describes market reaction to AI-related concerns but does not provide specific evidence of a human-AI relationship signal.",
-      "reasoning": "The headline describes market reaction to AI-related concerns but does not provide specific evidence of a human-AI relationship signal.",
+      "evidence_summary": "The headline describes market reaction to AI-related jitters but does not provide specific evidence of a human-AI relationship signal.",
+      "reasoning": "The headline describes market reaction to AI-related jitters but does not provide specific evidence of a human-AI relationship signal.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -2135,9 +1994,9 @@
       "ai_direction": "neutral",
       "evidence_status": "insufficient",
       "story_country_iso3s": [
-        "USA",
+        "GBR",
         "FRA",
-        "CAN"
+        "USA"
       ],
       "evidence_summary": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
       "reasoning": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
@@ -2175,8 +2034,8 @@
       "story_country_iso3s": [
         "CHN"
       ],
-      "evidence_summary": "The article discusses the practice of AI development at Bank of Communications, focusing on the transition from '1+1+N' to large-scale application. This suggests that humans are using AI to extend their existing capabilities in the context of financial services.",
-      "reasoning": "The article discusses the practice of AI development at Bank of Communications, focusing on the transition from '1+1+N' to large-scale application. This suggests that humans are using AI to extend their existing capabilities in the context of financial services.",
+      "evidence_summary": "The article discusses the application of AI in the banking sector, highlighting how people are using AI to extend existing capabilities in their operations.",
+      "reasoning": "The article discusses the application of AI in the banking sector, highlighting how people are using AI to extend existing capabilities in their operations.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -2236,19 +2095,19 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "insufficient_evidence",
-      "plain_label": "There is not enough source evidence to classify the relationship",
-      "technical_label": "Insufficient evidence",
-      "human_experience_type": "neutral",
-      "ai_expressive_role": "neutral",
-      "human_direction": "neutral",
-      "ai_direction": "neutral",
-      "evidence_status": "insufficient",
+      "configuration": "mutualism",
+      "plain_label": "Both people and the AI side are represented as gaining",
+      "technical_label": "Mutualism",
+      "human_experience_type": "extension",
+      "ai_expressive_role": "ai_extension",
+      "human_direction": "enabling",
+      "ai_direction": "enabling",
+      "evidence_status": "sufficient",
       "story_country_iso3s": [
         "FRA"
       ],
-      "evidence_summary": "The headline raises a question about why TV channels use generative AI but does not provide specific information about human-AI relationships.",
-      "reasoning": "The headline raises a question about why TV channels use generative AI but does not provide specific information about human-AI relationships.",
+      "evidence_summary": "The article explores how TV channels use generative AI for content creation, indicating that humans are extending their capacity through AI while the AI system is extending its operative reach.",
+      "reasoning": "The article explores how TV channels use generative AI for content creation, indicating that humans are extending their capacity through AI while the AI system is extending its operative reach.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -2319,8 +2178,8 @@
       "story_country_iso3s": [
         "FRA"
       ],
-      "evidence_summary": "The article discusses how AI influenced the author's political beliefs, suggesting a human extension and AI extension relationship.",
-      "reasoning": "The article discusses how AI influenced the author's political beliefs, suggesting a human extension and AI extension relationship.",
+      "evidence_summary": "The article discusses how exposure to AI systems influenced the author's political beliefs, suggesting a human extension and AI extension relationship.",
+      "reasoning": "The article discusses how exposure to AI systems influenced the author's political beliefs, suggesting a human extension and AI extension relationship.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -2391,8 +2250,8 @@
       "story_country_iso3s": [
         "FRA"
       ],
-      "evidence_summary": "The evidence provided is insufficient to determine the specific relationship between people and the AI system, operator, or ecosystem. There is no clear indication of how people are interacting with or being affected by the AI system in this context.",
-      "reasoning": "The evidence provided is insufficient to determine the specific relationship between people and the AI system, operator, or ecosystem. There is no clear indication of how people are interacting with or being affected by the AI system in this context.",
+      "evidence_summary": "The evidence provided is a headline without additional context or details about the relationship between people, the AI system, or the ecosystem. There is no explicit information about how people interact with the AI system or how the AI system is being used in the context of people or the ecosystem.",
+      "reasoning": "The evidence provided is a headline without additional context or details about the relationship between people, the AI system, or the ecosystem. There is no explicit information about how people interact with the AI system or how the AI system is being used in the context of people or the ecosystem.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -2427,8 +2286,8 @@
       "story_country_iso3s": [
         "USA"
       ],
-      "evidence_summary": "The evidence provided is insufficient to determine the human-AI relationship. The headline does not contain enough detail to classify the interaction between people and the AI system, operator, or ecosystem.",
-      "reasoning": "The evidence provided is insufficient to determine the human-AI relationship. The headline does not contain enough detail to classify the interaction between people and the AI system, operator, or ecosystem.",
+      "evidence_summary": "The evidence provided is insufficient to determine the relationship between people and the AI system, operator, or ecosystem. The headline does not contain enough detail to make a defensible judgment about the human-AI relationship.",
+      "reasoning": "The evidence provided is insufficient to determine the relationship between people and the AI system, operator, or ecosystem. The headline does not contain enough detail to make a defensible judgment about the human-AI relationship.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -2461,11 +2320,10 @@
       "ai_direction": "enabling",
       "evidence_status": "sufficient",
       "story_country_iso3s": [
-        "USA",
         "CHN"
       ],
-      "evidence_summary": "The article discusses how AI is extending its reach into real-world scenarios through robotics and other applications, indicating that people are using AI to project and exercise existing capacities.",
-      "reasoning": "The article discusses how AI is extending its reach into real-world scenarios through robotics and other applications, indicating that people are using AI to project and exercise existing capacities.",
+      "evidence_summary": "The article discusses how AI is extending its reach into real-world scenarios through robotics and other applications, indicating that people are using AI to project and exercise existing capacities in new contexts.",
+      "reasoning": "The article discusses how AI is extending its reach into real-world scenarios through robotics and other applications, indicating that people are using AI to project and exercise existing capacities in new contexts.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -2536,8 +2394,8 @@
       "story_country_iso3s": [
         "USA"
       ],
-      "evidence_summary": "The article discusses the decline of generative AI and provides predictions for the future of technology. However, it does not provide specific evidence of how people interact with AI systems, operators, or ecosystems.",
-      "reasoning": "The article discusses the decline of generative AI and provides predictions for the future of technology. However, it does not provide specific evidence of how people interact with AI systems, operators, or ecosystems.",
+      "evidence_summary": "The article discusses the potential decline of generative AI and offers predictions for future technological developments. However, it does not provide specific evidence of how people interact with AI systems, operators, or ecosystems.",
+      "reasoning": "The article discusses the potential decline of generative AI and offers predictions for future technological developments. However, it does not provide specific evidence of how people interact with AI systems, operators, or ecosystems.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -2574,8 +2432,8 @@
         "USA",
         "CHN"
       ],
-      "evidence_summary": "The headline highlights the development of an AI intelligent baseboard that accelerates on-device application implementation, suggesting that the AI system is extending its operational reach and functionality.",
-      "reasoning": "The headline highlights the development of an AI intelligent baseboard that accelerates on-device application implementation, suggesting that the AI system is extending its operational reach and functionality.",
+      "evidence_summary": "The headline describes the development of an AI intelligent baseboard that is accelerating on-device application implementation. The evidence focuses on the AI system's capabilities and development without detailing human interaction or experience.",
+      "reasoning": "The headline describes the development of an AI intelligent baseboard that is accelerating on-device application implementation. The evidence focuses on the AI system's capabilities and development without detailing human interaction or experience.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -2610,8 +2468,8 @@
       "story_country_iso3s": [
         "USA"
       ],
-      "evidence_summary": "The evidence provided is insufficient to determine the relationship between people and the AI system, operator, or ecosystem. The headline does not contain enough information to classify the human-AI relationship.",
-      "reasoning": "The evidence provided is insufficient to determine the relationship between people and the AI system, operator, or ecosystem. The headline does not contain enough information to classify the human-AI relationship.",
+      "evidence_summary": "The evidence provided is insufficient to determine the relationship between people and the AI system, operator, or ecosystem. The headline does not contain enough information to classify the human-AI relationship or the AI's expressive role.",
+      "reasoning": "The evidence provided is insufficient to determine the relationship between people and the AI system, operator, or ecosystem. The headline does not contain enough information to classify the human-AI relationship or the AI's expressive role.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -2646,8 +2504,8 @@
       "story_country_iso3s": [
         "USA"
       ],
-      "evidence_summary": "The article is a financial comparison of AI stocks from SpaceX and Alphabet, with no discussion of human-AI interactions or relationships.",
-      "reasoning": "The article is a financial comparison of AI stocks from SpaceX and Alphabet, with no discussion of human-AI interactions or relationships.",
+      "evidence_summary": "The article compares AI stocks between SpaceX and Alphabet but does not provide any evidence of human-AI relationship or interaction.",
+      "reasoning": "The article compares AI stocks between SpaceX and Alphabet but does not provide any evidence of human-AI relationship or interaction.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -2684,8 +2542,8 @@
         "GBR",
         "FRA"
       ],
-      "evidence_summary": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem. The title focuses on the topic of AI reproducing biases, but no direct human-AI relationship is described in the headline or text.",
-      "reasoning": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem. The title focuses on the topic of AI reproducing biases, but no direct human-AI relationship is described in the headline or text.",
+      "evidence_summary": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
+      "reasoning": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -2756,8 +2614,8 @@
       "story_country_iso3s": [
         "CHN"
       ],
-      "evidence_summary": "The article highlights the challenges young entrepreneurs face in the age of AI, emphasizing the extension of existing capacities through AI and global collaboration.",
-      "reasoning": "The article highlights the challenges young entrepreneurs face in the age of AI, emphasizing the extension of existing capacities through AI and global collaboration.",
+      "evidence_summary": "The article discusses how young entrepreneurs are facing new challenges in the age of AI, suggesting that they are extending their existing capacities through AI or responding to AI in a global context.",
+      "reasoning": "The article discusses how young entrepreneurs are facing new challenges in the age of AI, suggesting that they are extending their existing capacities through AI or responding to AI in a global context.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -2794,8 +2652,8 @@
         "USA",
         "FRA"
       ],
-      "evidence_summary": "A Generative AI is used to create the genome of a new virus, indicating that the AI is functioning and extending its reach in virology and genetic research. There is no direct human experience or interaction described in the evidence.",
-      "reasoning": "A Generative AI is used to create the genome of a new virus, indicating that the AI is functioning and extending its reach in virology and genetic research. There is no direct human experience or interaction described in the evidence.",
+      "evidence_summary": "The evidence describes a generative AI being used to create the genome of a new virus, with no direct human-AI interaction or relationship described. The AI is functioning and producing useful output, indicating it is extending its operative reach.",
+      "reasoning": "The evidence describes a generative AI being used to create the genome of a new virus, with no direct human-AI interaction or relationship described. The AI is functioning and producing useful output, indicating it is extending its operative reach.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -2830,8 +2688,8 @@
       "story_country_iso3s": [
         "FRA"
       ],
-      "evidence_summary": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
-      "reasoning": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
+      "evidence_summary": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem. The content is a video by Jacques Attali discussing the potential impact of AI on country growth, but it does not describe any direct interaction or relationship between humans and AI systems, operators, or ecosystems.",
+      "reasoning": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem. The content is a video by Jacques Attali discussing the potential impact of AI on country growth, but it does not describe any direct interaction or relationship between humans and AI systems, operators, or ecosystems.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -2864,10 +2722,10 @@
       "ai_direction": "neutral",
       "evidence_status": "insufficient",
       "story_country_iso3s": [
-        "USA"
+        "GB"
       ],
-      "evidence_summary": "The evidence is a financial comparison of two AI stocks, with no information on human-AI relationships or interactions.",
-      "reasoning": "The evidence is a financial comparison of two AI stocks, with no information on human-AI relationships or interactions.",
+      "evidence_summary": "The source evidence is a financial comparison of two AI-related stocks, not a description of human-AI relationships or impacts.",
+      "reasoning": "The source evidence is a financial comparison of two AI-related stocks, not a description of human-AI relationships or impacts.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -2938,8 +2796,8 @@
       "story_country_iso3s": [
         "USA"
       ],
-      "evidence_summary": "The headline highlights the availability of multiple AI models in AWS GovCloud (US) as a mission advantage, suggesting an AI-side expansion but no clear human-side relationship signal.",
-      "reasoning": "The headline highlights the availability of multiple AI models in AWS GovCloud (US) as a mission advantage, suggesting an AI-side expansion but no clear human-side relationship signal.",
+      "evidence_summary": "The headline reports that AWS is expanding its AI model offerings in AWS GovCloud (US), suggesting an AI-side expansion. There is no clear human-side relationship signal described in the evidence.",
+      "reasoning": "The headline reports that AWS is expanding its AI model offerings in AWS GovCloud (US), suggesting an AI-side expansion. There is no clear human-side relationship signal described in the evidence.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -2972,7 +2830,9 @@
       "ai_direction": "neutral",
       "evidence_status": "insufficient",
       "story_country_iso3s": [
-        "USA"
+        "USA",
+        "GBR",
+        "FRA"
       ],
       "evidence_summary": "The evidence provided is insufficient to determine the relationship between people and the AI system, operator, or ecosystem. The headline does not contain enough detail to make a defensible judgment about the human-AI relationship.",
       "reasoning": "The evidence provided is insufficient to determine the relationship between people and the AI system, operator, or ecosystem. The headline does not contain enough detail to make a defensible judgment about the human-AI relationship.",
@@ -3010,8 +2870,8 @@
       "story_country_iso3s": [
         "GTM"
       ],
-      "evidence_summary": "The headline raises a question about the potential use of AI in municipal campaigns but does not provide sufficient information to determine the relationship between people, the AI system, or the ecosystem.",
-      "reasoning": "The headline raises a question about the potential use of AI in municipal campaigns but does not provide sufficient information to determine the relationship between people, the AI system, or the ecosystem.",
+      "evidence_summary": "The headline raises a question about the potential use of AI in municipal campaigns but does not provide sufficient evidence to determine the relationship between people, the AI system, or the ecosystem.",
+      "reasoning": "The headline raises a question about the potential use of AI in municipal campaigns but does not provide sufficient evidence to determine the relationship between people, the AI system, or the ecosystem.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -3156,8 +3016,8 @@
       "story_country_iso3s": [
         "GBR"
       ],
-      "evidence_summary": "The evidence does not provide sufficient information to determine the relationship between humans and the AI system, operator, or ecosystem. The title suggests a historical reflection on AI, but no concrete human-AI interaction is described.",
-      "reasoning": "The evidence does not provide sufficient information to determine the relationship between humans and the AI system, operator, or ecosystem. The title suggests a historical reflection on AI, but no concrete human-AI interaction is described.",
+      "evidence_summary": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem. The title suggests a historical or reflective perspective on AI, but no concrete human-AI interaction is described.",
+      "reasoning": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem. The title suggests a historical or reflective perspective on AI, but no concrete human-AI interaction is described.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -3266,8 +3126,8 @@
         "CHN",
         "FRA"
       ],
-      "evidence_summary": "The country has successfully developed nearly 200 key AI standards, indicating an AI-side expansion. There is no clear human-side relationship signal described in the evidence.",
-      "reasoning": "The country has successfully developed nearly 200 key AI standards, indicating an AI-side expansion. There is no clear human-side relationship signal described in the evidence.",
+      "evidence_summary": "The country has successfully developed nearly 200 key AI standards, which represents an expansion of the AI system or operator side. There is no clear human-side relationship signal described in the evidence.",
+      "reasoning": "The country has successfully developed nearly 200 key AI standards, which represents an expansion of the AI system or operator side. There is no clear human-side relationship signal described in the evidence.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -3302,8 +3162,8 @@
       "story_country_iso3s": [
         "GBR"
       ],
-      "evidence_summary": "The headline mentions a limitation of ChatGPT but does not provide sufficient information to determine the specific relationship between people, the AI system, operator, or ecosystem.",
-      "reasoning": "The headline mentions a limitation of ChatGPT but does not provide sufficient information to determine the specific relationship between people, the AI system, operator, or ecosystem.",
+      "evidence_summary": "The headline mentions a limitation of ChatGPT but does not provide sufficient information to determine the human-AI relationship or the AI's expressive role in the context of the event.",
+      "reasoning": "The headline mentions a limitation of ChatGPT but does not provide sufficient information to determine the human-AI relationship or the AI's expressive role in the context of the event.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -3338,8 +3198,8 @@
       "story_country_iso3s": [
         "USA"
       ],
-      "evidence_summary": "The headline mentions 'Generative \"AI\" Macro Data' but does not provide specific details about human-AI relationship signals or the AI system's role in the ecosystem.",
-      "reasoning": "The headline mentions 'Generative \"AI\" Macro Data' but does not provide specific details about human-AI relationship signals or the AI system's role in the ecosystem.",
+      "evidence_summary": "The headline does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
+      "reasoning": "The headline does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -3372,12 +3232,12 @@
       "ai_direction": "enabling",
       "evidence_status": "sufficient",
       "story_country_iso3s": [
+        "GBR",
         "USA",
-        "CHN",
-        "FRA"
+        "CHN"
       ],
-      "evidence_summary": "The AI system is described as showcasing its innovation capabilities, indicating that it is functioning and extending its operative reach. There is no explicit information about human experience or interaction with the AI system.",
-      "reasoning": "The AI system is described as showcasing its innovation capabilities, indicating that it is functioning and extending its operative reach. There is no explicit information about human experience or interaction with the AI system.",
+      "evidence_summary": "The AI system is described as showcasing its innovation capabilities, indicating that it is functioning and producing useful output. There is no explicit information about human experience or interaction with the AI system.",
+      "reasoning": "The AI system is described as showcasing its innovation capabilities, indicating that it is functioning and producing useful output. There is no explicit information about human experience or interaction with the AI system.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -3448,8 +3308,8 @@
       "story_country_iso3s": [
         "XKX"
       ],
-      "evidence_summary": "The integration of AI in the transportation sector in Ningxia is creating new opportunities for people, suggesting an expansion in human experience and an extension of the AI system's operative reach.",
-      "reasoning": "The integration of AI in the transportation sector in Ningxia is creating new opportunities for people, suggesting an expansion in human experience and an extension of the AI system's operative reach.",
+      "evidence_summary": "The integration of AI in the transportation sector in Ningxia is creating new opportunities for people, indicating an expansion in human experience and an extension of the AI system's operative reach.",
+      "reasoning": "The integration of AI in the transportation sector in Ningxia is creating new opportunities for people, indicating an expansion in human experience and an extension of the AI system's operative reach.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -3522,8 +3382,8 @@
       "story_country_iso3s": [
         "USA"
       ],
-      "evidence_summary": "The article reports that Greg Abel, Warren Buffett's successor, is buying AI stock that Buffett also loved. However, there is no explicit information about the relationship between people and the AI system, operator, or ecosystem.",
-      "reasoning": "The article reports that Greg Abel, Warren Buffett's successor, is buying AI stock that Buffett also loved. However, there is no explicit information about the relationship between people and the AI system, operator, or ecosystem.",
+      "evidence_summary": "The evidence describes a human (Greg Abel) buying an AI stock that was previously loved by Warren Buffett. There is no explicit description of how this action relates to the AI system, operator, or ecosystem.",
+      "reasoning": "The evidence describes a human (Greg Abel) buying an AI stock that was previously loved by Warren Buffett. There is no explicit description of how this action relates to the AI system, operator, or ecosystem.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -3556,12 +3416,10 @@
       "ai_direction": "enabling",
       "evidence_status": "sufficient",
       "story_country_iso3s": [
-        "USA",
-        "GBR",
-        "FRA"
+        "GBR"
       ],
-      "evidence_summary": "The Raddison Hotel Group has launched an AI-powered real-time price matching technology, which is a new capability for the AI system in the hospitality industry. There is no direct human-AI interaction or relationship described in the evidence.",
-      "reasoning": "The Raddison Hotel Group has launched an AI-powered real-time price matching technology, which is a new capability for the AI system in the hospitality industry. There is no direct human-AI interaction or relationship described in the evidence.",
+      "evidence_summary": "The Raddison Hotel Group has launched an AI-powered real-time price matching technology, which is described as industry-leading in the hospitality sector. The evidence does not describe any direct human-AI interaction or relationship, but it does describe the AI system's function and expansion in the hospitality industry.",
+      "reasoning": "The Raddison Hotel Group has launched an AI-powered real-time price matching technology, which is described as industry-leading in the hospitality sector. The evidence does not describe any direct human-AI interaction or relationship, but it does describe the AI system's function and expansion in the hospitality industry.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -3598,8 +3456,8 @@
         "USA",
         "CHN"
       ],
-      "evidence_summary": "The evidence indicates that the AI system is extending its operational reach and functionality by allowing domestic AI computing power to be used as needed. There is no explicit information about how humans are affected by the AI system or ecosystem.",
-      "reasoning": "The evidence indicates that the AI system is extending its operational reach and functionality by allowing domestic AI computing power to be used as needed. There is no explicit information about how humans are affected by the AI system or ecosystem.",
+      "evidence_summary": "The headline describes an AI system's ability to use domestic AI computing power as needed, suggesting an AI-side action but no direct human-side relationship signal.",
+      "reasoning": "The headline describes an AI system's ability to use domestic AI computing power as needed, suggesting an AI-side action but no direct human-side relationship signal.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -3634,8 +3492,8 @@
       "story_country_iso3s": [
         "FRA"
       ],
-      "evidence_summary": "The evidence indicates that AI is being adopted in European offices, leading to gains in productivity, which suggests that people are gaining new capabilities through AI and that the AI system is functioning and extending its operative reach.",
-      "reasoning": "The evidence indicates that AI is being adopted in European offices, leading to gains in productivity, which suggests that people are gaining new capabilities through AI and that the AI system is functioning and extending its operative reach.",
+      "evidence_summary": "The evidence indicates that AI is being adopted in European offices, leading to productivity gains, which suggests that people are gaining new capabilities through AI and that the AI system is functioning and extending its operational reach.",
+      "reasoning": "The evidence indicates that AI is being adopted in European offices, leading to productivity gains, which suggests that people are gaining new capabilities through AI and that the AI system is functioning and extending its operational reach.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -3670,8 +3528,8 @@
       "story_country_iso3s": [
         "USA"
       ],
-      "evidence_summary": "The FDA digital health leader is promising generative AI regulatory guidance, indicating that the AI system is being extended or developed by the FDA.",
-      "reasoning": "The FDA digital health leader is promising generative AI regulatory guidance, indicating that the AI system is being extended or developed by the FDA.",
+      "evidence_summary": "The FDA digital health leader is promising that generative AI regulatory guidance will be coming, indicating that the AI system is extending its reach by providing regulatory guidance.",
+      "reasoning": "The FDA digital health leader is promising that generative AI regulatory guidance will be coming, indicating that the AI system is extending its reach by providing regulatory guidance.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -3706,8 +3564,8 @@
       "story_country_iso3s": [
         "GBR"
       ],
-      "evidence_summary": "The evidence provided is a headline that mentions an AI policy watch and updates from August 2026, but it does not provide specific details about the relationship between people, the AI system, or the ecosystem.",
-      "reasoning": "The evidence provided is a headline that mentions an AI policy watch and updates from August 2026, but it does not provide specific details about the relationship between people, the AI system, or the ecosystem.",
+      "evidence_summary": "The weekly release title indicates a focus on AI policy updates, but no specific details about human-AI relationships, interactions, or outcomes are provided in the evidence. The evidence is insufficient to determine the nature of the relationship between people and the AI system, operator, or ecosystem.",
+      "reasoning": "The weekly release title indicates a focus on AI policy updates, but no specific details about human-AI relationships, interactions, or outcomes are provided in the evidence. The evidence is insufficient to determine the nature of the relationship between people and the AI system, operator, or ecosystem.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -3744,8 +3602,8 @@
         "EU",
         "CHN"
       ],
-      "evidence_summary": "The weekly release focuses on regulatory efforts to constrain agentic artificial intelligence, suggesting that the AI system or operator is being restricted through regulatory measures.",
-      "reasoning": "The weekly release focuses on regulatory efforts to constrain agentic artificial intelligence, suggesting that the AI system or operator is being restricted through regulatory measures.",
+      "evidence_summary": "The evidence indicates that regulatory measures are being implemented to restrict or limit agentic AI systems, but no specific human-AI interaction or experience is described.",
+      "reasoning": "The evidence indicates that regulatory measures are being implemented to restrict or limit agentic AI systems, but no specific human-AI interaction or experience is described.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -3780,8 +3638,8 @@
       "story_country_iso3s": [
         "USA"
       ],
-      "evidence_summary": "The article discusses the potential economic impact of AI but does not provide specific evidence of how people interact with AI systems, operators, or ecosystems. There is no clear indication of human-AI relationships in terms of extension, expansion, restriction, reduction, or neutrality.",
-      "reasoning": "The article discusses the potential economic impact of AI but does not provide specific evidence of how people interact with AI systems, operators, or ecosystems. There is no clear indication of human-AI relationships in terms of extension, expansion, restriction, reduction, or neutrality.",
+      "evidence_summary": "The article discusses the potential economic impact of AI but does not provide specific evidence of how people interact with AI systems, operators, or ecosystems.",
+      "reasoning": "The article discusses the potential economic impact of AI but does not provide specific evidence of how people interact with AI systems, operators, or ecosystems.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -3816,8 +3674,8 @@
       "story_country_iso3s": [
         "GB"
       ],
-      "evidence_summary": "The headline does not provide sufficient evidence to determine the relationship between people and the AI system, operator, or ecosystem.",
-      "reasoning": "The headline does not provide sufficient evidence to determine the relationship between people and the AI system, operator, or ecosystem.",
+      "evidence_summary": "The headline does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
+      "reasoning": "The headline does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -3924,8 +3782,8 @@
       "story_country_iso3s": [
         "USA"
       ],
-      "evidence_summary": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem. The headline mentions a legal question regarding an AI model executive order, but no specific human-AI interaction or relationship is described.",
-      "reasoning": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem. The headline mentions a legal question regarding an AI model executive order, but no specific human-AI interaction or relationship is described.",
+      "evidence_summary": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem. The headline mentions an executive order related to AI and First Amendment questions, but no specific details about human-AI interactions, capabilities, or constraints are provided.",
+      "reasoning": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem. The headline mentions an executive order related to AI and First Amendment questions, but no specific details about human-AI interactions, capabilities, or constraints are provided.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -4034,7 +3892,7 @@
       "story_country_iso3s": [
         "USA",
         "FRA",
-        "GBR"
+        "ITA"
       ],
       "evidence_summary": "The statement mentions that states struggle to control the concentration of artificial intelligence, but it does not provide clear evidence of how people interact with the AI system, operator, or ecosystem.",
       "reasoning": "The statement mentions that states struggle to control the concentration of artificial intelligence, but it does not provide clear evidence of how people interact with the AI system, operator, or ecosystem.",
@@ -4072,8 +3930,8 @@
       "story_country_iso3s": [
         "FRA"
       ],
-      "evidence_summary": "The headline presents a balanced view of AI's potential to democratize knowledge and deepen social divides, but does not provide specific evidence of human-AI interactions, operator relationships, or ecosystem dynamics.",
-      "reasoning": "The headline presents a balanced view of AI's potential to democratize knowledge and deepen social divides, but does not provide specific evidence of human-AI interactions, operator relationships, or ecosystem dynamics.",
+      "evidence_summary": "The headline presents a balanced view of AI's potential to democratize knowledge and deepen social divides, but does not provide specific evidence of human-AI interactions, relationships, or signals.",
+      "reasoning": "The headline presents a balanced view of AI's potential to democratize knowledge and deepen social divides, but does not provide specific evidence of human-AI interactions, relationships, or signals.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -4178,7 +4036,9 @@
       "ai_direction": "neutral",
       "evidence_status": "insufficient",
       "story_country_iso3s": [
-        "USA"
+        "GBR",
+        "USA",
+        "FRA"
       ],
       "evidence_summary": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
       "reasoning": "The evidence does not provide sufficient information to determine the relationship between people and the AI system, operator, or ecosystem.",
@@ -4256,8 +4116,8 @@
         "GBR",
         "IND"
       ],
-      "evidence_summary": "The evidence provided is a title of an event without additional context or description of human-AI interactions. There is no information about how people interact with the AI system, operator, or ecosystem.",
-      "reasoning": "The evidence provided is a title of an event without additional context or description of human-AI interactions. There is no information about how people interact with the AI system, operator, or ecosystem.",
+      "evidence_summary": "The evidence provided is a title of an event without additional context or description that would indicate the relationship between people, the AI system, or the ecosystem. There is no explicit information about how people interact with the AI system or how the AI system is being used in this context.",
+      "reasoning": "The evidence provided is a title of an event without additional context or description that would indicate the relationship between people, the AI system, or the ecosystem. There is no explicit information about how people interact with the AI system or how the AI system is being used in this context.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -4290,10 +4150,10 @@
       "ai_direction": "enabling",
       "evidence_status": "sufficient",
       "story_country_iso3s": [
-        "USA"
+        "GBR"
       ],
-      "evidence_summary": "Thomson Reuters launches a proprietary AI model for legal work, indicating the AI system is being extended in terms of its operational reach and capabilities.",
-      "reasoning": "Thomson Reuters launches a proprietary AI model for legal work, indicating the AI system is being extended in terms of its operational reach and capabilities.",
+      "evidence_summary": "Thomson Reuters launches a proprietary AI model for legal work, indicating that the AI system is functioning and extending its operative reach.",
+      "reasoning": "Thomson Reuters launches a proprietary AI model for legal work, indicating that the AI system is functioning and extending its operative reach.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -4328,8 +4188,8 @@
       "story_country_iso3s": [
         "CHN"
       ],
-      "evidence_summary": "The evidence provided does not describe any direct human-AI relationship or interaction. The headline mentions the completion of on-orbit testing and validation of the health management module of the aerospace vertical large model 'Hua Shan', but does not specify any human-AI interaction, capability change, or relationship signal.",
-      "reasoning": "The evidence provided does not describe any direct human-AI relationship or interaction. The headline mentions the completion of on-orbit testing and validation of the health management module of the aerospace vertical large model 'Hua Shan', but does not specify any human-AI interaction, capability change, or relationship signal.",
+      "evidence_summary": "The evidence provided does not describe any direct human-AI relationship or interaction. The headline mentions the completion of on-orbit testing and validation of the 'Hua Shan' health management module, but does not specify how humans are involved with the AI system or how the AI system is interacting with humans.",
+      "reasoning": "The evidence provided does not describe any direct human-AI relationship or interaction. The headline mentions the completion of on-orbit testing and validation of the 'Hua Shan' health management module, but does not specify how humans are involved with the AI system or how the AI system is interacting with humans.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -4372,8 +4232,8 @@
       "story_country_iso3s": [
         "CHN"
       ],
-      "evidence_summary": "The Ministry of Industry and Information Technology is exploring new models for cultivating AI applications, with a focus on expanding the use of AI. The evidence suggests that the AI system is expanding its capabilities and applications, but there is no clear information about how this affects human experience.",
-      "reasoning": "The Ministry of Industry and Information Technology is exploring new models for cultivating AI applications, with a focus on expanding the use of AI. The evidence suggests that the AI system is expanding its capabilities and applications, but there is no clear information about how this affects human experience.",
+      "evidence_summary": "The Ministry of Industry and Information Technology is exploring new models for cultivating AI applications, with a focus on expanding the use of AI. The evidence suggests that the AI system is expanding its capabilities and applications, but there is no clear indication of how this affects human experience.",
+      "reasoning": "The Ministry of Industry and Information Technology is exploring new models for cultivating AI applications, with a focus on expanding the use of AI. The evidence suggests that the AI system is expanding its capabilities and applications, but there is no clear indication of how this affects human experience.",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
@@ -4394,5 +4254,5 @@
     "ambiguous_relational_signal": "Ambiguous relational signal",
     "insufficient_evidence": "Insufficient evidence"
   },
-  "content_sha256": "8e1f8fbbf8fb9e85a2cb665b1f0bbb909a3be4b4a76398e754a340ef0c7a5e64"
+  "content_sha256": "3bcfa1b8736a85af3f2f0effbdacc8a030ba19dab9bdfe9968781d7c2d0c51d5"
 }
