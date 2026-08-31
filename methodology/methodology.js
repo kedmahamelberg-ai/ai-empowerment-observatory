@@ -39,7 +39,8 @@ async function init() {
   const pool = release.historical_pool || {};
   setText("scope-pool", pool.all_prior_events_considered ? `All accepted evidence since ${String(pool.starts_at || "5 August 2026").slice(0,10)}` : "Pilot history from 5 August 2026");
   setText("scope-release", `${release.release_id} revision ${Number(release.revision || 1)}`);
-  setText("scope-review", symbiosis?.public_status === "human_reviewed" ? `${symbiosis.review?.event_reviewed || 0} of ${symbiosis.review?.event_total || 0} developments reviewed` : "Relationship review in progress");
+  const relationshipCurrent = symbiosis && String(symbiosis.release_id || "") === String(release.release_id || "");
+  setText("scope-review", relationshipCurrent && symbiosis?.public_status === "human_reviewed" ? `${symbiosis.review?.event_reviewed || 0} of ${symbiosis.review?.event_total || 0} developments reviewed` : "Relationship review in progress");
 }
 
 init().catch((error) => {
