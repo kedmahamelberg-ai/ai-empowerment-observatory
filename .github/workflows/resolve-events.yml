@@ -47,6 +47,7 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
           LLAMA_SERVER_BIN: /tmp/llama.cpp/build/bin/llama-server
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: python scripts/resolve_events.py
       - name: Commit resolved event outputs safely
         run: |
