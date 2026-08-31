@@ -89,8 +89,9 @@ function periodCounts(current) {
   };
 }
 
-function relationshipCard(symbiosis) {
-  const complete = Boolean(symbiosis?.review?.complete);
+function relationshipCard(symbiosis, releaseId) {
+  const sameRelease = String(symbiosis?.release_id || "") === String(releaseId || "");
+  const complete = sameRelease && Boolean(symbiosis?.review?.complete);
   if (!complete) {
     const reviewed = Number(symbiosis?.review?.event_reviewed || 0);
     const total = Number(symbiosis?.review?.event_total || 0);
@@ -128,7 +129,7 @@ function relationshipCard(symbiosis) {
 
 function renderPreview(current, symbiosis) {
   const c = periodCounts(current);
-  const relationship = relationshipCard(symbiosis);
+  const relationship = relationshipCard(symbiosis, current?.release_id);
   const cards = [
     {
       label: "New reality",
