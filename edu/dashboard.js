@@ -512,7 +512,7 @@ async function init() {
     const [release, index, countryData, symbiosis] = await Promise.all([fetchJSON(CURRENT_URL), fetchJSON(INDEX_URL), fetchJSON(COUNTRIES_URL), fetchJSON(SYMBIOSIS_URL, true)]);
     currentRelease = release;
     releaseIndex = index;
-    currentSymbiosis = symbiosis;
+    currentSymbiosis = symbiosis && String(symbiosis.release_id || "") === String(release.release_id || "") ? symbiosis : null;
     markets = countryData.markets || {};
     coverageByArticle = new Map((currentRelease.units?.coverage_articles || []).map((row) => [String(row.article_id), row]));
     renderMarketSelection(countryData.selection || {});
