@@ -1,14 +1,14 @@
 {
   "stage": "7A.2",
-  "last_attempt_at": "2026-08-24T06:35:51.813841Z",
-  "last_success_at": "2026-08-24T06:35:51.813841Z",
-  "run_key": "run_20260824T063512Z",
-  "run_id": "71d66df1-a27d-4ee3-9a86-64d59d9e9145",
-  "run_date": "2026-08-24",
+  "last_attempt_at": "2026-08-31T12:03:40.742862Z",
+  "last_success_at": "2026-08-31T12:03:40.742862Z",
+  "run_key": "run_20260831T120321Z",
+  "run_id": "6760adad-d212-46e1-9ea4-3fb33a9ffb98",
+  "run_date": "2026-08-31",
   "configured_searches": 5,
   "successful_searches": 5,
   "failed_searches": 0,
-  "latest_candidate_count": 134,
+  "latest_candidate_count": 130,
   "private_storage": "Supabase",
   "countries": [
     {
@@ -19,9 +19,9 @@
       "status": "success",
       "raw_result_count": 100,
       "normalized_candidate_count": 30,
-      "serpapi_search_id": "6a8be622124815a42573f865",
+      "serpapi_search_id": "6a956d8cb9dbc4611ff4c8cd",
       "google_news_url": "https://news.google.com/search?q=%28%22artificial+intelligence%22+OR+%22generative+AI%22+OR+%22AI+policy%22+OR+%22AI+regulation%22+OR+%22AI+model%22%29+when%3A7d&hl=en&gl=US",
-      "raw_storage_path": "serpapi/google-news/2026/08/24/run_20260824T063512Z/usa.json"
+      "raw_storage_path": "serpapi/google-news/2026/08/31/run_20260831T120321Z/usa.json"
     },
     {
       "country": "China",
@@ -31,9 +31,9 @@
       "status": "success",
       "raw_result_count": 100,
       "normalized_candidate_count": 30,
-      "serpapi_search_id": "6a8be627a1de123c2b7d0edb",
+      "serpapi_search_id": "6a956d8f3d0e4eca6842fb47",
       "google_news_url": "https://news.google.com/search?q=%28%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD+OR+%E7%94%9F%E6%88%90%E5%BC%8F%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD+OR+%E5%A4%A7%E6%A8%A1%E5%9E%8B+OR+%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%9B%91%E7%AE%A1+OR+%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%94%BF%E7%AD%96%29+when%3A7d&hl=zh-cn&gl=CN",
-      "raw_storage_path": "serpapi/google-news/2026/08/24/run_20260824T063512Z/chn.json"
+      "raw_storage_path": "serpapi/google-news/2026/08/31/run_20260831T120321Z/chn.json"
     },
     {
       "country": "United Kingdom",
@@ -43,9 +43,9 @@
       "status": "success",
       "raw_result_count": 100,
       "normalized_candidate_count": 30,
-      "serpapi_search_id": "6a8be62f3d06ea362511a0a4",
+      "serpapi_search_id": "6a956d921f758adfb1596a2a",
       "google_news_url": "https://news.google.com/search?q=%28%22artificial+intelligence%22+OR+%22generative+AI%22+OR+%22AI+policy%22+OR+%22AI+regulation%22+OR+%22AI+model%22%29+when%3A7d&hl=en&gl=UK",
-      "raw_storage_path": "serpapi/google-news/2026/08/24/run_20260824T063512Z/gbr.json"
+      "raw_storage_path": "serpapi/google-news/2026/08/31/run_20260831T120321Z/gbr.json"
     },
     {
       "country": "France",
@@ -55,9 +55,9 @@
       "status": "success",
       "raw_result_count": 100,
       "normalized_candidate_count": 30,
-      "serpapi_search_id": "6a8be63965f701f3ada55c48",
+      "serpapi_search_id": "6a956d96b9dbc45f087db542",
       "google_news_url": "https://news.google.com/search?q=%28%22intelligence+artificielle%22+OR+%22IA+g%C3%A9n%C3%A9rative%22+OR+%22r%C3%A9glementation+de+l%E2%80%99IA%22+OR+%22politique+de+l%E2%80%99IA%22+OR+%22mod%C3%A8le+d%E2%80%99IA%22%29+when%3A7d&hl=fr&gl=FR",
-      "raw_storage_path": "serpapi/google-news/2026/08/24/run_20260824T063512Z/fra.json"
+      "raw_storage_path": "serpapi/google-news/2026/08/31/run_20260831T120321Z/fra.json"
     },
     {
       "country": "Canada",
@@ -67,9 +67,9 @@
       "status": "success",
       "raw_result_count": 100,
       "normalized_candidate_count": 30,
-      "serpapi_search_id": "6a8be6413d40b6d287a90628",
+      "serpapi_search_id": "6a956d9a560433ed698a0322",
       "google_news_url": "https://news.google.com/search?q=%28%22artificial+intelligence%22+OR+%22generative+AI%22+OR+%22intelligence+artificielle%22+OR+%22IA+g%C3%A9n%C3%A9rative%22+OR+%22AI+regulation%22%29+when%3A7d&hl=en&gl=CA",
-      "raw_storage_path": "serpapi/google-news/2026/08/24/run_20260824T063512Z/can.json"
+      "raw_storage_path": "serpapi/google-news/2026/08/31/run_20260831T120321Z/can.json"
     }
   ],
   "publication_state": "review only; no automated empowerment scores"
