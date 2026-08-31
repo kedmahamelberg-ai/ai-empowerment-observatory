@@ -58,7 +58,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REVIEW_PATH = ROOT / "review" / "events" / "assignments" / "latest.json"
 PUBLIC_EVENTS_PATH = ROOT / "data" / "events" / "latest.json"
 
-RESOLVER_VERSION = "7B.4-launch"
+RESOLVER_VERSION = "7B.4.1-structured-json-retry"
 METHOD_NAME = "article_to_event_v1"
 TRANSLATION_PROFILE = "validated_language_routing_v3"
 
@@ -612,31 +612,47 @@ def stop_llama_server(
 
 
 def extract_json(text: str) -> dict[str, Any]:
-    text = re.sub(
+    """Extract one JSON object from model output without repairing semantics.
+
+    Structured-output mode should normally make the whole response valid JSON.
+    The fallback scanner only tolerates harmless wrappers such as markdown
+    fences or surrounding prose. It deliberately does not guess how to repair
+    malformed JSON, because a guessed repair could change an event decision.
+    """
+    cleaned = re.sub(
         r"<think>.*?</think>",
         "",
         text,
         flags=re.S,
     ).strip()
 
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError:
-        pass
-
-    match = re.search(
-        r"\{.*\}",
-        text,
-        flags=re.S,
+    cleaned = re.sub(
+        r"^```(?:json)?\s*",
+        "",
+        cleaned,
+        flags=re.I,
     )
+    cleaned = re.sub(r"\s*```$", "", cleaned).strip()
 
-    if not match:
-        raise ResolverError(
-            f"Qwen output contained no JSON: {text}"
-        )
+    try:
+        payload = json.loads(cleaned)
+        if isinstance(payload, dict):
+            return payload
+        raise ResolverError("Qwen returned JSON that was not an object.")
+    except json.JSONDecodeError as direct_error:
+        decoder = json.JSONDecoder()
 
-    return json.loads(match.group(0))
+        # Scan for the first independently valid JSON object rather than using
+        # a greedy {.*} regex, which can accidentally join multiple objects.
+        for match in re.finditer(r"\{", cleaned):
+            try:
+                payload, _ = decoder.raw_decode(cleaned[match.start():])
+            except json.JSONDecodeError:
+                continue
+            if isinstance(payload, dict):
+                return payload
 
+        raise direct_error
 
 def qwen_verify_event(
     *,
@@ -698,7 +714,7 @@ Event representation similarity: {rep_similarity:.4f}
 ModernBERT strongest pair score: {modernbert_max:.4f}
 Google News story-token match: {str(story_token_match).lower()}
 
-Return ONLY JSON:
+Return ONLY one valid JSON object with exactly these fields:
 {{
   "relationship": "same_event | not_same_event | unclear",
   "confidence": 0.00,
@@ -706,63 +722,133 @@ Return ONLY JSON:
 }}
 """.strip()
 
-    response = requests.post(
-        SERVER_URL,
-        json={
-            "model": f"{QWEN_REPO}:{QWEN_QUANT}",
-            "messages": [
-                {
-                    "role": "system",
-                    "content": (
-                        "You are a conservative real-world news-event verifier. "
-                        "False merges are more harmful than false splits."
-                    ),
-                },
-                {
-                    "role": "user",
-                    "content": prompt,
-                },
-            ],
+    # llama.cpp supports OpenAI-compatible JSON-object mode. Use it first so a
+    # stray quote/newline in the free-text reason cannot invalidate the whole
+    # weekly run. The prompt-only mode remains as a compatibility fallback.
+    request_modes = [
+        {
+            "name": "json_object",
+            "extra": {"response_format": {"type": "json_object"}},
             "temperature": 0.0,
             "top_p": 1.0,
-            "max_tokens": 230,
-            "stream": False,
         },
-        timeout=180,
-    )
+        {
+            "name": "json_object_retry",
+            "extra": {"response_format": {"type": "json_object"}},
+            "temperature": 0.2,
+            "top_p": 0.9,
+        },
+        {
+            "name": "prompt_only_retry",
+            "extra": {},
+            "temperature": 0.2,
+            "top_p": 0.9,
+        },
+    ]
 
-    response.raise_for_status()
+    last_error: Exception | None = None
 
-    result = extract_json(
-        str(
-            response.json()["choices"][0]["message"]["content"]
-        )
-    )
+    for attempt, mode in enumerate(request_modes, start=1):
+        try:
+            response = requests.post(
+                SERVER_URL,
+                json={
+                    "model": f"{QWEN_REPO}:{QWEN_QUANT}",
+                    "messages": [
+                        {
+                            "role": "system",
+                            "content": (
+                                "You are a conservative real-world news-event verifier. "
+                                "False merges are more harmful than false splits. "
+                                "Return one syntactically valid JSON object only."
+                            ),
+                        },
+                        {
+                            "role": "user",
+                            "content": prompt,
+                        },
+                    ],
+                    "temperature": mode["temperature"],
+                    "top_p": mode["top_p"],
+                    "max_tokens": 230,
+                    "stream": False,
+                    **mode["extra"],
+                },
+                timeout=180,
+            )
+            response.raise_for_status()
 
-    relationship = str(
-        result.get("relationship") or ""
-    ).strip()
+            result = extract_json(
+                str(response.json()["choices"][0]["message"]["content"])
+            )
 
-    if relationship not in {
-        "same_event",
-        "not_same_event",
-        "unclear",
-    }:
+            relationship = str(
+                result.get("relationship") or ""
+            ).strip()
+
+            if relationship not in {
+                "same_event",
+                "not_same_event",
+                "unclear",
+            }:
+                raise ResolverError(
+                    f"Unexpected Qwen relationship: {relationship}"
+                )
+
+            try:
+                confidence = float(result.get("confidence", 0.0))
+            except Exception:
+                confidence = 0.0
+
+            return {
+                "relationship": relationship,
+                "confidence": max(0.0, min(1.0, confidence)),
+                "reason": str(result.get("reason") or ""),
+                "structured_output_mode": mode["name"],
+            }
+
+        except requests.RequestException as exc:
+            # A real server/HTTP failure is not silently converted into a model
+            # judgement. Retry, then fail the stage if transport remains broken.
+            last_error = exc
+            print(
+                f"Warning: Qwen verifier request {attempt}/{len(request_modes)} "
+                f"failed in {mode['name']} mode: {exc}",
+                file=sys.stderr,
+            )
+
+        except (json.JSONDecodeError, KeyError, IndexError, TypeError, ResolverError) as exc:
+            # Malformed model output is recoverable. Retrying the same article is
+            # much safer than terminating a 100+ article weekly resolution run.
+            last_error = exc
+            print(
+                f"Warning: Qwen verifier output {attempt}/{len(request_modes)} "
+                f"was invalid in {mode['name']} mode: {exc}",
+                file=sys.stderr,
+            )
+
+        if attempt < len(request_modes):
+            time.sleep(1)
+
+    if isinstance(last_error, requests.RequestException):
         raise ResolverError(
-            f"Unexpected Qwen relationship: {relationship}"
-        )
+            "Qwen verifier HTTP/server request failed after all retries."
+        ) from last_error
 
-    try:
-        confidence = float(result.get("confidence", 0.0))
-    except Exception:
-        confidence = 0.0
-
+    # Precision-first fallback: an unparsable model answer can never cause an
+    # automatic merge. Mark it unclear so meaningful non-LLM evidence enters
+    # human review, while weak evidence remains a separate event.
+    print(
+        "Warning: Qwen verifier returned malformed/invalid structured output "
+        "after all retries; using conservative 'unclear' fallback.",
+        file=sys.stderr,
+    )
     return {
-        "relationship": relationship,
-        "confidence": max(0.0, min(1.0, confidence)),
-        "reason": str(result.get("reason") or ""),
+        "relationship": "unclear",
+        "confidence": 0.0,
+        "reason": "verifier_output_invalid_after_retries",
+        "structured_output_mode": "fallback_unclear",
     }
-
 
 def pair_score(
     tokenizer,

@@ -21,6 +21,7 @@ import hashlib
 import json
 import os
 import sys
+import time
 from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
@@ -58,7 +59,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_OUTPUT = ROOT / "data" / "releases" / "reconciliation" / "latest.json"
 PRIVATE_REVIEW = ROOT / "review" / "events" / "longitudinal" / "latest.json"
 
-RECONCILER_VERSION = "longitudinal_v1.3"
+RECONCILER_VERSION = "longitudinal_v1.3.1-structured-json-retry"
 MANUAL_DECISIONS_PATH = ROOT / "review" / "events" / "longitudinal" / "manual-decisions.json"
 RECENT_TRACK_DAYS = float(os.environ.get("AIEO_RECENT_TRACK_DAYS", "21"))
 RESURFACE_DAYS = float(os.environ.get("AIEO_RESURFACE_DAYS", "28"))
@@ -666,38 +667,116 @@ Return ONLY JSON:
   "reason": ""
 }}
 """.strip()
-    response = requests.post(
-        SERVER_URL,
-        json={
-            "model": f"{QWEN_REPO}:{QWEN_QUANT}",
-            "messages": [
-                {
-                    "role": "system",
-                    "content": (
-                        "You are a conservative longitudinal news-event verifier. "
-                        "False merges are more harmful than false splits."
-                    ),
-                },
-                {"role": "user", "content": prompt},
-            ],
+    request_modes = [
+        {
+            "name": "json_object",
+            "extra": {"response_format": {"type": "json_object"}},
             "temperature": 0.0,
             "top_p": 1.0,
-            "max_tokens": 280,
-            "stream": False,
         },
-        timeout=180,
+        {
+            "name": "json_object_retry",
+            "extra": {"response_format": {"type": "json_object"}},
+            "temperature": 0.2,
+            "top_p": 0.9,
+        },
+        {
+            "name": "prompt_only_retry",
+            "extra": {},
+            "temperature": 0.2,
+            "top_p": 0.9,
+        },
+    ]
+    last_error: Exception | None = None
+
+    for attempt, mode in enumerate(request_modes, start=1):
+        try:
+            response = requests.post(
+                SERVER_URL,
+                json={
+                    "model": f"{QWEN_REPO}:{QWEN_QUANT}",
+                    "messages": [
+                        {
+                            "role": "system",
+                            "content": (
+                                "You are a conservative longitudinal news-event verifier. "
+                                "False merges are more harmful than false splits. "
+                                "Return one syntactically valid JSON object only."
+                            ),
+                        },
+                        {"role": "user", "content": prompt},
+                    ],
+                    "temperature": mode["temperature"],
+                    "top_p": mode["top_p"],
+                    "max_tokens": 280,
+                    "stream": False,
+                    **mode["extra"],
+                },
+                timeout=180,
+            )
+            response.raise_for_status()
+            payload = extract_json(
+                str(response.json()["choices"][0]["message"]["content"])
+            )
+            relationship = clean_text(payload.get("relationship"))
+            allowed = {
+                "same_event",
+                "follow_on_development",
+                "same_topic_only",
+                "unclear",
+            }
+            if relationship not in allowed:
+                raise ReconciliationError(
+                    f"Unexpected relationship: {relationship}"
+                )
+            try:
+                confidence = max(
+                    0.0,
+                    min(1.0, float(payload.get("confidence", 0.0))),
+                )
+            except (TypeError, ValueError):
+                confidence = 0.0
+            return {
+                "relationship": relationship,
+                "confidence": confidence,
+                "reason": clean_text(payload.get("reason")),
+                "structured_output_mode": mode["name"],
+            }
+
+        except requests.RequestException as exc:
+            last_error = exc
+            print(
+                f"Warning: longitudinal Qwen request {attempt}/{len(request_modes)} "
+                f"failed in {mode['name']} mode: {exc}",
+                file=sys.stderr,
+            )
+        except (json.JSONDecodeError, KeyError, IndexError, TypeError, ReconciliationError) as exc:
+            last_error = exc
+            print(
+                f"Warning: longitudinal Qwen output {attempt}/{len(request_modes)} "
+                f"was invalid in {mode['name']} mode: {exc}",
+                file=sys.stderr,
+            )
+
+        if attempt < len(request_modes):
+            time.sleep(1)
+
+    if isinstance(last_error, requests.RequestException):
+        raise ReconciliationError(
+            "Longitudinal Qwen HTTP/server request failed after all retries."
+        ) from last_error
+
+    print(
+        "Warning: longitudinal Qwen output remained invalid after retries; "
+        "using conservative 'unclear' fallback.",
+        file=sys.stderr,
     )
-    response.raise_for_status()
-    payload = extract_json(str(response.json()["choices"][0]["message"]["content"]))
-    relationship = clean_text(payload.get("relationship"))
-    allowed = {"same_event", "follow_on_development", "same_topic_only", "unclear"}
-    if relationship not in allowed:
-        raise ReconciliationError(f"Unexpected relationship: {relationship}")
-    try:
-        confidence = max(0.0, min(1.0, float(payload.get("confidence", 0.0))))
-    except (TypeError, ValueError):
-        confidence = 0.0
-    return {"relationship": relationship, "confidence": confidence, "reason": clean_text(payload.get("reason"))}
+    return {
+        "relationship": "unclear",
+        "confidence": 0.0,
+        "reason": "verifier_output_invalid_after_retries",
+        "structured_output_mode": "fallback_unclear",
+    }
 
 
 def upsert_relationship(
