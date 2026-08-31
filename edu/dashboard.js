@@ -49,7 +49,7 @@ let coverageByArticle = new Map();
 
 function normalizeEvidenceView(value) {
   if (value === "resurfaced") return "recurring";
-  return ["all", "new", "recurring"].includes(value) ? value : "all";
+  return ["all", "new", "recurring", "review"].includes(value) ? value : "all";
 }
 
 function escapeHTML(value) {
@@ -87,6 +87,7 @@ function formatShortRange(startValue, endValue) {
   const start = parseDate(startValue);
   const end = parseDate(endValue);
   if (!start || !end) return "Date unavailable";
+  if (start.toISOString().slice(0, 10) === end.toISOString().slice(0, 10)) return dateShort.format(start);
   return `${dateShort.format(start)}-${dateShort.format(end)}`;
 }
 
@@ -154,10 +155,10 @@ function renderTape() {
   const idx = currentRow ? rows.indexOf(currentRow) : rows.length - 1;
   const previous = idx > 0 ? rows[idx - 1] : null;
   const values = [
-    { label: "Coverage", value: c.articles, previous: previous ? rowNumber(previous, ["articles", "ai_relevant_articles"]) : NaN, note: "source items", href: "?view=all#evidence" },
+    { label: "Coverage", value: c.articles, previous: previous ? rowNumber(previous, ["articles", "ai_relevant_articles"]) : NaN, note: "AI-news source pages", href: "?view=all#evidence" },
     { label: "Developments", value: c.events, previous: previous ? rowNumber(previous, ["event_records", "ai_relevant_event_records"]) : NaN, note: "distinct occurrences", href: "#history" },
-    { label: "Additional reports", value: c.extra, previous: previous ? rowNumber(previous, ["extra_coverage"]) : NaN, note: "repeat coverage", href: "?view=recurring#evidence" },
-    { label: "New to AIEO", value: c.newDevelopments, previous: NaN, note: "not in the history", href: "?view=new#evidence" },
+    { label: "Additional coverage", value: c.extra, previous: previous ? rowNumber(previous, ["extra_coverage"]) : NaN, note: "extra source pages, not extra developments", href: "?view=all#evidence" },
+    { label: "First-time developments", value: c.newDevelopments, previous: NaN, note: "not established in an earlier standardized release", href: "?view=new#evidence" },
   ];
   container.innerHTML = values.map((item) => {
     const change = changeMeta(item.value, item.previous);
@@ -167,13 +168,26 @@ function renderTape() {
 
 function renderOpening() {
   const c = periodCounts(currentRelease);
-  setText("week-badge", `Current weekly signal | ${formatRange(currentRelease.period_start, currentRelease.period_end)}`);
-  setText("week-intro", `${c.articles} coverage items were grouped into ${c.events} distinct developments. ${c.newDevelopments} ${plural(c.newDevelopments, "was", "were")} new to AIEO.`);
-  setText("fact-new", `${c.newDevelopments} new to AIEO`);
-  setText("fact-seen", `${c.recurring} seen before`);
-  setText("week-equation-coverage", `${c.articles} coverage items = ${c.events} developments + ${c.extra} additional ${plural(c.extra, "report")}.`);
   const pending = c.possible + c.unclassified;
-  setText("week-equation-novelty", pending ? `${c.events} developments = ${c.newDevelopments} new + ${c.recurring} seen before + ${pending} under review.` : `${c.events} developments = ${c.newDevelopments} new + ${c.recurring} seen before.`);
+  const extraSentence = c.extra
+    ? ` ${c.extra} additional ${plural(c.extra, "source page")} covered a development already counted.`
+    : "";
+  const noveltySentence = pending
+    ? `${c.newDevelopments} were not established in an earlier standardized release, ${c.recurring} were recurring, and ${pending} ${plural(pending, "historical match is", "historical matches are")} still being validated.`
+    : `${c.newDevelopments} were not established in an earlier standardized release and ${c.recurring} were recurring.`;
+  setText("week-badge", `Current weekly signal | ${formatRange(currentRelease.period_start, currentRelease.period_end)}`);
+  setText("week-intro", `${c.articles} AI-news source pages were grouped into ${c.events} distinct developments. ${noveltySentence}${extraSentence}`);
+  setText("fact-new", `${c.newDevelopments} first recorded`);
+  setText("fact-seen", `${c.recurring} recurring`);
+  const reviewFact = document.getElementById("fact-review");
+  if (reviewFact) {
+    reviewFact.hidden = pending === 0;
+    reviewFact.textContent = `${pending} ${plural(pending, "history match", "history matches")} under validation`;
+  }
+  setText("week-equation-coverage", `${c.articles} source pages = ${c.events} developments + ${c.extra} additional ${plural(c.extra, "source page")} about developments already counted.`);
+  setText("week-equation-novelty", pending
+    ? `${c.events} developments = ${c.newDevelopments} first recorded + ${c.recurring} recurring + ${pending} history-match ${plural(pending, "case", "cases")} under validation.`
+    : `${c.events} developments = ${c.newDevelopments} first recorded + ${c.recurring} recurring.`);
 }
 
 function renderMarketSelection(selection) {
@@ -240,19 +254,39 @@ function relationshipEventById(event) {
 function renderRelationship() {
   const banner = document.getElementById("relationship-review-banner");
   const core = document.getElementById("relationship-core");
-  if (!currentSymbiosis || currentSymbiosis.public_status !== "human_reviewed" || !currentSymbiosis.review?.event_complete) {
+  if (!currentSymbiosis) {
     banner.hidden = false;
-    banner.textContent = "The current relationship signal is still under review. Weekly counts and source evidence remain available.";
+    banner.textContent = "Relationship classification is not available for this release yet.";
     core.hidden = true;
-    setText("relationship-scope", "Review in progress");
-    setText("relationship-other-summary", "No model-only relationship distribution is published as a completed finding.");
+    setText("relationship-scope", "Classification pending");
+    setText("relationship-other-summary", "The core weekly counts and source evidence remain available.");
     return;
   }
-  banner.hidden = true;
-  core.hidden = false;
+
+  const status = String(currentSymbiosis.public_status || "classification_in_progress");
   const event = currentSymbiosis.event || {};
-  const counts = event.configuration_counts || {};
-  const complete = Number(event.complete_configuration_count || 0);
+  const humanReviewed = status === "human_reviewed" && Boolean(currentSymbiosis.review?.event_complete);
+  const classified = humanReviewed
+    ? Number(event.classified_units || event.expected_units || 0)
+    : Number(event.display_classified_units || event.classified_units || 0);
+  if (status === "classification_in_progress" || status === "review_in_progress" || classified === 0) {
+    banner.hidden = false;
+    banner.textContent = "Relationship classification is still running. This layer will refresh automatically when it finishes.";
+    core.hidden = true;
+    setText("relationship-scope", "Classification in progress");
+    setText("relationship-other-summary", "The core weekly counts are already published; no older relationship percentages are substituted.");
+    return;
+  }
+
+  banner.hidden = humanReviewed;
+  if (!humanReviewed) {
+    banner.textContent = "Model-coded provisional signal. Accepted human corrections replace model outputs as review proceeds.";
+  }
+  core.hidden = false;
+  const counts = humanReviewed ? (event.configuration_counts || {}) : (event.display_configuration_counts || event.configuration_counts || {});
+  const complete = humanReviewed
+    ? Number(event.complete_configuration_count || 0)
+    : Number(event.display_complete_configuration_count ?? event.complete_configuration_count ?? 0);
   const entries = [
     ["mutualism", "relationship-mutualism", "relationship-mutualism-share"],
     ["ai_benefiting_parasitism", "relationship-ai-benefit", "relationship-ai-benefit-share"],
@@ -264,12 +298,14 @@ function renderRelationship() {
     setText(countId, count);
     setText(shareId, complete ? `${((count / complete) * 100).toFixed(0)}%` : "0%");
   });
-  setText("relationship-scope", `${complete} developments had evidence for both sides`);
-  const partial = Number(event.partial_signal_count || 0);
-  const none = Number(event.no_clear_relational_signal_count || 0);
-  const ambiguous = Number(event.ambiguous_relational_signal_count || 0);
-  const insufficient = Number(event.insufficient_evidence_count || 0);
-  setText("relationship-other-summary", `${partial} one-sided signals, ${none} no-clear cases, ${ambiguous} ambiguous cases, and ${insufficient} insufficient-evidence cases are kept outside the four-pattern percentages.`);
+  setText("relationship-scope", humanReviewed
+    ? `${complete} human-reviewed developments had evidence for both sides`
+    : `${complete} model-coded developments had evidence for both sides`);
+  const partial = Number(humanReviewed ? event.partial_signal_count : (event.display_partial_signal_count ?? event.partial_signal_count) || 0);
+  const none = Number(humanReviewed ? event.no_clear_relational_signal_count : (event.display_no_clear_relational_signal_count ?? event.no_clear_relational_signal_count) || 0);
+  const ambiguous = Number(humanReviewed ? event.ambiguous_relational_signal_count : (event.display_ambiguous_relational_signal_count ?? event.ambiguous_relational_signal_count) || 0);
+  const insufficient = Number(humanReviewed ? event.insufficient_evidence_count : (event.display_insufficient_evidence_count ?? event.insufficient_evidence_count) || 0);
+  setText("relationship-other-summary", `${partial} one-sided signals, ${none} no-clear cases, ${ambiguous} ambiguous cases, and ${insufficient} insufficient-evidence cases are outside the four-pattern percentages.`);
 }
 
 function eventDiscoveryMarkets(event) {
@@ -288,11 +324,12 @@ function eventMatchesView(event) {
   const novelty = String(event.novelty_status || "");
   if (evidenceView === "new") return novelty === "first_time" || novelty === "follow_on_development" || Boolean(event.first_time_in_period) || Boolean(event.follow_on_development);
   if (evidenceView === "recurring") return novelty === "recurring" || Boolean(event.recurring_in_period);
+  if (evidenceView === "review") return novelty === "possible_historical_match" || novelty === "unclassified" || Boolean(event.possible_historical_match);
   return true;
 }
 
 function relationshipArrows(row) {
-  if (!row?.reviewed) return { people: "People ?", ai: "AI ?" };
+  if (!row) return { people: "People ?", ai: "AI ?" };
   const human = row.human_direction === "enabling" ? "People ↑" : row.human_direction === "constraining" ? "People ↓" : row.human_direction === "neutral" ? "People ↔" : "People ?";
   const ai = row.ai_direction === "enabling" ? "AI ↑" : row.ai_direction === "constraining" ? "AI ↓" : row.ai_direction === "neutral" ? "AI ↔" : "AI ?";
   return { people: human, ai };
@@ -308,8 +345,9 @@ function storyLocation(event, relationship) {
 
 function evidenceScopeCopy(count) {
   const marketCopy = selectedMarket ? ` found through the ${markets[selectedMarket]?.name || selectedMarket} search` : "";
-  if (evidenceView === "new") return `${count} new-to-AIEO ${plural(count, "development")} shown${marketCopy}.`;
-  if (evidenceView === "recurring") return `${count} previously seen ${plural(count, "development")} covered this week${marketCopy}.`;
+  if (evidenceView === "new") return `${count} first-recorded ${plural(count, "development")} shown${marketCopy}.`;
+  if (evidenceView === "recurring") return `${count} recurring ${plural(count, "development")} covered this week${marketCopy}.`;
+  if (evidenceView === "review") return `${count} ${plural(count, "development has", "developments have")} a cross-week history match still being validated${marketCopy}.`;
   return `${count} current-week ${plural(count, "development")} shown${marketCopy}.`;
 }
 
@@ -327,19 +365,38 @@ function renderEvidence() {
   }
   container.innerHTML = visible.map((event, index) => {
     const relationship = relationshipEventById(event);
+    const hasRelationship = Boolean(relationship?.configuration);
     const arrows = relationshipArrows(relationship);
     const sources = event.sources || [];
+    const sourceDates = sources.map((source) => String(source.published_date || "")).filter(Boolean).sort();
+    const eventDate = sourceDates.length
+      ? formatShortRange(sourceDates[0], sourceDates.at(-1))
+      : formatShortRange(event.event_date, event.event_date);
     const marketsFound = eventDiscoveryMarkets(event);
     const novelty = String(event.novelty_status || "");
-    const noveltyLabel = novelty === "recurring" || event.recurring_in_period ? "Seen before" : novelty === "follow_on_development" || event.follow_on_development ? "New follow-on" : novelty === "first_time" || event.first_time_in_period ? "New to AIEO" : "Novelty under review";
-    const relationshipLabel = relationship?.reviewed ? (RELATIONSHIP_LABELS[relationship.configuration] || relationship.plain_label) : "Relationship review pending";
-    const shouldOpen = evidenceView === "new" && events.length === 1 && index === 0;
+    const noveltyLabel = novelty === "recurring" || event.recurring_in_period
+      ? "Recurring"
+      : novelty === "follow_on_development" || event.follow_on_development
+        ? "First recorded · follow-on"
+        : novelty === "first_time" || event.first_time_in_period
+          ? "First recorded"
+          : novelty === "possible_historical_match" || event.possible_historical_match
+            ? "History match under validation"
+            : "History status under validation";
+    const relationshipText = hasRelationship ? (RELATIONSHIP_LABELS[relationship.configuration] || relationship.plain_label || "Relationship pattern") : "";
+    const relationshipBadge = hasRelationship
+      ? `<span class="relationship-badge" title="${relationship.reviewed ? "Human-reviewed" : "Model-coded provisional"}">${escapeHTML(relationshipText)}</span>`
+      : "";
+    const relationshipSnapshot = hasRelationship
+      ? `<div class="relationship-snapshot"><div class="relationship-side"><strong>${arrows.people}</strong><span>${escapeHTML(SIDE_LABELS[relationship?.human_experience_type] || "No directional signal")}</span></div><div class="relationship-side"><strong>${arrows.ai}</strong><span>${escapeHTML(SIDE_LABELS[relationship?.ai_expressive_role] || "No directional signal")}</span></div></div>`
+      : "";
+    const shouldOpen = evidenceView === "review" && events.length === 1 && index === 0;
     const marketButtons = marketsFound.length ? marketsFound.map((iso3) => `<button type="button" class="market-evidence-chip" data-globe-market="${escapeHTML(iso3)}">${escapeHTML(markets[iso3]?.name || iso3)} search</button>`).join("") : "Search market not available";
     return `
       <details class="evidence-card" ${shouldOpen ? "open" : ""}>
-        <summary><div><h3>${escapeHTML(event.event_title || "Untitled development")}</h3><div class="evidence-meta"><span>${escapeHTML(formatShortRange(event.event_date, event.event_date))}</span><span class="evidence-pill">${sources.length} ${plural(sources.length, "source")}</span><span class="evidence-pill">${escapeHTML(noveltyLabel)}</span><span class="relationship-badge">${escapeHTML(relationshipLabel)}</span></div></div></summary>
+        <summary><div><h3>${escapeHTML(event.event_title || "Untitled development")}</h3><div class="evidence-meta"><span>${escapeHTML(eventDate)}</span><span class="evidence-pill">${sources.length} ${plural(sources.length, "source")}</span><span class="evidence-pill">${escapeHTML(noveltyLabel)}</span>${relationshipBadge}</div></div></summary>
         <div class="evidence-body">
-          <div class="relationship-snapshot"><div class="relationship-side"><strong>${arrows.people}</strong><span>${escapeHTML(SIDE_LABELS[relationship?.human_experience_type] || "Evidence pending")}</span></div><div class="relationship-side"><strong>${arrows.ai}</strong><span>${escapeHTML(SIDE_LABELS[relationship?.ai_expressive_role] || "Evidence pending")}</span></div></div>
+          ${relationshipSnapshot}
           <div class="source-links">${sources.map((source) => `<a href="${escapeHTML(safeUrl(source.url))}" target="_blank" rel="noopener noreferrer"><span><strong>${escapeHTML(source.publisher || "Publication")}</strong>: ${escapeHTML(source.headline || "Open source")}</span><small>${escapeHTML(source.published_date || "")}</small></a>`).join("")}</div>
           <details class="compact-more"><summary>Context and classification detail</summary><p><strong>Found through:</strong></p><div class="market-evidence-chips">${marketButtons}</div><p><strong>Story location:</strong> ${escapeHTML(storyLocation(event, relationship))}</p>${relationship?.evidence_summary ? `<p><strong>Evidence summary:</strong> ${escapeHTML(relationship.evidence_summary)}</p>` : ""}${relationship?.reasoning ? `<p><strong>Why this pattern:</strong> ${escapeHTML(relationship.reasoning)}</p>` : ""}</details>
         </div>
@@ -351,8 +408,9 @@ function renderEvidence() {
     globe?.selectMarket(button.dataset.globeMarket, { notify: false });
     document.getElementById("explore")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }));
-  more.hidden = visible.length >= events.length;
-  more.textContent = `Show ${Math.min(6, events.length - visible.length)} more`;
+  const remaining = events.length - visible.length;
+  more.hidden = remaining <= 0;
+  if (remaining > 0) more.textContent = `Show next ${Math.min(6, remaining)} ${plural(Math.min(6, remaining), "development")}`;
 }
 
 function deltaText(current, previous) {
@@ -376,7 +434,7 @@ function renderHistoryComparison() {
   const metrics = [
     ["Coverage items", ["articles", "ai_relevant_articles"]],
     ["Distinct developments", ["event_records", "ai_relevant_event_records"]],
-    ["Additional reports", ["extra_coverage"]],
+    ["Additional coverage", ["extra_coverage"]],
   ];
   container.innerHTML = metrics.map(([label, keys]) => {
     const now = rowNumber(current, keys);
@@ -436,20 +494,22 @@ function empowermentPlain(index) {
 }
 
 function renderEmpowerment() {
-  const event = currentSymbiosis?.secondary_empowerment?.event;
-  if (!event || !currentSymbiosis?.review?.event_complete) {
-    setText("human-plain-label", "Review in progress");
-    setText("human-index", "The reviewed secondary lens is not available yet.");
-    setText("human-denominator", "Review pending");
-    return;
-  }
-  const index = event.empowerment_index;
+  const lens = currentRelease?.lenses?.event || {};
+  const index = lens.empowerment_index;
+  const scored = Number(lens.unit_count_scored || 0);
+  const unclear = Number(lens.unit_count_excluded_unclear || 0);
+  const evidenceRows = (currentRelease?.evidence || []).filter((row) => row.classification?.ai_relevant !== false);
+  const counts = { expanding: 0, contracting: 0, mixed: 0, non_empowerment: 0, unclear: 0 };
+  evidenceRows.forEach((row) => {
+    const key = String(row.classification?.empowerment_status || "unclear");
+    if (Object.hasOwn(counts, key)) counts[key] += 1;
+    else counts.unclear += 1;
+  });
   setText("human-plain-label", empowermentPlain(index));
   setText("human-index", index == null ? "No scored index" : `${Number(index) >= 0 ? "+" : ""}${Number(index).toFixed(2)} on a -100 to +100 scale`);
-  setText("human-denominator", `${event.scored_units} scored, ${event.excluded_unclear} unclear`);
+  setText("human-denominator", `${scored} scored, ${unclear} unclear · model-coded weekly lens`);
   const marker = document.getElementById("human-gauge-marker");
   if (marker && index != null) marker.style.left = `${Math.max(0, Math.min(100, (Number(index) + 100) / 2))}%`;
-  const counts = event.status_counts || {};
   const labels = [
     ["expanding", "Enabling"],
     ["contracting", "Constraining"],
@@ -457,7 +517,7 @@ function renderEmpowerment() {
     ["non_empowerment", "No direct change"],
     ["unclear", "Unclear"],
   ];
-  const total = Number(event.reviewed_units || Object.values(counts).reduce((sum, value) => sum + Number(value || 0), 0));
+  const total = evidenceRows.length;
   document.getElementById("human-bars").innerHTML = labels.map(([key, label]) => {
     const count = Number(counts[key] || 0);
     const pct = total ? (count / total) * 100 : 0;
