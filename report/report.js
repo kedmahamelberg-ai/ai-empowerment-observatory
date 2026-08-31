@@ -82,7 +82,7 @@ function periodCounts(current) {
     first,
     followOn,
     newDevelopments,
-    recurring: Number(raw.recurring_event_records ?? Math.max(0, events - newDevelopments)),
+    recurring: Number(raw.recurring_event_records ?? Math.max(0, events - newDevelopments - Number(raw.possible_historical_match_event_records || 0) - Number(raw.unclassified_novelty_event_records || 0))),
     possible: Number(raw.possible_historical_match_event_records || 0),
     unclassified: Number(raw.unclassified_novelty_event_records || 0),
     extra: Number(raw.extra_coverage || 0),
@@ -91,18 +91,26 @@ function periodCounts(current) {
 
 function relationshipCard(symbiosis, releaseId) {
   const sameRelease = String(symbiosis?.release_id || "") === String(releaseId || "");
-  const complete = sameRelease && Boolean(symbiosis?.review?.complete);
-  if (!complete) {
-    const reviewed = Number(symbiosis?.review?.event_reviewed || 0);
-    const total = Number(symbiosis?.review?.event_total || 0);
+  if (!sameRelease) {
     return {
       label: "Human-AI relationship lens",
-      title: total ? `${reviewed} of ${total} developments reviewed` : "Relationship review is being prepared",
-      body: "The monthly brief will lead with who is represented as gaining or being constrained only after the complete current-week review is finished. Model-only labels are not shown as public findings.",
+      title: "Relationship classification is being prepared",
+      body: "The core weekly evidence is already available. This relationship layer is added automatically when the same-release classification finishes.",
+    };
+  }
+  const status = String(symbiosis?.public_status || "classification_in_progress");
+  const humanReviewed = status === "human_reviewed" && Boolean(symbiosis?.review?.event_complete);
+  const event = symbiosis?.event || {};
+  const classified = humanReviewed ? Number(event.classified_units || event.expected_units || 0) : Number(event.display_classified_units || event.classified_units || 0);
+  if (status === "classification_in_progress" || status === "review_in_progress" || classified === 0) {
+    return {
+      label: "Human-AI relationship lens",
+      title: "Relationship classification is still running",
+      body: "No older relationship percentages are substituted. The same-release model-coded signal will appear automatically when classification completes.",
     };
   }
 
-  const counts = symbiosis?.event?.configuration_counts || {};
+  const counts = humanReviewed ? (event.configuration_counts || {}) : (event.display_configuration_counts || event.configuration_counts || {});
   const candidates = [
     ["mutualism", Number(counts.mutualism || 0)],
     ["ai_benefiting_parasitism", Number(counts.ai_benefiting_parasitism || 0)],
@@ -117,13 +125,13 @@ function relationshipCard(symbiosis, releaseId) {
     human_benefiting_parasitism: "People gain while the AI system is constrained",
     competition: "People and the AI side are both constrained",
   };
-  const completeCount = Number(symbiosis?.event?.complete_configuration_count || 0);
-  const noClear = Number(symbiosis?.event?.no_clear_relational_signal_count || 0);
-  const partial = Number(symbiosis?.event?.partial_signal_count || 0);
+  const completeCount = humanReviewed ? Number(event.complete_configuration_count || 0) : Number(event.display_complete_configuration_count ?? event.complete_configuration_count ?? 0);
+  const noClear = humanReviewed ? Number(event.no_clear_relational_signal_count || 0) : Number(event.display_no_clear_relational_signal_count ?? event.no_clear_relational_signal_count ?? 0);
+  const partial = humanReviewed ? Number(event.partial_signal_count || 0) : Number(event.display_partial_signal_count ?? event.partial_signal_count ?? 0);
   return {
-    label: "Human-AI relationship lens",
+    label: humanReviewed ? "Human-AI relationship lens · human reviewed" : "Human-AI relationship lens · model-coded provisional",
     title: count ? `${count} ${plural(count, "development")} showed: ${labels[key]}` : "No complete two-sided pattern dominated",
-    body: `${completeCount} developments had a complete two-sided relationship signal. ${partial} had a one-sided signal and ${noClear} described no clear human-AI relationship. Human empowerment remains a secondary reviewed lens.`,
+    body: `${completeCount} developments had a complete two-sided relationship signal. ${partial} had a one-sided signal and ${noClear} described no clear relationship. Accepted human corrections replace model outputs as review proceeds.`,
   };
 }
 
@@ -132,14 +140,14 @@ function renderPreview(current, symbiosis) {
   const relationship = relationshipCard(symbiosis, current?.release_id);
   const cards = [
     {
-      label: "New reality",
-      title: `${c.newDevelopments} new ${plural(c.newDevelopments, "development")}`,
-      body: c.followOn ? `${c.first} entered the pool for the first time; ${c.followOn} were genuine follow-on developments in continuing stories.` : "These developments were not counted as repetitions of an earlier event in the disclosed historical pool.",
+      label: "First recorded",
+      title: `${c.newDevelopments} first-time ${plural(c.newDevelopments, "development")}`,
+      body: c.followOn ? `${c.first} were first recorded in AIEO weekly history with this release; ${c.followOn} were distinct follow-on developments in continuing stories.` : `These developments were first recorded in AIEO weekly history with this release.${c.possible + c.unclassified ? ` ${c.possible + c.unclassified} additional history-match ${plural(c.possible + c.unclassified, "case is", "cases are")} kept separately while validation is unresolved.` : ""}`,
     },
     {
       label: "Recurring attention",
       title: `${c.recurring} previously seen ${plural(c.recurring, "development")}`,
-      body: `${c.recurring} previously seen ${plural(c.recurring, "development received", "developments received")} coverage in this release without being counted as new again. AIEO stores exact recurrence timing where available instead of applying a fixed public cut-off.${c.possible + c.unclassified ? ` ${c.possible + c.unclassified} novelty ${plural(c.possible + c.unclassified, "decision remains", "decisions remain")} under review.` : ""}`,
+      body: `${c.recurring} ${plural(c.recurring, "development was", "developments were")} established before this weekly period and received coverage again. Collection retries and rediscovery alone do not make a development recurring.`,
     },
     relationship,
   ];
