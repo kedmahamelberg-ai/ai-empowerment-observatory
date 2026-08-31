@@ -1,8 +1,8 @@
 "use strict";
 
-import { initDiscoveryGlobe } from "/globe.js?v=5.9.1";
+import { initDiscoveryGlobe } from "/globe.js?v=5.9.2";
 
-const BUILD_ID = "5.9.1";
+const BUILD_ID = "5.9.2";
 const CURRENT_URL = "/data/releases/current.json";
 const INDEX_URL = "/data/releases/index.json";
 const COUNTRIES_URL = "/edu/countries.json";
@@ -129,7 +129,7 @@ function renderSignalTape(release, index) {
       label: "Coverage",
       value: counts.articles,
       previous: previous ? rowNumber(previous, ["articles", "ai_relevant_articles"]) : null,
-      note: "source items this week",
+      note: "AI-news source pages this week",
       href: "/edu/?view=all#evidence",
     },
     {
@@ -140,17 +140,17 @@ function renderSignalTape(release, index) {
       href: "/edu/#history",
     },
     {
-      label: "Additional reports",
+      label: "Additional coverage",
       value: counts.extra,
       previous: previous ? rowNumber(previous, ["extra_coverage"]) : null,
-      note: "attention, not another event",
-      href: "/edu/?view=recurring#evidence",
+      note: "extra source pages about developments already counted",
+      href: "/edu/?view=all#evidence",
     },
     {
-      label: "New to AIEO",
+      label: "First-time developments",
       value: counts.newDevelopments,
       previous: null,
-      note: "not in the disclosed history",
+      note: "not established in an earlier standardized release",
       href: "/edu/?view=new#evidence",
     },
   ];
@@ -172,30 +172,44 @@ function renderRelease(release) {
   if (!release) {
     setText("release-badge", "Current signal temporarily unavailable");
     setText("hero-summary", "The latest weekly data could not be loaded. Open the current-week page to try again.");
-    setText("hero-fact-new", "New-development count unavailable");
-    setText("hero-fact-repeat", "Repeated-attention count unavailable");
+    setText("hero-fact-new", "First-time count unavailable");
+    setText("hero-fact-repeat", "Recurring count unavailable");
+    const reviewFact = document.getElementById("hero-fact-review");
+    if (reviewFact) reviewFact.hidden = true;
     return;
   }
 
   const counts = releaseCounts(release);
   const period = formatRange(release.period_start, release.period_end);
+  const pending = counts.possible + counts.unclassified;
+  const extraSentence = counts.extra
+    ? ` ${counts.extra} additional ${plural(counts.extra, "source page")} covered a development already counted.`
+    : "";
+  const noveltySentence = pending
+    ? `${counts.newDevelopments} were not established in an earlier standardized release, ${counts.recurring} were recurring, and ${pending} ${plural(pending, "historical match was", "historical matches were")} still being validated.`
+    : `${counts.newDevelopments} were not established in an earlier standardized release and ${counts.recurring} were recurring.`;
+
   setText("release-badge", `Current weekly signal | ${period}`);
   setText(
     "hero-summary",
-    `${counts.articles} coverage items were grouped into ${counts.events} distinct developments. ${counts.newDevelopments} ${plural(counts.newDevelopments, "was", "were")} new to AIEO, while ${counts.recurring} had been seen before.`,
+    `${counts.articles} AI-news source pages were grouped into ${counts.events} distinct developments. ${noveltySentence}${extraSentence}`,
   );
-  setText("hero-fact-new", `${counts.newDevelopments} new to AIEO`);
-  setText("hero-fact-repeat", `${counts.recurring} seen before`);
+  setText("hero-fact-new", `${counts.newDevelopments} first recorded`);
+  setText("hero-fact-repeat", `${counts.recurring} recurring`);
+  const reviewFact = document.getElementById("hero-fact-review");
+  if (reviewFact) {
+    reviewFact.hidden = pending === 0;
+    reviewFact.textContent = `${pending} ${plural(pending, "history match", "history matches")} under validation`;
+  }
   setText(
     "hero-equation-coverage",
-    `${counts.articles} coverage items = ${counts.events} developments + ${counts.extra} additional ${plural(counts.extra, "report")} about developments already counted.`,
+    `${counts.articles} source pages = ${counts.events} developments + ${counts.extra} additional ${plural(counts.extra, "source page")} about developments already counted.`,
   );
-  const pending = counts.possible + counts.unclassified;
   setText(
     "hero-equation-novelty",
     pending
-      ? `${counts.events} developments = ${counts.newDevelopments} new + ${counts.recurring} seen before + ${pending} still under novelty review.`
-      : `${counts.events} developments = ${counts.newDevelopments} new + ${counts.recurring} seen before.`,
+      ? `${counts.events} developments = ${counts.newDevelopments} first recorded + ${counts.recurring} recurring + ${pending} history-match ${plural(pending, "case", "cases")} under validation.`
+      : `${counts.events} developments = ${counts.newDevelopments} first recorded + ${counts.recurring} recurring.`,
   );
 }
 
@@ -246,35 +260,61 @@ function renderRelationship(symbiosis, error = null, releaseId = null) {
   const ticker = document.getElementById("relationship-ticker");
   if (!ticker) return;
   if (error) {
-    ticker.innerHTML = '<p class="loading-line data-error">The reviewed relationship signal is temporarily unavailable.</p>';
+    ticker.innerHTML = '<p class="loading-line data-error">The relationship signal is temporarily unavailable.</p>';
     setText("relationship-denominator", "Signal unavailable");
     setText("relationship-other-summary", "Weekly counts and source evidence remain available.");
     return;
   }
   const sameRelease = !releaseId || String(symbiosis?.release_id || "") === String(releaseId);
-  if (!symbiosis || !sameRelease || symbiosis.public_status !== "human_reviewed" || !symbiosis.review?.event_complete) {
-    ticker.innerHTML = '<p class="loading-line">The relationship signal is still under review for this release.</p>';
-    setText("relationship-denominator", "Review in progress");
-    setText("relationship-other-summary", "Weekly counts and sources remain available while the relationship review is completed.");
+  if (!symbiosis || !sameRelease) {
+    ticker.innerHTML = '<p class="loading-line">Relationship classification is not available for this release yet.</p>';
+    setText("relationship-denominator", "Classification pending");
+    setText("relationship-other-summary", "Weekly counts and source evidence remain available.");
     return;
   }
+
+  const status = String(symbiosis.public_status || "classification_in_progress");
   const event = symbiosis.event || {};
-  const counts = event.configuration_counts || {};
-  const complete = Number(event.complete_configuration_count || 0);
+  const humanReviewed = status === "human_reviewed" && Boolean(symbiosis.review?.event_complete);
+  const classified = humanReviewed
+    ? Number(event.classified_units || event.expected_units || 0)
+    : Number(event.display_classified_units || event.classified_units || 0);
+  if (status === "classification_in_progress" || status === "review_in_progress" || classified === 0) {
+    ticker.innerHTML = '<p class="loading-line">Relationship classification is still running for this release.</p>';
+    setText("relationship-denominator", "Classification in progress");
+    setText("relationship-other-summary", "The core weekly counts are already published. This relationship layer updates automatically when classification finishes.");
+    return;
+  }
+
+  const counts = humanReviewed
+    ? (event.configuration_counts || {})
+    : (event.display_configuration_counts || event.configuration_counts || {});
+  const complete = humanReviewed
+    ? Number(event.complete_configuration_count || 0)
+    : Number(event.display_complete_configuration_count ?? event.complete_configuration_count ?? 0);
   ticker.innerHTML = [
     "mutualism",
     "ai_benefiting_parasitism",
     "human_benefiting_parasitism",
     "competition",
   ].map((key) => relationshipCell(key, Number(counts[key] || 0), complete)).join("");
-  setText("relationship-denominator", `${complete} developments had evidence for both sides`);
-  const partial = Number(event.partial_signal_count || 0);
-  const noClear = Number(event.no_clear_relational_signal_count || 0);
-  const ambiguous = Number(event.ambiguous_relational_signal_count || 0);
-  const insufficient = Number(event.insufficient_evidence_count || 0);
+
+  setText(
+    "relationship-denominator",
+    humanReviewed
+      ? `${complete} human-reviewed developments had evidence for both sides`
+      : `${complete} model-coded developments had evidence for both sides`,
+  );
+  const partial = Number(humanReviewed ? event.partial_signal_count : (event.display_partial_signal_count ?? event.partial_signal_count) || 0);
+  const noClear = Number(humanReviewed ? event.no_clear_relational_signal_count : (event.display_no_clear_relational_signal_count ?? event.no_clear_relational_signal_count) || 0);
+  const ambiguous = Number(humanReviewed ? event.ambiguous_relational_signal_count : (event.display_ambiguous_relational_signal_count ?? event.ambiguous_relational_signal_count) || 0);
+  const insufficient = Number(humanReviewed ? event.insufficient_evidence_count : (event.display_insufficient_evidence_count ?? event.insufficient_evidence_count) || 0);
+  const prefix = humanReviewed
+    ? "Human-reviewed relationship signal."
+    : "Model-coded provisional signal; accepted human corrections replace model outputs as review proceeds.";
   setText(
     "relationship-other-summary",
-    `${partial} one-sided signals, ${noClear} no-clear cases, ${ambiguous} ambiguous cases, and ${insufficient} insufficient-evidence cases are kept outside the four-pattern percentages.`,
+    `${prefix} ${partial} one-sided signals, ${noClear} no-clear cases, ${ambiguous} ambiguous cases, and ${insufficient} insufficient-evidence cases are outside the four-pattern percentages.`,
   );
 }
 

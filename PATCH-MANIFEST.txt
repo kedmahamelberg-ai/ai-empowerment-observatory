@@ -1,0 +1,18 @@
+AIEO W35 semantic + relationship automation patch
+
+Changed/new repository files:
+.github/workflows/prepare-symbiosis-review.yml
+.github/workflows/repair-current-observatory.yml
+scripts/build_weekly_release.py
+scripts/restate_release_history.py
+scripts/create_symbiosis_placeholder.py
+scripts/publish_symbiosis_release.py
+scripts/validate_and_publish_release.py
+site.js
+index.html
+edu/dashboard.js
+edu/index.html
+report/report.js
+report/index.html
+
+No files under data/ are included. Overlay this package onto the current repository so the already-generated W35 data is not replaced by an older package snapshot.
