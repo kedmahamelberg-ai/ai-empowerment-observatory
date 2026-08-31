@@ -2,14 +2,14 @@
   "schema_version": "aieo_symbiosis_public_v1.0",
   "release_id": "2026-W35",
   "release_type": "weekly_relationship_lens",
-  "revision": 1,
+  "revision": 2,
   "period_start": "2026-08-24",
   "period_end": "2026-08-30",
-  "generated_at": "2026-08-31T18:01:33.532149Z",
+  "generated_at": "2026-08-31T19:26:17.050553Z",
   "codebook_version": "aieo_news_symbiosis_v0.1",
-  "public_status": "review_in_progress",
-  "source_release_sha256": "4aa63acb6f6f19b5bd28b93301d9d90fc4d1d238b95170ee7f974ef0d6da4a7c",
-  "scope_note": "This lens classifies how source evidence represents human-AI relations. No relationship distribution is published until the current release completes human review.",
+  "public_status": "classification_in_progress",
+  "source_release_sha256": "0217b03f92a9252e715c1845adbb8d142598770b59554980bebb707674df5992",
+  "scope_note": "This lens classifies how source evidence represents human-AI relations. Relationship classification runs after the core weekly release. Once available, the live distribution is model-coded and versioned, with accepted human corrections incorporated later.",
   "review": {
     "complete": false,
     "event_complete": false,
@@ -57,7 +57,7 @@
       "human_benefiting_parasitism": 0.0,
       "mutualism": 0.0
     },
-    "denominator_note": "Relationship percentages are withheld until the current release has completed human review."
+    "denominator_note": "Relationship classification is still running for this release."
   },
   "coverage": {
     "expected_units": 112,
@@ -88,7 +88,7 @@
       "human_benefiting_parasitism": 0.0,
       "mutualism": 0.0
     },
-    "denominator_note": "Relationship percentages are withheld until the current release has completed human review."
+    "denominator_note": "Relationship classification is still running for this release."
   },
   "secondary_empowerment": {
     "event": {
@@ -110,7 +110,7 @@
         "non_empowerment": 0.0,
         "unclear": 0.0
       },
-      "note": "Secondary reviewed empowerment values are withheld until human review is complete."
+      "note": "The core weekly empowerment lens is published separately; this relationship-review placeholder contains no secondary relationship-derived values yet."
     },
     "coverage": {
       "reviewed_units": 0,
@@ -131,7 +131,7 @@
         "non_empowerment": 0.0,
         "unclear": 0.0
       },
-      "note": "Secondary reviewed empowerment values are withheld until human review is complete."
+      "note": "The core weekly empowerment lens is published separately; this relationship-review placeholder contains no secondary relationship-derived values yet."
     }
   },
   "evidence": [],
@@ -148,5 +148,5 @@
     "ambiguous_relational_signal": "Ambiguous relational signal",
     "insufficient_evidence": "Insufficient evidence"
   },
-  "content_sha256": "8c95db92e05a165d9c3a0b4f5bc5af54651991fe2d890a930ebf024a7feccf71"
+  "content_sha256": "2033328b68d43a3f1f27d83af79236440cd0565354f6a005329671c2af6d5643"
 }
