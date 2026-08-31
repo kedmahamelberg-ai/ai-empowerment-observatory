@@ -1,18 +1,19 @@
 {
   "schema_version": "aieo_release_index_v3.0",
-  "updated_at": "2026-08-31T14:49:08.132668Z",
-  "release_count": 2,
-  "weekly_release_count": 2,
+  "updated_at": "2026-08-31T18:00:54.094347Z",
+  "release_count": 3,
+  "weekly_release_count": 3,
   "historical_snapshot_count": 1,
-  "publication_snapshot_count": 3,
-  "current_release_id": "2026-W34",
-  "current_revision": 2,
+  "publication_snapshot_count": 4,
+  "current_release_id": "2026-W35",
+  "current_revision": 1,
   "data_current_through": "2026-08-31T14:49:03.794193+00:00",
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
     "considered_through": "2026-08-31T13:53:33.22983+00:00",
     "registry_snapshot_id": "registry_77c90d514e56786d8303",
-    "all_prior_events_considered": true
+    "all_prior_events_considered": true,
+    "disclosure": "New means new relative to this historical matching pool."
   },
   "revision_archives": {
     "2026-W33": [
@@ -114,6 +115,30 @@
       "amplification_gap": -0.9105,
       "audit_status": "pending",
       "validation_status": "passed"
+    },
+    {
+      "release_id": "2026-W35",
+      "release_type": "weekly",
+      "period_start": "2026-08-24",
+      "period_end": "2026-08-30",
+      "generated_at": "2026-08-31T18:00:54.094347Z",
+      "articles": 112,
+      "event_records": 111,
+      "revision": 1,
+      "new_event_records": 102,
+      "first_time_event_records": 102,
+      "recurring_event_records": 6,
+      "resurfaced_event_records": 0,
+      "follow_on_event_records": 0,
+      "possible_historical_match_event_records": 3,
+      "unclassified_novelty_event_records": 0,
+      "rediscovered_article_records": 3,
+      "extra_coverage": 1,
+      "coverage_index": 0.0,
+      "event_index": 0.0,
+      "amplification_gap": 0.0,
+      "audit_status": "pending",
+      "validation_status": "passed"
     }
   ],
   "display_series": [
@@ -192,28 +217,56 @@
       "label": "Week ending 2026-08-23",
       "comparable_to_weekly_series": true,
       "connect_to_previous": true
+    },
+    {
+      "release_id": "2026-W35",
+      "release_type": "weekly",
+      "period_start": "2026-08-24",
+      "period_end": "2026-08-30",
+      "generated_at": "2026-08-31T18:00:54.094347Z",
+      "articles": 112,
+      "event_records": 111,
+      "revision": 1,
+      "new_event_records": 102,
+      "first_time_event_records": 102,
+      "recurring_event_records": 6,
+      "resurfaced_event_records": 0,
+      "follow_on_event_records": 0,
+      "possible_historical_match_event_records": 3,
+      "unclassified_novelty_event_records": 0,
+      "rediscovered_article_records": 3,
+      "extra_coverage": 1,
+      "coverage_index": 0.0,
+      "event_index": 0.0,
+      "amplification_gap": 0.0,
+      "audit_status": "pending",
+      "validation_status": "passed",
+      "series_kind": "weekly",
+      "label": "Week ending 2026-08-30",
+      "comparable_to_weekly_series": true,
+      "connect_to_previous": true
     }
   ],
   "cumulative_standardized_series": {
-    "distinct_articles": 251,
-    "distinct_event_records": 236,
-    "release_count": 2,
+    "distinct_articles": 363,
+    "distinct_event_records": 347,
+    "release_count": 3,
     "period_start": "2026-08-10",
-    "period_end": "2026-08-23"
+    "period_end": "2026-08-30"
   },
   "cumulative_since_launch": {
-    "distinct_articles": 251,
-    "distinct_event_records": 236,
-    "release_count": 2,
+    "distinct_articles": 363,
+    "distinct_event_records": 347,
+    "release_count": 3,
     "period_start": "2026-08-10",
-    "period_end": "2026-08-23",
+    "period_end": "2026-08-30",
     "scope": "standardized_weekly_releases_only",
     "historical_snapshots_excluded": 1
   },
   "month_to_date": {
     "month": "2026-08",
-    "distinct_articles": 251,
-    "distinct_event_records": 236
+    "distinct_articles": 363,
+    "distinct_event_records": 347
   },
   "comparison_rule": {
     "weekly_series": "Connect only consecutive, non-overlapping Monday-Sunday releases.",
