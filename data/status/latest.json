@@ -1,28 +1,38 @@
 {
-  "generated_at": "2026-08-27T18:30:05.255947Z",
+  "generated_at": "2026-08-31T18:02:28.299464Z",
   "system_status": "operational",
+  "release_id": "2026-W35",
+  "release_revision": 1,
+  "period_start": "2026-08-24",
+  "period_end": "2026-08-30",
   "release_status": "provisional_automated",
+  "release_label": "Model-coded, human-governed pilot release",
   "human_audited": false,
   "structural_gate": "passed",
+  "source_of_truth": "/data/releases/current.json",
   "latest": {
-    "coverage_units": 130,
-    "event_units": 125,
-    "active_events": 360,
-    "coverage_empowerment_index": 1.5504,
-    "event_empowerment_index": 1.6129,
-    "directional_amplification_gap": -0.0625,
-    "review_queue_count": 17
+    "release_id": "2026-W35",
+    "coverage_units": 112,
+    "event_units": 111,
+    "coverage_empowerment_index": 0.0,
+    "event_empowerment_index": 0.0,
+    "directional_amplification_gap": 0.0,
+    "review_queue_count": 105,
+    "relationship_status": "review_in_progress"
   },
   "governance": {
     "weekly_publication_blocks_on": [
+      "stale weekly release",
+      "mismatched public derivatives",
       "missing or invalid artifacts",
-      "unassigned coverage units",
+      "unreconciled coverage and event counts",
       "null or out-of-range indices",
       "workflow or storage failure"
     ],
     "weekly_publication_does_not_block_on": [
       "pending stratified classification audit",
-      "ambiguous event merge review",
+      "human relationship review still in progress",
+      "ambiguous event merge review disclosed by the release",
       "ordinary model-confidence uncertainty"
     ],
     "human_role": "asynchronous governance, periodic stratified audit, high-risk review and methodology version approval"
