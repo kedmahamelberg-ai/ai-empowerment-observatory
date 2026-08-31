@@ -135,30 +135,74 @@ def latest_rows(
 
 
 def configuration_summary(rows: dict[str, dict[str, Any]], expected_ids: list[str]) -> dict[str, Any]:
-    reviewed_rows = [row for unit_id, row in rows.items() if unit_id in expected_ids and final_payload_from_classification(row)["reviewed"]]
-    configurations = [str(final_payload_from_classification(row)["configuration"]) for row in reviewed_rows]
-    counts = Counter(configurations)
-    complete_total = sum(counts[value] for value in CORE_FOUR)
-    partial_total = sum(counts[value] for value in PARTIALS)
-    core_distribution = {
-        value: round(counts[value] / complete_total, 6) if complete_total else 0.0
-        for value in sorted(CORE_FOUR)
-    }
+    """Return finalized human-review counts plus an automatic display layer.
+
+    The public Observatory updates every week.  Until all human review is
+    complete, the display layer uses model classifications with any accepted
+    human corrections already substituted.  Finalized human-only counts remain
+    available separately and take over automatically when review is complete.
+    """
+    available = [
+        final_payload_from_classification(rows[unit_id])
+        for unit_id in expected_ids
+        if unit_id in rows
+    ]
+    reviewed = [item for item in available if item["reviewed"]]
+
+    def summarize(items: list[dict[str, Any]]) -> dict[str, Any]:
+        configurations = [
+            str(item.get("configuration"))
+            for item in items
+            if item.get("configuration") in PLAIN_LABELS
+        ]
+        counts = Counter(configurations)
+        complete_total = sum(counts[value] for value in CORE_FOUR)
+        partial_total = sum(counts[value] for value in PARTIALS)
+        return {
+            "configuration_counts": {key: counts.get(key, 0) for key in PLAIN_LABELS},
+            "complete_configuration_count": complete_total,
+            "partial_signal_count": partial_total,
+            "no_clear_relational_signal_count": counts.get("no_clear_relational_signal", 0),
+            "ambiguous_relational_signal_count": counts.get("ambiguous_relational_signal", 0),
+            "insufficient_evidence_count": counts.get("insufficient_evidence", 0),
+            "core_four_distribution": {
+                value: round(counts[value] / complete_total, 6) if complete_total else 0.0
+                for value in sorted(CORE_FOUR)
+            },
+        }
+
+    reviewed_summary = summarize(reviewed)
+    display_summary = summarize(available)
+    classified_units = len(available)
+    reviewed_units = len(reviewed)
+    expected_units = len(expected_ids)
+    complete_review = expected_units > 0 and reviewed_units == expected_units
+    display_basis = (
+        "human_reviewed"
+        if complete_review
+        else "model_coded_with_reviewed_corrections"
+        if classified_units
+        else "classification_in_progress"
+    )
+
     return {
-        "expected_units": len(expected_ids),
-        "classified_units": sum(1 for unit_id in expected_ids if unit_id in rows),
-        "reviewed_units": len(reviewed_rows),
-        "unreviewed_units": len(expected_ids) - len(reviewed_rows),
-        "configuration_counts": {key: counts.get(key, 0) for key in PLAIN_LABELS},
-        "complete_configuration_count": complete_total,
-        "partial_signal_count": partial_total,
-        "no_clear_relational_signal_count": counts.get("no_clear_relational_signal", 0),
-        "ambiguous_relational_signal_count": counts.get("ambiguous_relational_signal", 0),
-        "insufficient_evidence_count": counts.get("insufficient_evidence", 0),
-        "core_four_distribution": core_distribution,
+        "expected_units": expected_units,
+        "classified_units": classified_units,
+        "reviewed_units": reviewed_units,
+        "unreviewed_units": expected_units - reviewed_units,
+        **reviewed_summary,
+        "display_basis": display_basis,
+        "display_classified_units": classified_units,
+        "display_configuration_counts": display_summary["configuration_counts"],
+        "display_complete_configuration_count": display_summary["complete_configuration_count"],
+        "display_partial_signal_count": display_summary["partial_signal_count"],
+        "display_no_clear_relational_signal_count": display_summary["no_clear_relational_signal_count"],
+        "display_ambiguous_relational_signal_count": display_summary["ambiguous_relational_signal_count"],
+        "display_insufficient_evidence_count": display_summary["insufficient_evidence_count"],
+        "display_core_four_distribution": display_summary["core_four_distribution"],
         "denominator_note": (
-            "Core-four percentages use only human-reviewed complete two-sided configurations. "
-            "One-sided signals, no-clear-signal cases, and insufficient-evidence cases are reported separately."
+            "The live weekly display is model-coded and incorporates accepted human corrections as they arrive. "
+            "The finalized human-reviewed fields remain separate until every required review is complete."
         ),
     }
 
@@ -347,9 +391,17 @@ def main() -> int:
         "period_end": release.get("period_end"),
         "generated_at": now_iso(),
         "codebook_version": CODEBOOK_VERSION,
-        "public_status": "human_reviewed" if complete else "review_in_progress",
+        "source_release_sha256": release.get("content_sha256"),
+        "public_status": (
+            "human_reviewed"
+            if complete
+            else "model_coded_provisional"
+            if event_summary["classified_units"] and coverage_summary["classified_units"]
+            else "classification_in_progress"
+        ),
         "scope_note": (
             "This lens classifies how source evidence represents human-AI relations. "
+            "The weekly display is model-coded and versioned, with accepted human corrections incorporated when available. "
             "It does not claim objective system performance, consciousness, intentions, or biological fitness."
         ),
         "review": {

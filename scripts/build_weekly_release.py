@@ -349,16 +349,70 @@ def percentile(values: list[float], proportion: float) -> float | None:
     return round(ordered[low] + (ordered[high] - ordered[low]) * fraction, 2)
 
 
-def novelty_status(appearance_types: set[str]) -> str:
-    """Return one event-level novelty status with a clear precedence rule."""
+def prior_standardized_event_ids(period: Period) -> set[str]:
+    """Return effective event IDs already published in an earlier weekly release.
+
+    Public recurrence is a release-history concept, not a collection-run concept.
+    An article can be rediscovered by a retry without ever having appeared in an
+    earlier standardized release. Conversely, an event collected on the Monday
+    after a prior week still counts as recurring when that prior weekly release
+    already published it.
+    """
+    result: set[str] = set()
+    for path in sorted(WEEKLY_DIR.glob("*.json")):
+        payload = load_json(path, {})
+        if not isinstance(payload, dict):
+            continue
+        prior_end = parse_date(payload.get("period_end"))
+        if prior_end is None or prior_end >= period.start:
+            continue
+        rows = ((payload.get("units") or {}).get("event_records") or [])
+        if not rows:
+            rows = payload.get("evidence") or []
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            event_id = str(row.get("effective_event_id") or row.get("event_id") or "").strip()
+            if event_id:
+                result.add(event_id)
+    return result
+
+
+def novelty_status(
+    appearance_types: set[str],
+    *,
+    seen_in_prior_release: bool | None = None,
+    first_seen: date | None = None,
+    period_start: date | None = None,
+) -> str:
+    """Return the public event-level novelty status.
+
+    Public novelty is anchored to standardized release history. Collection
+    retries, repeat search results, and repeat discovery of the same stored
+    article are diagnostics and do not by themselves make a development
+    recurring.
+
+    Precedence:
+    1. unresolved longitudinal matches remain explicitly under validation;
+    2. accepted follow-on developments remain new but linked occurrences;
+    3. an event already present in an earlier standardized weekly release is recurring;
+    4. otherwise it is first-time for the current weekly release.
+
+    first_seen is retained only as a legacy fallback for release files created
+    before standardized weekly history was available.
+    """
+    if "possible_historical_match" in appearance_types:
+        return "possible_historical_match"
     if "follow_on_development" in appearance_types:
         return "follow_on_development"
+    if seen_in_prior_release is not None:
+        return "recurring" if seen_in_prior_release else "first_time"
+    if first_seen is not None and period_start is not None:
+        return "recurring" if first_seen < period_start else "first_time"
     if "first_event_coverage" in appearance_types:
         return "first_time"
     if "same_event_new_coverage" in appearance_types or "same_article_rediscovered" in appearance_types:
         return "recurring"
-    if "possible_historical_match" in appearance_types:
-        return "possible_historical_match"
     return "unclassified"
 
 
@@ -369,6 +423,7 @@ def occurrence_dynamics(
     *,
     ai_article_ids: set[str],
     ai_event_ids: set[str],
+    event_statuses: dict[str, str],
 ) -> dict[str, Any]:
     current_rows: list[dict[str, Any]] = []
     rediscovered = 0
@@ -402,7 +457,6 @@ def occurrence_dynamics(
             current_rows.append(row)
             by_event[effective_event_id].append(row)
 
-    event_statuses: dict[str, str] = {}
     recurring_ids: set[str] = set()
     resurfaced_ids: set[str] = set()
     follow_on_ids: set[str] = set()
@@ -412,9 +466,7 @@ def occurrence_dynamics(
     recurring_article_count = 0
 
     for event_id, rows in by_event.items():
-        types = {str(row.get("appearance_type") or "") for row in rows}
-        status = novelty_status(types)
-        event_statuses[event_id] = status
+        status = event_statuses.get(event_id, "unclassified")
         if status == "follow_on_development":
             follow_on_ids.add(event_id)
         elif status == "first_time":
@@ -662,6 +714,8 @@ def build_release(
     for article in coverage_units:
         selected_by_event[str(article["event_id"])].append(article)
 
+    prior_release_event_ids = prior_standardized_event_ids(period)
+
     event_units: list[dict[str, Any]] = []
     for eid in event_ids:
         event = event_rows[eid]
@@ -675,7 +729,12 @@ def build_release(
             for item in members
             if (occurrence_by_article.get(str(item["article_id"])) or {}).get("appearance_type")
         }
-        event_novelty = novelty_status(appearance_types)
+        event_novelty = novelty_status(
+            appearance_types,
+            seen_in_prior_release=eid in prior_release_event_ids,
+            first_seen=first_seen,
+            period_start=period.start,
+        )
         event_units.append(
             {
                 "event_id": eid,
@@ -767,6 +826,10 @@ def build_release(
         period,
         ai_article_ids=coverage_ai_ids,
         ai_event_ids=event_ai_ids,
+        event_statuses={
+            str(item["event_id"]): str(item.get("novelty_status") or "unclassified")
+            for item in event_ai
+        },
     )
 
     counts = {
@@ -849,9 +912,9 @@ def build_release(
             "event_lens": "Each effective resolved event represented by those articles receives one weight.",
             "extra_coverage": "AI-relevant published articles minus effective represented events for the same period.",
             "new_event_record": "A first-time event or a genuine follow-on occurrence not collapsed into earlier reality.",
-            "recurring_event_record": "A previously observed effective event represented again by newly published coverage.",
+            "recurring_event_record": "An effective event already present in an earlier standardized AIEO weekly release and represented again by current-week coverage.",
             "resurfaced_event_record": "A recurring event receiving new coverage after at least 28 days without observed coverage.",
-            "rediscovered_article_record": "A previously stored article page returned to the discovery results; it is not counted as a newly published article.",
+            "rediscovered_article_record": "A previously stored article page returned by a later collection run. This is a collection diagnostic and does not by itself make a development recurring.",
             "follow_on_development": "A genuinely new occurrence linked to an earlier event through a continuing story family.",
             "event_record_caveat": "AIEO uses a precision-first resolver. Ambiguous possible duplicates remain separate until governance resolves them.",
         },
@@ -865,7 +928,7 @@ def build_release(
             "considered_through": reconciliation.get("pool_considered_through") if reconciliation else collection.get("completed_at"),
             "registry_snapshot_id": reconciliation.get("registry_snapshot_id") if reconciliation else None,
             "all_prior_events_considered": True,
-            "disclosure": "New means new relative to this historical matching pool.",
+            "disclosure": "First-time means the canonical development was not present in an earlier standardized AIEO weekly release. Collection retries do not turn a current-week development into a recurring one.",
         },
         "reconciliation": {
             "run_id": reconciliation.get("reconciliation_run_id") if reconciliation else None,

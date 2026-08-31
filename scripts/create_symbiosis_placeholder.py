@@ -4,7 +4,7 @@
 The core weekly Observatory must never carry relationship numbers from an older
 week, but the human-governed relationship review should not block publication of
 the core Coverage/Event release. This script creates a same-release
-``review_in_progress`` artifact with the correct denominators and zero public
+``classification_in_progress`` artifact with the correct denominators and zero public
 relationship findings. If an artifact for the same release already exists, it
 is preserved so a rerun cannot erase review progress or reviewed findings.
 """
@@ -66,10 +66,7 @@ def empty_summary(expected: int) -> dict[str, Any]:
         "ambiguous_relational_signal_count": 0,
         "insufficient_evidence_count": 0,
         "core_four_distribution": {key: 0.0 for key in sorted(CORE_FOUR)},
-        "denominator_note": (
-            "Relationship percentages are withheld until the current release has "
-            "completed human review."
-        ),
+        "denominator_note": "Relationship classification is still running for this release.",
     }
 
 
@@ -82,7 +79,7 @@ def empty_empowerment() -> dict[str, Any]:
         "empowerment_index": None,
         "status_counts": {key: 0 for key in statuses},
         "status_distribution": {key: 0.0 for key in statuses},
-        "note": "Secondary reviewed empowerment values are withheld until human review is complete.",
+        "note": "The core weekly empowerment lens is published separately; this relationship-review placeholder contains no secondary relationship-derived values yet.",
     }
 
 
@@ -137,16 +134,25 @@ def main() -> int:
 
     target = OUTPUT_DIR / "weekly" / f"{release_id}.json"
     existing = load(target)
+    replacement_revision = 1
     if isinstance(existing, dict) and str(existing.get("release_id") or "") == release_id:
-        # Never erase model classifications, review progress, or reviewed findings.
-        write(CURRENT_PATH, existing)
-        update_index(existing)
-        print(json.dumps({
-            "release_id": release_id,
-            "status": "preserved_existing_relationship_artifact",
-            "public_status": existing.get("public_status"),
-        }, indent=2))
-        return 0
+        same_source = str(existing.get("source_release_sha256") or "") == str(release.get("content_sha256") or "")
+        if same_source:
+            # Never erase model classifications, review progress, or reviewed findings
+            # when they are already bound to the exact same canonical release revision.
+            write(CURRENT_PATH, existing)
+            update_index(existing)
+            print(json.dumps({
+                "release_id": release_id,
+                "status": "preserved_existing_relationship_artifact",
+                "public_status": existing.get("public_status"),
+            }, indent=2))
+            return 0
+        replacement_revision = int(existing.get("revision") or 1) + 1
+        archive = OUTPUT_DIR / "weekly" / "archive" / release_id / f"revision-{int(existing.get('revision') or 1)}.json"
+        archive.parent.mkdir(parents=True, exist_ok=True)
+        if not archive.exists():
+            shutil.copy2(target, archive)
 
     counts = release.get("counts") or {}
     coverage_n = int(counts.get("ai_relevant_articles") or 0)
@@ -160,16 +166,17 @@ def main() -> int:
         "schema_version": "aieo_symbiosis_public_v1.0",
         "release_id": release_id,
         "release_type": "weekly_relationship_lens",
-        "revision": 1,
+        "revision": replacement_revision,
         "period_start": release.get("period_start"),
         "period_end": release.get("period_end"),
         "generated_at": now_iso(),
         "codebook_version": CODEBOOK_VERSION,
-        "public_status": "review_in_progress",
+        "public_status": "classification_in_progress",
         "source_release_sha256": release.get("content_sha256"),
         "scope_note": (
             "This lens classifies how source evidence represents human-AI relations. "
-            "No relationship distribution is published until the current release completes human review."
+            "Relationship classification runs after the core weekly release. Once available, "
+            "the live distribution is model-coded and versioned, with accepted human corrections incorporated later."
         ),
         "review": {
             "complete": False,

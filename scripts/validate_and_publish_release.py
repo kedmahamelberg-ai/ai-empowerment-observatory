@@ -249,8 +249,13 @@ def validate(*, allow_stale: bool = False) -> tuple[dict[str, Any], dict[str, An
 
     validate_period_summaries(period_index, period_end)
 
-    symbiosis_status = str(symbiosis.get("public_status") or "review_in_progress")
-    if symbiosis_status not in {"review_in_progress", "human_reviewed"}:
+    symbiosis_status = str(symbiosis.get("public_status") or "classification_in_progress")
+    if symbiosis_status not in {
+        "classification_in_progress",
+        "model_coded_provisional",
+        "review_in_progress",  # backwards-compatible with archived placeholders
+        "human_reviewed",
+    }:
         raise ReleaseError(f"Unexpected relationship-lens public status: {symbiosis_status}")
     relationship_source_hash = str(symbiosis.get("source_release_sha256") or "")
     if relationship_source_hash and relationship_source_hash != str(release.get("content_sha256") or ""):

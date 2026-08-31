@@ -34,7 +34,7 @@ from release_common import (
 )
 
 ARCHIVE_DIR = WEEKLY_DIR / "archive"
-RESTATE_VERSION = "release_restatement_v1.2"
+RESTATE_VERSION = "release_restatement_v1.3"
 
 
 class RestatementError(RuntimeError):
@@ -133,16 +133,16 @@ def canonical_definitions() -> dict[str, str]:
             "into earlier reality."
         ),
         "recurring_event_record": (
-            "A previously observed effective event represented again by newly "
-            "published coverage."
+            "An effective event already present in an earlier standardized AIEO weekly release "
+            "and represented again by current-week coverage."
         ),
         "resurfaced_event_record": (
             "A recurring event receiving new coverage after at least 28 days "
             "without observed coverage."
         ),
         "rediscovered_article_record": (
-            "A previously stored article page returned to the discovery results; "
-            "it is not counted as a newly published article."
+            "A previously stored article page returned by a later collection run. "
+            "This is a collection diagnostic and does not by itself make a development recurring."
         ),
         "follow_on_development": (
             "A genuinely new occurrence linked to an earlier event through a "
@@ -462,6 +462,35 @@ def recalculate_dynamics(
     }
 
 
+def prior_standardized_event_ids(
+    period_start: date,
+    *,
+    cmap: dict[str, str],
+    exclude_release_id: str | None = None,
+) -> set[str]:
+    """Return canonical event IDs published before ``period_start``."""
+    result: set[str] = set()
+    for path in sorted(WEEKLY_DIR.glob("*.json")):
+        payload = load_json(path)
+        if not isinstance(payload, dict):
+            continue
+        if exclude_release_id and str(payload.get("release_id") or "") == exclude_release_id:
+            continue
+        prior_end = date_value(payload.get("period_end"))
+        if prior_end is None or prior_end >= period_start:
+            continue
+        rows = ((payload.get("units") or {}).get("event_records") or [])
+        if not rows:
+            rows = payload.get("evidence") or []
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            event_id = str(row.get("effective_event_id") or row.get("event_id") or "").strip()
+            if event_id:
+                result.add(cmap.get(event_id, event_id))
+    return result
+
+
 def recalculate(
     client,
     release: dict[str, Any],
@@ -516,6 +545,11 @@ def recalculate(
     end = date_value(updated.get("period_end"))
     if not start or not end:
         raise RestatementError(f"Invalid release period: {updated.get('release_id')}")
+    prior_release_ids = prior_standardized_event_ids(
+        start,
+        cmap=cmap,
+        exclude_release_id=str(updated.get("release_id") or ""),
+    )
     event_rows = [
         merge_event_rows(
             rows,
@@ -536,7 +570,12 @@ def recalculate(
             for item in coverage_by_event.get(event_id, [])
             if item.get("appearance_type")
         }
-        status = novelty_status(types)
+        status = novelty_status(
+            types,
+            seen_in_prior_release=event_id in prior_release_ids,
+            first_seen=date_value(row.get("first_seen_at")),
+            period_start=start,
+        )
         row["appearance_types"] = sorted(types)
         row["novelty_status"] = status
         row["new_in_period"] = status in {"first_time", "follow_on_development"}
@@ -611,6 +650,10 @@ def recalculate(
             "considered_through": reconciliation.get("pool_considered_through"),
             "registry_snapshot_id": reconciliation.get("registry_snapshot_id"),
             "all_prior_events_considered": True,
+            "disclosure": (
+                "First-time means the canonical development was not present in an earlier standardized AIEO weekly release. "
+                "Collection retries do not turn a current-week development into a recurring one."
+            ),
         }
         updated["data_current_through"] = reconciliation.get("completed_at")
         updated["reconciliation"] = {
