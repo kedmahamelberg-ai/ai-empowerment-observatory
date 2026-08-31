@@ -1,0 +1,85 @@
+{
+  "schema_version": "aieo_period_summary_v1.1",
+  "period_id": "2026",
+  "period_type": "annual",
+  "status": "accumulating",
+  "period_start": "2026-01-01",
+  "period_end": "2026-12-31",
+  "observed_week_start": "2026-08-10",
+  "observed_week_end": "2026-08-23",
+  "generated_at": "2026-08-26T13:31:24.780108Z",
+  "revision": 1,
+  "weekly_release_ids": [
+    "2026-W33",
+    "2026-W34"
+  ],
+  "weekly_revisions": {
+    "2026-W33": 3,
+    "2026-W34": 1
+  },
+  "reality": {
+    "distinct_event_records": 236,
+    "new_developments": 102,
+    "first_time_event_records": 101,
+    "follow_on_developments": 1,
+    "active_story_families": 1
+  },
+  "attention": {
+    "published_coverage_articles": 251,
+    "coverage_episode_count": 251,
+    "recurring_event_appearances": 134,
+    "resurfaced_event_appearances": 0,
+    "same_event_new_coverage_articles": 8,
+    "rediscovered_article_records": 138,
+    "unique_publications": 189,
+    "unique_domains": 188
+  },
+  "replication_delay": {
+    "observed_recurrence_count": 8,
+    "median_days": 0.0,
+    "p75_days": 5.02,
+    "p90_days": 5.02
+  },
+  "article_rediscovery_delay": {
+    "observed_rediscovery_count": 138,
+    "median_days": 0.0,
+    "p75_days": 0.0,
+    "p90_days": 0.0
+  },
+  "distributions": {
+    "topics": {
+      "other": 171,
+      "government_regulation": 26,
+      "education_research": 11,
+      "infrastructure_investment": 9,
+      "work_employment": 7,
+      "healthcare": 7,
+      "business_productivity": 3,
+      "consumer_services": 1,
+      "privacy_security": 1
+    },
+    "empowerment_status": {
+      "non_empowerment": 137,
+      "unclear": 94,
+      "expanding": 4,
+      "contracting": 1
+    }
+  },
+  "historical_pool": {
+    "starts_at": "2026-08-05T09:11:42.719519+00:00",
+    "considered_through": "2026-08-24T07:09:27.039332+00:00",
+    "scope": "All prior event records available to the included reconciliations."
+  },
+  "reconciliation": {
+    "current_through": "2026-08-25T21:47:18.123224+00:00",
+    "weekly_revisions_included": {
+      "2026-W33": 3,
+      "2026-W34": 1
+    },
+    "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
+  },
+  "story": "AIEO observed 251 newly published AI-news articles. They represented 102 new developments and 134 appearances of developments already in memory.",
+  "disclosure": "Distinct events are deduplicated across the full period by effective event ID. Recurring appearances remain in the Attention view and are not counted as new developments.",
+  "revision_history": [],
+  "content_sha256": "ec4bb70c49ad62ed33716bb6cc89b00651228f7496f9a370c287f72e181435ce"
+}
