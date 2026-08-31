@@ -14,6 +14,7 @@ import json
 import os
 import re
 import sys
+import time
 from collections.abc import Iterable
 from datetime import datetime, timezone
 from pathlib import Path
@@ -31,7 +32,9 @@ REVIEW_DIR = DATA_DIR / "review"
 STATUS_PATH = DATA_DIR / "collection_status.json"
 
 SERPAPI_ENDPOINT = "https://serpapi.com/search"
-COLLECTOR_VERSION = "7A.3-snippet-aware"
+COLLECTOR_VERSION = "7A.4-retry-complete-market-gate"
+REQUEST_ATTEMPTS = 3
+RETRYABLE_HTTP_STATUS = {429, 500, 502, 503, 504}
 TRACKING_PARAMS = {
     "utm_source",
     "utm_medium",
@@ -267,6 +270,7 @@ def request_country(
     api_key: str,
     collected_at: str,
     max_results: int,
+    attempts: int = REQUEST_ATTEMPTS,
 ) -> tuple[list[dict[str, Any]], dict[str, Any], dict[str, Any]]:
     params = {
         "engine": "google_news",
@@ -276,11 +280,34 @@ def request_country(
         "output": "json",
         "api_key": api_key,
     }
-    response = requests.get(SERPAPI_ENDPOINT, params=params, timeout=(10, 90))
-    try:
-        payload = response.json()
-    except ValueError:
-        payload = {}
+    response = None
+    payload: dict[str, Any] = {}
+    for attempt in range(1, attempts + 1):
+        try:
+            response = requests.get(SERPAPI_ENDPOINT, params=params, timeout=(10, 90))
+        except requests.RequestException:
+            if attempt >= attempts:
+                raise
+            time.sleep(6 * attempt)
+            continue
+
+        try:
+            decoded = response.json()
+            payload = decoded if isinstance(decoded, dict) else {}
+        except ValueError:
+            payload = {}
+
+        if response.status_code in RETRYABLE_HTTP_STATUS and attempt < attempts:
+            print(
+                f"  transient SerpAPI HTTP {response.status_code}; "
+                f"retrying ({attempt}/{attempts})..."
+            )
+            time.sleep(6 * attempt)
+            continue
+        break
+
+    if response is None:
+        raise RuntimeError("SerpAPI request produced no response.")
     if not response.ok:
         api_message = payload.get("error") if isinstance(payload, dict) else None
         if not api_message:
@@ -335,12 +362,14 @@ def main() -> int:
     if not config or not config.get("countries"):
         raise CollectionError(f"Invalid or empty configuration: {CONFIG_PATH}")
 
+    previous_status = read_json(STATUS_PATH, {}) or {}
     started = utc_now()
     collected_at = iso_z(started)
     run_date = started.date().isoformat()
     run_key = started.strftime("run_%Y%m%dT%H%M%SZ")
     workflow_run_id = normalize_space(os.environ.get("GITHUB_RUN_ID")) or None
     max_results = int(config["meta"].get("max_results_per_country", 30))
+    request_attempts = max(1, int(config["meta"].get("request_attempts_per_market", REQUEST_ATTEMPTS)))
 
     store = SupabaseStore(supabase_url, supabase_secret_key)
     run_id = store.start_collection_run(
@@ -364,6 +393,7 @@ def main() -> int:
                     api_key=api_key,
                     collected_at=collected_at,
                     max_results=max_results,
+                    attempts=request_attempts,
                 )
                 object_path = (
                     f"serpapi/google-news/{started:%Y/%m/%d}/"
@@ -477,7 +507,11 @@ def main() -> int:
         status_payload = {
             "stage": "7A.2",
             "last_attempt_at": completed_at,
-            "last_success_at": completed_at,
+            "last_success_at": (
+                completed_at
+                if final_status == "success"
+                else previous_status.get("last_success_at")
+            ),
             "run_key": run_key,
             "run_id": run_id,
             "run_date": run_date,
@@ -490,6 +524,13 @@ def main() -> int:
             "publication_state": "review only; no automated empowerment scores",
         }
         write_json(STATUS_PATH, status_payload)
+
+        require_all_markets = bool(config.get("meta", {}).get("require_all_markets", True))
+        if errors and require_all_markets:
+            raise CollectionError(
+                f"{len(errors)} of {len(config['countries'])} configured market searches failed. "
+                "The partial run was preserved privately, but weekly publication is blocked."
+            )
 
         print()
         print(f"Supabase collection run: {run_key} ({run_id})")

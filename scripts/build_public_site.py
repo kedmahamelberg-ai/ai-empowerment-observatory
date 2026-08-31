@@ -45,8 +45,6 @@ PUBLIC_DIRS = [
 ]
 
 REQUIRED_DATA_FILES = [
-    "data/lenses/latest.json",
-    "data/events/latest.json",
     "data/methodology/latest.json",
     "data/status/latest.json",
     "data/site-config.json",
@@ -163,7 +161,8 @@ def main() -> None:
 
     print(
         "Excluded private paths: scripts/, config/, supabase/, validation/, "
-        "review/, data/raw/, data/review/, prompts and internal QA artifacts."
+        "review/, data/raw/, data/review/, data/lenses/latest.json, "
+        "data/events/latest.json, prompts and internal QA artifacts."
     )
 
 

@@ -22,7 +22,6 @@ from typing import Any, Iterable, Iterator, Sequence
 from urllib.parse import urlparse
 from zoneinfo import ZoneInfo
 
-from supabase import Client, create_client
 
 ROOT = Path(__file__).resolve().parents[1]
 AMSTERDAM = ZoneInfo("Europe/Amsterdam")
@@ -100,7 +99,7 @@ def required_env(name: str) -> str:
     return value
 
 
-def supabase_admin() -> Client:
+def supabase_admin() -> Any:
     url = required_env("SUPABASE_URL")
     key = str(
         os.environ.get("SUPABASE_SECRET_KEY")
@@ -111,6 +110,12 @@ def supabase_admin() -> Client:
         raise ReleaseError(
             "SUPABASE_SECRET_KEY or SUPABASE_SERVICE_ROLE_KEY is missing."
         )
+    try:
+        from supabase import create_client
+    except (ImportError, AttributeError) as exc:
+        raise ReleaseError(
+            "The Supabase Python client is required for database-backed release operations."
+        ) from exc
     return create_client(url, key)
 
 

@@ -20,8 +20,7 @@ from reportlab.pdfgen.canvas import Canvas
 from reportlab.platypus import Paragraph
 
 ROOT = Path(__file__).resolve().parents[1]
-LENSES = ROOT / "data" / "lenses" / "latest.json"
-EVENTS = ROOT / "data" / "events" / "latest.json"
+RELEASE = ROOT / "data" / "releases" / "current.json"
 METHODOLOGY = ROOT / "data" / "methodology" / "latest.json"
 REPORT_DIR = ROOT / "reports"
 REPORT_PATH = REPORT_DIR / "ai-empowerment-pulse-latest.pdf"
@@ -197,11 +196,21 @@ def draw_bar(canvas: Canvas, x: float, y: float, w: float, label: str, value: fl
     canvas.drawRightString(x + w, y, f"{value:.1f}{suffix}")
 
 
-def build_pdf(lenses: dict[str, Any], events: dict[str, Any], methodology: dict[str, Any] | None) -> dict[str, Any]:
-    coverage = lenses["global"]["coverage"]
-    event = lenses["global"]["event"]
-    amp = lenses["global"]["amplification"]
-    start, end = collect_dates(events)
+def build_pdf(release: dict[str, Any], methodology: dict[str, Any] | None) -> dict[str, Any]:
+    coverage = (release.get("lenses") or {}).get("coverage") or {}
+    event = (release.get("lenses") or {}).get("event") or {}
+    release_amp = release.get("amplification") or {}
+    amp = {
+        "directional_amplification_gap": release_amp.get("directional_gap"),
+        "coverage_event_ratio": release_amp.get("coverage_event_ratio"),
+    }
+    start_value = str(release.get("period_start") or "")
+    end_value = str(release.get("period_end") or "")
+    try:
+        start = datetime.fromisoformat(start_value).replace(tzinfo=timezone.utc)
+        end = datetime.fromisoformat(end_value).replace(tzinfo=timezone.utc)
+    except ValueError:
+        start = end = None
     window = date_label(start, end)
     generated = datetime.now(timezone.utc)
     title = "AI Empowerment Pulse"
@@ -365,14 +374,17 @@ def build_pdf(lenses: dict[str, Any], events: dict[str, Any], methodology: dict[
     y -= 9 * mm
 
     top_events = sorted(
-        events.get("events", []),
-        key=lambda item: (int(item.get("article_count") or len(item.get("sources", [])) or 0), str(item.get("event_date") or "")),
+        (release.get("units") or {}).get("event_records", []) or [],
+        key=lambda item: (
+            int(item.get("member_article_count") or len(item.get("sources", [])) or 0),
+            str(item.get("event_date") or ""),
+        ),
         reverse=True,
     )[:3]
 
     for index, event_item in enumerate(top_events, start=1):
         title_text = ascii_text(event_item.get("event_title") or "Untitled event")[:110]
-        source_count = int(event_item.get("article_count") or len(event_item.get("sources", [])) or 1)
+        source_count = int(event_item.get("member_article_count") or len(event_item.get("sources", [])) or 1)
         canvas.setFillColor(colors.HexColor("#f5f7f7"))
         canvas.roundRect(17 * mm, y - 25 * mm, 176 * mm, 22 * mm, 3 * mm, fill=1, stroke=0)
         canvas.setFillColor(TEAL)
@@ -397,10 +409,15 @@ def build_pdf(lenses: dict[str, Any], events: dict[str, Any], methodology: dict[
         "slug": "ai-empowerment-pulse-latest",
         "title": title,
         "edition": (
-            "Human-audited baseline brief"
-            if str(lenses.get("meta", {}).get("release_status", "")).startswith("human_audited")
-            else "Current-window provisional brief"
+            "Human-audited weekly brief"
+            if str(((release.get("reliability") or {}).get("governance") or {}).get("audit_status") or "").lower() == "complete"
+            else "Current weekly model-coded brief"
         ),
+        "release_id": release.get("release_id"),
+        "release_revision": int(release.get("revision") or 1),
+        "period_start": release.get("period_start"),
+        "period_end": release.get("period_end"),
+        "source_of_truth": "/data/releases/current.json",
         "file": "/reports/ai-empowerment-pulse-latest.pdf",
         "generated_at": generated.isoformat().replace("+00:00", "Z"),
         "observation_window": window,
@@ -417,10 +434,9 @@ def build_pdf(lenses: dict[str, Any], events: dict[str, Any], methodology: dict[
 
 
 def main() -> int:
-    lenses = load_json(LENSES)
-    events = load_json(EVENTS)
+    release = load_json(RELEASE)
     methodology = load_json(METHODOLOGY) if METHODOLOGY.exists() else None
-    meta = build_pdf(lenses, events, methodology)
+    meta = build_pdf(release, methodology)
     print(json.dumps(meta, indent=2))
     return 0
 

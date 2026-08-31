@@ -1,25 +1,25 @@
 #!/usr/bin/env python3
+"""Generate public source/theme insights from the canonical weekly release.
+
+The weekly release is the single public source of truth. This script deliberately
+avoids querying an independently selected classification run, because that can
+produce public derivatives whose numbers do not match ``data/releases/current.json``.
+"""
+
 from __future__ import annotations
 
 import json
-import os
 import re
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from supabase import Client, create_client
-
 ROOT = Path(__file__).resolve().parents[1]
-
-LENSES_PATH = ROOT / "data" / "lenses" / "latest.json"
-EVENTS_PATH = ROOT / "data" / "events" / "latest.json"
-
+RELEASE_PATH = ROOT / "data" / "releases" / "current.json"
+RELEASE_INDEX_PATH = ROOT / "data" / "releases" / "index.json"
 INSIGHTS_PATH = ROOT / "data" / "insights" / "latest.json"
 HISTORY_PATH = ROOT / "data" / "history" / "releases.json"
-
-TRANSLATION_PROFILE = "validated_language_routing_v3"
 
 MARKET_NAMES = {
     "USA": "United States",
@@ -147,125 +147,69 @@ class InsightError(RuntimeError):
     pass
 
 
-def required_env(name: str) -> str:
-    value = str(os.environ.get(name) or "").strip()
-    if not value:
-        raise InsightError(f"{name} is missing.")
-    return value
-
-
 def load_json(path: Path) -> dict[str, Any]:
     if not path.exists():
         raise InsightError(f"Missing required artifact: {path}")
-    return json.loads(path.read_text(encoding="utf-8"))
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise InsightError(f"Expected a JSON object: {path}")
+    return payload
 
 
-def batch_in(
-    client: Client,
-    table: str,
-    select: str,
-    column: str,
-    values: list[str],
-    size: int = 120,
-) -> list[dict[str, Any]]:
-    rows = []
-
-    for start in range(0, len(values), size):
-        response = (
-            client.table(table)
-            .select(select)
-            .in_(column, values[start:start + size])
-            .execute()
-        )
-        rows.extend(getattr(response, "data", None) or [])
-
-    return rows
-
-
-def latest_translations(
-    client: Client,
-    article_ids: list[str],
-) -> dict[str, dict[str, Any]]:
-    rows = []
-
-    for start in range(0, len(article_ids), 120):
-        response = (
-            client.table("article_translations")
-            .select(
-                "article_id,translated_headline,"
-                "source_language_iso2,created_at"
-            )
-            .eq("translation_profile", TRANSLATION_PROFILE)
-            .in_("article_id", article_ids[start:start + 120])
-            .order("created_at", desc=True)
-            .execute()
-        )
-
-        rows.extend(getattr(response, "data", None) or [])
-
-    newest = {}
-
-    for row in rows:
-        aid = str(row["article_id"])
-        if aid not in newest:
-            newest[aid] = row
-
-    return newest
+def write_json(path: Path, payload: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
 
 
 def theme_for(text: str, model_topic: str | None = None) -> str:
     topic = str(model_topic or "other")
-
     if topic != "other" and topic in TOPIC_LABELS:
         return TOPIC_LABELS[topic]
 
     normalized = str(text or "").casefold()
-
     for label, patterns in THEME_RULES:
         if any(re.search(pattern, normalized, flags=re.I) for pattern in patterns):
             return label
-
     return "Other AI developments"
 
 
-def theme_distribution(
-    rows: list[dict[str, Any]],
-    title_lookup: dict[str, str],
-    id_field: str,
-) -> list[dict[str, Any]]:
+def classification(row: dict[str, Any]) -> dict[str, Any]:
+    value = row.get("classification")
+    return value if isinstance(value, dict) else {}
+
+
+def ai_relevant(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return [row for row in rows if classification(row).get("ai_relevant") is True]
+
+
+def title_for(row: dict[str, Any], *, lens: str) -> str:
+    if lens == "coverage":
+        return str(row.get("headline_english") or row.get("headline_original") or "")
+    return str(row.get("event_title") or row.get("event_summary") or "")
+
+
+def theme_distribution(rows: list[dict[str, Any]], *, lens: str) -> list[dict[str, Any]]:
     counts = Counter()
-
     for row in rows:
-        unit_id = str(row.get(id_field) or "")
-        title = title_lookup.get(unit_id, "")
-        label = theme_for(title, row.get("topic"))
-        counts[label] += 1
-
+        cls = classification(row)
+        counts[theme_for(title_for(row, lens=lens), cls.get("topic"))] += 1
     total = sum(counts.values())
-
     return [
         {
             "label": label,
             "count": int(count),
             "share": round(count / total, 4) if total else 0.0,
         }
-        for label, count in sorted(
-            counts.items(),
-            key=lambda item: (-item[1], item[0]),
-        )
+        for label, count in sorted(counts.items(), key=lambda item: (-item[1], item[0]))
     ]
 
 
-def simple_distribution(
-    rows: list[dict[str, Any]],
-    field: str,
-) -> dict[str, dict[str, Any]]:
-    counts = Counter(
-        str(row.get(field) or "unclear")
-        for row in rows
-    )
+def simple_distribution(rows: list[dict[str, Any]], field: str) -> dict[str, dict[str, Any]]:
+    counts = Counter(str(classification(row).get(field) or "unclear") for row in rows)
     total = sum(counts.values())
-
     return {
         key: {
             "count": int(count),
@@ -275,555 +219,208 @@ def simple_distribution(
     }
 
 
-def observation_range(events: dict[str, Any]) -> tuple[str | None, str | None]:
-    values = []
+def discovery_markets(coverage_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    market_articles: dict[str, set[str]] = defaultdict(set)
+    market_languages: dict[str, set[str]] = defaultdict(set)
+    market_publishers: dict[str, Counter[str]] = defaultdict(Counter)
 
-    for event in events.get("events", []):
-        if event.get("event_date"):
-            values.append(str(event["event_date"])[:10])
-
-        for source in event.get("sources", []):
-            if source.get("published_at"):
-                values.append(str(source["published_at"])[:10])
-
-    values = sorted(value for value in values if value)
-
-    return (
-        values[0] if values else None,
-        values[-1] if values else None,
-    )
-
-
-def main() -> int:
-    client: Client = create_client(
-        required_env("SUPABASE_URL"),
-        required_env("SUPABASE_SECRET_KEY"),
-    )
-
-    lenses = load_json(LENSES_PATH)
-    events = load_json(EVENTS_PATH)
-
-    run_id = str(
-        lenses.get("meta", {}).get("classification_run_id")
-        or ""
-    ).strip()
-
-    if not run_id:
-        raise InsightError(
-            "No classification_run_id in data/lenses/latest.json."
-        )
-
-    run_response = (
-        client.table("classification_runs")
-        .select("classification_run_id,collection_run_id,run_key")
-        .eq("classification_run_id", run_id)
-        .limit(1)
-        .execute()
-    )
-
-    run_rows = getattr(run_response, "data", None) or []
-
-    if not run_rows:
-        raise InsightError(
-            f"Classification run not found: {run_id}"
-        )
-
-    collection_run_id = str(
-        run_rows[0]["collection_run_id"]
-    )
-
-    response = (
-        client.table("lens_classifications")
-        .select(
-            "lens_classification_id,lens,article_id,event_id,"
-            "ai_relevant,empowerment_status,narrative_frame,"
-            "distribution_breadth,dominant_dimension,topic,"
-            "primary_country_iso3"
-        )
-        .eq("classification_run_id", run_id)
-        .execute()
-    )
-
-    rows = getattr(response, "data", None) or []
-
-    coverage_rows = [
-        row for row in rows
-        if row["lens"] == "coverage" and row["ai_relevant"]
-    ]
-
-    event_rows = [
-        row for row in rows
-        if row["lens"] == "event" and row["ai_relevant"]
-    ]
-
-    coverage_article_ids = [
-        str(row["article_id"])
-        for row in coverage_rows
-        if row.get("article_id")
-    ]
-
-    event_ids = [
-        str(row["event_id"])
-        for row in event_rows
-        if row.get("event_id")
-    ]
-
-    article_rows = batch_in(
-        client,
-        "articles",
-        (
-            "article_id,headline,publisher,canonical_url,"
-            "published_at,first_seen_at"
-        ),
-        "article_id",
-        coverage_article_ids,
-    )
-
-    article_map = {
-        str(row["article_id"]): row
-        for row in article_rows
-    }
-
-    translations = latest_translations(
-        client,
-        coverage_article_ids,
-    )
-
-    article_title = {}
-
-    for aid in coverage_article_ids:
-        article = article_map.get(aid) or {}
-        translation = translations.get(aid) or {}
-
-        article_title[aid] = str(
-            translation.get("translated_headline")
-            or article.get("headline")
-            or ""
-        )
-
-    public_event_map = {
-        str(event["event_id"]): event
-        for event in events.get("events", [])
-    }
-
-    event_title = {
-        eid: str(
-            (public_event_map.get(eid) or {}).get("event_title")
-            or ""
-        )
-        for eid in event_ids
-    }
-
-    non_emp_coverage = [
-        row for row in coverage_rows
-        if row["empowerment_status"] == "non_empowerment"
-    ]
-
-    non_emp_event = [
-        row for row in event_rows
-        if row["empowerment_status"] == "non_empowerment"
-    ]
-
-    # Source inventory.
-    publisher_article_counts = Counter(
-        str(
-            (article_map.get(aid) or {}).get("publisher")
-            or "Unknown source"
-        )
-        for aid in coverage_article_ids
-    )
-
-    event_article_rows = batch_in(
-        client,
-        "event_articles",
-        "event_id,article_id",
-        "event_id",
-        event_ids,
-        size=100,
-    )
-
-    all_event_article_ids = sorted(
-        {
-            str(row["article_id"])
-            for row in event_article_rows
-        }
-    )
-
-    missing_ids = [
-        aid
-        for aid in all_event_article_ids
-        if aid not in article_map
-    ]
-
-    if missing_ids:
-        extra_articles = batch_in(
-            client,
-            "articles",
-            (
-                "article_id,headline,publisher,canonical_url,"
-                "published_at,first_seen_at"
-            ),
-            "article_id",
-            missing_ids,
-        )
-
-        for row in extra_articles:
-            article_map[str(row["article_id"])] = row
-
-    event_publishers = defaultdict(set)
-
-    for row in event_article_rows:
-        eid = str(row["event_id"])
-        aid = str(row["article_id"])
-
-        publisher = str(
-            (article_map.get(aid) or {}).get("publisher")
-            or "Unknown source"
-        )
-
-        event_publishers[eid].add(publisher)
-
-    publisher_event_counts = Counter()
-
-    for publishers in event_publishers.values():
-        for publisher in publishers:
-            publisher_event_counts[publisher] += 1
-
-    source_names = sorted(
-        set(publisher_article_counts)
-        | set(publisher_event_counts)
-    )
-
-    sources = [
-        {
-            "publisher": publisher,
-            "article_count": int(
-                publisher_article_counts[publisher]
-            ),
-            "unique_event_count": int(
-                publisher_event_counts[publisher]
-            ),
-        }
-        for publisher in source_names
-    ]
-
-    sources.sort(
-        key=lambda row: (
-            -row["article_count"],
-            -row["unique_event_count"],
-            row["publisher"].casefold(),
-        )
-    )
-
-    # Search-market discovery statistics.
-    obs_response = (
-        client.table("article_observations")
-        .select(
-            "article_id,search_country_iso3,"
-            "search_language,search_rank"
-        )
-        .eq("run_id", collection_run_id)
-        .execute()
-    )
-
-    observations = getattr(obs_response, "data", None) or []
-
-    coverage_set = set(coverage_article_ids)
-    market_articles = defaultdict(set)
-    market_languages = defaultdict(set)
-    market_publishers = defaultdict(Counter)
-
-    for row in observations:
-        aid = str(row["article_id"])
-
-        if aid not in coverage_set:
+    for row in coverage_rows:
+        article_id = str(row.get("article_id") or "").strip()
+        if not article_id:
             continue
+        publisher = str(row.get("publisher") or "Unknown source")
+        languages = [str(value) for value in (row.get("search_languages") or []) if value]
+        for market in [str(value) for value in (row.get("search_markets") or []) if value]:
+            market_articles[market].add(article_id)
+            market_publishers[market][publisher] += 1
+            market_languages[market].update(languages)
 
-        market = str(
-            row.get("search_country_iso3")
-            or "UNK"
-        )
-
-        market_articles[market].add(aid)
-
-        language = str(
-            row.get("search_language")
-            or ""
-        ).strip()
-
-        if language:
-            market_languages[market].add(language)
-
-        publisher = str(
-            (article_map.get(aid) or {}).get("publisher")
-            or "Unknown source"
-        )
-
-        market_publishers[market][publisher] += 1
-
-    discovery_markets = []
-
-    for iso3 in sorted(
-        market_articles,
-        key=lambda code: (
-            -len(market_articles[code]),
-            code,
-        ),
-    ):
+    result = []
+    for iso3 in sorted(market_articles, key=lambda code: (-len(market_articles[code]), code)):
         publishers = market_publishers[iso3]
-
-        discovery_markets.append(
+        result.append(
             {
                 "country_iso3": iso3,
                 "name": MARKET_NAMES.get(iso3, iso3),
-                "article_count": len(
-                    market_articles[iso3]
-                ),
-                "unique_publishers": len(
-                    publishers
-                ),
-                "languages": sorted(
-                    market_languages[iso3]
-                ),
+                "article_count": len(market_articles[iso3]),
+                "unique_publishers": len(publishers),
+                "languages": sorted(market_languages[iso3]),
                 "top_publishers": [
-                    {
-                        "publisher": publisher,
-                        "article_count": int(count),
-                    }
+                    {"publisher": publisher, "article_count": int(count)}
                     for publisher, count in publishers.most_common(5)
                 ],
                 "note": (
-                    "Discovery-market counts can overlap because the same "
-                    "article may appear in more than one search market."
+                    "Discovery-market counts can overlap because the same article may "
+                    "appear in more than one search market."
                 ),
             }
         )
+    return result
 
-    start, end = observation_range(events)
+
+def source_inventory(coverage_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    article_counts: Counter[str] = Counter()
+    event_sets: dict[str, set[str]] = defaultdict(set)
+    for row in coverage_rows:
+        publisher = str(row.get("publisher") or "Unknown source")
+        article_counts[publisher] += 1
+        event_id = str(row.get("effective_event_id") or row.get("event_id") or "").strip()
+        if event_id:
+            event_sets[publisher].add(event_id)
+
+    rows = [
+        {
+            "publisher": publisher,
+            "article_count": int(article_counts[publisher]),
+            "unique_event_count": len(event_sets[publisher]),
+        }
+        for publisher in article_counts
+    ]
+    rows.sort(key=lambda row: (-row["article_count"], -row["unique_event_count"], row["publisher"].casefold()))
+    return rows
+
+
+def history_from_release_index(index: dict[str, Any]) -> dict[str, Any]:
+    points = []
+    for row in index.get("weekly") or []:
+        articles = int(row.get("articles") or row.get("ai_relevant_articles") or 0)
+        events = int(row.get("event_records") or row.get("ai_relevant_event_records") or 0)
+        points.append(
+            {
+                "release_id": row.get("release_id"),
+                "revision": int(row.get("revision") or 1),
+                "window_start": row.get("period_start"),
+                "window_end": row.get("period_end"),
+                "coverage_count": articles,
+                "event_count": events,
+                "extra_article_instances": max(0, articles - events),
+                "coverage_index": row.get("coverage_index"),
+                "event_index": row.get("event_index"),
+                "amplification_gap": row.get("amplification_gap"),
+                "coverage_event_ratio": round(articles / events, 4) if events else None,
+            }
+        )
+    points.sort(key=lambda row: (str(row.get("window_end") or ""), str(row.get("release_id") or "")))
+    return {
+        "meta": {
+            "series": "weekly_public_releases",
+            "cumulative": False,
+            "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+            "source": "/data/releases/index.json",
+            "note": (
+                "Each point is one standardized weekly Observatory release. "
+                "Counts are not cumulatively summed."
+            ),
+        },
+        "points": points,
+    }
+
+
+def main() -> int:
+    release = load_json(RELEASE_PATH)
+    index = load_json(RELEASE_INDEX_PATH)
+
+    release_id = str(release.get("release_id") or "").strip()
+    if not release_id:
+        raise InsightError("Current release has no release_id.")
+    if str(index.get("current_release_id") or "") != release_id:
+        raise InsightError("Release index does not point to the current release.")
+
+    units = release.get("units") or {}
+    coverage_rows = ai_relevant(list(units.get("coverage_articles") or []))
+    event_rows = ai_relevant(list(units.get("event_records") or []))
+
+    expected_coverage = int((release.get("counts") or {}).get("ai_relevant_articles") or 0)
+    expected_events = int((release.get("counts") or {}).get("ai_relevant_event_records") or 0)
+    if len(coverage_rows) != expected_coverage or len(event_rows) != expected_events:
+        raise InsightError(
+            "Canonical release unit counts do not reconcile: "
+            f"coverage {len(coverage_rows)}/{expected_coverage}, "
+            f"events {len(event_rows)}/{expected_events}."
+        )
+
+    non_emp_coverage = [row for row in coverage_rows if classification(row).get("empowerment_status") == "non_empowerment"]
+    non_emp_event = [row for row in event_rows if classification(row).get("empowerment_status") == "non_empowerment"]
+    sources = source_inventory(coverage_rows)
 
     insights = {
         "meta": {
-            "version": "public_insights_v3",
-            "generated_at": (
-                datetime.now(timezone.utc)
-                .isoformat()
-                .replace("+00:00", "Z")
-            ),
-            "classification_run_id": run_id,
-            "collection_run_id": collection_run_id,
-            "observation_start": start,
-            "observation_end": end,
+            "version": "public_insights_v4_release_bound",
+            "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+            "release_id": release_id,
+            "release_revision": int(release.get("revision") or 1),
+            "classification_run_id": (release.get("lineage") or {}).get("classification_run_id"),
+            "collection_run_id": (release.get("lineage") or {}).get("collection_run_id"),
+            "observation_start": release.get("period_start"),
+            "observation_end": release.get("period_end"),
+            "source_of_truth": "/data/releases/current.json",
+            "coverage_units": expected_coverage,
+            "event_units": expected_events,
+            "extra_coverage": int((release.get("counts") or {}).get("extra_coverage") or 0),
+            "first_time_event_records": int((release.get("counts") or {}).get("first_time_event_records") or 0),
+            "follow_on_event_records": int((release.get("counts") or {}).get("follow_on_event_records") or 0),
+            "recurring_event_records": int((release.get("counts") or {}).get("recurring_event_records") or 0),
             "source_method": (
-                "Publications and organisations are dynamically observed "
-                "through the current discovery workflow; this is not a fixed "
-                "journal whitelist."
+                "Publications and organisations are dynamically observed through the "
+                "current discovery workflow; this is not a fixed journal whitelist."
             ),
             "theme_method": (
-                "Descriptive themes are a separate navigation layer. "
-                "They do not affect the empowerment index."
+                "Descriptive themes are a separate navigation layer. They do not affect "
+                "the empowerment index."
             ),
         },
-        "discovery_markets": discovery_markets,
+        "discovery_markets": discovery_markets(coverage_rows),
         "sources": {
             "unique_publishers": len(sources),
             "rows": sources,
         },
         "coverage": {
-            "themes": theme_distribution(
-                coverage_rows,
-                article_title,
-                "article_id",
-            ),
-            "by_status": simple_distribution(
-                coverage_rows,
-                "empowerment_status",
-            ),
-            "by_narrative": simple_distribution(
-                coverage_rows,
-                "narrative_frame",
-            ),
+            "themes": theme_distribution(coverage_rows, lens="coverage"),
+            "by_status": simple_distribution(coverage_rows, "empowerment_status"),
+            "by_narrative": simple_distribution(coverage_rows, "narrative_frame"),
         },
         "event": {
-            "themes": theme_distribution(
-                event_rows,
-                event_title,
-                "event_id",
-            ),
-            "by_status": simple_distribution(
-                event_rows,
-                "empowerment_status",
-            ),
-            "by_narrative": simple_distribution(
-                event_rows,
-                "narrative_frame",
-            ),
+            "themes": theme_distribution(event_rows, lens="event"),
+            "by_status": simple_distribution(event_rows, "empowerment_status"),
+            "by_narrative": simple_distribution(event_rows, "narrative_frame"),
         },
         "non_empowerment": {
             "coverage": {
                 "unit_count": len(non_emp_coverage),
-                "themes": theme_distribution(
-                    non_emp_coverage,
-                    article_title,
-                    "article_id",
-                ),
+                "themes": theme_distribution(non_emp_coverage, lens="coverage"),
             },
             "event": {
                 "unit_count": len(non_emp_event),
-                "themes": theme_distribution(
-                    non_emp_event,
-                    event_title,
-                    "event_id",
-                ),
+                "themes": theme_distribution(non_emp_event, lens="event"),
             },
         },
     }
 
-    INSIGHTS_PATH.parent.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    INSIGHTS_PATH.write_text(
-        json.dumps(
-            insights,
-            ensure_ascii=False,
-            indent=2,
-        )
-        + "\n",
-        encoding="utf-8",
-    )
-
-    coverage = lenses["global"]["coverage"]
-    event = lenses["global"]["event"]
-    amplification = lenses["global"]["amplification"]
-
-    point = {
-        "release_id": run_id,
-        "window_start": start,
-        "window_end": end,
-        "coverage_count": int(
-            coverage.get("unit_count_ai_relevant")
-            or 0
-        ),
-        "event_count": int(
-            event.get("unit_count_ai_relevant")
-            or 0
-        ),
-        "extra_article_instances": max(
-            0,
-            int(
-                coverage.get(
-                    "unit_count_ai_relevant"
-                )
-                or 0
-            )
-            - int(
-                event.get(
-                    "unit_count_ai_relevant"
-                )
-                or 0
-            ),
-        ),
-        "coverage_index": coverage.get(
-            "empowerment_index"
-        ),
-        "event_index": event.get(
-            "empowerment_index"
-        ),
-        "amplification_gap": amplification.get(
-            "directional_amplification_gap"
-        ),
-        "coverage_event_ratio": amplification.get(
-            "coverage_event_ratio"
-        ),
-    }
-
-    history = {
-        "meta": {
-            "series": "weekly_public_releases",
-            "cumulative": False,
-            "note": (
-                "Each point is one weekly Observatory release. "
-                "Counts are not cumulatively summed."
-            ),
-        },
-        "points": [],
-    }
-
-    if HISTORY_PATH.exists():
-        try:
-            existing = json.loads(
-                HISTORY_PATH.read_text(
-                    encoding="utf-8"
-                )
-            )
-
-            if isinstance(existing, dict):
-                history.update(existing)
-        except Exception:
-            pass
-
-    points = [
-        row
-        for row in history.get(
-            "points",
-            [],
-        )
-        if row.get("release_id") != run_id
-    ]
-
-    points.append(point)
-
-    points.sort(
-        key=lambda row: (
-            str(row.get("window_end") or ""),
-            str(row.get("release_id") or ""),
-        )
-    )
-
-    history["points"] = points
-
-    HISTORY_PATH.parent.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    HISTORY_PATH.write_text(
-        json.dumps(
-            history,
-            ensure_ascii=False,
-            indent=2,
-        )
-        + "\n",
-        encoding="utf-8",
-    )
+    history = history_from_release_index(index)
+    write_json(INSIGHTS_PATH, insights)
+    write_json(HISTORY_PATH, history)
 
     print(
         json.dumps(
             {
-                "classification_run_id": run_id,
-                "coverage_units": len(
-                    coverage_rows
-                ),
-                "event_units": len(
-                    event_rows
-                ),
-                "unique_sources": len(
-                    sources
-                ),
-                "discovery_markets": len(
-                    discovery_markets
-                ),
-                "history_points": len(
-                    points
-                ),
+                "release_id": release_id,
+                "coverage_units": len(coverage_rows),
+                "event_units": len(event_rows),
+                "unique_sources": len(sources),
+                "discovery_markets": len(insights["discovery_markets"]),
+                "history_points": len(history["points"]),
             },
             indent=2,
         )
     )
-
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    try:
+        raise SystemExit(main())
+    except InsightError as exc:
+        import sys
+
+        print(f"Public insights failed: {exc}", file=sys.stderr)
+        raise SystemExit(1)
