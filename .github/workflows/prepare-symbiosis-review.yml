@@ -8,6 +8,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: aieo-weekly-symbiosis-review
@@ -34,3 +36,9 @@ jobs:
       require_complete: false
       placeholder: false
     secrets: inherit
+
+  deploy-refreshed-relationship:
+    needs: refresh-review-progress
+    uses: ./.github/workflows/publish-observatory-release.yml
+    secrets: inherit
+
