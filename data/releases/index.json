@@ -1,19 +1,18 @@
 {
   "schema_version": "aieo_release_index_v3.0",
-  "updated_at": "2026-08-26T13:19:01.967089Z",
+  "updated_at": "2026-08-31T14:49:08.132668Z",
   "release_count": 2,
   "weekly_release_count": 2,
   "historical_snapshot_count": 1,
   "publication_snapshot_count": 3,
   "current_release_id": "2026-W34",
-  "current_revision": 1,
-  "data_current_through": "2026-08-25T21:47:18.123224+00:00",
+  "current_revision": 2,
+  "data_current_through": "2026-08-31T14:49:03.794193+00:00",
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-08-24T07:09:27.039332+00:00",
-    "registry_snapshot_id": "registry_c18a1ff3c1949eda75ed",
-    "all_prior_events_considered": true,
-    "disclosure": "New means new relative to this historical matching pool."
+    "considered_through": "2026-08-31T13:53:33.22983+00:00",
+    "registry_snapshot_id": "registry_77c90d514e56786d8303",
+    "all_prior_events_considered": true
   },
   "revision_archives": {
     "2026-W33": [
@@ -28,6 +27,20 @@
         "generated_at": "2026-08-25T21:47:23.700618Z",
         "path": "/data/releases/weekly/archive/2026-W33/revision-2.json",
         "content_sha256": "70ff2f29199e86286c1c216b21c1569fb14ec25f88c0efda8cf5f4b03fbdf71d"
+      },
+      {
+        "revision": 3,
+        "generated_at": "2026-08-26T08:10:44.383437Z",
+        "path": "/data/releases/weekly/archive/2026-W33/revision-3.json",
+        "content_sha256": "aa866b728cabdef470798cb363046814db6294a979a3226183a41a92fe5d0cd7"
+      }
+    ],
+    "2026-W34": [
+      {
+        "revision": 1,
+        "generated_at": "2026-08-26T13:19:01.967089Z",
+        "path": "/data/releases/weekly/archive/2026-W34/revision-1.json",
+        "content_sha256": "3fde421777f6b5b7f118d3864e643ed7aa0fa3dcea56d6c45a6083dd8b3e1c1a"
       }
     ]
   },
@@ -59,10 +72,10 @@
       "release_type": "weekly",
       "period_start": "2026-08-10",
       "period_end": "2026-08-16",
-      "generated_at": "2026-08-26T08:10:44.383437Z",
+      "generated_at": "2026-08-31T14:49:07.613350Z",
       "articles": 120,
       "event_records": 113,
-      "revision": 3,
+      "revision": 4,
       "new_event_records": 101,
       "first_time_event_records": 101,
       "recurring_event_records": 12,
@@ -83,10 +96,10 @@
       "release_type": "weekly",
       "period_start": "2026-08-17",
       "period_end": "2026-08-23",
-      "generated_at": "2026-08-26T13:19:01.967089Z",
+      "generated_at": "2026-08-31T14:49:08.132668Z",
       "articles": 131,
       "event_records": 123,
-      "revision": 1,
+      "revision": 2,
       "new_event_records": 1,
       "first_time_event_records": 0,
       "recurring_event_records": 122,
@@ -129,10 +142,10 @@
       "release_type": "weekly",
       "period_start": "2026-08-10",
       "period_end": "2026-08-16",
-      "generated_at": "2026-08-26T08:10:44.383437Z",
+      "generated_at": "2026-08-31T14:49:07.613350Z",
       "articles": 120,
       "event_records": 113,
-      "revision": 3,
+      "revision": 4,
       "new_event_records": 101,
       "first_time_event_records": 101,
       "recurring_event_records": 12,
@@ -157,10 +170,10 @@
       "release_type": "weekly",
       "period_start": "2026-08-17",
       "period_end": "2026-08-23",
-      "generated_at": "2026-08-26T13:19:01.967089Z",
+      "generated_at": "2026-08-31T14:49:08.132668Z",
       "articles": 131,
       "event_records": 123,
-      "revision": 1,
+      "revision": 2,
       "new_event_records": 1,
       "first_time_event_records": 0,
       "recurring_event_records": 122,
