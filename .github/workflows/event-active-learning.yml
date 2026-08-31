@@ -5,12 +5,7 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
   build:
@@ -72,28 +67,3 @@ jobs:
           git diff --cached --quiet || \
             git commit -m "data: generate event identity active-learning sample"
           git push
-
-      - name: Build public site artifact
-        run: python scripts/build_public_site.py
-
-      - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: "_site"
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-
-    permissions:
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4

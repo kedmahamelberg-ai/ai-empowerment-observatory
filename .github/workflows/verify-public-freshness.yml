@@ -1,0 +1,26 @@
+name: Verify Weekly Observatory Freshness
+
+on:
+  schedule:
+    # Monday 18:17 UTC: fail visibly if the previous complete week is not public.
+    - cron: "17 18 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v6
+        with:
+          ref: main
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Fail if the public release is stale or internally inconsistent
+        run: python scripts/validate_and_publish_release.py --check-only

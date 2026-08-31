@@ -1,6 +1,28 @@
 name: Build Weekly Observatory Release
 
 on:
+  workflow_call:
+    inputs:
+      period_start:
+        required: false
+        default: ""
+        type: string
+      period_end:
+        required: false
+        default: ""
+        type: string
+      replace:
+        required: false
+        default: false
+        type: boolean
+      revision_reason:
+        required: false
+        default: ""
+        type: string
+      rebuild_index_only:
+        required: false
+        default: false
+        type: boolean
   workflow_dispatch:
     inputs:
       period_start:
@@ -47,9 +69,10 @@ jobs:
       REBUILD_INDEX_ONLY: ${{ inputs.rebuild_index_only }}
 
     steps:
-      - name: Check out repository
+      - name: Check out latest main
         uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
 
       - name: Set up Python
@@ -188,4 +211,4 @@ jobs:
           PY
           )"
           git commit -m "Build Observatory weekly release ${release_id} r${revision}"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          git push origin HEAD:main

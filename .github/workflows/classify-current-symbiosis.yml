@@ -1,6 +1,16 @@
 name: Classify Current Human-AI Relationship Patterns
 
 on:
+  workflow_call:
+    inputs:
+      lens:
+        required: false
+        default: both
+        type: string
+      replace:
+        required: false
+        default: false
+        type: boolean
   workflow_dispatch:
     inputs:
       lens:
@@ -8,10 +18,7 @@ on:
         required: true
         default: both
         type: choice
-        options:
-          - both
-          - event
-          - coverage
+        options: [both, event, coverage]
       replace:
         description: "Reclassify units that already have this codebook version"
         required: true
@@ -24,10 +31,12 @@ permissions:
 jobs:
   classify:
     runs-on: ubuntu-latest
-    timeout-minutes: 360
+    timeout-minutes: 350
     steps:
-      - name: Checkout repository
+      - name: Checkout latest main
         uses: actions/checkout@v6
+        with:
+          ref: main
       - name: Set up Python
         uses: actions/setup-python@v6
         with:

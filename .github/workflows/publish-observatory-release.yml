@@ -1,6 +1,7 @@
 name: Publish Observatory Release
 
 on:
+  workflow_call:
   workflow_dispatch:
 
 permissions:
@@ -9,60 +10,57 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: false
 
 jobs:
-  publish:
+  validate-and-build:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 30
     steps:
-      - name: Checkout latest repository state
+      - name: Checkout latest main
         uses: actions/checkout@v6
         with:
           ref: main
-
+          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
-
-      - name: Validate latest release artifacts
+      - name: Validate canonical release and every public derivative
         run: python scripts/validate_and_publish_release.py
-
       - name: Commit release status
+        shell: bash
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/status/latest.json
-
-          git diff --cached --quiet || \
-            git commit -m "data: publish Observatory release status"
-
-          git push
-
-      - name: Build public site artifact
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish Observatory release status"
+            git push origin HEAD:main
+          else
+            echo "Release status is unchanged."
+          fi
+      - name: Refresh after status commit
+        run: git pull --ff-only origin main
+      - name: Build public site artifact once
         run: python scripts/build_public_site.py
-
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: "_site"
+          path: _site
 
   deploy:
-    needs: publish
+    needs: validate-and-build
     runs-on: ubuntu-latest
-
     permissions:
       pages: write
       id-token: write
-
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
-      - name: Deploy GitHub Pages
+      - name: Deploy validated GitHub Pages build
         id: deployment
         uses: actions/deploy-pages@v4

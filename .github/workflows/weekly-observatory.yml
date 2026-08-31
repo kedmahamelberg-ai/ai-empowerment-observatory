@@ -1,59 +1,90 @@
-name: Continue Weekly Observatory Pipeline
+name: Weekly Observatory Pipeline
 
 on:
-  workflow_run:
-    workflows:
-      - Update AI News Collection
-    types:
-      - completed
-
+  schedule:
+    # 00:17 UTC Monday. This is 02:17 CEST / 01:17 CET in the Netherlands.
+    # The non-zero minute avoids the busiest scheduled-run boundary.
+    - cron: "17 0 * * 1"
   workflow_dispatch:
-    inputs:
-      validate_only:
-        description: "Check workflow names, states and dispatch inputs without running the pipeline"
-        required: true
-        default: true
-        type: boolean
 
 permissions:
-  actions: write
-  contents: read
+  contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: aieo-weekly-pipeline
   cancel-in-progress: false
 
 jobs:
-  orchestrate:
-    if: >-
-      ${{
-        github.event_name == 'workflow_dispatch' ||
-        (
-          github.event.workflow_run.conclusion == 'success' &&
-          github.event.workflow_run.event != 'push'
-        )
-      }}
+  collect:
+    uses: ./.github/workflows/update-observatory.yml
+    secrets: inherit
 
-    runs-on: ubuntu-latest
-    timeout-minutes: 900
+  translate:
+    needs: collect
+    uses: ./.github/workflows/translate-news.yml
+    secrets: inherit
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-        with:
-          ref: main
+  resolve-events:
+    needs: translate
+    uses: ./.github/workflows/resolve-events.yml
+    secrets: inherit
 
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.12"
+  reconcile-history:
+    needs: resolve-events
+    uses: ./.github/workflows/reconcile-observatory-history.yml
+    with:
+      mode: auto
+      dry_run: false
+    secrets: inherit
 
-      - name: Install API client dependency
-        run: python -m pip install requests
+  classify-dual-lenses:
+    needs: reconcile-history
+    uses: ./.github/workflows/classify-dual-lenses.yml
+    secrets: inherit
 
-      - name: Run the remaining weekly pipeline
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PIPELINE_REF: main
-          PIPELINE_VALIDATE_ONLY: ${{ github.event_name == 'workflow_dispatch' && inputs.validate_only || false }}
-        run: python scripts/orchestrate_weekly.py
+  finalize-residual:
+    needs: classify-dual-lenses
+    uses: ./.github/workflows/finalize-stage7c-residual.yml
+    secrets: inherit
+
+  build-weekly-release:
+    needs: finalize-residual
+    uses: ./.github/workflows/build-weekly-release.yml
+    with:
+      period_start: ""
+      period_end: ""
+      replace: false
+      revision_reason: ""
+      rebuild_index_only: false
+    secrets: inherit
+
+  relationship-release-boundary:
+    needs: build-weekly-release
+    uses: ./.github/workflows/publish-symbiosis-release.yml
+    with:
+      release_id: ""
+      require_complete: false
+      placeholder: true
+    secrets: inherit
+
+  period-summaries:
+    needs: relationship-release-boundary
+    uses: ./.github/workflows/build-period-summaries.yml
+    secrets: inherit
+
+  public-insights:
+    needs: period-summaries
+    uses: ./.github/workflows/generate-public-insights.yml
+    secrets: inherit
+
+  public-brief:
+    needs: public-insights
+    uses: ./.github/workflows/generate-public-brief.yml
+    secrets: inherit
+
+  publish-site:
+    needs: public-brief
+    uses: ./.github/workflows/publish-observatory-release.yml
+    secrets: inherit

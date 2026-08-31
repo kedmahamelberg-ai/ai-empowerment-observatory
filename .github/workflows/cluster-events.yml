@@ -5,12 +5,7 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
   build:
@@ -51,28 +46,3 @@ jobs:
           git add review/events/latest.json
           git diff --cached --quiet || git commit -m "data: refresh provisional event clusters [$(date -u +%Y-%m-%d)]"
           git push
-
-      - name: Build intentionally public site artifact
-        run: python scripts/build_public_site.py
-
-      - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: "_site"
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-
-    permissions:
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4

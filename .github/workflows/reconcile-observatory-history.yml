@@ -1,6 +1,16 @@
 name: Reconcile Observatory History
 
 on:
+  workflow_call:
+    inputs:
+      mode:
+        required: false
+        default: auto
+        type: string
+      dry_run:
+        required: false
+        default: false
+        type: boolean
   workflow_dispatch:
     inputs:
       mode:
@@ -24,23 +34,24 @@ concurrency:
 jobs:
   reconcile:
     runs-on: ubuntu-latest
-    timeout-minutes: 420
+    timeout-minutes: 350
     env:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
       HF_TOKEN: ${{ secrets.HF_TOKEN }}
-      MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || 'auto' }}
-      DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}
+      MODE: ${{ inputs.mode }}
+      DRY_RUN: ${{ inputs.dry_run }}
       LLAMA_SERVER_BIN: /tmp/llama.cpp/build/bin/llama-server
       # Pilot governance: models propose; accepted decisions change history.
       AIEO_AUTO_APPLY_MODEL_SAME_EVENT: "false"
       AIEO_AUTO_LINK_MODEL_FOLLOW_ON: "false"
 
     steps:
-      - name: Check out repository
+      - name: Check out latest main
         uses: actions/checkout@v6
         with:
+          ref: main
           fetch-depth: 0
 
       - name: Set up Python
@@ -166,4 +177,4 @@ jobs:
             exit 0
           fi
           git commit -m "Reconcile Observatory event history"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          git push origin HEAD:main

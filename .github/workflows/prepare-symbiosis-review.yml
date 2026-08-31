@@ -1,0 +1,36 @@
+name: Prepare Weekly Symbiosis Review
+
+on:
+  workflow_run:
+    workflows: ["Weekly Observatory Pipeline"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aieo-weekly-symbiosis-review
+  cancel-in-progress: false
+
+jobs:
+  classify-and-build-workbench:
+    if: >-
+      ${{
+        github.event_name == 'workflow_dispatch' ||
+        github.event.workflow_run.conclusion == 'success'
+      }}
+    uses: ./.github/workflows/classify-current-symbiosis.yml
+    with:
+      lens: both
+      replace: false
+    secrets: inherit
+
+  refresh-review-progress:
+    needs: classify-and-build-workbench
+    uses: ./.github/workflows/publish-symbiosis-release.yml
+    with:
+      release_id: ""
+      require_complete: false
+      placeholder: false
+    secrets: inherit
