@@ -242,7 +242,7 @@ function relationshipCell(key, count, complete) {
   `;
 }
 
-function renderRelationship(symbiosis, error = null) {
+function renderRelationship(symbiosis, error = null, releaseId = null) {
   const ticker = document.getElementById("relationship-ticker");
   if (!ticker) return;
   if (error) {
@@ -251,7 +251,8 @@ function renderRelationship(symbiosis, error = null) {
     setText("relationship-other-summary", "Weekly counts and source evidence remain available.");
     return;
   }
-  if (!symbiosis || symbiosis.public_status !== "human_reviewed" || !symbiosis.review?.event_complete) {
+  const sameRelease = !releaseId || String(symbiosis?.release_id || "") === String(releaseId);
+  if (!symbiosis || !sameRelease || symbiosis.public_status !== "human_reviewed" || !symbiosis.review?.event_complete) {
     ticker.innerHTML = '<p class="loading-line">The relationship signal is still under review for this release.</p>';
     setText("relationship-denominator", "Review in progress");
     setText("relationship-other-summary", "Weekly counts and sources remain available while the relationship review is completed.");
@@ -384,13 +385,14 @@ async function loadSignalTape(releasePromise) {
   }
 }
 
-async function loadRelationship() {
+async function loadRelationship(releasePromise) {
+  const release = await releasePromise;
   try {
     const symbiosis = await fetchJSON(SYMBIOSIS_URL);
-    renderRelationship(symbiosis);
+    renderRelationship(symbiosis, null, release?.release_id || null);
   } catch (error) {
     console.warn("Relationship artifact could not be loaded", error);
-    renderRelationship(null, error);
+    renderRelationship(null, error, release?.release_id || null);
   }
 }
 
@@ -433,7 +435,7 @@ async function init() {
   const releasePromise = loadRelease();
   await Promise.allSettled([
     loadSignalTape(releasePromise),
-    loadRelationship(),
+    loadRelationship(releasePromise),
     loadGlobe(releasePromise),
   ]);
 }

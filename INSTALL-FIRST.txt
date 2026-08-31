@@ -1,0 +1,31 @@
+AI Empowerment Observatory — install/run this fix
+31 August 2026
+
+1. Replace the repository files with the contents of the FULL package.
+   If using a local clone, DO NOT delete the existing .git folder.
+
+2. Commit and push all changes to the main branch.
+
+3. In GitHub -> Settings -> Secrets and variables -> Actions, confirm:
+   SERPAPI_KEY
+   SUPABASE_URL
+   SUPABASE_SECRET_KEY
+
+4. In GitHub -> Actions -> Weekly Observatory Pipeline -> Run workflow -> main.
+   Do not manually launch the child workflows while this run is active.
+
+5. The run today must produce:
+   data/releases/current.json -> release_id 2026-W35
+   period_start 2026-08-24
+   period_end   2026-08-30
+   and data/releases/weekly/2026-W35.json must exist.
+
+6. After publish-site is green, refresh https://observatory.hamelberg-ai.com.
+   The public week must be 24-30 August 2026.
+
+Future weeks run automatically every Monday at 00:17 UTC.
+The strict freshness check runs Monday evening at 18:17 UTC.
+
+For verification, recovery instructions, saved-history design, and the
+relationship-review exception, read:
+OBSERVATORY-AUTOMATION-FIX-2026-08-31.md
