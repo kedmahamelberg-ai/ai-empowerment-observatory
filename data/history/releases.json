@@ -2,20 +2,36 @@
   "meta": {
     "series": "weekly_public_releases",
     "cumulative": false,
-    "note": "History starts with the first generated public insight release."
+    "generated_at": "2026-08-31T12:05:33.640325Z",
+    "source": "/data/releases/index.json",
+    "note": "Each point is one standardized weekly Observatory release. Counts are not cumulatively summed."
   },
   "points": [
     {
-      "release_id": "c7e442f1-b54e-403d-9140-42726069375b",
-      "window_start": "2026-08-05",
-      "window_end": "2026-08-24",
-      "coverage_count": 129,
-      "event_count": 124,
-      "extra_article_instances": 5,
-      "coverage_index": 1.5504,
-      "event_index": 1.6129,
-      "amplification_gap": -0.0625,
-      "coverage_event_ratio": 1.0403
+      "release_id": "2026-W33",
+      "revision": 3,
+      "window_start": "2026-08-10",
+      "window_end": "2026-08-16",
+      "coverage_count": 120,
+      "event_count": 113,
+      "extra_article_instances": 7,
+      "coverage_index": 0.9132,
+      "event_index": 1.0101,
+      "amplification_gap": -0.0969,
+      "coverage_event_ratio": 1.0619
+    },
+    {
+      "release_id": "2026-W34",
+      "revision": 1,
+      "window_start": "2026-08-17",
+      "window_end": "2026-08-23",
+      "coverage_count": 131,
+      "event_count": 123,
+      "extra_article_instances": 8,
+      "coverage_index": 0.8439,
+      "event_index": 1.7544,
+      "amplification_gap": -0.9105,
+      "coverage_event_ratio": 1.065
     }
   ]
 }
