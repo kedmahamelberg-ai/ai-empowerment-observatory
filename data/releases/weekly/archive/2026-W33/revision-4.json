@@ -2,10 +2,10 @@
   "schema_version": "aieo_public_release_v3.0",
   "release_id": "2026-W33",
   "release_type": "weekly",
-  "revision": 5,
+  "revision": 4,
   "period_start": "2026-08-10",
   "period_end": "2026-08-16",
-  "generated_at": "2026-08-31T19:25:33.183828Z",
+  "generated_at": "2026-08-31T14:49:07.613350Z",
   "public_label": "Model-coded, human-governed pilot release",
   "lineage": {
     "collection_run_id": "8383ed52-fea7-45d0-8a60-ff42c0181d8a",
@@ -24,9 +24,9 @@
     "event_lens": "Each effective resolved event represented by those articles receives one weight.",
     "extra_coverage": "AI-relevant published articles minus effective represented events for the same period.",
     "new_event_record": "A first-time event or a genuine follow-on occurrence not collapsed into earlier reality.",
-    "recurring_event_record": "An effective event already present in an earlier standardized AIEO weekly release and represented again by current-week coverage.",
+    "recurring_event_record": "A previously observed effective event represented again by newly published coverage.",
     "resurfaced_event_record": "A recurring event receiving new coverage after at least 28 days without observed coverage.",
-    "rediscovered_article_record": "A previously stored article page returned by a later collection run. This is a collection diagnostic and does not by itself make a development recurring.",
+    "rediscovered_article_record": "A previously stored article page returned to the discovery results; it is not counted as a newly published article.",
     "follow_on_development": "A genuinely new occurrence linked to an earlier event through a continuing story family.",
     "event_record_caveat": "AIEO uses a precision-first resolver. Ambiguous possible duplicates remain separate until governance resolves them."
   },
@@ -35,8 +35,8 @@
     "ai_relevant_articles": 120,
     "represented_event_records": 114,
     "ai_relevant_event_records": 113,
-    "new_event_records": 113,
-    "recurring_event_records": 0,
+    "new_event_records": 101,
+    "recurring_event_records": 12,
     "extra_coverage": 7,
     "extra_coverage_from_memberships": 7,
     "singleton_event_records": 109,
@@ -44,7 +44,7 @@
     "possible_duplicate_event_records": 4,
     "unique_publications": 105,
     "unique_domains": 106,
-    "first_time_event_records": 113,
+    "first_time_event_records": 101,
     "follow_on_event_records": 0,
     "possible_historical_match_event_records": 0,
     "unclassified_novelty_event_records": 0,
@@ -1207,7 +1207,7 @@
       "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
       "last_seen_at": "2026-08-12T05:57:21.87556+00:00",
       "first_seen_date": "2026-08-12",
-      "new_in_period": true,
+      "new_in_period": false,
       "member_article_ids": [
         "a0fb2b8f515265622fdcde75e36f7241"
       ],
@@ -1285,9 +1285,9 @@
       "appearance_types": [
         "same_article_rediscovered"
       ],
-      "novelty_status": "first_time",
-      "first_time_in_period": true,
-      "recurring_in_period": false,
+      "novelty_status": "recurring",
+      "first_time_in_period": false,
+      "recurring_in_period": true,
       "follow_on_development": false,
       "possible_historical_match": false
     },
@@ -1299,7 +1299,7 @@
       "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
       "last_seen_at": "2026-08-12T05:57:21.87556+00:00",
       "first_seen_date": "2026-08-12",
-      "new_in_period": true,
+      "new_in_period": false,
       "member_article_ids": [
         "59ae4e30103557f1f4ba466bdda8f508"
       ],
@@ -1377,9 +1377,9 @@
       "appearance_types": [
         "same_article_rediscovered"
       ],
-      "novelty_status": "first_time",
-      "first_time_in_period": true,
-      "recurring_in_period": false,
+      "novelty_status": "recurring",
+      "first_time_in_period": false,
+      "recurring_in_period": true,
       "follow_on_development": false,
       "possible_historical_match": false
     },
@@ -1391,7 +1391,7 @@
       "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
       "last_seen_at": "2026-08-12T05:57:21.87556+00:00",
       "first_seen_date": "2026-08-12",
-      "new_in_period": true,
+      "new_in_period": false,
       "member_article_ids": [
         "665943540afb60d0eb9daa7ae4cd62bb"
       ],
@@ -1469,9 +1469,9 @@
       "appearance_types": [
         "same_article_rediscovered"
       ],
-      "novelty_status": "first_time",
-      "first_time_in_period": true,
-      "recurring_in_period": false,
+      "novelty_status": "recurring",
+      "first_time_in_period": false,
+      "recurring_in_period": true,
       "follow_on_development": false,
       "possible_historical_match": false
     },
@@ -1483,7 +1483,7 @@
       "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
       "last_seen_at": "2026-08-10T17:15:09+00:00",
       "first_seen_date": "2026-08-12",
-      "new_in_period": true,
+      "new_in_period": false,
       "member_article_ids": [
         "f72d80896374613331fb680acea59a78"
       ],
@@ -1561,9 +1561,9 @@
       "appearance_types": [
         "same_article_rediscovered"
       ],
-      "novelty_status": "first_time",
-      "first_time_in_period": true,
-      "recurring_in_period": false,
+      "novelty_status": "recurring",
+      "first_time_in_period": false,
+      "recurring_in_period": true,
       "follow_on_development": false,
       "possible_historical_match": false
     },
@@ -1759,7 +1759,7 @@
       "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
       "last_seen_at": "2026-08-12T05:57:21.87556+00:00",
       "first_seen_date": "2026-08-12",
-      "new_in_period": true,
+      "new_in_period": false,
       "member_article_ids": [
         "fe4a7403a6a88258c99af67fb1f2e6b8"
       ],
@@ -1837,9 +1837,9 @@
       "appearance_types": [
         "same_article_rediscovered"
       ],
-      "novelty_status": "first_time",
-      "first_time_in_period": true,
-      "recurring_in_period": false,
+      "novelty_status": "recurring",
+      "first_time_in_period": false,
+      "recurring_in_period": true,
       "follow_on_development": false,
       "possible_historical_match": false
     },
@@ -1851,7 +1851,7 @@
       "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
       "last_seen_at": "2026-08-12T05:57:21.87556+00:00",
       "first_seen_date": "2026-08-12",
-      "new_in_period": true,
+      "new_in_period": false,
       "member_article_ids": [
         "8b38afac2e4d9e3764078e0253d94553"
       ],
@@ -1929,9 +1929,9 @@
       "appearance_types": [
         "same_article_rediscovered"
       ],
-      "novelty_status": "first_time",
-      "first_time_in_period": true,
-      "recurring_in_period": false,
+      "novelty_status": "recurring",
+      "first_time_in_period": false,
+      "recurring_in_period": true,
       "follow_on_development": false,
       "possible_historical_match": false
     },
@@ -1943,7 +1943,7 @@
       "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
       "last_seen_at": "2026-08-12T05:57:21.87556+00:00",
       "first_seen_date": "2026-08-12",
-      "new_in_period": true,
+      "new_in_period": false,
       "member_article_ids": [
         "21d29d363dea700dcb6cba73061d2a58"
       ],
@@ -2021,9 +2021,9 @@
       "appearance_types": [
         "same_article_rediscovered"
       ],
-      "novelty_status": "first_time",
-      "first_time_in_period": true,
-      "recurring_in_period": false,
+      "novelty_status": "recurring",
+      "first_time_in_period": false,
+      "recurring_in_period": true,
       "follow_on_development": false,
       "possible_historical_match": false
     },
@@ -2229,7 +2229,7 @@
       "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
       "last_seen_at": "2026-08-17T06:32:24.721904+00:00",
       "first_seen_date": "2026-08-12",
-      "new_in_period": true,
+      "new_in_period": false,
       "member_article_ids": [
         "8c3617de71974143a91fc2aadf602e18"
       ],
@@ -2309,9 +2309,9 @@
       "appearance_types": [
         "same_event_new_coverage"
       ],
-      "novelty_status": "first_time",
-      "first_time_in_period": true,
-      "recurring_in_period": false,
+      "novelty_status": "recurring",
+      "first_time_in_period": false,
+      "recurring_in_period": true,
       "follow_on_development": false,
       "possible_historical_match": false
     },
@@ -2323,7 +2323,7 @@
       "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
       "last_seen_at": "2026-08-12T05:57:21.87556+00:00",
       "first_seen_date": "2026-08-12",
-      "new_in_period": true,
+      "new_in_period": false,
       "member_article_ids": [
         "a919afd62e1dee48ac81b4f7603eda4a"
       ],
@@ -2401,9 +2401,9 @@
       "appearance_types": [
         "same_article_rediscovered"
       ],
-      "novelty_status": "first_time",
-      "first_time_in_period": true,
-      "recurring_in_period": false,
+      "novelty_status": "recurring",
+      "first_time_in_period": false,
+      "recurring_in_period": true,
       "follow_on_development": false,
       "possible_historical_match": false
     },
@@ -2415,7 +2415,7 @@
       "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
       "last_seen_at": "2026-08-17T06:32:24.721904+00:00",
       "first_seen_date": "2026-08-12",
-      "new_in_period": true,
+      "new_in_period": false,
       "member_article_ids": [
         "1a0953bc112a97d2823d90ab2b3813d1"
       ],
@@ -2493,9 +2493,9 @@
       "appearance_types": [
         "same_event_new_coverage"
       ],
-      "novelty_status": "first_time",
-      "first_time_in_period": true,
-      "recurring_in_period": false,
+      "novelty_status": "recurring",
+      "first_time_in_period": false,
+      "recurring_in_period": true,
       "follow_on_development": false,
       "possible_historical_match": false
     },
@@ -2599,7 +2599,7 @@
       "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
       "last_seen_at": "2026-08-12T05:57:21.87556+00:00",
       "first_seen_date": "2026-08-12",
-      "new_in_period": true,
+      "new_in_period": false,
       "member_article_ids": [
         "d70cf2a70c4e58584b16128c6d51ee76"
       ],
@@ -2677,9 +2677,9 @@
       "appearance_types": [
         "same_article_rediscovered"
       ],
-      "novelty_status": "first_time",
-      "first_time_in_period": true,
-      "recurring_in_period": false,
+      "novelty_status": "recurring",
+      "first_time_in_period": false,
+      "recurring_in_period": true,
       "follow_on_development": false,
       "possible_historical_match": false
     },
@@ -3243,7 +3243,7 @@
       "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
       "last_seen_at": "2026-08-17T06:32:24.721904+00:00",
       "first_seen_date": "2026-08-12",
-      "new_in_period": true,
+      "new_in_period": false,
       "member_article_ids": [
         "55d5d9bd668714ada2b04d0bbb8ea2e5"
       ],
@@ -3321,9 +3321,9 @@
       "appearance_types": [
         "same_event_new_coverage"
       ],
-      "novelty_status": "first_time",
-      "first_time_in_period": true,
-      "recurring_in_period": false,
+      "novelty_status": "recurring",
+      "first_time_in_period": false,
+      "recurring_in_period": true,
       "follow_on_development": false,
       "possible_historical_match": false
     },
@@ -21512,7 +21512,7 @@
         "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
         "last_seen_at": "2026-08-12T05:57:21.87556+00:00",
         "first_seen_date": "2026-08-12",
-        "new_in_period": true,
+        "new_in_period": false,
         "member_article_ids": [
           "a0fb2b8f515265622fdcde75e36f7241"
         ],
@@ -21590,9 +21590,9 @@
         "appearance_types": [
           "same_article_rediscovered"
         ],
-        "novelty_status": "first_time",
-        "first_time_in_period": true,
-        "recurring_in_period": false,
+        "novelty_status": "recurring",
+        "first_time_in_period": false,
+        "recurring_in_period": true,
         "follow_on_development": false,
         "possible_historical_match": false
       },
@@ -21604,7 +21604,7 @@
         "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
         "last_seen_at": "2026-08-12T05:57:21.87556+00:00",
         "first_seen_date": "2026-08-12",
-        "new_in_period": true,
+        "new_in_period": false,
         "member_article_ids": [
           "59ae4e30103557f1f4ba466bdda8f508"
         ],
@@ -21682,9 +21682,9 @@
         "appearance_types": [
           "same_article_rediscovered"
         ],
-        "novelty_status": "first_time",
-        "first_time_in_period": true,
-        "recurring_in_period": false,
+        "novelty_status": "recurring",
+        "first_time_in_period": false,
+        "recurring_in_period": true,
         "follow_on_development": false,
         "possible_historical_match": false
       },
@@ -21696,7 +21696,7 @@
         "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
         "last_seen_at": "2026-08-12T05:57:21.87556+00:00",
         "first_seen_date": "2026-08-12",
-        "new_in_period": true,
+        "new_in_period": false,
         "member_article_ids": [
           "665943540afb60d0eb9daa7ae4cd62bb"
         ],
@@ -21774,9 +21774,9 @@
         "appearance_types": [
           "same_article_rediscovered"
         ],
-        "novelty_status": "first_time",
-        "first_time_in_period": true,
-        "recurring_in_period": false,
+        "novelty_status": "recurring",
+        "first_time_in_period": false,
+        "recurring_in_period": true,
         "follow_on_development": false,
         "possible_historical_match": false
       },
@@ -21788,7 +21788,7 @@
         "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
         "last_seen_at": "2026-08-10T17:15:09+00:00",
         "first_seen_date": "2026-08-12",
-        "new_in_period": true,
+        "new_in_period": false,
         "member_article_ids": [
           "f72d80896374613331fb680acea59a78"
         ],
@@ -21866,9 +21866,9 @@
         "appearance_types": [
           "same_article_rediscovered"
         ],
-        "novelty_status": "first_time",
-        "first_time_in_period": true,
-        "recurring_in_period": false,
+        "novelty_status": "recurring",
+        "first_time_in_period": false,
+        "recurring_in_period": true,
         "follow_on_development": false,
         "possible_historical_match": false
       },
@@ -22064,7 +22064,7 @@
         "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
         "last_seen_at": "2026-08-12T05:57:21.87556+00:00",
         "first_seen_date": "2026-08-12",
-        "new_in_period": true,
+        "new_in_period": false,
         "member_article_ids": [
           "fe4a7403a6a88258c99af67fb1f2e6b8"
         ],
@@ -22142,9 +22142,9 @@
         "appearance_types": [
           "same_article_rediscovered"
         ],
-        "novelty_status": "first_time",
-        "first_time_in_period": true,
-        "recurring_in_period": false,
+        "novelty_status": "recurring",
+        "first_time_in_period": false,
+        "recurring_in_period": true,
         "follow_on_development": false,
         "possible_historical_match": false
       },
@@ -22156,7 +22156,7 @@
         "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
         "last_seen_at": "2026-08-12T05:57:21.87556+00:00",
         "first_seen_date": "2026-08-12",
-        "new_in_period": true,
+        "new_in_period": false,
         "member_article_ids": [
           "8b38afac2e4d9e3764078e0253d94553"
         ],
@@ -22234,9 +22234,9 @@
         "appearance_types": [
           "same_article_rediscovered"
         ],
-        "novelty_status": "first_time",
-        "first_time_in_period": true,
-        "recurring_in_period": false,
+        "novelty_status": "recurring",
+        "first_time_in_period": false,
+        "recurring_in_period": true,
         "follow_on_development": false,
         "possible_historical_match": false
       },
@@ -22248,7 +22248,7 @@
         "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
         "last_seen_at": "2026-08-12T05:57:21.87556+00:00",
         "first_seen_date": "2026-08-12",
-        "new_in_period": true,
+        "new_in_period": false,
         "member_article_ids": [
           "21d29d363dea700dcb6cba73061d2a58"
         ],
@@ -22326,9 +22326,9 @@
         "appearance_types": [
           "same_article_rediscovered"
         ],
-        "novelty_status": "first_time",
-        "first_time_in_period": true,
-        "recurring_in_period": false,
+        "novelty_status": "recurring",
+        "first_time_in_period": false,
+        "recurring_in_period": true,
         "follow_on_development": false,
         "possible_historical_match": false
       },
@@ -22534,7 +22534,7 @@
         "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
         "last_seen_at": "2026-08-17T06:32:24.721904+00:00",
         "first_seen_date": "2026-08-12",
-        "new_in_period": true,
+        "new_in_period": false,
         "member_article_ids": [
           "8c3617de71974143a91fc2aadf602e18"
         ],
@@ -22614,9 +22614,9 @@
         "appearance_types": [
           "same_event_new_coverage"
         ],
-        "novelty_status": "first_time",
-        "first_time_in_period": true,
-        "recurring_in_period": false,
+        "novelty_status": "recurring",
+        "first_time_in_period": false,
+        "recurring_in_period": true,
         "follow_on_development": false,
         "possible_historical_match": false
       },
@@ -22628,7 +22628,7 @@
         "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
         "last_seen_at": "2026-08-12T05:57:21.87556+00:00",
         "first_seen_date": "2026-08-12",
-        "new_in_period": true,
+        "new_in_period": false,
         "member_article_ids": [
           "a919afd62e1dee48ac81b4f7603eda4a"
         ],
@@ -22706,9 +22706,9 @@
         "appearance_types": [
           "same_article_rediscovered"
         ],
-        "novelty_status": "first_time",
-        "first_time_in_period": true,
-        "recurring_in_period": false,
+        "novelty_status": "recurring",
+        "first_time_in_period": false,
+        "recurring_in_period": true,
         "follow_on_development": false,
         "possible_historical_match": false
       },
@@ -22720,7 +22720,7 @@
         "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
         "last_seen_at": "2026-08-17T06:32:24.721904+00:00",
         "first_seen_date": "2026-08-12",
-        "new_in_period": true,
+        "new_in_period": false,
         "member_article_ids": [
           "1a0953bc112a97d2823d90ab2b3813d1"
         ],
@@ -22798,9 +22798,9 @@
         "appearance_types": [
           "same_event_new_coverage"
         ],
-        "novelty_status": "first_time",
-        "first_time_in_period": true,
-        "recurring_in_period": false,
+        "novelty_status": "recurring",
+        "first_time_in_period": false,
+        "recurring_in_period": true,
         "follow_on_development": false,
         "possible_historical_match": false
       },
@@ -22904,7 +22904,7 @@
         "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
         "last_seen_at": "2026-08-12T05:57:21.87556+00:00",
         "first_seen_date": "2026-08-12",
-        "new_in_period": true,
+        "new_in_period": false,
         "member_article_ids": [
           "d70cf2a70c4e58584b16128c6d51ee76"
         ],
@@ -22982,9 +22982,9 @@
         "appearance_types": [
           "same_article_rediscovered"
         ],
-        "novelty_status": "first_time",
-        "first_time_in_period": true,
-        "recurring_in_period": false,
+        "novelty_status": "recurring",
+        "first_time_in_period": false,
+        "recurring_in_period": true,
         "follow_on_development": false,
         "possible_historical_match": false
       },
@@ -23640,7 +23640,7 @@
         "first_seen_at": "2026-08-12T05:57:21.87556+00:00",
         "last_seen_at": "2026-08-17T06:32:24.721904+00:00",
         "first_seen_date": "2026-08-12",
-        "new_in_period": true,
+        "new_in_period": false,
         "member_article_ids": [
           "55d5d9bd668714ada2b04d0bbb8ea2e5"
         ],
@@ -23718,9 +23718,9 @@
         "appearance_types": [
           "same_event_new_coverage"
         ],
-        "novelty_status": "first_time",
-        "first_time_in_period": true,
-        "recurring_in_period": false,
+        "novelty_status": "recurring",
+        "first_time_in_period": false,
+        "recurring_in_period": true,
         "follow_on_development": false,
         "possible_historical_match": false
       },
@@ -32064,34 +32064,34 @@
       }
     ]
   },
-  "content_sha256": "9b93dc3424011cfe5ef94936387a2df4c173c8099b70f8f5377214de4d56ba1b",
+  "content_sha256": "cb64194b1af77d17d75eb4f6d8de8959d0634ae8d01b45ee902424caa775b278",
   "dynamics": {
     "coverage_episode_count": 120,
-    "first_time_event_appearances": 114,
+    "first_time_event_appearances": 102,
     "follow_on_developments": 0,
-    "recurring_event_appearances": 0,
+    "recurring_event_appearances": 12,
     "possible_historical_matches": 0,
     "resurfaced_event_appearances": 0,
-    "same_event_new_coverage_articles": 0,
+    "same_event_new_coverage_articles": 3,
     "rediscovered_article_records": 10,
     "resurface_threshold_days": 28,
     "event_novelty_statuses": {
-      "26688aaf-da98-428f-b0dd-97bf3444ea9d": "first_time",
-      "2a9793dc-4ecb-4dc1-bb37-6916360eeae8": "first_time",
-      "2e8f8799-2e83-47e9-9a1a-625293864255": "first_time",
-      "7a9e7e0f-a780-4966-89dc-1362ffad7f11": "first_time",
+      "26688aaf-da98-428f-b0dd-97bf3444ea9d": "recurring",
+      "2a9793dc-4ecb-4dc1-bb37-6916360eeae8": "recurring",
+      "2e8f8799-2e83-47e9-9a1a-625293864255": "recurring",
+      "7a9e7e0f-a780-4966-89dc-1362ffad7f11": "recurring",
       "c6582cef-228b-416d-b393-6efa89ee6f9f": "first_time",
       "f257416f-70ac-4a81-b032-e2afc62580a3": "first_time",
-      "2dee8c49-f3cf-4ff0-8718-d11fb262644c": "first_time",
-      "4f9a7ae0-d98a-4562-b387-9c680ddf7aaa": "first_time",
-      "5303d2a0-5c85-487d-b030-b7a266f5517c": "first_time",
+      "2dee8c49-f3cf-4ff0-8718-d11fb262644c": "recurring",
+      "4f9a7ae0-d98a-4562-b387-9c680ddf7aaa": "recurring",
+      "5303d2a0-5c85-487d-b030-b7a266f5517c": "recurring",
       "7a5a4130-017a-4efb-9d4c-58905e44fa0c": "first_time",
       "876698e8-a001-4a36-aab0-285d3eff79ba": "first_time",
-      "92fcb4f4-15a2-415b-8453-375e7ef548f3": "first_time",
-      "acc58142-8857-442c-a5ae-07f9ca2fd158": "first_time",
-      "be5a26cf-1625-4e48-834b-67cca47bdf72": "first_time",
+      "92fcb4f4-15a2-415b-8453-375e7ef548f3": "recurring",
+      "acc58142-8857-442c-a5ae-07f9ca2fd158": "recurring",
+      "be5a26cf-1625-4e48-834b-67cca47bdf72": "recurring",
       "c40af09c-c79d-4e0c-8d3b-c1fdbad382b4": "first_time",
-      "cc38027d-470f-41e7-abc5-52ff77f3dc74": "first_time",
+      "cc38027d-470f-41e7-abc5-52ff77f3dc74": "recurring",
       "dc267c6e-4e29-4daa-b1be-292c4389f0b4": "first_time",
       "dd7a089c-7a54-401a-8b49-e87da048d084": "first_time",
       "045f155f-2e6f-4b00-8e74-63391d5ac486": "first_time",
@@ -32099,7 +32099,7 @@
       "291ffa04-1d71-4d76-b7d7-4ee89d8f7237": "first_time",
       "2b947e07-9a23-41e8-8b16-0ba26b7ae3ed": "first_time",
       "737dbff3-1a58-42b5-9239-afac0b8ba202": "first_time",
-      "83e5f50a-2f4c-4ac0-86dd-e6964a31f83e": "first_time",
+      "83e5f50a-2f4c-4ac0-86dd-e6964a31f83e": "recurring",
       "8cad4beb-4a12-4f06-8b39-4982b07a313f": "first_time",
       "9574c75e-7592-408a-8db2-9c4aa4b244a9": "first_time",
       "9f29bbe7-00c1-48b3-b1f0-9ab80a57ba0c": "first_time",
@@ -32192,11 +32192,15 @@
       "d918e57b-0ec8-433d-8621-8f00515a5399": "first_time"
     },
     "replication_lag_days": {
-      "count": 0,
-      "median": null,
-      "p75": null,
-      "p90": null,
-      "values": []
+      "count": 3,
+      "median": 5.02,
+      "p75": 5.02,
+      "p90": 5.02,
+      "values": [
+        5.024,
+        5.024,
+        5.024
+      ]
     },
     "article_rediscovery_lag_days": {
       "count": 10,
@@ -32221,8 +32225,7 @@
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
     "considered_through": "2026-08-31T13:53:33.22983+00:00",
     "registry_snapshot_id": "registry_77c90d514e56786d8303",
-    "all_prior_events_considered": true,
-    "disclosure": "First-time means the canonical development was not present in an earlier standardized AIEO weekly release. Collection retries do not turn a current-week development into a recurring one."
+    "all_prior_events_considered": true
   },
   "data_current_through": "2026-08-31T14:49:03.794193+00:00",
   "reconciliation": {
@@ -32232,8 +32235,8 @@
     "completed_at": "2026-08-31T14:49:03.794193+00:00",
     "status": "success"
   },
-  "restated_at": "2026-08-31T19:25:33.183828Z",
-  "revision_reason": "Correct public novelty semantics: collection retries and rediscovery do not by themselves make a development recurring.",
+  "restated_at": "2026-08-31T14:49:07.613350Z",
+  "revision_reason": "Longitudinal reconciliation changed new-versus-recurring assignments.",
   "revision_history": [
     {
       "revision": 2,
@@ -32407,81 +32410,8 @@
         }
       },
       "reconciliation_run_id": "73a7e137-b555-44c6-8585-9376ac99e0e9"
-    },
-    {
-      "revision": 5,
-      "changed_at": "2026-08-31T19:25:33.183828Z",
-      "reason": "Correct public novelty semantics: collection retries and rediscovery do not by themselves make a development recurring.",
-      "change_summary": {
-        "coverage_articles_reassigned": 0,
-        "event_records_before": 113,
-        "event_records_after": 113,
-        "event_record_change": 0,
-        "new_event_records_before": 101,
-        "new_event_records_after": 113,
-        "recurring_event_records_before": 12,
-        "recurring_event_records_after": 0,
-        "follow_on_event_records_after": 0,
-        "possible_historical_match_records_after": 0,
-        "merged_event_ids": [],
-        "effective_event_ids_added": [],
-        "follow_on_event_records_before": 0,
-        "possible_historical_match_records_before": 0,
-        "rediscovered_article_records_before": 10,
-        "rediscovered_article_records_after": 10,
-        "replication_lag_count_before": 3,
-        "replication_lag_count_after": 0,
-        "definitions_changed": true,
-        "reliability_denominators_changed": false,
-        "event_diagnostics_changed": false,
-        "reliability_denominators_before": {
-          "coverage_total": 121,
-          "coverage_ai_relevant": 120,
-          "coverage_scored": 73,
-          "coverage_excluded_unclear": 47,
-          "coverage_not_ai_relevant": 1,
-          "event_total": 114,
-          "event_ai_relevant": 113,
-          "event_scored": 66,
-          "event_excluded_unclear": 47,
-          "event_not_ai_relevant": 1
-        },
-        "reliability_denominators_after": {
-          "coverage_total": 121,
-          "coverage_ai_relevant": 120,
-          "coverage_scored": 73,
-          "coverage_excluded_unclear": 47,
-          "coverage_not_ai_relevant": 1,
-          "event_total": 114,
-          "event_ai_relevant": 113,
-          "event_scored": 66,
-          "event_excluded_unclear": 47,
-          "event_not_ai_relevant": 1
-        },
-        "event_diagnostics_before": {
-          "singleton_share": 0.964602,
-          "multi_source_share": 0.035398,
-          "possible_duplicate_records": 4,
-          "same_event_recall_validated": false,
-          "longitudinal_event_memory_active": true,
-          "historical_pool_disclosed": true,
-          "longitudinal_reconciliation_status": "success",
-          "registry_snapshot_id": "registry_77c90d514e56786d8303"
-        },
-        "event_diagnostics_after": {
-          "singleton_share": 0.964602,
-          "multi_source_share": 0.035398,
-          "possible_duplicate_records": 4,
-          "same_event_recall_validated": false,
-          "longitudinal_event_memory_active": true,
-          "historical_pool_disclosed": true,
-          "longitudinal_reconciliation_status": "success",
-          "registry_snapshot_id": "registry_77c90d514e56786d8303"
-        }
-      },
-      "reconciliation_run_id": "73a7e137-b555-44c6-8585-9376ac99e0e9"
     }
   ],
-  "previous_revision_path": "/data/releases/weekly/archive/2026-W33/revision-4.json",
-  "restatement_version": "release_restatement_v1.3"
+  "previous_revision_path": "/data/releases/weekly/archive/2026-W33/revision-3.json",
+  "restatement_version": "release_restatement_v1.2"
 }
