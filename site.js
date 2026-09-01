@@ -1,8 +1,8 @@
 "use strict";
 
-import { initDiscoveryGlobe } from "/globe.js?v=5.9.2";
+import { initDiscoveryGlobe } from "/globe.js?v=5.10.0";
 
-const BUILD_ID = "5.9.2";
+const BUILD_ID = "5.10.0";
 const CURRENT_URL = "/data/releases/current.json";
 const INDEX_URL = "/data/releases/index.json";
 const COUNTRIES_URL = "/edu/countries.json";
@@ -256,6 +256,24 @@ function relationshipCell(key, count, complete) {
   `;
 }
 
+function relationshipOutsideCopy(total, complete, partial, noClear, ambiguous, insufficient) {
+  const outside = Math.max(0, total - complete);
+  const phrases = [];
+  if (partial) phrases.push(`${partial} one-sided ${plural(partial, "signal")}`);
+  if (noClear) phrases.push(`${noClear} no-clear ${plural(noClear, "case")}`);
+  if (ambiguous) phrases.push(`${ambiguous} ambiguous ${plural(ambiguous, "case")}`);
+  if (insufficient) phrases.push(`${insufficient} insufficient-evidence ${plural(insufficient, "case")}`);
+  const accounted = complete + partial + noClear + ambiguous + insufficient;
+  const remainder = Math.max(0, total - accounted);
+  if (remainder) phrases.push(`${remainder} other unclassified ${plural(remainder, "case")}`);
+  let tail = "";
+  if (phrases.length === 1) tail = phrases[0];
+  else if (phrases.length === 2) tail = `${phrases[0]} and ${phrases[1]}`;
+  else if (phrases.length > 2) tail = `${phrases.slice(0, -1).join(", ")}, and ${phrases.at(-1)}`;
+  if (!outside) return "All current-week developments fall within the four two-sided relationship patterns.";
+  return `${outside} ${plural(outside, "development was", "developments were")} outside the four-pattern denominator${tail ? `: ${tail}` : ""}.`;
+}
+
 function renderRelationship(symbiosis, error = null, releaseId = null) {
   const ticker = document.getElementById("relationship-ticker");
   if (!ticker) return;
@@ -267,57 +285,35 @@ function renderRelationship(symbiosis, error = null, releaseId = null) {
   }
   const sameRelease = !releaseId || String(symbiosis?.release_id || "") === String(releaseId);
   if (!symbiosis || !sameRelease) {
-    ticker.innerHTML = '<p class="loading-line">Relationship classification is not available for this release yet.</p>';
-    setText("relationship-denominator", "Classification pending");
+    ticker.innerHTML = '<p class="loading-line">The relationship signal is being prepared for this release.</p>';
+    setText("relationship-denominator", "Relationship signal being prepared");
     setText("relationship-other-summary", "Weekly counts and source evidence remain available.");
     return;
   }
-
-  const status = String(symbiosis.public_status || "classification_in_progress");
   const event = symbiosis.event || {};
-  const humanReviewed = status === "human_reviewed" && Boolean(symbiosis.review?.event_complete);
-  const classified = humanReviewed
-    ? Number(event.classified_units || event.expected_units || 0)
-    : Number(event.display_classified_units || event.classified_units || 0);
-  if (status === "classification_in_progress" || status === "review_in_progress" || classified === 0) {
-    ticker.innerHTML = '<p class="loading-line">Relationship classification is still running for this release.</p>';
-    setText("relationship-denominator", "Classification in progress");
-    setText("relationship-other-summary", "The core weekly counts are already published. This relationship layer updates automatically when classification finishes.");
+  const counts = event.display_configuration_counts || event.configuration_counts || {};
+  const classified = Number(event.display_classified_units ?? event.classified_units ?? 0);
+  const total = Number(event.expected_units || classified || 0);
+  if (classified === 0 || (total && classified < total)) {
+    ticker.innerHTML = '<p class="loading-line">The relationship signal is being prepared for this release.</p>';
+    setText("relationship-denominator", "Relationship signal being prepared");
+    setText("relationship-other-summary", "Weekly counts and source evidence remain available.");
     return;
   }
-
-  const counts = humanReviewed
-    ? (event.configuration_counts || {})
-    : (event.display_configuration_counts || event.configuration_counts || {});
-  const complete = humanReviewed
-    ? Number(event.complete_configuration_count || 0)
-    : Number(event.display_complete_configuration_count ?? event.complete_configuration_count ?? 0);
+  const complete = Number(event.display_complete_configuration_count ?? event.complete_configuration_count ?? 0);
   ticker.innerHTML = [
     "mutualism",
     "ai_benefiting_parasitism",
     "human_benefiting_parasitism",
     "competition",
   ].map((key) => relationshipCell(key, Number(counts[key] || 0), complete)).join("");
-
-  setText(
-    "relationship-denominator",
-    humanReviewed
-      ? `${complete} human-reviewed developments had evidence for both sides`
-      : `${complete} model-coded developments had evidence for both sides`,
-  );
-  const partial = Number(humanReviewed ? event.partial_signal_count : (event.display_partial_signal_count ?? event.partial_signal_count) || 0);
-  const noClear = Number(humanReviewed ? event.no_clear_relational_signal_count : (event.display_no_clear_relational_signal_count ?? event.no_clear_relational_signal_count) || 0);
-  const ambiguous = Number(humanReviewed ? event.ambiguous_relational_signal_count : (event.display_ambiguous_relational_signal_count ?? event.ambiguous_relational_signal_count) || 0);
-  const insufficient = Number(humanReviewed ? event.insufficient_evidence_count : (event.display_insufficient_evidence_count ?? event.insufficient_evidence_count) || 0);
-  const prefix = humanReviewed
-    ? "Human-reviewed relationship signal."
-    : "Model-coded provisional signal; accepted human corrections replace model outputs as review proceeds.";
-  setText(
-    "relationship-other-summary",
-    `${prefix} ${partial} one-sided signals, ${noClear} no-clear cases, ${ambiguous} ambiguous cases, and ${insufficient} insufficient-evidence cases are outside the four-pattern percentages.`,
-  );
+  setText("relationship-denominator", `${complete} of ${total} developments had directional evidence for both sides`);
+  const partial = Number(event.display_partial_signal_count ?? event.partial_signal_count ?? 0);
+  const noClear = Number(event.display_no_clear_relational_signal_count ?? event.no_clear_relational_signal_count ?? 0);
+  const ambiguous = Number(event.display_ambiguous_relational_signal_count ?? event.ambiguous_relational_signal_count ?? 0);
+  const insufficient = Number(event.display_insufficient_evidence_count ?? event.insufficient_evidence_count ?? 0);
+  setText("relationship-other-summary", relationshipOutsideCopy(total, complete, partial, noClear, ambiguous, insufficient));
 }
-
 function marketRows(release, iso3) {
   return (release?.units?.coverage_articles || []).filter((row) => (
     row.classification?.ai_relevant
