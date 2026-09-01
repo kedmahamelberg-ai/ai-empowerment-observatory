@@ -1,0 +1,46 @@
+name: Observatory Repository Integrity
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/**"
+      - "scripts/**"
+      - "index.html"
+      - "site.js"
+      - "edu/**"
+      - "data/releases/current.json"
+      - "data/symbiosis/current.json"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Compile critical Python scripts
+        run: |
+          python -m py_compile \
+            scripts/classify_symbiosis.py \
+            scripts/symbiosis_common.py \
+            scripts/publish_symbiosis_release.py \
+            scripts/export_symbiosis_qc.py \
+            scripts/ingest_symbiosis_qc.py \
+            scripts/apply_symbiosis_reviews.py \
+            scripts/validate_public_relationship_consistency.py \
+            scripts/validate_repository_integrity.py
+      - name: Validate repository guardrails
+        run: python scripts/validate_repository_integrity.py
+      - name: Validate public relationship arithmetic
+        run: python scripts/validate_public_relationship_consistency.py
+      - name: Validate JavaScript syntax
+        run: |
+          node --check site.js
+          node --check edu/dashboard.js

@@ -1,0 +1,55 @@
+name: Build Optional Symbiosis QC File
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_id:
+        description: "Weekly release ID; leave blank for current"
+        required: false
+        default: ""
+        type: string
+      mode:
+        description: "Whole week or a reproducible stratified random QC sample"
+        required: true
+        default: stratified_random
+        type: choice
+        options: [stratified_random, all]
+      sample_size:
+        description: "Rows for stratified_random mode"
+        required: true
+        default: "24"
+        type: string
+      seed:
+        description: "Optional reproducible seed; blank derives one from release ID"
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Export owner QC file
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(--mode "${{ inputs.mode }}" --sample-size "${{ inputs.sample_size }}")
+          if [[ -n "${{ inputs.release_id }}" ]]; then args+=(--release-id "${{ inputs.release_id }}"); fi
+          if [[ -n "${{ inputs.seed }}" ]]; then args+=(--seed "${{ inputs.seed }}"); fi
+          python scripts/export_symbiosis_qc.py "${args[@]}"
+      - name: Upload QC CSV and metadata
+        uses: actions/upload-artifact@v7
+        with:
+          name: symbiosis-qc-${{ github.run_id }}
+          path: review/symbiosis/qc/
+          retention-days: 30

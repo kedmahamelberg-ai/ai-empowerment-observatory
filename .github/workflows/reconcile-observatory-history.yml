@@ -49,13 +49,13 @@ jobs:
 
     steps:
       - name: Check out latest main
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           cache: "pip"
@@ -157,7 +157,7 @@ jobs:
 
       - name: Upload private reconciliation review
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: longitudinal-reconciliation-review-${{ github.run_id }}
           path: review/events/longitudinal/latest.json

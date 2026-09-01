@@ -1,0 +1,130 @@
+name: Apply Owner Symbiosis QC
+
+on:
+  workflow_dispatch:
+    inputs:
+      qc_file:
+        description: "Repository path to the completed QC CSV, e.g. validation/qc/2026-W35-event-qc.csv"
+        required: true
+        type: string
+      reviewer:
+        description: "Reviewer name stored with the gold labels"
+        required: true
+        default: "Kedma Hamelberg"
+        type: string
+      dry_run:
+        description: "Validate only; do not write Supabase, gold, or public relationship data"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: aieo-owner-symbiosis-qc
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    outputs:
+      release_id: ${{ steps.release.outputs.release_id }}
+      is_current: ${{ steps.release.outputs.is_current }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Validate and ingest completed owner QC
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(--input "${{ inputs.qc_file }}" --reviewer "${{ inputs.reviewer }}")
+          if [[ "${{ inputs.dry_run }}" == "true" ]]; then args+=(--dry-run); fi
+          python scripts/ingest_symbiosis_qc.py "${args[@]}"
+      - name: Resolve reviewed release ID
+        id: release
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          p=json.load(open('review/symbiosis/qc-decisions.json', encoding='utf-8'))
+          ids=sorted(set(str(x.get('release_id') or '') for x in p.get('decisions',[]) if x.get('release_id')))
+          if len(ids) != 1:
+              raise SystemExit(f'Owner QC application requires exactly one release per file; found {ids}')
+          release_id=ids[0]
+          current=json.load(open('data/releases/current.json', encoding='utf-8'))
+          current_id=str(current.get('release_id') or '')
+          print(f'release_id={release_id}')
+          print(f'is_current={str(release_id == current_id).lower()}')
+          PY
+      - name: Validate decisions against current classification rows
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: python scripts/apply_symbiosis_reviews.py --decisions-path review/symbiosis/qc-decisions.json --dry-run --strict
+      - name: Apply owner corrections to Supabase
+        if: ${{ inputs.dry_run == false }}
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: python scripts/apply_symbiosis_reviews.py --decisions-path review/symbiosis/qc-decisions.json --strict
+      - name: Rebuild reviewed relationship artifact with accepted owner corrections
+        if: ${{ inputs.dry_run == false }}
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: python scripts/publish_symbiosis_release.py --release-id "${{ steps.release.outputs.release_id }}"
+      - name: Validate current relationship arithmetic
+        if: ${{ inputs.dry_run == false && steps.release.outputs.is_current == 'true' }}
+        run: python scripts/validate_public_relationship_consistency.py
+      - name: Commit only gold and relationship data
+        if: ${{ inputs.dry_run == false }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          release_id="${{ steps.release.outputs.release_id }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add validation/symbiosis-owner-gold.json \
+                  validation/symbiosis-owner-qc-history.json \
+                  data/symbiosis/index.json \
+                  "data/symbiosis/weekly/${release_id}.json"
+          if [[ "${{ steps.release.outputs.is_current }}" == "true" ]]; then
+            git add data/symbiosis/current.json
+          fi
+          if [[ -d "data/symbiosis/weekly/archive/${release_id}" ]]; then
+            git add "data/symbiosis/weekly/archive/${release_id}"
+          fi
+          if git diff --cached --quiet; then
+            echo "No owner-QC changes to commit."
+          else
+            git commit -m "Apply owner relationship QC for ${release_id}"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Upload QC validation summary
+        uses: actions/upload-artifact@v7
+        with:
+          name: owner-symbiosis-qc-${{ github.run_id }}
+          path: |
+            review/symbiosis/qc-ingest-summary.json
+            review/symbiosis/qc-decisions.json
+            review/symbiosis/apply-summary.json
+          retention-days: 30
+
+  publish:
+    if: ${{ inputs.dry_run == false && needs.apply.outputs.is_current == 'true' }}
+    needs: apply
+    uses: ./.github/workflows/publish-observatory-release.yml
+    secrets: inherit
