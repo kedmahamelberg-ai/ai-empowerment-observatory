@@ -251,42 +251,52 @@ function relationshipEventById(event) {
   return (currentSymbiosis?.evidence || []).find((row) => String(row.event_id || "") === id) || null;
 }
 
+function relationshipSummaryData() {
+  const event = currentSymbiosis?.event || {};
+  const counts = event.display_configuration_counts || event.configuration_counts || {};
+  const classified = Number(event.display_classified_units ?? event.classified_units ?? 0);
+  const expected = Number(event.expected_units || classified || 0);
+  const complete = Number(event.display_complete_configuration_count ?? event.complete_configuration_count ?? 0);
+  const partial = Number(event.display_partial_signal_count ?? event.partial_signal_count ?? 0);
+  const noClear = Number(event.display_no_clear_relational_signal_count ?? event.no_clear_relational_signal_count ?? 0);
+  const ambiguous = Number(event.display_ambiguous_relational_signal_count ?? event.ambiguous_relational_signal_count ?? 0);
+  const insufficient = Number(event.display_insufficient_evidence_count ?? event.insufficient_evidence_count ?? 0);
+  return { event, counts, classified, expected, complete, partial, noClear, ambiguous, insufficient };
+}
+
+function joinCountPhrases(items) {
+  const values = items.filter(Boolean);
+  if (!values.length) return "";
+  if (values.length === 1) return values[0];
+  if (values.length === 2) return `${values[0]} and ${values[1]}`;
+  return `${values.slice(0, -1).join(", ")}, and ${values.at(-1)}`;
+}
+
+function relationshipOutsideCopy(data) {
+  const outside = Math.max(0, data.expected - data.complete);
+  const phrases = [];
+  if (data.partial) phrases.push(`${data.partial} one-sided ${plural(data.partial, "signal")}`);
+  if (data.noClear) phrases.push(`${data.noClear} no-clear ${plural(data.noClear, "case")}`);
+  if (data.ambiguous) phrases.push(`${data.ambiguous} ambiguous ${plural(data.ambiguous, "case")}`);
+  if (data.insufficient) phrases.push(`${data.insufficient} insufficient-evidence ${plural(data.insufficient, "case")}`);
+  const accounted = data.complete + data.partial + data.noClear + data.ambiguous + data.insufficient;
+  const remainder = Math.max(0, data.expected - accounted);
+  if (remainder) phrases.push(`${remainder} other unclassified ${plural(remainder, "case")}`);
+  if (!outside) return "All current-week developments fall within the four two-sided relationship patterns.";
+  return `${outside} ${plural(outside, "development was", "developments were")} outside the four-pattern denominator${phrases.length ? `: ${joinCountPhrases(phrases)}` : ""}.`;
+}
+
 function renderRelationship() {
-  const banner = document.getElementById("relationship-review-banner");
   const core = document.getElementById("relationship-core");
-  if (!currentSymbiosis) {
-    banner.hidden = false;
-    banner.textContent = "Relationship classification is not available for this release yet.";
-    core.hidden = true;
-    setText("relationship-scope", "Classification pending");
-    setText("relationship-other-summary", "The core weekly counts and source evidence remain available.");
+  const data = relationshipSummaryData();
+  const ready = Boolean(currentSymbiosis) && data.classified > 0 && (!data.expected || data.classified >= data.expected);
+  if (!ready) {
+    if (core) core.hidden = true;
+    setText("relationship-scope", "Relationship signal is being prepared for this release");
+    setText("relationship-other-summary", "Weekly counts and source evidence remain available.");
     return;
   }
-
-  const status = String(currentSymbiosis.public_status || "classification_in_progress");
-  const event = currentSymbiosis.event || {};
-  const humanReviewed = status === "human_reviewed" && Boolean(currentSymbiosis.review?.event_complete);
-  const classified = humanReviewed
-    ? Number(event.classified_units || event.expected_units || 0)
-    : Number(event.display_classified_units || event.classified_units || 0);
-  if (status === "classification_in_progress" || status === "review_in_progress" || classified === 0) {
-    banner.hidden = false;
-    banner.textContent = "Relationship classification is still running. This layer will refresh automatically when it finishes.";
-    core.hidden = true;
-    setText("relationship-scope", "Classification in progress");
-    setText("relationship-other-summary", "The core weekly counts are already published; no older relationship percentages are substituted.");
-    return;
-  }
-
-  banner.hidden = humanReviewed;
-  if (!humanReviewed) {
-    banner.textContent = "Model-coded provisional signal. Accepted human corrections replace model outputs as review proceeds.";
-  }
-  core.hidden = false;
-  const counts = humanReviewed ? (event.configuration_counts || {}) : (event.display_configuration_counts || event.configuration_counts || {});
-  const complete = humanReviewed
-    ? Number(event.complete_configuration_count || 0)
-    : Number(event.display_complete_configuration_count ?? event.complete_configuration_count ?? 0);
+  if (core) core.hidden = false;
   const entries = [
     ["mutualism", "relationship-mutualism", "relationship-mutualism-share"],
     ["ai_benefiting_parasitism", "relationship-ai-benefit", "relationship-ai-benefit-share"],
@@ -294,20 +304,13 @@ function renderRelationship() {
     ["competition", "relationship-competition", "relationship-competition-share"],
   ];
   entries.forEach(([key, countId, shareId]) => {
-    const count = Number(counts[key] || 0);
+    const count = Number(data.counts[key] || 0);
     setText(countId, count);
-    setText(shareId, complete ? `${((count / complete) * 100).toFixed(0)}%` : "0%");
+    setText(shareId, data.complete ? `${((count / data.complete) * 100).toFixed(0)}%` : "0%");
   });
-  setText("relationship-scope", humanReviewed
-    ? `${complete} human-reviewed developments had evidence for both sides`
-    : `${complete} model-coded developments had evidence for both sides`);
-  const partial = Number(humanReviewed ? event.partial_signal_count : (event.display_partial_signal_count ?? event.partial_signal_count) || 0);
-  const none = Number(humanReviewed ? event.no_clear_relational_signal_count : (event.display_no_clear_relational_signal_count ?? event.no_clear_relational_signal_count) || 0);
-  const ambiguous = Number(humanReviewed ? event.ambiguous_relational_signal_count : (event.display_ambiguous_relational_signal_count ?? event.ambiguous_relational_signal_count) || 0);
-  const insufficient = Number(humanReviewed ? event.insufficient_evidence_count : (event.display_insufficient_evidence_count ?? event.insufficient_evidence_count) || 0);
-  setText("relationship-other-summary", `${partial} one-sided signals, ${none} no-clear cases, ${ambiguous} ambiguous cases, and ${insufficient} insufficient-evidence cases are outside the four-pattern percentages.`);
+  setText("relationship-scope", `${data.complete} of ${data.expected} developments had directional evidence for both sides`);
+  setText("relationship-other-summary", relationshipOutsideCopy(data));
 }
-
 function eventDiscoveryMarkets(event) {
   const values = new Set();
   for (const articleId of event.member_article_ids || []) {
@@ -385,7 +388,7 @@ function renderEvidence() {
             : "History status under validation";
     const relationshipText = hasRelationship ? (RELATIONSHIP_LABELS[relationship.configuration] || relationship.plain_label || "Relationship pattern") : "";
     const relationshipBadge = hasRelationship
-      ? `<span class="relationship-badge" title="${relationship.reviewed ? "Human-reviewed" : "Model-coded provisional"}">${escapeHTML(relationshipText)}</span>`
+      ? `<span class="relationship-badge" title="Relationship pattern">${escapeHTML(relationshipText)}</span>`
       : "";
     const relationshipSnapshot = hasRelationship
       ? `<div class="relationship-snapshot"><div class="relationship-side"><strong>${arrows.people}</strong><span>${escapeHTML(SIDE_LABELS[relationship?.human_experience_type] || "No directional signal")}</span></div><div class="relationship-side"><strong>${arrows.ai}</strong><span>${escapeHTML(SIDE_LABELS[relationship?.ai_expressive_role] || "No directional signal")}</span></div></div>`
@@ -481,50 +484,50 @@ function renderHistoryChart() {
   note.textContent = "Only completed, standardized Monday-to-Sunday weeks are connected.";
 }
 
-function empowermentPlain(index) {
-  if (index == null || !Number.isFinite(Number(index))) return "Not enough scored evidence";
-  const value = Number(index);
-  if (Math.abs(value) < 5) return "Near neutral";
-  if (value >= 5 && value < 20) return "Slightly more enabling";
-  if (value >= 20 && value < 45) return "More enabling";
-  if (value >= 45) return "Strongly more enabling";
-  if (value <= -5 && value > -20) return "Slightly more constraining";
-  if (value <= -20 && value > -45) return "More constraining";
-  return "Strongly more constraining";
-}
-
 function renderEmpowerment() {
-  const lens = currentRelease?.lenses?.event || {};
-  const index = lens.empowerment_index;
-  const scored = Number(lens.unit_count_scored || 0);
-  const unclear = Number(lens.unit_count_excluded_unclear || 0);
-  const evidenceRows = (currentRelease?.evidence || []).filter((row) => row.classification?.ai_relevant !== false);
-  const counts = { expanding: 0, contracting: 0, mixed: 0, non_empowerment: 0, unclear: 0 };
-  evidenceRows.forEach((row) => {
-    const key = String(row.classification?.empowerment_status || "unclear");
-    if (Object.hasOwn(counts, key)) counts[key] += 1;
-    else counts.unclear += 1;
-  });
-  setText("human-plain-label", empowermentPlain(index));
-  setText("human-index", index == null ? "No scored index" : `${Number(index) >= 0 ? "+" : ""}${Number(index).toFixed(2)} on a -100 to +100 scale`);
-  setText("human-denominator", `${scored} scored, ${unclear} unclear · model-coded weekly lens`);
-  const marker = document.getElementById("human-gauge-marker");
-  if (marker && index != null) marker.style.left = `${Math.max(0, Math.min(100, (Number(index) + 100) / 2))}%`;
-  const labels = [
-    ["expanding", "Enabling"],
-    ["contracting", "Constraining"],
-    ["mixed", "Mixed"],
-    ["non_empowerment", "No direct change"],
-    ["unclear", "Unclear"],
-  ];
-  const total = evidenceRows.length;
-  document.getElementById("human-bars").innerHTML = labels.map(([key, label]) => {
-    const count = Number(counts[key] || 0);
-    const pct = total ? (count / total) * 100 : 0;
-    return `<div class="bar-row"><span>${label}</span><div class="bar-track"><i style="width:${pct}%"></i></div><strong>${count}</strong></div>`;
-  }).join("");
-}
+  const container = document.getElementById("human-bars");
+  const data = relationshipSummaryData();
+  const ready = Boolean(currentSymbiosis) && data.classified > 0 && (!data.expected || data.classified >= data.expected);
+  if (!ready) {
+    setText("human-plain-label", "Signal being prepared");
+    setText("human-index", "The people-side view will appear with the relationship signal.");
+    setText("human-denominator", "Relationship evidence is being prepared");
+    if (container) container.innerHTML = "";
+    return;
+  }
+  const counts = data.counts;
+  const enabling = Number(counts.mutualism || 0)
+    + Number(counts.human_benefiting_parasitism || 0)
+    + Number(counts.human_enabling_only || 0);
+  const constraining = Number(counts.ai_benefiting_parasitism || 0)
+    + Number(counts.competition || 0)
+    + Number(counts.human_constraining_only || 0);
+  const noDirect = Number(counts.ai_enabling_only || 0)
+    + Number(counts.ai_constraining_only || 0)
+    + Number(counts.no_clear_relational_signal || 0);
+  let uncertain = Number(counts.ambiguous_relational_signal || 0)
+    + Number(counts.insufficient_evidence || 0);
+  const accounted = enabling + constraining + noDirect + uncertain;
+  if (data.expected > accounted) uncertain += data.expected - accounted;
+  const directional = enabling + constraining;
 
+  setText("human-denominator", `${data.expected} current-week developments`);
+  setText("human-plain-label", `${enabling} gain ${plural(enabling, "signal")} · ${constraining} constraint ${plural(constraining, "signal")}`);
+  setText("human-index", `${directional} had a directional people-side signal · ${noDirect} had no direct people-side signal · ${uncertain} insufficient or unclear`);
+
+  const labels = [
+    ["Gain / enabling", enabling],
+    ["Constraint", constraining],
+    ["No direct people-side signal", noDirect],
+    ["Insufficient / unclear", uncertain],
+  ];
+  if (container) {
+    container.innerHTML = labels.map(([label, count]) => {
+      const pct = data.expected ? (Number(count) / data.expected) * 100 : 0;
+      return `<div class="bar-row"><span>${label}</span><div class="bar-track"><i style="width:${pct}%"></i></div><strong>${count}</strong></div>`;
+    }).join("");
+  }
+}
 function setupEvidence() {
   if (new URLSearchParams(window.location.search).get("view") === "resurfaced") {
     const url = new URL(window.location.href);

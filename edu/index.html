@@ -97,7 +97,6 @@
         <div><p class="eyebrow">Primary relationship lens</p><h2 id="relationship-title">Who gained and who was constrained?</h2></div>
         <div class="heading-info"><span id="relationship-scope">Loading relationship evidence...</span><details class="info-popover align-right"><summary aria-label="Explain relationship percentages">i</summary><div class="info-card"><strong>Two sides, coded separately</strong><p>AIEO first evaluates the people side and the AI or operator side. The four percentages use only developments with evidence for both sides.</p><p>One-sided, no-clear, ambiguous, and insufficient cases remain outside the four-pattern denominator.</p></div></details></div>
       </div>
-      <div id="relationship-review-banner" class="relationship-review-banner" hidden></div>
       <div id="relationship-core" class="relationship-ticker" hidden>
         <article class="relationship-cell mutualism"><div class="arrows"><span>People ↑</span><span>AI ↑</span></div><strong><b id="relationship-mutualism">0</b><small id="relationship-mutualism-share">0%</small></strong><h3>Both gain</h3><small>Mutualism</small></article>
         <article class="relationship-cell ai-benefit"><div class="arrows"><span>People ↓</span><span>AI ↑</span></div><strong><b id="relationship-ai-benefit">0</b><small id="relationship-ai-benefit-share">0%</small></strong><h3>AI side gains, people are constrained</h3><small>AI-benefiting parasitism</small></article>
@@ -136,15 +135,14 @@
 
     <section id="human-impact" class="empowerment-section" aria-labelledby="empowerment-title">
       <div class="section-heading compact-heading">
-        <div><p class="eyebrow">Secondary human lens</p><h2 id="empowerment-title">What changed for people?</h2></div>
-        <div class="heading-info"><span id="human-denominator">Loading relationship evidence...</span><details class="info-popover align-right"><summary aria-label="Explain the human empowerment index">i</summary><div class="info-card"><strong>Plain-language index</strong><p>The index runs from -100 to +100. Negative values mean more constraining effects among scored developments. Positive values mean more enabling effects. Zero means balance or no direct change.</p><p>Unclear cases are excluded from the index and shown separately.</p></div></details></div>
+        <div><p class="eyebrow">People-side view</p><h2 id="empowerment-title">What changed for people?</h2></div>
+        <div class="heading-info"><span id="human-denominator">Loading relationship evidence...</span><details class="info-popover align-right"><summary aria-label="Explain the people-side view">i</summary><div class="info-card"><strong>Same relationship evidence, people side only</strong><p>This view collapses the relationship categories above onto the people side. Gain or enabling combines developments where people are represented as gaining capacity, access, autonomy, or control. Constraint combines developments where people are represented as losing them.</p><p>AI-only and no-clear patterns are shown as no direct people-side signal. Insufficient or ambiguous evidence stays separate.</p></div></details></div>
       </div>
       <div class="empowerment-card">
-        <div class="empowerment-summary"><span>Model-coded human effect</span><strong id="human-plain-label">Loading</strong><small id="human-index">Loading index...</small></div>
-        <div><div class="empowerment-gauge" aria-hidden="true"><span class="gauge-negative">-100</span><i id="human-gauge-marker"></i><span class="gauge-positive">+100</span></div><div id="human-bars" class="bar-list"></div></div>
+        <div class="empowerment-summary"><span>People-side directional evidence</span><strong id="human-plain-label">Loading</strong><small id="human-index">Loading the current relationship evidence...</small></div>
+        <div><div id="human-bars" class="bar-list"></div></div>
       </div>
     </section>
-
     <section class="method-note">
       <div><p class="eyebrow">Method in one line</p><h2>Count the coverage, resolve the developments, remember the history, then interpret both sides.</h2></div>
       <a class="button primary" href="/methodology/">Methodology</a>
@@ -153,7 +151,7 @@
 
   <footer><span>© 2026 AI Empowerment Observatory</span><nav aria-label="Footer navigation"><a href="/">Home</a><a href="/reports/">Reports</a><a href="/methodology/">Methodology</a><a href="/privacy/">Privacy</a><a href="mailto:kedma@hamelberg-ai.com">Contact</a></nav></footer>
 
-  <script type="module" src="/edu/dashboard.js?v=5.9.2"></script>
+  <script type="module" src="/edu/dashboard.js?v=5.10.0"></script>
   <script src="/analytics.js"></script>
 </body>
 </html>
