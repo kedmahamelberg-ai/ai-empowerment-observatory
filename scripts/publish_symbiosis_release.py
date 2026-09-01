@@ -321,7 +321,15 @@ def archive_and_revision(target: Path, new_payload: dict[str, Any]) -> tuple[int
     return old_revision + 1, True
 
 
-def update_index(payload: dict[str, Any]) -> None:
+def canonical_current_release_id() -> str:
+    current_release = read_json(RELEASES_DIR / "current.json")
+    value = str(current_release.get("release_id") or "").strip()
+    if not value:
+        raise PublishError("Canonical current weekly release lacks release_id.")
+    return value
+
+
+def update_index(payload: dict[str, Any], *, current_release_id: str) -> None:
     index = read_json(INDEX_PATH) if INDEX_PATH.exists() else {
         "schema_version": "aieo_symbiosis_index_v1.0",
         "weekly": [],
@@ -344,11 +352,39 @@ def update_index(payload: dict[str, Any]) -> None:
     index.update(
         {
             "updated_at": now_iso(),
-            "current_release_id": payload["release_id"],
+            "current_release_id": current_release_id,
             "weekly": rows,
         }
     )
     write_json(INDEX_PATH, index)
+
+
+def persist_release_payload(
+    *,
+    target: Path,
+    payload: dict[str, Any],
+    release_id: str,
+) -> tuple[int, bool, str, bool]:
+    """Persist one weekly relationship artifact without rolling current backwards.
+
+    A historical owner-QC correction updates its versioned weekly artifact and
+    index row, but current.json remains tied to data/releases/current.json.
+    """
+    canonical_current = canonical_current_release_id()
+    is_current_release = release_id == canonical_current
+    revision, changed = archive_and_revision(target, payload)
+    payload["revision"] = revision
+    payload["content_sha256"] = normalized_hash(payload)
+    if changed:
+        write_json(target, payload)
+        if is_current_release:
+            write_json(CURRENT_PATH, payload)
+        update_index(payload, current_release_id=canonical_current)
+    elif is_current_release:
+        current_payload = read_json(target)
+        write_json(CURRENT_PATH, current_payload)
+        update_index(current_payload, current_release_id=canonical_current)
+    return revision, changed, canonical_current, is_current_release
 
 
 def parse_args() -> argparse.Namespace:
@@ -433,15 +469,9 @@ def main() -> int:
     }
 
     target = OUTPUT_DIR / "weekly" / f"{release_id}.json"
-    revision, changed = archive_and_revision(target, payload)
-    payload["revision"] = revision
-    payload["content_sha256"] = normalized_hash(payload)
-    if changed:
-        write_json(target, payload)
-        write_json(CURRENT_PATH, payload)
-        update_index(payload)
-    elif not CURRENT_PATH.exists() or read_json(CURRENT_PATH).get("release_id") == release_id:
-        write_json(CURRENT_PATH, read_json(target))
+    revision, changed, canonical_current, is_current_release = persist_release_payload(
+        target=target, payload=payload, release_id=release_id
+    )
 
     print(
         json.dumps(
@@ -452,6 +482,8 @@ def main() -> int:
                 "public_status": payload["public_status"],
                 "event_review": f"{event_summary['reviewed_units']}/{event_summary['expected_units']}",
                 "coverage_review": f"{coverage_summary['reviewed_units']}/{coverage_summary['expected_units']}",
+                "canonical_current_release_id": canonical_current,
+                "promoted_to_current": is_current_release,
             },
             indent=2,
         )

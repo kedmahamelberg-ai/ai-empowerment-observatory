@@ -12,8 +12,8 @@ from pathlib import Path
 from typing import Any
 
 CODEBOOK_VERSION = "aieo_news_symbiosis_v0.1"
-CLASSIFIER_VERSION = "symbiosis_news_v0.1"
-EVIDENCE_POLICY_VERSION = "aieo_evidence_basis_v2"
+CLASSIFIER_VERSION = "symbiosis_news_v0.2"
+EVIDENCE_POLICY_VERSION = "aieo_evidence_basis_v3"
 
 HUMAN_TYPES = {
     "extension",
@@ -251,6 +251,13 @@ def validate_model_payload(payload: dict[str, Any]) -> dict[str, Any]:
         raise ValueError(f"Invalid ai_expressive_role: {ai_role}")
     if evidence_status not in EVIDENCE_STATUSES:
         raise ValueError(f"Invalid evidence_status: {evidence_status}")
+
+    # A genuinely insufficient unit cannot support directional or neutral
+    # component claims. Normalize the components to unclear so future model
+    # outputs and owner gold use one internally coherent representation.
+    if evidence_status == "insufficient":
+        human_type = "unclear"
+        ai_role = "unclear"
 
     configuration, human_direction, ai_direction, plain_label = derive_configuration(
         human_type,

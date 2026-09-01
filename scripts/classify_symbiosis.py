@@ -8,9 +8,9 @@ The unit of interpretation is release-specific:
   that same weekly release.
 
 This matters longitudinally. A stable event can receive different framing in a
-later week, so Event Lens unit keys include the release ID. Every model result is
-written with review_status=pending and cannot become a reviewed public signal
-until a human explicitly accepts or corrects it.
+later week, so Event Lens unit keys include the release ID. Every model result is written with review_status=pending. The live Observatory can
+display the model-coded weekly signal, while optional owner quality control can
+accept or correct sampled rows and add those adjudications to the gold set.
 
 Scopes:
 - latest: the current weekly release JSON;
@@ -25,6 +25,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -59,6 +60,7 @@ LLAMA_SERVER_BIN = os.environ.get(
 SERVER_URL = "http://127.0.0.1:8080/v1/chat/completions"
 HEALTH_URL = "http://127.0.0.1:8080/health"
 TRANSLATION_PROFILE = "validated_language_routing_v3"
+OWNER_GOLD_PATH = ROOT / "validation" / "symbiosis-owner-gold.json"
 
 
 class SymbiosisClassificationError(RuntimeError):
@@ -457,7 +459,7 @@ def start_run(
                 "evidence_policy_version": EVIDENCE_POLICY_VERSION,
                 "model_name": QWEN_REPO,
                 "model_revision": model_revision,
-                "notes": "Release-specific model proposals. Every row requires explicit human review.",
+                "notes": "Release-specific model proposals. Rows are eligible for optional owner QC; manual review is not required every week.",
             }
         )
         .select("symbiosis_run_id")
@@ -559,12 +561,116 @@ def extract_json(text: str) -> dict[str, Any]:
     raise SymbiosisClassificationError("Model response did not contain a JSON object.")
 
 
+def _gold_tokens(text: str) -> set[str]:
+    return {
+        token
+        for token in re.findall(r"[a-z0-9]+", str(text or "").casefold())
+        if len(token) >= 3 and token not in {"artificial", "intelligence", "generative", "model"}
+    }
+
+
+def _gold_example_text(row: dict[str, Any]) -> str:
+    title = str(row.get("title") or "").strip()
+    headlines = [str(value).strip() for value in (row.get("source_headlines") or []) if str(value).strip()]
+    parts = [title] + [value for value in headlines if value != title]
+    return " | ".join(parts)[:600]
+
+
+def owner_gold_calibration_block(*, lens: str, evidence: str, limit: int = 4) -> str:
+    """Return a small, provenance-safe calibration block from owner-adjudicated QC.
+
+    The gold examples teach coding boundaries only. They are never used as a
+    same-event lookup or automatic override, because a recurring development can
+    be framed differently in a later weekly release.
+    """
+    if not OWNER_GOLD_PATH.exists():
+        return ""
+    try:
+        payload = json.loads(OWNER_GOLD_PATH.read_text(encoding="utf-8"))
+    except Exception as exc:
+        print(f"Warning: owner gold could not be read: {exc}", file=sys.stderr)
+        return ""
+    rows = [row for row in (payload.get("records") or []) if isinstance(row, dict) and row.get("lens") == lens]
+    if not rows:
+        return ""
+    target = _gold_tokens(evidence)
+    scored: list[tuple[float, str, dict[str, Any]]] = []
+    for row in rows:
+        example_text = _gold_example_text(row)
+        tokens = _gold_tokens(example_text)
+        union = target | tokens
+        score = (len(target & tokens) / len(union)) if union else 0.0
+        configuration = str((row.get("final") or {}).get("configuration") or "")
+        scored.append((score, configuration, row))
+    scored.sort(key=lambda item: (item[0], item[1], str(item[2].get("gold_id") or "")), reverse=True)
+
+    selected: list[dict[str, Any]] = []
+    seen_ids: set[str] = set()
+    # Prefer genuinely similar examples first.
+    for score, _configuration, row in scored:
+        if score <= 0:
+            continue
+        gold_id = str(row.get("gold_id") or row.get("unit_key") or "")
+        if gold_id in seen_ids:
+            continue
+        selected.append(row)
+        seen_ids.add(gold_id)
+        if len(selected) >= limit:
+            break
+    # If lexical overlap is weak, add diverse decision-boundary examples rather
+    # than an arbitrary cluster of one label.
+    if len(selected) < limit:
+        preferred = [
+            "no_clear_relational_signal",
+            "insufficient_evidence",
+            "ai_enabling_only",
+            "ai_constraining_only",
+            "mutualism",
+            "ai_benefiting_parasitism",
+            "competition",
+        ]
+        for configuration in preferred:
+            for _score, candidate_config, row in scored:
+                if candidate_config != configuration:
+                    continue
+                gold_id = str(row.get("gold_id") or row.get("unit_key") or "")
+                if gold_id in seen_ids:
+                    continue
+                selected.append(row)
+                seen_ids.add(gold_id)
+                break
+            if len(selected) >= limit:
+                break
+    if not selected:
+        return ""
+
+    lines = [
+        "OWNER-ADJUDICATED CALIBRATION EXAMPLES",
+        "Use these only to learn coding boundaries. Do not copy an example label unless the new evidence supports it.",
+    ]
+    for index, row in enumerate(selected, start=1):
+        final = row.get("final") or {}
+        lines.extend(
+            [
+                f"Example {index} evidence: {_gold_example_text(row)}",
+                (
+                    f"Example {index} labels: human={final.get('human_experience_type')}; "
+                    f"AI={final.get('ai_expressive_role')}; evidence_status={final.get('evidence_status')}; "
+                    f"configuration={final.get('configuration')}"
+                ),
+            ]
+        )
+    return "\n".join(lines)
+
+
 def classifier_prompt(*, lens: str, evidence: str, content_basis: str) -> str:
     lens_note = (
         "COVERAGE LENS: classify how this one published page represents the relationship."
         if lens == "coverage"
         else "EVENT LENS: classify the resolved development from the evidence represented in this weekly release. Do not copy the Coverage Lens label automatically."
     )
+    calibration = owner_gold_calibration_block(lens=lens, evidence=evidence)
+    calibration_section = f"\n\n{calibration}" if calibration else ""
     return f"""
 /no_think
 
@@ -595,19 +701,26 @@ AI EXPRESSIVE ROLE
 - unclear: an AI-side relation is suggested, but its direction cannot be supported
 
 EVIDENCE STATUS
-- sufficient: the evidence supports both selected component labels
-- partial: the evidence supports one side while the other side is neutral
-- insufficient: the available headline or text cannot support a defensible relationship judgement
+- sufficient: the available evidence supports both selected component labels, including neutral/neutral when the evidence clearly describes a non-relational development
+- partial: the evidence supports one directional side while the other side is neutral
+- insufficient: the available headline or text is too opaque to determine whether a defensible directional or neutral/no-clear judgement can be made
 
-Important rules
+DECISION BOUNDARY POLICY
 1. Do not force every AI story into mutualism, parasitism, or competition.
-2. Investment, a model launch, or an institutional announcement is not itself a human-AI relationship signal.
-3. Distinguish no clear relational signal from insufficient evidence. Use neutral when enough text shows no relation. Use unclear or insufficient when the evidence is too thin.
-4. Allegations remain allegations. A lawsuit or complaint is a real human action, but it does not prove liability or a court outcome.
-5. When a source reports that human work, data, likeness, or creative output feeds AI training without consent, control, or compensation, human restriction or reduction and AI expansion may be supported.
-6. For a lawsuit event, the filing itself may show human extension or expansion while the AI side remains neutral unless the filing has already constrained the system or operator.
-7. Do not use the search market as story location.
-8. Return only one JSON object.
+2. Do not use insufficient as a default for a story that is clearly non-relational. If the headline clearly describes a stock/valuation story, conference announcement, ranking/list, corporate transaction, or other AI-themed item but establishes no human or AI directional relation, code human=neutral, AI=neutral, evidence_status=sufficient. That yields no_clear_relational_signal.
+3. A model launch, investment, institutional announcement, conference, or policy mention is not automatically a gain. Require an explicit capability, adoption, operative-reach, access, productivity, constraint, or other directional cue.
+4. If one side is directional and the other side is not established, use the directional label plus neutral and evidence_status=partial. Do not mark the whole unit insufficient merely because the second side is neutral.
+5. An explicit ban, halt, withdrawal, blocking rule, or operational limitation can support an AI-side restriction even when no people-side outcome is stated. A stated failure/degradation can support AI-side reduction.
+6. Explicit deployment/use/application can support AI-side extension. Code a people-side gain only when the evidence says or clearly entails that people gain capacity, access, protection, productivity, opportunity, or another defined benefit.
+7. Human extension requires an observable human capacity or action. Mere exposure to AI, growing up with AI, discussing AI, or saying that AI is changing a domain does not by itself establish human extension or gain.
+8. Distinguish attitudes from outcomes. Dislike, concern, controversy, or split opinion does not by itself mean people or AI are constrained.
+9. If the evidence explicitly presents both a human gain and a human cost and no single direction can be supported, use human=unclear rather than neutral. A genuine directional conflict is ambiguous, not no-clear.
+10. Governance artifacts are not automatically AI gains. A policy, standard, proposed guidance, legal analysis, or regulatory discussion supports AI restriction only when it actually limits or blocks the AI/operator; otherwise keep the AI side neutral unless a separate capability/adoption cue is present.
+11. Allegations remain allegations. A lawsuit or complaint is a real human action, but it does not prove liability or a court outcome.
+12. When a source reports that human work, data, likeness, or creative output feeds AI training without consent, control, or compensation, human restriction or reduction and AI expansion may be supported.
+13. For a lawsuit event, the filing itself may show human extension or expansion while the AI side remains neutral unless the filing has already constrained the system or operator.
+14. Do not use the search market as story location.
+15. Return only one JSON object.{calibration_section}
 
 Required keys:
 ai_relevant, evidence_status, relational_signal, human_experience_type,
@@ -623,7 +736,6 @@ Content basis: {content_basis}
 EVIDENCE
 {evidence}
 """.strip()
-
 
 def call_classifier(*, lens: str, evidence: str, content_basis: str) -> dict[str, Any]:
     prompt = classifier_prompt(lens=lens, evidence=evidence, content_basis=content_basis)
@@ -642,7 +754,7 @@ def call_classifier(*, lens: str, evidence: str, content_basis: str) -> dict[str
                     "messages": [
                         {
                             "role": "system",
-                            "content": "Return only valid JSON. False certainty is more harmful than an insufficient-evidence label.",
+                            "content": "Return only valid JSON. Use insufficient evidence only when the available evidence is genuinely too thin for either a directional or a defensible neutral/no-clear judgment.",
                         },
                         {"role": "user", "content": prompt},
                     ],

@@ -42,10 +42,10 @@ def required_env(name: str) -> str:
     return value
 
 
-def load_decisions() -> dict[str, Any]:
-    if not DECISIONS_PATH.exists():
-        raise ReviewApplyError(f"Missing decisions file: {DECISIONS_PATH}")
-    payload = json.loads(DECISIONS_PATH.read_text(encoding="utf-8"))
+def load_decisions(path: Path = DECISIONS_PATH) -> dict[str, Any]:
+    if not path.exists():
+        raise ReviewApplyError(f"Missing decisions file: {path}")
+    payload = json.loads(path.read_text(encoding="utf-8"))
     if payload.get("codebook_version") != CODEBOOK_VERSION:
         raise ReviewApplyError(
             f"Decision codebook {payload.get('codebook_version')} does not match {CODEBOOK_VERSION}."
@@ -209,12 +209,17 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--strict", action="store_true", help="Fail when any decision cannot be matched or the exported queue is incomplete")
+    parser.add_argument(
+        "--decisions-path",
+        default=str(DECISIONS_PATH),
+        help="Review decisions JSON. Defaults to the historical reviewed-decisions manifest.",
+    )
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
-    manifest = load_decisions()
+    manifest = load_decisions(Path(args.decisions_path))
     decisions = manifest["decisions"]
     expected = int(manifest.get("expected_unit_count") or len(decisions))
     reviewed = int(manifest.get("reviewed_unit_count") or len(decisions))
