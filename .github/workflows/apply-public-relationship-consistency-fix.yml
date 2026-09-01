@@ -1,0 +1,63 @@
+name: Apply Public Relationship Consistency Fix
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: aieo-public-consistency-fix
+  cancel-in-progress: false
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Apply public consistency patch
+        run: python scripts/apply_public_relationship_consistency_fix.py
+      - name: Validate JavaScript syntax
+        run: |
+          node --check site.js
+          node --check edu/dashboard.js
+      - name: Validate current relationship arithmetic
+        run: python scripts/validate_public_relationship_consistency.py
+      - name: Ensure internal process labels are not exposed in the public interface
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -R -n -E 'Model-coded provisional signal|model-coded weekly lens' index.html site.js edu/index.html edu/dashboard.js; then
+            echo "Internal process wording is still exposed in the public interface."
+            exit 1
+          fi
+      - name: Commit the public consistency fix
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site.js index.html edu/dashboard.js edu/index.html .github/workflows/publish-observatory-release.yml scripts/validate_public_relationship_consistency.py scripts/apply_public_relationship_consistency_fix.py
+          if git diff --cached --quiet; then
+            echo "No frontend changes were needed."
+          else
+            git commit -m "Fix public relationship and people-side consistency"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+
+  publish:
+    needs: patch
+    uses: ./.github/workflows/publish-observatory-release.yml
+    secrets: inherit
