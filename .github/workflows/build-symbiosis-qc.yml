@@ -1,6 +1,24 @@
 name: Build Optional Symbiosis QC File
 
 on:
+  workflow_call:
+    inputs:
+      release_id:
+        required: false
+        default: ""
+        type: string
+      mode:
+        required: false
+        default: stratified_random
+        type: string
+      sample_size:
+        required: false
+        default: "24"
+        type: string
+      seed:
+        required: false
+        default: ""
+        type: string
   workflow_dispatch:
     inputs:
       release_id:

@@ -1,0 +1,139 @@
+name: Reclassify Current Week from Full Article Bodies
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_id:
+        description: "Current weekly release to reclassify, for example 2026-W35"
+        required: true
+        default: "2026-W35"
+        type: string
+      retry_mode:
+        description: "Retry body extraction failures for this one-time audit"
+        required: true
+        default: all
+        type: choice
+        options: [all, retryable, none]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: aieo-full-body-reclassification
+  cancel-in-progress: false
+
+jobs:
+  guard-current-release:
+    runs-on: ubuntu-latest
+    outputs:
+      period_start: ${{ steps.release.outputs.period_start }}
+      period_end: ${{ steps.release.outputs.period_end }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - id: release
+        name: Confirm that the requested week is still current
+        env:
+          REQUESTED_RELEASE: ${{ inputs.release_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          release = json.loads(Path("data/releases/current.json").read_text(encoding="utf-8"))
+          requested = os.environ["REQUESTED_RELEASE"].strip()
+          current = str(release.get("release_id") or "")
+          if requested != current:
+              raise SystemExit(
+                  f"This workflow safely reclassifies only the current collection. "
+                  f"Requested {requested}, but current is {current}."
+              )
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              handle.write(f"period_start={release['period_start']}\n")
+              handle.write(f"period_end={release['period_end']}\n")
+          print(f"Confirmed {current}: {release['period_start']} through {release['period_end']}")
+          PY
+
+  collect-bodies:
+    needs: guard-current-release
+    uses: ./.github/workflows/enrich-new-brief-article-bodies.yml
+    with:
+      scope: release
+      release_id: ${{ inputs.release_id }}
+      retry_mode: ${{ inputs.retry_mode }}
+    secrets: inherit
+
+  classify-observatory-news:
+    needs: collect-bodies
+    uses: ./.github/workflows/classify-dual-lenses.yml
+    secrets: inherit
+
+  finalize-observatory-news:
+    needs: classify-observatory-news
+    uses: ./.github/workflows/finalize-stage7c-residual.yml
+    secrets: inherit
+
+  rebuild-weekly-release:
+    needs: [guard-current-release, finalize-observatory-news]
+    uses: ./.github/workflows/build-weekly-release.yml
+    with:
+      period_start: ${{ needs.guard-current-release.outputs.period_start }}
+      period_end: ${{ needs.guard-current-release.outputs.period_end }}
+      replace: true
+      revision_reason: "Full-body-first reclassification and owner quality-control audit"
+      rebuild_index_only: false
+    secrets: inherit
+
+  classify-relationships:
+    needs: rebuild-weekly-release
+    uses: ./.github/workflows/classify-current-symbiosis.yml
+    with:
+      lens: both
+      replace: true
+      release_id: ${{ inputs.release_id }}
+    secrets: inherit
+
+  publish-relationships:
+    needs: classify-relationships
+    uses: ./.github/workflows/publish-symbiosis-release.yml
+    with:
+      release_id: ${{ inputs.release_id }}
+      require_complete: false
+      placeholder: false
+    secrets: inherit
+
+  period-summaries:
+    needs: publish-relationships
+    uses: ./.github/workflows/build-period-summaries.yml
+    secrets: inherit
+
+  public-insights:
+    needs: period-summaries
+    uses: ./.github/workflows/generate-public-insights.yml
+    secrets: inherit
+
+  public-brief:
+    needs: public-insights
+    uses: ./.github/workflows/generate-public-brief.yml
+    secrets: inherit
+
+  export-owner-qc:
+    needs: publish-relationships
+    uses: ./.github/workflows/build-symbiosis-qc.yml
+    with:
+      release_id: ${{ inputs.release_id }}
+      mode: all
+      sample_size: "111"
+      seed: "full-body-owner-qc"
+    secrets: inherit
+
+  publish-site:
+    needs: public-brief
+    uses: ./.github/workflows/publish-observatory-release.yml
+    secrets: inherit

@@ -9,7 +9,9 @@ on:
       - "scripts/**"
       - "index.html"
       - "site.js"
+      - "site.css"
       - "edu/**"
+      - "methodology/**"
       - "data/releases/current.json"
       - "data/symbiosis/current.json"
 
@@ -34,6 +36,7 @@ jobs:
             scripts/export_symbiosis_qc.py \
             scripts/ingest_symbiosis_qc.py \
             scripts/apply_symbiosis_reviews.py \
+            scripts/migrate_public_people_signals.py \
             scripts/validate_public_relationship_consistency.py \
             scripts/validate_repository_integrity.py
       - name: Validate repository guardrails

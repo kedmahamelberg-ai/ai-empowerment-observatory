@@ -29,6 +29,9 @@ jobs:
   enrich-article-bodies:
     needs: collect
     uses: ./.github/workflows/enrich-new-brief-article-bodies.yml
+    with:
+      scope: latest_collection
+      retry_mode: retryable
     secrets: inherit
 
   resolve-events:
@@ -74,8 +77,26 @@ jobs:
       placeholder: true
     secrets: inherit
 
-  period-summaries:
+  classify-relationships:
     needs: relationship-release-boundary
+    uses: ./.github/workflows/classify-current-symbiosis.yml
+    with:
+      lens: both
+      replace: false
+      release_id: ""
+    secrets: inherit
+
+  relationship-signal:
+    needs: classify-relationships
+    uses: ./.github/workflows/publish-symbiosis-release.yml
+    with:
+      release_id: ""
+      require_complete: false
+      placeholder: false
+    secrets: inherit
+
+  period-summaries:
+    needs: relationship-signal
     uses: ./.github/workflows/build-period-summaries.yml
     secrets: inherit
 

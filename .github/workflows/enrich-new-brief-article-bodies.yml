@@ -2,12 +2,43 @@ name: Enrich New AIEO Brief Article Bodies
 
 on:
   workflow_call:
+    inputs:
+      scope:
+        required: false
+        default: latest_collection
+        type: string
+      release_id:
+        required: false
+        default: ""
+        type: string
+      retry_mode:
+        required: false
+        default: retryable
+        type: string
   workflow_run:
     workflows:
       - Update AI News Collection
     types:
       - completed
   workflow_dispatch:
+    inputs:
+      scope:
+        description: "Which articles should be enriched"
+        required: true
+        default: latest_collection
+        type: choice
+        options: [latest_collection, release, all]
+      release_id:
+        description: "Required only when scope is release, for example 2026-W35"
+        required: false
+        default: ""
+        type: string
+      retry_mode:
+        description: "Whether previously failed sources should be retried"
+        required: true
+        default: retryable
+        type: choice
+        options: [none, retryable, all]
 
 permissions:
   contents: read
@@ -43,18 +74,44 @@ jobs:
             "beautifulsoup4>=4.12,<5" \
             "trafilatura>=2,<3"
 
+      - name: Validate private body-evidence contract
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: python scripts/validate_body_evidence_contract.py
+
       - name: Enrich never-attempted article bodies
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
         run: |
-          python scripts/brief_backfill_article_content_resumable.py \
-            --limit 0 \
-            --retry-mode none \
+          set -euo pipefail
+          scope="${{ inputs.scope || 'latest_collection' }}"
+          release_id="${{ inputs.release_id || '' }}"
+          retry_mode="${{ inputs.retry_mode || 'retryable' }}"
+          args=(
+            --limit 0
+            --scope "$scope"
+            --retry-mode "$retry_mode"
             --max-runtime-minutes 30
+            --report-output review/body-evidence/latest-collection-report.json
+          )
+          if [[ "$scope" == "release" ]]; then
+            test -n "$release_id" || { echo "release_id is required for release scope"; exit 1; }
+            args+=(--release-id "$release_id")
+          fi
+          python scripts/brief_backfill_article_content_resumable.py "${args[@]}"
 
       - name: Audit newly stored content
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
         run: python scripts/audit_brief_article_content.py --limit 30
+
+      - name: Upload body-coverage report
+        uses: actions/upload-artifact@v7
+        with:
+          name: body-evidence-report-${{ github.run_id }}
+          path: review/body-evidence/latest-collection-report.json
+          if-no-files-found: error
+          retention-days: 90
