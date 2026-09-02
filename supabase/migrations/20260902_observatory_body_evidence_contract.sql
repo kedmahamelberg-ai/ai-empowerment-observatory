@@ -4,6 +4,8 @@
 -- same best-available evidence to Observatory classification and AIEO Brief.
 -- Body text remains private: anon and authenticated roles receive no grants.
 
+begin;
+
 create extension if not exists pgcrypto;
 
 create table if not exists public.brief_article_fetch_attempts (
@@ -25,6 +27,29 @@ create table if not exists public.brief_article_fetch_attempts (
   metadata jsonb not null default '{}'::jsonb,
   attempted_at timestamptz not null default now()
 );
+
+-- Upgrade legacy AIEO Brief installations in place. Some existing databases
+-- already have this table with an older primary-key name (for example,
+-- attempt_id). CREATE TABLE IF NOT EXISTS deliberately leaves such a table
+-- untouched, so add every operational column used by the body collector. The
+-- legacy primary key remains valid and no existing rows are rewritten.
+alter table public.brief_article_fetch_attempts
+  add column if not exists article_id text,
+  add column if not exists source_url text,
+  add column if not exists source_domain text,
+  add column if not exists workflow_run_id text,
+  add column if not exists retrieval_method text,
+  add column if not exists http_status integer,
+  add column if not exists robots_allowed boolean,
+  add column if not exists tdm_reservation boolean,
+  add column if not exists tdm_policy_url text,
+  add column if not exists paywall_detected boolean,
+  add column if not exists outcome text,
+  add column if not exists response_content_type text,
+  add column if not exists response_bytes bigint,
+  add column if not exists elapsed_ms integer,
+  add column if not exists metadata jsonb default '{}'::jsonb,
+  add column if not exists attempted_at timestamptz default now();
 
 create table if not exists public.brief_article_content_snapshots (
   snapshot_id uuid primary key default gen_random_uuid(),
@@ -83,7 +108,17 @@ create unique index if not exists ux_brief_body_one_current
 create index if not exists idx_brief_evidence_article
   on public.brief_article_evidence_snapshots(article_id, created_at desc);
 
-create or replace view public.brief_article_best_evidence as
+-- PostgreSQL only permits CREATE OR REPLACE VIEW when every existing output
+-- column keeps its name and position. Earlier AIEO releases exposed these
+-- columns in a different order, so replacing the view directly raises 42P16
+-- (for example, evidence_basis -> headline). Rebuild only the three derived
+-- views, in reverse dependency order. The source tables and their rows are not
+-- dropped or changed by these statements.
+drop view if exists public.brief_event_evidence_readiness;
+drop view if exists public.brief_event_source_evidence;
+drop view if exists public.brief_article_best_evidence;
+
+create view public.brief_article_best_evidence as
 select
   a.article_id,
   a.headline,
@@ -156,7 +191,7 @@ left join lateral (
   limit 1
 ) chosen on true;
 
-create or replace view public.brief_event_source_evidence as
+create view public.brief_event_source_evidence as
 select
   e.event_id,
   e.event_title,
@@ -178,7 +213,7 @@ join public.event_articles ea on ea.event_id = e.event_id
 join public.articles a on a.article_id = ea.article_id
 left join public.brief_article_best_evidence best on best.article_id = a.article_id;
 
-create or replace view public.brief_event_evidence_readiness as
+create view public.brief_event_evidence_readiness as
 select
   event_id,
   max(event_title) as event_title,
@@ -220,3 +255,9 @@ comment on table public.brief_article_content_snapshots is
   'Private versioned article-body evidence shared by Observatory classification and AIEO Brief; never published verbatim.';
 comment on view public.brief_article_best_evidence is
   'Best private evidence per article: full source, excerpt, discovery snippet, then headline.';
+
+-- Make the additive columns and recreated views visible to Supabase REST
+-- immediately after this transaction commits.
+notify pgrst, 'reload schema';
+
+commit;
