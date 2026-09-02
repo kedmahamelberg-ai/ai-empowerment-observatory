@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Methodology | AI Empowerment Observatory</title>
-  <meta name="description" content="How AIEO observes coverage, resolves developments, remembers history, and interprets human-AI relationship patterns.">
-  <link rel="stylesheet" href="/methodology/methodology.css">
+  <title>How it works | AI Empowerment Observatory</title>
+  <meta name="description" content="How AIEO turns noisy AI coverage into a clear, source-linked picture of what is changing for people.">
+  <link rel="stylesheet" href="/site.css?v=6.0.0">
+  <link rel="stylesheet" href="/methodology/methodology.css?v=6.0.0">
   <link rel="stylesheet" href="/analytics-consent.css">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96">
@@ -13,61 +14,60 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to how it works</a>
   <header class="site-header">
-    <a class="brand" href="/"><span class="brand-mark">AIEO</span><span><strong>AI Empowerment Observatory</strong><small>Public methodology</small></span></a>
-    <nav><a href="/edu/">This week</a><a href="/reports/">Reports</a><a aria-current="page" href="/methodology/">Methodology</a><a class="nav-cta" href="/report/">Get the Pulse</a></nav>
+    <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">AIEO</span><span class="brand-copy"><strong>AI Empowerment Observatory</strong><small>AI news, made easier to understand</small></span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
+    <nav id="main-nav" aria-label="Main navigation"><a href="/edu/">This week</a><a href="/reports/">Reports</a><a aria-current="page" href="/methodology/">How it works</a><a class="nav-cta" href="/edu/#evidence">Open the news</a></nav>
   </header>
 
-  <main>
+  <main id="main-content" class="method-main">
     <section class="method-hero">
-      <div>
-        <p class="eyebrow">Methodology v2.1</p>
-        <h1>From noisy coverage to a relationship signal.</h1>
-        <p>AIEO keeps four questions separate: what was published, what actually happened, whether it was already known, and how the source evidence positions people and the AI side.</p>
-      </div>
-      <aside class="scope-card">
-        <span>Current public scope</span>
-        <dl>
-          <div><dt>Observation period</dt><dd id="scope-period">Loading...</dd></div>
-          <div><dt>Historical pool</dt><dd id="scope-pool">Loading...</dd></div>
-          <div><dt>Release</dt><dd id="scope-release">Loading...</dd></div>
-          <div><dt>Relationship review</dt><dd id="scope-review">Loading...</dd></div>
-        </dl>
-      </aside>
+      <div class="method-hero-copy"><p class="eyebrow">How it works · version 3.0</p><h1>From noisy coverage to a <em>people-first picture.</em></h1><p>AIEO does not ask you to keep up with every AI headline. It gathers the coverage, groups reports about the same thing, checks what came before, and asks what the news shows for people.</p></div>
+      <aside class="scope-card"><span>Current scope</span><dl><div><dt>Week covered</dt><dd id="scope-period">Loading...</dd></div><div><dt>News history checked</dt><dd id="scope-pool">Loading...</dd></div><div><dt>Current release</dt><dd id="scope-release">Loading...</dd></div><div><dt>People-first picture</dt><dd id="scope-picture">Loading...</dd></div></dl></aside>
     </section>
 
-    <section class="method-steps" aria-labelledby="steps-title">
-      <div class="section-heading"><div><p class="eyebrow">The evidence chain</p><h2 id="steps-title">Four steps, one direction</h2></div><details class="info-popover align-right"><summary aria-label="Explain the evidence chain">i</summary><div class="info-card"><p>Technical prompts, thresholds, and private orchestration code are not published. Public concepts, counts, source links, release scope, revisions, and limitations are published.</p></div></details></div>
+    <section class="method-panel" aria-labelledby="steps-title">
+      <div class="section-title-row"><div><p class="eyebrow">The evidence path</p><h2 id="steps-title">Four steps from news to meaning</h2></div><p class="section-side-note">Every public card links back to the sources behind it.</p></div>
       <div class="step-tape">
-        <article><span>1</span><strong>Observe</strong><small>Keep every source item and later rediscovery.</small></article>
-        <article><span>2</span><strong>Resolve</strong><small>Group reports about the same occurrence.</small></article>
-        <article><span>3</span><strong>Remember</strong><small>Compare each development with the historical pool.</small></article>
-        <article><span>4</span><strong>Interpret</strong><small>Code people and the AI or operator side separately.</small></article>
+        <article><span>1</span><strong>Gather</strong><small>Keep each source page found during the week.</small></article>
+        <article><span>2</span><strong>Group</strong><small>Put reports about the same real-world development together.</small></article>
+        <article><span>3</span><strong>Remember</strong><small>Check whether that development appeared before.</small></article>
+        <article><span>4</span><strong>Make sense</strong><small>Look for gains, losses, mixed stories and uneven benefits.</small></article>
       </div>
     </section>
 
-    <section class="matrix-section" aria-labelledby="matrix-title">
-      <div class="section-heading"><div><p class="eyebrow">Primary relationship lens</p><h2 id="matrix-title">Two directions create four complete patterns</h2></div><details class="info-popover align-right"><summary aria-label="Explain the relationship matrix">i</summary><div class="info-card"><p>The four cells use only complete two-sided signals. One-sided, no-clear, ambiguous, and insufficient cases remain visible but are excluded from the four-cell percentages.</p><p>The AI side refers to the system, operator, or ecosystem as represented in the source. It does not imply consciousness.</p></div></details></div>
-      <div class="matrix-grid">
-        <article class="mutualism"><div><span>People ↑</span><span>AI ↑</span></div><h3>Both gain</h3><small>Mutualism</small></article>
-        <article class="human-benefit"><div><span>People ↑</span><span>AI ↓</span></div><h3>People gain, AI side is constrained</h3><small>Human-benefiting parasitism</small></article>
-        <article class="ai-benefit"><div><span>People ↓</span><span>AI ↑</span></div><h3>AI side gains, people are constrained</h3><small>AI-benefiting parasitism</small></article>
-        <article class="competition"><div><span>People ↓</span><span>AI ↓</span></div><h3>Both are constrained</h3><small>Competition or co-constraint</small></article>
+    <section class="method-panel" aria-labelledby="truth-title">
+      <div class="section-title-row"><div><p class="eyebrow">One story, more than one truth</p><h2 id="truth-title">A development does not have to fit one box</h2></div></div>
+      <div class="method-example"><blockquote>AI can make knowledge easier to reach while widening the gap between people who can use it critically and people who become dependent on its answers.</blockquote><div class="example-tags"><span class="gain">People gaining</span><span class="loss">People losing ground</span><span class="mixed">A mixed picture</span><span class="unequal">Not everyone benefits</span></div></div>
+      <p class="method-explainer">Each signal is checked separately. That means one development can appear in several cards. The totals are not slices of a pie and do not need to add up to 100%.</p>
+    </section>
+
+    <section class="method-panel" aria-labelledby="under-title">
+      <div class="section-title-row"><div><p class="eyebrow">Under the public language</p><h2 id="under-title">How people and AI can move together</h2></div><p class="section-side-note">The public site uses everyday wording; these names connect the Observatory to its research base.</p></div>
+      <div class="under-grid">
+        <article class="together"><div><span>People ↑</span><span>AI →</span></div><h3>People gain as AI moves forward</h3><small>Mutualism</small></article>
+        <article class="people-down"><div><span>People ↓</span><span>AI →</span></div><h3>AI moves forward while people lose ground</h3><small>AI-benefiting parasitism</small></article>
+        <article class="ai-held"><div><span>People ↑</span><span>AI ↓</span></div><h3>People gain when AI is held back</h3><small>Human-benefiting parasitism</small></article>
+        <article class="both-down"><div><span>People ↓</span><span>AI ↓</span></div><h3>People and AI both run into trouble</h3><small>Competition or co-constraint</small></article>
       </div>
+      <p class="method-explainer">“AI moves forward” refers to the system, its operator or its wider ecosystem working, spreading or gaining capacity in the source account. It does not suggest that AI is conscious or has human interests.</p>
     </section>
 
-    <section class="method-details" aria-label="Method details">
-      <details open><summary>How coverage and developments are counted</summary><div><p>Each AI-related source page dated in the weekly period counts once in the coverage total. Pages about the same concrete occurrence are grouped into one development.</p><p><strong>Additional reports = coverage items minus distinct developments.</strong> They measure extra attention, not extra reality.</p></div></details>
-      <details><summary>How new and seen-before are decided</summary><div><p>A development is new to AIEO when it is not matched to an accepted event in the disclosed historical pool. A later source about an earlier event increases attention but does not create a new development.</p><p>Long-gap candidates are compared with the full registry. Human-governed decisions can revise earlier releases, and prior revisions remain archived.</p></div></details>
-      <details><summary>How the secondary human empowerment index works</summary><div><p>Expanding effects receive a positive score, contracting effects receive a negative score, and mixed or no-direct-change cases receive zero. Unclear cases are excluded.</p><p>The public index runs from -100 to +100. It is accompanied by a plain-language label and the scored versus unclear denominator.</p></div></details>
-      <details><summary>What AIEO does not claim</summary><div><p>The five discovery markets are a research sample, not a complete census of global AI news. A search market is not necessarily the location of the reported development.</p><p>The relationship lens classifies how source evidence represents the relation. It does not establish objective system performance, private experience, consciousness, intention, or biological fitness.</p></div></details>
+    <section class="method-details" aria-label="More detail">
+      <details open><summary>How source pages become developments</summary><div><p>Each AI-related source page published during the weekly period counts once. Pages about the same concrete occurrence are grouped into one development.</p><p><strong>Extra pages = source pages minus distinct developments.</strong> They show added attention, not an added event.</p></div></details>
+      <details><summary>How first recorded and seen before are decided</summary><div><p>A development is first recorded when AIEO does not link it to an accepted development in the disclosed history. A later report about an earlier event adds attention but does not create another event.</p><p>Possible links are kept separate while they are checked. Earlier weekly releases can be corrected, and prior versions remain archived.</p></div></details>
+      <details><summary>How several meanings can be stored in one development</summary><div><p>The people side and the AI side are considered separately. A development may show people gaining, people losing ground, AI moving forward, AI being limited, or more than one of these at once.</p><p>A separate check asks whether benefits differ across groups. This is what allows a story to show both “A mixed picture” and “Not everyone benefits” without forcing a compromise label.</p></div></details>
+      <details><summary>How reliability is checked without making the Observatory manual</summary><div><p>The weekly release remains automatic. At selected moments, the owner reviews a full week or a reproducible sample without seeing the existing labels first. Disagreements are measured, approved corrections are added to an owner-judged reference set, and later classification can learn from those decisions.</p><p>Historical checks update the week being reviewed and cannot roll the live site back to an older week.</p></div></details>
+      <details><summary>What AIEO does not claim</summary><div><p>The discovery markets are a research sample, not a complete census of global AI news. The market where a source was found is not necessarily the place where the story happened.</p><p>The Observatory records what the available news supports. A card does not prove a universal outcome, private experience, intention or objective system performance.</p></div></details>
+      <details><summary>What is public—and what remains protected</summary><div><p>AIEO publishes the concepts, sources, weekly scope, counts, revisions, limitations and the meaning of every public card. This is enough to understand and challenge the output.</p><p>Exact prompts, calibration thresholds, private orchestration code and abuse-resistant operating details are not published. This protects the integrity of the system without hiding how readers should interpret its findings.</p></div></details>
     </section>
 
-    <section class="method-cta"><div><p class="eyebrow">Read the output</p><h2>Open the current week and inspect the sources behind every visible signal.</h2></div><a href="/edu/">Open this week</a></section>
+    <section class="method-cta"><div><p class="eyebrow">See it in use</p><h2>Open this week and move from the people-first picture to every source behind it.</h2></div><a class="button primary" href="/edu/">Open this week</a></section>
   </main>
 
   <footer><span>© 2026 AI Empowerment Observatory</span><nav><a href="/">Home</a><a href="/edu/">This week</a><a href="/reports/">Reports</a><a href="/privacy/">Privacy</a></nav></footer>
-  <script src="/methodology/methodology.js"></script>
+  <script src="/methodology/methodology.js?v=6.0.0"></script>
   <script src="/analytics.js"></script>
 </body>
 </html>

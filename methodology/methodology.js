@@ -1,5 +1,7 @@
 "use strict";
 
+const BUILD_ID = "6.0.0";
+
 const dateLong = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric" });
 
 function parseDate(value) {
@@ -21,7 +23,7 @@ function setText(id, value) {
 
 async function fetchJSON(url, optional = false) {
   try {
-    const response = await fetch(url, { cache: "no-store" });
+    const response = await fetch(`${url}?build=${BUILD_ID}&t=${Date.now()}`, { cache: "no-store" });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return response.json();
   } catch (error) {
@@ -30,7 +32,18 @@ async function fetchJSON(url, optional = false) {
   }
 }
 
+function setupNavigation() {
+  const toggle = document.querySelector(".nav-toggle");
+  const nav = document.getElementById("main-nav");
+  toggle?.addEventListener("click", () => {
+    const open = toggle.getAttribute("aria-expanded") !== "true";
+    toggle.setAttribute("aria-expanded", String(open));
+    nav?.setAttribute("data-open", String(open));
+  });
+}
+
 async function init() {
+  setupNavigation();
   const [release, symbiosis] = await Promise.all([
     fetchJSON("/data/releases/current.json"),
     fetchJSON("/data/symbiosis/current.json", true),
@@ -40,7 +53,8 @@ async function init() {
   setText("scope-pool", pool.all_prior_events_considered ? `All accepted evidence since ${String(pool.starts_at || "5 August 2026").slice(0,10)}` : "Pilot history from 5 August 2026");
   setText("scope-release", `${release.release_id} revision ${Number(release.revision || 1)}`);
   const relationshipCurrent = symbiosis && String(symbiosis.release_id || "") === String(release.release_id || "");
-  setText("scope-review", relationshipCurrent && symbiosis?.public_status === "human_reviewed" ? `${symbiosis.review?.event_reviewed || 0} of ${symbiosis.review?.event_total || 0} developments reviewed` : "Relationship review in progress");
+  const developments = Number(symbiosis?.people_signals?.expected_units || release.counts?.ai_relevant_event_records || 0);
+  setText("scope-picture", relationshipCurrent ? `${developments} source-linked developments` : "Current picture being prepared");
 }
 
 init().catch((error) => {
