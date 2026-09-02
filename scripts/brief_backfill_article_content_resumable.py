@@ -6,6 +6,7 @@ import json
 import os
 import time
 from collections import defaultdict
+from pathlib import Path
 
 from supabase import create_client
 
@@ -19,6 +20,8 @@ RETRYABLE = {
     "robots_unavailable",
 }
 
+ROOT = Path(__file__).resolve().parents[1]
+
 def paged_rows(client, table, columns, page_size=500):
     start = 0
     while True:
@@ -30,6 +33,94 @@ def paged_rows(client, table, columns, page_size=500):
         if len(rows) < page_size:
             break
         start += page_size
+
+def release_article_ids(release_id):
+    candidate = ROOT / "data" / "releases" / "weekly" / f"{release_id}.json"
+    if not candidate.exists():
+        current = ROOT / "data" / "releases" / "current.json"
+        payload = json.loads(current.read_text(encoding="utf-8"))
+        if str(payload.get("release_id") or "") != release_id:
+            raise SystemExit(f"Could not find release {release_id}")
+    else:
+        payload = json.loads(candidate.read_text(encoding="utf-8"))
+
+    found = set()
+    for row in (payload.get("units") or {}).get("coverage_articles") or []:
+        if isinstance(row, dict) and row.get("article_id"):
+            found.add(str(row["article_id"]))
+    for event in payload.get("evidence") or []:
+        if not isinstance(event, dict):
+            continue
+        for article_id in event.get("member_article_ids") or []:
+            if article_id:
+                found.add(str(article_id))
+        for source in event.get("sources") or []:
+            if isinstance(source, dict) and source.get("article_id"):
+                found.add(str(source["article_id"]))
+    return found
+
+def latest_collection_article_ids(client):
+    runs = (
+        client.table("collection_runs")
+        .select("run_id,started_at,status")
+        .in_("status", ["success", "partial"])
+        .order("started_at", desc=True)
+        .limit(1)
+        .execute()
+        .data or []
+    )
+    if not runs:
+        raise SystemExit("No successful or partial collection run was found")
+    run_id = str(runs[0]["run_id"])
+    found = {
+        str(row.get("article_id") or "")
+        for row in paged_rows_for_run(client, run_id)
+        if row.get("article_id")
+    }
+    return found, run_id
+
+def paged_rows_for_run(client, run_id, page_size=500):
+    start = 0
+    while True:
+        response = (
+            client.table("article_observations")
+            .select("article_id")
+            .eq("run_id", run_id)
+            .range(start, start + page_size - 1)
+            .execute()
+        )
+        rows = response.data or []
+        if not rows:
+            break
+        yield from rows
+        if len(rows) < page_size:
+            break
+        start += page_size
+
+def target_scope(client, scope, release_id):
+    if scope == "all":
+        return None, None
+    if scope == "release":
+        if not release_id:
+            raise SystemExit("--release-id is required when --scope=release")
+        return release_article_ids(release_id), f"release:{release_id}"
+    article_ids, run_id = latest_collection_article_ids(client)
+    return article_ids, f"collection:{run_id}"
+
+def article_rows(client, target_ids):
+    if target_ids is None:
+        yield from paged_rows(client, "articles", "*", page_size=200)
+        return
+    ordered = sorted(target_ids)
+    for start in range(0, len(ordered), 150):
+        rows = (
+            client.table("articles")
+            .select("*")
+            .in_("article_id", ordered[start:start + 150])
+            .execute()
+            .data or []
+        )
+        yield from rows
 
 def load_state(client):
     stored = set()
@@ -88,11 +179,20 @@ def main():
     parser.add_argument("--retry-mode", choices=["none", "retryable", "all"], default="none")
     parser.add_argument("--max-runtime-minutes", type=int, default=150)
     parser.add_argument("--sleep", type=float, default=0.25)
+    parser.add_argument(
+        "--scope",
+        choices=["all", "latest_collection", "release"],
+        default="all",
+        help="Limit extraction to the newest collection, one weekly release, or all stored articles.",
+    )
+    parser.add_argument("--release-id", default="")
+    parser.add_argument("--report-output", default="")
     args = parser.parse_args()
 
     client = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SECRET_KEY"])
     workflow_run_id = os.environ.get("GITHUB_RUN_ID")
     stored, latest_outcome = load_state(client)
+    target_ids, target_label = target_scope(client, args.scope, args.release_id)
 
     counts = defaultdict(int)
     methods = defaultdict(int)
@@ -101,7 +201,7 @@ def main():
     soft_stopped = False
     started = time.monotonic()
 
-    for row in paged_rows(client, "articles", "*", page_size=200):
+    for row in article_rows(client, target_ids):
         scanned += 1
 
         if (time.monotonic() - started) / 60 >= args.max_runtime_minutes:
@@ -158,7 +258,29 @@ def main():
 
         time.sleep(max(0.0, args.sleep))
 
+    stored_after, latest_after = load_state(client)
+    target_set = target_ids if target_ids is not None else {
+        str(row.get("article_id") or "")
+        for row in paged_rows(client, "articles", "article_id")
+        if row.get("article_id")
+    }
+    target_total = len(target_set)
+    full_ids = target_set & stored_after
+    unresolved = target_set - full_ids
+    unresolved_outcomes = defaultdict(int)
+    for article_id in unresolved:
+        unresolved_outcomes[latest_after.get(article_id, "never_attempted")] += 1
+
     summary = {
+        "schema_version": "aieo_body_collection_report_v1",
+        "scope": args.scope,
+        "target": target_label or "all_articles",
+        "release_id": args.release_id or None,
+        "target_articles": target_total,
+        "target_articles_with_full_body": len(full_ids),
+        "target_articles_without_full_body": len(unresolved),
+        "full_body_coverage_rate": round(len(full_ids) / target_total, 6) if target_total else 0.0,
+        "unresolved_outcomes": dict(sorted(unresolved_outcomes.items())),
         "processed": processed,
         "scanned": scanned,
         "soft_stopped": soft_stopped,
@@ -167,6 +289,13 @@ def main():
         "extraction_methods": dict(sorted(methods.items())),
     }
     print(json.dumps(summary, indent=2))
+
+    if args.report_output:
+        report_path = Path(args.report_output)
+        if not report_path.is_absolute():
+            report_path = ROOT / report_path
+        report_path.parent.mkdir(parents=True, exist_ok=True)
+        report_path.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
 
     summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary_path:

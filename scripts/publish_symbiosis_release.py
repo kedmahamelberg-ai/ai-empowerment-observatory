@@ -23,6 +23,7 @@ from symbiosis_common import (
     PUBLIC_SIGNAL_SCHEMA_VERSION,
     RELATIONSHIP_PATTERN_KEYS,
     TECHNICAL_LABELS,
+    derive_configuration,
     final_payload_from_classification,
     normalize_distribution_signal,
     normalize_relationship_patterns,
@@ -35,6 +36,7 @@ OUTPUT_DIR = ROOT / "data" / "symbiosis"
 CURRENT_PATH = OUTPUT_DIR / "current.json"
 INDEX_PATH = OUTPUT_DIR / "index.json"
 OWNER_GOLD_PATH = ROOT / "validation" / "symbiosis-owner-gold.json"
+SOURCE_BODY_QC_DIR = ROOT / "validation" / "qc"
 
 
 class PublishError(RuntimeError):
@@ -140,7 +142,11 @@ def latest_rows(
     return latest
 
 
-def configuration_summary(rows: dict[str, dict[str, Any]], expected_ids: list[str]) -> dict[str, Any]:
+def configuration_summary(
+    rows: dict[str, dict[str, Any]],
+    expected_ids: list[str],
+    display_overrides: dict[str, dict[str, Any]] | None = None,
+) -> dict[str, Any]:
     """Return finalized human-review counts plus an automatic display layer.
 
     The public Observatory updates every week.  Until all human review is
@@ -149,11 +155,15 @@ def configuration_summary(rows: dict[str, dict[str, Any]], expected_ids: list[st
     available separately and take over automatically when review is complete.
     """
     available = [
-        final_payload_from_classification(rows[unit_id])
+        (display_overrides or {}).get(unit_id, final_payload_from_classification(rows[unit_id]))
         for unit_id in expected_ids
         if unit_id in rows
     ]
-    reviewed = [item for item in available if item["reviewed"]]
+    reviewed = [
+        final_payload_from_classification(rows[unit_id])
+        for unit_id in expected_ids
+        if unit_id in rows and final_payload_from_classification(rows[unit_id])["reviewed"]
+    ]
 
     def summarize(items: list[dict[str, Any]]) -> dict[str, Any]:
         configurations = [
@@ -227,9 +237,82 @@ def owner_gold_for_release(release_id: str) -> dict[str, dict[str, Any]]:
     return result
 
 
+def source_body_corrections_for_release(release_id: str) -> dict[str, dict[str, Any]]:
+    path = SOURCE_BODY_QC_DIR / f"{release_id}-source-body-audit.json"
+    if not path.exists():
+        return {}
+    payload = read_json(path)
+    return {
+        str(row.get("event_id")): row
+        for row in payload.get("records") or []
+        if isinstance(row, dict) and row.get("event_id")
+    }
+
+
+def apply_source_body_correction(
+    final: dict[str, Any],
+    record: dict[str, Any] | None,
+) -> dict[str, Any]:
+    if not record:
+        return final
+    human_type = str(record.get("human_experience_type") or "unclear")
+    ai_role = str(record.get("ai_expressive_role") or "unclear")
+    evidence_status = str(record.get("evidence_status") or "insufficient")
+    configuration, human_direction, ai_direction, plain_label = derive_configuration(
+        human_type, ai_role, evidence_status
+    )
+    patterns, _ = normalize_relationship_patterns(
+        record.get("relationship_patterns"),
+        fallback_configuration=configuration,
+    )
+    distribution, distribution_explicit = normalize_distribution_signal(
+        record.get("distribution_signal")
+    )
+    public_signals = public_signals_from_patterns(
+        patterns,
+        configuration=configuration,
+        human_direction=human_direction,
+        evidence_status=evidence_status,
+        distribution_signal=distribution,
+    )
+    takeaway = str(record.get("public_takeaway") or "").strip()
+    return {
+        **final,
+        "reviewed": False,
+        "review_status": "source_body_qc_ai_assisted",
+        "configuration": configuration,
+        "plain_label": plain_label,
+        "technical_label": TECHNICAL_LABELS[configuration],
+        "human_experience_type": human_type,
+        "ai_expressive_role": ai_role,
+        "human_direction": human_direction,
+        "ai_direction": ai_direction,
+        "evidence_status": evidence_status,
+        "content_basis": str(record.get("content_basis") or "full_text_supplied_by_owner"),
+        "evidence_basis_summary": {
+            "source_count": 1,
+            "full_text_sources": 1,
+            "article_summary_sources": 0,
+            "snippet_sources": 0,
+            "headline_only_sources": 0,
+            "body_coverage": "owner_supplied_full_body",
+        },
+        "evidence_summary": takeaway,
+        "reasoning": str(record.get("reasoning") or takeaway).strip(),
+        "relationship_patterns": patterns,
+        "public_signals": public_signals,
+        "distribution_signal": distribution,
+        "public_takeaway": takeaway,
+        "multi_label_available": True,
+        "distribution_coded": distribution_explicit,
+        "signal_provenance": "owner_requested_ai_assisted_source_body_audit",
+    }
+
+
 def resolved_public_payload(
     row: dict[str, Any] | None,
     owner_record: dict[str, Any] | None = None,
+    source_body_record: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     final = final_payload_from_classification(row) if row else {
         "reviewed": False,
@@ -242,6 +325,8 @@ def resolved_public_payload(
         "human_direction": None,
         "ai_direction": None,
         "evidence_status": None,
+        "content_basis": "not_available",
+        "evidence_basis_summary": {},
         "story_country_iso3s": [],
         "evidence_summary": "",
         "reasoning": "",
@@ -262,6 +347,7 @@ def resolved_public_payload(
         "multi_label_available": False,
         "distribution_coded": False,
     }
+    final = apply_source_body_correction(final, source_body_record)
     if not owner_record:
         return final
 
@@ -310,14 +396,21 @@ def public_signal_summary(
     rows: dict[str, dict[str, Any]],
     expected_ids: list[str],
     owner_gold: dict[str, dict[str, Any]],
+    source_body_corrections: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
     pattern_counts = Counter()
     people_counts = Counter()
     explicit_multi_label_units = 0
     distribution_coded_units = 0
     classified_units = 0
+    body_coverage_counts = Counter()
+    not_clear_breakdown = Counter()
     for event_id in expected_ids:
-        final = resolved_public_payload(rows.get(event_id), owner_gold.get(event_id))
+        final = resolved_public_payload(
+            rows.get(event_id),
+            owner_gold.get(event_id),
+            source_body_corrections.get(event_id),
+        )
         if rows.get(event_id) is not None:
             classified_units += 1
         if final.get("multi_label_available"):
@@ -328,6 +421,13 @@ def public_signal_summary(
             pattern_counts[key] += int(bool((final.get("relationship_patterns") or {}).get(key)))
         for key, value in (final.get("public_signals") or {}).items():
             people_counts[key] += int(bool(value))
+        basis = final.get("evidence_basis_summary") or {}
+        body_coverage_counts[str(basis.get("body_coverage") or "not_recorded")] += 1
+        if (final.get("public_signals") or {}).get("not_clear_yet"):
+            if str(final.get("evidence_status") or "") == "insufficient":
+                not_clear_breakdown["not_enough_evidence"] += 1
+            else:
+                not_clear_breakdown["no_directional_people_change"] += 1
 
     expected = len(expected_ids)
     return {
@@ -356,6 +456,11 @@ def public_signal_summary(
         },
         "explicit_multi_label_units": explicit_multi_label_units,
         "distribution_coded_units": distribution_coded_units,
+        "body_coverage_counts": dict(sorted(body_coverage_counts.items())),
+        "not_clear_breakdown": {
+            "not_enough_evidence": int(not_clear_breakdown["not_enough_evidence"]),
+            "no_directional_people_change": int(not_clear_breakdown["no_directional_people_change"]),
+        },
         "overlap_note": "A development may contain more than one signal, so these counts do not have to add up to the weekly total.",
     }
 
@@ -400,11 +505,16 @@ def event_public_rows(
     event_ids: list[str],
     evidence: dict[str, dict[str, Any]],
     owner_gold: dict[str, dict[str, Any]],
+    source_body_corrections: dict[str, dict[str, Any]],
 ) -> list[dict[str, Any]]:
     result: list[dict[str, Any]] = []
     for event_id in event_ids:
         source = evidence.get(event_id, {})
-        final = resolved_public_payload(event_rows.get(event_id), owner_gold.get(event_id))
+        final = resolved_public_payload(
+            event_rows.get(event_id),
+            owner_gold.get(event_id),
+            source_body_corrections.get(event_id),
+        )
         result.append(
             {
                 "event_id": event_id,
@@ -422,6 +532,8 @@ def event_public_rows(
                 "human_direction": final["human_direction"],
                 "ai_direction": final["ai_direction"],
                 "evidence_status": final["evidence_status"],
+                "content_basis": final.get("content_basis"),
+                "evidence_basis_summary": final.get("evidence_basis_summary") or {},
                 "story_country_iso3s": final["story_country_iso3s"],
                 "evidence_summary": final["evidence_summary"],
                 "reasoning": final["reasoning"],
@@ -431,6 +543,7 @@ def event_public_rows(
                 "public_takeaway": final["public_takeaway"],
                 "multi_label_available": final["multi_label_available"],
                 "distribution_coded": final["distribution_coded"],
+                "signal_provenance": final.get("signal_provenance") or "model_classification",
                 "empowerment_secondary": {
                     "status": final["empowerment_status"],
                     "degree": final["empowerment_degree"],
@@ -547,9 +660,21 @@ def main() -> int:
     coverage_rows = latest_rows(client, release_id=release_id, lens="coverage", ids=article_ids)
     event_rows = latest_rows(client, release_id=release_id, lens="event", ids=event_ids)
     owner_gold = owner_gold_for_release(release_id)
+    source_body_corrections = source_body_corrections_for_release(release_id)
+    event_display_overrides = {
+        event_id: resolved_public_payload(
+            event_rows.get(event_id),
+            owner_gold.get(event_id),
+            source_body_corrections.get(event_id),
+        )
+        for event_id in event_ids
+        if event_id in event_rows
+    }
     coverage_summary = configuration_summary(coverage_rows, article_ids)
-    event_summary = configuration_summary(event_rows, event_ids)
-    people_signal_summary = public_signal_summary(event_rows, event_ids, owner_gold)
+    event_summary = configuration_summary(event_rows, event_ids, event_display_overrides)
+    people_signal_summary = public_signal_summary(
+        event_rows, event_ids, owner_gold, source_body_corrections
+    )
     coverage_empowerment = empowerment_secondary_summary(coverage_rows, article_ids)
     event_empowerment = empowerment_secondary_summary(event_rows, event_ids)
     event_complete = event_summary["reviewed_units"] == event_summary["expected_units"] and event_summary["expected_units"] > 0
@@ -604,12 +729,24 @@ def main() -> int:
         },
         "event": event_summary,
         "people_signals": people_signal_summary,
+        "source_body_qc": {
+            "review_file": (
+                f"validation/qc/{release_id}-source-body-audit.json"
+                if source_body_corrections
+                else None
+            ),
+            "reviewed_unit_count": len(source_body_corrections),
+            "method": "owner-requested AI-assisted full-body audit",
+            "owner_gold": False,
+        },
         "coverage": coverage_summary,
         "secondary_empowerment": {
             "event": event_empowerment,
             "coverage": coverage_empowerment,
         },
-        "evidence": event_public_rows(event_rows, event_ids, evidence, owner_gold),
+        "evidence": event_public_rows(
+            event_rows, event_ids, evidence, owner_gold, source_body_corrections
+        ),
         "technical_labels": TECHNICAL_LABELS,
     }
 

@@ -75,6 +75,10 @@ FIELDS = [
     "model_human_direction",
     "model_ai_direction",
     "model_evidence_status",
+    "model_content_basis",
+    "model_body_coverage",
+    "model_full_body_sources",
+    "model_fallback_sources",
     "model_evidence_summary",
     "model_reasoning",
     "model_review_status",
@@ -220,6 +224,11 @@ def rows_for_release(sym: dict[str, Any]) -> list[dict[str, Any]]:
         )
         distribution_signal, _ = normalize_distribution_signal(item.get("distribution_signal"))
         public_signals = item.get("public_signals") if isinstance(item.get("public_signals"), dict) else {}
+        evidence_basis = (
+            item.get("evidence_basis_summary")
+            if isinstance(item.get("evidence_basis_summary"), dict)
+            else {}
+        )
         if not public_signals:
             public_signals = public_signals_from_patterns(
                 patterns,
@@ -257,6 +266,13 @@ def rows_for_release(sym: dict[str, Any]) -> list[dict[str, Any]]:
             "model_human_direction": norm(item.get("human_direction")),
             "model_ai_direction": norm(item.get("ai_direction")),
             "model_evidence_status": norm(item.get("evidence_status")),
+            "model_content_basis": norm(item.get("content_basis")),
+            "model_body_coverage": norm(evidence_basis.get("body_coverage")),
+            "model_full_body_sources": int(evidence_basis.get("full_text_sources") or 0),
+            "model_fallback_sources": sum(
+                int(evidence_basis.get(key) or 0)
+                for key in ("article_summary_sources", "snippet_sources", "headline_only_sources")
+            ),
             "model_evidence_summary": norm(item.get("evidence_summary")),
             "model_reasoning": norm(item.get("reasoning")),
             "model_review_status": norm(item.get("review_status")),

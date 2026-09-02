@@ -262,6 +262,26 @@ def evidence_from_metadata(metadata: dict[str, Any]) -> tuple[str, str]:
     return "", "headline_only"
 
 
+def evidence_basis_summary(articles: list[dict[str, Any]]) -> dict[str, Any]:
+    counts: dict[str, int] = defaultdict(int)
+    for article in articles:
+        counts[str(article.get("content_basis") or "headline_only")] += 1
+    total = len(articles)
+    full = counts.get("full_text", 0)
+    return {
+        "source_count": total,
+        "full_text_sources": full,
+        "article_summary_sources": counts.get("article_summary", 0),
+        "snippet_sources": counts.get("headline_and_snippet", 0),
+        "headline_only_sources": counts.get("headline_only", 0),
+        "body_coverage": (
+            "all_sources" if total and full == total
+            else "some_sources" if full
+            else "no_full_body"
+        ),
+    }
+
+
 def article_ids_from_release(release: dict[str, Any]) -> list[str]:
     found: set[str] = set()
     for row in release.get("units", {}).get("coverage_articles", []) or []:
@@ -329,7 +349,10 @@ def load_articles(client: Client, article_ids: list[str]) -> dict[str, dict[str,
         metadata = parse_metadata(row.get("source_metadata"))
         evidence_text, content_basis = evidence_from_metadata(metadata)
         full_text = full_text_map.get(article_id) or {}
-        if not metadata.get("human_evidence_summary") and full_text.get("body_text"):
+        # Full publisher evidence always outranks a previously generated or
+        # discovery-time summary. Summaries remain the lawful fallback when a
+        # body could not be retained.
+        if full_text.get("body_text"):
             evidence_text = str(full_text["body_text"])
             content_basis = "full_text"
         result[article_id] = {
@@ -423,6 +446,7 @@ def release_units(
                         "release_id": release_id,
                         "period_start": period_start,
                         "period_end": period_end,
+                        "evidence_basis_summary": evidence_basis_summary([article]),
                     },
                 )
             )
@@ -463,6 +487,7 @@ def release_units(
                         "event_summary": event_summary,
                         "event_date": str(event.get("event_date") or period_end),
                         "content_basis": content_basis,
+                        "evidence_basis_summary": evidence_basis_summary(members),
                         "member_articles": members,
                     },
                 )
@@ -927,7 +952,11 @@ def insert_result(
         "topic": result["topic"],
         "geographic_scope": result["geographic_scope"],
         "country_iso3s": result["country_iso3s"],
-        "raw_output": result["raw_output"],
+        "raw_output": {
+            **result["raw_output"],
+            "input_evidence": unit.get("evidence_basis_summary") or {},
+            "content_basis": unit["content_basis"],
+        },
         "review_status": "pending",
         "updated_at": iso_z(utc_now()),
     }

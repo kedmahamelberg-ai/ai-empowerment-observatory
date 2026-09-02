@@ -485,6 +485,12 @@ def final_payload_from_classification(row: dict[str, Any]) -> dict[str, Any]:
             or ""
         ),
     )
+    raw_output = row.get("raw_output") if isinstance(row.get("raw_output"), dict) else {}
+    input_evidence = (
+        raw_output.get("input_evidence")
+        if isinstance(raw_output.get("input_evidence"), dict)
+        else {}
+    )
     return {
         "reviewed": reviewed,
         "review_status": row.get("review_status", "pending"),
@@ -498,6 +504,8 @@ def final_payload_from_classification(row: dict[str, Any]) -> dict[str, Any]:
         "human_direction": human_direction,
         "ai_direction": ai_direction,
         "evidence_status": evidence_status,
+        "content_basis": row.get("content_basis") or raw_output.get("content_basis") or "headline_only",
+        "evidence_basis_summary": input_evidence,
         "story_country_iso3s": row.get("final_story_country_iso3s") or row.get("country_iso3s") or [],
         "evidence_summary": row.get("final_evidence_summary") or row.get("model_summary") or "",
         "reasoning": row.get("final_reasoning") or row.get("model_summary") or "",
