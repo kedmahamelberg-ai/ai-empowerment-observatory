@@ -1,0 +1,48 @@
+{
+  "schema_version": "aieo_source_body_qc_v1",
+  "release_id": "2026-W35",
+  "reviewed_at": "2026-09-02T12:45:00Z",
+  "review_method": "owner_requested_ai_assisted_source_body_audit",
+  "provenance_note": "The Observatory owner supplied the article bodies and requested review of the not-clear classification. These are source-body corrections, not owner-adjudicated gold labels.",
+  "records": [
+    {
+      "event_id": "16fb7116-2b40-47e1-ae66-0fc7814a024a",
+      "title": "Artificial Intelligence: Ads Are Coming to ChatGPT in France",
+      "source_url": "https://www.lemonde.fr/economie/article/2026/08/24/intelligence-artificielle-les-publicites-arrivent-sur-chatgpt-en-france_6755543_3234.html",
+      "previous_configuration": "insufficient_evidence",
+      "content_basis": "full_text_supplied_by_owner",
+      "human_experience_type": "restriction",
+      "ai_expressive_role": "ai_expansion",
+      "evidence_status": "sufficient",
+      "distribution_signal": "not_shown",
+      "public_takeaway": "ChatGPT's ad rollout gives OpenAI a new revenue stream while free and low-cost users face targeted advertising inside the assistant.",
+      "reasoning": "The body establishes both sides of the relationship: OpenAI diversifies revenue, while users of the free and Go tiers are newly exposed to targeted advertising in a setting where trust and control are explicitly sensitive. The stated safeguards qualify the risk but do not make the development unclear."
+    },
+    {
+      "event_id": "fb7e6caf-1500-40aa-810d-c1702c407904",
+      "title": "Thomson Reuters launches proprietary AI model for legal work",
+      "source_url": "https://siliconangle.com/2026/08/24/thomson-reuters-launches-proprietary-ai-model-for-legal-work",
+      "previous_configuration": "ai_enabling_only",
+      "content_basis": "full_text_supplied_by_owner",
+      "human_experience_type": "extension",
+      "ai_expressive_role": "ai_expansion",
+      "evidence_status": "sufficient",
+      "distribution_signal": "not_shown",
+      "public_takeaway": "Legal professionals gain a specialized tool for document review and research, while Thomson Reuters expands its AI capability under expert oversight.",
+      "reasoning": "The body describes concrete professional gains through high-volume document review, domain knowledge, supported citations, expert oversight and data controls. It also describes expansion of the AI system into legal workflows. The human side is therefore established rather than unclear."
+    },
+    {
+      "event_id": "9fe18eeb-fd47-4eb4-ab2a-c00b61992673",
+      "title": "Introducing the AI Model ‘Harness’",
+      "source_url": "https://www.wsj.com/cio-journal/introducing-the-ai-model-harness-a638c65b",
+      "previous_configuration": "insufficient_evidence",
+      "content_basis": "full_text_supplied_by_owner",
+      "human_experience_type": "expansion",
+      "ai_expressive_role": "ai_extension",
+      "evidence_status": "sufficient",
+      "distribution_signal": "not_shown",
+      "public_takeaway": "Organizations gain more control, privacy and resilience by owning the software that directs their AI models.",
+      "reasoning": "The body explicitly says model harnesses can reduce dependence on one provider, keep workflows private, lower token costs and increase business resilience. The harness also extends what AI models can connect to and do. Both sides are therefore directionally established."
+    }
+  ]
+}
