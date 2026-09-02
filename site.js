@@ -1,8 +1,8 @@
 "use strict";
 
-import { initDiscoveryGlobe } from "/globe.js?v=6.0.0";
+import { initDiscoveryGlobe } from "/globe.js?v=6.1.0";
 
-const BUILD_ID = "6.0.0";
+const BUILD_ID = "6.1.0";
 const CURRENT_URL = "/data/releases/current.json";
 const SYMBIOSIS_URL = "/data/symbiosis/current.json";
 const COUNTRIES_URL = "/edu/countries.json";
@@ -46,6 +46,12 @@ function plural(value, singular, pluralForm = `${singular}s`) {
 function setText(id, value) {
   const element = document.getElementById(id);
   if (element) element.textContent = String(value ?? "—");
+}
+
+function formatPercent(value, total) {
+  const denominator = Number(total || 0);
+  if (!denominator) return "—";
+  return `${((Number(value || 0) / denominator) * 100).toFixed(1)}%`;
 }
 
 async function fetchJSON(url, optional = false) {
@@ -116,7 +122,6 @@ function plainSignalData(symbiosis, release) {
 function renderRelease(release) {
   const counts = releaseCounts(release);
   setText("release-badge", `This week · ${formatRange(release.period_start, release.period_end)}`);
-  setText("hero-summary", `${counts.articles} source pages became ${counts.events} distinct developments—and one clearer picture.`);
   setText("count-source-pages", counts.articles);
   setText("count-developments", counts.events);
   setText("count-first-time", counts.firstRecorded);
@@ -147,19 +152,22 @@ function renderSignals(signalData, release) {
   const counts = signalData?.people_signal_counts || {};
   const available = signalData?.availability || {};
   const cards = [
-    ["people_gaining", "signal-people-gaining", "status-people-gaining"],
-    ["people_losing_ground", "signal-people-losing", "status-people-losing"],
-    ["mixed_picture", "signal-mixed", "status-mixed"],
-    ["not_everyone_benefits", "signal-unequal", "status-unequal"],
-    ["not_clear_yet", "signal-unclear", "status-unclear"],
+    ["people_gaining", "signal-people-gaining", "percent-people-gaining", "status-people-gaining"],
+    ["people_losing_ground", "signal-people-losing", "percent-people-losing", "status-people-losing"],
+    ["mixed_picture", "signal-mixed", "percent-mixed", "status-mixed"],
+    ["not_everyone_benefits", "signal-unequal", "percent-unequal", "status-unequal"],
+    ["not_clear_yet", "signal-unclear", "percent-unclear", "status-unclear"],
   ];
-  cards.forEach(([key, countId, statusId]) => {
+  cards.forEach(([key, countId, percentId, statusId]) => {
     const card = document.querySelector(`[data-signal="${key}"]`);
     const ready = available[key] === true;
-    setText(countId, ready ? Number(counts[key] || 0) : "—");
+    const value = Number(counts[key] || 0);
+    setText(countId, ready ? value : "—");
+    setText(percentId, ready ? formatPercent(value, total) : "—");
     setText(statusId, ready ? `of ${total} developments` : "New count coming after review");
     card?.classList.toggle("is-pending", !ready);
   });
+  setText("signal-denominator", `${total} developments checked this week`);
   setText("week-takeaway", signalData ? takeawayCopy(counts, total) : "The people-first picture is still being prepared for this week.");
 
   const patterns = signalData?.relationship_pattern_counts || {};
