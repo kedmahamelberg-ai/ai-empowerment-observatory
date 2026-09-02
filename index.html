@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Empowerment Observatory | Less noise. More signal.</title>
-  <meta name="description" content="A clear weekly view of AI coverage, distinct developments, repeated attention, and human-AI relationship patterns.">
+  <title>AI Empowerment Observatory | What AI news means for people</title>
+  <meta name="description" content="A clear weekly view of who is gaining from AI, who is losing ground, and what is still not clear.">
   <link rel="canonical" href="https://observatory.hamelberg-ai.com/">
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@6.5.0/dist/maplibre-gl.css">
-  <link rel="stylesheet" href="/globe.css?v=5.9.1">
-  <link rel="stylesheet" href="/site.css?v=5.9.1">
+  <link rel="stylesheet" href="/globe.css?v=6.0.0">
+  <link rel="stylesheet" href="/site.css?v=6.0.0">
   <link rel="stylesheet" href="/analytics-consent.css">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96">
@@ -16,133 +16,108 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to the weekly signal</a>
+  <a class="skip-link" href="#main-content">Skip to this week's picture</a>
 
   <header class="site-header">
     <a class="brand" href="/" aria-label="AI Empowerment Observatory home">
       <span class="brand-mark" aria-hidden="true">AIEO</span>
       <span class="brand-copy">
         <strong>AI Empowerment Observatory</strong>
-        <small>A research initiative by Kedma Hamelberg</small>
+        <small>AI news, made easier to understand</small>
       </span>
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
     <nav id="main-nav" aria-label="Main navigation">
       <a href="/edu/">This week</a>
       <a href="/reports/">Reports</a>
-      <a href="/methodology/">Methodology</a>
+      <a href="/methodology/">How it works</a>
       <a href="/pro/">Pro</a>
-      <a class="nav-cta" href="#globe">Explore</a>
+      <a class="nav-cta" href="/edu/#evidence">Open the news</a>
     </nav>
   </header>
 
   <main id="main-content">
-    <section id="home-signal-tape" class="signal-tape" aria-label="Latest weekly changes">
-      <p class="loading-line">Loading the latest weekly comparison...</p>
-    </section>
-
-    <section class="hero-shell" aria-labelledby="hero-title">
-      <div class="hero-copy">
-        <p id="release-badge" class="eyebrow">Loading the current weekly release...</p>
-        <h1 id="hero-title">Less noise.<br><em>More signal.</em></h1>
-        <p id="hero-summary" class="hero-summary">Loading this week in one sentence...</p>
-
+    <section class="people-hero" aria-labelledby="hero-title">
+      <div class="hero-intro">
+        <p id="release-badge" class="eyebrow">Loading this week's news...</p>
+        <h1 id="hero-title">What is AI changing <em>for people?</em></h1>
+        <p id="hero-summary" class="hero-summary">Sorting the week's AI news into a picture you can use.</p>
         <div class="hero-actions">
-          <a class="button primary" href="/edu/">Open this week</a>
-          <a class="button secondary" href="/edu/#evidence">See the sources</a>
+          <a class="button primary" href="/edu/">Explore this week</a>
+          <a class="button quiet" href="/edu/#evidence">See every source</a>
         </div>
-
-        <div class="hero-facts">
-          <span id="hero-fact-new">Loading first-time developments...</span>
-          <span id="hero-fact-repeat">Loading recurring developments...</span>
-          <span id="hero-fact-review" hidden>Loading history-match review...</span>
-          <details class="info-popover">
-            <summary aria-label="Explain the weekly counts">i</summary>
-            <div class="info-card">
-              <strong>How the numbers fit together</strong>
-              <p id="hero-equation-coverage">Loading the coverage calculation.</p>
-              <p id="hero-equation-novelty">Loading the novelty calculation.</p>
-              <p>Coverage items are source pages. Developments are real-world occurrences after pages about the same thing are grouped together.</p>
-            </div>
-          </details>
-        </div>
+        <p class="overlap-note"><span aria-hidden="true">✦</span> One development can tell more than one story.</p>
       </div>
 
-      <div id="globe" class="hero-globe" aria-labelledby="globe-title">
-        <div class="globe-heading">
-          <div>
-            <p class="eyebrow">Discovery map</p>
-            <h2 id="globe-title">Where coverage was found</h2>
-          </div>
-          <details class="info-popover align-right">
-            <summary aria-label="Explain the discovery map">i</summary>
-            <div class="info-card">
-              <strong>Search market, not story location</strong>
-              <p>The globe shows the Google News market through which AIEO found a source. The reported development may concern another country or several countries.</p>
-            </div>
-          </details>
-        </div>
+      <div id="people-signal-board" class="people-signal-board" aria-live="polite">
+        <article class="people-card gaining" data-signal="people_gaining"><span class="signal-icon" aria-hidden="true">↑</span><div><p>People gaining</p><strong id="signal-people-gaining">—</strong></div><small>More ability, access, opportunity or control.</small><span id="status-people-gaining" class="signal-status">Loading</span></article>
+        <article class="people-card losing" data-signal="people_losing_ground"><span class="signal-icon" aria-hidden="true">↓</span><div><p>People losing ground</p><strong id="signal-people-losing">—</strong></div><small>Less control, weaker skills, lost opportunity or new risk.</small><span id="status-people-losing" class="signal-status">Loading</span></article>
+        <article class="people-card mixed" data-signal="mixed_picture"><span class="signal-icon" aria-hidden="true">↕</span><div><p>A mixed picture</p><strong id="signal-mixed">—</strong></div><small>The same story brings gains and downsides.</small><span id="status-mixed" class="signal-status">Loading</span></article>
+        <article class="people-card unequal" data-signal="not_everyone_benefits"><span class="signal-icon" aria-hidden="true">≠</span><div><p>Not everyone benefits</p><strong id="signal-unequal">—</strong></div><small>AI helps some people more than others.</small><span id="status-unequal" class="signal-status">Loading</span></article>
+        <article class="people-card unclear" data-signal="not_clear_yet"><span class="signal-icon" aria-hidden="true">?</span><div><p>Not clear yet</p><strong id="signal-unclear">—</strong></div><small>The news does not show enough yet to tell.</small><span id="status-unclear" class="signal-status">Loading</span></article>
+      </div>
+    </section>
 
+    <section class="week-takeaway" aria-label="This week's takeaway">
+      <span>This week in one sentence</span>
+      <p id="week-takeaway">Loading the clearest takeaway...</p>
+    </section>
+
+    <section class="evidence-base" aria-labelledby="evidence-base-title">
+      <div class="section-title-row">
+        <div><p class="eyebrow">What sits behind the picture</p><h2 id="evidence-base-title">The week, counted once</h2></div>
+        <a class="text-link" href="/edu/#evidence">Open the developments →</a>
+      </div>
+      <div class="count-row">
+        <article><strong id="count-source-pages">—</strong><span>source pages checked</span></article>
+        <article><strong id="count-developments">—</strong><span>distinct developments</span></article>
+        <article><strong id="count-first-time">—</strong><span>first recorded here</span></article>
+        <article><strong id="count-recurring">—</strong><span>seen before</span></article>
+        <article id="count-review-card"><strong id="count-review">—</strong><span>history links being checked</span></article>
+      </div>
+      <p id="count-equation" class="count-note">Loading how the counts fit together...</p>
+    </section>
+
+    <section class="movement-section" aria-labelledby="movement-title">
+      <div class="section-title-row">
+        <div><p class="eyebrow">A closer look</p><h2 id="movement-title">How are people and AI moving together?</h2></div>
+        <p id="movement-scope" class="section-side-note">Loading...</p>
+      </div>
+      <div id="movement-grid" class="movement-grid" aria-live="polite">
+        <article class="movement-card together"><div class="movement-arrows"><span>People ↑</span><span>AI →</span></div><strong id="pattern-together">—</strong><h3>People gain as AI moves forward</h3></article>
+        <article class="movement-card people-down"><div class="movement-arrows"><span>People ↓</span><span>AI →</span></div><strong id="pattern-people-down">—</strong><h3>AI moves forward while people lose ground</h3></article>
+        <article class="movement-card ai-held"><div class="movement-arrows"><span>People ↑</span><span>AI ↓</span></div><strong id="pattern-ai-held">—</strong><h3>People gain when AI is held back</h3></article>
+        <article class="movement-card both-down"><div class="movement-arrows"><span>People ↓</span><span>AI ↓</span></div><strong id="pattern-both-down">—</strong><h3>People and AI both run into trouble</h3></article>
+      </div>
+      <p class="overlap-explainer">These are developments containing each pattern. The cards may overlap, so they are counts—not parts of a pie.</p>
+    </section>
+
+    <section id="globe" class="map-section" aria-labelledby="globe-title">
+      <div class="map-copy">
+        <p class="eyebrow">Where the sources were found</p>
+        <h2 id="globe-title">Look beyond one news bubble.</h2>
+        <p>AIEO searches across several news markets. The map shows where a source was found, which may differ from where the story happened.</p>
+        <div id="market-buttons" class="market-buttons" aria-label="Choose a news market"></div>
+        <article id="market-card" class="market-card" aria-live="polite"><div><strong>Choose a market</strong><p>See the coverage found through that search.</p></div><a class="text-link" href="/edu/#evidence">All evidence</a></article>
+      </div>
+      <div class="map-visual">
         <div class="globe-stage home-globe-stage">
-          <div id="home-globe" class="globe-canvas" aria-label="Interactive globe of AIEO discovery markets"></div>
-          <div class="globe-topline">
-            <span id="home-globe-prompt" class="globe-prompt">Drag the globe or choose a market</span>
-            <button id="home-globe-toggle" class="globe-toggle" type="button" aria-pressed="true">Pause</button>
-          </div>
-          <div id="home-globe-fallback" class="globe-fallback" hidden>The map could not load. Choose a market below.</div>
+          <div id="home-globe" class="globe-canvas" aria-label="Interactive globe of AIEO news markets"></div>
+          <div class="globe-topline"><span id="home-globe-prompt" class="globe-prompt">Drag the globe or choose a market</span><button id="home-globe-toggle" class="globe-toggle" type="button" aria-pressed="true">Pause</button></div>
+          <div id="home-globe-fallback" class="globe-fallback" hidden>The map could not load. Choose a market beside it.</div>
         </div>
-        <div id="market-buttons" class="market-buttons" aria-label="Choose a discovery market"></div>
-        <article id="market-card" class="market-card" aria-live="polite">
-          <div><strong>Choose a market</strong><p>See the coverage found through that search.</p></div>
-          <a id="market-evidence-cta" class="text-link" href="/edu/#evidence">All evidence</a>
-        </article>
       </div>
     </section>
 
-    <section id="relationship" class="relationship-strip" aria-labelledby="relationship-title">
-      <div class="relationship-heading">
-        <div>
-          <p class="eyebrow">Human-AI relationship signal</p>
-          <h2 id="relationship-title">Who gained and who was constrained?</h2>
-        </div>
-        <div class="relationship-denominator">
-          <span id="relationship-denominator">Loading relationship evidence...</span>
-          <details class="info-popover align-right">
-            <summary aria-label="Explain relationship percentages">i</summary>
-            <div class="info-card">
-              <strong>How to read this strip</strong>
-              <p>The four percentages use only developments where the source evidence supports a direction for both the people side and the AI or operator side.</p>
-              <p>One-sided, no-clear, ambiguous, and insufficient cases remain separate and are not forced into the four patterns.</p>
-            </div>
-          </details>
-        </div>
-      </div>
-
-      <div id="relationship-ticker" class="relationship-ticker" aria-live="polite">
-        <p class="loading-line">Loading the relationship patterns...</p>
-      </div>
-      <p id="relationship-other-summary" class="relationship-other-summary"></p>
-    </section>
-
-    <section class="home-shortcuts" aria-label="Next steps">
-      <a href="/edu/#evidence"><span>Evidence</span><strong>Open the developments and sources</strong></a>
-      <a href="/edu/#history"><span>History</span><strong>Compare the latest standardized weeks</strong></a>
-      <a href="/report/"><span>Monthly Pulse</span><strong>Receive one concise evidence brief</strong></a>
+    <section class="home-shortcuts" aria-label="Keep exploring">
+      <a href="/edu/#evidence"><span>Read</span><strong>The developments behind this picture</strong><b>→</b></a>
+      <a href="/edu/#history"><span>Compare</span><strong>What changed from the week before</strong><b>→</b></a>
+      <a href="/methodology/"><span>Understand</span><strong>How the Observatory makes sense of AI news</strong><b>→</b></a>
     </section>
   </main>
 
-  <footer>
-    <span>© 2026 AI Empowerment Observatory</span>
-    <nav aria-label="Footer navigation">
-      <a href="/edu/">This week</a>
-      <a href="/reports/">Reports</a>
-      <a href="/methodology/">Methodology</a>
-      <a href="/privacy/">Privacy</a>
-      <a href="mailto:kedma@hamelberg-ai.com">Contact</a>
-    </nav>
-  </footer>
-
-  <script type="module" src="/site.js?v=5.10.0"></script>
+  <footer><span>© 2026 AI Empowerment Observatory</span><nav aria-label="Footer navigation"><a href="/edu/">This week</a><a href="/reports/">Reports</a><a href="/methodology/">How it works</a><a href="/privacy/">Privacy</a><a href="mailto:kedma@hamelberg-ai.com">Contact</a></nav></footer>
+  <script type="module" src="/site.js?v=6.0.0"></script>
   <script src="/analytics.js"></script>
 </body>
 </html>

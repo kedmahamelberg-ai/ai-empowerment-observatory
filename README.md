@@ -1,2 +1,8 @@
-# ai-empowerment-observatory
-A source-backed interactive map of how AI developments are changing human capability, creativity, autonomy, and public influence around the world.
+# AI Empowerment Observatory
+
+A source-linked weekly view of what AI news means for people: who is gaining,
+who is losing ground, where the picture is mixed, who may be left behind, and
+what is still not clear.
+
+Start with `START-HERE-REDESIGN-2026-09-02.md` for installation, publication,
+and owner-QC instructions.
