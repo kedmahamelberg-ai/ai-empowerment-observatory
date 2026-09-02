@@ -18,6 +18,12 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+from symbiosis_common import (
+    normalize_distribution_signal,
+    normalize_relationship_patterns,
+    public_signals_from_patterns,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 SYMBIOSIS_DIR = ROOT / "data" / "symbiosis"
 RELEASES_DIR = ROOT / "data" / "releases"
@@ -58,6 +64,12 @@ FIELDS = [
     "qa_note",
     "model_configuration",
     "model_plain_label",
+    "model_relationship_patterns",
+    "model_people_gaining",
+    "model_people_losing_ground",
+    "model_mixed_picture",
+    "model_unequal_benefits",
+    "model_not_clear_yet",
     "model_human_experience_type",
     "model_ai_expressive_role",
     "model_human_direction",
@@ -67,9 +79,12 @@ FIELDS = [
     "model_reasoning",
     "model_review_status",
     "model_reviewed",
-    "HUMAN_human_experience_type",
-    "HUMAN_ai_expressive_role",
-    "HUMAN_evidence_status",
+    "HUMAN_enough_to_judge",
+    "HUMAN_people_gaining",
+    "HUMAN_people_losing_ground",
+    "HUMAN_ai_advancing",
+    "HUMAN_ai_limited",
+    "HUMAN_unequal_benefits",
     "HUMAN_reasoning",
     "HUMAN_include_in_gold",
     "HUMAN_reviewer_name",
@@ -198,6 +213,21 @@ def rows_for_release(sym: dict[str, Any]) -> list[dict[str, Any]]:
         event_id = str(item.get("event_id") or "")
         sources = [source for source in (item.get("sources") or []) if isinstance(source, dict)]
         priority, note = audit_note(item)
+        configuration = str(item.get("configuration") or "")
+        patterns, _ = normalize_relationship_patterns(
+            item.get("relationship_patterns"),
+            fallback_configuration=configuration,
+        )
+        distribution_signal, _ = normalize_distribution_signal(item.get("distribution_signal"))
+        public_signals = item.get("public_signals") if isinstance(item.get("public_signals"), dict) else {}
+        if not public_signals:
+            public_signals = public_signals_from_patterns(
+                patterns,
+                configuration=configuration,
+                human_direction=str(item.get("human_direction") or ""),
+                evidence_status=str(item.get("evidence_status") or ""),
+                distribution_signal=distribution_signal,
+            )
         row = {
             "release_id": release_id,
             "event_id": event_id,
@@ -209,11 +239,19 @@ def rows_for_release(sym: dict[str, Any]) -> list[dict[str, Any]]:
             "source_headlines": " | ".join(norm(source.get("headline")) for source in sources),
             "source_urls": " | ".join(norm(source.get("url")) for source in sources),
             "novelty_status": norm(item.get("novelty_status")),
-            "qc_stratum": qc_stratum(str(item.get("configuration") or "")),
+            "qc_stratum": qc_stratum(configuration),
             "qa_priority": priority,
             "qa_note": note,
-            "model_configuration": norm(item.get("configuration")),
+            "model_configuration": norm(configuration),
             "model_plain_label": norm(item.get("plain_label")),
+            "model_relationship_patterns": " | ".join(
+                key for key, present in patterns.items() if present
+            ),
+            "model_people_gaining": "yes" if public_signals.get("people_gaining") else "no",
+            "model_people_losing_ground": "yes" if public_signals.get("people_losing_ground") else "no",
+            "model_mixed_picture": "yes" if public_signals.get("mixed_picture") else "no",
+            "model_unequal_benefits": "yes" if public_signals.get("not_everyone_benefits") else "no",
+            "model_not_clear_yet": "yes" if public_signals.get("not_clear_yet") else "no",
             "model_human_experience_type": norm(item.get("human_experience_type")),
             "model_ai_expressive_role": norm(item.get("ai_expressive_role")),
             "model_human_direction": norm(item.get("human_direction")),
@@ -223,9 +261,12 @@ def rows_for_release(sym: dict[str, Any]) -> list[dict[str, Any]]:
             "model_reasoning": norm(item.get("reasoning")),
             "model_review_status": norm(item.get("review_status")),
             "model_reviewed": bool(item.get("reviewed")),
-            "HUMAN_human_experience_type": "",
-            "HUMAN_ai_expressive_role": "",
-            "HUMAN_evidence_status": "",
+            "HUMAN_enough_to_judge": "",
+            "HUMAN_people_gaining": "",
+            "HUMAN_people_losing_ground": "",
+            "HUMAN_ai_advancing": "",
+            "HUMAN_ai_limited": "",
+            "HUMAN_unequal_benefits": "",
             "HUMAN_reasoning": "",
             "HUMAN_include_in_gold": "yes",
             "HUMAN_reviewer_name": "",
@@ -319,7 +360,7 @@ def main() -> int:
         writer.writerows(selected)
 
     meta = {
-        "schema_version": "aieo_symbiosis_qc_export_v1",
+        "schema_version": "aieo_symbiosis_qc_export_v2",
         "release_id": release_id,
         "mode": args.mode,
         "seed": seed,
@@ -327,7 +368,10 @@ def main() -> int:
         "exported_rows": len(selected),
         "model_counts": (sym.get("event") or {}).get("display_configuration_counts") or {},
         "instructions": {
-            "blind_review": "Code HUMAN_human_experience_type, HUMAN_ai_expressive_role, and HUMAN_evidence_status from the source evidence before comparing with the model columns.",
+            "blind_review": (
+                "Use the six plain-language HUMAN questions without looking at the model columns. "
+                "A development may contain more than one relationship pattern."
+            ),
             "gold": "Keep HUMAN_include_in_gold=yes only for rows you personally adjudicated.",
         },
         "csv": str(csv_path.relative_to(ROOT) if csv_path.is_relative_to(ROOT) else csv_path),

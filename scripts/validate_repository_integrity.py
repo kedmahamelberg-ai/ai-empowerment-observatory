@@ -11,6 +11,10 @@ WORKFLOWS = ROOT / ".github" / "workflows"
 FORBIDDEN_PUBLIC = (
     "Model-coded provisional signal",
     "model-coded weekly lens",
+    "AI-benefiting parasitism",
+    "Human-benefiting parasitism",
+    "Competition or co-constraint",
+    "Who gained and who was constrained?",
 )
 
 REQUIRED_ACTION_MINIMUMS = {

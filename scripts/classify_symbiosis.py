@@ -656,7 +656,9 @@ def owner_gold_calibration_block(*, lens: str, evidence: str, limit: int = 4) ->
                 (
                     f"Example {index} labels: human={final.get('human_experience_type')}; "
                     f"AI={final.get('ai_expressive_role')}; evidence_status={final.get('evidence_status')}; "
-                    f"configuration={final.get('configuration')}"
+                    f"configuration={final.get('configuration')}; "
+                    f"relationship_patterns={json.dumps(final.get('relationship_patterns') or {}, sort_keys=True)}; "
+                    f"distribution_signal={final.get('distribution_signal') or 'not_shown'}"
                 ),
             ]
         )
@@ -720,12 +722,27 @@ DECISION BOUNDARY POLICY
 12. When a source reports that human work, data, likeness, or creative output feeds AI training without consent, control, or compensation, human restriction or reduction and AI expansion may be supported.
 13. For a lawsuit event, the filing itself may show human extension or expansion while the AI side remains neutral unless the filing has already constrained the system or operator.
 14. Do not use the search market as story location.
-15. Return only one JSON object.{calibration_section}
+15. A development can contain several relationship patterns at once. Mark every pattern directly supported by the evidence. Do not force the whole development into one compromise pattern.
+16. Mark unequal human outcomes only when the evidence says that some groups benefit more, face different conditions, or are put at a disadvantage relative to others.
+17. Write public_takeaway as one short sentence in everyday language. State what the development means for people; avoid method labels and academic terminology.
+18. Return only one JSON object.{calibration_section}
 
 Required keys:
 ai_relevant, evidence_status, relational_signal, human_experience_type,
 ai_expressive_role, human_reasoning, ai_reasoning, summary, confidence,
-topic, geographic_scope, country_iso3s.
+topic, geographic_scope, country_iso3s, relationship_patterns,
+distribution_signal, public_takeaway.
+
+relationship_patterns must be an object with exactly these boolean keys:
+- mutualism: AI works, spreads, or grows while people gain
+- ai_benefiting_parasitism: AI works, spreads, or grows while people lose ground
+- human_benefiting_parasitism: people gain while AI is limited, corrected, blocked, or fails
+- competition: people lose ground while AI is limited, corrected, blocked, or fails
+
+More than one relationship_patterns value may be true. If the evidence is insufficient,
+all four values must be false.
+
+Allowed distribution_signal values: broadly_shared, unequal, not_shown, unclear.
 
 Allowed relational_signal values: complete, human_only, ai_only, none, unclear.
 Allowed geographic_scope values: country, multi_country, global, unclear.
@@ -770,7 +787,13 @@ def call_classifier(*, lens: str, evidence: str, content_basis: str) -> dict[str
             text = str(response.json()["choices"][0]["message"]["content"])
             raw = extract_json(text)
             normalized = validate_model_payload(raw)
-            normalized["raw_output"] = raw
+            normalized["raw_output"] = {
+                "model_response": raw,
+                "relationship_patterns": normalized["relationship_patterns"],
+                "distribution_signal": normalized["distribution_signal"],
+                "public_takeaway": normalized["public_takeaway"],
+                "public_signal_schema_version": normalized["schema_version"],
+            }
             normalized["structured_output_mode"] = name
             return normalized
         except Exception as exc:

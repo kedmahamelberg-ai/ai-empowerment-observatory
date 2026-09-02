@@ -12,8 +12,9 @@ from pathlib import Path
 from typing import Any
 
 CODEBOOK_VERSION = "aieo_news_symbiosis_v0.1"
-CLASSIFIER_VERSION = "symbiosis_news_v0.2"
+CLASSIFIER_VERSION = "symbiosis_news_v0.3"
 EVIDENCE_POLICY_VERSION = "aieo_evidence_basis_v3"
+PUBLIC_SIGNAL_SCHEMA_VERSION = "aieo_people_signals_v1"
 
 HUMAN_TYPES = {
     "extension",
@@ -177,6 +178,162 @@ PARTIALS = {
     "ai_constraining_only",
 }
 
+RELATIONSHIP_PATTERN_KEYS = (
+    "mutualism",
+    "ai_benefiting_parasitism",
+    "human_benefiting_parasitism",
+    "competition",
+)
+
+DISTRIBUTION_SIGNALS = {
+    "broadly_shared",
+    "unequal",
+    "not_shown",
+    "unclear",
+}
+
+
+def _boolean(value: Any) -> bool:
+    if isinstance(value, bool):
+        return value
+    return str(value or "").strip().casefold() in {"1", "true", "yes", "y", "present"}
+
+
+def normalize_relationship_patterns(
+    value: Any,
+    *,
+    fallback_configuration: str | None = None,
+) -> tuple[dict[str, bool], bool]:
+    """Normalize multi-label pattern flags and report whether they were explicit.
+
+    Older releases contain one configuration per development. They remain
+    readable through the fallback while newer classifier and owner-QC records
+    may mark several patterns in the same development.
+    """
+    patterns = {key: False for key in RELATIONSHIP_PATTERN_KEYS}
+    explicit = False
+    if isinstance(value, dict):
+        explicit = any(key in value for key in RELATIONSHIP_PATTERN_KEYS)
+        for key in RELATIONSHIP_PATTERN_KEYS:
+            if key in value:
+                patterns[key] = _boolean(value.get(key))
+    elif isinstance(value, (list, tuple, set)):
+        explicit = True
+        selected = {str(item or "").strip() for item in value}
+        for key in RELATIONSHIP_PATTERN_KEYS:
+            patterns[key] = key in selected
+    elif isinstance(value, str) and value.strip():
+        explicit = True
+        selected = {item.strip() for item in value.split("|") if item.strip()}
+        for key in RELATIONSHIP_PATTERN_KEYS:
+            patterns[key] = key in selected
+
+    if not explicit and fallback_configuration in patterns:
+        patterns[str(fallback_configuration)] = True
+    return patterns, explicit
+
+
+def normalize_distribution_signal(value: Any) -> tuple[str, bool]:
+    raw = str(value or "").strip().casefold().replace(" ", "_")
+    aliases = {
+        "yes": "unequal",
+        "not_everyone_benefits": "unequal",
+        "some_more_than_others": "unequal",
+        "some_people_benefit_more": "unequal",
+        "no": "not_shown",
+        "not_evident": "not_shown",
+        "not_applicable": "not_shown",
+        "equal": "broadly_shared",
+        "shared": "broadly_shared",
+        "not_sure": "unclear",
+    }
+    normalized = aliases.get(raw, raw)
+    if normalized in DISTRIBUTION_SIGNALS:
+        return normalized, True
+    return "not_shown", False
+
+
+def public_signals_from_patterns(
+    patterns: dict[str, bool],
+    *,
+    configuration: str | None,
+    human_direction: str | None,
+    evidence_status: str | None,
+    distribution_signal: str,
+) -> dict[str, bool]:
+    gaining = bool(
+        patterns.get("mutualism")
+        or patterns.get("human_benefiting_parasitism")
+        or configuration == "human_enabling_only"
+        or (not any(patterns.values()) and human_direction == "enabling")
+    )
+    losing = bool(
+        patterns.get("ai_benefiting_parasitism")
+        or patterns.get("competition")
+        or configuration == "human_constraining_only"
+        or (not any(patterns.values()) and human_direction == "constraining")
+    )
+    return {
+        "people_gaining": gaining,
+        "people_losing_ground": losing,
+        "mixed_picture": gaining and losing,
+        "not_everyone_benefits": distribution_signal == "unequal",
+        "not_clear_yet": not gaining and not losing,
+    }
+
+
+def public_signal_payload(
+    *,
+    raw_payload: dict[str, Any] | None,
+    configuration: str | None,
+    human_direction: str | None,
+    evidence_status: str | None,
+    public_takeaway: str = "",
+) -> dict[str, Any]:
+    raw = raw_payload if isinstance(raw_payload, dict) else {}
+    nested = raw.get("model_response") if isinstance(raw.get("model_response"), dict) else {}
+    pattern_value = (
+        raw.get("relationship_patterns")
+        if "relationship_patterns" in raw
+        else nested.get("relationship_patterns")
+    )
+    patterns, explicit_patterns = normalize_relationship_patterns(
+        pattern_value,
+        fallback_configuration=configuration,
+    )
+    distribution_value = (
+        raw.get("distribution_signal")
+        if "distribution_signal" in raw
+        else raw.get("human_distribution")
+        if "human_distribution" in raw
+        else nested.get("distribution_signal", nested.get("human_distribution"))
+    )
+    distribution_signal, distribution_explicit = normalize_distribution_signal(distribution_value)
+    takeaway = str(
+        raw.get("public_takeaway")
+        or nested.get("public_takeaway")
+        or public_takeaway
+        or ""
+    ).strip()
+    if evidence_status == "insufficient":
+        patterns = {key: False for key in RELATIONSHIP_PATTERN_KEYS}
+    signals = public_signals_from_patterns(
+        patterns,
+        configuration=configuration,
+        human_direction=human_direction,
+        evidence_status=evidence_status,
+        distribution_signal=distribution_signal,
+    )
+    return {
+        "schema_version": PUBLIC_SIGNAL_SCHEMA_VERSION,
+        "relationship_patterns": patterns,
+        "public_signals": signals,
+        "distribution_signal": distribution_signal,
+        "public_takeaway": takeaway,
+        "multi_label_available": explicit_patterns,
+        "distribution_coded": distribution_explicit,
+    }
+
 
 def derive_configuration(
     human_type: str,
@@ -275,6 +432,13 @@ def validate_model_payload(payload: dict[str, Any]) -> dict[str, Any]:
         if str(value).strip()
     ]
     confidence = max(0.0, min(1.0, float(payload.get("confidence", 0.0))))
+    public_layer = public_signal_payload(
+        raw_payload=payload,
+        configuration=configuration,
+        human_direction=human_direction,
+        evidence_status=evidence_status,
+        public_takeaway=str(payload.get("public_takeaway") or payload.get("summary") or ""),
+    )
 
     return {
         "ai_relevant": bool(payload.get("ai_relevant", True)),
@@ -295,6 +459,7 @@ def validate_model_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "geographic_scope": str(payload.get("geographic_scope") or "unclear").strip(),
         "country_iso3s": countries,
         "model_relational_signal": model_signal,
+        **public_layer,
     }
 
 
@@ -309,6 +474,17 @@ def final_payload_from_classification(row: dict[str, Any]) -> dict[str, Any]:
     human_direction = row.get("final_human_direction") if reviewed else row.get("model_human_direction")
     ai_direction = row.get("final_ai_direction") if reviewed else row.get("model_ai_direction")
     evidence_status = row.get("final_evidence_status") if reviewed else row.get("evidence_status")
+    public_layer = public_signal_payload(
+        raw_payload=row.get("raw_output") if isinstance(row.get("raw_output"), dict) else {},
+        configuration=str(configuration or ""),
+        human_direction=str(human_direction or ""),
+        evidence_status=str(evidence_status or ""),
+        public_takeaway=str(
+            row.get("final_evidence_summary")
+            or row.get("model_summary")
+            or ""
+        ),
+    )
     return {
         "reviewed": reviewed,
         "review_status": row.get("review_status", "pending"),
@@ -328,4 +504,5 @@ def final_payload_from_classification(row: dict[str, Any]) -> dict[str, Any]:
         "empowerment_status": row.get("final_empowerment_status"),
         "empowerment_degree": row.get("final_empowerment_degree"),
         "empowerment_reasoning": row.get("final_empowerment_reasoning"),
+        **public_layer,
     }

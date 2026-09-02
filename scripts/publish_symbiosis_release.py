@@ -20,8 +20,13 @@ from symbiosis_common import (
     CORE_FOUR,
     PARTIALS,
     PLAIN_LABELS,
+    PUBLIC_SIGNAL_SCHEMA_VERSION,
+    RELATIONSHIP_PATTERN_KEYS,
     TECHNICAL_LABELS,
     final_payload_from_classification,
+    normalize_distribution_signal,
+    normalize_relationship_patterns,
+    public_signals_from_patterns,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,6 +34,7 @@ RELEASES_DIR = ROOT / "data" / "releases"
 OUTPUT_DIR = ROOT / "data" / "symbiosis"
 CURRENT_PATH = OUTPUT_DIR / "current.json"
 INDEX_PATH = OUTPUT_DIR / "index.json"
+OWNER_GOLD_PATH = ROOT / "validation" / "symbiosis-owner-gold.json"
 
 
 class PublishError(RuntimeError):
@@ -207,6 +213,153 @@ def configuration_summary(rows: dict[str, dict[str, Any]], expected_ids: list[st
     }
 
 
+def owner_gold_for_release(release_id: str) -> dict[str, dict[str, Any]]:
+    if not OWNER_GOLD_PATH.exists():
+        return {}
+    payload = read_json(OWNER_GOLD_PATH)
+    result: dict[str, dict[str, Any]] = {}
+    for record in payload.get("records") or []:
+        if not isinstance(record, dict) or str(record.get("release_id") or "") != release_id:
+            continue
+        event_id = str(record.get("event_id") or "").strip()
+        if event_id:
+            result[event_id] = record
+    return result
+
+
+def resolved_public_payload(
+    row: dict[str, Any] | None,
+    owner_record: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    final = final_payload_from_classification(row) if row else {
+        "reviewed": False,
+        "review_status": "not_classified",
+        "configuration": None,
+        "plain_label": "Relationship review pending",
+        "technical_label": "Relationship review pending",
+        "human_experience_type": None,
+        "ai_expressive_role": None,
+        "human_direction": None,
+        "ai_direction": None,
+        "evidence_status": None,
+        "story_country_iso3s": [],
+        "evidence_summary": "",
+        "reasoning": "",
+        "empowerment_status": None,
+        "empowerment_degree": None,
+        "empowerment_reasoning": None,
+        "schema_version": PUBLIC_SIGNAL_SCHEMA_VERSION,
+        "relationship_patterns": {key: False for key in RELATIONSHIP_PATTERN_KEYS},
+        "public_signals": {
+            "people_gaining": False,
+            "people_losing_ground": False,
+            "mixed_picture": False,
+            "not_everyone_benefits": False,
+            "not_clear_yet": True,
+        },
+        "distribution_signal": "not_shown",
+        "public_takeaway": "",
+        "multi_label_available": False,
+        "distribution_coded": False,
+    }
+    if not owner_record:
+        return final
+
+    owner_final = owner_record.get("final") if isinstance(owner_record.get("final"), dict) else {}
+    configuration = str(owner_final.get("configuration") or final.get("configuration") or "")
+    human_direction = str(owner_final.get("human_direction") or final.get("human_direction") or "")
+    evidence_status = str(owner_final.get("evidence_status") or final.get("evidence_status") or "")
+    patterns, explicit = normalize_relationship_patterns(
+        owner_final.get("relationship_patterns"),
+        fallback_configuration=configuration,
+    )
+    distribution, distribution_explicit = normalize_distribution_signal(
+        owner_final.get("distribution_signal")
+    )
+    public_signals = public_signals_from_patterns(
+        patterns,
+        configuration=configuration,
+        human_direction=human_direction,
+        evidence_status=evidence_status,
+        distribution_signal=distribution,
+    )
+    return {
+        **final,
+        "reviewed": True,
+        "review_status": "owner_manual_qc",
+        "configuration": configuration or final.get("configuration"),
+        "human_direction": human_direction or final.get("human_direction"),
+        "ai_direction": owner_final.get("ai_direction") or final.get("ai_direction"),
+        "evidence_status": evidence_status or final.get("evidence_status"),
+        "relationship_patterns": patterns,
+        "public_signals": public_signals,
+        "distribution_signal": distribution,
+        "public_takeaway": str(
+            owner_final.get("public_takeaway")
+            or owner_record.get("review_reasoning")
+            or final.get("public_takeaway")
+            or ""
+        ).strip(),
+        "multi_label_available": explicit,
+        "distribution_coded": distribution_explicit,
+        "signal_provenance": "owner_manual_qc",
+    }
+
+
+def public_signal_summary(
+    rows: dict[str, dict[str, Any]],
+    expected_ids: list[str],
+    owner_gold: dict[str, dict[str, Any]],
+) -> dict[str, Any]:
+    pattern_counts = Counter()
+    people_counts = Counter()
+    explicit_multi_label_units = 0
+    distribution_coded_units = 0
+    classified_units = 0
+    for event_id in expected_ids:
+        final = resolved_public_payload(rows.get(event_id), owner_gold.get(event_id))
+        if rows.get(event_id) is not None:
+            classified_units += 1
+        if final.get("multi_label_available"):
+            explicit_multi_label_units += 1
+        if final.get("distribution_coded"):
+            distribution_coded_units += 1
+        for key in RELATIONSHIP_PATTERN_KEYS:
+            pattern_counts[key] += int(bool((final.get("relationship_patterns") or {}).get(key)))
+        for key, value in (final.get("public_signals") or {}).items():
+            people_counts[key] += int(bool(value))
+
+    expected = len(expected_ids)
+    return {
+        "schema_version": PUBLIC_SIGNAL_SCHEMA_VERSION,
+        "expected_units": expected,
+        "classified_units": classified_units,
+        "relationship_pattern_counts": {
+            key: int(pattern_counts[key]) for key in RELATIONSHIP_PATTERN_KEYS
+        },
+        "people_signal_counts": {
+            key: int(people_counts[key])
+            for key in (
+                "people_gaining",
+                "people_losing_ground",
+                "mixed_picture",
+                "not_everyone_benefits",
+                "not_clear_yet",
+            )
+        },
+        "availability": {
+            "people_gaining": classified_units == expected and expected > 0,
+            "people_losing_ground": classified_units == expected and expected > 0,
+            "mixed_picture": explicit_multi_label_units == expected and expected > 0,
+            "not_everyone_benefits": distribution_coded_units == expected and expected > 0,
+            "not_clear_yet": classified_units == expected and expected > 0,
+        },
+        "explicit_multi_label_units": explicit_multi_label_units,
+        "distribution_coded_units": distribution_coded_units,
+        "overlap_note": "A development may contain more than one signal, so these counts do not have to add up to the weekly total.",
+    }
+
+
 def empowerment_secondary_summary(rows: dict[str, dict[str, Any]], expected_ids: list[str]) -> dict[str, Any]:
     finals = [
         final_payload_from_classification(rows[unit_id])
@@ -246,29 +399,12 @@ def event_public_rows(
     event_rows: dict[str, dict[str, Any]],
     event_ids: list[str],
     evidence: dict[str, dict[str, Any]],
+    owner_gold: dict[str, dict[str, Any]],
 ) -> list[dict[str, Any]]:
     result: list[dict[str, Any]] = []
     for event_id in event_ids:
         source = evidence.get(event_id, {})
-        row = event_rows.get(event_id)
-        final = final_payload_from_classification(row) if row else {
-            "reviewed": False,
-            "review_status": "not_classified",
-            "configuration": None,
-            "plain_label": "Relationship review pending",
-            "technical_label": "Relationship review pending",
-            "human_experience_type": None,
-            "ai_expressive_role": None,
-            "human_direction": None,
-            "ai_direction": None,
-            "evidence_status": None,
-            "story_country_iso3s": [],
-            "evidence_summary": "",
-            "reasoning": "",
-            "empowerment_status": None,
-            "empowerment_degree": None,
-            "empowerment_reasoning": None,
-        }
+        final = resolved_public_payload(event_rows.get(event_id), owner_gold.get(event_id))
         result.append(
             {
                 "event_id": event_id,
@@ -289,6 +425,12 @@ def event_public_rows(
                 "story_country_iso3s": final["story_country_iso3s"],
                 "evidence_summary": final["evidence_summary"],
                 "reasoning": final["reasoning"],
+                "relationship_patterns": final["relationship_patterns"],
+                "public_signals": final["public_signals"],
+                "distribution_signal": final["distribution_signal"],
+                "public_takeaway": final["public_takeaway"],
+                "multi_label_available": final["multi_label_available"],
+                "distribution_coded": final["distribution_coded"],
                 "empowerment_secondary": {
                     "status": final["empowerment_status"],
                     "degree": final["empowerment_degree"],
@@ -404,8 +546,10 @@ def main() -> int:
     client: Client = create_client(required_env("SUPABASE_URL"), required_env("SUPABASE_SECRET_KEY"))
     coverage_rows = latest_rows(client, release_id=release_id, lens="coverage", ids=article_ids)
     event_rows = latest_rows(client, release_id=release_id, lens="event", ids=event_ids)
+    owner_gold = owner_gold_for_release(release_id)
     coverage_summary = configuration_summary(coverage_rows, article_ids)
     event_summary = configuration_summary(event_rows, event_ids)
+    people_signal_summary = public_signal_summary(event_rows, event_ids, owner_gold)
     coverage_empowerment = empowerment_secondary_summary(coverage_rows, article_ids)
     event_empowerment = empowerment_secondary_summary(event_rows, event_ids)
     event_complete = event_summary["reviewed_units"] == event_summary["expected_units"] and event_summary["expected_units"] > 0
@@ -419,7 +563,7 @@ def main() -> int:
         )
 
     payload: dict[str, Any] = {
-        "schema_version": "aieo_symbiosis_public_v1.0",
+        "schema_version": "aieo_symbiosis_public_v1.1",
         "release_id": release_id,
         "release_type": "weekly_relationship_lens",
         "revision": 1,
@@ -459,12 +603,13 @@ def main() -> int:
             "insufficient_evidence": PLAIN_LABELS["insufficient_evidence"],
         },
         "event": event_summary,
+        "people_signals": people_signal_summary,
         "coverage": coverage_summary,
         "secondary_empowerment": {
             "event": event_empowerment,
             "coverage": coverage_empowerment,
         },
-        "evidence": event_public_rows(event_rows, event_ids, evidence),
+        "evidence": event_public_rows(event_rows, event_ids, evidence, owner_gold),
         "technical_labels": TECHNICAL_LABELS,
     }
 

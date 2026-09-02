@@ -18,8 +18,12 @@ from symbiosis_common import (
     EMPOWERMENT_STATUSES,
     EVIDENCE_STATUSES,
     HUMAN_TYPES,
+    RELATIONSHIP_PATTERN_KEYS,
     TECHNICAL_LABELS,
     derive_configuration,
+    normalize_distribution_signal,
+    normalize_relationship_patterns,
+    public_signals_from_patterns,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -156,6 +160,22 @@ def normalize_final(decision: dict[str, Any], row: dict[str, Any]) -> dict[str, 
         ai_role,
         evidence_status,
     )
+    patterns, _ = normalize_relationship_patterns(
+        supplied_final.get("relationship_patterns"),
+        fallback_configuration=configuration,
+    )
+    if evidence_status == "insufficient":
+        patterns = {key: False for key in RELATIONSHIP_PATTERN_KEYS}
+    distribution_signal, _ = normalize_distribution_signal(
+        supplied_final.get("distribution_signal")
+    )
+    public_signals = public_signals_from_patterns(
+        patterns,
+        configuration=configuration,
+        human_direction=human_direction,
+        evidence_status=evidence_status,
+        distribution_signal=distribution_signal,
+    )
     return {
         "review_status": status,
         "human_experience_type": human_type,
@@ -171,6 +191,15 @@ def normalize_final(decision: dict[str, Any], row: dict[str, Any]) -> dict[str, 
         "empowerment_status": empowerment_status,
         "empowerment_degree": empowerment_degree,
         "empowerment_reasoning": empowerment_reasoning,
+        "relationship_patterns": patterns,
+        "public_signals": public_signals,
+        "distribution_signal": distribution_signal,
+        "public_takeaway": str(
+            supplied_final.get("public_takeaway")
+            or evidence_summary
+            or reasoning
+            or ""
+        ).strip(),
     }
 
 

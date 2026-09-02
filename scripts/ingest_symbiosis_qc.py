@@ -22,7 +22,10 @@ from symbiosis_common import (
     CODEBOOK_VERSION,
     EVIDENCE_STATUSES,
     HUMAN_TYPES,
+    RELATIONSHIP_PATTERN_KEYS,
     derive_configuration,
+    normalize_relationship_patterns,
+    public_signals_from_patterns,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -42,6 +45,98 @@ def truthy(value: Any) -> bool:
 
 def split_pipe(value: Any) -> list[str]:
     return [item.strip() for item in str(value or "").split("|") if item.strip()]
+
+
+def answer(value: Any) -> str:
+    raw = str(value or "").strip().casefold()
+    aliases = {
+        "y": "yes", "true": "yes", "1": "yes",
+        "n": "no", "false": "no", "0": "no",
+        "unsure": "not sure", "unclear": "not sure", "not_sure": "not sure",
+    }
+    return aliases.get(raw, raw)
+
+
+def plain_row_labels(row: dict[str, Any], row_number: int) -> tuple[dict[str, Any] | None, list[str]]:
+    """Translate the plain-language v2 workbook answers into stored labels."""
+    errors: list[str] = []
+    fields = {
+        "enough": answer(row.get("HUMAN_enough_to_judge")),
+        "people_gain": answer(row.get("HUMAN_people_gaining")),
+        "people_lose": answer(row.get("HUMAN_people_losing_ground")),
+        "ai_advance": answer(row.get("HUMAN_ai_advancing")),
+        "ai_limited": answer(row.get("HUMAN_ai_limited")),
+        "unequal": answer(row.get("HUMAN_unequal_benefits")),
+    }
+    if not any(fields.values()):
+        return None, []
+    allowed = {"yes", "no", "not sure"}
+    for key, value in fields.items():
+        if value not in allowed:
+            errors.append(f"row {row_number}: {key} must be Yes, No, or Not sure")
+    if errors:
+        return None, errors
+    if "not sure" in fields.values():
+        errors.append(
+            f"row {row_number}: resolve every Not sure answer before importing this row, or leave the row out of the import"
+        )
+        return None, errors
+
+    enough = fields["enough"] == "yes"
+    if not enough:
+        directional = [fields[key] for key in ("people_gain", "people_lose", "ai_advance", "ai_limited")]
+        if any(value == "yes" for value in directional):
+            errors.append(
+                f"row {row_number}: Enough to judge=No cannot be combined with a directional Yes answer"
+            )
+            return None, errors
+        human_type = "unclear"
+        ai_role = "unclear"
+        evidence_status = "insufficient"
+    else:
+        human_gain = fields["people_gain"] == "yes"
+        human_lose = fields["people_lose"] == "yes"
+        ai_advance = fields["ai_advance"] == "yes"
+        ai_limited = fields["ai_limited"] == "yes"
+        human_type = "unclear" if human_gain and human_lose else "extension" if human_gain else "restriction" if human_lose else "neutral"
+        ai_role = "unclear" if ai_advance and ai_limited else "ai_extension" if ai_advance else "ai_restriction" if ai_limited else "neutral"
+        directional_sides = int(human_gain or human_lose) + int(ai_advance or ai_limited)
+        internally_mixed = (human_gain and human_lose) or (ai_advance and ai_limited)
+        evidence_status = "partial" if directional_sides == 1 and not internally_mixed else "sufficient"
+
+    configuration, human_direction, ai_direction, plain_label = derive_configuration(
+        human_type, ai_role, evidence_status
+    )
+    human_gain = fields["people_gain"] == "yes" if enough else False
+    human_lose = fields["people_lose"] == "yes" if enough else False
+    ai_advance = fields["ai_advance"] == "yes" if enough else False
+    ai_limited = fields["ai_limited"] == "yes" if enough else False
+    patterns = {
+        "mutualism": human_gain and ai_advance,
+        "ai_benefiting_parasitism": human_lose and ai_advance,
+        "human_benefiting_parasitism": human_gain and ai_limited,
+        "competition": human_lose and ai_limited,
+    }
+    distribution_signal = "unequal" if fields["unequal"] == "yes" else "not_shown"
+    public_signals = public_signals_from_patterns(
+        patterns,
+        configuration=configuration,
+        human_direction=human_direction,
+        evidence_status=evidence_status,
+        distribution_signal=distribution_signal,
+    )
+    return {
+        "human_type": human_type,
+        "ai_role": ai_role,
+        "evidence_status": evidence_status,
+        "configuration": configuration,
+        "human_direction": human_direction,
+        "ai_direction": ai_direction,
+        "plain_label": plain_label,
+        "relationship_patterns": patterns,
+        "public_signals": public_signals,
+        "distribution_signal": distribution_signal,
+    }, []
 
 
 def load_gold(path: Path) -> dict[str, Any]:
@@ -94,12 +189,23 @@ def main() -> int:
     if not rows:
         raise SystemExit("QC input has no rows.")
 
+    plain_schema = "HUMAN_people_gaining" in rows[0]
     required_cols = {
         "release_id", "event_id", "unit_key", "development_title", "source_urls",
-        "model_configuration", "model_human_experience_type", "model_ai_expressive_role",
-        "model_evidence_status", "HUMAN_human_experience_type", "HUMAN_ai_expressive_role",
-        "HUMAN_evidence_status", "HUMAN_include_in_gold",
+        "model_configuration", "model_evidence_status", "HUMAN_include_in_gold",
     }
+    if plain_schema:
+        required_cols.update({
+            "HUMAN_enough_to_judge", "HUMAN_people_gaining",
+            "HUMAN_people_losing_ground", "HUMAN_ai_advancing",
+            "HUMAN_ai_limited", "HUMAN_unequal_benefits",
+        })
+    else:
+        required_cols.update({
+            "model_human_experience_type", "model_ai_expressive_role",
+            "HUMAN_human_experience_type", "HUMAN_ai_expressive_role",
+            "HUMAN_evidence_status",
+        })
     missing = sorted(required_cols - set(rows[0]))
     if missing:
         raise SystemExit(f"QC input is missing required columns: {', '.join(missing)}")
@@ -112,15 +218,35 @@ def main() -> int:
     confusion: dict[str, Counter[str]] = defaultdict(Counter)
 
     for index, row in enumerate(rows, start=2):
-        human_type = str(row.get("HUMAN_human_experience_type") or "").strip()
-        ai_role = str(row.get("HUMAN_ai_expressive_role") or "").strip()
-        evidence_status = str(row.get("HUMAN_evidence_status") or "").strip()
-        filled = [bool(human_type), bool(ai_role), bool(evidence_status)]
-        if any(filled) and not all(filled):
-            errors.append(f"row {index}: complete all three HUMAN label columns or leave all three blank")
-            continue
-        if not all(filled):
-            continue
+        if plain_schema:
+            parsed, row_errors = plain_row_labels(row, index)
+            if row_errors:
+                errors.extend(row_errors)
+                continue
+            if parsed is None:
+                continue
+            human_type = parsed["human_type"]
+            ai_role = parsed["ai_role"]
+            evidence_status = parsed["evidence_status"]
+            relationship_patterns = parsed["relationship_patterns"]
+            public_signals = parsed["public_signals"]
+            distribution_signal = parsed["distribution_signal"]
+        else:
+            human_type = str(row.get("HUMAN_human_experience_type") or "").strip()
+            ai_role = str(row.get("HUMAN_ai_expressive_role") or "").strip()
+            evidence_status = str(row.get("HUMAN_evidence_status") or "").strip()
+            filled = [bool(human_type), bool(ai_role), bool(evidence_status)]
+            if any(filled) and not all(filled):
+                errors.append(f"row {index}: complete all three HUMAN label columns or leave all three blank")
+                continue
+            if not all(filled):
+                continue
+            relationship_patterns, _ = normalize_relationship_patterns(
+                None,
+                fallback_configuration=str(row.get("model_configuration") or ""),
+            )
+            distribution_signal = "not_shown"
+            public_signals = {}
         if human_type not in HUMAN_TYPES:
             errors.append(f"row {index}: invalid human type {human_type!r}")
             continue
@@ -147,6 +273,18 @@ def main() -> int:
         configuration, human_direction, ai_direction, plain_label = derive_configuration(
             human_type, ai_role, evidence_status
         )
+        if not plain_schema:
+            relationship_patterns, _ = normalize_relationship_patterns(
+                None,
+                fallback_configuration=configuration,
+            )
+            public_signals = public_signals_from_patterns(
+                relationship_patterns,
+                configuration=configuration,
+                human_direction=human_direction,
+                evidence_status=evidence_status,
+                distribution_signal=distribution_signal,
+            )
         one_sided = configuration in {
             "human_enabling_only", "human_constraining_only",
             "ai_enabling_only", "ai_constraining_only",
@@ -162,7 +300,15 @@ def main() -> int:
         model_ai = str(row.get("model_ai_expressive_role") or "").strip()
         model_evidence = str(row.get("model_evidence_status") or "").strip()
         model_config = str(row.get("model_configuration") or "").strip()
+        model_patterns, _ = normalize_relationship_patterns(
+            row.get("model_relationship_patterns"),
+            fallback_configuration=model_config,
+        )
         exact = (human_type, ai_role, evidence_status) == (model_human, model_ai, model_evidence)
+        pattern_exact = all(
+            bool(relationship_patterns.get(key)) == bool(model_patterns.get(key))
+            for key in RELATIONSHIP_PATTERN_KEYS
+        )
         if evidence_status == "insufficient":
             review_status = "insufficient_evidence"
         elif exact:
@@ -173,6 +319,7 @@ def main() -> int:
         agreements["exact_component_agreement"] += int(exact)
         agreements["configuration_agreement"] += int(configuration == model_config)
         agreements["evidence_status_agreement"] += int(evidence_status == model_evidence)
+        agreements["relationship_pattern_agreement"] += int(pattern_exact)
         confusion[model_config][configuration] += 1
 
         reviewer = str(row.get("HUMAN_reviewer_name") or "").strip() or args.reviewer
@@ -190,6 +337,10 @@ def main() -> int:
             "human_experience_type": human_type,
             "ai_expressive_role": ai_role,
             "evidence_status": evidence_status,
+            "relationship_patterns": relationship_patterns,
+            "public_signals": public_signals,
+            "distribution_signal": distribution_signal,
+            "public_takeaway": reasoning,
             "story_country_iso3s": [],
             "evidence_summary": str(row.get("source_headlines") or row.get("development_title") or "").strip(),
             "reasoning": reasoning,
@@ -230,6 +381,7 @@ def main() -> int:
                         "human_experience_type": model_human,
                         "ai_expressive_role": model_ai,
                         "evidence_status": model_evidence,
+                        "relationship_patterns": model_patterns,
                     },
                     "final": {
                         "configuration": configuration,
@@ -239,6 +391,10 @@ def main() -> int:
                         "human_direction": human_direction,
                         "ai_direction": ai_direction,
                         "evidence_status": evidence_status,
+                        "relationship_patterns": relationship_patterns,
+                        "public_signals": public_signals,
+                        "distribution_signal": distribution_signal,
+                        "public_takeaway": reasoning,
                     },
                     "reviewer_name": reviewer,
                     "reviewed_at": reviewed_at,
@@ -285,6 +441,8 @@ def main() -> int:
             "human_experience_type": str((row.get("final") or {}).get("human_experience_type") or ""),
             "ai_expressive_role": str((row.get("final") or {}).get("ai_expressive_role") or ""),
             "evidence_status": str((row.get("final") or {}).get("evidence_status") or ""),
+            "relationship_patterns": (row.get("final") or {}).get("relationship_patterns") or {},
+            "distribution_signal": str((row.get("final") or {}).get("distribution_signal") or ""),
         }
         for row in decisions
     ]
@@ -304,6 +462,7 @@ def main() -> int:
         "configuration_agreement_rate": (agreements["configuration_agreement"] / reviewed_n) if reviewed_n else None,
         "component_exact_agreement_rate": (agreements["exact_component_agreement"] / reviewed_n) if reviewed_n else None,
         "evidence_status_agreement_rate": (agreements["evidence_status_agreement"] / reviewed_n) if reviewed_n else None,
+        "relationship_pattern_agreement_rate": (agreements["relationship_pattern_agreement"] / reviewed_n) if reviewed_n else None,
         "model_to_human_configuration_confusion": {key: dict(value) for key, value in confusion.items()},
         "qc_batch_id": qc_batch_id,
         "dry_run": args.dry_run,
@@ -344,6 +503,7 @@ def main() -> int:
             "configuration_agreement_rate": summary["configuration_agreement_rate"],
             "component_exact_agreement_rate": summary["component_exact_agreement_rate"],
             "evidence_status_agreement_rate": summary["evidence_status_agreement_rate"],
+            "relationship_pattern_agreement_rate": summary["relationship_pattern_agreement_rate"],
             "model_to_human_configuration_confusion": summary["model_to_human_configuration_confusion"],
         }
         existing_batches = [
