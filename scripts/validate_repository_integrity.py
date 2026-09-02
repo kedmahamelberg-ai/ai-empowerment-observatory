@@ -7,6 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOWS = ROOT / ".github" / "workflows"
+ACTIONS = ROOT / ".github" / "actions"
 
 FORBIDDEN_PUBLIC = (
     "Model-coded provisional signal",
@@ -42,7 +43,10 @@ def main() -> int:
     # Never let an Action try to push workflow-file edits. GitHub App tokens can
     # reject that push unless given workflow-management permission, and source
     # workflow changes should be normal reviewed commits anyway.
-    for path in sorted(WORKFLOWS.glob("*.yml")):
+    automation_files = sorted(WORKFLOWS.glob("*.yml")) + sorted(
+        ACTIONS.glob("**/*.yml")
+    )
+    for path in automation_files:
         text = path.read_text(encoding="utf-8")
         for line_no, line in enumerate(text.splitlines(), start=1):
             if "git add" in line and ".github/workflows" in line:
@@ -94,6 +98,32 @@ def main() -> int:
     missing = [value for value in expected_jobs if value not in weekly]
     if missing:
         fail(f"weekly pipeline is missing stages: {', '.join(missing)}")
+
+    stage7c_workflow = (WORKFLOWS / "classify-dual-lenses.yml").read_text(
+        encoding="utf-8"
+    )
+    if stage7c_workflow.count("uses: ./.github/actions/run-stage7c-pass") < 2:
+        fail("Stage 7C must have more than one bounded, resumable job pass")
+    if "Require complete classification" not in stage7c_workflow:
+        fail("Stage 7C is missing its downstream completion gate")
+
+    stage7c_script = (ROOT / "scripts" / "classify_dual_lens.py").read_text(
+        encoding="utf-8"
+    )
+    required_resume_guards = [
+        "resume_or_start_classification_run",
+        "load_saved_classifications",
+        "checkpoint_classification_run",
+        "--time-budget-minutes",
+    ]
+    missing_resume_guards = [
+        value for value in required_resume_guards if value not in stage7c_script
+    ]
+    if missing_resume_guards:
+        fail(
+            "Stage 7C resumability guard is incomplete: "
+            + ", ".join(missing_resume_guards)
+        )
 
     print("Repository integrity checks passed.")
     return 0

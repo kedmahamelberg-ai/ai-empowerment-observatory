@@ -23,6 +23,7 @@ score.
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import os
@@ -229,6 +230,12 @@ class ClassificationError(RuntimeError):
     pass
 
 
+class PassBudgetReached(RuntimeError):
+    """Stop a pass cleanly so a later job can resume the same run."""
+
+    pass
+
+
 def utc_now() -> datetime:
     return datetime.now(timezone.utc)
 
@@ -256,6 +263,66 @@ def first_row(response: Any, context: str) -> dict[str, Any]:
         return data
 
     raise ClassificationError(f"No row while {context}.")
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Classify the current Observatory collection with resumable "
+            "Coverage and Event lens passes."
+        )
+    )
+    parser.add_argument(
+        "--time-budget-minutes",
+        type=float,
+        default=0,
+        help=(
+            "Stop cleanly after this many minutes and leave the run "
+            "resumable. Zero disables the application-level budget."
+        ),
+    )
+    parser.add_argument(
+        "--status-output",
+        default="",
+        help="Optional JSON path reporting whether the full run completed.",
+    )
+    args = parser.parse_args()
+    if args.time_budget_minutes < 0:
+        parser.error("--time-budget-minutes cannot be negative")
+    return args
+
+
+def write_pass_status(
+    path_value: str,
+    *,
+    complete: bool,
+    classification_run_id: str,
+    run_key: str,
+    classified: int,
+    attempted: int,
+    reason: str,
+) -> None:
+    if not path_value:
+        return
+
+    path = Path(path_value)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(
+            {
+                "schema_version": "stage7c_pass_status_v1",
+                "complete": complete,
+                "classification_run_id": classification_run_id,
+                "run_key": run_key,
+                "classified_count": classified,
+                "attempted_qwen_count": attempted,
+                "reason": reason,
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
 
 
 def latest_collection(client: Client) -> dict[str, Any]:
@@ -716,6 +783,83 @@ def start_classification_run(
     )
 
 
+def resume_or_start_classification_run(
+    client: Client,
+    *,
+    collection_run_id: str,
+    codebook_version_id: str,
+    model_version_id: str,
+) -> tuple[str, str, bool]:
+    """Resume the newest interrupted run for this exact classifier lineage."""
+
+    response = (
+        client.table("classification_runs")
+        .select("classification_run_id,run_key,started_at,status")
+        .eq("collection_run_id", collection_run_id)
+        .eq("codebook_version_id", codebook_version_id)
+        .eq("model_version_id", model_version_id)
+        .eq("classifier_version", CLASSIFIER_VERSION)
+        .eq("status", "running")
+        .order("started_at", desc=True)
+        .limit(1)
+        .execute()
+    )
+    rows = getattr(response, "data", None) or []
+
+    if rows:
+        row = rows[0]
+        classification_run_id = str(row["classification_run_id"])
+        run_key = str(row["run_key"])
+        (
+            client.table("classification_runs")
+            .update(
+                {
+                    "status": "running",
+                    "completed_at": None,
+                    "classifier_version": CLASSIFIER_VERSION,
+                }
+            )
+            .eq("classification_run_id", classification_run_id)
+            .execute()
+        )
+        return classification_run_id, run_key, True
+
+    classification_run_id, run_key = start_classification_run(
+        client,
+        collection_run_id=collection_run_id,
+        codebook_version_id=codebook_version_id,
+        model_version_id=model_version_id,
+    )
+    return classification_run_id, run_key, False
+
+
+def checkpoint_classification_run(
+    client: Client,
+    *,
+    classification_run_id: str,
+    attempted: int,
+    classified: int,
+    review_required: int,
+) -> None:
+    """Persist progress while keeping the run eligible for the next pass."""
+
+    (
+        client.table("classification_runs")
+        .update(
+            {
+                "completed_at": None,
+                "status": "running",
+                "attempted_count": attempted,
+                "classified_count": classified,
+                "review_required_count": review_required,
+                "classifier_version": CLASSIFIER_VERSION,
+            }
+        )
+        .eq("classification_run_id", classification_run_id)
+        .execute()
+    )
+
+
 def finish_classification_run(
     client: Client,
     *,
@@ -743,6 +887,109 @@ def finish_classification_run(
         )
         .execute()
     )
+
+
+def load_saved_classifications(
+    client: Client,
+    *,
+    classification_run_id: str,
+) -> tuple[dict[str, dict[str, Any]], dict[str, dict[str, Any]]]:
+    """Load complete rows already written by an earlier bounded pass."""
+
+    fields = (
+        "lens_classification_id,lens,article_id,event_id,ai_relevant,"
+        "empowerment_status,empowerment_degree,unit_score,narrative_frame,"
+        "distribution_breadth,dominant_dimension,ai_authority_shift,topic,"
+        "geographic_scope,primary_country_iso3,country_iso3s,content_basis,"
+        "confidence,reasoning,requires_review,review_reason,raw_output"
+    )
+    response = (
+        client.table("lens_classifications")
+        .select(fields)
+        .eq("classification_run_id", classification_run_id)
+        .execute()
+    )
+    rows = getattr(response, "data", None) or []
+    classification_ids = [
+        str(row["lens_classification_id"])
+        for row in rows
+    ]
+
+    dimensions: dict[str, dict[str, dict[str, Any]]] = defaultdict(dict)
+    for offset in range(0, len(classification_ids), 100):
+        batch = classification_ids[offset : offset + 100]
+        dimension_response = (
+            client.table("lens_dimensions")
+            .select(
+                "lens_classification_id,dimension,present,direction,degree,"
+                "confidence,reasoning"
+            )
+            .in_("lens_classification_id", batch)
+            .execute()
+        )
+        for item in getattr(dimension_response, "data", None) or []:
+            classification_id = str(item["lens_classification_id"])
+            dimensions[classification_id][str(item["dimension"])] = {
+                "present": bool(item.get("present")),
+                "direction": str(item.get("direction") or "not_present"),
+                "degree": int(item.get("degree") or 0),
+                "confidence": float(item.get("confidence") or 0.0),
+                "reasoning": str(item.get("reasoning") or ""),
+            }
+
+    coverage: dict[str, dict[str, Any]] = {}
+    events: dict[str, dict[str, Any]] = {}
+
+    for stored in rows:
+        classification_id = str(stored["lens_classification_id"])
+        stored_dimensions = dimensions.get(classification_id, {})
+        if set(stored_dimensions) != VALID_DIMENSIONS:
+            raise ClassificationError(
+                "Cannot resume an incomplete saved classification: "
+                f"{classification_id} has {len(stored_dimensions)} of "
+                f"{len(VALID_DIMENSIONS)} dimensions."
+            )
+
+        result = {
+            "ai_relevant": bool(stored.get("ai_relevant")),
+            "empowerment_status": str(stored["empowerment_status"]),
+            "empowerment_degree": int(stored.get("empowerment_degree") or 0),
+            "unit_score": float(stored.get("unit_score") or 0.0),
+            "narrative_frame": str(stored["narrative_frame"]),
+            "distribution_breadth": str(stored["distribution_breadth"]),
+            "dominant_dimension": stored.get("dominant_dimension"),
+            "dimensions": stored_dimensions,
+            "ai_authority_shift": str(stored["ai_authority_shift"]),
+            "topic": str(stored["topic"]),
+            "geographic_scope": str(stored["geographic_scope"]),
+            "country_iso3s": list(stored.get("country_iso3s") or []),
+            "primary_country_iso3": stored.get("primary_country_iso3"),
+            "content_basis": str(stored["content_basis"]),
+            "confidence": float(stored.get("confidence") or 0.0),
+            "reasoning": str(stored.get("reasoning") or ""),
+            "requires_review": bool(stored.get("requires_review")),
+            "review_reason": str(stored.get("review_reason") or ""),
+            "_raw_model_output": stored.get("raw_output") or {},
+            "_classification_id": classification_id,
+        }
+
+        lens = str(stored.get("lens") or "")
+        if lens == "coverage" and stored.get("article_id"):
+            unit_id = str(stored["article_id"])
+            if unit_id in coverage:
+                raise ClassificationError(
+                    f"Duplicate saved coverage classification for {unit_id}."
+                )
+            coverage[unit_id] = result
+        elif lens == "event" and stored.get("event_id"):
+            unit_id = str(stored["event_id"])
+            if unit_id in events:
+                raise ClassificationError(
+                    f"Duplicate saved event classification for {unit_id}."
+                )
+            events[unit_id] = result
+
+    return coverage, events
 
 
 def start_server() -> tuple[subprocess.Popen, Any]:
@@ -2092,6 +2339,13 @@ def review_card(
 
 
 def main() -> int:
+    args = parse_args()
+    pass_deadline = (
+        time.monotonic() + args.time_budget_minutes * 60
+        if args.time_budget_minutes > 0
+        else None
+    )
+
     client: Client = create_client(
         required_env("SUPABASE_URL"),
         required_env(
@@ -2131,8 +2385,8 @@ def main() -> int:
         register_model(client)
     )
 
-    classification_run_id, run_key = (
-        start_classification_run(
+    classification_run_id, run_key, resumed = (
+        resume_or_start_classification_run(
             client,
             collection_run_id=str(
                 collection["run_id"]
@@ -2145,6 +2399,18 @@ def main() -> int:
             model_version_id=model_version_id,
         )
     )
+
+    saved_coverage, saved_events = load_saved_classifications(
+        client,
+        classification_run_id=classification_run_id,
+    )
+    if resumed:
+        print(
+            "Resuming Stage 7C run "
+            f"{run_key}: {len(saved_coverage)} coverage and "
+            f"{len(saved_events)} event classifications already saved.",
+            flush=True,
+        )
 
     attempted = (
         len(articles)
@@ -2171,8 +2437,26 @@ def main() -> int:
     process = None
     handle = None
 
+    def require_pass_budget(stage: str) -> None:
+        if pass_deadline is not None and time.monotonic() >= pass_deadline:
+            raise PassBudgetReached(stage)
+
     try:
-        process, handle = start_server()
+        current_article_ids = {
+            str(article["article_id"])
+            for article in articles
+        }
+        current_multi_event_ids = {
+            str(event["event_id"])
+            for event in events
+            if len(membership[str(event["event_id"])]) > 1
+        }
+        needs_server = bool(
+            current_article_ids.difference(saved_coverage)
+            or current_multi_event_ids.difference(saved_events)
+        )
+        if needs_server:
+            process, handle = start_server()
 
         # 1. COVERAGE LENS — every article gets one classification.
         for index, article in enumerate(
@@ -2185,49 +2469,59 @@ def main() -> int:
             )
 
             qwen_calls += 1
+            article_id = str(article["article_id"])
+            saved_result = saved_coverage.get(article_id)
 
-            result = call_classifier(
-                codebook_prompt=str(
-                    codebook[
-                        "prompt_text"
-                    ]
-                ),
-                lens="coverage",
-                evidence_text=article_evidence(
-                    article
-                ),
-                content_basis=(
-                    article.get("content_basis")
-                    or "headline_only"
-                ),
-            )
-
-            print(
-                "  -> "
-                f"status={result['empowerment_status']} "
-                f"frame={result['narrative_frame']} "
-                f"confidence={result['confidence']:.2f}",
-                flush=True,
-            )
-
-            classification_id = (
-                insert_classification(
-                    client,
-                    classification_run_id=classification_run_id,
-                    lens="coverage",
-                    unit_id=article[
-                        "article_id"
-                    ],
-                    result=result,
+            if saved_result is not None:
+                result = dict(saved_result)
+                classification_id = str(result["_classification_id"])
+                print(
+                    "  -> resumed saved classification "
+                    f"status={result['empowerment_status']} "
+                    f"frame={result['narrative_frame']} "
+                    f"confidence={result['confidence']:.2f}",
+                    flush=True,
                 )
-            )
+            else:
+                require_pass_budget("coverage")
+                result = call_classifier(
+                    codebook_prompt=str(
+                        codebook[
+                            "prompt_text"
+                        ]
+                    ),
+                    lens="coverage",
+                    evidence_text=article_evidence(
+                        article
+                    ),
+                    content_basis=(
+                        article.get("content_basis")
+                        or "headline_only"
+                    ),
+                )
+
+                print(
+                    "  -> "
+                    f"status={result['empowerment_status']} "
+                    f"frame={result['narrative_frame']} "
+                    f"confidence={result['confidence']:.2f}",
+                    flush=True,
+                )
+
+                classification_id = (
+                    insert_classification(
+                        client,
+                        classification_run_id=classification_run_id,
+                        lens="coverage",
+                        unit_id=article_id,
+                        result=result,
+                    )
+                )
 
             result.update(
                 {
                     "_classification_id": classification_id,
-                    "_unit_id": article[
-                        "article_id"
-                    ],
+                    "_unit_id": article_id,
                     "_lens": "coverage",
                     "_title": article[
                         "headline_english"
@@ -2308,60 +2602,73 @@ def main() -> int:
                 for aid in member_ids
             ]
 
-            if len(member_ids) == 1:
-                source = coverage_by_article[
-                    member_ids[0]
-                ]
-
-                result = copy_for_singleton_event(
-                    source
-                )
-
-                derived_from = source[
-                    "_classification_id"
-                ]
-
-                print(
-                    f"[Event {index}/{len(events)}] "
-                    f"singleton reuse: "
-                    f"{event.get('event_title','')[:90]}"
-                )
-
-            else:
+            saved_result = saved_events.get(event_id)
+            if len(member_ids) > 1:
                 qwen_calls += 1
 
+            if saved_result is not None:
+                result = dict(saved_result)
+                classification_id = str(result["_classification_id"])
                 print(
                     f"[Event {index}/{len(events)}] "
-                    f"multi-source Qwen ({len(member_ids)} sources): "
-                    f"{event.get('event_title','')[:80]}"
+                    f"resumed saved classification: "
+                    f"{event.get('event_title','')[:90]}"
                 )
+            else:
+                if len(member_ids) == 1:
+                    source = coverage_by_article[
+                        member_ids[0]
+                    ]
 
-                result = call_classifier(
-                    codebook_prompt=str(
-                        codebook[
-                            "prompt_text"
-                        ]
-                    ),
-                    lens="event",
-                    evidence_text=event_evidence(
-                        event,
-                        members,
-                    ),
-                    content_basis="multiple_sources",
+                    result = copy_for_singleton_event(
+                        source
+                    )
+
+                    derived_from = source[
+                        "_classification_id"
+                    ]
+
+                    print(
+                        f"[Event {index}/{len(events)}] "
+                        f"singleton reuse: "
+                        f"{event.get('event_title','')[:90]}"
+                    )
+
+                else:
+                    require_pass_budget("event")
+
+                    print(
+                        f"[Event {index}/{len(events)}] "
+                        f"multi-source Qwen ({len(member_ids)} sources): "
+                        f"{event.get('event_title','')[:80]}"
+                    )
+
+                    result = call_classifier(
+                        codebook_prompt=str(
+                            codebook[
+                                "prompt_text"
+                            ]
+                        ),
+                        lens="event",
+                        evidence_text=event_evidence(
+                            event,
+                            members,
+                        ),
+                        content_basis="multiple_sources",
+                    )
+
+                    derived_from = None
+
+                classification_id = (
+                    insert_classification(
+                        client,
+                        classification_run_id=classification_run_id,
+                        lens="event",
+                        unit_id=event_id,
+                        result=result,
+                        derived_from_id=derived_from,
+                    )
                 )
-
-                derived_from = None
-
-            classification_id = (
-                insert_classification(
-                    client,
-                    classification_run_id=classification_run_id,
-                    lens="event",
-                    unit_id=event_id,
-                    result=result,
-                    derived_from_id=derived_from,
-                )
-            )
 
             # Populate event geography from the event-level classifier.
             (
@@ -2772,6 +3079,46 @@ def main() -> int:
             )
         )
 
+        write_pass_status(
+            args.status_output,
+            complete=True,
+            classification_run_id=classification_run_id,
+            run_key=run_key,
+            classified=classified_count,
+            attempted=attempted,
+            reason="complete",
+        )
+
+        return 0
+
+    except PassBudgetReached as exc:
+        review_required_count = sum(
+            1
+            for row in coverage_results + event_results
+            if row["requires_review"]
+        )
+        checkpoint_classification_run(
+            client,
+            classification_run_id=classification_run_id,
+            attempted=attempted,
+            classified=classified_count,
+            review_required=review_required_count,
+        )
+        write_pass_status(
+            args.status_output,
+            complete=False,
+            classification_run_id=classification_run_id,
+            run_key=run_key,
+            classified=classified_count,
+            attempted=attempted,
+            reason=f"time_budget_reached_before_{exc}",
+        )
+        print(
+            "Stage 7C pass checkpointed cleanly after "
+            f"{classified_count} saved classifications; the next pass will "
+            f"resume run {run_key}.",
+            flush=True,
+        )
         return 0
 
     except Exception:
@@ -2782,6 +3129,15 @@ def main() -> int:
             attempted=attempted,
             classified=classified_count,
             review_required=0,
+        )
+        write_pass_status(
+            args.status_output,
+            complete=False,
+            classification_run_id=classification_run_id,
+            run_key=run_key,
+            classified=classified_count,
+            attempted=attempted,
+            reason="error",
         )
         raise
 
