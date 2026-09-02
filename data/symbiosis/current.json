@@ -1,11 +1,11 @@
 {
-  "schema_version": "aieo_symbiosis_public_v1.0",
+  "schema_version": "aieo_symbiosis_public_v1.1",
   "release_id": "2026-W35",
   "release_type": "weekly_relationship_lens",
-  "revision": 4,
+  "revision": 5,
   "period_start": "2026-08-24",
   "period_end": "2026-08-30",
-  "generated_at": "2026-08-31T22:07:00.296510Z",
+  "generated_at": "2026-09-02T09:07:09.097616Z",
   "codebook_version": "aieo_news_symbiosis_v0.1",
   "source_release_sha256": "0217b03f92a9252e715c1845adbb8d142598770b59554980bebb707674df5992",
   "public_status": "model_coded_provisional",
@@ -221,7 +221,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "00396d3e-532a-4f9c-ae6d-69e909d3f426",
@@ -257,7 +274,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "07dd1da3-4efe-4177-9d12-cd22a1c8d5b5",
@@ -295,7 +329,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "0b6a05bf-f28d-43c5-8325-bac94d9170f6",
@@ -331,7 +382,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "0f88ac0e-34c9-4291-a626-9ebe99b4c9bd",
@@ -367,7 +435,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": true,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": true,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": false
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "1115366b-1c5e-4835-8a89-f72a446312ed",
@@ -403,7 +488,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "1117bece-0bee-4b48-beb6-590720633fb6",
@@ -439,7 +541,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "143ad789-0ff0-4645-9380-98153c556ab3",
@@ -477,7 +596,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": true,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": true,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": false
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "152394eb-4b37-4022-97bd-01ecd82e4114",
@@ -513,7 +649,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "15aba3c7-7559-4e74-8ea9-993be6fb3261",
@@ -549,7 +702,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "16fb7116-2b40-47e1-ae66-0fc7814a024a",
@@ -585,7 +755,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "172e55ac-d3d8-4909-b0d9-e33d1778109e",
@@ -621,7 +808,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "1aeb2829-ecd4-4c3c-b547-eb50a1db2a90",
@@ -657,7 +861,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "1cc7aa2a-089c-476e-9c7f-4a0c5dce3774",
@@ -694,7 +915,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "1e5f8b9a-8366-4555-8ffa-d67018eb6c5f",
@@ -730,7 +968,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "207bb492-9b47-45e4-9a02-06433350195d",
@@ -766,7 +1021,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "2394ef80-4482-46a4-8675-41d815045eeb",
@@ -802,7 +1074,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "27459097-7617-4a62-81cf-ba1835f7f467",
@@ -840,7 +1129,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "2cce67b0-7fa9-49e1-b76f-ebe366fff9e9",
@@ -876,7 +1182,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "2d35d24e-ecd1-4ecc-a6db-a20743a85385",
@@ -912,7 +1235,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "2dccc286-c4c7-482d-a07c-a885f0c7d011",
@@ -948,7 +1288,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": true,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": true,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": false
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "2e452bbd-a9b1-441f-90d9-c7fd2477dc09",
@@ -984,7 +1341,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "2ff5d6f9-c42e-4684-b657-a4d553aecbec",
@@ -1020,7 +1394,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "3267186f-024f-47aa-b406-6096185cca97",
@@ -1056,7 +1447,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "36f54cf1-3ab5-4496-9f36-a369fa4e62bd",
@@ -1092,7 +1500,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "395c2036-a625-42fe-a461-6a270cd997e3",
@@ -1128,7 +1553,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": true,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": true,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": false
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "397bf0ad-6578-456f-abd0-513969ffe9f0",
@@ -1164,7 +1606,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "3a9a70d7-0c5d-4317-83a1-bb6dbfb36833",
@@ -1202,7 +1661,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "3aa32691-d132-4eb1-9ed7-32fa4e617154",
@@ -1238,7 +1714,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "3b117ab7-7526-4fe5-a2ec-28a9b31500b6",
@@ -1274,7 +1767,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "3bb6abc9-be60-4500-bd65-8e3f6696bf3a",
@@ -1312,7 +1822,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "45596d7e-5fe3-4121-a477-16b61f8041d0",
@@ -1348,7 +1875,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "4a3b473a-414c-4c6f-8693-da501c118d13",
@@ -1384,7 +1928,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "4b15b2c2-7e21-4148-af2b-355564342be5",
@@ -1420,7 +1981,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "4eafaa25-203c-49e3-b06b-03f9bdf4e95d",
@@ -1458,7 +2036,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "51b36745-7cfa-47e8-a276-9b70444e613b",
@@ -1494,7 +2089,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": true,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": true,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": false
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "55b446cb-c17d-4c5a-b544-f034cfcfcb94",
@@ -1530,7 +2142,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "59929de9-31be-48e6-b65d-1670f4851345",
@@ -1566,7 +2195,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "5f682ae1-17c1-4bba-8db1-b4a8590cef83",
@@ -1602,7 +2248,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": true,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": true,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": false
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "602ed24e-b928-4b87-8fad-f9bfd2e9544b",
@@ -1636,7 +2299,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "64d6926a-442c-440d-8372-21b1009e8b40",
@@ -1672,7 +2352,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": true,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": true,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": false
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "6522d107-8d62-462d-95bd-41ced83a9a9b",
@@ -1710,7 +2407,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "65ab52b1-c922-472b-843a-ca8cc3070d2b",
@@ -1746,7 +2460,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "686c3177-6cc8-4603-b17d-365c62ab1f35",
@@ -1782,7 +2513,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "688d2116-cde9-4293-9b86-a4ec2585cea7",
@@ -1818,7 +2566,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": true,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": true,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": false
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "699bf4f4-7e3d-4b9d-9b09-321fdc622202",
@@ -1856,7 +2621,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "6c125f41-0a5f-44fb-8af8-ef2f281ee194",
@@ -1894,7 +2676,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "6c231012-a07f-4152-b560-782d82f10ec6",
@@ -1930,7 +2729,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": true,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": true,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": false
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "7078c1bf-f3f4-4ab6-a30a-42a054c6caaa",
@@ -1966,7 +2782,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "7a2046e0-9d27-44f9-b9f8-83a8253eb280",
@@ -2004,7 +2837,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "7b5d8532-d0b5-412f-8f2b-a9e0a0bdf83d",
@@ -2040,7 +2890,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": true,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": true,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": false
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "7cbc3ee3-679b-4840-8685-1cc1befa55c3",
@@ -2076,7 +2943,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "7dc52761-158f-4319-8bc5-2ab6a88f2175",
@@ -2112,7 +2996,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": true,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": true,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": false
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "7fb83c64-1155-48d2-a591-6dea4a2fd95b",
@@ -2148,7 +3049,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "82e67fff-c7c6-44fc-9ce9-f7fc9a2a33e9",
@@ -2184,7 +3102,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": true,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": true,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": false
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "832968eb-4185-4fb3-8712-88200d759cf5",
@@ -2220,7 +3155,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "84562587-3d35-41a2-8b7f-60d6f748db15",
@@ -2256,7 +3208,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "85693635-5d76-4edb-9617-ecd81637d6b1",
@@ -2292,7 +3261,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "87319c4b-d0c5-4610-9fd5-6f9cf53714c0",
@@ -2328,7 +3314,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": true,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": true,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": false
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "87463e3d-45f1-48a7-823b-fc25619584f5",
@@ -2364,7 +3367,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": true,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": true,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": false
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "88b3bea6-bc29-4565-bc30-f646c2da8fc1",
@@ -2400,7 +3420,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "896c07f2-3e72-40eb-b114-fb9bc7507b14",
@@ -2438,7 +3475,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "8a41af89-e567-409d-be59-dc4637e4cfd3",
@@ -2474,7 +3528,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "8b3f0eb1-8432-4275-ad87-ac45aee1cd68",
@@ -2510,7 +3581,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "8bf3d389-7766-466d-8f25-3480ec85cb98",
@@ -2548,7 +3636,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "909a35b9-e480-4605-ba61-1503c17455e1",
@@ -2584,7 +3689,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "9272dce9-381b-4345-bdaf-f8142923a32b",
@@ -2620,7 +3742,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": true,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": true,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": false
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "9e28b8bb-10e0-4f0c-99d0-5fd0c49d9720",
@@ -2658,7 +3797,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "9ebd7c71-a290-4de4-97f0-ec5ee065042d",
@@ -2694,7 +3850,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "9ed95a40-ab46-4d76-b701-7cfd031b1133",
@@ -2730,7 +3903,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "9fe18eeb-fd47-4eb4-ab2a-c00b61992673",
@@ -2766,7 +3956,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "a016f327-3189-4395-a5c1-3e6b0ad6ab75",
@@ -2802,7 +4009,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "a0efe330-8ed8-4a67-ab8c-5960ee82c3fb",
@@ -2840,7 +4064,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "a32aac7a-55a0-4a04-934e-7645928b64fb",
@@ -2876,7 +4117,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "a8960241-1c98-46b5-bcd2-3b399874d1d2",
@@ -2912,7 +4170,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "a8cec4b6-1473-4f0f-81e8-94bf140ff4dd",
@@ -2950,7 +4225,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "a9bab4ea-9203-4860-b549-b07d3b605a99",
@@ -2986,7 +4278,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "aa90c16e-14e9-47f0-9e94-54bd3dd561a3",
@@ -3022,7 +4331,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "ac3d7417-8087-4c84-a2ec-dd1b8768976a",
@@ -3058,7 +4384,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "b138984a-ffa5-41c8-9cac-dc409388c86d",
@@ -3094,7 +4437,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "b199dc3b-65a0-4235-a04f-6530a0618d56",
@@ -3132,7 +4492,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "b35eace4-8e33-4b65-9fd7-687cd9d1b78b",
@@ -3168,7 +4545,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "b77af074-24ee-44f9-86d1-718e27aedefb",
@@ -3204,7 +4598,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "bc5adac5-8703-4c42-9b43-08af379576c7",
@@ -3242,7 +4653,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "bc7b4584-d90a-4faf-85fd-a78e41c167b5",
@@ -3278,7 +4706,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "bfd5a0e6-d61a-4a97-a6dd-cf8e559f6e50",
@@ -3314,7 +4759,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": true,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": true,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": false
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "c32b8f67-a885-4975-8aa5-e713940b0e67",
@@ -3352,7 +4814,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": true,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": true,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": false
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "c3c34bc9-e3ba-48c1-9705-752c123aee9e",
@@ -3388,7 +4867,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "c4dbc459-149a-495f-8ba4-008a8058849f",
@@ -3424,7 +4920,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "cc124c80-f0d0-4f65-b45d-dd37942aef88",
@@ -3462,7 +4975,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "cf64f370-2129-4f56-b669-c0d0350f1146",
@@ -3498,7 +5028,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": true,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": true,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": false
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "d2378fa6-c423-47f7-86ce-5230db95819f",
@@ -3534,7 +5081,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "d6852802-925f-4a23-89f2-f52ca8ee2e0e",
@@ -3570,7 +5134,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "d6ca4c57-8f70-450b-a93f-37c26e2b5a1c",
@@ -3608,7 +5189,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "dd952d35-cc40-411c-8591-6554d99277b0",
@@ -3644,7 +5242,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "ddffdcda-b6bf-4957-9831-8ce95fb05e75",
@@ -3680,7 +5295,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "e1866f35-a7c0-4ec3-940f-fe2dd155a512",
@@ -3716,7 +5348,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": true
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": true,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": false
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "e3ec7e9d-9a52-4151-89f9-c0c54c89b2dc",
@@ -3752,7 +5401,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "e563c6d1-3a01-4d7f-97ea-1b92559e1853",
@@ -3788,7 +5454,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "e76ed7b0-1150-47fd-8853-2299c271b948",
@@ -3824,7 +5507,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "e832909f-b43d-4646-8f89-b635eb5851ea",
@@ -3862,7 +5562,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "e8f1cb55-715e-4863-a2e6-e68bfb707026",
@@ -3900,7 +5617,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "e9664542-5c26-4611-85e2-21e94b6cbabd",
@@ -3936,7 +5670,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "ea450577-ad19-48e8-a02a-48270b40ee30",
@@ -3972,7 +5723,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "ec4a1e10-c825-4879-a1c6-050951d71477",
@@ -4008,7 +5776,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": true,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": true,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": false
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "ed6bf134-8dc7-4bd2-b578-72333277d67a",
@@ -4046,7 +5831,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "f9c0c2c3-fd2b-40bb-9525-94c2909a3588",
@@ -4082,7 +5884,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "faeac2bd-3bc2-4d29-88da-cf5a41acc662",
@@ -4122,7 +5941,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "fb7e6caf-1500-40aa-810d-c1702c407904",
@@ -4158,7 +5994,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "fc16e022-51ac-4e71-b263-00c4b3c7be07",
@@ -4194,7 +6047,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     },
     {
       "event_id": "fd6d4d29-b7b7-4a92-ac71-8ca32de98186",
@@ -4238,7 +6108,24 @@
         "status": null,
         "degree": null,
         "reasoning": null
-      }
+      },
+      "relationship_patterns": {
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
+        "human_benefiting_parasitism": false,
+        "competition": false
+      },
+      "public_signals": {
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
+        "not_everyone_benefits": false,
+        "not_clear_yet": true
+      },
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
+      "multi_label_available": false,
+      "distribution_coded": false
     }
   ],
   "technical_labels": {
@@ -4254,5 +6141,39 @@
     "ambiguous_relational_signal": "Ambiguous relational signal",
     "insufficient_evidence": "Insufficient evidence"
   },
-  "content_sha256": "3bcfa1b8736a85af3f2f0effbdacc8a030ba19dab9bdfe9968781d7c2d0c51d5"
+  "content_sha256": "482e104a078e9465b4f08e87abb3d60e58938990ce402a31838e74df5e65fc72",
+  "people_signals": {
+    "schema_version": "aieo_people_signals_v1",
+    "expected_units": 111,
+    "classified_units": 111,
+    "relationship_pattern_counts": {
+      "mutualism": 18,
+      "ai_benefiting_parasitism": 1,
+      "human_benefiting_parasitism": 0,
+      "competition": 1
+    },
+    "people_signal_counts": {
+      "people_gaining": 18,
+      "people_losing_ground": 2,
+      "mixed_picture": 0,
+      "not_everyone_benefits": 0,
+      "not_clear_yet": 91
+    },
+    "availability": {
+      "people_gaining": true,
+      "people_losing_ground": true,
+      "mixed_picture": false,
+      "not_everyone_benefits": false,
+      "not_clear_yet": true
+    },
+    "explicit_multi_label_units": 0,
+    "distribution_coded_units": 0,
+    "overlap_note": "A development may contain more than one signal, so these counts do not have to add up to the weekly total.",
+    "legacy_compatibility": true
+  },
+  "signal_migration": {
+    "version": "aieo_people_signals_v1",
+    "mode": "legacy_single_label_compatibility",
+    "note": "Existing labels were preserved. Mixed-picture and unequal-benefit counts remain unavailable until multi-label review is complete."
+  }
 }
