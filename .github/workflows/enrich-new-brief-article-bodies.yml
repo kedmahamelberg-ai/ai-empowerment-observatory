@@ -1,6 +1,7 @@
 name: Enrich New AIEO Brief Article Bodies
 
 on:
+  workflow_call:
   workflow_run:
     workflows:
       - Update AI News Collection
@@ -18,6 +19,7 @@ concurrency:
 jobs:
   enrich:
     if: >-
+      github.event_name == 'workflow_call' ||
       github.event_name == 'workflow_dispatch' ||
       github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest

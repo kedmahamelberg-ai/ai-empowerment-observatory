@@ -26,6 +26,11 @@ jobs:
     uses: ./.github/workflows/translate-news.yml
     secrets: inherit
 
+  enrich-article-bodies:
+    needs: collect
+    uses: ./.github/workflows/enrich-new-brief-article-bodies.yml
+    secrets: inherit
+
   resolve-events:
     needs: translate
     uses: ./.github/workflows/resolve-events.yml
@@ -40,7 +45,7 @@ jobs:
     secrets: inherit
 
   classify-dual-lenses:
-    needs: reconcile-history
+    needs: [reconcile-history, enrich-article-bodies]
     uses: ./.github/workflows/classify-dual-lenses.yml
     secrets: inherit
 
