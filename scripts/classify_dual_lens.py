@@ -44,7 +44,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REVIEW_OUTPUT = ROOT / "review" / "classification" / "latest.json"
 PUBLIC_OUTPUT = ROOT / "data" / "lenses" / "latest.json"
 
-CLASSIFIER_VERSION = "7C.3"
+CLASSIFIER_VERSION = "7C.4"
 CODEBOOK_VERSION = "observatory_dual_lens_v1.1"
 EVENT_METHOD = "article_to_event_v1"
 TRANSLATION_PROFILE = "validated_language_routing_v3"
@@ -63,6 +63,9 @@ HEALTH_URL = "http://127.0.0.1:8080/health"
 MIN_COUNTRY_SIGNAL_N = 3
 AUDIT_TARGET = 12
 MULTI_EVENT_AUDIT_MAX = 5
+MAX_ARTICLE_EVIDENCE_CHARS = 14000
+MAX_EVENT_EVIDENCE_CHARS = 22000
+MIN_FULL_TEXT_WORDS = 80
 
 VALID_STATUS = {
     "expanding",
@@ -329,6 +332,45 @@ def parse_source_metadata(value: Any) -> dict[str, Any]:
     return value if isinstance(value, dict) else {}
 
 
+def compact_evidence_text(value: Any, max_chars: int = MAX_ARTICLE_EVIDENCE_CHARS) -> str:
+    text = re.sub(r"[ \t]+", " ", str(value or ""))
+    text = re.sub(r"\n{3,}", "\n\n", text).strip()
+    if len(text) <= max_chars:
+        return text
+    head_chars = int(max_chars * 0.72)
+    tail_chars = max_chars - head_chars
+    return f"{text[:head_chars].rstrip()}\n\n[Middle shortened for classification]\n\n{text[-tail_chars:].lstrip()}"
+
+
+def load_current_full_text(client: Client, article_ids: list[str]) -> dict[str, dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for start in range(0, len(article_ids), 150):
+        response = (
+            client.table("brief_article_content_snapshots")
+            .select("article_id,body_text,word_count,extraction_quality,retrieval_method,retrieved_at")
+            .eq("is_current", True)
+            .in_("article_id", article_ids[start:start + 150])
+            .execute()
+        )
+        rows.extend(getattr(response, "data", None) or [])
+    rows.sort(
+        key=lambda row: (
+            float(row.get("extraction_quality") or 0),
+            int(row.get("word_count") or 0),
+            str(row.get("retrieved_at") or ""),
+        ),
+        reverse=True,
+    )
+    result: dict[str, dict[str, Any]] = {}
+    for row in rows:
+        article_id = str(row.get("article_id") or "")
+        body = compact_evidence_text(row.get("body_text"))
+        words = int(row.get("word_count") or len(body.split()))
+        if article_id and article_id not in result and body and words >= MIN_FULL_TEXT_WORDS:
+            result[article_id] = {**row, "body_text": body, "word_count": words}
+    return result
+
+
 def load_current_articles(
     client: Client,
     run_id: str,
@@ -398,6 +440,7 @@ def load_current_articles(
         rows.extend(getattr(response, "data", None) or [])
 
     translations = load_translations(client, ids)
+    full_text_map = load_current_full_text(client, ids)
 
     articles = []
 
@@ -433,6 +476,14 @@ def load_current_articles(
                 snippet = str(value).strip()
                 break
 
+        full_text = full_text_map.get(aid) or {}
+        if full_text.get("body_text"):
+            evidence_text = str(full_text["body_text"])
+            content_basis = "full_text"
+        else:
+            evidence_text = snippet
+            content_basis = "headline_and_snippet" if snippet else "headline_only"
+
         date_value = row.get("published_at") or row.get("first_seen_at")
 
         articles.append(
@@ -451,6 +502,10 @@ def load_current_articles(
                 "url": row.get("canonical_url"),
                 "date": str(date_value),
                 "snippet": snippet,
+                "evidence_text": evidence_text,
+                "content_basis": content_basis,
+                "evidence_word_count": int(full_text.get("word_count") or 0),
+                "retrieval_method": str(full_text.get("retrieval_method") or ""),
                 "search_rank": meta[aid]["rank"],
                 # Search markets are preserved for audit but NEVER supplied to
                 # the classifier as event-country evidence.
@@ -1360,11 +1415,9 @@ present, direction, degree, confidence, reasoning.
     )
 
 def article_evidence(article: dict[str, Any]) -> str:
-    basis = (
-        "headline_and_snippet"
-        if article.get("snippet")
-        else "headline_only"
-    )
+    basis = str(article.get("content_basis") or "headline_only")
+    evidence = str(article.get("evidence_text") or "")
+    evidence_label = "Collected article body" if basis == "full_text" else "Source snippet"
 
     return f"""
 Lens unit: one news article
@@ -1372,7 +1425,7 @@ Publisher: {article["publisher"]}
 Date: {article["date"]}
 Original headline: {article["headline_original"]}
 English normalization: {article["headline_english"]}
-Snippet: {article.get("snippet") or ""}
+{evidence_label}: {evidence}
 Evidence basis available: {basis}
 """.strip()
 
@@ -1383,6 +1436,7 @@ def event_evidence(
 ) -> str:
     blocks = []
 
+    per_source_limit = max(2600, min(MAX_ARTICLE_EVIDENCE_CHARS, MAX_EVENT_EVIDENCE_CHARS // max(1, len(members))))
     for index, article in enumerate(
         members,
         start=1,
@@ -1394,7 +1448,8 @@ Publisher: {article["publisher"]}
 Date: {article["date"]}
 Original headline: {article["headline_original"]}
 English normalization: {article["headline_english"]}
-Snippet: {article.get("snippet") or ""}
+Evidence basis: {article.get("content_basis") or "headline_only"}
+Source evidence: {compact_evidence_text(article.get("evidence_text") or "", per_source_limit)}
 """.strip()
         )
 
@@ -2142,9 +2197,8 @@ def main() -> int:
                     article
                 ),
                 content_basis=(
-                    "headline_and_snippet"
-                    if article.get("snippet")
-                    else "headline_only"
+                    article.get("content_basis")
+                    or "headline_only"
                 ),
             )
 

@@ -61,6 +61,9 @@ SERVER_URL = "http://127.0.0.1:8080/v1/chat/completions"
 HEALTH_URL = "http://127.0.0.1:8080/health"
 TRANSLATION_PROFILE = "validated_language_routing_v3"
 OWNER_GOLD_PATH = ROOT / "validation" / "symbiosis-owner-gold.json"
+MAX_ARTICLE_EVIDENCE_CHARS = 14000
+MAX_EVENT_EVIDENCE_CHARS = 22000
+MIN_FULL_TEXT_WORDS = 80
 
 
 class SymbiosisClassificationError(RuntimeError):
@@ -203,6 +206,47 @@ def parse_metadata(value: Any) -> dict[str, Any]:
     return dict(value) if isinstance(value, dict) else {}
 
 
+def compact_evidence_text(value: Any, max_chars: int = MAX_ARTICLE_EVIDENCE_CHARS) -> str:
+    text = re.sub(r"[ \t]+", " ", str(value or ""))
+    text = re.sub(r"\n{3,}", "\n\n", text).strip()
+    if len(text) <= max_chars:
+        return text
+    head_chars = int(max_chars * 0.72)
+    tail_chars = max_chars - head_chars
+    return f"{text[:head_chars].rstrip()}\n\n[Middle shortened for classification]\n\n{text[-tail_chars:].lstrip()}"
+
+
+def load_full_text_map(client: Client, article_ids: list[str]) -> dict[str, dict[str, Any]]:
+    """Load the best current legally collected article body for each source."""
+    rows: list[dict[str, Any]] = []
+    for start in range(0, len(article_ids), 150):
+        response = (
+            client.table("brief_article_content_snapshots")
+            .select("article_id,body_text,word_count,extraction_quality,retrieval_method,retrieved_at")
+            .eq("is_current", True)
+            .in_("article_id", article_ids[start:start + 150])
+            .execute()
+        )
+        rows.extend(getattr(response, "data", None) or [])
+
+    rows.sort(
+        key=lambda row: (
+            float(row.get("extraction_quality") or 0),
+            int(row.get("word_count") or 0),
+            str(row.get("retrieved_at") or ""),
+        ),
+        reverse=True,
+    )
+    result: dict[str, dict[str, Any]] = {}
+    for row in rows:
+        article_id = str(row.get("article_id") or "")
+        body = compact_evidence_text(row.get("body_text"))
+        words = int(row.get("word_count") or len(body.split()))
+        if article_id and article_id not in result and body and words >= MIN_FULL_TEXT_WORDS:
+            result[article_id] = {**row, "body_text": body, "word_count": words}
+    return result
+
+
 def evidence_from_metadata(metadata: dict[str, Any]) -> tuple[str, str]:
     for key, basis in (
         ("human_evidence_summary", "article_summary"),
@@ -274,6 +318,7 @@ def load_articles(client: Client, article_ids: list[str]) -> dict[str, dict[str,
         rows.extend(getattr(response, "data", None) or [])
     translations = load_translation_map(client, article_ids)
     observation_meta = load_observation_meta(client, article_ids)
+    full_text_map = load_full_text_map(client, article_ids)
     result: dict[str, dict[str, Any]] = {}
     for row in rows:
         article_id = str(row["article_id"])
@@ -283,6 +328,10 @@ def load_articles(client: Client, article_ids: list[str]) -> dict[str, dict[str,
         translation = translations.get(article_id) or {}
         metadata = parse_metadata(row.get("source_metadata"))
         evidence_text, content_basis = evidence_from_metadata(metadata)
+        full_text = full_text_map.get(article_id) or {}
+        if not metadata.get("human_evidence_summary") and full_text.get("body_text"):
+            evidence_text = str(full_text["body_text"])
+            content_basis = "full_text"
         result[article_id] = {
             "article_id": article_id,
             "headline_original": original,
@@ -293,6 +342,8 @@ def load_articles(client: Client, article_ids: list[str]) -> dict[str, dict[str,
             "source_language": str(translation.get("source_language_iso2") or row.get("language") or "en"),
             "evidence_text": evidence_text,
             "content_basis": content_basis,
+            "evidence_word_count": int(full_text.get("word_count") or 0),
+            "retrieval_method": str(full_text.get("retrieval_method") or ""),
             "search_markets": sorted(observation_meta[article_id]["search_markets"]),
             "search_languages": sorted(observation_meta[article_id]["search_languages"]),
             "min_rank": observation_meta[article_id]["min_rank"],
@@ -811,7 +862,12 @@ def article_evidence(article: dict[str, Any]) -> str:
         f"Headline: {article['headline_english']}",
     ]
     if article.get("evidence_text"):
-        lines.append(f"Available source summary or snippet: {article['evidence_text']}")
+        label = {
+            "full_text": "Collected article body",
+            "article_summary": "Reviewed or stored article summary",
+            "headline_and_snippet": "Source snippet",
+        }.get(str(article.get("content_basis") or ""), "Available source evidence")
+        lines.append(f"{label}: {article['evidence_text']}")
     else:
         lines.append("No source summary or snippet is stored. Classify cautiously from the headline only.")
     return "\n".join(lines)
@@ -825,10 +881,13 @@ def event_evidence(event: dict[str, Any]) -> str:
     if event.get("event_summary"):
         lines.append(f"Stored development summary: {event['event_summary']}")
     lines.append("Source evidence represented in this weekly release:")
-    for article in event["member_articles"]:
+    members = event["member_articles"]
+    per_source_limit = max(2600, min(MAX_ARTICLE_EVIDENCE_CHARS, MAX_EVENT_EVIDENCE_CHARS // max(1, len(members))))
+    for article in members:
         line = f"- {article['publisher']}: {article['headline_english']} ({article['date']})"
         if article.get("evidence_text"):
-            line += f" | {article['evidence_text']}"
+            excerpt = compact_evidence_text(article["evidence_text"], per_source_limit)
+            line += f" | Evidence basis: {article.get('content_basis')} | {excerpt}"
         lines.append(line)
     return "\n".join(lines)
 

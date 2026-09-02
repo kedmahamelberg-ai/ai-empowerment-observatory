@@ -12,8 +12,8 @@ from pathlib import Path
 from typing import Any
 
 CODEBOOK_VERSION = "aieo_news_symbiosis_v0.1"
-CLASSIFIER_VERSION = "symbiosis_news_v0.3"
-EVIDENCE_POLICY_VERSION = "aieo_evidence_basis_v3"
+CLASSIFIER_VERSION = "symbiosis_news_v0.4"
+EVIDENCE_POLICY_VERSION = "aieo_evidence_basis_v4_full_text_first"
 PUBLIC_SIGNAL_SCHEMA_VERSION = "aieo_people_signals_v1"
 
 HUMAN_TYPES = {
