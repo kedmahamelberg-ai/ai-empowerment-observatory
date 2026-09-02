@@ -6,9 +6,9 @@
   <title>This week | AI Empowerment Observatory</title>
   <meta name="description" content="See who is gaining from AI, who is losing ground, and the source-linked news behind this week's picture.">
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@6.5.0/dist/maplibre-gl.css">
-  <link rel="stylesheet" href="/globe.css?v=6.0.0">
-  <link rel="stylesheet" href="/site.css?v=6.0.0">
-  <link rel="stylesheet" href="/edu/observatory.css?v=6.0.0">
+  <link rel="stylesheet" href="/globe.css?v=6.1.0">
+  <link rel="stylesheet" href="/site.css?v=6.1.0">
+  <link rel="stylesheet" href="/edu/observatory.css?v=6.1.0">
   <link rel="stylesheet" href="/analytics-consent.css">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96">
@@ -25,18 +25,24 @@
 
   <main id="main-content" class="weekly-main">
     <section class="weekly-opening" aria-labelledby="week-title">
-      <p id="week-badge" class="eyebrow">Loading this week's news...</p>
-      <div class="weekly-heading"><h1 id="week-title">This week,<br><em>without the overload.</em></h1><p id="week-intro">Loading the clearest summary...</p></div>
+      <div class="weekly-opening-top">
+        <p id="week-badge" class="eyebrow">Loading this week's news...</p>
+        <details class="week-info">
+          <summary aria-label="About this week's evidence">i</summary>
+          <div class="week-info-panel"><strong>About this week</strong><p id="week-intro">Loading the evidence count...</p></div>
+        </details>
+      </div>
+      <div class="weekly-heading"><h1 id="week-title">This week,<br><em>without the overload.</em></h1></div>
     </section>
 
     <section class="weekly-signals" aria-labelledby="people-title">
       <div class="section-title-row"><div><p class="eyebrow">Start with people</p><h2 id="people-title">What is AI changing for people?</h2></div><p class="section-side-note">One development can fit more than one card.</p></div>
       <div id="week-people-board" class="week-people-board" aria-live="polite">
-        <article class="week-people-card gaining" data-signal-card="people_gaining"><span aria-hidden="true">↑</span><strong id="week-signal-gaining">—</strong><h3>People gaining</h3><p>More ability, access, opportunity or control.</p><small id="week-status-gaining">Loading</small></article>
-        <article class="week-people-card losing" data-signal-card="people_losing_ground"><span aria-hidden="true">↓</span><strong id="week-signal-losing">—</strong><h3>People losing ground</h3><p>Less control, weaker skills, lost opportunity or new risk.</p><small id="week-status-losing">Loading</small></article>
-        <article class="week-people-card mixed" data-signal-card="mixed_picture"><span aria-hidden="true">↕</span><strong id="week-signal-mixed">—</strong><h3>A mixed picture</h3><p>Gains and downsides in the same story.</p><small id="week-status-mixed">Loading</small></article>
-        <article class="week-people-card unequal" data-signal-card="not_everyone_benefits"><span aria-hidden="true">≠</span><strong id="week-signal-unequal">—</strong><h3>Not everyone benefits</h3><p>AI helps some people more than others.</p><small id="week-status-unequal">Loading</small></article>
-        <article class="week-people-card unclear" data-signal-card="not_clear_yet"><span aria-hidden="true">?</span><strong id="week-signal-unclear">—</strong><h3>Not clear yet</h3><p>The news does not show enough yet to tell.</p><small id="week-status-unclear">Loading</small></article>
+        <article class="week-people-card gaining" data-signal-card="people_gaining"><span aria-hidden="true">↑</span><div class="week-card-metric"><strong id="week-signal-gaining">—</strong><b id="week-percent-gaining">—</b></div><h3>People gaining</h3><p>More ability, access, opportunity or control.</p><small id="week-status-gaining">Loading</small></article>
+        <article class="week-people-card losing" data-signal-card="people_losing_ground"><span aria-hidden="true">↓</span><div class="week-card-metric"><strong id="week-signal-losing">—</strong><b id="week-percent-losing">—</b></div><h3>People losing ground</h3><p>Less control, weaker skills, lost opportunity or new risk.</p><small id="week-status-losing">Loading</small></article>
+        <article class="week-people-card mixed" data-signal-card="mixed_picture"><span aria-hidden="true">↕</span><div class="week-card-metric"><strong id="week-signal-mixed">—</strong><b id="week-percent-mixed">—</b></div><h3>A mixed picture</h3><p>Gains and downsides in the same story.</p><small id="week-status-mixed">Loading</small></article>
+        <article class="week-people-card unequal" data-signal-card="not_everyone_benefits"><span aria-hidden="true">≠</span><div class="week-card-metric"><strong id="week-signal-unequal">—</strong><b id="week-percent-unequal">—</b></div><h3>Not everyone benefits</h3><p>AI helps some people more than others.</p><small id="week-status-unequal">Loading</small></article>
+        <article class="week-people-card unclear" data-signal-card="not_clear_yet"><span aria-hidden="true">?</span><div class="week-card-metric"><strong id="week-signal-unclear">—</strong><b id="week-percent-unclear">—</b></div><h3>Not clear yet</h3><p>The news does not show enough yet to tell.</p><small id="week-status-unclear">Loading</small></article>
       </div>
       <div class="weekly-takeaway"><span>This week in one sentence</span><p id="weekly-takeaway-copy">Loading...</p></div>
     </section>
@@ -83,7 +89,7 @@
   </main>
 
   <footer><span>© 2026 AI Empowerment Observatory</span><nav aria-label="Footer navigation"><a href="/">Home</a><a href="/reports/">Reports</a><a href="/methodology/">How it works</a><a href="/privacy/">Privacy</a><a href="mailto:kedma@hamelberg-ai.com">Contact</a></nav></footer>
-  <script type="module" src="/edu/dashboard.js?v=6.0.0"></script>
+  <script type="module" src="/edu/dashboard.js?v=6.1.0"></script>
   <script src="/analytics.js"></script>
 </body>
 </html>

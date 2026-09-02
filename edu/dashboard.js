@@ -1,8 +1,8 @@
 "use strict";
 
-import { initDiscoveryGlobe } from "/globe.js?v=6.0.0";
+import { initDiscoveryGlobe } from "/globe.js?v=6.1.0";
 
-const BUILD_ID = "6.0.0";
+const BUILD_ID = "6.1.0";
 const CURRENT_URL = "/data/releases/current.json";
 const INDEX_URL = "/data/releases/index.json";
 const COUNTRIES_URL = "/edu/countries.json";
@@ -88,6 +88,12 @@ function setText(id, value) {
   if (element) element.textContent = String(value ?? "—");
 }
 
+function formatPercent(value, total) {
+  const denominator = Number(total || 0);
+  if (!denominator) return "—";
+  return `${((Number(value || 0) / denominator) * 100).toFixed(1)}%`;
+}
+
 async function fetchJSON(url, optional = false) {
   try {
     const separator = url.includes("?") ? "&" : "?";
@@ -162,15 +168,17 @@ function renderSignals() {
   const counts = signalSummary?.people_signal_counts || {};
   const available = signalSummary?.availability || {};
   const cards = [
-    ["people_gaining", "week-signal-gaining", "week-status-gaining"],
-    ["people_losing_ground", "week-signal-losing", "week-status-losing"],
-    ["mixed_picture", "week-signal-mixed", "week-status-mixed"],
-    ["not_everyone_benefits", "week-signal-unequal", "week-status-unequal"],
-    ["not_clear_yet", "week-signal-unclear", "week-status-unclear"],
+    ["people_gaining", "week-signal-gaining", "week-percent-gaining", "week-status-gaining"],
+    ["people_losing_ground", "week-signal-losing", "week-percent-losing", "week-status-losing"],
+    ["mixed_picture", "week-signal-mixed", "week-percent-mixed", "week-status-mixed"],
+    ["not_everyone_benefits", "week-signal-unequal", "week-percent-unequal", "week-status-unequal"],
+    ["not_clear_yet", "week-signal-unclear", "week-percent-unclear", "week-status-unclear"],
   ];
-  cards.forEach(([key, countId, statusId]) => {
+  cards.forEach(([key, countId, percentId, statusId]) => {
     const ready = available[key] === true;
-    setText(countId, ready ? Number(counts[key] || 0) : "—");
+    const value = Number(counts[key] || 0);
+    setText(countId, ready ? value : "—");
+    setText(percentId, ready ? formatPercent(value, total) : "—");
     setText(statusId, ready ? `of ${total}` : "Count coming after review");
     document.querySelector(`[data-signal-card="${key}"]`)?.classList.toggle("is-pending", !ready);
     const filter = document.querySelector(`[data-signal-view="${key}"]`);
