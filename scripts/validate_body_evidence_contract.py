@@ -32,9 +32,27 @@ def main() -> int:
     args = parser.parse_args()
 
     client = create_client(required_env("SUPABASE_URL"), required_env("SUPABASE_SECRET_KEY"))
+    # Validate the operational contract, not an implementation-specific primary
+    # key name. Older AIEO installations use attempt_id while fresh databases
+    # use fetch_attempt_id; neither collector nor reporting code reads that key.
+    # Probing every column that collection actually writes catches real schema
+    # drift without rejecting a compatible legacy table.
     checks = (
-        ("brief_article_fetch_attempts", "fetch_attempt_id,article_id,outcome,attempted_at"),
-        ("brief_article_content_snapshots", "snapshot_id,article_id,word_count,is_current,retrieved_at"),
+        (
+            "brief_article_fetch_attempts",
+            "article_id,source_url,source_domain,workflow_run_id,retrieval_method,"
+            "http_status,robots_allowed,tdm_reservation,tdm_policy_url,"
+            "paywall_detected,outcome,response_content_type,response_bytes,"
+            "elapsed_ms,metadata,attempted_at",
+        ),
+        (
+            "brief_article_content_snapshots",
+            "snapshot_id,article_id,source_url,source_domain,retrieval_method,"
+            "http_status,mime_type,extracted_title,word_count,text_sha256,"
+            "extraction_quality,content_basis,rights_status,rights_basis,"
+            "robots_allowed,tdm_reservation,tdm_policy_url,paywall_detected,"
+            "is_current,retrieved_at,created_at",
+        ),
         ("brief_article_best_evidence", "article_id,evidence_basis,evidence_at,evidence_ref"),
         ("brief_event_source_evidence", "event_id,article_id,evidence_basis,evidence_at,evidence_ref"),
         (
@@ -69,7 +87,10 @@ def main() -> int:
         print("\nPrivate body-evidence contract is not ready:")
         for error in errors:
             print(f"- {error}")
-        print(f"\nApply {MIGRATION} once in Supabase, then rerun this workflow.")
+        print(
+            "\nThe operational evidence schema is incomplete or inaccessible. "
+            f"Run the current {MIGRATION} in Supabase, then start a fresh workflow run."
+        )
         return 1
     return 0
 
