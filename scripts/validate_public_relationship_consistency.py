@@ -107,11 +107,26 @@ def main() -> int:
     if human_sum != expected:
         fail(f"people-side marginal sums to {human_sum}, not {expected}")
 
-    people = sym.get("people_signals") or {}
-    if int(people.get("expected_units") or 0) != expected:
-        fail("plain-language people-signal denominator does not match the weekly developments")
-    if int(people.get("classified_units") or 0) != classified:
-        fail("plain-language people-signal classified count does not match the relationship layer")
+    people = sym.get("people_signals")
+    if not isinstance(people, dict):
+        fail(
+            "data/symbiosis/current.json is missing the people_signals block; "
+            "upload the matching people-first current and weekly symbiosis artifacts"
+        )
+    people_expected = int(people.get("expected_units") or 0)
+    if people_expected != expected:
+        fail(
+            "data/symbiosis/current.json has "
+            f"people_signals.expected_units={people_expected}, but the current weekly "
+            f"relationship denominator is {expected}"
+        )
+    people_classified = int(people.get("classified_units") or 0)
+    if people_classified != classified:
+        fail(
+            "data/symbiosis/current.json has "
+            f"people_signals.classified_units={people_classified}, but the relationship "
+            f"layer contains {classified} classified developments"
+        )
 
     evidence = [row for row in (sym.get("evidence") or []) if isinstance(row, dict)]
     if len(evidence) != expected:
