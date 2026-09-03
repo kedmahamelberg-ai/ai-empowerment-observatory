@@ -33,6 +33,7 @@ jobs:
             scripts/classify_symbiosis.py \
             scripts/symbiosis_common.py \
             scripts/validate_symbiosis_resilience.py \
+            scripts/create_symbiosis_placeholder.py \
             scripts/publish_symbiosis_release.py \
             scripts/export_symbiosis_qc.py \
             scripts/ingest_symbiosis_qc.py \
@@ -44,6 +45,8 @@ jobs:
         run: python scripts/validate_repository_integrity.py
       - name: Validate symbiosis resilience contract
         run: python scripts/validate_symbiosis_resilience.py
+      - name: Refresh local relationship placeholder for current release
+        run: python scripts/create_symbiosis_placeholder.py
       - name: Validate public relationship arithmetic
         run: python scripts/validate_public_relationship_consistency.py
       - name: Validate JavaScript syntax
