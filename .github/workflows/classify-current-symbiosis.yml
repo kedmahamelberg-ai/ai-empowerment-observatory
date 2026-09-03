@@ -37,10 +37,21 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: symbiosis-classification-${{ github.repository }}
+  cancel-in-progress: false
+
 jobs:
-  classify:
+  pass_1:
+    name: Classification pass 1
     runs-on: ubuntu-latest
-    timeout-minutes: 350
+    timeout-minutes: 285
+    outputs:
+      complete: ${{ steps.symbiosis.outputs.complete }}
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      LLAMA_SERVER_BIN: /tmp/llama.cpp/build/bin/llama-server
     steps:
       - name: Checkout latest main
         uses: actions/checkout@v7
@@ -51,34 +62,238 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
+      - name: Validate symbiosis resilience contract
+        run: python scripts/validate_symbiosis_resilience.py
+      - name: Cache Qwen model files
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/huggingface/hub
+          key: ${{ runner.os }}-aieo-qwen3-4b-gguf-q4-k-m-v1
       - name: Install Python dependencies
         run: |
+          set -euo pipefail
           python -m pip install -r requirements.txt
           python -m pip install "huggingface_hub>=0.34,<2"
       - name: Install llama.cpp build dependencies
         run: |
+          set -euo pipefail
           sudo apt-get update
           sudo apt-get install -y cmake build-essential libcurl4-openssl-dev
       - name: Build llama.cpp server
         run: |
+          set -euo pipefail
           git clone --depth 1 https://github.com/ggml-org/llama.cpp.git /tmp/llama.cpp
           cmake -S /tmp/llama.cpp -B /tmp/llama.cpp/build \
             -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=OFF -DLLAMA_CURL=ON
           cmake --build /tmp/llama.cpp/build --target llama-server -j2
-      - name: Classify current relationship patterns
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
-          LLAMA_SERVER_BIN: /tmp/llama.cpp/build/bin/llama-server
+      - name: Run bounded symbiosis classification pass 1
+        id: symbiosis
         run: |
-          args=(--scope latest --lens "${{ inputs.lens }}")
+          set -euo pipefail
+          status_file="$RUNNER_TEMP/symbiosis-status-${GITHUB_JOB}.json"
+          args=(--scope latest --lens "${{ inputs.lens }}" --time-budget-minutes "225" --status-output "$status_file")
           if [[ -n "${{ inputs.release_id }}" ]]; then args+=(--release-id "${{ inputs.release_id }}"); fi
           if [[ "${{ inputs.replace }}" == "true" ]]; then args+=(--replace); fi
           python scripts/classify_symbiosis.py "${args[@]}"
+          python - "$status_file" "$GITHUB_OUTPUT" <<'PY'
+          import json
+          import sys
+
+          status_path, output_path = sys.argv[1:]
+          with open(status_path, encoding="utf-8") as handle:
+              status = json.load(handle)
+          complete = "true" if status.get("complete") is True else "false"
+          with open(output_path, "a", encoding="utf-8") as handle:
+              handle.write(f"complete={complete}\n")
+          print(json.dumps(status, indent=2))
+          PY
+
+  pass_2:
+    name: Classification pass 2
+    needs: pass_1
+    if: needs.pass_1.outputs.complete != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 285
+    outputs:
+      complete: ${{ steps.symbiosis.outputs.complete }}
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      LLAMA_SERVER_BIN: /tmp/llama.cpp/build/bin/llama-server
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v7
+        with:
+          ref: main
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Validate symbiosis resilience contract
+        run: python scripts/validate_symbiosis_resilience.py
+      - name: Cache Qwen model files
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/huggingface/hub
+          key: ${{ runner.os }}-aieo-qwen3-4b-gguf-q4-k-m-v1
+      - name: Install Python dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install -r requirements.txt
+          python -m pip install "huggingface_hub>=0.34,<2"
+      - name: Install llama.cpp build dependencies
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential libcurl4-openssl-dev
+      - name: Build llama.cpp server
+        run: |
+          set -euo pipefail
+          git clone --depth 1 https://github.com/ggml-org/llama.cpp.git /tmp/llama.cpp
+          cmake -S /tmp/llama.cpp -B /tmp/llama.cpp/build \
+            -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=OFF -DLLAMA_CURL=ON
+          cmake --build /tmp/llama.cpp/build --target llama-server -j2
+      - name: Resume bounded symbiosis classification pass 2
+        id: symbiosis
+        run: |
+          set -euo pipefail
+          status_file="$RUNNER_TEMP/symbiosis-status-${GITHUB_JOB}.json"
+          args=(--scope latest --lens "${{ inputs.lens }}" --time-budget-minutes "225" --status-output "$status_file")
+          if [[ -n "${{ inputs.release_id }}" ]]; then args+=(--release-id "${{ inputs.release_id }}"); fi
+          if [[ "${{ inputs.replace }}" == "true" ]]; then args+=(--replace); fi
+          python scripts/classify_symbiosis.py "${args[@]}"
+          python - "$status_file" "$GITHUB_OUTPUT" <<'PY'
+          import json
+          import sys
+
+          status_path, output_path = sys.argv[1:]
+          with open(status_path, encoding="utf-8") as handle:
+              status = json.load(handle)
+          complete = "true" if status.get("complete") is True else "false"
+          with open(output_path, "a", encoding="utf-8") as handle:
+              handle.write(f"complete={complete}\n")
+          print(json.dumps(status, indent=2))
+          PY
+
+  pass_3:
+    name: Classification pass 3
+    needs: [pass_1, pass_2]
+    if: >-
+      always() &&
+      needs.pass_1.result == 'success' &&
+      needs.pass_1.outputs.complete != 'true' &&
+      needs.pass_2.result == 'success' &&
+      needs.pass_2.outputs.complete != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 285
+    outputs:
+      complete: ${{ steps.symbiosis.outputs.complete }}
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      LLAMA_SERVER_BIN: /tmp/llama.cpp/build/bin/llama-server
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v7
+        with:
+          ref: main
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Validate symbiosis resilience contract
+        run: python scripts/validate_symbiosis_resilience.py
+      - name: Cache Qwen model files
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/huggingface/hub
+          key: ${{ runner.os }}-aieo-qwen3-4b-gguf-q4-k-m-v1
+      - name: Install Python dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install -r requirements.txt
+          python -m pip install "huggingface_hub>=0.34,<2"
+      - name: Install llama.cpp build dependencies
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential libcurl4-openssl-dev
+      - name: Build llama.cpp server
+        run: |
+          set -euo pipefail
+          git clone --depth 1 https://github.com/ggml-org/llama.cpp.git /tmp/llama.cpp
+          cmake -S /tmp/llama.cpp -B /tmp/llama.cpp/build \
+            -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=OFF -DLLAMA_CURL=ON
+          cmake --build /tmp/llama.cpp/build --target llama-server -j2
+      - name: Resume bounded symbiosis classification pass 3
+        id: symbiosis
+        run: |
+          set -euo pipefail
+          status_file="$RUNNER_TEMP/symbiosis-status-${GITHUB_JOB}.json"
+          args=(--scope latest --lens "${{ inputs.lens }}" --time-budget-minutes "225" --status-output "$status_file")
+          if [[ -n "${{ inputs.release_id }}" ]]; then args+=(--release-id "${{ inputs.release_id }}"); fi
+          if [[ "${{ inputs.replace }}" == "true" ]]; then args+=(--replace); fi
+          python scripts/classify_symbiosis.py "${args[@]}"
+          python - "$status_file" "$GITHUB_OUTPUT" <<'PY'
+          import json
+          import sys
+
+          status_path, output_path = sys.argv[1:]
+          with open(status_path, encoding="utf-8") as handle:
+              status = json.load(handle)
+          complete = "true" if status.get("complete") is True else "false"
+          with open(output_path, "a", encoding="utf-8") as handle:
+              handle.write(f"complete={complete}\n")
+          print(json.dumps(status, indent=2))
+          PY
+
+  ensure_complete:
+    name: Require complete relationship classification
+    needs: [pass_1, pass_2, pass_3]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PASS_1_COMPLETE: ${{ needs.pass_1.outputs.complete }}
+      PASS_2_COMPLETE: ${{ needs.pass_2.outputs.complete }}
+      PASS_3_COMPLETE: ${{ needs.pass_3.outputs.complete }}
+    steps:
+      - name: Require a completed symbiosis run
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$PASS_1_COMPLETE" == "true" || \
+                "$PASS_2_COMPLETE" == "true" || \
+                "$PASS_3_COMPLETE" == "true" ]]; then
+            echo "Relationship classification completed successfully."
+            exit 0
+          fi
+          echo "::error::Relationship classification did not complete within three resumable passes. No downstream publication was started."
+          exit 1
+
+  build_review_workbench:
+    name: Build relationship review workbench
+    needs: ensure_complete
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v7
+        with:
+          ref: main
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install review dependencies
+        run: python -m pip install -r requirements.txt
       - name: Build self-contained review workbench
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
         run: python scripts/build_symbiosis_review_workbench.py --scope latest
       - name: Upload review workbench
         uses: actions/upload-artifact@v7
@@ -87,5 +302,4 @@ jobs:
           path: |
             review/symbiosis/workbench.html
             review/symbiosis/workbench-data.json
-            review/symbiosis/latest.json
           retention-days: 30
