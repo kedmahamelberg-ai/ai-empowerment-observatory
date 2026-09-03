@@ -125,6 +125,40 @@ def main() -> int:
             + ", ".join(missing_resume_guards)
         )
 
+    body_workflow = (
+        WORKFLOWS / "enrich-new-brief-article-bodies.yml"
+    ).read_text(encoding="utf-8")
+    hard_match = re.search(r"timeout-minutes:\s*(\d+)", body_workflow)
+    soft_match = re.search(r"--max-runtime-minutes\s+(\d+)", body_workflow)
+    if not hard_match or not soft_match:
+        fail("body enrichment is missing hard or soft runtime limits")
+    hard_minutes = int(hard_match.group(1))
+    soft_minutes = int(soft_match.group(1))
+    if hard_minutes < soft_minutes + 10:
+        fail("body enrichment needs at least 10 minutes between soft and hard stops")
+    if "--per-source-timeout-seconds" not in body_workflow:
+        fail("body enrichment is missing its per-source watchdog")
+
+    body_fetcher = (
+        ROOT / "scripts" / "brief_backfill_article_content.py"
+    ).read_text(encoding="utf-8")
+    if "rp.read()" in body_fetcher:
+        fail("robots.txt must not be read through an unbounded RobotFileParser request")
+    for required in ("ROBOTS_TIMEOUT", "TDM_TIMEOUT", "ARTICLE_TIMEOUT"):
+        if required not in body_fetcher:
+            fail(f"body fetcher is missing {required}")
+
+    body_resumer = (
+        ROOT / "scripts" / "brief_backfill_article_content_resumable.py"
+    ).read_text(encoding="utf-8")
+    for required in (
+        "source_deadline",
+        "source_timeout",
+        "TERMINAL_PRIOR_OUTCOMES",
+    ):
+        if required not in body_resumer:
+            fail(f"body enrichment resumability guard is missing {required}")
+
     print("Repository integrity checks passed.")
     return 0
 

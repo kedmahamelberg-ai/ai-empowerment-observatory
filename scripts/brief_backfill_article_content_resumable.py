@@ -4,8 +4,10 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import signal
 import time
 from collections import defaultdict
+from contextlib import contextmanager
 from pathlib import Path
 
 from supabase import create_client
@@ -16,11 +18,50 @@ from brief_content_common import article_url
 RETRYABLE = {
     "http_error",
     "exception",
+    "source_timeout",
     "too_little_extractable_text",
     "robots_unavailable",
 }
 
+TERMINAL_PRIOR_OUTCOMES = {
+    "blocked_paywall_or_login",
+    "blocked_robots",
+    "blocked_tdm_reserved",
+    "non_article_media",
+}
+
 ROOT = Path(__file__).resolve().parents[1]
+
+
+class SourceDeadlineExceeded(BaseException):
+    """Escape extraction helpers that intentionally swallow ordinary errors."""
+
+    pass
+
+
+@contextmanager
+def source_deadline(seconds):
+    """Bound every source, including parsing code and robots checks."""
+
+    seconds = float(seconds or 0)
+    if seconds <= 0 or not hasattr(signal, "SIGALRM"):
+        yield
+        return
+
+    previous_handler = signal.getsignal(signal.SIGALRM)
+
+    def raise_timeout(_signum, _frame):
+        raise SourceDeadlineExceeded(
+            f"Source processing exceeded {seconds:g} seconds"
+        )
+
+    signal.signal(signal.SIGALRM, raise_timeout)
+    signal.setitimer(signal.ITIMER_REAL, seconds)
+    try:
+        yield
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, 0)
+        signal.signal(signal.SIGALRM, previous_handler)
 
 def paged_rows(client, table, columns, page_size=500):
     start = 0
@@ -152,6 +193,8 @@ def should_skip(article_id, stored, latest_outcome, retry_mode):
     prior = latest_outcome.get(article_id)
     if not prior:
         return False, None
+    if prior in TERMINAL_PRIOR_OUTCOMES:
+        return True, f"terminal_prior_{prior}"
     if retry_mode == "none":
         return True, "already_attempted"
     if retry_mode == "retryable" and prior not in RETRYABLE:
@@ -178,6 +221,12 @@ def main():
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--retry-mode", choices=["none", "retryable", "all"], default="none")
     parser.add_argument("--max-runtime-minutes", type=int, default=150)
+    parser.add_argument(
+        "--per-source-timeout-seconds",
+        type=float,
+        default=75,
+        help="Hard wall-clock budget for one source, including policy checks and parsing.",
+    )
     parser.add_argument("--sleep", type=float, default=0.25)
     parser.add_argument(
         "--scope",
@@ -227,7 +276,13 @@ def main():
         print(f"[{processed}] {article_id} {source_url}", flush=True)
 
         try:
-            result = media_result() if is_obvious_media(source_url) else base.fetch_and_extract(source_url)
+            with source_deadline(args.per_source_timeout_seconds):
+                result = media_result() if is_obvious_media(source_url) else base.fetch_and_extract(source_url)
+        except SourceDeadlineExceeded as exc:
+            result = {
+                "outcome": "source_timeout",
+                "error": str(exc),
+            }
         except Exception as exc:
             result = {
                 "outcome": "exception",
@@ -285,6 +340,7 @@ def main():
         "scanned": scanned,
         "soft_stopped": soft_stopped,
         "retry_mode": args.retry_mode,
+        "per_source_timeout_seconds": args.per_source_timeout_seconds,
         "counts": dict(sorted(counts.items())),
         "extraction_methods": dict(sorted(methods.items())),
     }

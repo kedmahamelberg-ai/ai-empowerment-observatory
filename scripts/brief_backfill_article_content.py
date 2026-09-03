@@ -18,18 +18,30 @@ from supabase import create_client
 from brief_content_common import article_url, domain_of, normalize_space, sha256_text
 
 USER_AGENT = "AIEOResearchBot/1.1 (+https://observatory.hamelberg-ai.com/methodology/)"
-TIMEOUT = (10, 35)
+ROBOTS_TIMEOUT = (5, 10)
+TDM_TIMEOUT = (5, 10)
+ARTICLE_TIMEOUT = (10, 30)
 MIN_WORDS = 80
 
 def robots_allowed(url: str) -> tuple[bool | None, str]:
     parts = urlsplit(url)
     robots_url = f"{parts.scheme}://{parts.netloc}/robots.txt"
     try:
+        response = requests.get(
+            robots_url,
+            headers={"User-Agent": USER_AGENT},
+            timeout=ROBOTS_TIMEOUT,
+            allow_redirects=True,
+        )
+        if response.status_code in {401, 403}:
+            return False, robots_url
+        if response.status_code != 200:
+            return None, robots_url
         rp = RobotFileParser()
         rp.set_url(robots_url)
-        rp.read()
+        rp.parse(response.text.splitlines())
         return bool(rp.can_fetch(USER_AGENT, url)), robots_url
-    except Exception:
+    except requests.RequestException:
         return None, robots_url
 
 def tdmrep_for(url: str) -> dict:
@@ -37,7 +49,12 @@ def tdmrep_for(url: str) -> dict:
     endpoint = f"{parts.scheme}://{parts.netloc}/.well-known/tdmrep.json"
     out = {"url": endpoint, "reservation": "unset", "policy": None}
     try:
-        r = requests.get(endpoint, headers={"User-Agent": USER_AGENT}, timeout=TIMEOUT)
+        r = requests.get(
+            endpoint,
+            headers={"User-Agent": USER_AGENT},
+            timeout=TDM_TIMEOUT,
+            allow_redirects=True,
+        )
         if r.status_code != 200:
             return out
         rules = r.json()
@@ -228,7 +245,7 @@ def fetch_and_extract(url: str):
     r = requests.get(
         url,
         headers={"User-Agent":USER_AGENT, "Accept":"text/html,application/xhtml+xml;q=0.9,*/*;q=0.5"},
-        timeout=TIMEOUT,
+        timeout=ARTICLE_TIMEOUT,
         allow_redirects=True,
     )
     elapsed_ms = round((time.monotonic() - started) * 1000)
