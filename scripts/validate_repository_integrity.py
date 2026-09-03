@@ -119,6 +119,9 @@ def main() -> int:
         "load_saved_classifications",
         "checkpoint_classification_run",
         "--time-budget-minutes",
+        "TransientSupabaseError",
+        "supabase_execute_with_retry",
+        "transient_supabase_error",
     ]
     missing_resume_guards = [
         value for value in required_resume_guards if value not in stage7c_script

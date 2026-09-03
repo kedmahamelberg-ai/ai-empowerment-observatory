@@ -34,7 +34,7 @@ import time
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 import requests
 from huggingface_hub import HfApi
@@ -67,6 +67,8 @@ MULTI_EVENT_AUDIT_MAX = 5
 MAX_ARTICLE_EVIDENCE_CHARS = 14000
 MAX_EVENT_EVIDENCE_CHARS = 22000
 MIN_FULL_TEXT_WORDS = 80
+SUPABASE_WRITE_MAX_ATTEMPTS = 6
+SUPABASE_RETRY_DELAYS_SECONDS = (2, 4, 8, 16, 30)
 
 VALID_STATUS = {
     "expanding",
@@ -236,6 +238,12 @@ class PassBudgetReached(RuntimeError):
     pass
 
 
+class TransientSupabaseError(ClassificationError):
+    """A temporary database/API failure that should pause rather than fail a pass."""
+
+    pass
+
+
 def utc_now() -> datetime:
     return datetime.now(timezone.utc)
 
@@ -263,6 +271,68 @@ def first_row(response: Any, context: str) -> dict[str, Any]:
         return data
 
     raise ClassificationError(f"No row while {context}.")
+
+
+def _error_text(exc: Exception) -> str:
+    return " ".join(
+        str(value)
+        for value in (exc, getattr(exc, "message", ""))
+        if value
+    ).casefold()
+
+
+def is_transient_supabase_error(exc: Exception) -> bool:
+    """Recognize reverse-proxy and transport failures from the Supabase API."""
+
+    text = _error_text(exc)
+    markers = (
+        "'code': '525'",
+        '\"code\": \"525\"',
+        "ssl handshake failed",
+        "json could not be generated",
+        "cloudflare",
+        "bad gateway",
+        "gateway timeout",
+        "service unavailable",
+        "too many requests",
+        "connection reset",
+        "connection aborted",
+        "connection timed out",
+        "read timed out",
+    )
+    return any(marker in text for marker in markers)
+
+
+def supabase_execute_with_retry(
+    label: str,
+    operation: Callable[[], Any],
+) -> Any:
+    """Retry only transient Supabase/API failures with bounded backoff."""
+
+    last_error: Exception | None = None
+    for attempt in range(1, SUPABASE_WRITE_MAX_ATTEMPTS + 1):
+        try:
+            return operation()
+        except Exception as exc:
+            if not is_transient_supabase_error(exc):
+                raise
+            last_error = exc
+            if attempt == SUPABASE_WRITE_MAX_ATTEMPTS:
+                break
+            delay = SUPABASE_RETRY_DELAYS_SECONDS[
+                min(attempt - 1, len(SUPABASE_RETRY_DELAYS_SECONDS) - 1)
+            ]
+            print(
+                f"Warning: transient Supabase error while {label}; "
+                f"retrying in {delay}s ({attempt}/{SUPABASE_WRITE_MAX_ATTEMPTS}).",
+                file=sys.stderr,
+                flush=True,
+            )
+            time.sleep(delay)
+
+    raise TransientSupabaseError(
+        f"Supabase remained temporarily unavailable while {label}: {last_error}"
+    ) from last_error
 
 
 def parse_args() -> argparse.Namespace:
@@ -794,20 +864,24 @@ def resume_or_start_classification_run(
 
     response = (
         client.table("classification_runs")
-        .select("classification_run_id,run_key,started_at,status")
+        .select("classification_run_id,run_key,started_at,status,classified_count")
         .eq("collection_run_id", collection_run_id)
         .eq("codebook_version_id", codebook_version_id)
         .eq("model_version_id", model_version_id)
         .eq("classifier_version", CLASSIFIER_VERSION)
-        .eq("status", "running")
+        .in_("status", ["running", "paused", "failed"])
         .order("started_at", desc=True)
-        .limit(1)
         .execute()
     )
     rows = getattr(response, "data", None) or []
 
-    if rows:
-        row = rows[0]
+    for row in rows:
+        status = str(row.get("status") or "")
+        has_saved_work = int(row.get("classified_count") or 0) > 0
+        if status not in {"running", "paused"} and not (
+            status == "failed" and has_saved_work
+        ):
+            continue
         classification_run_id = str(row["classification_run_id"])
         run_key = str(row["run_key"])
         (
@@ -822,6 +896,12 @@ def resume_or_start_classification_run(
             .eq("classification_run_id", classification_run_id)
             .execute()
         )
+        if status == "failed":
+            print(
+                f"Recovering partial Stage 7C run {run_key} after an earlier "
+                "infrastructure failure.",
+                flush=True,
+            )
         return classification_run_id, run_key, True
 
     classification_run_id, run_key = start_classification_run(
@@ -843,20 +923,23 @@ def checkpoint_classification_run(
 ) -> None:
     """Persist progress while keeping the run eligible for the next pass."""
 
-    (
-        client.table("classification_runs")
-        .update(
-            {
-                "completed_at": None,
-                "status": "running",
-                "attempted_count": attempted,
-                "classified_count": classified,
-                "review_required_count": review_required,
-                "classifier_version": CLASSIFIER_VERSION,
-            }
-        )
-        .eq("classification_run_id", classification_run_id)
-        .execute()
+    supabase_execute_with_retry(
+        "checkpointing Stage 7C progress",
+        lambda: (
+            client.table("classification_runs")
+            .update(
+                {
+                    "completed_at": None,
+                    "status": "running",
+                    "attempted_count": attempted,
+                    "classified_count": classified,
+                    "review_required_count": review_required,
+                    "classifier_version": CLASSIFIER_VERSION,
+                }
+            )
+            .eq("classification_run_id", classification_run_id)
+            .execute()
+        ),
     )
 
 
@@ -869,23 +952,26 @@ def finish_classification_run(
     classified: int,
     review_required: int,
 ) -> None:
-    (
-        client.table("classification_runs")
-        .update(
-            {
-                "completed_at": iso_z(utc_now()),
-                "status": status,
-                "attempted_count": attempted,
-                "classified_count": classified,
-                "review_required_count": review_required,
-                "classifier_version": CLASSIFIER_VERSION,
-            }
-        )
-        .eq(
-            "classification_run_id",
-            classification_run_id,
-        )
-        .execute()
+    supabase_execute_with_retry(
+        "finishing Stage 7C progress",
+        lambda: (
+            client.table("classification_runs")
+            .update(
+                {
+                    "completed_at": iso_z(utc_now()),
+                    "status": status,
+                    "attempted_count": attempted,
+                    "classified_count": classified,
+                    "review_required_count": review_required,
+                    "classifier_version": CLASSIFIER_VERSION,
+                }
+            )
+            .eq(
+                "classification_run_id",
+                classification_run_id,
+            )
+            .execute()
+        ),
     )
 
 
@@ -944,11 +1030,14 @@ def load_saved_classifications(
         classification_id = str(stored["lens_classification_id"])
         stored_dimensions = dimensions.get(classification_id, {})
         if set(stored_dimensions) != VALID_DIMENSIONS:
-            raise ClassificationError(
-                "Cannot resume an incomplete saved classification: "
-                f"{classification_id} has {len(stored_dimensions)} of "
-                f"{len(VALID_DIMENSIONS)} dimensions."
+            print(
+                "Warning: ignoring incomplete saved classification until its "
+                f"dimensions are repaired: {classification_id} has "
+                f"{len(stored_dimensions)} of {len(VALID_DIMENSIONS)} dimensions.",
+                file=sys.stderr,
+                flush=True,
             )
+            continue
 
         result = {
             "ai_relevant": bool(stored.get("ai_relevant")),
@@ -1784,21 +1873,54 @@ def insert_classification(
         ),
     }
 
-    response = (
-        client.table("lens_classifications")
-        .insert(payload)
-        .select("lens_classification_id")
-        .execute()
-    )
+    unit_field = "article_id" if lens == "coverage" else "event_id"
 
-    classification_id = str(
-        first_row(
-            response,
-            f"inserting {lens} classification",
-        )["lens_classification_id"]
-    )
+    def existing_classification_id() -> str | None:
+        response = supabase_execute_with_retry(
+            f"checking for an existing {lens} classification",
+            lambda: (
+                client.table("lens_classifications")
+                .select("lens_classification_id")
+                .eq("classification_run_id", classification_run_id)
+                .eq("lens", lens)
+                .eq(unit_field, unit_id)
+                .limit(2)
+                .execute()
+            ),
+        )
+        rows = getattr(response, "data", None) or []
+        if len(rows) > 1:
+            raise ClassificationError(
+                f"Duplicate {lens} classifications already exist for {unit_id}."
+            )
+        return str(rows[0]["lens_classification_id"]) if rows else None
 
-    dimension_rows = []
+    classification_id = existing_classification_id()
+    if classification_id is None:
+        try:
+            response = supabase_execute_with_retry(
+                f"inserting {lens} classification",
+                lambda: (
+                    client.table("lens_classifications")
+                    .insert(payload)
+                    .select("lens_classification_id")
+                    .execute()
+                ),
+            )
+            classification_id = str(
+                first_row(
+                    response,
+                    f"inserting {lens} classification",
+                )["lens_classification_id"]
+            )
+        except Exception:
+            # A gateway can lose the response after PostgreSQL accepted the
+            # insert. Read before deciding that this unit has failed.
+            classification_id = existing_classification_id()
+            if classification_id is None:
+                raise
+
+    dimension_rows: list[dict[str, Any]] = []
 
     for dimension, item in result[
         "dimensions"
@@ -1818,11 +1940,48 @@ def insert_classification(
             }
         )
 
-    (
-        client.table("lens_dimensions")
-        .insert(dimension_rows)
-        .execute()
+    existing_dimensions_response = supabase_execute_with_retry(
+        f"checking dimensions for {lens} classification",
+        lambda: (
+            client.table("lens_dimensions")
+            .select("dimension")
+            .eq("lens_classification_id", classification_id)
+            .execute()
+        ),
     )
+    existing_dimensions = {
+        str(row.get("dimension") or "")
+        for row in (getattr(existing_dimensions_response, "data", None) or [])
+    }
+    missing_dimensions = [
+        row for row in dimension_rows
+        if str(row["dimension"]) not in existing_dimensions
+    ]
+    if missing_dimensions:
+        try:
+            supabase_execute_with_retry(
+                f"inserting dimensions for {lens} classification",
+                lambda: client.table("lens_dimensions").insert(missing_dimensions).execute(),
+            )
+        except Exception:
+            # As above, recover cleanly if the write reached PostgreSQL but the
+            # HTTP response did not reach the runner.
+            verify_response = supabase_execute_with_retry(
+                f"verifying dimensions for {lens} classification",
+                lambda: (
+                    client.table("lens_dimensions")
+                    .select("dimension")
+                    .eq("lens_classification_id", classification_id)
+                    .execute()
+                ),
+            )
+            verified = {
+                str(row.get("dimension") or "")
+                for row in (getattr(verify_response, "data", None) or [])
+            }
+            expected = {str(row["dimension"]) for row in dimension_rows}
+            if not expected.issubset(verified):
+                raise
 
     return classification_id
 
@@ -3097,13 +3256,20 @@ def main() -> int:
             for row in coverage_results + event_results
             if row["requires_review"]
         )
-        checkpoint_classification_run(
-            client,
-            classification_run_id=classification_run_id,
-            attempted=attempted,
-            classified=classified_count,
-            review_required=review_required_count,
-        )
+        try:
+            checkpoint_classification_run(
+                client,
+                classification_run_id=classification_run_id,
+                attempted=attempted,
+                classified=classified_count,
+                review_required=review_required_count,
+            )
+        except TransientSupabaseError as checkpoint_error:
+            print(
+                f"Warning: could not update the pass checkpoint yet: {checkpoint_error}",
+                file=sys.stderr,
+                flush=True,
+            )
         write_pass_status(
             args.status_output,
             complete=False,
@@ -3121,15 +3287,95 @@ def main() -> int:
         )
         return 0
 
-    except Exception:
-        finish_classification_run(
-            client,
-            classification_run_id=classification_run_id,
-            status="failed",
-            attempted=attempted,
-            classified=classified_count,
-            review_required=0,
+    except TransientSupabaseError as exc:
+        review_required_count = sum(
+            1
+            for row in coverage_results + event_results
+            if row["requires_review"]
         )
+        try:
+            checkpoint_classification_run(
+                client,
+                classification_run_id=classification_run_id,
+                attempted=attempted,
+                classified=classified_count,
+                review_required=review_required_count,
+            )
+        except TransientSupabaseError as checkpoint_error:
+            print(
+                f"Warning: could not update the transient-error checkpoint yet: {checkpoint_error}",
+                file=sys.stderr,
+                flush=True,
+            )
+        write_pass_status(
+            args.status_output,
+            complete=False,
+            classification_run_id=classification_run_id,
+            run_key=run_key,
+            classified=classified_count,
+            attempted=attempted,
+            reason="transient_supabase_error",
+        )
+        print(
+            "Stage 7C paused after a transient Supabase error. "
+            f"The next pass will resume run {run_key} without discarding saved work.",
+            file=sys.stderr,
+            flush=True,
+        )
+        return 0
+
+    except Exception as exc:
+        if is_transient_supabase_error(exc):
+            review_required_count = sum(
+                1
+                for row in coverage_results + event_results
+                if row["requires_review"]
+            )
+            try:
+                checkpoint_classification_run(
+                    client,
+                    classification_run_id=classification_run_id,
+                    attempted=attempted,
+                    classified=classified_count,
+                    review_required=review_required_count,
+                )
+            except TransientSupabaseError as checkpoint_error:
+                print(
+                    f"Warning: could not update the raw transient-error checkpoint yet: {checkpoint_error}",
+                    file=sys.stderr,
+                    flush=True,
+                )
+            write_pass_status(
+                args.status_output,
+                complete=False,
+                classification_run_id=classification_run_id,
+                run_key=run_key,
+                classified=classified_count,
+                attempted=attempted,
+                reason="transient_supabase_error",
+            )
+            print(
+                "Stage 7C paused after a transient Supabase error. "
+                f"The next pass will resume run {run_key} without discarding saved work.",
+                file=sys.stderr,
+                flush=True,
+            )
+            return 0
+        try:
+            finish_classification_run(
+                client,
+                classification_run_id=classification_run_id,
+                status="failed",
+                attempted=attempted,
+                classified=classified_count,
+                review_required=0,
+            )
+        except TransientSupabaseError as checkpoint_error:
+            print(
+                f"Warning: could not mark the failed run in Supabase: {checkpoint_error}",
+                file=sys.stderr,
+                flush=True,
+            )
         write_pass_status(
             args.status_output,
             complete=False,
