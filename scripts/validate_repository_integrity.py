@@ -70,6 +70,29 @@ def main() -> int:
     if "validate_public_relationship_consistency.py" not in publish:
         fail("publication workflow is missing the relationship arithmetic gate")
 
+    repository_integrity = (WORKFLOWS / "repository-integrity.yml").read_text(
+        encoding="utf-8"
+    )
+    if "scripts/create_symbiosis_placeholder.py" not in repository_integrity:
+        fail("repository integrity must compile the release-bound relationship placeholder helper")
+    if (
+        "Refresh local relationship placeholder for current release"
+        not in repository_integrity
+        or "python scripts/create_symbiosis_placeholder.py" not in repository_integrity
+    ):
+        fail("repository integrity must refresh the local relationship placeholder before arithmetic validation")
+
+    release_builder = (WORKFLOWS / "build-weekly-release.yml").read_text(
+        encoding="utf-8"
+    )
+    if (
+        "Refresh release-bound relationship placeholder" not in release_builder
+        or "python scripts/create_symbiosis_placeholder.py" not in release_builder
+    ):
+        fail("weekly release builds must refresh the release-bound relationship placeholder")
+    if "git add -f data/releases data/symbiosis" not in release_builder:
+        fail("weekly release builds must commit data/symbiosis with data/releases")
+
     sym_publish = (ROOT / "scripts" / "publish_symbiosis_release.py").read_text(encoding="utf-8")
     required_rollback_guards = [
         "canonical_current_release_id",

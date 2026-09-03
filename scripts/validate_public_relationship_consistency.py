@@ -60,6 +60,15 @@ def main() -> int:
     if str(sym.get("release_id") or "") != release_id:
         fail(f"symbiosis release {sym.get('release_id')} != current release {release_id}")
 
+    release_hash = str(release.get("content_sha256") or "")
+    relationship_hash = str(sym.get("source_release_sha256") or "")
+    if release_hash and relationship_hash and relationship_hash != release_hash:
+        fail(
+            "relationship artifact was generated from a different weekly release "
+            "revision; run the release-bound relationship placeholder/publication "
+            "step after rebuilding the weekly release"
+        )
+
     weekly_total = int((release.get("counts") or {}).get("ai_relevant_event_records") or 0)
     event = sym.get("event") or {}
     expected = int(event.get("expected_units") or 0)
