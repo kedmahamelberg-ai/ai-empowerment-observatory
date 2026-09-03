@@ -134,6 +134,50 @@ def main() -> int:
             + ", ".join(missing_resume_guards)
         )
 
+    symbiosis_workflow = (WORKFLOWS / "classify-current-symbiosis.yml").read_text(
+        encoding="utf-8"
+    )
+    if symbiosis_workflow.count('--time-budget-minutes "225"') < 3:
+        fail("relationship classification must have three bounded, resumable job passes")
+    if symbiosis_workflow.count("actions/cache@v6") < 3:
+        fail("each relationship-classification pass must restore the shared model cache")
+    if "Require complete relationship classification" not in symbiosis_workflow:
+        fail("relationship classification is missing its downstream completion gate")
+    if symbiosis_workflow.count("validate_symbiosis_resilience.py") < 3:
+        fail("each relationship-classification pass must verify the resilience contract")
+
+    symbiosis_script = (ROOT / "scripts" / "classify_symbiosis.py").read_text(
+        encoding="utf-8"
+    )
+    required_symbiosis_guards = [
+        "resume_or_start_run",
+        "saved_rows_for_run",
+        "checkpoint_run",
+        "--time-budget-minutes",
+        "--status-output",
+        "time_budget_reached",
+    ]
+    missing_symbiosis_guards = [
+        value for value in required_symbiosis_guards if value not in symbiosis_script
+    ]
+    if missing_symbiosis_guards:
+        fail(
+            "relationship-classification resumability guard is incomplete: "
+            + ", ".join(missing_symbiosis_guards)
+        )
+    if 'delete().eq("symbiosis_run_id", run_id)' in symbiosis_script:
+        fail("relationship classification must retain committed rows after an interrupted run")
+
+    symbiosis_common = (ROOT / "scripts" / "symbiosis_common.py").read_text(
+        encoding="utf-8"
+    )
+    if "def coerce_confidence(" not in symbiosis_common:
+        fail("relationship confidence values must accept model labels without aborting a run")
+
+    symbiosis_contract_test = ROOT / "scripts" / "validate_symbiosis_resilience.py"
+    if not symbiosis_contract_test.is_file():
+        fail("symbiosis resilience regression test is missing")
+
     # Supabase stores an absent lens dimension as NULL direction and a
     # non-null degree of 0.  Saved rows are deliberately converted back to a
     # display-friendly ``not_present`` shape when read, so require a dedicated

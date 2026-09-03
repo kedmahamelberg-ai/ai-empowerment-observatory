@@ -199,6 +199,48 @@ def _boolean(value: Any) -> bool:
     return str(value or "").strip().casefold() in {"1", "true", "yes", "y", "present"}
 
 
+def coerce_confidence(value: Any) -> float:
+    """Return a bounded numeric confidence without letting a model label abort a run.
+
+    Models sometimes use a qualitative label even when prompted for a number.
+    The label is still useful diagnostic information, but it must never turn a
+    valid classification into a failed multi-hour workflow.  Keep the public
+    storage contract numeric and use a conservative, documented mapping.
+    """
+    if isinstance(value, bool):
+        return 1.0 if value else 0.0
+    if isinstance(value, (int, float)):
+        return max(0.0, min(1.0, float(value)))
+
+    raw = str(value or "").strip().casefold()
+    if not raw:
+        return 0.0
+    normalized = raw.replace("-", "_").replace(" ", "_")
+    labels = {
+        "very_high": 0.95,
+        "high": 0.85,
+        "medium_high": 0.70,
+        "medium": 0.60,
+        "medium_low": 0.45,
+        "low": 0.35,
+        "very_low": 0.15,
+        "unknown": 0.0,
+        "unclear": 0.0,
+        "none": 0.0,
+        "n_a": 0.0,
+    }
+    if normalized in labels:
+        return labels[normalized]
+
+    try:
+        numeric = float(raw[:-1]) / 100.0 if raw.endswith("%") else float(raw)
+    except (TypeError, ValueError):
+        # An unsupported model value is diagnostic only.  Evidence and labels
+        # remain reviewable, so retain the row with the least assertive score.
+        return 0.0
+    return max(0.0, min(1.0, numeric))
+
+
 def normalize_relationship_patterns(
     value: Any,
     *,
@@ -431,7 +473,7 @@ def validate_model_payload(payload: dict[str, Any]) -> dict[str, Any]:
         for value in (payload.get("country_iso3s") or [])
         if str(value).strip()
     ]
-    confidence = max(0.0, min(1.0, float(payload.get("confidence", 0.0))))
+    confidence = coerce_confidence(payload.get("confidence", 0.0))
     public_layer = public_signal_payload(
         raw_payload=payload,
         configuration=configuration,

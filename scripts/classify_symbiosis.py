@@ -544,22 +544,93 @@ def start_run(
     return str(first_row(response, "starting symbiosis run")["symbiosis_run_id"]), run_key
 
 
-def finish_run(client: Client, run_id: str, *, status: str, rows: list[dict[str, Any]]) -> None:
-    configurations = [str(row["model_configuration"]) for row in rows]
+def run_progress_payload(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """Summarise durable rows already written for a symbiosis run."""
+    configurations = [str(row.get("model_configuration") or "") for row in rows]
     complete = {"mutualism", "ai_benefiting_parasitism", "human_benefiting_parasitism", "competition"}
     partial = {"human_enabling_only", "human_constraining_only", "ai_enabling_only", "ai_constraining_only"}
-    payload = {
-        "completed_at": iso_z(utc_now()),
-        "status": status,
-        "coverage_unit_count": sum(1 for row in rows if row["lens"] == "coverage"),
-        "event_unit_count": sum(1 for row in rows if row["lens"] == "event"),
+    return {
+        "coverage_unit_count": sum(1 for row in rows if row.get("lens") == "coverage"),
+        "event_unit_count": sum(1 for row in rows if row.get("lens") == "event"),
         "complete_configuration_count": sum(value in complete for value in configurations),
         "partial_signal_count": sum(value in partial for value in configurations),
         "no_clear_signal_count": configurations.count("no_clear_relational_signal"),
         "insufficient_evidence_count": configurations.count("insufficient_evidence"),
         "review_required_count": len(rows),
     }
+
+
+def finish_run(client: Client, run_id: str, *, status: str, rows: list[dict[str, Any]]) -> None:
+    payload = {
+        **run_progress_payload(rows),
+        "completed_at": iso_z(utc_now()),
+        "status": status,
+    }
     client.table("symbiosis_classification_runs").update(payload).eq("symbiosis_run_id", run_id).execute()
+
+
+def checkpoint_run(client: Client, run_id: str, *, rows: list[dict[str, Any]]) -> None:
+    """Persist a resumable checkpoint without marking the run complete."""
+    payload = {**run_progress_payload(rows), "status": "running", "completed_at": None}
+    client.table("symbiosis_classification_runs").update(payload).eq("symbiosis_run_id", run_id).execute()
+
+
+def resume_or_start_run(
+    client: Client,
+    *,
+    scope: str,
+    target_release_id: str | None,
+    collection_run_id: str | None,
+    empowerment_run_id: str | None,
+    model_revision: str,
+) -> tuple[str, str, bool]:
+    """Reuse the latest interrupted run with the same durable codebook contract."""
+    query = (
+        client.table("symbiosis_classification_runs")
+        .select("symbiosis_run_id,run_key,status")
+        .eq("scope", scope)
+        .eq("classifier_version", CLASSIFIER_VERSION)
+        .eq("codebook_version", CODEBOOK_VERSION)
+        .in_("status", ["running", "failed"])
+    )
+    if target_release_id:
+        query = query.eq("target_release_id", target_release_id)
+    else:
+        query = query.is_("target_release_id", "null")
+    response = query.order("started_at", desc=True).limit(1).execute()
+    rows = getattr(response, "data", None) or []
+    if rows:
+        row = rows[0]
+        run_id = str(row["symbiosis_run_id"])
+        run_key = str(row["run_key"])
+        (
+            client.table("symbiosis_classification_runs")
+            .update({"status": "running", "completed_at": None})
+            .eq("symbiosis_run_id", run_id)
+            .execute()
+        )
+        print(f"Resuming durable symbiosis run {run_key}.", flush=True)
+        return run_id, run_key, True
+
+    run_id, run_key = start_run(
+        client,
+        scope=scope,
+        target_release_id=target_release_id,
+        collection_run_id=collection_run_id,
+        empowerment_run_id=empowerment_run_id,
+        model_revision=model_revision,
+    )
+    return run_id, run_key, False
+
+
+def saved_rows_for_run(client: Client, run_id: str) -> list[dict[str, Any]]:
+    """Load rows written before a timeout or recoverable infrastructure error."""
+    return paged_table(
+        client,
+        "symbiosis_classifications",
+        "symbiosis_classification_id,unit_key,lens,model_configuration",
+        apply=lambda query: query.eq("symbiosis_run_id", run_id),
+    )
 
 
 def start_server() -> tuple[subprocess.Popen[Any], Any]:
@@ -809,6 +880,9 @@ ai_expressive_role, human_reasoning, ai_reasoning, summary, confidence,
 topic, geographic_scope, country_iso3s, relationship_patterns,
 distribution_signal, public_takeaway.
 
+confidence must be a JSON number from 0 through 1, for example 0.85. Do not
+return a word such as high, medium, or low.
+
 relationship_patterns must be an object with exactly these boolean keys:
 - mutualism: AI works, spreads, or grows while people gain
 - ai_benefiting_parasitism: AI works, spreads, or grows while people lose ground
@@ -978,11 +1052,57 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--release-id", default="", help="Optional weekly release ID")
     parser.add_argument("--limit", type=int, default=0, help="Maximum units in this batch; 0 means all selected units")
     parser.add_argument("--replace", action="store_true", help="Reclassify release-specific units already coded under this codebook")
+    parser.add_argument(
+        "--time-budget-minutes",
+        type=float,
+        default=0.0,
+        help="Checkpoint safely after this many minutes; 0 means no script-level budget.",
+    )
+    parser.add_argument(
+        "--status-output",
+        default="",
+        help="Optional JSON path containing complete=true/false for a resumable workflow pass.",
+    )
     return parser.parse_args()
+
+
+def write_pass_status(path: str, payload: dict[str, Any]) -> None:
+    if not path:
+        return
+    target = Path(path)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    temporary = target.with_name(f"{target.name}.tmp")
+    temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    temporary.replace(target)
+
+
+def pass_status_payload(
+    *,
+    complete: bool,
+    run_id: str | None,
+    run_key: str | None,
+    selected_units: int,
+    saved_units: int,
+    new_units: int,
+    reason: str,
+) -> dict[str, Any]:
+    return {
+        "schema_version": "aieo_symbiosis_pass_status_v1",
+        "complete": complete,
+        "symbiosis_run_id": run_id,
+        "run_key": run_key,
+        "selected_units": selected_units,
+        "saved_units": saved_units,
+        "new_units": new_units,
+        "remaining_units": max(0, selected_units - saved_units),
+        "reason": reason,
+    }
 
 
 def main() -> int:
     args = parse_args()
+    if args.time_budget_minutes < 0:
+        raise SymbiosisClassificationError("--time-budget-minutes must be zero or greater.")
     releases, skipped_references = selected_releases(args.scope, args.release_id)
     client: Client = create_client(required_env("SUPABASE_URL"), required_env("SUPABASE_SECRET_KEY"))
 
@@ -1012,6 +1132,18 @@ def main() -> int:
             ),
         }
         write_output(payload)
+        write_pass_status(
+            args.status_output,
+            pass_status_payload(
+                complete=True,
+                run_id=None,
+                run_key=None,
+                selected_units=0,
+                saved_units=0,
+                new_units=0,
+                reason="nothing_to_classify",
+            ),
+        )
         print(json.dumps(payload, indent=2))
         return 0
 
@@ -1025,7 +1157,7 @@ def main() -> int:
     target_release_id = units[0][1]["release_id"] if one_release else None
     selected_release = next((release for release in releases if release["release_id"] == target_release_id), None)
     lineage = selected_release.get("lineage", {}) if selected_release else {}
-    run_id, run_key = start_run(
+    run_id, run_key, resumed = resume_or_start_run(
         client,
         scope="latest_release" if args.scope == "latest" else "historical_releases",
         target_release_id=target_release_id,
@@ -1034,18 +1166,49 @@ def main() -> int:
         model_revision=model_revision,
     )
 
+    saved_rows = saved_rows_for_run(client, run_id)
+    saved_keys = {str(row.get("unit_key") or "") for row in saved_rows}
+    pending_units = [(lens, unit) for lens, unit in units if unit["unit_key"] not in saved_keys]
+    if resumed:
+        print(
+            f"Recovered {len(saved_rows)} saved symbiosis classifications; "
+            f"{len(pending_units)} remain in this run.",
+            flush=True,
+        )
+
     process: subprocess.Popen[Any] | None = None
     handle: Any | None = None
-    written: list[dict[str, Any]] = []
+    newly_written: list[dict[str, Any]] = []
     review_rows: list[dict[str, Any]] = []
+    deadline = (
+        time.monotonic() + args.time_budget_minutes * 60
+        if args.time_budget_minutes > 0
+        else None
+    )
     try:
-        process, handle = start_server()
-        for position, (lens, unit) in enumerate(units, start=1):
-            print(f"[{position}/{len(units)}] {lens}: {unit['unit_key']}", flush=True)
+        if pending_units:
+            process, handle = start_server()
+        for position, (lens, unit) in enumerate(pending_units, start=1):
+            if deadline is not None and time.monotonic() >= deadline:
+                all_rows = saved_rows + newly_written
+                checkpoint_run(client, run_id, rows=all_rows)
+                status = pass_status_payload(
+                    complete=False,
+                    run_id=run_id,
+                    run_key=run_key,
+                    selected_units=len(units),
+                    saved_units=len(all_rows),
+                    new_units=len(newly_written),
+                    reason="time_budget_reached",
+                )
+                write_pass_status(args.status_output, status)
+                print(json.dumps(status, indent=2))
+                return 0
+            print(f"[{position}/{len(pending_units)}] {lens}: {unit['unit_key']}", flush=True)
             evidence = article_evidence(unit) if lens == "coverage" else event_evidence(unit)
             result = call_classifier(lens=lens, evidence=evidence, content_basis=unit["content_basis"])
             row = insert_result(client, run_id=run_id, lens=lens, unit=unit, result=result)
-            written.append(row)
+            newly_written.append(row)
             review_rows.append(
                 {
                     "symbiosis_classification_id": row["symbiosis_classification_id"],
@@ -1065,7 +1228,8 @@ def main() -> int:
                     "model": result,
                 }
             )
-        finish_run(client, run_id, status="success", rows=written)
+        all_rows = saved_rows + newly_written
+        finish_run(client, run_id, status="success", rows=all_rows)
         payload = {
             "status": "success",
             "scope": args.scope,
@@ -1075,21 +1239,50 @@ def main() -> int:
             "excluded_aggregate_references": skipped_references,
             "codebook_version": CODEBOOK_VERSION,
             "classifier_version": CLASSIFIER_VERSION,
-            "classified_units": len(written),
-            "coverage_units": sum(row["lens"] == "coverage" for row in written),
-            "event_units": sum(row["lens"] == "event" for row in written),
+            "classified_units": len(all_rows),
+            "newly_classified_units": len(newly_written),
+            "resumed_saved_units": len(saved_rows),
+            "coverage_units": sum(row.get("lens") == "coverage" for row in all_rows),
+            "event_units": sum(row.get("lens") == "event" for row in all_rows),
             "all_require_human_review": True,
             "review_rows": review_rows,
         }
         write_output(payload)
+        write_pass_status(
+            args.status_output,
+            pass_status_payload(
+                complete=True,
+                run_id=run_id,
+                run_key=run_key,
+                selected_units=len(units),
+                saved_units=len(all_rows),
+                new_units=len(newly_written),
+                reason="all_selected_units_saved",
+            ),
+        )
         print(json.dumps({key: value for key, value in payload.items() if key != "review_rows"}, indent=2))
         return 0
-    except Exception:
+    except Exception as exc:
+        # Preserve committed rows. A later pass can resume this run after a
+        # transient model or infrastructure failure instead of redoing hours
+        # of classification or silently replacing already reviewable evidence.
         try:
-            client.table("symbiosis_classifications").delete().eq("symbiosis_run_id", run_id).execute()
-            finish_run(client, run_id, status="failed", rows=[])
-        except Exception as cleanup_exc:
-            print(f"Warning: cleanup failed: {cleanup_exc}", file=sys.stderr)
+            all_rows = saved_rows + newly_written
+            finish_run(client, run_id, status="failed", rows=all_rows)
+        except Exception as checkpoint_exc:
+            print(f"Warning: could not checkpoint failed symbiosis run: {checkpoint_exc}", file=sys.stderr)
+        write_pass_status(
+            args.status_output,
+            pass_status_payload(
+                complete=False,
+                run_id=run_id,
+                run_key=run_key,
+                selected_units=len(units),
+                saved_units=len(saved_rows) + len(newly_written),
+                new_units=len(newly_written),
+                reason=f"failed: {type(exc).__name__}",
+            ),
+        )
         raise
     finally:
         stop_server(process, handle)
