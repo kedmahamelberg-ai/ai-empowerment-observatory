@@ -54,7 +54,7 @@ jobs:
       github.event_name == 'workflow_dispatch' ||
       github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
 
     steps:
       - uses: actions/checkout@v7
@@ -80,7 +80,7 @@ jobs:
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
         run: python scripts/validate_body_evidence_contract.py
 
-      - name: Enrich never-attempted article bodies
+      - name: Enrich article bodies with bounded retries
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
@@ -93,7 +93,8 @@ jobs:
             --limit 0
             --scope "$scope"
             --retry-mode "$retry_mode"
-            --max-runtime-minutes 30
+            --max-runtime-minutes 40
+            --per-source-timeout-seconds 75
             --report-output review/body-evidence/latest-collection-report.json
           )
           if [[ "$scope" == "release" ]]; then

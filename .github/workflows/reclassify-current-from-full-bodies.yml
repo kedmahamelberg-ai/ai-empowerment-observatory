@@ -9,11 +9,11 @@ on:
         default: "2026-W35"
         type: string
       retry_mode:
-        description: "Retry body extraction failures for this one-time audit"
+        description: "Body retries: none still collects sources never attempted"
         required: true
-        default: all
+        default: none
         type: choice
-        options: [all, retryable, none]
+        options: [none, retryable, all]
 
 permissions:
   contents: write
