@@ -33,6 +33,8 @@ jobs:
         with:
           python-version: "3.12"
           cache: "pip"
+      - name: Verify Stage 7C dimension storage contract
+        run: python scripts/validate_stage7c_dimension_storage.py
       - name: Cache Qwen model files
         uses: actions/cache@v6
         with:
@@ -105,6 +107,8 @@ jobs:
         with:
           python-version: "3.12"
           cache: "pip"
+      - name: Verify Stage 7C dimension storage contract
+        run: python scripts/validate_stage7c_dimension_storage.py
       - name: Cache Qwen model files
         uses: actions/cache@v6
         with:
@@ -182,6 +186,8 @@ jobs:
         with:
           python-version: "3.12"
           cache: "pip"
+      - name: Verify Stage 7C dimension storage contract
+        run: python scripts/validate_stage7c_dimension_storage.py
       - name: Cache Qwen model files
         uses: actions/cache@v6
         with:
