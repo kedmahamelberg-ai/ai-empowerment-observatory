@@ -102,8 +102,12 @@ def main() -> int:
     stage7c_workflow = (WORKFLOWS / "classify-dual-lenses.yml").read_text(
         encoding="utf-8"
     )
-    if stage7c_workflow.count("uses: ./.github/actions/run-stage7c-pass") < 2:
-        fail("Stage 7C must have more than one bounded, resumable job pass")
+    if "./.github/actions/run-stage7c-pass" in stage7c_workflow:
+        fail("Stage 7C must be self-contained and not depend on a separately uploaded local action")
+    if stage7c_workflow.count('--time-budget-minutes "225"') < 3:
+        fail("Stage 7C must have three bounded, resumable job passes")
+    if stage7c_workflow.count("actions/cache@v6") < 3:
+        fail("each Stage 7C pass must restore the shared model cache")
     if "Require complete classification" not in stage7c_workflow:
         fail("Stage 7C is missing its downstream completion gate")
 
