@@ -33,11 +33,48 @@ jobs:
         with:
           python-version: "3.12"
           cache: "pip"
+      - name: Cache Qwen model files
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/huggingface/hub
+          key: ${{ runner.os }}-aieo-qwen3-4b-gguf-q4-k-m-v1
+      - name: Install Python dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install -r requirements.txt
+          python -m pip install "huggingface_hub>=0.34,<2"
+      - name: Install llama.cpp build dependencies
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential libcurl4-openssl-dev
+      - name: Build llama.cpp server
+        run: |
+          set -euo pipefail
+          git clone --depth 1 https://github.com/ggml-org/llama.cpp.git /tmp/llama.cpp
+          cmake -S /tmp/llama.cpp -B /tmp/llama.cpp/build \
+            -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=OFF -DLLAMA_CURL=ON
+          cmake --build /tmp/llama.cpp/build --target llama-server -j2
       - name: Run bounded Stage 7C pass 1
         id: stage7c
-        uses: ./.github/actions/run-stage7c-pass
-        with:
-          time-budget-minutes: "225"
+        run: |
+          set -euo pipefail
+          status_file="$RUNNER_TEMP/stage7c-status-${GITHUB_JOB}.json"
+          python scripts/classify_dual_lens.py \
+            --time-budget-minutes "225" \
+            --status-output "$status_file"
+          python - "$status_file" "$GITHUB_OUTPUT" <<'PY'
+          import json
+          import sys
+
+          status_path, output_path = sys.argv[1:]
+          with open(status_path, encoding="utf-8") as handle:
+              status = json.load(handle)
+          complete = "true" if status.get("complete") is True else "false"
+          with open(output_path, "a", encoding="utf-8") as handle:
+              handle.write(f"complete={complete}\n")
+          print(json.dumps(status, indent=2))
+          PY
       - name: Commit completed Stage 7C outputs safely
         if: steps.stage7c.outputs.complete == 'true'
         run: |
@@ -68,11 +105,48 @@ jobs:
         with:
           python-version: "3.12"
           cache: "pip"
+      - name: Cache Qwen model files
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/huggingface/hub
+          key: ${{ runner.os }}-aieo-qwen3-4b-gguf-q4-k-m-v1
+      - name: Install Python dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install -r requirements.txt
+          python -m pip install "huggingface_hub>=0.34,<2"
+      - name: Install llama.cpp build dependencies
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential libcurl4-openssl-dev
+      - name: Build llama.cpp server
+        run: |
+          set -euo pipefail
+          git clone --depth 1 https://github.com/ggml-org/llama.cpp.git /tmp/llama.cpp
+          cmake -S /tmp/llama.cpp -B /tmp/llama.cpp/build \
+            -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=OFF -DLLAMA_CURL=ON
+          cmake --build /tmp/llama.cpp/build --target llama-server -j2
       - name: Resume bounded Stage 7C pass 2
         id: stage7c
-        uses: ./.github/actions/run-stage7c-pass
-        with:
-          time-budget-minutes: "225"
+        run: |
+          set -euo pipefail
+          status_file="$RUNNER_TEMP/stage7c-status-${GITHUB_JOB}.json"
+          python scripts/classify_dual_lens.py \
+            --time-budget-minutes "225" \
+            --status-output "$status_file"
+          python - "$status_file" "$GITHUB_OUTPUT" <<'PY'
+          import json
+          import sys
+
+          status_path, output_path = sys.argv[1:]
+          with open(status_path, encoding="utf-8") as handle:
+              status = json.load(handle)
+          complete = "true" if status.get("complete") is True else "false"
+          with open(output_path, "a", encoding="utf-8") as handle:
+              handle.write(f"complete={complete}\n")
+          print(json.dumps(status, indent=2))
+          PY
       - name: Commit completed Stage 7C outputs safely
         if: steps.stage7c.outputs.complete == 'true'
         run: |
@@ -108,11 +182,48 @@ jobs:
         with:
           python-version: "3.12"
           cache: "pip"
+      - name: Cache Qwen model files
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/huggingface/hub
+          key: ${{ runner.os }}-aieo-qwen3-4b-gguf-q4-k-m-v1
+      - name: Install Python dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install -r requirements.txt
+          python -m pip install "huggingface_hub>=0.34,<2"
+      - name: Install llama.cpp build dependencies
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential libcurl4-openssl-dev
+      - name: Build llama.cpp server
+        run: |
+          set -euo pipefail
+          git clone --depth 1 https://github.com/ggml-org/llama.cpp.git /tmp/llama.cpp
+          cmake -S /tmp/llama.cpp -B /tmp/llama.cpp/build \
+            -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=OFF -DLLAMA_CURL=ON
+          cmake --build /tmp/llama.cpp/build --target llama-server -j2
       - name: Resume bounded Stage 7C pass 3
         id: stage7c
-        uses: ./.github/actions/run-stage7c-pass
-        with:
-          time-budget-minutes: "225"
+        run: |
+          set -euo pipefail
+          status_file="$RUNNER_TEMP/stage7c-status-${GITHUB_JOB}.json"
+          python scripts/classify_dual_lens.py \
+            --time-budget-minutes "225" \
+            --status-output "$status_file"
+          python - "$status_file" "$GITHUB_OUTPUT" <<'PY'
+          import json
+          import sys
+
+          status_path, output_path = sys.argv[1:]
+          with open(status_path, encoding="utf-8") as handle:
+              status = json.load(handle)
+          complete = "true" if status.get("complete") is True else "false"
+          with open(output_path, "a", encoding="utf-8") as handle:
+              handle.write(f"complete={complete}\n")
+          print(json.dumps(status, indent=2))
+          PY
       - name: Commit completed Stage 7C outputs safely
         if: steps.stage7c.outputs.complete == 'true'
         run: |
