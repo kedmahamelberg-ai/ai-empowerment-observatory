@@ -175,12 +175,12 @@ def update_dimensions(
                 "dimension": name,
                 "present": present,
                 "direction": item["direction"] if present else None,
-                # Absent dimensions must have no measurement fields.  This is
-                # enforced by lens_dimension_presence_consistency and keeps
-                # audit writes compatible with classifier writes.
-                "degree": int(item["degree"]) if present else None,
-                "confidence": confidence if present else None,
-                "reasoning": (item.get("reasoning") or None) if present else None,
+                # The live table requires degree even when a dimension is
+                # absent.  Its accepted absent shape is NULL direction plus
+                # degree 0, matching automated classification writes.
+                "degree": int(item["degree"]) if present else 0,
+                "confidence": float(confidence or 0.0),
+                "reasoning": item.get("reasoning") or None,
             }
         )
 

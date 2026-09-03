@@ -110,6 +110,8 @@ def main() -> int:
         fail("each Stage 7C pass must restore the shared model cache")
     if "Require complete classification" not in stage7c_workflow:
         fail("Stage 7C is missing its downstream completion gate")
+    if stage7c_workflow.count("validate_stage7c_dimension_storage.py") < 3:
+        fail("each Stage 7C pass must verify the dimension storage contract before model work")
 
     stage7c_script = (ROOT / "scripts" / "classify_dual_lens.py").read_text(
         encoding="utf-8"
@@ -132,16 +134,16 @@ def main() -> int:
             + ", ".join(missing_resume_guards)
         )
 
-    # Supabase stores an absent lens dimension as a boolean flag with every
-    # measurement/detail column NULL.  Saved rows are deliberately converted
-    # back to a display-friendly ``not_present`` shape when read, so require a
-    # dedicated write-boundary translator before any resumed event can write
-    # those display values back into the database.
+    # Supabase stores an absent lens dimension as NULL direction and a
+    # non-null degree of 0.  Saved rows are deliberately converted back to a
+    # display-friendly ``not_present`` shape when read, so require a dedicated
+    # write-boundary translator before any resumed event can write those
+    # display values back into the database.
     required_dimension_storage_guards = [
         "def dimension_row_for_storage(",
-        '"degree": None',
-        '"confidence": None',
-        '"reasoning": None',
+        '"direction": None',
+        '"degree": 0',
+        'float(item.get("confidence") or 0.0)',
     ]
     missing_dimension_storage_guards = [
         value
@@ -157,8 +159,12 @@ def main() -> int:
     audit_script = (ROOT / "scripts" / "apply_stage7c_audit.py").read_text(
         encoding="utf-8"
     )
-    if '"degree": int(item["degree"]) if present else None' not in audit_script:
+    if '"degree": int(item["degree"]) if present else 0' not in audit_script:
         fail("Stage 7C audit writes do not preserve the absent-dimension constraint")
+
+    dimension_contract_test = ROOT / "scripts" / "validate_stage7c_dimension_storage.py"
+    if not dimension_contract_test.is_file():
+        fail("Stage 7C dimension storage regression test is missing")
 
     body_workflow = (
         WORKFLOWS / "enrich-new-brief-article-bodies.yml"

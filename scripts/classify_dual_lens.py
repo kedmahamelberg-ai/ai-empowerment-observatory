@@ -1985,15 +1985,15 @@ def dimension_row_for_storage(
     dimension: str,
     item: dict[str, Any],
 ) -> dict[str, Any]:
-    """Translate a classifier dimension into the database's strict shape.
+    """Translate a classifier dimension into the live database shape.
 
-    In-memory results deliberately use ``not_present``/zero values so that
-    downstream code can reason about every dimension uniformly.  The
-    ``lens_dimension_presence_consistency`` database constraint instead
-    represents an absent dimension with NULL detail fields.  Keeping that
-    translation at the write boundary makes resumed singleton events safe:
-    rows read back from Supabase are normalised to ``not_present`` again, but
-    are never written back in that display-oriented form.
+    Saved dimensions are read as ``not_present`` so in-memory classification
+    code has one explicit state for every dimension.  PostgreSQL stores the
+    same absent state as a NULL ``direction`` with a *non-null* degree of 0.
+    The other values remain ordinary diagnostic fields.  That is also the
+    shape used by the already-successful coverage classifications; this
+    adapter prevents a resumed singleton event from writing the display value
+    ``not_present`` back to the database.
     """
     present = bool(item.get("present"))
     row: dict[str, Any] = {
@@ -2006,9 +2006,11 @@ def dimension_row_for_storage(
         row.update(
             {
                 "direction": None,
-                "degree": None,
-                "confidence": None,
-                "reasoning": None,
+                # degree is NOT NULL in the live table.  An absent dimension
+                # is represented by degree 0, not a NULL measurement.
+                "degree": 0,
+                "confidence": float(item.get("confidence") or 0.0),
+                "reasoning": item.get("reasoning") or None,
             }
         )
         return row
