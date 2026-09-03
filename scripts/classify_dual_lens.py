@@ -1926,18 +1926,11 @@ def insert_classification(
         "dimensions"
     ].items():
         dimension_rows.append(
-            {
-                "lens_classification_id": classification_id,
-                "dimension": dimension,
-                "present": item["present"],
-                "direction": item["direction"],
-                "degree": item["degree"],
-                "confidence": item["confidence"],
-                "reasoning": (
-                    item["reasoning"]
-                    or None
-                ),
-            }
+            dimension_row_for_storage(
+                classification_id=classification_id,
+                dimension=dimension,
+                item=item,
+            )
         )
 
     existing_dimensions_response = supabase_execute_with_retry(
@@ -1984,6 +1977,51 @@ def insert_classification(
                 raise
 
     return classification_id
+
+
+def dimension_row_for_storage(
+    *,
+    classification_id: str,
+    dimension: str,
+    item: dict[str, Any],
+) -> dict[str, Any]:
+    """Translate a classifier dimension into the database's strict shape.
+
+    In-memory results deliberately use ``not_present``/zero values so that
+    downstream code can reason about every dimension uniformly.  The
+    ``lens_dimension_presence_consistency`` database constraint instead
+    represents an absent dimension with NULL detail fields.  Keeping that
+    translation at the write boundary makes resumed singleton events safe:
+    rows read back from Supabase are normalised to ``not_present`` again, but
+    are never written back in that display-oriented form.
+    """
+    present = bool(item.get("present"))
+    row: dict[str, Any] = {
+        "lens_classification_id": classification_id,
+        "dimension": dimension,
+        "present": present,
+    }
+
+    if not present:
+        row.update(
+            {
+                "direction": None,
+                "degree": None,
+                "confidence": None,
+                "reasoning": None,
+            }
+        )
+        return row
+
+    row.update(
+        {
+            "direction": item.get("direction"),
+            "degree": item.get("degree"),
+            "confidence": item.get("confidence"),
+            "reasoning": item.get("reasoning") or None,
+        }
+    )
+    return row
 
 
 def copy_for_singleton_event(

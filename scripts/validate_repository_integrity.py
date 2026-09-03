@@ -132,6 +132,34 @@ def main() -> int:
             + ", ".join(missing_resume_guards)
         )
 
+    # Supabase stores an absent lens dimension as a boolean flag with every
+    # measurement/detail column NULL.  Saved rows are deliberately converted
+    # back to a display-friendly ``not_present`` shape when read, so require a
+    # dedicated write-boundary translator before any resumed event can write
+    # those display values back into the database.
+    required_dimension_storage_guards = [
+        "def dimension_row_for_storage(",
+        '"degree": None',
+        '"confidence": None',
+        '"reasoning": None',
+    ]
+    missing_dimension_storage_guards = [
+        value
+        for value in required_dimension_storage_guards
+        if value not in stage7c_script
+    ]
+    if missing_dimension_storage_guards:
+        fail(
+            "Stage 7C is missing the absent-dimension database adapter: "
+            + ", ".join(missing_dimension_storage_guards)
+        )
+
+    audit_script = (ROOT / "scripts" / "apply_stage7c_audit.py").read_text(
+        encoding="utf-8"
+    )
+    if '"degree": int(item["degree"]) if present else None' not in audit_script:
+        fail("Stage 7C audit writes do not preserve the absent-dimension constraint")
+
     body_workflow = (
         WORKFLOWS / "enrich-new-brief-article-bodies.yml"
     ).read_text(encoding="utf-8")
