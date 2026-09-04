@@ -54,6 +54,7 @@ from resolve_events import (  # type: ignore
     stop_llama_server,
     utc_now,
 )
+from translation_policy import SUPPORTED_TRANSLATION_PROFILES, preferred_translation_rows
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_OUTPUT = ROOT / "data" / "releases" / "reconciliation" / "latest.json"
@@ -443,17 +444,17 @@ def load_translations(client: Client, article_ids: list[str]) -> dict[str, dict[
     for batch in chunks(article_ids):
         response = (
             client.table("article_translations")
-            .select("article_id,translated_headline,source_language_iso2,created_at")
-            .eq("translation_profile", "validated_language_routing_v3")
+            .select(
+                "article_id,translated_headline,source_language_iso2,"
+                "translation_profile,created_at"
+            )
+            .in_("translation_profile", list(SUPPORTED_TRANSLATION_PROFILES))
             .in_("article_id", batch)
             .order("created_at", desc=True)
             .execute()
         )
         rows.extend(getattr(response, "data", None) or [])
-    newest: dict[str, dict[str, Any]] = {}
-    for row in rows:
-        newest.setdefault(str(row["article_id"]), row)
-    return newest
+    return preferred_translation_rows(rows)
 
 
 def load_memories(

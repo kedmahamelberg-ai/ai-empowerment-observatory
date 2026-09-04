@@ -307,7 +307,7 @@ def main():
             methods[str(method)] += 1
 
         print(
-            f"  -> {outcome} ({result.get('word_count','-')} words; {method or '-'})",
+            f"  -> {outcome} ({result.get('word_count','-')} evidence units; {method or '-'})",
             flush=True,
         )
 

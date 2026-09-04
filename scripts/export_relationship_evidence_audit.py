@@ -20,6 +20,8 @@ from typing import Any
 
 from supabase import Client, create_client
 
+from brief_content_common import evidence_unit_count
+
 from build_relationship_audit import (
     ROOT,
     as_mapping,
@@ -33,7 +35,7 @@ from build_relationship_audit import (
 
 
 DEFAULT_OUTPUT_DIR = ROOT / "review" / "relationship-audit" / "export"
-SCHEMA_VERSION = "aieo_private_full_body_audit_v2"
+SCHEMA_VERSION = "aieo_private_full_body_audit_v3_multilingual"
 FULL_BODY_STAGE7C_VERSION = "7C.5_full_body_required"
 
 POLICY_OR_ACCESS_OUTCOMES = {
@@ -144,7 +146,7 @@ def current_body_snapshots(client: Client, article_ids: list[str]) -> dict[str, 
     fields = (
         "article_id,source_url,source_domain,word_count,extraction_quality,"
         "retrieval_method,rights_status,rights_basis,robots_allowed,tdm_reservation,"
-        "paywall_detected,retrieved_at,is_current"
+        "paywall_detected,retrieved_at,is_current,body_text"
     )
     result: dict[str, dict[str, Any]] = {}
     for batch in chunks(article_ids):
@@ -259,9 +261,13 @@ def private_body_metadata(
     outcome = str(latest.get("outcome") or "never_attempted")
     category, action = recovery_category(outcome)
     if snapshot:
+        stored_units = int(snapshot.get("word_count") or 0)
+        verified_units = evidence_unit_count(str(snapshot.get("body_text") or ""))
         return {
             "state": "full_article_body_stored",
-            "word_count": int(snapshot.get("word_count") or 0),
+            "stored_evidence_unit_count": stored_units,
+            "verified_evidence_unit_count": verified_units,
+            "evidence_unit_count_match": stored_units == verified_units,
             "extraction_quality": snapshot.get("extraction_quality"),
             "retrieval_method": str(snapshot.get("retrieval_method") or ""),
             "rights_status": str(snapshot.get("rights_status") or ""),
@@ -327,7 +333,9 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         "latest_attempt_outcome",
         "recovery_category",
         "recommended_next_action",
-        "word_count",
+        "stored_evidence_unit_count",
+        "verified_evidence_unit_count",
+        "evidence_unit_count_match",
         "extraction_quality",
         "retrieval_method",
         "latest_http_status",
@@ -455,7 +463,9 @@ def main() -> int:
                 "latest_attempt_outcome": body.get("latest_attempt_outcome", "stored"),
                 "recovery_category": body.get("recovery_category", ""),
                 "recommended_next_action": body.get("recommended_next_action", ""),
-                "word_count": body.get("word_count", ""),
+                "stored_evidence_unit_count": body.get("stored_evidence_unit_count", ""),
+                "verified_evidence_unit_count": body.get("verified_evidence_unit_count", ""),
+                "evidence_unit_count_match": body.get("evidence_unit_count_match", ""),
                 "extraction_quality": body.get("extraction_quality", ""),
                 "retrieval_method": body.get("retrieval_method", body.get("latest_retrieval_method", "")),
                 "latest_http_status": body.get("latest_http_status", ""),

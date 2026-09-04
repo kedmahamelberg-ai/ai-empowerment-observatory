@@ -44,6 +44,9 @@ import requests
 from huggingface_hub import HfApi
 from supabase import Client, create_client
 
+from brief_content_common import MIN_FULL_BODY_EVIDENCE_UNITS, evidence_unit_count
+from translation_policy import SUPPORTED_TRANSLATION_PROFILES, preferred_translation_rows
+
 ROOT = Path(__file__).resolve().parents[1]
 
 REVIEW_OUTPUT = ROOT / "review" / "classification" / "latest.json"
@@ -52,7 +55,6 @@ PUBLIC_OUTPUT = ROOT / "data" / "lenses" / "latest.json"
 CLASSIFIER_VERSION = "7C.5_full_body_required"
 CODEBOOK_VERSION = "observatory_dual_lens_v1.1"
 EVENT_METHOD = "article_to_event_v1"
-TRANSLATION_PROFILE = "validated_language_routing_v3"
 FULL_BODY_REQUIRED_POLICY = "full_article_body_required_v1"
 
 QWEN_REPO = "Qwen/Qwen3-4B-GGUF"
@@ -71,7 +73,7 @@ AUDIT_TARGET = 12
 MULTI_EVENT_AUDIT_MAX = 5
 MAX_ARTICLE_EVIDENCE_CHARS = 14000
 MAX_EVENT_EVIDENCE_CHARS = 22000
-MIN_FULL_TEXT_WORDS = 80
+MIN_FULL_TEXT_WORDS = MIN_FULL_BODY_EVIDENCE_UNITS
 SUPABASE_WRITE_MAX_ATTEMPTS = 6
 SUPABASE_RETRY_DELAYS_SECONDS = (2, 4, 8, 16, 30)
 
@@ -449,10 +451,10 @@ def load_translations(
         response = (
             client.table("article_translations")
             .select(
-                "article_id,source_language_iso2,"
-                "translated_headline,created_at"
+                "article_id,source_language_iso2,translated_headline,"
+                "translation_profile,created_at"
             )
-            .eq("translation_profile", TRANSLATION_PROFILE)
+            .in_("translation_profile", list(SUPPORTED_TRANSLATION_PROFILES))
             .in_("article_id", article_ids[start:start + 150])
             .order("created_at", desc=True)
             .execute()
@@ -460,15 +462,7 @@ def load_translations(
 
         rows.extend(getattr(response, "data", None) or [])
 
-    newest: dict[str, dict[str, Any]] = {}
-
-    for row in rows:
-        aid = str(row["article_id"])
-
-        if aid not in newest:
-            newest[aid] = row
-
-    return newest
+    return preferred_translation_rows(rows)
 
 
 def parse_source_metadata(value: Any) -> dict[str, Any]:
@@ -508,7 +502,7 @@ def load_current_full_text(client: Client, article_ids: list[str]) -> dict[str, 
     for row in rows:
         article_id = str(row.get("article_id") or "")
         body = compact_evidence_text(row.get("body_text"))
-        words = int(row.get("word_count") or len(body.split()))
+        words = int(row.get("word_count") or evidence_unit_count(body))
         if article_id and article_id not in result and body and words >= MIN_FULL_TEXT_WORDS:
             result[article_id] = {**row, "body_text": body, "word_count": words}
     return result
@@ -639,7 +633,7 @@ def load_current_articles(
                 "headline_english": english or original,
                 "source_language": str(
                     trans.get("source_language_iso2")
-                    or "en"
+                    or "und"
                 ),
                 "publisher": str(
                     row.get("publisher")
@@ -1614,6 +1608,11 @@ locates the development there.
 Full article body evidence is required for this model call. A headline may
 orient the reader, but it cannot independently support a classification.
 
+The full article body may be written in any language. Treat the original-
+language body as the evidence. English headline normalisation is an aid for
+matching and review only. Never reduce the evidence status merely because the
+source body is not English.
+
 Confidence is a diagnostic self-rating of categorical certainty, not a rating
 of how much source text was available. Use confidence 0 only when no
 defensible categorical judgement can be made from the supplied full body.
@@ -1831,6 +1830,7 @@ def article_evidence(article: dict[str, Any]) -> str:
 Lens unit: one news article
 Publisher: {article["publisher"]}
 Date: {article["date"]}
+Source language: {article.get("source_language") or "not confidently detected"}
 Original headline: {article["headline_original"]}
 English normalization: {article["headline_english"]}
 Full article body: unavailable
@@ -1841,6 +1841,7 @@ Model input policy: {FULL_BODY_REQUIRED_POLICY}
 Lens unit: one news article
 Publisher: {article["publisher"]}
 Date: {article["date"]}
+Source language: {article.get("source_language") or "not confidently detected"}
 Original headline: {article["headline_original"]}
 English normalization: {article["headline_english"]}
 Collected full article body: {evidence}
@@ -1869,6 +1870,7 @@ def event_evidence(
 Source {index}
 Publisher: {article["publisher"]}
 Date: {article["date"]}
+Source language: {article.get("source_language") or "not confidently detected"}
 Original headline: {article["headline_original"]}
 English normalization: {article["headline_english"]}
 Full article body: {compact_evidence_text(article.get("evidence_text") or "", per_source_limit)}

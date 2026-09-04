@@ -16,27 +16,35 @@ import trafilatura
 from bs4 import BeautifulSoup
 from supabase import create_client
 
-from brief_content_common import article_url, domain_of, normalize_space, sha256_text
+from brief_content_common import (
+    MIN_FULL_BODY_EVIDENCE_UNITS,
+    article_url,
+    domain_of,
+    evidence_unit_count,
+    normalize_space,
+    sha256_text,
+)
 
 USER_AGENT = "AIEOResearchBot/1.2 (+https://observatory.hamelberg-ai.com/methodology/)"
 ROBOTS_TIMEOUT = (5, 10)
 TDM_TIMEOUT = (5, 10)
 ARTICLE_TIMEOUT = (10, 30)
-MIN_WORDS = 80
+MIN_WORDS = MIN_FULL_BODY_EVIDENCE_UNITS
 FETCH_RETRY_ATTEMPTS = 3
 MAX_ALTERNATE_URLS = 3
 MAX_REDIRECTS = 4
 RECOVERY_STRATEGY_VERSION = "safe_public_recovery_v4"
 TRANSIENT_STATUS_CODES = {408, 425, 429, 500, 502, 503, 504}
 REDIRECT_STATUS_CODES = {301, 302, 303, 307, 308}
-CJK_CHARACTER_RE = re.compile(r"[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF\u3040-\u30FF\uAC00-\uD7AF]")
 
 
 def _request_headers(*, accept: str) -> dict[str, str]:
+    # Do not ask publishers for an English variant.  The publisher's original
+    # public page is the evidence, including French, Chinese, bilingual
+    # Canadian and other multilingual reporting.
     return {
         "User-Agent": USER_AGENT,
         "Accept": accept,
-        "Accept-Language": "en;q=0.9,*;q=0.5",
     }
 
 
@@ -54,6 +62,52 @@ def retry_delay_seconds(response: requests.Response | None, attempt: int) -> flo
         return max(0.0, min(8.0, float(retry_after)))
     except (TypeError, ValueError):
         return min(4.0, 0.8 * (2 ** max(0, attempt - 1)))
+
+
+def decode_article_html(response: requests.Response) -> str:
+    """Decode publisher HTML without assuming an English or Latin page.
+
+    Requests can fall back to ISO-8859-1 for a page that omits a charset.
+    That fallback silently turns UTF-8 Chinese, French and multilingual
+    Canadian reporting into mojibake. Prefer explicit page metadata, then
+    charset detection, before using that legacy fallback.
+    """
+    raw = bytes(response.content or b"")
+    if not raw:
+        return ""
+
+    candidates: list[str] = []
+    content_type = str(response.headers.get("content-type") or "")
+    header_match = re.search(r"charset\\s*=\\s*['\"]?([^;\\s'\"]+)", content_type, re.I)
+    if header_match:
+        candidates.append(header_match.group(1))
+
+    head = raw[:8192].decode("ascii", errors="ignore")
+    meta_match = re.search(r"<meta[^>]+charset\\s*=\\s*['\"]?([^\\s'\">/]+)", head, re.I)
+    if not meta_match:
+        meta_match = re.search(r"charset\\s*=\\s*['\"]?([^;\\s'\">]+)", head, re.I)
+    if meta_match:
+        candidates.append(meta_match.group(1))
+
+    apparent = str(getattr(response, "apparent_encoding", "") or "").strip()
+    if apparent:
+        candidates.append(apparent)
+    declared = str(response.encoding or "").strip()
+    if declared and declared.casefold() not in {"iso-8859-1", "latin-1"}:
+        candidates.append(declared)
+    candidates.extend(["utf-8", declared, "windows-1252"])
+
+    seen = set()
+    for encoding in candidates:
+        normalized = str(encoding or "").strip()
+        if not normalized or normalized.casefold() in seen:
+            continue
+        seen.add(normalized.casefold())
+        try:
+            return raw.decode(normalized)
+        except (LookupError, UnicodeDecodeError):
+            continue
+    return raw.decode("utf-8", errors="replace")
 
 
 def public_get(
@@ -269,19 +323,8 @@ def detect_access_challenge(html: str) -> bool:
     return any(marker in lower for marker in markers)
 
 def word_count(text: str) -> int:
-    """Count evidence words without rejecting space-free CJK article text.
-
-    English and many other languages separate words with whitespace. Chinese,
-    Japanese and Korean commonly do not, so treating every uninterrupted CJK
-    article as one token silently discards a real public article body.
-    """
-    value = text or ""
-    cjk_characters = CJK_CHARACTER_RE.findall(value)
-    if not cjk_characters:
-        return len(re.findall(r"\S+", value))
-    without_cjk = CJK_CHARACTER_RE.sub(" ", value)
-    non_cjk_words = re.findall(r"[^\W_]+", without_cjk, flags=re.UNICODE)
-    return len(cjk_characters) + len(non_cjk_words)
+    """Backwards-compatible name for the shared multilingual body measure."""
+    return evidence_unit_count(text)
 
 def clean_text(value: str) -> str:
     lines = [normalize_space(x) for x in (value or "").splitlines()]
@@ -621,7 +664,7 @@ def fetch_public_candidate(
         }
     elapsed_ms = sum(int(item.get("elapsed_ms") or 0) for item in request_attempts)
     content_type = str(response.headers.get("content-type") or "")
-    response_text = response.text
+    response_text = decode_article_html(response)
     looks_like_html = (
         "html" in content_type.casefold()
         or response_text.lstrip().casefold().startswith(("<!doctype html", "<html", "<article"))
@@ -901,7 +944,10 @@ def main():
         if method:
             methods[method] = methods.get(method,0)+1
         label = "retrievable" if args.dry_run and outcome == "stored" else outcome
-        print(f"  -> {label} ({result.get('word_count','-')} words; {method or '-'})", flush=True)
+        print(
+            f"  -> {label} ({result.get('word_count','-')} evidence units; {method or '-'})",
+            flush=True,
+        )
 
         if not args.dry_run:
             insert_attempt(client, article_id, url, result, workflow_run_id)

@@ -131,6 +131,8 @@ def main() -> int:
     )
     if "scripts/create_symbiosis_placeholder.py" not in repository_integrity:
         fail("repository integrity must compile the release-bound relationship placeholder helper")
+    if "scripts/validate_multilingual_pipeline.py" not in repository_integrity:
+        fail("repository integrity must run the multilingual full-body regression checks")
     if (
         "Confirm relationship placeholder cannot pass publication"
         not in repository_integrity
@@ -291,11 +293,36 @@ def main() -> int:
         "if response.status_code in {404, 410}",
         'detail["policy_state"] = "absent"',
         "separate TDM, paywall and",
-        "CJK_CHARACTER_RE",
-        "space-free CJK article text",
+        "decode_article_html",
+        "Do not ask publishers for an English variant",
+        "evidence_unit_count",
     ):
         if marker not in body_recovery:
             fail(f"safe missing-body recovery mishandles an absent robots policy: {marker}")
+    if "Accept-Language" in body_recovery:
+        fail("full-body collection must not request an English publisher variant")
+
+    multilingual_contract = ROOT / "scripts" / "validate_multilingual_pipeline.py"
+    if not multilingual_contract.is_file():
+        fail("multilingual full-body regression test is missing")
+    translation_router = (ROOT / "scripts" / "translate_headlines.py").read_text(
+        encoding="utf-8"
+    )
+    for marker in (
+        "qwen_primary_items",
+        "routed through multilingual normalization",
+        "all_other_detected_or_uncertain_languages",
+    ):
+        if marker not in translation_router:
+            fail(f"translation router is missing its multilingual route: {marker}")
+    if 'lang not in {"en", "fr", "zh"}' in translation_router:
+        fail("translation router still excludes languages beyond English, French and Chinese")
+
+    country_config = (ROOT / "config" / "edu_countries.json").read_text(
+        encoding="utf-8"
+    )
+    if country_config.count('"iso3": "CAN"') != 2 or '"hl": "fr"' not in country_config:
+        fail("Canadian bilingual discovery configuration is incomplete")
 
     reclassification_workflow = (
         WORKFLOWS / "reclassify-current-from-full-bodies.yml"

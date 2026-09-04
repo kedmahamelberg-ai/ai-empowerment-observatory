@@ -375,7 +375,9 @@ def main() -> int:
     run_id = store.start_collection_run(
         run_key=run_key,
         started_at=collected_at,
-        configured_country_count=len(config["countries"]),
+        # Search language is intentionally separate from market count. Canada
+        # has English and French discovery passes, but it remains one market.
+        configured_country_count=len({str(country["iso3"]) for country in config["countries"]}),
         workflow_run_id=workflow_run_id,
         collector_version=COLLECTOR_VERSION,
     )
@@ -397,7 +399,12 @@ def main() -> int:
                 )
                 object_path = (
                     f"serpapi/google-news/{started:%Y/%m/%d}/"
-                    f"{run_key}/{country['iso3'].lower()}.json"
+                    # A country may intentionally have more than one
+                    # language-specific discovery pass. Keep every raw search
+                    # response instead of letting a French Canadian pass
+                    # overwrite its English Canadian counterpart.
+                    f"{run_key}/{country['iso3'].lower()}-"
+                    f"{str(country['hl']).lower().replace('_', '-')}.json"
                 )
                 store.upload_raw_json(object_path=object_path, payload=payload)
                 search_id = store.create_search_run(

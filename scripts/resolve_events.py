@@ -53,6 +53,8 @@ from sentence_transformers import SentenceTransformer
 from supabase import Client, create_client
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
+from translation_policy import SUPPORTED_TRANSLATION_PROFILES, preferred_translation_rows
+
 ROOT = Path(__file__).resolve().parents[1]
 
 REVIEW_PATH = ROOT / "review" / "events" / "assignments" / "latest.json"
@@ -60,8 +62,6 @@ PUBLIC_EVENTS_PATH = ROOT / "data" / "events" / "latest.json"
 
 RESOLVER_VERSION = "7B.4.1-structured-json-retry"
 METHOD_NAME = "article_to_event_v1"
-TRANSLATION_PROFILE = "validated_language_routing_v3"
-
 EMBEDDING_MODEL = (
     "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 )
@@ -248,9 +248,9 @@ def load_translations(
             .select(
                 "article_id,source_language_iso2,"
                 "translated_headline,requires_review,"
-                "review_reason,created_at"
+                "review_reason,translation_profile,created_at"
             )
-            .eq("translation_profile", TRANSLATION_PROFILE)
+            .in_("translation_profile", list(SUPPORTED_TRANSLATION_PROFILES))
             .in_("article_id", batch)
             .order("created_at", desc=True)
             .execute()
@@ -258,14 +258,7 @@ def load_translations(
 
         rows.extend(getattr(response, "data", None) or [])
 
-    newest: dict[str, dict[str, Any]] = {}
-
-    for row in rows:
-        aid = str(row["article_id"])
-        if aid not in newest:
-            newest[aid] = row
-
-    return newest
+    return preferred_translation_rows(rows)
 
 
 def load_latest_articles(
@@ -364,7 +357,7 @@ def load_latest_articles(
 
         source_language = str(
             translation.get("source_language_iso2")
-            or "en"
+            or "und"
         )
 
         metadata = parse_source_metadata(

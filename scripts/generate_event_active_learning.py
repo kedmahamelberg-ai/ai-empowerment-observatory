@@ -45,11 +45,16 @@ from sentence_transformers import SentenceTransformer
 from supabase import Client, create_client
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
+from translation_policy import (
+    CURRENT_TRANSLATION_PROFILE,
+    SUPPORTED_TRANSLATION_PROFILES,
+    preferred_translation_rows,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_PATH = ROOT / "review" / "events" / "active-learning" / "latest.json"
 GOLD_PATH = ROOT / "validation" / "event_pair_gold_v1.csv"
 
-TRANSLATION_PROFILE = "validated_language_routing_v3"
 EMBEDDING_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 MODERNBERT_MODEL = "Juanillaberia/articles-pairs-event-detection"
 QWEN_REPO = "Qwen/Qwen3-4B-GGUF"
@@ -216,21 +221,16 @@ def load_translations(client: Client, article_ids: list[str]) -> dict[str, dict[
             client.table("article_translations")
             .select(
                 "article_id,source_language_iso2,translated_headline,"
-                "requires_review,review_reason,created_at"
+                "requires_review,review_reason,translation_profile,created_at"
             )
-            .eq("translation_profile", TRANSLATION_PROFILE)
+            .in_("translation_profile", list(SUPPORTED_TRANSLATION_PROFILES))
             .in_("article_id", batch)
             .order("created_at", desc=True)
             .execute()
         )
         rows.extend(getattr(response, "data", None) or [])
 
-    newest: dict[str, dict[str, Any]] = {}
-    for row in rows:
-        aid = str(row["article_id"])
-        if aid not in newest:
-            newest[aid] = row
-    return newest
+    return preferred_translation_rows(rows)
 
 
 def load_current_event_map(client: Client, article_ids: list[str]) -> dict[str, str]:
@@ -791,7 +791,7 @@ def main() -> int:
                     "stage": "7B.2C",
                     "purpose": "active-learning expansion of binary event-identity human gold labels",
                     "collection_run_key": collection["run_key"],
-                    "translation_profile": TRANSLATION_PROFILE,
+                    "translation_profile": CURRENT_TRANSLATION_PROFILE,
                     "embedding_model": EMBEDDING_MODEL,
                     "modernbert_model": MODERNBERT_MODEL,
                     "qwen_model": QWEN_REPO,

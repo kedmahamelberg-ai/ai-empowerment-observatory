@@ -44,6 +44,7 @@ from release_common import (
     utc_now,
     write_json,
 )
+from translation_policy import SUPPORTED_TRANSLATION_PROFILES, preferred_translation_rows
 
 BASELINE_DIR = ROOT / "data" / "releases" / "baselines"
 RESURFACE_DAYS = 28.0
@@ -164,18 +165,15 @@ def load_translations(client, article_ids: list[str]) -> dict[str, dict[str, Any
             client.table("article_translations")
             .select(
                 "article_id,source_language_iso2,translated_headline,"
-                "requires_review,review_reason,created_at"
+                "requires_review,review_reason,translation_profile,created_at"
             )
-            .eq("translation_profile", "validated_language_routing_v3")
+            .in_("translation_profile", list(SUPPORTED_TRANSLATION_PROFILES))
             .in_("article_id", batch)
             .order("created_at", desc=True)
             .execute()
         )
         rows.extend(getattr(response, "data", None) or [])
-    newest: dict[str, dict[str, Any]] = {}
-    for row in rows:
-        newest.setdefault(str(row["article_id"]), row)
-    return newest
+    return preferred_translation_rows(rows)
 
 
 def load_event_links(client, article_ids: list[str]) -> list[dict[str, Any]]:
@@ -691,7 +689,7 @@ def build_release(
                 "url": article.get("canonical_url"),
                 "source_language": str(
                     translation.get("source_language_iso2")
-                    or next(iter(observations[aid]["search_languages"]), "en")
+                    or next(iter(observations[aid]["search_languages"]), "und")
                 ),
                 "search_rank": observations[aid]["search_rank"],
                 "search_markets": sorted(observations[aid]["search_markets"]),

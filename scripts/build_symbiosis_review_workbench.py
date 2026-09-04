@@ -19,6 +19,7 @@ from symbiosis_common import (
     release_identifier,
     release_review_scope,
 )
+from translation_policy import SUPPORTED_TRANSLATION_PROFILES, preferred_translation_rows
 
 ROOT = Path(__file__).resolve().parents[1]
 RELEASES_DIR = ROOT / "data" / "releases"
@@ -27,9 +28,6 @@ CSS_PATH = ROOT / "review" / "symbiosis" / "workbench.css"
 JS_PATH = ROOT / "review" / "symbiosis" / "workbench.js"
 OUTPUT_PATH = ROOT / "review" / "symbiosis" / "workbench.html"
 JSON_PATH = ROOT / "review" / "symbiosis" / "workbench-data.json"
-TRANSLATION_PROFILE = "validated_language_routing_v3"
-
-
 class WorkbenchError(RuntimeError):
     pass
 
@@ -179,18 +177,21 @@ def load_articles(client: Client, ids: list[str]) -> dict[str, dict[str, Any]]:
             .execute()
         )
         rows.extend(getattr(response, "data", None) or [])
-    translations: dict[str, dict[str, Any]] = {}
+    translation_rows: list[dict[str, Any]] = []
     for start in range(0, len(ids), 150):
         response = (
             client.table("article_translations")
-            .select("article_id,translated_headline,source_language_iso2,created_at")
-            .eq("translation_profile", TRANSLATION_PROFILE)
+            .select(
+                "article_id,translated_headline,source_language_iso2,"
+                "translation_profile,created_at"
+            )
+            .in_("translation_profile", list(SUPPORTED_TRANSLATION_PROFILES))
             .in_("article_id", ids[start:start + 150])
             .order("created_at", desc=True)
             .execute()
         )
-        for row in getattr(response, "data", None) or []:
-            translations.setdefault(str(row["article_id"]), row)
+        translation_rows.extend(getattr(response, "data", None) or [])
+    translations = preferred_translation_rows(translation_rows)
     result: dict[str, dict[str, Any]] = {}
     for row in rows:
         aid = str(row["article_id"])

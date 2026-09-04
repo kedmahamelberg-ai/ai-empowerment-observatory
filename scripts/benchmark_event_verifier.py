@@ -37,6 +37,12 @@ from huggingface_hub import HfApi
 from supabase import Client, create_client
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
+from translation_policy import (
+    CURRENT_TRANSLATION_PROFILE,
+    SUPPORTED_TRANSLATION_PROFILES,
+    preferred_translation_rows,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 
 GOLD_PATH = ROOT / "validation" / "event_pair_gold_v1.csv"
@@ -48,8 +54,6 @@ OUTPUT_PATH = (
     / "verifier-benchmark"
     / "latest.json"
 )
-
-TRANSLATION_PROFILE = "validated_language_routing_v3"
 
 MODERNBERT_MODEL = "Juanillaberia/articles-pairs-event-detection"
 
@@ -176,9 +180,9 @@ def fetch_translations(
             .select(
                 "article_id,source_language_iso2,"
                 "translated_headline,requires_review,"
-                "review_reason,created_at"
+                "review_reason,translation_profile,created_at"
             )
-            .eq("translation_profile", TRANSLATION_PROFILE)
+            .in_("translation_profile", list(SUPPORTED_TRANSLATION_PROFILES))
             .in_("article_id", batch)
             .order("created_at", desc=True)
             .execute()
@@ -188,15 +192,7 @@ def fetch_translations(
             getattr(response, "data", None) or []
         )
 
-    newest: dict[str, dict[str, Any]] = {}
-
-    for row in rows:
-        aid = str(row["article_id"])
-
-        if aid not in newest:
-            newest[aid] = row
-
-    return newest
+    return preferred_translation_rows(rows)
 
 
 def story_token(article: dict[str, Any] | None) -> str | None:
@@ -899,7 +895,7 @@ def main() -> int:
                         "same-event verifier benchmark against "
                         "human-coded Observatory pairs"
                     ),
-                    "translation_profile": TRANSLATION_PROFILE,
+                    "translation_profile": CURRENT_TRANSLATION_PROFILE,
                     "gold_file": (
                         "validation/event_pair_gold_v1.csv"
                     ),

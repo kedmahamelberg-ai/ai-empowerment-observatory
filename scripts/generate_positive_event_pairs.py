@@ -42,6 +42,8 @@ from sentence_transformers import SentenceTransformer
 from supabase import Client, create_client
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
+from translation_policy import SUPPORTED_TRANSLATION_PROFILES, preferred_translation_rows
+
 ROOT = Path(__file__).resolve().parents[1]
 
 OUTPUT = (
@@ -56,8 +58,6 @@ VALIDATION_FILES = [
     ROOT / "validation" / "event_pair_gold_v1.csv",
     ROOT / "validation" / "event_pair_hard_negatives_v1.csv",
 ]
-
-TRANSLATION_PROFILE = "validated_language_routing_v3"
 
 EMBEDDING_MODEL = (
     "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
@@ -387,12 +387,9 @@ def load_translations(
                 "article_id,source_language_iso2,"
                 "translated_headline,"
                 "requires_review,review_reason,"
-                "created_at"
+                "translation_profile,created_at"
             )
-            .eq(
-                "translation_profile",
-                TRANSLATION_PROFILE,
-            )
+            .in_("translation_profile", list(SUPPORTED_TRANSLATION_PROFILES))
             .in_(
                 "article_id",
                 batch,
@@ -412,17 +409,7 @@ def load_translations(
             ) or []
         )
 
-    newest = {}
-
-    for row in rows:
-        aid = str(
-            row["article_id"]
-        )
-
-        if aid not in newest:
-            newest[aid] = row
-
-    return newest
+    return preferred_translation_rows(rows)
 
 
 def normalized_headline(

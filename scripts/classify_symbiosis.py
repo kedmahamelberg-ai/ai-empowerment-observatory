@@ -38,6 +38,7 @@ import requests
 from huggingface_hub import HfApi
 from supabase import Client, create_client
 
+from brief_content_common import MIN_FULL_BODY_EVIDENCE_UNITS, evidence_unit_count
 from symbiosis_common import (
     CLASSIFIER_VERSION,
     CODEBOOK_VERSION,
@@ -48,6 +49,7 @@ from symbiosis_common import (
     release_review_scope,
     validate_model_payload,
 )
+from translation_policy import SUPPORTED_TRANSLATION_PROFILES, preferred_translation_rows
 
 ROOT = Path(__file__).resolve().parents[1]
 RELEASES_DIR = ROOT / "data" / "releases"
@@ -61,11 +63,10 @@ LLAMA_SERVER_BIN = os.environ.get(
 )
 SERVER_URL = "http://127.0.0.1:8080/v1/chat/completions"
 HEALTH_URL = "http://127.0.0.1:8080/health"
-TRANSLATION_PROFILE = "validated_language_routing_v3"
 OWNER_GOLD_PATH = ROOT / "validation" / "symbiosis-owner-gold.json"
 MAX_ARTICLE_EVIDENCE_CHARS = 14000
 MAX_EVENT_EVIDENCE_CHARS = 22000
-MIN_FULL_TEXT_WORDS = 80
+MIN_FULL_TEXT_WORDS = MIN_FULL_BODY_EVIDENCE_UNITS
 FULL_BODY_REQUIRED_POLICY = "full_article_body_required_v1"
 
 
@@ -190,19 +191,21 @@ def paged_table(
 
 
 def load_translation_map(client: Client, article_ids: list[str]) -> dict[str, dict[str, Any]]:
-    result: dict[str, dict[str, Any]] = {}
+    rows: list[dict[str, Any]] = []
     for start in range(0, len(article_ids), 150):
         response = (
             client.table("article_translations")
-            .select("article_id,source_language_iso2,translated_headline,created_at")
-            .eq("translation_profile", TRANSLATION_PROFILE)
+            .select(
+                "article_id,source_language_iso2,translated_headline,"
+                "translation_profile,created_at"
+            )
+            .in_("translation_profile", list(SUPPORTED_TRANSLATION_PROFILES))
             .in_("article_id", article_ids[start:start + 150])
             .order("created_at", desc=True)
             .execute()
         )
-        for row in getattr(response, "data", None) or []:
-            result.setdefault(str(row["article_id"]), row)
-    return result
+        rows.extend(getattr(response, "data", None) or [])
+    return preferred_translation_rows(rows)
 
 
 def parse_metadata(value: Any) -> dict[str, Any]:
@@ -244,7 +247,7 @@ def load_full_text_map(client: Client, article_ids: list[str]) -> dict[str, dict
     for row in rows:
         article_id = str(row.get("article_id") or "")
         body = compact_evidence_text(row.get("body_text"))
-        words = int(row.get("word_count") or len(body.split()))
+        words = int(row.get("word_count") or evidence_unit_count(body))
         if article_id and article_id not in result and body and words >= MIN_FULL_TEXT_WORDS:
             result[article_id] = {**row, "body_text": body, "word_count": words}
     return result
@@ -370,7 +373,7 @@ def load_articles(client: Client, article_ids: list[str]) -> dict[str, dict[str,
             "publisher": str(row.get("publisher") or "Unknown source"),
             "url": str(row.get("canonical_url") or ""),
             "date": str(row.get("published_at") or row.get("first_seen_at") or ""),
-            "source_language": str(translation.get("source_language_iso2") or row.get("language") or "en"),
+            "source_language": str(translation.get("source_language_iso2") or row.get("language") or "und"),
             "evidence_text": evidence_text,
             "content_basis": content_basis,
             "evidence_word_count": int(full_text.get("word_count") or 0),
@@ -394,7 +397,7 @@ def fallback_article(source: dict[str, Any]) -> dict[str, Any] | None:
         "publisher": str(source.get("publisher") or "Unknown source"),
         "url": str(source.get("url") or ""),
         "date": str(source.get("published_date") or ""),
-        "source_language": str(source.get("source_language") or "en"),
+        "source_language": str(source.get("source_language") or "und"),
         "evidence_text": "",
         "content_basis": "not_available",
         "search_markets": [],
@@ -960,7 +963,8 @@ DECISION BOUNDARY POLICY
 16. Mark unequal human outcomes only when the evidence says that some groups benefit more, face different conditions, or are put at a disadvantage relative to others.
 17. Write public_takeaway as one short sentence in everyday language. State what the development means for people; avoid method labels and academic terminology.
 18. Write people_evidence in at most 280 characters. If you choose a people benefit or downside, identify the specific source-supported fact behind it. Otherwise write "no people outcome stated" or "not enough evidence". Do not quote long passages.
-19. Return only one JSON object.{calibration_section}
+19. The collected full article body may be written in any language. Treat the original-language body as evidence. English headline normalisation is only an aid for matching and review. Do not mark evidence insufficient merely because the source is not English.
+20. Return only one JSON object.{calibration_section}
 
 Required keys:
 ai_relevant, evidence_status, relational_signal, human_experience_type,
@@ -1083,6 +1087,7 @@ def article_evidence(article: dict[str, Any]) -> str:
     lines = [
         f"Publisher: {article['publisher']}",
         f"Publication date: {article['date']}",
+        f"Source language: {article.get('source_language') or 'not confidently detected'}",
         f"Headline: {article['headline_english']}",
     ]
     if article.get("evidence_text"):
@@ -1106,7 +1111,11 @@ def event_evidence(event: dict[str, Any]) -> str:
     members = event.get("model_member_articles") or []
     per_source_limit = max(2600, min(MAX_ARTICLE_EVIDENCE_CHARS, MAX_EVENT_EVIDENCE_CHARS // max(1, len(members))))
     for article in members:
-        line = f"- {article['publisher']}: {article['headline_english']} ({article['date']})"
+        line = (
+            f"- {article['publisher']}: {article['headline_english']} "
+            f"({article['date']}; source language: "
+            f"{article.get('source_language') or 'not confidently detected'})"
+        )
         if article.get("evidence_text"):
             excerpt = compact_evidence_text(article["evidence_text"], per_source_limit)
             line += f" | Evidence basis: {article.get('content_basis')} | {excerpt}"

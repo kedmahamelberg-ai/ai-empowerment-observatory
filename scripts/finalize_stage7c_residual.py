@@ -33,6 +33,8 @@ from typing import Any
 
 from supabase import Client, create_client
 
+from translation_policy import SUPPORTED_TRANSLATION_PROFILES, preferred_translation_rows
+
 ROOT = Path(__file__).resolve().parents[1]
 
 REVIEW_OUTPUT = ROOT / "review" / "classification" / "latest.json"
@@ -40,7 +42,6 @@ PUBLIC_OUTPUT = ROOT / "data" / "lenses" / "latest.json"
 
 POSTPROCESS_VERSION = "7C.5a_full_body_required"
 TARGET_CLASSIFIER_VERSION = "7C.5_full_body_required"
-TRANSLATION_PROFILE = "validated_language_routing_v3"
 EVENT_METHOD = "article_to_event_v1"
 
 AUDIT_TARGET = 12
@@ -671,9 +672,9 @@ def load_articles(
             client.table("article_translations")
             .select(
                 "article_id,translated_headline,"
-                "source_language_iso2,created_at"
+                "source_language_iso2,translation_profile,created_at"
             )
-            .eq("translation_profile", TRANSLATION_PROFILE)
+            .in_("translation_profile", list(SUPPORTED_TRANSLATION_PROFILES))
             .in_("article_id", article_ids[start:start + 150])
             .order("created_at", desc=True)
             .execute()
@@ -681,12 +682,7 @@ def load_articles(
 
         translations.extend(getattr(response, "data", None) or [])
 
-    newest: dict[str, dict[str, Any]] = {}
-
-    for row in translations:
-        aid = str(row["article_id"])
-        if aid not in newest:
-            newest[aid] = row
+    newest = preferred_translation_rows(translations)
 
     return (
         {

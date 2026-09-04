@@ -21,11 +21,13 @@ from lingua import LanguageDetectorBuilder
 from sentence_transformers import SentenceTransformer
 from supabase import Client, create_client
 
+from translation_policy import CURRENT_TRANSLATION_PROFILE
+
 ROOT = Path(__file__).resolve().parents[1]
 REVIEW_PATH = ROOT / "review" / "translations" / "latest.json"
 
-PROFILE = "validated_language_routing_v3"
-PIPELINE_VERSION = "7B.2B-0f"
+PROFILE = CURRENT_TRANSLATION_PROFILE
+PIPELINE_VERSION = "7B.3_multilingual_routing"
 TARGET_LANGUAGE = "en"
 
 HYMT_REPO = "tencent/Hy-MT2-1.8B-GGUF"
@@ -168,19 +170,36 @@ def resolve_language(detector, headline, observed):
 
     if contains_han(headline):
         return "zh", confidence, "han_script+lingua", False, ""
-    if hint and detected == hint:
-        return detected, confidence, "lingua+search_language", False, ""
     if confidence >= 0.65:
-        return detected, confidence, "lingua", False, ""
-    if hint:
+        if detected == "en" and hint and hint != "en":
+            # Short French, Chinese or bilingual headlines can be incorrectly
+            # scored as English. The discovery locale is not proof of the
+            # source language, but this conflict is enough to avoid an
+            # English-only passthrough. Qwen receives the original headline
+            # and can preserve it if it was genuinely already English.
+            return (
+                "un",
+                confidence,
+                "lingua_english_conflicts_with_discovery_language",
+                True,
+                "English detection conflicts with the discovery language; routed through multilingual normalization rather than assumed English.",
+            )
+        method = "lingua+search_language" if hint and detected == hint else "lingua"
+        return detected, confidence, method, False, ""
+    if detected == "en" and confidence >= 0.45:
         return (
-            hint,
+            "un",
             confidence,
-            "search_language_override",
+            "lingua_low_confidence_english_routed_multilingual",
             True,
-            f"low-confidence '{detected}' overridden by '{hint}'",
+            "English detection is tentative; the headline is routed through multilingual normalization rather than assumed English.",
         )
-    return detected if len(detected) == 2 else "un", confidence, "lingua", True, "uncertain source language"
+    # The Google interface language is discovery metadata, not proof that the
+    # publisher wrote the source in that language.  Never override a French,
+    # Chinese, Indigenous or other source into English merely because it was
+    # found in an English-language Canadian search.
+    language = detected if len(detected) == 2 and detected != "en" else "un"
+    return language, confidence, "lingua_low_confidence", True, "uncertain source language; routed for multilingual normalization"
 
 
 def text_hash(text):
@@ -330,10 +349,13 @@ def chat(model, messages, temperature=0.2, top_p=0.8):
 
 
 def qwen_translate(headline, source_lang):
-    lang = {"fr": "French", "zh": "Chinese"}.get(source_lang, source_lang)
+    language_note = {
+        "fr": "The source is French. ",
+        "zh": "The source is Chinese. ",
+    }.get(source_lang, "")
     prompt = (
         "/no_think\n"
-        f"Translate this {lang} news headline into natural, precise English. "
+        f"{language_note}Translate this news headline into natural, precise English. "
         "Preserve specific event meaning, named entities, places, organizations, "
         "people, numbers, negation, modality and comparisons. Translate idioms "
         "by meaning, not word-for-word. Do not summarize or add facts. "
@@ -361,6 +383,14 @@ def hymt_translate(headline):
         temperature=0.7,
         top_p=0.6,
     )
+
+
+def translate_or_record(fn, headline):
+    """Keep one source failure from excluding the remaining multilingual run."""
+    try:
+        return fn(headline), ""
+    except Exception as exc:
+        return headline, f"translation request failed: {type(exc).__name__}: {exc}"
 
 
 def primary_qc(source_lang, original, english):
@@ -430,7 +460,7 @@ def main():
     qwen_primary_version = register_model(
         client, QWEN_REPO, qwen_revision,
         "headline_translation_to_english",
-        "French primary translator selected after blind benchmark.",
+        "Multilingual primary translator for every non-English source except the separately benchmarked Chinese primary route.",
     )
     qwen_audit_version = register_model(
         client, QWEN_REPO, qwen_revision,
@@ -456,27 +486,48 @@ def main():
             "language_reason": lreason,
         })
 
-    french = [x for x in prepared if x["source_language"] == "fr"]
     chinese = [x for x in prepared if x["source_language"] == "zh"]
+    qwen_primary_items = [
+        item
+        for item in prepared
+        if item["source_language"] not in {"en", "zh"}
+    ]
 
     outputs = {}
 
-    # Qwen: French primary + Chinese independent audit
+    # Qwen is the general multilingual route.  This deliberately includes
+    # French, Canadian multilingual sources and any future language detected
+    # outside the original English/French/Chinese pilot.
     qp = qlog = None
     try:
-        if french or chinese:
+        if qwen_primary_items or chinese:
             qp, qlog = start_server(QWEN_REPO, QWEN_QUANT, "qwen-routing")
-        for item in french:
+        for item in qwen_primary_items:
+            primary, error = translate_or_record(
+                lambda text, lang=item["source_language"]: qwen_translate(text, lang),
+                item["headline"],
+            )
             outputs[item["article_id"]] = {
-                "primary": qwen_translate(item["headline"], "fr"),
+                "primary": primary,
                 "primary_model_version": qwen_primary_version,
+                "primary_error": error,
                 "auditor": None,
+                "auditor_error": "",
                 "audit_model_version": None,
             }
         for item in chinese:
             outputs.setdefault(item["article_id"], {})
-            outputs[item["article_id"]]["auditor"] = qwen_translate(item["headline"], "zh")
-            outputs[item["article_id"]]["audit_model_version"] = qwen_audit_version
+            auditor, error = translate_or_record(
+                lambda text: qwen_translate(text, "zh"),
+                item["headline"],
+            )
+            outputs[item["article_id"]].update(
+                {
+                    "auditor": auditor,
+                    "auditor_error": error,
+                    "audit_model_version": qwen_audit_version,
+                }
+            )
     finally:
         stop_server(qp, qlog)
 
@@ -487,8 +538,14 @@ def main():
             hp, hlog = start_server(HYMT_REPO, HYMT_QUANT, "hymt-routing")
         for item in chinese:
             outputs.setdefault(item["article_id"], {})
-            outputs[item["article_id"]]["primary"] = hymt_translate(item["headline"])
-            outputs[item["article_id"]]["primary_model_version"] = hymt_primary_version
+            primary, error = translate_or_record(hymt_translate, item["headline"])
+            outputs[item["article_id"]].update(
+                {
+                    "primary": primary,
+                    "primary_model_version": hymt_primary_version,
+                    "primary_error": error,
+                }
+            )
     finally:
         stop_server(hp, hlog)
 
@@ -498,7 +555,9 @@ def main():
             outputs[item["article_id"]] = {
                 "primary": item["headline"],
                 "primary_model_version": None,
+                "primary_error": "",
                 "auditor": None,
+                "auditor_error": "",
                 "audit_model_version": None,
             }
 
@@ -506,7 +565,8 @@ def main():
     audit_texts = []
     for item in chinese:
         d = outputs[item["article_id"]]
-        audit_texts.extend([d["primary"], d["auditor"]])
+        if not d.get("primary_error") and not d.get("auditor_error"):
+            audit_texts.extend([d["primary"], d["auditor"]])
 
     embeddings = None
     if audit_texts:
@@ -537,27 +597,26 @@ def main():
             aid = item["article_id"]
             lang = item["source_language"]
 
-            if lang not in {"en", "fr", "zh"}:
-                primary = item["headline"]
-                primary_model_version = None
-                auditor = None
-                audit_model_version = None
-                status = "unsupported"
-                counts["unsupported"] += 1
+            d = outputs[aid]
+            primary = d["primary"]
+            primary_model_version = d["primary_model_version"]
+            primary_error = str(d.get("primary_error") or "")
+            auditor = d.get("auditor")
+            auditor_error = str(d.get("auditor_error") or "")
+            audit_model_version = d.get("audit_model_version")
+            if lang == "en":
+                status = "passthrough"
+            elif primary_error:
+                status = "failed"
             else:
-                d = outputs[aid]
-                primary = d["primary"]
-                primary_model_version = d["primary_model_version"]
-                auditor = d.get("auditor")
-                audit_model_version = d.get("audit_model_version")
-                status = "passthrough" if lang == "en" else "translated"
-                counts[status] += 1
+                status = "translated"
+            counts[status] += 1
 
             reasons = []
             if item["language_reason"]:
                 reasons.append(item["language_reason"])
-            if status == "unsupported":
-                reasons.append(f"language '{lang}' not routed in validated pilot")
+            if primary_error:
+                reasons.append(primary_error)
             else:
                 reasons.extend(primary_qc(lang, item["headline"], primary))
 
@@ -589,7 +648,7 @@ def main():
             audit_status = None
             audit_reason = ""
 
-            if lang == "zh" and auditor:
+            if lang == "zh" and auditor and not primary_error and not auditor_error:
                 counts["audited"] += 1
                 v1 = embeddings[pair_i]
                 v2 = embeddings[pair_i + 1]
@@ -637,6 +696,20 @@ def main():
                         .execute()
                     )
 
+            elif lang == "zh" and auditor_error:
+                requires_review = True
+                reasons.append(f"Chinese translation audit unavailable: {auditor_error}")
+                (
+                    client.table("article_translations")
+                    .update({
+                        "requires_review": True,
+                        "review_reason": "; ".join(dict.fromkeys(reasons)),
+                        "updated_at": iso_z(now_utc()),
+                    })
+                    .eq("translation_id", translation_id)
+                    .execute()
+                )
+
             if requires_review:
                 counts["review"] += 1
 
@@ -649,7 +722,7 @@ def main():
                     "english_headline": primary,
                     "primary_model": (
                         HYMT_REPO if lang == "zh"
-                        else (QWEN_REPO if lang == "fr" else None)
+                        else (QWEN_REPO if lang != "en" else None)
                     ),
                     "auditor_translation": auditor,
                     "auditor_model": QWEN_REPO if lang == "zh" else None,
@@ -690,14 +763,15 @@ def main():
                         **counts,
                         "routing": {
                             "en": "passthrough",
-                            "fr": f"{QWEN_REPO}:{QWEN_QUANT}",
+                            "all_other_detected_or_uncertain_languages": f"{QWEN_REPO}:{QWEN_QUANT}",
                             "zh_primary": f"{HYMT_REPO}:{HYMT_QUANT}",
                             "zh_auditor": f"{QWEN_REPO}:{QWEN_QUANT}",
                         },
                         "principle": (
-                            "Original evidence is retained. English is an additional "
-                            "normalized representation. Chinese cross-model disagreement "
-                            "is preserved as an audit signal."
+                            "Original-language evidence is retained. English is an additional "
+                            "normalization for multilingual event matching, never a condition "
+                            "for collection or full-body classification. Chinese cross-model "
+                            "disagreement is preserved as an audit signal."
                         ),
                     },
                     "translations": sorted(
@@ -719,7 +793,7 @@ def main():
         print(f"Translation run: {run_key}")
         print(f"Passthrough: {counts['passthrough']}")
         print(f"Translated: {counts['translated']}")
-        print(f"Unsupported: {counts['unsupported']}")
+        print(f"Unsupported: {counts['unsupported']} (the multilingual route has no language exclusion)")
         print(f"Chinese audited: {counts['audited']}")
         print(f"Chinese audit disagreement: {counts['audit_disagreement']}")
         print(f"Review required: {counts['review']}")
