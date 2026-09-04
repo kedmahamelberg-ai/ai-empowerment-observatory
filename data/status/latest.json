@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-02T10:20:39.700633Z",
+  "generated_at": "2026-09-04T08:57:30.507198Z",
   "system_status": "operational",
   "release_id": "2026-W35",
-  "release_revision": 2,
+  "release_revision": 4,
   "period_start": "2026-08-24",
   "period_end": "2026-08-30",
   "release_status": "provisional_automated",
@@ -12,13 +12,13 @@
   "source_of_truth": "/data/releases/current.json",
   "latest": {
     "release_id": "2026-W35",
-    "coverage_units": 112,
-    "event_units": 111,
-    "coverage_empowerment_index": 0.0,
-    "event_empowerment_index": 0.0,
-    "directional_amplification_gap": 0.0,
-    "review_queue_count": 105,
-    "relationship_status": "model_coded_provisional"
+    "coverage_units": 111,
+    "event_units": 110,
+    "coverage_empowerment_index": 6.6667,
+    "event_empowerment_index": 4.9844,
+    "directional_amplification_gap": 1.6823,
+    "review_queue_count": 97,
+    "relationship_status": "classification_in_progress"
   },
   "governance": {
     "weekly_publication_blocks_on": [
