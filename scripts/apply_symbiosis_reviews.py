@@ -21,7 +21,10 @@ from symbiosis_common import (
     RELATIONSHIP_PATTERN_KEYS,
     TECHNICAL_LABELS,
     derive_configuration,
+    normalize_ai_role,
     normalize_distribution_signal,
+    normalize_evidence_status,
+    normalize_human_type,
     normalize_relationship_patterns,
     public_signals_from_patterns,
 )
@@ -108,9 +111,9 @@ def normalize_final(decision: dict[str, Any], row: dict[str, Any]) -> dict[str, 
     supplied_final = decision.get("final") if isinstance(decision.get("final"), dict) else {}
 
     if status == "accepted":
-        human_type = str(row["model_human_experience_type"])
-        ai_role = str(row["model_ai_expressive_role"])
-        evidence_status = str(row["evidence_status"])
+        human_type = normalize_human_type(row["model_human_experience_type"])
+        ai_role = normalize_ai_role(row["model_ai_expressive_role"])
+        evidence_status = normalize_evidence_status(row["evidence_status"])
         evidence_summary = str(supplied_final.get("evidence_summary") or row.get("model_summary") or "").strip()
         reasoning = str(supplied_final.get("reasoning") or evidence_summary).strip()
         empowerment_status = str(supplied_final.get("empowerment_status") or "unclear")
@@ -125,9 +128,9 @@ def normalize_final(decision: dict[str, Any], row: dict[str, Any]) -> dict[str, 
         final = supplied_final
         if not final:
             raise ReviewApplyError(f"Decision {decision.get('decision_id')} lacks final values.")
-        human_type = str(final.get("human_experience_type") or "unclear")
-        ai_role = str(final.get("ai_expressive_role") or "unclear")
-        evidence_status = str(final.get("evidence_status") or "insufficient")
+        human_type = normalize_human_type(final.get("human_experience_type"))
+        ai_role = normalize_ai_role(final.get("ai_expressive_role"))
+        evidence_status = normalize_evidence_status(final.get("evidence_status"))
         evidence_summary = str(final.get("evidence_summary") or "").strip()
         reasoning = str(final.get("reasoning") or evidence_summary).strip()
         empowerment_status = str(final.get("empowerment_status") or "unclear")

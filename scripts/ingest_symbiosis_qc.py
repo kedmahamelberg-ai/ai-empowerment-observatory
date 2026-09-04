@@ -24,6 +24,9 @@ from symbiosis_common import (
     HUMAN_TYPES,
     RELATIONSHIP_PATTERN_KEYS,
     derive_configuration,
+    normalize_ai_role,
+    normalize_evidence_status,
+    normalize_human_type,
     normalize_relationship_patterns,
     public_signals_from_patterns,
 )
@@ -232,15 +235,18 @@ def main() -> int:
             public_signals = parsed["public_signals"]
             distribution_signal = parsed["distribution_signal"]
         else:
-            human_type = str(row.get("HUMAN_human_experience_type") or "").strip()
-            ai_role = str(row.get("HUMAN_ai_expressive_role") or "").strip()
-            evidence_status = str(row.get("HUMAN_evidence_status") or "").strip()
-            filled = [bool(human_type), bool(ai_role), bool(evidence_status)]
+            raw_human_type = str(row.get("HUMAN_human_experience_type") or "").strip()
+            raw_ai_role = str(row.get("HUMAN_ai_expressive_role") or "").strip()
+            raw_evidence_status = str(row.get("HUMAN_evidence_status") or "").strip()
+            filled = [bool(raw_human_type), bool(raw_ai_role), bool(raw_evidence_status)]
             if any(filled) and not all(filled):
                 errors.append(f"row {index}: complete all three HUMAN label columns or leave all three blank")
                 continue
             if not all(filled):
                 continue
+            human_type = normalize_human_type(raw_human_type)
+            ai_role = normalize_ai_role(raw_ai_role)
+            evidence_status = normalize_evidence_status(raw_evidence_status)
             relationship_patterns, _ = normalize_relationship_patterns(
                 None,
                 fallback_configuration=str(row.get("model_configuration") or ""),
@@ -296,9 +302,9 @@ def main() -> int:
             errors.append(f"row {index}: evidence_status=partial requires exactly one directional side and one neutral side")
             continue
 
-        model_human = str(row.get("model_human_experience_type") or "").strip()
-        model_ai = str(row.get("model_ai_expressive_role") or "").strip()
-        model_evidence = str(row.get("model_evidence_status") or "").strip()
+        model_human = normalize_human_type(row.get("model_human_experience_type"))
+        model_ai = normalize_ai_role(row.get("model_ai_expressive_role"))
+        model_evidence = normalize_evidence_status(row.get("model_evidence_status"))
         model_config = str(row.get("model_configuration") or "").strip()
         model_patterns, _ = normalize_relationship_patterns(
             row.get("model_relationship_patterns"),

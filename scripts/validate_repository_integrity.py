@@ -196,6 +196,14 @@ def main() -> int:
     )
     if "def coerce_confidence(" not in symbiosis_common:
         fail("relationship confidence values must accept model labels without aborting a run")
+    for marker in (
+        "def normalize_ai_role(",
+        "ai_expressive_role",
+        "normalized to",
+        'return _AI_ROLE_ALIASES.get(token, "unclear")',
+    ):
+        if marker not in symbiosis_common:
+            fail(f"relationship model-boundary normalization is missing: {marker}")
 
     symbiosis_contract_test = ROOT / "scripts" / "validate_symbiosis_resilience.py"
     if not symbiosis_contract_test.is_file():

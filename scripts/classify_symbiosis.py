@@ -943,6 +943,7 @@ def call_classifier(*, lens: str, evidence: str, content_basis: str) -> dict[str
                 "distribution_signal": normalized["distribution_signal"],
                 "public_takeaway": normalized["public_takeaway"],
                 "public_signal_schema_version": normalized["schema_version"],
+                "normalization_warnings": normalized.get("normalization_warnings") or [],
             }
             normalized["structured_output_mode"] = name
             return normalized

@@ -10,7 +10,11 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from symbiosis_common import coerce_confidence, validate_model_payload
+from symbiosis_common import (
+    coerce_confidence,
+    normalize_ai_role,
+    validate_model_payload,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -30,6 +34,14 @@ def main() -> int:
     require(coerce_confidence("very high") == 0.95, "very high confidence must be accepted")
     require(coerce_confidence("85%") == 0.85, "percentage confidence must be accepted")
     require(coerce_confidence("unrecognised label") == 0.0, "unknown confidence must remain non-fatal")
+    require(
+        normalize_ai_role("restriction") == "ai_restriction",
+        "human-side shorthand in the AI role field must normalize",
+    )
+    require(
+        normalize_ai_role("unknown model wording") == "unclear",
+        "unknown AI role wording must remain conservative and non-fatal",
+    )
 
     model_payload = {
         "ai_relevant": True,
@@ -50,6 +62,17 @@ def main() -> int:
     require(
         validate_model_payload({**model_payload, "confidence": "high"})["confidence"] == 0.85,
         "a full model payload with high confidence must be accepted",
+    )
+    alias_result = validate_model_payload(
+        {**model_payload, "ai_expressive_role": "restriction"}
+    )
+    require(
+        alias_result["ai_expressive_role"] == "ai_restriction",
+        "an aliased AI role must be stored under the canonical value",
+    )
+    require(
+        alias_result["normalization_warnings"],
+        "aliased model values must be retained as an audit warning",
     )
 
     source = CLASSIFIER.read_text(encoding="utf-8")

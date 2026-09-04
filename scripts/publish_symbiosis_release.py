@@ -25,7 +25,10 @@ from symbiosis_common import (
     TECHNICAL_LABELS,
     derive_configuration,
     final_payload_from_classification,
+    normalize_ai_role,
     normalize_distribution_signal,
+    normalize_evidence_status,
+    normalize_human_type,
     normalize_relationship_patterns,
     public_signals_from_patterns,
 )
@@ -255,9 +258,9 @@ def apply_source_body_correction(
 ) -> dict[str, Any]:
     if not record:
         return final
-    human_type = str(record.get("human_experience_type") or "unclear")
-    ai_role = str(record.get("ai_expressive_role") or "unclear")
-    evidence_status = str(record.get("evidence_status") or "insufficient")
+    human_type = normalize_human_type(record.get("human_experience_type"))
+    ai_role = normalize_ai_role(record.get("ai_expressive_role"))
+    evidence_status = normalize_evidence_status(record.get("evidence_status"))
     configuration, human_direction, ai_direction, plain_label = derive_configuration(
         human_type, ai_role, evidence_status
     )

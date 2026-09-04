@@ -42,6 +42,85 @@ EMPOWERMENT_STATUSES = {
     "unclear",
 }
 
+# Qwen occasionally emits the human-side shorthand (for example
+# ``restriction``) in the AI-role field even though the prompt asks for the
+# storage value ``ai_restriction``.  Keep the database contract canonical, but
+# normalize the model boundary instead of spending three retries on a
+# deterministic validation error.  Unknown values are deliberately mapped to
+# ``unclear``; the raw model response and a warning are retained for review.
+_AI_ROLE_ALIASES = {
+    "extension": "ai_extension",
+    "expansion": "ai_expansion",
+    "restriction": "ai_restriction",
+    "reduction": "ai_reduction",
+    "enabling": "ai_extension",
+    "enabled": "ai_extension",
+    "growing": "ai_expansion",
+    "growth": "ai_expansion",
+    "adoption": "ai_expansion",
+    "constraining": "ai_restriction",
+    "constrained": "ai_restriction",
+    "constraint": "ai_restriction",
+    "blocked": "ai_restriction",
+    "limited": "ai_restriction",
+    "regulated": "ai_restriction",
+    "failing": "ai_reduction",
+    "failure": "ai_reduction",
+    "degraded": "ai_reduction",
+    "degradation": "ai_reduction",
+    "withdrawn": "ai_reduction",
+    "declining": "ai_reduction",
+    "not_clear": "unclear",
+    "no_clear": "unclear",
+}
+
+_HUMAN_TYPE_ALIASES = {
+    "human_extension": "extension",
+    "human_expansion": "expansion",
+    "human_restriction": "restriction",
+    "human_reduction": "reduction",
+    "not_clear": "unclear",
+    "no_clear": "unclear",
+}
+
+_EVIDENCE_STATUS_ALIASES = {
+    "adequate": "sufficient",
+    "enough": "sufficient",
+    "complete": "sufficient",
+    "limited": "partial",
+    "incomplete": "partial",
+    "not_enough": "insufficient",
+    "insufficient_evidence": "insufficient",
+}
+
+
+def _normalized_token(value: Any) -> str:
+    return str(value or "").strip().casefold().replace("-", "_").replace(" ", "_").strip("_")
+
+
+def normalize_ai_role(value: Any) -> str:
+    """Return a canonical AI role without allowing model wording to abort a run."""
+    token = _normalized_token(value)
+    if token in AI_ROLES:
+        return token
+    return _AI_ROLE_ALIASES.get(token, "unclear")
+
+
+def normalize_human_type(value: Any) -> str:
+    """Return a canonical human experience type at the model boundary."""
+    token = _normalized_token(value)
+    if token in HUMAN_TYPES:
+        return token
+    return _HUMAN_TYPE_ALIASES.get(token, "unclear")
+
+
+def normalize_evidence_status(value: Any) -> str:
+    """Return a canonical evidence status; unknown status is conservatively insufficient."""
+    token = _normalized_token(value)
+    if token in EVIDENCE_STATUSES:
+        return token
+    return _EVIDENCE_STATUS_ALIASES.get(token, "insufficient")
+
 def release_identifier(payload: dict[str, Any], source_path: str | Path | None = None) -> str:
     """Return a stable publication identifier for weekly releases and references."""
     for key in ("release_id", "snapshot_id"):
@@ -441,15 +520,25 @@ def infer_relational_signal(human_type: str, ai_role: str, evidence_status: str)
 
 
 def validate_model_payload(payload: dict[str, Any]) -> dict[str, Any]:
-    human_type = str(payload.get("human_experience_type") or "").strip()
-    ai_role = str(payload.get("ai_expressive_role") or "").strip()
-    evidence_status = str(payload.get("evidence_status") or "").strip()
-    if human_type not in HUMAN_TYPES:
-        raise ValueError(f"Invalid human_experience_type: {human_type}")
-    if ai_role not in AI_ROLES:
-        raise ValueError(f"Invalid ai_expressive_role: {ai_role}")
-    if evidence_status not in EVIDENCE_STATUSES:
-        raise ValueError(f"Invalid evidence_status: {evidence_status}")
+    raw_human_type = str(payload.get("human_experience_type") or "").strip()
+    raw_ai_role = str(payload.get("ai_expressive_role") or "").strip()
+    raw_evidence_status = str(payload.get("evidence_status") or "").strip()
+    human_type = normalize_human_type(raw_human_type)
+    ai_role = normalize_ai_role(raw_ai_role)
+    evidence_status = normalize_evidence_status(raw_evidence_status)
+    normalization_warnings: list[str] = []
+    if _normalized_token(raw_human_type) != human_type:
+        normalization_warnings.append(
+            f"human_experience_type {raw_human_type!r} normalized to {human_type!r}"
+        )
+    if _normalized_token(raw_ai_role) != ai_role:
+        normalization_warnings.append(
+            f"ai_expressive_role {raw_ai_role!r} normalized to {ai_role!r}"
+        )
+    if _normalized_token(raw_evidence_status) != evidence_status:
+        normalization_warnings.append(
+            f"evidence_status {raw_evidence_status!r} normalized to {evidence_status!r}"
+        )
 
     # A genuinely insufficient unit cannot support directional or neutral
     # component claims. Normalize the components to unclear so future model
@@ -501,6 +590,7 @@ def validate_model_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "geographic_scope": str(payload.get("geographic_scope") or "unclear").strip(),
         "country_iso3s": countries,
         "model_relational_signal": model_signal,
+        "normalization_warnings": normalization_warnings,
         **public_layer,
     }
 
