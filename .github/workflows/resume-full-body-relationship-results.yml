@@ -1,0 +1,57 @@
+name: Resume Full-Body Relationship Results
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: aieo-full-body-relationship-recovery
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    name: Verify saved full-body relationship work
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      release_id: ${{ steps.resume.outputs.release_id }}
+      saved_units: ${{ steps.resume.outputs.saved_units }}
+      remaining_units: ${{ steps.resume.outputs.remaining_units }}
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v7
+        with:
+          ref: main
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Install preflight dependency
+        run: python -m pip install "supabase>=2.18,<3"
+      - id: resume
+        name: Find interrupted run and count saved units
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: python scripts/check_symbiosis_resume.py
+
+  resume-relationships:
+    name: Resume only the unfinished relationship units
+    needs: preflight
+    uses: ./.github/workflows/classify-current-symbiosis.yml
+    with:
+      lens: both
+      replace: true
+      resume_only: true
+      release_id: ${{ needs.preflight.outputs.release_id }}
+    secrets: inherit
+
+  publish-site:
+    name: Publish recovered full-body results
+    needs: resume-relationships
+    uses: ./.github/workflows/publish-observatory-release.yml
+    secrets: inherit

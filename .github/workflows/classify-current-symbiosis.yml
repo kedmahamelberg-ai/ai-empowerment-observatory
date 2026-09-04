@@ -11,6 +11,10 @@ on:
         required: false
         default: false
         type: boolean
+      resume_only:
+        required: false
+        default: false
+        type: boolean
       release_id:
         required: false
         default: ""
@@ -25,6 +29,11 @@ on:
         options: [both, event, coverage]
       replace:
         description: "Reclassify units that already have this codebook version"
+        required: true
+        default: false
+        type: boolean
+      resume_only:
+        description: "Resume the matching interrupted run; never start a new run"
         required: true
         default: false
         type: boolean
@@ -94,6 +103,7 @@ jobs:
           args=(--scope latest --lens "${{ inputs.lens }}" --time-budget-minutes "225" --status-output "$status_file")
           if [[ -n "${{ inputs.release_id }}" ]]; then args+=(--release-id "${{ inputs.release_id }}"); fi
           if [[ "${{ inputs.replace }}" == "true" ]]; then args+=(--replace); fi
+          if [[ "${{ inputs.resume_only }}" == "true" ]]; then args+=(--resume-only); fi
           python scripts/classify_symbiosis.py "${args[@]}"
           python - "$status_file" "$GITHUB_OUTPUT" <<'PY'
           import json
@@ -162,6 +172,7 @@ jobs:
           args=(--scope latest --lens "${{ inputs.lens }}" --time-budget-minutes "225" --status-output "$status_file")
           if [[ -n "${{ inputs.release_id }}" ]]; then args+=(--release-id "${{ inputs.release_id }}"); fi
           if [[ "${{ inputs.replace }}" == "true" ]]; then args+=(--replace); fi
+          if [[ "${{ inputs.resume_only }}" == "true" ]]; then args+=(--resume-only); fi
           python scripts/classify_symbiosis.py "${args[@]}"
           python - "$status_file" "$GITHUB_OUTPUT" <<'PY'
           import json
@@ -235,6 +246,7 @@ jobs:
           args=(--scope latest --lens "${{ inputs.lens }}" --time-budget-minutes "225" --status-output "$status_file")
           if [[ -n "${{ inputs.release_id }}" ]]; then args+=(--release-id "${{ inputs.release_id }}"); fi
           if [[ "${{ inputs.replace }}" == "true" ]]; then args+=(--replace); fi
+          if [[ "${{ inputs.resume_only }}" == "true" ]]; then args+=(--resume-only); fi
           python scripts/classify_symbiosis.py "${args[@]}"
           python - "$status_file" "$GITHUB_OUTPUT" <<'PY'
           import json

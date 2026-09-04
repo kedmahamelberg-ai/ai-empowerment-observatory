@@ -31,6 +31,7 @@ jobs:
         run: |
           python -m py_compile \
             scripts/classify_symbiosis.py \
+            scripts/check_symbiosis_resume.py \
             scripts/symbiosis_common.py \
             scripts/validate_symbiosis_resilience.py \
             scripts/create_symbiosis_placeholder.py \
@@ -49,7 +50,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python scripts/create_symbiosis_placeholder.py
+          python scripts/create_symbiosis_placeholder.py --force-placeholder-for-test
           if python scripts/validate_public_relationship_consistency.py; then
             echo "::error::The public gate incorrectly accepted a relationship placeholder."
             exit 1
