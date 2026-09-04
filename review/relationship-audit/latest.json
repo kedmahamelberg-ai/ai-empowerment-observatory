@@ -1,0 +1,5413 @@
+{
+  "schema_version": "aieo_relationship_evidence_audit_v1",
+  "generated_at": "2026-09-04T14:17:17.109954Z",
+  "release_id": "2026-W35",
+  "period_start": "2026-08-24",
+  "period_end": "2026-08-30",
+  "public_status": "model_coded_provisional",
+  "review": {
+    "complete": false,
+    "event_complete": false,
+    "coverage_complete": false,
+    "event_reviewed": 0,
+    "event_total": 110,
+    "coverage_reviewed": 0,
+    "coverage_total": 111
+  },
+  "summary": {
+    "development_count": 110,
+    "primary_outcome_counts": {
+      "benefit_shown": 21,
+      "downside_shown": 10,
+      "benefit_and_downside": 0,
+      "no_clear_people_change": 70,
+      "too_little_evidence": 9
+    },
+    "uneven_effect_count": 2,
+    "body_coverage_counts": {
+      "all_sources": 44,
+      "no_full_body": 63,
+      "owner_supplied_full_body": 3
+    },
+    "reported_body_coverage_counts": {
+      "all_sources": 44,
+      "no_full_body": 63,
+      "owner_supplied_full_body": 3
+    },
+    "audit_flag_counts": {
+      "directional_result_without_full_article_body": 12,
+      "insufficient_evidence": 9,
+      "model_reading_not_human_checked": 110
+    },
+    "plain_language_note": "The five primary outcome counts add up to the weekly total. An uneven effect is a separate detail that can overlap with any outcome."
+  },
+  "developments": [
+    {
+      "event_id": "f9c0c2c3-fd2b-40bb-9525-94c2909a3588",
+      "title": "2 Premier Artificial Intelligence (AI) Stocks That Can Plunge Up to 63%, According to Select Wall Street Analysts",
+      "date": "2026-08-28",
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "partial",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "competition",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "CAN"
+      ],
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "sources": [
+        {
+          "article_id": "59ff6a08c24bc5966fb7fa2f929f7439",
+          "publisher": "The Globe and Mail",
+          "headline": "2 Premier Artificial Intelligence (AI) Stocks That Can Plunge Up to 63%, According to Select Wall Street Analysts",
+          "url": "https://www.theglobeandmail.com/investing/markets/stocks/PLTR/pressreleases/4309564/2-premier-artificial-intelligence-ai-stocks-that-can-plunge-up-to-63-according-to-select-wall-street-analysts",
+          "published_date": "2026-08-28",
+          "source_language": "en",
+          "search_markets": [
+            "CAN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "1aeb2829-ecd4-4c3c-b547-eb50a1db2a90",
+      "title": "A Cultural History of Artificial Intelligence",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "no_clear_relational_signal",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [
+        "GEO"
+      ],
+      "sources": [
+        {
+          "article_id": "e9bc39a9c7ba870403ad023ae3a7c0a5",
+          "publisher": "Fabula, la recherche en littérature",
+          "headline": "A Cultural History of Artificial Intelligence",
+          "url": "https://www.fabula.org/actualites/135499/une-histoire-culturelle-de-l-intelligence-artificielle-27-08.html",
+          "published_date": "2026-08-28",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "9e28b8bb-10e0-4f0c-99d0-5fd0c49d9720",
+      "title": "A Generative AI Behind the Genome of a New Virus",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "f42e07d9d688a10b13aa3d524cbc8205",
+          "publisher": "Gènéthique",
+          "headline": "A Generative AI Behind the Genome of a New Virus",
+          "url": "https://genethique.org/une-ia-generative-a-lorigine-du-genome-dun-nouveau-virus",
+          "published_date": "2026-08-28",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "84562587-3d35-41a2-8b7f-60d6f748db15",
+      "title": "AI According to MC Solaar",
+      "date": "2026-08-30",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "insufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "insufficient_evidence",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [
+        "F",
+        "R",
+        "A"
+      ],
+      "sources": [
+        {
+          "article_id": "f0ed3b6d9fdadf55b036e96f344cc89b",
+          "publisher": "franceinfo",
+          "headline": "AI According to MC Solaar",
+          "url": "https://www.franceinfo.fr/replay-radio/ces-chansons-qui-font-l-actu/l-intelligence-artificielle-selon-mc-solaar_8083994.html",
+          "published_date": "2026-08-30",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "insufficient_evidence"
+      ]
+    },
+    {
+      "event_id": "a016f327-3189-4395-a5c1-3e6b0ad6ab75",
+      "title": "AI Model Choice is now a Mission Advantage: Multiple AI models available in AWS GovCloud (US)",
+      "date": "2026-08-30",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "sources": [
+        {
+          "article_id": "bc53c5decfecc8d7b4de4750cfc2b157",
+          "publisher": "Amazon Web Services (AWS)",
+          "headline": "AI Model Choice is now a Mission Advantage: Multiple AI models available in AWS GovCloud (US)",
+          "url": "https://aws.amazon.com/blogs/publicsector/ai-model-choice-is-now-a-mission-advantage-multiple-ai-models-available-in-aws-govcloud-us",
+          "published_date": "2026-08-30",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "d6852802-925f-4a23-89f2-f52ca8ee2e0e",
+      "title": "AI policy watch: need-to-know updates from August 2026",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "no_clear_relational_signal",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "GBR"
+      ],
+      "story_country_iso3s": [
+        "U",
+        "S",
+        "A"
+      ],
+      "sources": [
+        {
+          "article_id": "5341a68abb3de70576c841ffe108a231",
+          "publisher": "World Trademark Review",
+          "headline": "AI policy watch: need-to-know updates from August 2026",
+          "url": "https://www.worldtrademarkreview.com/article/ai-policy-watch-need-know-updates-august-2026",
+          "published_date": "2026-08-28",
+          "source_language": "en",
+          "search_markets": [
+            "GBR"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "51b36745-7cfa-47e8-a276-9b70444e613b",
+      "title": "AI-powered, diagnosis first! Business district holds “Artificial Intelligence + Manufacturing” diagnosis exchange event",
+      "date": "2026-08-26",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "966ce4a950fe422ba311d2fae630d727",
+          "publisher": "sipac.gov.cn",
+          "headline": "AI-powered, diagnosis first! Business district holds “Artificial Intelligence + Manufacturing” diagnosis exchange event",
+          "url": "https://www.sipac.gov.cn/jjhswq/gzdt/202608/ce1cfc59b9c045588e9aa1c6b6dc838c.shtml",
+          "published_date": "2026-08-26",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "2394ef80-4482-46a4-8675-41d815045eeb",
+      "title": "AI: Nvidia Aims to Reassure Frenzied Markets on Demand Growth",
+      "date": "2026-08-27",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [
+        "FRA",
+        "USA"
+      ],
+      "sources": [
+        {
+          "article_id": "52c66afde0b7460e2dfbd677e7adbcee",
+          "publisher": "Le Monde.fr",
+          "headline": "AI: Nvidia Aims to Reassure Frenzied Markets on Demand Growth",
+          "url": "https://www.lemonde.fr/economie/article/2026/08/27/intelligence-artificielle-nvidia-cherche-a-rassurer-les-marches-febriles-sur-la-croissance-de-la-demande_6757800_3234.html",
+          "published_date": "2026-08-27",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "ddffdcda-b6bf-4957-9831-8ce95fb05e75",
+      "title": "After Losing More Than $1 Trillion in Market Cap, This Artificial Intelligence (AI) Stock Will Become the Most Valuable Business in the World, According to Elon Musk",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "partial",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "CAN"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "3b865edebbb9c2627217b7d9ab2e82e7",
+          "publisher": "The Globe and Mail",
+          "headline": "After Losing More Than $1 Trillion in Market Cap, This Artificial Intelligence (AI) Stock Will Become the Most Valuable Business in the World, According to Elon Musk",
+          "url": "https://www.theglobeandmail.com/investing/markets/stocks/NDAQ/pressreleases/4310850/after-losing-more-than-1-trillion-in-market-cap-this-artificial-intelligence-ai-stock-will-become-the-most-valuable-business-in-the-world-according-to-elon-musk",
+          "published_date": "2026-08-28",
+          "source_language": "en",
+          "search_markets": [
+            "CAN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "aa90c16e-14e9-47f0-9e94-54bd3dd561a3",
+      "title": "Artificial Intelligence As It Once Was",
+      "date": "2026-08-25",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "insufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "insufficient_evidence",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "CAN",
+        "GBR"
+      ],
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "sources": [
+        {
+          "article_id": "42c7ea5edd11a4e8bdedce1a10832026",
+          "publisher": "Hackaday",
+          "headline": "Artificial Intelligence As It Once Was",
+          "url": "https://hackaday.com/2026/08/25/artificial-intelligence-as-it-once-was",
+          "published_date": "2026-08-25",
+          "source_language": "en",
+          "search_markets": [
+            "CAN",
+            "GBR"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "insufficient_evidence"
+      ]
+    },
+    {
+      "event_id": "ac3d7417-8087-4c84-a2ec-dd1b8768976a",
+      "title": "Artificial Intelligence – part 3: The Hype, the Dangers, and the Resistance",
+      "date": "2026-08-27",
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "partial",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "competition",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "CAN"
+      ],
+      "story_country_iso3s": [
+        "U",
+        "S",
+        "A"
+      ],
+      "sources": [
+        {
+          "article_id": "fda548da059b0c065769d06d0b35d28b",
+          "publisher": "Socialist Project",
+          "headline": "Artificial Intelligence – part 3: The Hype, the Dangers, and the Resistance",
+          "url": "https://socialistproject.ca/2026/08/artificial-intelligence-part-3",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "CAN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "16fb7116-2b40-47e1-ae66-0fc7814a024a",
+      "title": "Artificial Intelligence: Ads Are Coming to ChatGPT in France",
+      "date": "2026-08-24",
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text_supplied_by_owner",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "source_body_qc_ai_assisted",
+        "configuration": "ai_benefiting_parasitism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article supplied by the owner",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "owner_supplied_full_body"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [
+        "FRA"
+      ],
+      "sources": [
+        {
+          "article_id": "01d02022f50a499d6129505162e104b1",
+          "publisher": "Le Monde.fr",
+          "headline": "Artificial Intelligence: Ads Are Coming to ChatGPT in France",
+          "url": "https://www.lemonde.fr/economie/article/2026/08/24/intelligence-artificielle-les-publicites-arrivent-sur-chatgpt-en-france_6755543_3234.html",
+          "published_date": "2026-08-24",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "b35eace4-8e33-4b65-9fd7-687cd9d1b78b",
+      "title": "Artificial Intelligence: ChatGPT Can't Publish It",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_constraining_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "88ce8f2977d10f9de4a361dd18fe6890",
+          "publisher": "Le Canard enchaîné",
+          "headline": "Artificial Intelligence: ChatGPT Can't Publish It",
+          "url": "https://www.lecanardenchaine.fr/technologie-sciences/54734-chatgpt-n-en-peut-pub",
+          "published_date": "2026-08-28",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "172e55ac-d3d8-4909-b0d9-e33d1778109e",
+      "title": "Artificial Intelligence: Five Things to Know About Anthropic Before Its IPO That Could Exceed SpaceX's Record",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "51059c3bad7b92a32364f2eea273f725",
+          "publisher": "Sud Ouest",
+          "headline": "Artificial Intelligence: Five Things to Know About Anthropic Before Its IPO That Could Exceed SpaceX's Record",
+          "url": "https://www.sudouest.fr/sciences-et-technologie/intelligence-artificielle/intelligence-artificielle-cinq-choses-a-savoir-sur-anthropic-avant-son-entree-en-bourse-qui-pourrait-surpasser-le-record-de-spacex-30395776.php",
+          "published_date": "2026-08-28",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "82e67fff-c7c6-44fc-9ce9-f7fc9a2a33e9",
+      "title": "Artificial Intelligence: How AI Made Me Marxist",
+      "date": "2026-08-25",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [
+        "U",
+        "N",
+        "D",
+        "E",
+        "F",
+        "I",
+        "N",
+        "E",
+        "D"
+      ],
+      "sources": [
+        {
+          "article_id": "24638d900278aa9e329ea1d003c2b1d8",
+          "publisher": "Le Canard enchaîné",
+          "headline": "Artificial Intelligence: How AI Made Me Marxist",
+          "url": "https://www.lecanardenchaine.fr/technologie-sciences/54726-comment-l-ia-m-a-rendu-marxiste",
+          "published_date": "2026-08-25",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "directional_result_without_full_article_body"
+      ]
+    },
+    {
+      "event_id": "8bf3d389-7766-466d-8f25-3480ec85cb98",
+      "title": "Artificial Intelligence: How Algorithms Reproduce Racist Biases",
+      "date": "2026-08-27",
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "competition",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "9fa69e9b2777a7a15d2a08a4213d8f7d",
+          "publisher": "La Croix",
+          "headline": "Artificial Intelligence: How Algorithms Reproduce Racist Biases",
+          "url": "https://www.la-croix.com/societe/intelligence-artificielle-comment-les-algorithmes-reproduisent-les-prejuges-racistes-20260827",
+          "published_date": "2026-08-27",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "directional_result_without_full_article_body"
+      ]
+    },
+    {
+      "event_id": "6522d107-8d62-462d-95bd-41ced83a9a9b",
+      "title": "Artificial Intelligence: Introduction to Usage Conditions",
+      "date": "2026-08-26",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "3ec0f74be220e2711f05f27dd9cb3652",
+          "publisher": "Terre de Liens",
+          "headline": "Artificial Intelligence: Introduction to Usage Conditions",
+          "url": "https://terredeliens.org/national/actu/formation-lintelligence-artificielle-introduction-aux-conditions-dusage-26-08-2026",
+          "published_date": "2026-08-26",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "e9664542-5c26-4611-85e2-21e94b6cbabd",
+      "title": "Artificial intelligence can democratize access to knowledge while deepening a new social divide",
+      "date": "2026-08-25",
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "competition",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [
+        "F",
+        "R",
+        "A"
+      ],
+      "sources": [
+        {
+          "article_id": "a4dabc397c20631535c0fc7ac266c263",
+          "publisher": "Libération",
+          "headline": "Artificial intelligence can democratize access to knowledge while deepening a new social divide",
+          "url": "https://www.liberation.fr/idees-et-debats/tribunes/lintelligence-artificielle-peut-democratiser-lacces-au-savoir-tout-en-creusant-une-nouvelle-fracture-sociale-20260825_HBOCA4AKCRCO7IN4IWDUQSDWVI",
+          "published_date": "2026-08-25",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "directional_result_without_full_article_body"
+      ]
+    },
+    {
+      "event_id": "2e452bbd-a9b1-441f-90d9-c7fd2477dc09",
+      "title": "Artificial intelligence in electronic health records still needs fine tuning",
+      "date": "2026-08-27",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_constraining_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "sources": [
+        {
+          "article_id": "be73bf8897772db4c652da7777e7ca77",
+          "publisher": "UCI Health",
+          "headline": "Artificial intelligence in electronic health records still needs fine tuning",
+          "url": "https://www.ucihealth.org/about-us/news/2026/08/artificial-intelligence-electronic-health-record",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "cf64f370-2129-4f56-b669-c0d0350f1146",
+      "title": "Artificial intelligence is increasingly present in European offices, but with gains in productivity.",
+      "date": "2026-08-26",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": true,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [
+        "FRA",
+        "DEU",
+        "GBR",
+        "ESP",
+        "ITA",
+        "NLD",
+        "PRT",
+        "CZE",
+        "LUX",
+        "SWE",
+        "FIN"
+      ],
+      "sources": [
+        {
+          "article_id": "d3eb411bca985800a9dd831c51c17a86",
+          "publisher": "Boursorama",
+          "headline": "Artificial intelligence is increasingly present in European offices, but with gains in productivity.",
+          "url": "https://www.boursorama.com/actualite-economique/actualites/l-intelligence-artificielle-de-plus-en-plus-presente-dans-les-bureaux-europeens-mais-avec-des-gains-de-productivite-inegaux-selon-la-banque-centrale-europeenne-3652605067eb713c99bf57470c7a6d64",
+          "published_date": "2026-08-26",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "207bb492-9b47-45e4-9a02-06433350195d",
+      "title": "Artificial intelligence: Trump administration sanctions against Anthropic canceled by a federal judge",
+      "date": "2026-08-28",
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_constraining_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "sources": [
+        {
+          "article_id": "7e8d1460933e976128844f18dd94cde2",
+          "publisher": "Le Monde.fr",
+          "headline": "Artificial intelligence: Trump administration sanctions against Anthropic canceled by a federal judge",
+          "url": "https://www.lemonde.fr/international/article/2026/08/28/intelligence-artificielle-le-bannissement-d-anthropic-par-l-administration-trump-est-illegal-decide-la-justice-americaine_6758773_3210.html",
+          "published_date": "2026-08-28",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "3aa32691-d132-4eb1-9ed7-32fa4e617154",
+      "title": "Artificial intelligence’s impact on the labor market",
+      "date": "2026-08-27",
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "competition",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "89c40b1d3b8e1756c0d5c2fb35e8cac0",
+          "publisher": "Arizona PBS",
+          "headline": "Artificial intelligence’s impact on the labor market",
+          "url": "https://azpbs.org/horizon/2026/08/artificial-intelligences-impact-on-the-labor-market",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "directional_result_without_full_article_body"
+      ]
+    },
+    {
+      "event_id": "395c2036-a625-42fe-a461-6a270cd997e3",
+      "title": "Ask a Journalist: How Generative A.I. Is Changing Education",
+      "date": "2026-08-27",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "827caf623b0467270218f151ee560d53",
+          "publisher": "The New York Times",
+          "headline": "Ask a Journalist: How Generative A.I. Is Changing Education",
+          "url": "https://www.nytimes.com/2026/08/27/learning/lesson-plans/ask-a-journalist-how-generative-ai-is-changing-education.html",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "directional_result_without_full_article_body"
+      ]
+    },
+    {
+      "event_id": "e3ec7e9d-9a52-4151-89f9-c0c54c89b2dc",
+      "title": "Australia Bans Generative A.I. From Official Music Charts",
+      "date": "2026-08-25",
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "competition",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [
+        "A",
+        "U",
+        "S"
+      ],
+      "sources": [
+        {
+          "article_id": "0dc8b258a0c728afcc2ae647a4345bc9",
+          "publisher": "The New York Times",
+          "headline": "Australia Bans Generative A.I. From Official Music Charts",
+          "url": "https://www.nytimes.com/2026/08/25/world/australia/australia-ai-music-chart-ban.html",
+          "published_date": "2026-08-25",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "directional_result_without_full_article_body"
+      ]
+    },
+    {
+      "event_id": "3bb6abc9-be60-4500-bd65-8e3f6696bf3a",
+      "title": "Ban AI\": Free Software Developers Reject Artificial Intelligence",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "partial",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_constraining_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "dc9d4b03602431f4d0ad4af88a883bda",
+          "publisher": "Basta Media",
+          "headline": "Ban AI\": Free Software Developers Reject Artificial Intelligence",
+          "url": "https://basta.media/interdire-IA-LLM-des-developpeurs-de-logiciels-libres-rejettent-intelligence-artificielle-Debian",
+          "published_date": "2026-08-28",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "a8cec4b6-1473-4f0f-81e8-94bf140ff4dd",
+      "title": "Baolong Industry’s Rise: The AI Wave Approaches, Listed Companies Competing to Take Action",
+      "date": "2026-08-26",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "partial",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "f15b9aaf402e7c0069cc73af2c671a5e",
+          "publisher": "lg.gov.cn",
+          "headline": "Baolong Industry’s Rise: The AI Wave Approaches, Listed Companies Competing to Take Action",
+          "url": "http://www.lg.gov.cn/lgbljdb/gkmlpt/content/12/12954/post_12954560.html?jump=true",
+          "published_date": "2026-08-26",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "e832909f-b43d-4646-8f89-b635eb5851ea",
+      "title": "Break through the pain points in the integration of “artificial intelligence + manufacturing”",
+      "date": "2026-08-25",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [
+        "USA",
+        "CHN",
+        "FRA"
+      ],
+      "sources": [
+        {
+          "article_id": "bfa967b2586bfa13d6128e26935e4ae7",
+          "publisher": "中国经济网",
+          "headline": "Break through the pain points in the integration of “artificial intelligence + manufacturing”",
+          "url": "http://paper.ce.cn/pad/content/202608/25/content_337817.html",
+          "published_date": "2026-08-25",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "9ed95a40-ab46-4d76-b701-7cfd031b1133",
+      "title": "C3.ai vs. Oracle: Which Artificial Intelligence Stock Is a Better Investment in 2026?",
+      "date": "2026-08-27",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "partial",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "CAN"
+      ],
+      "story_country_iso3s": [
+        "U",
+        "S",
+        "A"
+      ],
+      "sources": [
+        {
+          "article_id": "9c631776150b9af5e9c3857b687717ae",
+          "publisher": "The Globe and Mail",
+          "headline": "C3.ai vs. Oracle: Which Artificial Intelligence Stock Is a Better Investment in 2026?",
+          "url": "https://www.theglobeandmail.com/investing/markets/stocks/AI/pressreleases/4260415/c3ai-vs-oracle-which-artificial-intelligence-stock-is-a-better-investment-in-2026",
+          "published_date": "2026-08-28",
+          "source_language": "en",
+          "search_markets": [
+            "CAN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "1115366b-1c5e-4835-8a89-f72a446312ed",
+      "title": "C3.ai vs. UiPath: Which Artificial Intelligence Stock Is a Better Investment in 2026?",
+      "date": "2026-08-29",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "no_clear_relational_signal",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "CAN"
+      ],
+      "story_country_iso3s": [
+        "U",
+        "S",
+        "A"
+      ],
+      "sources": [
+        {
+          "article_id": "a70722030f865219e1cda1ab7113dc57",
+          "publisher": "The Globe and Mail",
+          "headline": "C3.ai vs. UiPath: Which Artificial Intelligence Stock Is a Better Investment in 2026?",
+          "url": "https://www.theglobeandmail.com/investing/markets/stocks/AI/pressreleases/4331944/c3ai-vs-uipath-which-artificial-intelligence-stock-is-a-better-investment-in-2026",
+          "published_date": "2026-08-29",
+          "source_language": "en",
+          "search_markets": [
+            "CAN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "a32aac7a-55a0-4a04-934e-7645928b64fb",
+      "title": "Can municipal candidates use AI in their campaigns?",
+      "date": "2026-08-30",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "partial",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CAN"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "ffa4280e746568379095ee3f725834ea",
+          "publisher": "CBC",
+          "headline": "Can municipal candidates use AI in their campaigns?",
+          "url": "https://www.cbc.ca/news/canada/sudbury/ontario-municipal-elections-2026-ai-artificial-intelligence-political-advertising-9.7323178",
+          "published_date": "2026-08-30",
+          "source_language": "en",
+          "search_markets": [
+            "CAN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "2ff5d6f9-c42e-4684-b657-a4d553aecbec",
+      "title": "Can you rely on artificial intelligence for investment advice?",
+      "date": "2026-08-27",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "partial",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "GBR"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "0fb9ee6a1b34ee85c050e53562ac297c",
+          "publisher": "The Armchair Trader",
+          "headline": "Can you rely on artificial intelligence for investment advice?",
+          "url": "https://www.thearmchairtrader.com/features/can-you-rely-on-artificial-intelligence-for-investment-advice",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "GBR"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "00284c14-1d24-4e37-992a-63434b8974b9",
+      "title": "Charts that explain the rise of artificial intelligence",
+      "date": "2026-08-29",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "GBR"
+      ],
+      "story_country_iso3s": [
+        "USA",
+        "ESP",
+        "FRA",
+        "CHN",
+        "IND",
+        "CAN",
+        "GBR"
+      ],
+      "sources": [
+        {
+          "article_id": "e8a8c9d16e785b0842e2413a5d5eff49",
+          "publisher": "EL PAÍS English",
+          "headline": "Charts that explain the rise of artificial intelligence",
+          "url": "https://english.elpais.com/technology/2026-08-29/charts-that-explain-the-rise-of-artificial-intelligence.html",
+          "published_date": "2026-08-29",
+          "source_language": "en",
+          "search_markets": [
+            "GBR"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "85693635-5d76-4edb-9617-ecd81637d6b1",
+      "title": "ChatGPT Images: Bring Your Ideas to Life",
+      "date": "2026-08-29",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CAN",
+        "GBR"
+      ],
+      "story_country_iso3s": [
+        "USA",
+        "GBR",
+        "FRA"
+      ],
+      "sources": [
+        {
+          "article_id": "680a0d5c44a9af0a74341c51aa97a18d",
+          "publisher": "StartupHub.ai",
+          "headline": "ChatGPT Images: Bring Your Ideas to Life",
+          "url": "https://www.startuphub.ai/ai-news/artificial-intelligence/2026/chatgpt-images-bring-your-ideas-to-life",
+          "published_date": "2026-08-29",
+          "source_language": "en",
+          "search_markets": [
+            "CAN",
+            "GBR"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "directional_result_without_full_article_body"
+      ]
+    },
+    {
+      "event_id": "0b6a05bf-f28d-43c5-8325-bac94d9170f6",
+      "title": "China Telecom Artificial Intelligence Technology (Beijing) Co., Ltd. Launches Full Campus Recruitment for the 2027 Class",
+      "date": "2026-08-27",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "no_clear_relational_signal",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "829fb974454fc9ddc3a8640de02f2d1a",
+          "publisher": "sasac.gov.cn",
+          "headline": "China Telecom Artificial Intelligence Technology (Beijing) Co., Ltd. Launches Full Campus Recruitment for the 2027 Class",
+          "url": "http://www.sasac.gov.cn/n2588035/n2588325/n2588350/c35816109/content.html",
+          "published_date": "2026-08-27",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "87463e3d-45f1-48a7-823b-fc25619584f5",
+      "title": "Cleveland Clinic AI Summit Highlights Growing Role of Artificial Intelligence in Healthcare",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "GBR",
+        "USA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "72d6f8821659e919519d83c799cf5c0a",
+          "publisher": "Cleveland Clinic Newsroom",
+          "headline": "Cleveland Clinic AI Summit Highlights Growing Role of Artificial Intelligence in Healthcare",
+          "url": "https://newsroom.clevelandclinic.org/2026/08/28/cleveland-clinic-ai-summit-highlights-growing-role-of-artificial-intelligence-in-healthcare",
+          "published_date": "2026-08-28",
+          "source_language": "en",
+          "search_markets": [
+            "GBR",
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "a0efe330-8ed8-4a67-ab8c-5960ee82c3fb",
+      "title": "Commentary: Applying artificial intelligence to fixed income trading",
+      "date": "2026-08-27",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "GBR"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "5945fcf32accb5ec4224df701112b675",
+          "publisher": "fi-desk.com",
+          "headline": "Commentary: Applying artificial intelligence to fixed income trading",
+          "url": "https://www.fi-desk.com/commentary-applying-artificial-intelligence-to-fixed-income-trading",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "GBR"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "2d35d24e-ecd1-4ecc-a6db-a20743a85385",
+      "title": "Could Artificial Intelligence Be Conscious?",
+      "date": "2026-08-26",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "no_clear_relational_signal",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [
+        "F",
+        "R",
+        "A"
+      ],
+      "sources": [
+        {
+          "article_id": "8a34a3e7512e801a0ba5a8b9437de3c0",
+          "publisher": "Université de Montréal",
+          "headline": "Could Artificial Intelligence Be Conscious?",
+          "url": "https://nouvelles.umontreal.ca/article/2026/08/26/l-intelligence-artificielle-pourrait-elle-etre-consciente",
+          "published_date": "2026-08-26",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "45596d7e-5fe3-4121-a477-16b61f8041d0",
+      "title": "Douglas County, Wis., Adopts AI Policy for Officials, Staff",
+      "date": "2026-08-27",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_constraining_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [
+        "U",
+        "S",
+        "A"
+      ],
+      "sources": [
+        {
+          "article_id": "2e3d6d2f1bb213769124607be82bfbe5",
+          "publisher": "GovTech",
+          "headline": "Douglas County, Wis., Adopts AI Policy for Officials, Staff",
+          "url": "https://www.govtech.com/artificial-intelligence/douglas-county-wis-adopts-ai-policy-for-officials-staff",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "7fb83c64-1155-48d2-a591-6dea4a2fd95b",
+      "title": "EXL acquires physical AI model developer iMerit",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "partial",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "0a9b74b79fa147994cbe13087bf8476b",
+          "publisher": "The Robot Report",
+          "headline": "EXL acquires physical AI model developer iMerit",
+          "url": "https://www.therobotreport.com/exl-acquires-physical-ai-model-developer-imerit",
+          "published_date": "2026-08-28",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "7cbc3ee3-679b-4840-8685-1cc1befa55c3",
+      "title": "FDA Seeks Input on How to Regulate Generative AI-Enabled Medical Devices to Shape Upcoming Guidance",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "354adbe8c2a1387946328bd4c9b55320",
+          "publisher": "Buchanan Ingersoll & Rooney PC",
+          "headline": "FDA Seeks Input on How to Regulate Generative AI-Enabled Medical Devices to Shape Upcoming Guidance",
+          "url": "https://www.bipc.com/fda-seeks-input-on-how-to-regulate-generative-ai-enabled-medical-devices-to-shape-upcoming-guidance",
+          "published_date": "2026-08-28",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "d2378fa6-c423-47f7-86ce-5230db95819f",
+      "title": "FDA digital health leader promises generative AI regulatory guidance is coming",
+      "date": "2026-08-24",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "partial",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "2ef39d3871e7460e4d0c8ef3aa8e6a83",
+          "publisher": "STAT",
+          "headline": "FDA digital health leader promises generative AI regulatory guidance is coming",
+          "url": "https://www.statnews.com/2026/08/24/fda-rick-abramson-generative-ai-guidances-are-coming",
+          "published_date": "2026-08-24",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "59929de9-31be-48e6-b65d-1670f4851345",
+      "title": "Feds spend more than $600K on artificial intelligence projects in northern Ontario",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CAN"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "e87263fb070eab6af041b9a50ede6b51",
+          "publisher": "CBC",
+          "headline": "Feds spend more than $600K on artificial intelligence projects in northern Ontario",
+          "url": "https://www.cbc.ca/news/canada/thunder-bay/artificial-intelligence-funding-northern-ontario-9.7323319",
+          "published_date": "2026-08-28",
+          "source_language": "en",
+          "search_markets": [
+            "CAN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "3b117ab7-7526-4fe5-a2ec-28a9b31500b6",
+      "title": "From Ancient Republics to Artificial Intelligence: National Constitution Center Announces New America’s Town Hall Programs | Constitution Center",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "no_clear_relational_signal",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "cd1762422a47eeef2dacae738452b484",
+          "publisher": "The National Constitution Center",
+          "headline": "From Ancient Republics to Artificial Intelligence: National Constitution Center Announces New America’s Town Hall Programs | Constitution Center",
+          "url": "https://constitutioncenter.org/about/press-room/press-releases/from-ancient-republics-to-artificial-intelligence-national-constitution-center-announces-new-americas-town-hall-programs",
+          "published_date": "2026-08-28",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "9272dce9-381b-4345-bdaf-f8142923a32b",
+      "title": "From Chinese Practices to Global Collaboration: New Challenges for Young Entrepreneurs in the Age of Artificial Intelligence",
+      "date": "2026-08-26",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "no_clear_relational_signal",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [
+        "C",
+        "H",
+        "N"
+      ],
+      "sources": [
+        {
+          "article_id": "fe4e09684945a57c8a3148887963d3b1",
+          "publisher": "中国日报网",
+          "headline": "From Chinese Practices to Global Collaboration: New Challenges for Young Entrepreneurs in the Age of Artificial Intelligence",
+          "url": "https://cn.chinadaily.com.cn/a/202608/26/WS6a8e827ce4b09a165c78614a.html",
+          "published_date": "2026-08-26",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "ea450577-ad19-48e8-a02a-48270b40ee30",
+      "title": "From War Booty to War Learning: The Legal Status of Captured Military Artificial Intelligence",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "GBR",
+        "USA"
+      ],
+      "story_country_iso3s": [
+        "A",
+        "U",
+        "S"
+      ],
+      "sources": [
+        {
+          "article_id": "7714ab01001a80e6deb08c958da69b6d",
+          "publisher": "Lieber Institute West Point",
+          "headline": "From War Booty to War Learning: The Legal Status of Captured Military Artificial Intelligence",
+          "url": "https://lieber.westpoint.edu/war-booty-war-learning-legal-status-captured-military-artificial-intelligence",
+          "published_date": "2026-08-28",
+          "source_language": "en",
+          "search_markets": [
+            "GBR",
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "2dccc286-c4c7-482d-a07c-a885f0c7d011",
+      "title": "From technical validation to production implementation, digital intelligence productivity kicks off a new cycle for AI.",
+      "date": "2026-08-28",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "55d68a7865efb2c76f4cf476a6721792",
+          "publisher": "中国科技网",
+          "headline": "From technical validation to production implementation, digital intelligence productivity kicks off a new cycle for AI.",
+          "url": "https://www.stdaily.com/web/gdxw/2026-08/28/content_571521.html",
+          "published_date": "2026-08-28",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "directional_result_without_full_article_body"
+      ]
+    },
+    {
+      "event_id": "7b5d8532-d0b5-412f-8f2b-a9e0a0bdf83d",
+      "title": "From “1+1+N” to Large-Scale Application——The Practice of AI Development at Bank of Communications",
+      "date": "2026-08-25",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [
+        "CHN"
+      ],
+      "sources": [
+        {
+          "article_id": "c0fa23be4f9aba5624ad4fb6f90788e3",
+          "publisher": "观察者网",
+          "headline": "From “1+1+N” to Large-Scale Application——The Practice of AI Development at Bank of Communications",
+          "url": "https://www.guancha.cn/GuanJinRong/2026_08_25_828604.shtml",
+          "published_date": "2026-08-25",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "b77af074-24ee-44f9-86d1-718e27aedefb",
+      "title": "Generative \"AI\" Macro Data Shows U.S. Impacts",
+      "date": "2026-08-27",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "partial",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "a61ece5dbd7299c734a39b794bd234e9",
+          "publisher": "Yahoo Finance",
+          "headline": "Generative \"AI\" Macro Data Shows U.S. Impacts",
+          "url": "https://finance.yahoo.com/technology/ai/articles/generative-ai-macro-data-shows-205400328.html",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "88b3bea6-bc29-4565-bc30-f646c2da8fc1",
+      "title": "Generative AI Is Fading. Here Are 4 Bets on What’s Next in Tech",
+      "date": "2026-08-25",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_constraining_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [
+        "U",
+        "S",
+        "A"
+      ],
+      "sources": [
+        {
+          "article_id": "6ffcbcd5e776d031e0e5f69cf4b7744b",
+          "publisher": "inc.com",
+          "headline": "Generative AI Is Fading. Here Are 4 Bets on What’s Next in Tech",
+          "url": "https://www.inc.com/joe-procopio/generative-ai-is-fading-here-are-4-bets-on-whats-next-in-tech/91395641",
+          "published_date": "2026-08-25",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "3267186f-024f-47aa-b406-6096185cca97",
+      "title": "Generative AI and HR Decisions: Can We Really Rely on It?",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "no_clear_relational_signal",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [
+        "FRA"
+      ],
+      "sources": [
+        {
+          "article_id": "7b18f44a0a86a6b39365efde29c04853",
+          "publisher": "Éditions Tissot",
+          "headline": "Generative AI and HR Decisions: Can We Really Rely on It?",
+          "url": "https://www.editions-tissot.fr/guide/decision-rh-ia-generative",
+          "published_date": "2026-08-28",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "7a2046e0-9d27-44f9-b9f8-83a8253eb280",
+      "title": "Generative AI: It's impossible to know which image really served as the model",
+      "date": "2026-08-29",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "insufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "insufficient_evidence",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "784d270f282b4b5f53c36374ae8f5428",
+          "publisher": "Journal du Geek",
+          "headline": "Generative AI: It's impossible to know which image really served as the model",
+          "url": "https://www.journaldugeek.com/2026/08/29/ia-generative-impossible-de-savoir-quelle-image-a-vraiment-servi-de-modele",
+          "published_date": "2026-08-29",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "insufficient_evidence"
+      ]
+    },
+    {
+      "event_id": "7dc52761-158f-4319-8bc5-2ab6a88f2175",
+      "title": "Generics, sets, gummy bears… Why do TV channels rely on generative AI?",
+      "date": "2026-08-24",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [
+        "F",
+        "R",
+        "A"
+      ],
+      "sources": [
+        {
+          "article_id": "ea0868e149b40259c6062002e9c3a82d",
+          "publisher": "Le Nouvel Obs",
+          "headline": "Generics, sets, gummy bears… Why do TV channels rely on generative AI?",
+          "url": "https://www.nouvelobs.com/medias/20260824.OBS117619/generiques-decors-pastilles-pourquoi-les-chaines-de-television-misent-elles-sur-l-ia-generative.html",
+          "published_date": "2026-08-24",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "27459097-7617-4a62-81cf-ba1835f7f467",
+      "title": "Global Cognitive Computing and Artificial Intelligence",
+      "date": "2026-08-27",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "CAN"
+      ],
+      "story_country_iso3s": [
+        "USA",
+        "FRA",
+        "BRA",
+        "GBR",
+        "CHI",
+        "IND"
+      ],
+      "sources": [
+        {
+          "article_id": "bf8a9f92be40ebf145a991bc0b0972df",
+          "publisher": "GlobeNewswire",
+          "headline": "Global Cognitive Computing and Artificial Intelligence",
+          "url": "https://www.globenewswire.com/news-release/2026/08/27/3352287/0/en/global-cognitive-computing-and-artificial-intelligence-systems-market-in-healthcare-to-reach-significant-scale-driven-by-rising-chronic-disease-burden-and-healthcare-digitalization.html",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "CAN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "688d2116-cde9-4293-9b86-a4ec2585cea7",
+      "title": "Guangxi launches AI-driven field research in various industries",
+      "date": "2026-08-25",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [
+        "C",
+        "N"
+      ],
+      "sources": [
+        {
+          "article_id": "5cbb33c1e47fe85e6ac4a48ac061faa3",
+          "publisher": "中国科技网",
+          "headline": "Guangxi launches AI-driven field research in various industries",
+          "url": "https://www.stdaily.com/web/gdxw/2026-08/25/content_569503.html",
+          "published_date": "2026-08-25",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "directional_result_without_full_article_body"
+      ]
+    },
+    {
+      "event_id": "cc124c80-f0d0-4f65-b45d-dd37942aef88",
+      "title": "Haidian, this artificial intelligence company, allows domestic AI computing power to be used as needed!",
+      "date": "2026-08-25",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "b7e68813bc52615c3ea65bede9b5e0e5",
+          "publisher": "ncsti.gov.cn",
+          "headline": "Haidian, this artificial intelligence company, allows domestic AI computing power to be used as needed!",
+          "url": "https://www.ncsti.gov.cn/kjdt/yqdy/yqdt/202608/t20260825_254354.html",
+          "published_date": "2026-08-25",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "397bf0ad-6578-456f-abd0-513969ffe9f0",
+      "title": "Henan hosts an artificial intelligence session of “Longzi Lake Science and Innovation Roadshow”.",
+      "date": "2026-08-25",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [
+        "CHN"
+      ],
+      "sources": [
+        {
+          "article_id": "4ec3563ab20db8d7e81ce2e1714469b4",
+          "publisher": "中国科技网",
+          "headline": "Henan hosts an artificial intelligence session of “Longzi Lake Science and Innovation Roadshow”.",
+          "url": "https://www.stdaily.com/web/gdxw/2026-08/25/content_569511.html",
+          "published_date": "2026-08-25",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "4eafaa25-203c-49e3-b06b-03f9bdf4e95d",
+      "title": "How China’s AI robot revolution is beating the West",
+      "date": "2026-08-25",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "GBR"
+      ],
+      "story_country_iso3s": [
+        "CHN"
+      ],
+      "sources": [
+        {
+          "article_id": "86ee20bc9d6d27bc37a1c4368c35971c",
+          "publisher": "The Independent",
+          "headline": "How China’s AI robot revolution is beating the West",
+          "url": "https://www.independent.co.uk/tech/china-robot-artificial-intelligence-deepseek-chatgpt-openai-b3038836.html",
+          "published_date": "2026-08-25",
+          "source_language": "en",
+          "search_markets": [
+            "GBR"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "9fe18eeb-fd47-4eb4-ab2a-c00b61992673",
+      "title": "Introducing the AI Model ‘Harness’",
+      "date": "2026-08-24",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text_supplied_by_owner",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "source_body_qc_ai_assisted",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article supplied by the owner",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "owner_supplied_full_body"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "c554f1f0a9d7eb3c25a53d74d6425ea8",
+          "publisher": "WSJ",
+          "headline": "Introducing the AI Model ‘Harness’",
+          "url": "https://www.wsj.com/cio-journal/introducing-the-ai-model-harness-a638c65b",
+          "published_date": "2026-08-24",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "3a9a70d7-0c5d-4317-83a1-bb6dbfb36833",
+      "title": "Investors are refining their investments in artificial intelligence-focused fintechs: KPMG report",
+      "date": "2026-08-27",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CAN"
+      ],
+      "story_country_iso3s": [
+        "U",
+        "S",
+        "A"
+      ],
+      "sources": [
+        {
+          "article_id": "34389d7a45c46cc81ce352f9cda99ce4",
+          "publisher": "Lexpert",
+          "headline": "Investors are refining their investments in artificial intelligence-focused fintechs: KPMG report",
+          "url": "https://www.lexpert.ca/news/finance-law/investors-are-refining-their-investments-in-artificial-intelligence-focused-fintechs-kpmg-report/394555",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "CAN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "55b446cb-c17d-4c5a-b544-f034cfcfcb94",
+      "title": "LICC: Exploring the adoption of artificial intelligence in the care sector",
+      "date": "2026-08-27",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "GBR"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "57e3134c1e4e14ae88f75eac0cf89b29",
+          "publisher": "Care Home Professional",
+          "headline": "LICC: Exploring the adoption of artificial intelligence in the care sector",
+          "url": "https://www.carehomeprofessional.com/artificial-intelligence-licc-adoption",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "GBR"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "5f682ae1-17c1-4bba-8db1-b4a8590cef83",
+      "title": "Life-inspired interoceptive artificial intelligence for autonomous and adaptive agents",
+      "date": "2026-08-26",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CAN",
+        "GBR",
+        "USA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "8484d05f80c10ad65d488a0a8ea21204",
+          "publisher": "Nature",
+          "headline": "Life-inspired interoceptive artificial intelligence for autonomous and adaptive agents",
+          "url": "https://www.nature.com/articles/s42256-026-01296-8",
+          "published_date": "2026-08-26",
+          "source_language": "en",
+          "search_markets": [
+            "CAN",
+            "GBR",
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "896c07f2-3e72-40eb-b114-fb9bc7507b14",
+      "title": "Link chip and scenario – AI intelligent baseboard accelerates on-device application implementation",
+      "date": "2026-08-25",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "c75a6a2bd91856d1dae7d4ec7d04ba5f",
+          "publisher": "新华网",
+          "headline": "Link chip and scenario – AI intelligent baseboard accelerates on-device application implementation",
+          "url": "https://www.news.cn/tech/20260825/402ae2d97b83468186deae5e00afe4d2/c.html",
+          "published_date": "2026-08-25",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "699bf4f4-7e3d-4b9d-9b09-321fdc622202",
+      "title": "Mediating memory through immersive technologies and artificial intelligence: revisiting individual and collectively co-created pasts and futures",
+      "date": "2026-08-27",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "GBR"
+      ],
+      "story_country_iso3s": [
+        "U",
+        "N",
+        "D",
+        "E",
+        "F",
+        "I",
+        "N",
+        "E",
+        "D"
+      ],
+      "sources": [
+        {
+          "article_id": "0a4ea7b72155548d91ee4d515fcad607",
+          "publisher": "Frontiers",
+          "headline": "Mediating memory through immersive technologies and artificial intelligence: revisiting individual and collectively co-created pasts and futures",
+          "url": "https://www.frontiersin.org/articles/10.3389/fhumd.2026.1891875/full",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "GBR"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "fd6d4d29-b7b7-4a92-ac71-8ca32de98186",
+      "title": "Ministry of Industry and Information Technology: Explore new models for cultivating applications of artificial intelligence",
+      "date": "2026-08-26",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "multiple_sources",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 2,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 2,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [
+        "CHN"
+      ],
+      "sources": [
+        {
+          "article_id": "4655d6226da600cc69e4f7f67602e773",
+          "publisher": "新华网",
+          "headline": "Ministry of Industry and Information Technology: Explore new models for cultivating applications of artificial intelligence",
+          "url": "https://www.news.cn/20260826/c5b36f438ad14733b0f6d698f7f8e9e9/c.html",
+          "published_date": "2026-08-26",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        },
+        {
+          "article_id": "bf11643d1764e6c090a135316df81832",
+          "publisher": "新华网",
+          "headline": "Strong foundation, expanding applications – how artificial intelligence opens up new opportunities for development",
+          "url": "https://www.news.cn/20260826/5b2dcccd8db9406ab9f766cd24fe9744/c.html",
+          "published_date": "2026-08-26",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "686c3177-6cc8-4603-b17d-365c62ab1f35",
+      "title": "More than a third of the Web is written by AI",
+      "date": "2026-08-27",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "136d0039eeace234f15d8f4844c0e6eb",
+          "publisher": "Les Echos",
+          "headline": "More than a third of the Web is written by AI",
+          "url": "https://www.lesechos.fr/tech-medias/intelligence-artificielle/plus-dun-tiers-du-web-est-ecrit-par-des-ia-2248541",
+          "published_date": "2026-08-27",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "bfd5a0e6-d61a-4a97-a6dd-cf8e559f6e50",
+      "title": "Ningxia: Artificial intelligence enters the transportation sector, creating new opportunities for the integration of technology and intelligence",
+      "date": "2026-08-29",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [
+        "X",
+        "K",
+        "N"
+      ],
+      "sources": [
+        {
+          "article_id": "09835e26b4b24d176691075b74fac91e",
+          "publisher": "中国科技网",
+          "headline": "Ningxia: Artificial intelligence enters the transportation sector, creating new opportunities for the integration of technology and intelligence",
+          "url": "https://www.stdaily.com/web/gdxw/2026-08/29/content_571954.html",
+          "published_date": "2026-08-29",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "87319c4b-d0c5-4610-9fd5-6f9cf53714c0",
+      "title": "On and off the robot arena, AI is accelerating its \"run\" into real-world scenarios",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "ccf2675c2ef4ad7b69d1991a78be645f",
+          "publisher": "中国科技网",
+          "headline": "On and off the robot arena, AI is accelerating its \"run\" into real-world scenarios",
+          "url": "https://www.stdaily.com/web/gdxw/2026-08/28/content_571686.html",
+          "published_date": "2026-08-28",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "8a41af89-e567-409d-be59-dc4637e4cfd3",
+      "title": "Opinion | Much Ado About Artificial Intelligence",
+      "date": "2026-08-26",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "insufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "insufficient_evidence",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CAN"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "bb05ffb3ffe6185719ebb968dd75fb11",
+          "publisher": "WSJ",
+          "headline": "Opinion | Much Ado About Artificial Intelligence",
+          "url": "https://www.wsj.com/opinion/much-ado-about-artificial-intelligence-e6e341db",
+          "published_date": "2026-08-26",
+          "source_language": "en",
+          "search_markets": [
+            "CAN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "insufficient_evidence"
+      ]
+    },
+    {
+      "event_id": "b199dc3b-65a0-4235-a04f-6530a0618d56",
+      "title": "Our country has successfully developed nearly 200 key AI standards.",
+      "date": "2026-08-26",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [
+        "USA",
+        "CHN",
+        "FRA"
+      ],
+      "sources": [
+        {
+          "article_id": "af1a613ee9b1def79f0f160507a0438c",
+          "publisher": "新华网",
+          "headline": "Our country has successfully developed nearly 200 key AI standards.",
+          "url": "https://www.news.cn/politics/20260826/11d728254adc42aa92d4232068dd5935/c.html",
+          "published_date": "2026-08-26",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "2cce67b0-7fa9-49e1-b76f-ebe366fff9e9",
+      "title": "Palantir Billionaire Peter Thiel Just Bought This Magnificent Artificial Intelligence (AI) Stock Up 347,260% Since Its IPO",
+      "date": "2026-08-27",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "partial",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "CAN"
+      ],
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "sources": [
+        {
+          "article_id": "6e71257cf2cbeaae996acd3e8f7eec15",
+          "publisher": "The Globe and Mail",
+          "headline": "Palantir Billionaire Peter Thiel Just Bought This Magnificent Artificial Intelligence (AI) Stock Up 347,260% Since Its IPO",
+          "url": "https://www.theglobeandmail.com/investing/markets/stocks/WMT/pressreleases/4236037/palantir-billionaire-peter-thiel-just-bought-this-magnificent-artificial-intelligence-ai-stock-up-347260-since-its-ipo",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "CAN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "602ed24e-b928-4b87-8fad-f9bfd2e9544b",
+      "title": "Palm Beach County commissioners put initial halt on massive artificial intelligence data centers",
+      "date": "2026-08-27",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_constraining_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "sources": [
+        {
+          "article_id": "35ad998253de9810c102256fd4dee493",
+          "publisher": "WLRN",
+          "headline": "Palm Beach County commissioners put initial halt on massive artificial intelligence data centers",
+          "url": "https://www.wlrn.org/government-politics/2026-08-27/palm-beach-county-artificial-intelligence-data-centers",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "6c125f41-0a5f-44fb-8af8-ef2f281ee194",
+      "title": "Patient factors in medical artificial intelligence: a systematic review",
+      "date": "2026-08-26",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "no_clear_relational_signal",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "GBR"
+      ],
+      "story_country_iso3s": [
+        "USA",
+        "GBR",
+        "FRA"
+      ],
+      "sources": [
+        {
+          "article_id": "b33725d1307518f5d641dc1c4bf56de6",
+          "publisher": "Nature",
+          "headline": "Patient factors in medical artificial intelligence: a systematic review",
+          "url": "https://www.nature.com/articles/s44360-026-00190-2",
+          "published_date": "2026-08-26",
+          "source_language": "en",
+          "search_markets": [
+            "GBR"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "832968eb-4185-4fb3-8712-88200d759cf5",
+      "title": "Pennsylvanians wary of artificial intelligence and data centers",
+      "date": "2026-08-27",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "insufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "insufficient_evidence",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "a4df75b800d394b7982b07b5233c09fb",
+          "publisher": "Reading Eagle",
+          "headline": "Pennsylvanians wary of artificial intelligence and data centers",
+          "url": "https://www.readingeagle.com/2026/08/27/pennsylvanians-wary-of-artificial-intelligence-and-data-centers",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "insufficient_evidence"
+      ]
+    },
+    {
+      "event_id": "dd952d35-cc40-411c-8591-6554d99277b0",
+      "title": "Prediction: If Artificial Intelligence (AI) Leads to Unprecedented Economic Growth, These 2 S&P 500 Stocks Are Once-in-a-Decade Buying Opportunities Right Now",
+      "date": "2026-08-30",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "partial",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "CAN"
+      ],
+      "story_country_iso3s": [
+        "U",
+        "S",
+        "A"
+      ],
+      "sources": [
+        {
+          "article_id": "43883ae14338fd144ed7b9756588c9f9",
+          "publisher": "The Globe and Mail",
+          "headline": "Prediction: If Artificial Intelligence (AI) Leads to Unprecedented Economic Growth, These 2 S&P 500 Stocks Are Once-in-a-Decade Buying Opportunities Right Now",
+          "url": "https://www.theglobeandmail.com/investing/markets/stocks/MA/pressreleases/4343830/prediction-if-artificial-intelligence-ai-leads-to-unprecedented-economic-growth-these-2-sp-500-stocks-are-once-in-a-decade-buying-opportunities-right-now",
+          "published_date": "2026-08-30",
+          "source_language": "en",
+          "search_markets": [
+            "CAN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "c32b8f67-a885-4975-8aa5-e713940b0e67",
+      "title": "Promote the integrated development of artificial intelligence and service consumption",
+      "date": "2026-08-29",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "fed5e972736391357a6f83c8577ad2ae",
+          "publisher": "求是",
+          "headline": "Promote the integrated development of artificial intelligence and service consumption",
+          "url": "https://www.qstheory.cn/20260829/d41dce21a52e4b18a58254d3222e7db8/c.html",
+          "published_date": "2026-08-29",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "directional_result_without_full_article_body"
+      ]
+    },
+    {
+      "event_id": "c4dbc459-149a-495f-8ba4-008a8058849f",
+      "title": "Raddison Hotel Group Launches Hospitality Industry-Leading Artificial Intelligence(AI)-Powered Real-Time Price Matching Technology",
+      "date": "2026-08-27",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "GBR"
+      ],
+      "story_country_iso3s": [
+        "USA",
+        "FRA",
+        "GBR"
+      ],
+      "sources": [
+        {
+          "article_id": "2e64a6139d4872e504e6e812f5621546",
+          "publisher": "Luxury Hospitality Magazine",
+          "headline": "Raddison Hotel Group Launches Hospitality Industry-Leading Artificial Intelligence(AI)-Powered Real-Time Price Matching Technology",
+          "url": "https://lhmagazine.co.uk/raddison-hotel-group-launches-hospitality-industry-leading-artificial-intelligenceai-powered-real-time-price-matching-technology",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "GBR"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "d6ca4c57-8f70-450b-a93f-37c26e2b5a1c",
+      "title": "Regulating Agentic Artificial Intelligence",
+      "date": "2026-08-29",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_constraining_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CAN",
+        "GBR",
+        "USA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "0202094b282b25abc2b68cd17c08ced5",
+          "publisher": "The Regulatory Review",
+          "headline": "Regulating Agentic Artificial Intelligence",
+          "url": "https://www.theregreview.org/2026/08/29/seminar-regulating-agentic-artificial-intelligence",
+          "published_date": "2026-08-29",
+          "source_language": "en",
+          "search_markets": [
+            "CAN",
+            "GBR",
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "ed6bf134-8dc7-4bd2-b578-72333277d67a",
+      "title": "Report: AI model hub Hugging Face exploring sale at $13B valuation",
+      "date": "2026-08-23",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "partial",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "sources": [
+        {
+          "article_id": "d4320f0468c65cfd3c2540602bd1a6d7",
+          "publisher": "SiliconANGLE",
+          "headline": "Report: AI model hub Hugging Face exploring sale at $13B valuation",
+          "url": "https://siliconangle.com/2026/08/23/report-ai-model-hub-hugging-face-exploring-sale-at-13b-valuation",
+          "published_date": "2026-08-24",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "143ad789-0ff0-4645-9380-98153c556ab3",
+      "title": "Reviewing Artificial Intelligence in Materials Discovery",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CAN",
+        "GBR",
+        "USA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "5c542e0bbba4f56e698eb93f6c3ef084",
+          "publisher": "Spectroscopy Online",
+          "headline": "Reviewing Artificial Intelligence in Materials Discovery",
+          "url": "https://www.spectroscopyonline.com/view/reviewing-artificial-intelligence-in-materials-discovery",
+          "published_date": "2026-08-28",
+          "source_language": "en",
+          "search_markets": [
+            "CAN",
+            "GBR",
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "ec4a1e10-c825-4879-a1c6-050951d71477",
+      "title": "School IB psychology class: Use of artificial intelligence for mental health splits opinion",
+      "date": "2026-08-27",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ambiguous_relational_signal",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "GBR"
+      ],
+      "story_country_iso3s": [
+        "U",
+        "N",
+        "D",
+        "E",
+        "F",
+        "I",
+        "N",
+        "E",
+        "D"
+      ],
+      "sources": [
+        {
+          "article_id": "5fcf1fd4655b27216d548664bfd36e50",
+          "publisher": "Financial Times",
+          "headline": "School IB psychology class: Use of artificial intelligence for mental health splits opinion",
+          "url": "https://www.ft.com/content/97097198-88ca-44ff-989f-8588fec9be97",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "GBR"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "152394eb-4b37-4022-97bd-01ecd82e4114",
+      "title": "Seminar \"Artificial Intelligence, Creation and Research: Transformations of Knowledge and Practices",
+      "date": "2026-08-27",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "insufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "insufficient_evidence",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [
+        "F",
+        "R",
+        "A"
+      ],
+      "sources": [
+        {
+          "article_id": "334d6d34580f2adc4efebdda477759b6",
+          "publisher": "Rennes 2",
+          "headline": "Seminar \"Artificial Intelligence, Creation and Research: Transformations of Knowledge and Practices",
+          "url": "https://nouvelles.univ-rennes2.fr/event/seminaire-intelligence-artificielle-creation-recherche-mutations-savoirs-pratiques",
+          "published_date": "2026-08-27",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "insufficient_evidence"
+      ]
+    },
+    {
+      "event_id": "1117bece-0bee-4b48-beb6-590720633fb6",
+      "title": "Should AI \"revive\" the dead?",
+      "date": "2026-08-25",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "insufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "insufficient_evidence",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "f7344ea255c50a23ce42f585d4bd80a1",
+          "publisher": "La Croix",
+          "headline": "Should AI \"revive\" the dead?",
+          "url": "https://www.la-croix.com/societe/faut-il-laisser-l-intelligence-artificielle-faire-revivre-les-morts-20260825",
+          "published_date": "2026-08-25",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "insufficient_evidence"
+      ]
+    },
+    {
+      "event_id": "8b3f0eb1-8432-4275-ad87-ac45aee1cd68",
+      "title": "SpaceX vs. Alphabet: Which Is the Best Artificial Intelligence (AI) Stock to Buy Now?",
+      "date": "2026-08-29",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "partial",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "CAN"
+      ],
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "sources": [
+        {
+          "article_id": "01a8442624e0066e6011f1f642a320d1",
+          "publisher": "The Globe and Mail",
+          "headline": "SpaceX vs. Alphabet: Which Is the Best Artificial Intelligence (AI) Stock to Buy Now?",
+          "url": "https://www.theglobeandmail.com/investing/markets/stocks/SPCX/pressreleases/4334161/spacex-vs-alphabet-which-is-the-best-artificial-intelligence-ai-stock-to-buy-now",
+          "published_date": "2026-08-29",
+          "source_language": "en",
+          "search_markets": [
+            "CAN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "64d6926a-442c-440d-8372-21b1009e8b40",
+      "title": "Striving wholeheartedly to promote “Artificial Intelligence empowering various industries” – Guangzhou’s private enterprises write new stories of “AI+”.",
+      "date": "2026-08-28",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [
+        "CHN"
+      ],
+      "sources": [
+        {
+          "article_id": "84c7a06f068765e9e74711905e760f2b",
+          "publisher": "广州市人民政府",
+          "headline": "Striving wholeheartedly to promote “Artificial Intelligence empowering various industries” – Guangzhou’s private enterprises write new stories of “AI+”.",
+          "url": "https://www.gz.gov.cn/szgzkfgx/zdgz/content/post_10981835.html",
+          "published_date": "2026-08-28",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "directional_result_without_full_article_body"
+      ]
+    },
+    {
+      "event_id": "909a35b9-e480-4605-ba61-1503c17455e1",
+      "title": "TMF wants to ‘experiment’ with its own AI model",
+      "date": "2026-08-27",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [
+        "U",
+        "S",
+        "A"
+      ],
+      "sources": [
+        {
+          "article_id": "926beaeb184ea945711abdf172f4bd17",
+          "publisher": "FedScoop",
+          "headline": "TMF wants to ‘experiment’ with its own AI model",
+          "url": "https://fedscoop.com/tmf-ai-model-gsa-jessie-posilkin",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "6c231012-a07f-4152-b560-782d82f10ec6",
+      "title": "Teenagers will have to grow up with artificial intelligence.",
+      "date": "2026-08-27",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "sources": [
+        {
+          "article_id": "036ad5ed8e2594325e9088aea3a5ac08",
+          "publisher": "Courrier international",
+          "headline": "Teenagers will have to grow up with artificial intelligence.",
+          "url": "https://www.courrierinternational.com/une/une-du-jour-les-ados-vont-bien-devoir-grandir-avec-l-intelligence-artificielle_264367",
+          "published_date": "2026-08-27",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "b138984a-ffa5-41c8-9cac-dc409388c86d",
+      "title": "The 2026 Yangtze River First City “Artificial Intelligence +” Innovation and Development Conference was held in Yibin, Sichuan.",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "no_clear_relational_signal",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [
+        "CHN"
+      ],
+      "sources": [
+        {
+          "article_id": "47627c8e5a6003fe27e0194a003420e4",
+          "publisher": "中国科技网",
+          "headline": "The 2026 Yangtze River First City “Artificial Intelligence +” Innovation and Development Conference was held in Yibin, Sichuan.",
+          "url": "https://www.stdaily.com/web/gdxw/2026-08/28/content_571304.html",
+          "published_date": "2026-08-28",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "faeac2bd-3bc2-4d29-88da-cf5a41acc662",
+      "title": "The High-Level Digital & Artificial Intelligence Policy Leaders Forum",
+      "date": "2026-08-30",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "no_clear_relational_signal",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CAN",
+        "GBR"
+      ],
+      "story_country_iso3s": [
+        "U",
+        "N",
+        "D",
+        "E",
+        "F",
+        "I",
+        "N",
+        "E",
+        "D"
+      ],
+      "sources": [
+        {
+          "article_id": "c4e4a7fea2529beaeceddff2b8935267",
+          "publisher": "United Nations Development Programme",
+          "headline": "The High-Level Digital & Artificial Intelligence Policy Leaders Forum",
+          "url": "https://www.undp.org/arab-states/events/high-level-digital-artificial-intelligence-policy-leaders-forum",
+          "published_date": "2026-08-30",
+          "source_language": "en",
+          "search_markets": [
+            "CAN",
+            "GBR"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "4b15b2c2-7e21-4148-af2b-355564342be5",
+      "title": "The Left and Artificial Intelligence",
+      "date": "2026-08-27",
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "competition",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [
+        "FRA"
+      ],
+      "sources": [
+        {
+          "article_id": "59d93f94158122d73d1dad444dfe4f78",
+          "publisher": "Le Monde diplomatique",
+          "headline": "The Left and Artificial Intelligence",
+          "url": "https://www.monde-diplomatique.fr/2026/08/MOROZOV/69807",
+          "published_date": "2026-08-27",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "e8f1cb55-715e-4863-a2e6-e68bfb707026",
+      "title": "The Pope says states struggle to control the concentration of artificial intelligence",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_constraining_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "GBR"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "ce1e4a494ff739d83a42fc9645f4f993",
+          "publisher": "MercoPress",
+          "headline": "The Pope says states struggle to control the concentration of artificial intelligence",
+          "url": "https://en.mercopress.com/2026/08/28/the-pope-says-states-struggle-to-control-the-concentration-of-artificial-intelligence",
+          "published_date": "2026-08-28",
+          "source_language": "en",
+          "search_markets": [
+            "GBR"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "bc5adac5-8703-4c42-9b43-08af379576c7",
+      "title": "The artificial intelligence exhibition team showcases its cutting-edge innovation capabilities",
+      "date": "2026-08-29",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "no_clear_relational_signal",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [
+        "CHN"
+      ],
+      "sources": [
+        {
+          "article_id": "57752aca4cde8e73f247e5f3854d27b6",
+          "publisher": "北京市人民政府门户网站",
+          "headline": "The artificial intelligence exhibition team showcases its cutting-edge innovation capabilities",
+          "url": "https://www.beijing.gov.cn/fuwu/lqfw/gggs/202608/t20260829_4842369.html",
+          "published_date": "2026-08-29",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "0f88ac0e-34c9-4291-a626-9ebe99b4c9bd",
+      "title": "The boundaries of scientific research are being redefined—Beijing’s artificial intelligence is enhancing scientific research at its forefront.",
+      "date": "2026-08-24",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [
+        "C",
+        "H",
+        "N"
+      ],
+      "sources": [
+        {
+          "article_id": "610dbe840625027b1d731f00b3d4cc20",
+          "publisher": "新华网",
+          "headline": "The boundaries of scientific research are being redefined—Beijing’s artificial intelligence is enhancing scientific research at its forefront.",
+          "url": "https://www.news.cn/liangzi/20260824/24950155984f4fd9a00234aa80112378/c.html",
+          "published_date": "2026-08-24",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "directional_result_without_full_article_body"
+      ]
+    },
+    {
+      "event_id": "a8960241-1c98-46b5-bcd2-3b399874d1d2",
+      "title": "The next customer of your site will be... an artificial intelligence",
+      "date": "2026-08-27",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [
+        "FRA"
+      ],
+      "sources": [
+        {
+          "article_id": "bc65714eb6965e2b1c1cdbbbb589983b",
+          "publisher": "journaldunet.com",
+          "headline": "The next customer of your site will be... an artificial intelligence",
+          "url": "https://www.journaldunet.com/retail/1554071-le-prochain-client-de-votre-site-sera-une-intelligence-artificielle",
+          "published_date": "2026-08-27",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "36f54cf1-3ab5-4496-9f36-a369fa4e62bd",
+      "title": "The school held a special report meeting on artificial intelligence empowering higher education.",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "5a64d32930bdd80dc836fc73bf81b772",
+          "publisher": "nwpu.edu.cn",
+          "headline": "The school held a special report meeting on artificial intelligence empowering higher education.",
+          "url": "https://www.nwpu.edu.cn/info/1198/126038.htm",
+          "published_date": "2026-08-28",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "1e5f8b9a-8366-4555-8ffa-d67018eb6c5f",
+      "title": "The state of AI in 2026: On the road to ROI",
+      "date": "2026-08-25",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CAN",
+        "GBR",
+        "USA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "c1e31a3255ae290d266618516c84abb7",
+          "publisher": "McKinsey & Company",
+          "headline": "The state of AI in 2026: On the road to ROI",
+          "url": "https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai",
+          "published_date": "2026-08-25",
+          "source_language": "en",
+          "search_markets": [
+            "CAN",
+            "GBR",
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "fb7e6caf-1500-40aa-810d-c1702c407904",
+      "title": "Thomson Reuters launches proprietary AI model for legal work",
+      "date": "2026-08-24",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text_supplied_by_owner",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "source_body_qc_ai_assisted",
+        "configuration": "mutualism",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article supplied by the owner",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "owner_supplied_full_body"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [
+        "U",
+        "S",
+        "A"
+      ],
+      "sources": [
+        {
+          "article_id": "bd48fb372bc88149d3d8b153bea17de3",
+          "publisher": "SiliconANGLE",
+          "headline": "Thomson Reuters launches proprietary AI model for legal work",
+          "url": "https://siliconangle.com/2026/08/24/thomson-reuters-launches-proprietary-ai-model-for-legal-work",
+          "published_date": "2026-08-24",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "65ab52b1-c922-472b-843a-ca8cc3070d2b",
+      "title": "Today’s Insight | Investigation Report on AI Agents Invading “Hug Faces” Shows That AI Development Should Serve as a Warning Bell for Security",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "partial",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_constraining_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [
+        "U",
+        "S",
+        "A"
+      ],
+      "sources": [
+        {
+          "article_id": "123bcff83a096e04f34081c4478cee81",
+          "publisher": "中国科技网",
+          "headline": "Today’s Insight | Investigation Report on AI Agents Invading “Hug Faces” Shows That AI Development Should Serve as a Warning Bell for Security",
+          "url": "https://www.stdaily.com/web/gdxw/2026-08/29/content_571459.html",
+          "published_date": "2026-08-28",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "e563c6d1-3a01-4d7f-97ea-1b92559e1853",
+      "title": "Trump’s AI Model Executive Order Poses First Amendment Questions",
+      "date": "2026-08-27",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_constraining_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "sources": [
+        {
+          "article_id": "0cdc760276f9d39b98632cd9a85404c2",
+          "publisher": "Bloomberg Law News",
+          "headline": "Trump’s AI Model Executive Order Poses First Amendment Questions",
+          "url": "https://news.bloomberglaw.com/legal-exchange-insights-and-commentary/trumps-ai-model-executive-order-poses-first-amendment-questions",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "7078c1bf-f3f4-4ab6-a30a-42a054c6caaa",
+      "title": "U.S. Stocks Mixed on Artificial-Intelligence Jitters",
+      "date": "2026-08-24",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "no_clear_relational_signal",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CAN",
+        "USA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "5a907535c4379b79d99bc1a479c8ad92",
+          "publisher": "WSJ",
+          "headline": "U.S. Stocks Mixed on Artificial-Intelligence Jitters",
+          "url": "https://www.wsj.com/finance/stocks/u-s-stocks-mixed-on-artificial-intelligence-jitters-fb7a3260",
+          "published_date": "2026-08-24",
+          "source_language": "en",
+          "search_markets": [
+            "CAN",
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "4a3b473a-414c-4c6f-8693-da501c118d13",
+      "title": "US futures mostly higher as the artificial intelligence business booms",
+      "date": "2026-08-27",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "CAN"
+      ],
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "sources": [
+        {
+          "article_id": "88ee0d7bc04690325ecb82cd8f9a7afe",
+          "publisher": "The Globe and Mail",
+          "headline": "US futures mostly higher as the artificial intelligence business booms",
+          "url": "https://www.theglobeandmail.com/investing/markets/indices/TTCS/pressreleases/4174113/us-futures-mostly-higher-as-the-artificial-intelligence-business-booms",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "CAN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "e1866f35-a7c0-4ec3-940f-fe2dd155a512",
+      "title": "University of Alberta Study Finds 87% of Canadian Musicians View Generative AI ‘Negatively’",
+      "date": "2026-08-28",
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
+      "uneven_effect_noted": true,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "competition",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "CAN"
+      ],
+      "story_country_iso3s": [
+        "C",
+        "A",
+        "N"
+      ],
+      "sources": [
+        {
+          "article_id": "b7703a642088e07330ef3502c9ee2c6b",
+          "publisher": "Billboard",
+          "headline": "University of Alberta Study Finds 87% of Canadian Musicians View Generative AI ‘Negatively’",
+          "url": "https://ca.billboard.com/business/tech/canadian-musicians-generative-ai-study",
+          "published_date": "2026-08-28",
+          "source_language": "en",
+          "search_markets": [
+            "CAN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "bc7b4584-d90a-4faf-85fd-a78e41c167b5",
+      "title": "Unlocking the Math Behind Better Decisions",
+      "date": "2026-08-27",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [
+        "U",
+        "S",
+        "A"
+      ],
+      "sources": [
+        {
+          "article_id": "3366b2ed96e6ddf7801b2290827ab1d8",
+          "publisher": "The University of Chicago Booth School of Business",
+          "headline": "Unlocking the Math Behind Better Decisions",
+          "url": "https://www.chicagobooth.edu/research/center-for-applied-artificial-intelligence/stories/2026/unlocking-the-math-behind-better-decisions",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "9ebd7c71-a290-4de4-97f0-ec5ee065042d",
+      "title": "VIDEO - \"We should not wait for a major impact of artificial intelligence on the growth of countries\": Jacques Attali's Minute",
+      "date": "2026-08-29",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "no_clear_relational_signal",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "fa346cf2f7b158b33076a34c659e9173",
+          "publisher": "Les Echos",
+          "headline": "VIDEO - \"We should not wait for a major impact of artificial intelligence on the growth of countries\": Jacques Attali's Minute",
+          "url": "https://www.lesechos.fr/idees-debats/editos-analyses/video-il-ne-faut-pas-attendre-un-impact-majeur-de-lintelligence-artificielle-sur-la-croissance-des-pays-la-minute-de-jacques-attali-2248805",
+          "published_date": "2026-08-29",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "07dd1da3-4efe-4177-9d12-cd22a1c8d5b5",
+      "title": "Video: Artificial Intelligence: A Deadlier Threat to Information",
+      "date": "2026-08-24",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "insufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "insufficient_evidence",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "FRA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "0041e4b0539783a325ee88219a9b22fe",
+          "publisher": "tv5monde",
+          "headline": "Video: Artificial Intelligence: A Deadlier Threat to Information",
+          "url": "https://information.tv5monde.com/science/video/lintelligence-artificielle-menace-mortelle-sur-linformation-2834832",
+          "published_date": "2026-08-24",
+          "source_language": "fr",
+          "search_markets": [
+            "FRA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "insufficient_evidence"
+      ]
+    },
+    {
+      "event_id": "c3c34bc9-e3ba-48c1-9705-752c123aee9e",
+      "title": "Warren Buffett's Successor, Greg Abel, Keeps Buying This Incredible Artificial Intelligence (AI) Stock That Buffett Also Loved",
+      "date": "2026-08-30",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "CAN"
+      ],
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "sources": [
+        {
+          "article_id": "97f542660bca85700eec1478eba7e480",
+          "publisher": "The Globe and Mail",
+          "headline": "Warren Buffett's Successor, Greg Abel, Keeps Buying This Incredible Artificial Intelligence (AI) Stock That Buffett Also Loved",
+          "url": "https://www.theglobeandmail.com/investing/markets/stocks/GOOG/pressreleases/4343251/warren-buffetts-successor-greg-abel-keeps-buying-this-incredible-artificial-intelligence-ai-stock-that-buffett-also-loved",
+          "published_date": "2026-08-30",
+          "source_language": "en",
+          "search_markets": [
+            "CAN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "15aba3c7-7559-4e74-8ea9-993be6fb3261",
+      "title": "What Snowflake (SNOW)'s Cortex AI Model Routing Push Means For Shareholders",
+      "date": "2026-08-29",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "full_text",
+        "evidence_status": "partial",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Full article used for every source",
+        "source_count": 1,
+        "full_text_sources": 1,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
+      },
+      "source_markets": [
+        "GBR"
+      ],
+      "story_country_iso3s": [
+        "GB"
+      ],
+      "sources": [
+        {
+          "article_id": "470a8e915ae406ef65e7277c022e36d6",
+          "publisher": "Yahoo Finance UK",
+          "headline": "What Snowflake (SNOW)'s Cortex AI Model Routing Push Means For Shareholders",
+          "url": "https://uk.finance.yahoo.com/news/snowflake-snow-cortex-ai-model-050431503.html",
+          "published_date": "2026-08-29",
+          "source_language": "en",
+          "search_markets": [
+            "GBR"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "e76ed7b0-1150-47fd-8853-2299c271b948",
+      "title": "What role does Artificial Intelligence play in golf?",
+      "date": "2026-08-28",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "insufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "insufficient_evidence",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "GBR"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "316730df059e14c2a29fe915c449fccc",
+          "publisher": "National Club Golfer",
+          "headline": "What role does Artificial Intelligence play in golf?",
+          "url": "https://www.nationalclubgolfer.com/club/features/the-rise-of-ai-what-role-does-artificial-intelligence-play-in-golf",
+          "published_date": "2026-08-28",
+          "source_language": "en",
+          "search_markets": [
+            "GBR"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked",
+        "insufficient_evidence"
+      ]
+    },
+    {
+      "event_id": "00396d3e-532a-4f9c-ae6d-69e909d3f426",
+      "title": "Z.ai shares surge 8% after releasing new AI model running only on Chinese chips",
+      "date": "2026-08-27",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "partial",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "USA"
+      ],
+      "story_country_iso3s": [],
+      "sources": [
+        {
+          "article_id": "4e50b0fdb0006d98828d8c70afe894f9",
+          "publisher": "CNBC",
+          "headline": "Z.ai shares surge 8% after releasing new AI model running only on Chinese chips",
+          "url": "https://www.cnbc.com/2026/08/27/zai-shares-surge-new-ai-model-using-chinese-chips.html",
+          "published_date": "2026-08-27",
+          "source_language": "en",
+          "search_markets": [
+            "USA"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "fc16e022-51ac-4e71-b263-00c4b3c7be07",
+      "title": "[China News Network] The aerospace vertical large model “Hua Shan” health management module has completed on-orbit testing and validation.",
+      "date": "2026-08-26",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "ai_enabling_only",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [
+        "CHN"
+      ],
+      "sources": [
+        {
+          "article_id": "9461bceaad78b42173923b8019b62325",
+          "publisher": "中国科学院",
+          "headline": "[China News Network] The aerospace vertical large model “Hua Shan” health management module has completed on-orbit testing and validation.",
+          "url": "https://www.cas.cn/cm/202608/t20260826_5119058.shtml",
+          "published_date": "2026-08-26",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    },
+    {
+      "event_id": "1cc7aa2a-089c-476e-9c7f-4a0c5dce3774",
+      "title": "“Time”’s Global Top 100 AI Figures Revealed: About 70% Are from the U.S., 9 from China on the List",
+      "date": "2026-08-28",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
+      "uneven_effect_noted": false,
+      "classification": {
+        "content_basis": "headline_only",
+        "evidence_status": "sufficient",
+        "reviewed": false,
+        "review_status": "pending",
+        "configuration": "no_clear_relational_signal",
+        "model_confidence": null,
+        "classification_audit": {}
+      },
+      "body_evidence": {
+        "label": "Headline only",
+        "source_count": 1,
+        "full_text_sources": 0,
+        "summary_sources": 0,
+        "snippet_sources": 0,
+        "headline_only_sources": 1,
+        "body_coverage": "no_full_body"
+      },
+      "source_markets": [
+        "CHN"
+      ],
+      "story_country_iso3s": [
+        "U",
+        "S",
+        "A",
+        ",",
+        "C",
+        "H",
+        "N"
+      ],
+      "sources": [
+        {
+          "article_id": "4b1856353667fb3a2981b65b601ef35f",
+          "publisher": "美国之音",
+          "headline": "“Time”’s Global Top 100 AI Figures Revealed: About 70% Are from the U.S., 9 from China on the List",
+          "url": "https://www.voachinese.com/a/time-reveals-the-2026-time-100-ai-20260828/8191627.html",
+          "published_date": "2026-08-29",
+          "source_language": "zh",
+          "search_markets": [
+            "CHN"
+          ]
+        }
+      ],
+      "audit_flags": [
+        "model_reading_not_human_checked"
+      ]
+    }
+  ]
+}
