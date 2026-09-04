@@ -2,11 +2,18 @@
 
 import { initDiscoveryGlobe } from "/globe.js?v=6.1.0";
 
-const BUILD_ID = "6.1.2";
+const BUILD_ID = "6.3.0";
 const CURRENT_URL = "/data/releases/current.json";
 const SYMBIOSIS_URL = "/data/symbiosis/current.json";
 const COUNTRIES_URL = "/edu/countries.json";
 const dateLong = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric" });
+const PRIMARY_OUTCOME_LABELS = {
+  benefit_shown: "A benefit was reported",
+  downside_shown: "A downside was reported",
+  benefit_and_downside: "Both were reported",
+  no_clear_people_change: "No clear change was reported",
+  too_little_evidence: "Too little evidence",
+};
 
 function escapeHTML(value) {
   return String(value ?? "")
@@ -36,7 +43,7 @@ function formatRange(startValue, endValue) {
   const end = parseDate(endValue);
   if (!start || !end) return "Current week";
   const sameMonth = start.getUTCMonth() === end.getUTCMonth() && start.getUTCFullYear() === end.getUTCFullYear();
-  return sameMonth ? `${start.getUTCDate()}–${dateLong.format(end)}` : `${dateLong.format(start)}–${dateLong.format(end)}`;
+  return sameMonth ? `${start.getUTCDate()} to ${dateLong.format(end)}` : `${dateLong.format(start)} to ${dateLong.format(end)}`;
 }
 
 function plural(value, singular, pluralForm = `${singular}s`) {
@@ -45,12 +52,12 @@ function plural(value, singular, pluralForm = `${singular}s`) {
 
 function setText(id, value) {
   const element = document.getElementById(id);
-  if (element) element.textContent = String(value ?? "—");
+  if (element) element.textContent = String(value ?? "Not available");
 }
 
 function formatPercent(value, total) {
   const denominator = Number(total || 0);
-  if (!denominator) return "—";
+  if (!denominator) return "Not available";
   return `${((Number(value || 0) / denominator) * 100).toFixed(1)}%`;
 }
 
@@ -123,7 +130,7 @@ function plainSignalData(symbiosis, release) {
 
 function renderRelease(release) {
   const counts = releaseCounts(release);
-  setText("release-badge", `This week · ${formatRange(release.period_start, release.period_end)}`);
+  setText("release-badge", `This week, ${formatRange(release.period_start, release.period_end)}`);
   setText("count-source-pages", counts.articles);
   setText("count-developments", counts.events);
   setText("count-first-time", counts.firstRecorded);
@@ -144,70 +151,118 @@ function fullBodyEvidenceCount(signalData) {
     + Number(counts.owner_supplied_full_body || 0);
 }
 
-function takeawayCopy(counts, total, breakdown = {}) {
-  const gaining = Number(counts.people_gaining || 0);
-  const losing = Number(counts.people_losing_ground || 0);
-  const unclear = Number(counts.not_clear_yet || 0);
-  const insufficient = Number(breakdown.not_enough_evidence || 0);
-  const noDirection = Number(breakdown.no_directional_people_change || 0);
-  if (unclear > total / 2) {
-    if (insufficient + noDirection === unclear) {
-      return `${insufficient} developments lacked enough evidence, while ${noDirection} had evidence but showed no clear gain or loss for people. Among the directional developments, ${gaining} pointed to gains and ${losing} to people losing ground.`;
-    }
-    return `Most AI news still did not show a clear change for people. Among the clearer developments, ${gaining} pointed to gains and ${losing} to people losing ground.`;
-  }
-  if (gaining > losing) return `Gains appeared more often than losses, but the picture was not the same for every person or every use of AI.`;
-  if (losing > gaining) return `More developments showed people losing ground than gaining, with ${unclear} still too unclear to call.`;
-  return `The week showed a balanced picture of gains and losses, with ${unclear} developments still not clear enough to call.`;
+function primaryOutcomeFor(relationship) {
+  const signals = relationship?.public_signals || {};
+  const gaining = Boolean(signals.people_gaining);
+  const losing = Boolean(signals.people_losing_ground);
+  if (gaining && losing) return "benefit_and_downside";
+  if (gaining) return "benefit_shown";
+  if (losing) return "downside_shown";
+  if (String(relationship?.evidence_status || "") === "insufficient") return "too_little_evidence";
+  return "no_clear_people_change";
 }
 
-function renderSignals(signalData, release) {
+function primaryOutcomeSummary(symbiosis, signalData, total) {
+  const counts = Object.fromEntries(Object.keys(PRIMARY_OUTCOME_LABELS).map((key) => [key, 0]));
+  const basis = Object.fromEntries(Object.keys(PRIMARY_OUTCOME_LABELS).map((key) => [key, { fullBody: 0, other: 0 }]));
+  const rows = Array.isArray(symbiosis?.evidence) ? symbiosis.evidence : [];
+  let uneven = 0;
+  if (rows.length === total && total > 0) {
+    rows.forEach((row) => {
+      const key = primaryOutcomeFor(row);
+      counts[key] += 1;
+      const fullBodies = Number(row?.evidence_basis_summary?.full_text_sources || 0);
+      if (fullBodies > 0) basis[key].fullBody += 1;
+      else basis[key].other += 1;
+      if (row?.public_signals?.not_everyone_benefits) uneven += 1;
+    });
+    return { counts, basis, uneven };
+  }
+  const legacy = signalData?.people_signal_counts || {};
+  const breakdown = signalData?.not_clear_breakdown || {};
+  counts.benefit_shown = Number(legacy.people_gaining || 0);
+  counts.downside_shown = Number(legacy.people_losing_ground || 0);
+  counts.benefit_and_downside = Number(legacy.mixed_picture || 0);
+  counts.too_little_evidence = Number(breakdown.not_enough_evidence || 0);
+  counts.no_clear_people_change = Math.max(0, total - counts.benefit_shown - counts.downside_shown - counts.benefit_and_downside - counts.too_little_evidence);
+  uneven = Number(legacy.not_everyone_benefits || 0);
+  return { counts, basis, uneven };
+}
+
+function outcomeStatus(key, count, basis, total) {
+  const detail = basis?.[key] || { fullBody: 0, other: 0 };
+  if (count > 0 && detail.fullBody + detail.other === count && (detail.fullBody || detail.other)) {
+    const fullText = `${detail.fullBody} with a full article`;
+    const other = `${detail.other} without a full article`;
+    return detail.fullBody && detail.other ? `${fullText}; ${other}` : detail.fullBody ? fullText : other;
+  }
+  return `of ${total} developments`;
+}
+
+function assessmentStatus(symbiosis, total) {
+  const covered = fullBodyEvidenceCount(symbiosis?.people_signals || {});
+  if (!total) return "The weekly picture is being prepared.";
+  if (covered >= total) return "A full source article was available for every development.";
+  return `A full source article was available for ${covered} of ${total} developments. The rest are kept separate as not enough evidence.`;
+}
+
+function takeawayCopy(counts) {
+  const benefit = Number(counts.benefit_shown || 0);
+  const downside = Number(counts.downside_shown || 0);
+  const noChange = Number(counts.no_clear_people_change || 0);
+  const insufficient = Number(counts.too_little_evidence || 0);
+  return `This week, ${insufficient} developments did not have enough source evidence and ${noChange} did not show a clear change for people. ${benefit} reported a benefit and ${downside} reported a downside.`;
+}
+
+function renderSignals(signalData, release, symbiosis) {
   const total = Number(signalData?.expected_units || releaseCounts(release).events || 0);
   const classified = Number(signalData?.classified_units || 0);
   const complete = total > 0 && classified === total;
-  const counts = signalData?.people_signal_counts || {};
-  const available = signalData?.availability || {};
-  const breakdown = signalData?.not_clear_breakdown || {};
+  const primary = primaryOutcomeSummary(symbiosis, signalData, total);
+  const counts = primary.counts;
   const cards = [
-    ["people_gaining", "signal-people-gaining", "percent-people-gaining", "status-people-gaining"],
-    ["people_losing_ground", "signal-people-losing", "percent-people-losing", "status-people-losing"],
-    ["mixed_picture", "signal-mixed", "percent-mixed", "status-mixed"],
-    ["not_everyone_benefits", "signal-unequal", "percent-unequal", "status-unequal"],
-    ["not_clear_yet", "signal-unclear", "percent-unclear", "status-unclear"],
+    ["benefit_shown", "signal-benefit", "percent-benefit", "status-benefit"],
+    ["downside_shown", "signal-downside", "percent-downside", "status-downside"],
+    ["benefit_and_downside", "signal-both", "percent-both", "status-both"],
+    ["no_clear_people_change", "signal-no-change", "percent-no-change", "status-no-change"],
+    ["too_little_evidence", "signal-insufficient", "percent-insufficient", "status-insufficient"],
   ];
   cards.forEach(([key, countId, percentId, statusId]) => {
     const card = document.querySelector(`[data-signal="${key}"]`);
-    const ready = complete && available[key] === true;
+    const ready = complete && Object.values(counts).reduce((sum, value) => sum + Number(value || 0), 0) === total;
     const value = Number(counts[key] || 0);
-    setText(countId, ready ? value : "—");
-    setText(percentId, ready ? formatPercent(value, total) : "—");
-    const insufficient = Number(breakdown.not_enough_evidence || 0);
-    const noDirection = Number(breakdown.no_directional_people_change || 0);
-    const status = key === "not_clear_yet" && insufficient + noDirection === value
-      ? `${insufficient} lack evidence · ${noDirection} show no gain/loss`
-      : `of ${total} developments`;
-    setText(statusId, ready ? status : "New count coming after review");
+    setText(countId, ready ? value : "Not available");
+    setText(percentId, ready ? formatPercent(value, total) : "Not available");
+    setText(statusId, ready ? outcomeStatus(key, value, primary.basis, total) : "Count being prepared");
     card?.classList.toggle("is-pending", !ready);
   });
   const fullBodyCount = fullBodyEvidenceCount(signalData);
   setText(
     "signal-denominator",
     complete
-      ? `${total} developments checked this week${fullBodyCount ? ` · full article evidence used for ${fullBodyCount}` : ""}`
+      ? `${total} developments in this week's reading.${fullBodyCount ? ` Full article evidence was used for ${fullBodyCount}.` : ""}`
       : `${classified} of ${total} relationship classifications published`,
   );
+  setText("assessment-status", assessmentStatus(symbiosis, total));
+  const overlapNote = document.getElementById("signal-overlap-note");
+  if (overlapNote) {
+    overlapNote.hidden = primary.uneven === 0;
+    overlapNote.textContent = primary.uneven
+      ? `In ${primary.uneven} developments, the source also described different effects for different groups. This is a detail within the totals above, not another total.`
+      : "";
+  }
   setText(
     "week-takeaway",
     complete
-      ? takeawayCopy(counts, total, breakdown)
+      ? takeawayCopy(counts)
       : "The people-first picture is still being prepared. Missing classifications are not counted as unclear results.",
   );
 
   const patterns = signalData?.relationship_pattern_counts || {};
-  setText("pattern-together", complete ? Number(patterns.mutualism || 0) : "—");
-  setText("pattern-people-down", complete ? Number(patterns.ai_benefiting_parasitism || 0) : "—");
-  setText("pattern-ai-held", complete ? Number(patterns.human_benefiting_parasitism || 0) : "—");
-  setText("pattern-both-down", complete ? Number(patterns.competition || 0) : "—");
+  setText("pattern-together", complete ? Number(patterns.mutualism || 0) : "Not available");
+  setText("pattern-people-down", complete ? Number(patterns.ai_benefiting_parasitism || 0) : "Not available");
+  setText("pattern-ai-held", complete ? Number(patterns.human_benefiting_parasitism || 0) : "Not available");
+  setText("pattern-both-down", complete ? Number(patterns.competition || 0) : "Not available");
   setText("movement-scope", complete ? `${total} developments checked` : "Picture being prepared");
 }
 
@@ -238,14 +293,18 @@ function renderMarketCard(release, markets, iso3) {
   card.innerHTML = `<div><strong>${count} coverage ${plural(count, "item")} found through ${escapeHTML(markets[iso3].name)}</strong><p>${leaders ? `Most visible: ${escapeHTML(leaders)}.` : "Open the evidence list for the sources."}</p></div><a class="text-link" href="/edu/?market=${encodeURIComponent(iso3)}&view=all#evidence">Open evidence</a>`;
 }
 
-function renderMarketButtons(release, markets, globe) {
-  const container = document.getElementById("market-buttons");
+function renderMarketOverview(release, markets, globe) {
+  const container = document.getElementById("market-overview");
   if (!container) return null;
   const select = (iso3) => {
     container.querySelectorAll("button[data-market]").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.market === iso3)));
     renderMarketCard(release, markets, iso3);
   };
-  container.innerHTML = Object.entries(markets || {}).map(([iso3, market]) => `<button type="button" data-market="${escapeHTML(iso3)}" aria-pressed="false">${escapeHTML(market.short_name || market.name)}</button>`).join("");
+  container.innerHTML = Object.entries(markets || {}).map(([iso3, market]) => {
+    const rows = marketRows(release, iso3);
+    const count = rows.length || Number(release?.sources?.discovery_markets?.[iso3] || 0);
+    return `<button type="button" class="market-overview-card" data-market="${escapeHTML(iso3)}" aria-pressed="false"><span>${escapeHTML(market.short_name || market.name)}</span><strong>${count}</strong><small>source ${plural(count, "page")}</small></button>`;
+  }).join("");
   container.querySelectorAll("button[data-market]").forEach((button) => button.addEventListener("click", () => {
     select(button.dataset.market);
     globe?.selectMarket(button.dataset.market, { notify: false });
@@ -269,7 +328,7 @@ async function loadGlobe(release, countryData) {
   } catch (error) {
     console.warn("Map unavailable; market buttons remain active", error);
   }
-  selectMarket = renderMarketButtons(release, markets, globe);
+  selectMarket = renderMarketOverview(release, markets, globe);
   renderMarketCard(release, markets, null);
 }
 
@@ -293,7 +352,7 @@ async function init() {
       fetchJSON(COUNTRIES_URL, true),
     ]);
     renderRelease(release);
-    renderSignals(plainSignalData(symbiosis, release), release);
+    renderSignals(plainSignalData(symbiosis, release), release, symbiosis);
     await loadGlobe(release, countryData);
   } catch (error) {
     console.error("The current Observatory picture could not load", error);

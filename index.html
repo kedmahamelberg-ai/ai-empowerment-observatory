@@ -8,7 +8,7 @@
   <link rel="canonical" href="https://observatory.hamelberg-ai.com/">
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@6.5.0/dist/maplibre-gl.css">
   <link rel="stylesheet" href="/globe.css?v=6.1.0">
-  <link rel="stylesheet" href="/site.css?v=6.1.0">
+  <link rel="stylesheet" href="/site.css?v=6.2.0">
   <link rel="stylesheet" href="/analytics-consent.css">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96">
@@ -39,17 +39,18 @@
   <main id="main-content">
     <section class="signal-overview" aria-labelledby="signal-overview-title">
       <div class="signal-overview-heading">
-        <div><p class="eyebrow">This week's picture</p><h2 id="signal-overview-title">Who is gaining—and who is losing ground?</h2></div>
-        <p id="signal-denominator">Loading this week's developments...</p>
+        <div><p class="eyebrow">This week's reading</p><h2 id="signal-overview-title">What does this week's AI news show for people?</h2></div>
+        <div class="assessment-copy"><p id="signal-denominator">Loading this week's developments...</p><p id="assessment-status" class="assessment-status">Checking the evidence basis...</p></div>
       </div>
 
       <div id="people-signal-board" class="people-signal-board" aria-live="polite">
-        <article class="people-card gaining" data-signal="people_gaining"><div class="signal-card-top"><span class="signal-icon" aria-hidden="true">↑</span><p>People gaining</p></div><div class="signal-metric"><strong id="signal-people-gaining">—</strong><b id="percent-people-gaining">—</b></div><small>More ability, access, opportunity or control.</small><span id="status-people-gaining" class="signal-status">Loading</span></article>
-        <article class="people-card losing" data-signal="people_losing_ground"><div class="signal-card-top"><span class="signal-icon" aria-hidden="true">↓</span><p>People losing ground</p></div><div class="signal-metric"><strong id="signal-people-losing">—</strong><b id="percent-people-losing">—</b></div><small>Less control, weaker skills, lost opportunity or new risk.</small><span id="status-people-losing" class="signal-status">Loading</span></article>
-        <article class="people-card mixed" data-signal="mixed_picture"><div class="signal-card-top"><span class="signal-icon" aria-hidden="true">↕</span><p>A mixed picture</p></div><div class="signal-metric"><strong id="signal-mixed">—</strong><b id="percent-mixed">—</b></div><small>Gains and downsides in the same development.</small><span id="status-mixed" class="signal-status">Loading</span></article>
-        <article class="people-card unequal" data-signal="not_everyone_benefits"><div class="signal-card-top"><span class="signal-icon" aria-hidden="true">≠</span><p>Not everyone benefits</p></div><div class="signal-metric"><strong id="signal-unequal">—</strong><b id="percent-unequal">—</b></div><small>AI helps some people more than others.</small><span id="status-unequal" class="signal-status">Loading</span></article>
-        <article class="people-card unclear" data-signal="not_clear_yet"><div class="signal-card-top"><span class="signal-icon" aria-hidden="true">?</span><p>Not clear yet</p></div><div class="signal-metric"><strong id="signal-unclear">—</strong><b id="percent-unclear">—</b></div><small>No clear gain or loss is shown yet.</small><span id="status-unclear" class="signal-status">Loading</span></article>
+        <article class="people-card gaining" data-signal="benefit_shown"><div class="signal-card-top"><span class="signal-icon" aria-hidden="true">↑</span><p>A benefit was reported</p></div><div class="signal-metric"><strong id="signal-benefit">Not available</strong><b id="percent-benefit">Not available</b></div><small>The source shows a direct benefit for people.</small><span id="status-benefit" class="signal-status">Loading</span></article>
+        <article class="people-card losing" data-signal="downside_shown"><div class="signal-card-top"><span class="signal-icon" aria-hidden="true">↓</span><p>A downside was reported</p></div><div class="signal-metric"><strong id="signal-downside">Not available</strong><b id="percent-downside">Not available</b></div><small>The source shows a direct drawback for people.</small><span id="status-downside" class="signal-status">Loading</span></article>
+        <article class="people-card mixed" data-signal="benefit_and_downside"><div class="signal-card-top"><span class="signal-icon" aria-hidden="true">↕</span><p>Both were reported</p></div><div class="signal-metric"><strong id="signal-both">Not available</strong><b id="percent-both">Not available</b></div><small>The source shows both a benefit and a downside.</small><span id="status-both" class="signal-status">Loading</span></article>
+        <article class="people-card nochange" data-signal="no_clear_people_change"><div class="signal-card-top"><span class="signal-icon" aria-hidden="true">○</span><p>No clear change was reported</p></div><div class="signal-metric"><strong id="signal-no-change">Not available</strong><b id="percent-no-change">Not available</b></div><small>The source discussed AI but did not show a clear change for people.</small><span id="status-no-change" class="signal-status">Loading</span></article>
+        <article class="people-card insufficient" data-signal="too_little_evidence"><div class="signal-card-top"><span class="signal-icon" aria-hidden="true">?</span><p>Too little evidence</p></div><div class="signal-metric"><strong id="signal-insufficient">Not available</strong><b id="percent-insufficient">Not available</b></div><small>The available source was too thin for a fair judgment.</small><span id="status-insufficient" class="signal-status">Loading</span></article>
       </div>
+      <p id="signal-overlap-note" class="signal-overlap-note" hidden></p>
     </section>
 
     <section class="people-hero" aria-labelledby="hero-title">
@@ -83,35 +84,35 @@
         <a class="text-link" href="/edu/#evidence">Open the developments →</a>
       </div>
       <div class="count-row">
-        <article><strong id="count-source-pages">—</strong><span>source pages checked</span></article>
-        <article><strong id="count-developments">—</strong><span>distinct developments</span></article>
-        <article><strong id="count-first-time">—</strong><span>first recorded here</span></article>
-        <article><strong id="count-recurring">—</strong><span>seen before</span></article>
-        <article id="count-review-card"><strong id="count-review">—</strong><span>history links being checked</span></article>
+        <article><strong id="count-source-pages">Loading</strong><span>source pages checked</span></article>
+        <article><strong id="count-developments">Loading</strong><span>distinct developments</span></article>
+        <article><strong id="count-first-time">Loading</strong><span>first recorded here</span></article>
+        <article><strong id="count-recurring">Loading</strong><span>seen before</span></article>
+        <article id="count-review-card"><strong id="count-review">Loading</strong><span>history links being checked</span></article>
       </div>
       <p id="count-equation" class="count-note">Loading how the counts fit together...</p>
     </section>
 
     <section class="movement-section" aria-labelledby="movement-title">
       <div class="section-title-row">
-        <div><p class="eyebrow">A closer look</p><h2 id="movement-title">How are people and AI moving together?</h2></div>
+        <div><p class="eyebrow">A closer look</p><h2 id="movement-title">When the source mentioned people and AI together</h2></div>
         <p id="movement-scope" class="section-side-note">Loading...</p>
       </div>
       <div id="movement-grid" class="movement-grid" aria-live="polite">
-        <article class="movement-card together"><div class="movement-arrows"><span>People ↑</span><span>AI →</span></div><strong id="pattern-together">—</strong><h3>People gain as AI moves forward</h3></article>
-        <article class="movement-card people-down"><div class="movement-arrows"><span>People ↓</span><span>AI →</span></div><strong id="pattern-people-down">—</strong><h3>AI moves forward while people lose ground</h3></article>
-        <article class="movement-card ai-held"><div class="movement-arrows"><span>People ↑</span><span>AI ↓</span></div><strong id="pattern-ai-held">—</strong><h3>People gain when AI is held back</h3></article>
-        <article class="movement-card both-down"><div class="movement-arrows"><span>People ↓</span><span>AI ↓</span></div><strong id="pattern-both-down">—</strong><h3>People and AI both run into trouble</h3></article>
+        <article class="movement-card together"><div class="movement-arrows"><span>People improve</span><span>AI expands</span></div><strong id="pattern-together">Not available</strong><h3>People benefit while AI expands</h3></article>
+        <article class="movement-card people-down"><div class="movement-arrows"><span>People lose ground</span><span>AI expands</span></div><strong id="pattern-people-down">Not available</strong><h3>People lose ground while AI expands</h3></article>
+        <article class="movement-card ai-held"><div class="movement-arrows"><span>People improve</span><span>AI limited</span></div><strong id="pattern-ai-held">Not available</strong><h3>People benefit while AI is limited</h3></article>
+        <article class="movement-card both-down"><div class="movement-arrows"><span>People lose ground</span><span>AI limited</span></div><strong id="pattern-both-down">Not available</strong><h3>People and AI both face a setback</h3></article>
       </div>
-      <p class="overlap-explainer">These are developments containing each pattern. The cards may overlap, so they are counts—not parts of a pie.</p>
+      <p class="overlap-explainer">These details can overlap. They explain the source's relationship pattern and are not another set of weekly totals.</p>
     </section>
 
-    <section id="globe" class="market-section" aria-labelledby="globe-title">
+    <section id="source-markets" class="market-section" aria-labelledby="source-market-title">
       <div class="map-copy">
-        <p class="eyebrow">Where the sources were found</p>
-        <h2 id="globe-title">Look beyond one news bubble.</h2>
-        <p>AIEO searches across several news markets. The map shows where a source was found, which may differ from where the story happened.</p>
-        <div id="market-buttons" class="market-buttons" aria-label="Choose a news market"></div>
+        <p class="eyebrow">Where this week's reporting came from</p>
+        <h2 id="source-market-title">Five news markets, one wider view.</h2>
+        <p>AIEO searches across several news markets. This shows where reporting was found, not necessarily where the story happened.</p>
+        <div id="market-overview" class="market-overview" aria-label="Source market overview"></div>
         <article id="market-card" class="market-card" aria-live="polite"><div><strong>Choose a market</strong><p>See the coverage found through that search.</p></div><a class="text-link" href="/edu/#evidence">All evidence</a></article>
       </div>
     </section>
@@ -124,7 +125,7 @@
   </main>
 
   <footer><span>© 2026 AI Empowerment Observatory</span><nav aria-label="Footer navigation"><a href="/edu/">This week</a><a href="/reports/">Reports</a><a href="/methodology/">How it works</a><a href="/privacy/">Privacy</a><a href="mailto:kedma@hamelberg-ai.com">Contact</a></nav></footer>
-  <script type="module" src="/site.js?v=6.1.2"></script>
+  <script type="module" src="/site.js?v=6.3.0"></script>
   <script src="/analytics.js"></script>
 </body>
 </html>
