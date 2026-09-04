@@ -187,6 +187,7 @@ def main() -> int:
     aggregate_signals = Counter()
     explicit_multi = 0
     distribution_coded = 0
+    explicit_two_sided_units = 0
     for row in evidence:
         patterns = row.get("relationship_patterns")
         signals = row.get("public_signals")
@@ -196,6 +197,7 @@ def main() -> int:
         distribution_coded += int(bool(row.get("distribution_coded")))
         for key in CORE:
             aggregate_patterns[key] += int(bool(patterns.get(key)))
+        explicit_two_sided_units += int(any(bool(patterns.get(key)) for key in CORE))
         for key in PEOPLE_SIGNALS:
             aggregate_signals[key] += int(bool(signals.get(key)))
         gaining = bool(signals.get("people_gaining"))
@@ -213,6 +215,8 @@ def main() -> int:
             fail(f"plain relationship pattern {key}={value}, but evidence rows produce {aggregate_patterns[key]}")
         if not 0 <= value <= expected:
             fail(f"plain relationship pattern {key} is outside 0..{expected}")
+    if not 0 <= explicit_two_sided_units <= expected:
+        fail("explicit public two-sided relationship subset is outside 0..expected")
     for key in PEOPLE_SIGNALS:
         value = int(declared_signals.get(key) or 0)
         if value != aggregate_signals[key]:
@@ -236,7 +240,8 @@ def main() -> int:
         fail("not-everyone-benefits availability does not match distribution coding coverage")
 
     print(f"Relationship arithmetic OK for {release_id}.")
-    print(f"Two-sided: {complete}/{expected}.")
+    print(f"Classifier configuration categories: {complete}/{expected}.")
+    print(f"Explicit public relationship-pattern subset: {explicit_two_sided_units}/{expected}.")
     print(f"People-side: enabling={enabling}, constraining={constraining}, no_direct={no_direct}, insufficient_or_unclear={uncertain}.")
     print(
         "Public signals: "

@@ -444,7 +444,7 @@ def governance_for(classification_run_id: str) -> dict[str, Any]:
             else (
                 "Human-governed release; audit exception disclosed"
                 if status == "waived_with_disclosure"
-                else "Model-coded, human-governed pilot release"
+                else "Evidence-based pilot release"
             )
         ),
     }

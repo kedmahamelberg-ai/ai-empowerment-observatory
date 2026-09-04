@@ -1,0 +1,31 @@
+{
+  "schema_version": "aieo_public_signal_audit_v1",
+  "release_id": "2026-W35",
+  "period_start": "2026-08-24",
+  "period_end": "2026-08-30",
+  "event_denominator": 110,
+  "people_outcomes": {
+    "benefit_shown": 21,
+    "downside_shown": 10,
+    "benefit_and_downside": 0,
+    "no_clear_people_change": 70,
+    "too_little_evidence": 9
+  },
+  "not_clear_explained": {
+    "no_clear_change_reported": 70,
+    "too_little_evidence": 9,
+    "combined": 79
+  },
+  "source_evidence": {
+    "developments_with_at_least_one_full_article": 47,
+    "developments_without_a_full_article": 63
+  },
+  "developments_with_an_explicit_two_sided_relationship_pattern": 17,
+  "not_in_clear_two_sided_subset": 93,
+  "checks": {
+    "mutually_exclusive_people_outcomes_sum_to_denominator": true,
+    "not_clear_breakdown_matches_evidence_rows": true,
+    "relationship_artifact_matches_release": true,
+    "displayed_relationship_patterns_match_evidence_rows": true
+  }
+}

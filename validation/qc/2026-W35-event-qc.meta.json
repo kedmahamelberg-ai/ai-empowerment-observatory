@@ -1,0 +1,26 @@
+{
+  "schema_version": "aieo_symbiosis_qc_export_v2",
+  "release_id": "2026-W35",
+  "mode": "all",
+  "seed": 12802279955456491910,
+  "weekly_developments": 110,
+  "exported_rows": 110,
+  "model_counts": {
+    "mutualism": 21,
+    "ai_benefiting_parasitism": 1,
+    "human_benefiting_parasitism": 0,
+    "competition": 8,
+    "human_enabling_only": 0,
+    "human_constraining_only": 0,
+    "ai_enabling_only": 44,
+    "ai_constraining_only": 11,
+    "no_clear_relational_signal": 15,
+    "ambiguous_relational_signal": 1,
+    "insufficient_evidence": 9
+  },
+  "instructions": {
+    "blind_review": "Use the six plain-language HUMAN questions without looking at the model columns. A development may contain more than one relationship pattern.",
+    "gold": "Keep HUMAN_include_in_gold=yes only for rows you personally adjudicated."
+  },
+  "csv": "validation/qc/2026-W35-event-qc.csv"
+}

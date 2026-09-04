@@ -194,12 +194,11 @@ def configuration_summary(
     expected_ids: list[str],
     display_overrides: dict[str, dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
-    """Return finalized human-review counts plus an automatic display layer.
+    """Return final review counts and the release's current evidence reading.
 
-    The public Observatory updates every week.  Until all human review is
-    complete, the display layer uses model classifications with any accepted
-    human corrections already substituted.  Finalized human-only counts remain
-    available separately and take over automatically when review is complete.
+    The public Observatory updates every week.  Completed review decisions are
+    merged into the current source-linked reading for that release; a complete
+    review is recorded separately when every expected unit has been reviewed.
     """
     available = [
         (display_overrides or {}).get(unit_id, final_payload_from_classification(rows[unit_id]))
@@ -243,7 +242,7 @@ def configuration_summary(
     display_basis = (
         "human_reviewed"
         if complete_review
-        else "model_coded_with_reviewed_corrections"
+        else "current_evidence_reading_with_reviewed_corrections"
         if classified_units
         else "classification_in_progress"
     )
@@ -573,7 +572,6 @@ def event_public_rows(
                 "review_status": final["review_status"],
                 "configuration": final["configuration"],
                 "plain_label": final["plain_label"],
-                "technical_label": final["technical_label"],
                 "human_experience_type": final["human_experience_type"],
                 "ai_expressive_role": final["ai_expressive_role"],
                 "human_direction": final["human_direction"],
@@ -754,7 +752,7 @@ def main() -> int:
         "public_status": (
             "human_reviewed"
             if complete
-            else "model_coded_provisional"
+            else "current_evidence_reading"
             if event_summary["classified_units"] and coverage_summary["classified_units"]
             else "classification_in_progress"
         ),
@@ -801,7 +799,6 @@ def main() -> int:
         "evidence": event_public_rows(
             event_rows, event_ids, evidence, owner_gold, source_body_corrections
         ),
-        "technical_labels": TECHNICAL_LABELS,
     }
 
     target = OUTPUT_DIR / "weekly" / f"{release_id}.json"

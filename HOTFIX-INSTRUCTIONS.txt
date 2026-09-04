@@ -1,54 +1,6 @@
-AI EMPOWERMENT OBSERVATORY — RESOLVER JSON HOTFIX
-31 August 2026
+HISTORICAL INCIDENT NOTE — DO NOT APPLY AS A PATCH
 
-WHAT FAILED
-The weekly resolver did not fail because of the Hugging Face warning.
-It failed because Qwen returned syntactically malformed JSON and
-resolve_events.py tried to parse that single response once with json.loads().
-The traceback does not print the raw model answer, so the exact malformed token
-cannot be recovered from the log. One malformed model response was enough to
-terminate the entire weekly run.
+The resolver hotfix is included in the complete repository. Do not copy a
+three-file hotfix over a newer checkout.
 
-WHAT THIS HOTFIX CHANGES
-1. scripts/resolve_events.py
-   - requests OpenAI-compatible JSON-object output from llama.cpp first;
-   - retries the same verifier call in three modes;
-   - validates the relationship label after parsing;
-   - if all responses are syntactically malformed, falls back conservatively to
-     relationship=unclear, confidence=0 instead of crashing or auto-merging;
-   - persistent HTTP/server failures still fail the stage rather than being hidden;
-   - replaces the old greedy JSON regex scanner with a safer JSON object scanner.
-
-2. scripts/reconcile_event_history.py
-   - applies the same structured-JSON/retry protection to the NEXT weekly stage,
-     so the pipeline cannot immediately fail there for the same reason.
-
-3. .github/workflows/resolve-events.yml
-   - passes HF_TOKEN when that optional GitHub secret exists. This only addresses
-     the rate-limit warning; HF_TOKEN is NOT required for the JSON error fix.
-
-DO THIS NOW
-1. Copy the three files in this ZIP over the files with the same repository paths.
-2. Commit and push them to branch main.
-   Suggested message:
-   Fix malformed Qwen JSON in event resolver
-3. Open the CURRENT failed run of "Weekly Observatory Pipeline".
-4. Click "Re-run jobs" -> "Re-run failed jobs".
-   Do NOT start a fresh collection first.
-5. The resolve-events job checks out latest main, so the rerun uses this hotfix
-   while retaining this week's already collected/translated data.
-6. Expected behavior:
-   - resolve-events continues past the article that failed before;
-   - you may see a warning such as "Qwen verifier output 1/3 was invalid";
-   - that warning is now recoverable and should be followed by retry/continuation;
-   - reconcile-history and the later weekly jobs should then start automatically.
-
-HF WARNING
-"You are sending unauthenticated requests to the HF Hub" is a warning, not the
-JSONDecodeError. If you already have an HF_TOKEN repository secret, this workflow
-will use it. If not, you do not need to create one just to recover today's run.
-
-IF RE-RUN FAILED JOBS IS NOT AVAILABLE
-Run "Weekly Observatory Pipeline" again from Actions. The collection layer is
-idempotent/deduplicated, but re-running only failed jobs is preferred because it
-reuses today's successful collection and translation stages.
+Use FULL-REPOSITORY-HANDOFF.md for any installation or release action.

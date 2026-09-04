@@ -1,8 +1,9 @@
-AI Empowerment Observatory — install/run this fix
-31 August 2026
+AI Empowerment Observatory — complete repository installation
+4 September 2026
 
-1. Replace the repository files with the contents of the FULL package.
-   If using a local clone, DO NOT delete the existing .git folder.
+1. Replace the repository files with the contents of the COMPLETE package.
+   This archive is not an overlay. If using a local clone, DO NOT delete the
+   existing .git folder.
 
 2. Commit and push all changes to the main branch.
 
@@ -26,6 +27,6 @@ AI Empowerment Observatory — install/run this fix
 Future weeks run automatically every Monday at 00:17 UTC.
 The strict freshness check runs Monday evening at 18:17 UTC.
 
-For verification, recovery instructions, saved-history design, and the
-relationship-review exception, read:
-OBSERVATORY-AUTOMATION-FIX-2026-08-31.md
+For the complete verification, deployment, multilingual, and owner-QC steps,
+read FULL-REPOSITORY-HANDOFF.md and
+FIX-AND-QC-INSTRUCTIONS-2026-09-04.md.

@@ -19,7 +19,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from symbiosis_common import CODEBOOK_VERSION, CORE_FOUR, PLAIN_LABELS, TECHNICAL_LABELS
+from symbiosis_common import CODEBOOK_VERSION, CORE_FOUR, PLAIN_LABELS
 
 ROOT = Path(__file__).resolve().parents[1]
 RELEASE_PATH = ROOT / "data" / "releases" / "current.json"
@@ -181,7 +181,7 @@ def main() -> int:
         "scope_note": (
             "This lens classifies how source evidence represents human-AI relations. "
             "Relationship classification runs after the core weekly release. Once available, "
-            "the live distribution is model-coded and versioned, with accepted human corrections incorporated later."
+            "the live reading is tied to the same release and its source evidence."
         ),
         "review": {
             "complete": False,
@@ -208,7 +208,6 @@ def main() -> int:
             "coverage": empty_empowerment(),
         },
         "evidence": [],
-        "technical_labels": TECHNICAL_LABELS,
     }
     payload["content_sha256"] = hash_payload(payload)
 

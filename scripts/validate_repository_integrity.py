@@ -10,8 +10,9 @@ WORKFLOWS = ROOT / ".github" / "workflows"
 ACTIONS = ROOT / ".github" / "actions"
 
 FORBIDDEN_PUBLIC = (
-    "Model-coded provisional signal",
-    "model-coded weekly lens",
+    "model-coded",
+    "model coded",
+    "Accepted human corrections replace model outputs as review proceeds.",
     "AI-benefiting parasitism",
     "Human-benefiting parasitism",
     "Competition or co-constraint",
@@ -59,12 +60,39 @@ def main() -> int:
                         f"{path.relative_to(ROOT)} uses {prefix}v{major}; minimum supported by this repository is v{minimum}"
                     )
 
-    public_files = [ROOT / "index.html", ROOT / "site.js", ROOT / "edu" / "index.html", ROOT / "edu" / "dashboard.js"]
+    public_files = [
+        ROOT / "index.html",
+        ROOT / "site.js",
+        ROOT / "edu" / "index.html",
+        ROOT / "edu" / "dashboard.js",
+        ROOT / "report" / "index.html",
+        ROOT / "report" / "report.js",
+        ROOT / "reports" / "index.html",
+        ROOT / "reports" / "reports.js",
+    ]
     for path in public_files:
         text = path.read_text(encoding="utf-8")
         for phrase in FORBIDDEN_PUBLIC:
             if phrase in text:
                 fail(f"internal process wording remains in {path.relative_to(ROOT)}: {phrase}")
+
+    public_data_roots = (
+        ROOT / "data" / "releases",
+        ROOT / "data" / "symbiosis",
+        ROOT / "data" / "insights",
+        ROOT / "data" / "reports",
+        ROOT / "data" / "history",
+        ROOT / "data" / "status",
+        ROOT / "data" / "methodology",
+    )
+    for data_root in public_data_roots:
+        if not data_root.exists():
+            continue
+        for path in data_root.rglob("*.json"):
+            text = path.read_text(encoding="utf-8")
+            for phrase in FORBIDDEN_PUBLIC:
+                if phrase.casefold() in text.casefold():
+                    fail(f"retired public wording remains in {path.relative_to(ROOT)}: {phrase}")
 
     publish = (WORKFLOWS / "publish-observatory-release.yml").read_text(encoding="utf-8")
     if "validate_public_relationship_consistency.py" not in publish:
@@ -77,6 +105,8 @@ def main() -> int:
     ):
         if marker not in publish:
             fail(f"publication workflow cannot materialize saved relationship results: {marker}")
+    if "validate_public_site_artifact.py" not in publish:
+        fail("publication workflow is missing the final public Pages artifact gate")
 
     relationship_gate = (
         ROOT / "scripts" / "validate_public_relationship_consistency.py"
@@ -102,14 +132,22 @@ def main() -> int:
         if marker not in site_script:
             fail(f"the public site can misrepresent missing relationship data: {marker}")
     home_page = (ROOT / "index.html").read_text(encoding="utf-8")
-    if '/site.js?v=6.3.0' not in home_page or 'const BUILD_ID = "6.3.0";' not in site_script:
+    if '/site.js?v=6.4.0' not in home_page or 'const BUILD_ID = "6.4.0";' not in site_script:
         fail("the relationship-data safety fix is missing its browser cache-busting version")
     education_page = (ROOT / "edu" / "index.html").read_text(encoding="utf-8")
     education_script = (ROOT / "edu" / "dashboard.js").read_text(encoding="utf-8")
-    if '/edu/dashboard.js?v=6.3.0' not in education_page or 'const BUILD_ID = "6.3.0";' not in education_script:
+    if '/edu/dashboard.js?v=6.4.0' not in education_page or 'const BUILD_ID = "6.4.0";' not in education_script:
         fail("the education interface is missing its relationship-provenance cache bust")
+    report_page = (ROOT / "report" / "index.html").read_text(encoding="utf-8")
+    if '/report/report.js?v=5.10.0' not in report_page:
+        fail("the report preview is missing its public-copy cache bust")
     for script_name, script in (("site.js", site_script), ("edu/dashboard.js", education_script)):
-        for marker in ("primaryOutcomeSummary", "not_enough_evidence", "fullBodyEvidenceCount"):
+        for marker in (
+            "primaryOutcomeSummary",
+            "not_enough_evidence",
+            "fullBodyEvidenceCount",
+            "clearTwoSidedCount",
+        ):
             if marker not in script:
                 fail(f"{script_name} is missing the public evidence breakdown: {marker}")
 
@@ -133,6 +171,14 @@ def main() -> int:
         fail("repository integrity must compile the release-bound relationship placeholder helper")
     if "scripts/validate_multilingual_pipeline.py" not in repository_integrity:
         fail("repository integrity must run the multilingual full-body regression checks")
+    for marker in (
+        "scripts/language_routing.py",
+        "scripts/audit_public_signal_denominators.py",
+        "scripts/normalize_public_release_copy.py --check",
+        "scripts/validate_public_site_artifact.py",
+    ):
+        if marker not in repository_integrity:
+            fail(f"repository integrity is missing the public/multilingual guard: {marker}")
     if (
         "Confirm relationship placeholder cannot pass publication"
         not in repository_integrity
@@ -303,20 +349,33 @@ def main() -> int:
         fail("full-body collection must not request an English publisher variant")
 
     multilingual_contract = ROOT / "scripts" / "validate_multilingual_pipeline.py"
-    if not multilingual_contract.is_file():
+    language_routing = ROOT / "scripts" / "language_routing.py"
+    if not multilingual_contract.is_file() or not language_routing.is_file():
         fail("multilingual full-body regression test is missing")
     translation_router = (ROOT / "scripts" / "translate_headlines.py").read_text(
         encoding="utf-8"
     )
     for marker in (
-        "qwen_primary_items",
-        "routed through multilingual normalization",
-        "all_other_detected_or_uncertain_languages",
+        "translation_route",
+        "ROUTE_MULTILINGUAL",
+        "resolve_source_language",
+        "language_candidates=candidates",
     ):
         if marker not in translation_router:
             fail(f"translation router is missing its multilingual route: {marker}")
-    if 'lang not in {"en", "fr", "zh"}' in translation_router:
-        fail("translation router still excludes languages beyond English, French and Chinese")
+    language_policy_text = language_routing.read_text(encoding="utf-8")
+    for marker in (
+        "ENGLISH_PASSTHROUGH_CONFIDENCE",
+        "language_candidates",
+        "lingua_english_with_competing_language",
+    ):
+        if marker not in language_policy_text:
+            fail(f"language-routing policy can treat bilingual sources as English-only: {marker}")
+    multilingual_test_text = multilingual_contract.read_text(encoding="utf-8")
+    if "bilingual_canadian" not in multilingual_test_text:
+        fail("multilingual regression suite lacks the bilingual Canadian source case")
+    if "ROUTE_UNSUPPORTED" in language_policy_text:
+        fail("language-routing policy may not expose an unsupported/excluded route")
 
     country_config = (ROOT / "config" / "edu_countries.json").read_text(
         encoding="utf-8"

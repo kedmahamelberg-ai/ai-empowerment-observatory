@@ -9,7 +9,7 @@
   "codebook_version": "aieo_news_symbiosis_v0.1",
   "public_status": "classification_in_progress",
   "source_release_sha256": "0217b03f92a9252e715c1845adbb8d142598770b59554980bebb707674df5992",
-  "scope_note": "This lens classifies how source evidence represents human-AI relations. Relationship classification runs after the core weekly release. Once available, the live distribution is model-coded and versioned, with accepted human corrections incorporated later.",
+  "scope_note": "This lens describes how source evidence represents human-AI relations. Relationship classifications are published with the weekly release and remain traceable to the source evidence for each development.",
   "review": {
     "complete": false,
     "event_complete": false,
@@ -135,18 +135,5 @@
     }
   },
   "evidence": [],
-  "technical_labels": {
-    "mutualism": "Mutualism",
-    "ai_benefiting_parasitism": "AI-benefiting parasitism",
-    "human_benefiting_parasitism": "Human-benefiting parasitism",
-    "competition": "Competition or co-constraint",
-    "human_enabling_only": "Human-side enabling signal only",
-    "human_constraining_only": "Human-side constraining signal only",
-    "ai_enabling_only": "AI-side enabling signal only",
-    "ai_constraining_only": "AI-side constraining signal only",
-    "no_clear_relational_signal": "No clear relational signal",
-    "ambiguous_relational_signal": "Ambiguous relational signal",
-    "insufficient_evidence": "Insufficient evidence"
-  },
   "content_sha256": "2033328b68d43a3f1f27d83af79236440cd0565354f6a005329671c2af6d5643"
 }

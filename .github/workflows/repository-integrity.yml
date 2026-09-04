@@ -11,9 +11,16 @@ on:
       - "site.js"
       - "site.css"
       - "edu/**"
+      - "report/**"
+      - "reports/**"
       - "methodology/**"
-      - "data/releases/current.json"
-      - "data/symbiosis/current.json"
+      - "data/releases/**"
+      - "data/symbiosis/**"
+      - "data/insights/**"
+      - "data/reports/**"
+      - "data/history/**"
+      - "data/status/**"
+      - "data/methodology/**"
 
 permissions:
   contents: read
@@ -47,16 +54,25 @@ jobs:
             scripts/brief_backfill_article_content.py \
             scripts/brief_backfill_article_content_resumable.py \
             scripts/audit_brief_article_content.py \
+            scripts/language_routing.py \
             scripts/translation_policy.py \
             scripts/translate_headlines.py \
             scripts/classify_dual_lens.py \
             scripts/validate_multilingual_pipeline.py \
+            scripts/normalize_public_release_copy.py \
+            scripts/audit_public_signal_denominators.py \
+            scripts/build_public_site.py \
+            scripts/validate_public_site_artifact.py \
             scripts/validate_relationship_audit.py \
             scripts/validate_repository_integrity.py
       - name: Validate repository guardrails
         run: python scripts/validate_repository_integrity.py
       - name: Validate multilingual full-body pipeline
         run: python scripts/validate_multilingual_pipeline.py
+      - name: Explain and validate public people-signal denominators
+        run: python scripts/audit_public_signal_denominators.py
+      - name: Reject retired wording in every public snapshot
+        run: python scripts/normalize_public_release_copy.py --check
       - name: Validate symbiosis resilience contract
         run: python scripts/validate_symbiosis_resilience.py
       - name: Validate the public relationship audit index
@@ -65,13 +81,23 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          test_root="$(mktemp -d)"
+          cp -a . "${test_root}/repository"
+          pushd "${test_root}/repository" >/dev/null
           python scripts/create_symbiosis_placeholder.py --force-placeholder-for-test
           if python scripts/validate_public_relationship_consistency.py; then
             echo "::error::The public gate incorrectly accepted a relationship placeholder."
             exit 1
           fi
-          echo "The public gate correctly rejected the relationship placeholder."
+          popd >/dev/null
+          echo "The public gate correctly rejected a placeholder without changing the build input."
       - name: Validate JavaScript syntax
         run: |
           node --check site.js
           node --check edu/dashboard.js
+          node --check report/report.js
+          node --check reports/reports.js
+      - name: Build and inspect the Pages artifact
+        run: |
+          python scripts/build_public_site.py
+          python scripts/validate_public_site_artifact.py

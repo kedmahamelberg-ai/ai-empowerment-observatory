@@ -21,6 +21,14 @@ from lingua import LanguageDetectorBuilder
 from sentence_transformers import SentenceTransformer
 from supabase import Client, create_client
 
+from language_routing import (
+    ROUTE_CHINESE_AUDITED,
+    ROUTE_ENGLISH_PASSTHROUGH,
+    ROUTE_MULTILINGUAL,
+    contains_han,
+    resolve_source_language,
+    translation_route,
+)
 from translation_policy import CURRENT_TRANSLATION_PROFILE
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -139,67 +147,26 @@ def build_detector():
 def detect_language(detector, text):
     vals = detector.compute_language_confidence_values(text)
     if not vals:
-        return "und", 0.0
+        return "und", 0.0, []
     best = vals[0]
     iso = best.language.iso_code_639_1
-    return (iso.name.lower() if iso else "und", float(best.value))
-
-
-def contains_han(text):
-    return any(
-        "\u3400" <= c <= "\u4dbf" or "\u4e00" <= c <= "\u9fff"
-        for c in text
-    )
-
-
-def normalize_search_lang(value):
-    value = str(value or "").lower()
-    if value.startswith("zh"):
-        return "zh"
-    if value.startswith("fr"):
-        return "fr"
-    if value.startswith("en"):
-        return "en"
-    return value.split("-", 1)[0] if value else ""
+    candidates = []
+    for value in vals[:5]:
+        candidate_iso = value.language.iso_code_639_1
+        if candidate_iso:
+            candidates.append((candidate_iso.name.lower(), float(value.value)))
+    return (iso.name.lower() if iso else "und", float(best.value), candidates)
 
 
 def resolve_language(detector, headline, observed):
-    detected, confidence = detect_language(detector, headline)
-    hints = {normalize_search_lang(v) for v in observed if normalize_search_lang(v)}
-    hint = next(iter(hints)) if len(hints) == 1 else None
-
-    if contains_han(headline):
-        return "zh", confidence, "han_script+lingua", False, ""
-    if confidence >= 0.65:
-        if detected == "en" and hint and hint != "en":
-            # Short French, Chinese or bilingual headlines can be incorrectly
-            # scored as English. The discovery locale is not proof of the
-            # source language, but this conflict is enough to avoid an
-            # English-only passthrough. Qwen receives the original headline
-            # and can preserve it if it was genuinely already English.
-            return (
-                "un",
-                confidence,
-                "lingua_english_conflicts_with_discovery_language",
-                True,
-                "English detection conflicts with the discovery language; routed through multilingual normalization rather than assumed English.",
-            )
-        method = "lingua+search_language" if hint and detected == hint else "lingua"
-        return detected, confidence, method, False, ""
-    if detected == "en" and confidence >= 0.45:
-        return (
-            "un",
-            confidence,
-            "lingua_low_confidence_english_routed_multilingual",
-            True,
-            "English detection is tentative; the headline is routed through multilingual normalization rather than assumed English.",
-        )
-    # The Google interface language is discovery metadata, not proof that the
-    # publisher wrote the source in that language.  Never override a French,
-    # Chinese, Indigenous or other source into English merely because it was
-    # found in an English-language Canadian search.
-    language = detected if len(detected) == 2 and detected != "en" else "un"
-    return language, confidence, "lingua_low_confidence", True, "uncertain source language; routed for multilingual normalization"
+    detected, confidence, candidates = detect_language(detector, headline)
+    return resolve_source_language(
+        headline=headline,
+        detected_language=detected,
+        confidence=confidence,
+        observed_search_languages=observed,
+        language_candidates=candidates,
+    )
 
 
 def text_hash(text):
@@ -486,11 +453,15 @@ def main():
             "language_reason": lreason,
         })
 
-    chinese = [x for x in prepared if x["source_language"] == "zh"]
+    chinese = [
+        item
+        for item in prepared
+        if translation_route(item["source_language"]) == ROUTE_CHINESE_AUDITED
+    ]
     qwen_primary_items = [
         item
         for item in prepared
-        if item["source_language"] not in {"en", "zh"}
+        if translation_route(item["source_language"]) == ROUTE_MULTILINGUAL
     ]
 
     outputs = {}
@@ -551,7 +522,7 @@ def main():
 
     # English passthrough
     for item in prepared:
-        if item["source_language"] == "en":
+        if translation_route(item["source_language"]) == ROUTE_ENGLISH_PASSTHROUGH:
             outputs[item["article_id"]] = {
                 "primary": item["headline"],
                 "primary_model_version": None,

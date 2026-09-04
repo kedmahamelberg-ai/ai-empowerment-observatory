@@ -7,8 +7,8 @@
   <meta name="description" content="See who is gaining from AI, who is losing ground, and the source-linked news behind this week's picture.">
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@6.5.0/dist/maplibre-gl.css">
   <link rel="stylesheet" href="/globe.css?v=6.1.0">
-  <link rel="stylesheet" href="/site.css?v=6.2.0">
-  <link rel="stylesheet" href="/edu/observatory.css?v=6.2.0">
+  <link rel="stylesheet" href="/site.css?v=6.4.0">
+  <link rel="stylesheet" href="/edu/observatory.css?v=6.4.0">
   <link rel="stylesheet" href="/analytics-consent.css">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96">
@@ -36,7 +36,7 @@
     </section>
 
     <section class="weekly-signals" aria-labelledby="people-title">
-      <div class="section-title-row"><div><p class="eyebrow">Start with people</p><h2 id="people-title">What did the news show for people?</h2></div><p id="weekly-assessment-status" class="section-side-note">Checking how the reading was made.</p></div>
+      <div class="section-title-row"><div><p class="eyebrow">Start with people</p><h2 id="people-title">What did the news show for people?</h2></div><details class="section-info"><summary aria-label="How this week's evidence was assessed">i</summary><div class="section-info-panel"><strong>About this reading</strong><p id="weekly-assessment-status">Checking how the reading was made.</p></div></details></div>
       <div id="week-people-board" class="week-people-board" aria-live="polite">
         <article class="week-people-card gaining" data-signal-card="benefit_shown"><span aria-hidden="true">↑</span><div class="week-card-metric"><strong id="week-signal-benefit">Not available</strong><b id="week-percent-benefit">Not available</b></div><h3>A benefit was reported</h3><p>The source showed a direct benefit for people.</p><small id="week-status-benefit">Loading</small></article>
         <article class="week-people-card losing" data-signal-card="downside_shown"><span aria-hidden="true">↓</span><div class="week-card-metric"><strong id="week-signal-downside">Not available</strong><b id="week-percent-downside">Not available</b></div><h3>A downside was reported</h3><p>The source showed a direct drawback for people.</p><small id="week-status-downside">Loading</small></article>
@@ -64,14 +64,14 @@
     </section>
 
     <section id="movement" class="weekly-section movement-section" aria-labelledby="movement-title">
-      <div class="section-title-row"><div><p class="eyebrow">A closer look</p><h2 id="movement-title">How are people and AI moving together?</h2></div><p id="movement-scope" class="section-side-note">Loading...</p></div>
+      <div class="section-title-row"><div><p class="eyebrow">A closer look</p><h2 id="movement-title">When a source made both sides clear</h2></div><p id="movement-scope" class="section-side-note">Loading...</p></div>
       <div id="movement-grid" class="movement-grid" hidden>
         <article class="movement-card together"><div class="movement-arrows"><span>People ↑</span><span>AI →</span></div><strong id="movement-together">0</strong><h3>People gain as AI moves forward</h3></article>
         <article class="movement-card people-down"><div class="movement-arrows"><span>People ↓</span><span>AI →</span></div><strong id="movement-people-down">0</strong><h3>AI moves forward while people lose ground</h3></article>
         <article class="movement-card ai-held"><div class="movement-arrows"><span>People ↑</span><span>AI ↓</span></div><strong id="movement-ai-held">0</strong><h3>People gain when AI is held back</h3></article>
         <article class="movement-card both-down"><div class="movement-arrows"><span>People ↓</span><span>AI ↓</span></div><strong id="movement-both-down">0</strong><h3>People and AI both run into trouble</h3></article>
       </div>
-      <p class="overlap-explainer">These are counts of developments containing each pattern. They may overlap and do not need to add up to the weekly total.</p>
+      <p class="overlap-explainer">This is a narrower subset, not another weekly total. A development can show more than one pattern, so the four cards are descriptions rather than slices of a pie.</p>
     </section>
 
     <section id="explore" class="weekly-section map-section" aria-labelledby="explore-title">
@@ -89,7 +89,7 @@
   </main>
 
   <footer><span>© 2026 AI Empowerment Observatory</span><nav aria-label="Footer navigation"><a href="/">Home</a><a href="/reports/">Reports</a><a href="/methodology/">How it works</a><a href="/privacy/">Privacy</a><a href="mailto:kedma@hamelberg-ai.com">Contact</a></nav></footer>
-  <script type="module" src="/edu/dashboard.js?v=6.3.0"></script>
+  <script type="module" src="/edu/dashboard.js?v=6.4.0"></script>
   <script src="/analytics.js"></script>
 </body>
 </html>

@@ -411,7 +411,7 @@ def build_pdf(release: dict[str, Any], methodology: dict[str, Any] | None) -> di
         "edition": (
             "Human-audited weekly brief"
             if str(((release.get("reliability") or {}).get("governance") or {}).get("audit_status") or "").lower() == "complete"
-            else "Current weekly model-coded brief"
+            else "Current weekly evidence brief"
         ),
         "release_id": release.get("release_id"),
         "release_revision": int(release.get("revision") or 1),

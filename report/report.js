@@ -95,7 +95,7 @@ function relationshipCard(symbiosis, releaseId) {
     return {
       label: "Human-AI relationship lens",
       title: "Relationship classification is being prepared",
-      body: "The core weekly evidence is already available. This relationship layer is added automatically when the same-release classification finishes.",
+      body: "The core weekly evidence is already available. This additional reading appears when the same-release classification finishes.",
     };
   }
   const status = String(symbiosis?.public_status || "classification_in_progress");
@@ -106,7 +106,7 @@ function relationshipCard(symbiosis, releaseId) {
     return {
       label: "Human-AI relationship lens",
       title: "Relationship classification is still running",
-      body: "No older relationship percentages are substituted. The same-release model-coded signal will appear automatically when classification completes.",
+      body: "No older relationship percentages are substituted. This same-release reading will appear when classification completes.",
     };
   }
 
@@ -129,9 +129,9 @@ function relationshipCard(symbiosis, releaseId) {
   const noClear = humanReviewed ? Number(event.no_clear_relational_signal_count || 0) : Number(event.display_no_clear_relational_signal_count ?? event.no_clear_relational_signal_count ?? 0);
   const partial = humanReviewed ? Number(event.partial_signal_count || 0) : Number(event.display_partial_signal_count ?? event.partial_signal_count ?? 0);
   return {
-    label: humanReviewed ? "Human-AI relationship lens · human reviewed" : "Human-AI relationship lens · model-coded provisional",
+    label: humanReviewed ? "Human-AI relationship lens · reviewed evidence" : "Human-AI relationship lens",
     title: count ? `${count} ${plural(count, "development")} showed: ${labels[key]}` : "No complete two-sided pattern dominated",
-    body: `${completeCount} developments had a complete two-sided relationship signal. ${partial} had a one-sided signal and ${noClear} described no clear relationship. Accepted human corrections replace model outputs as review proceeds.`,
+    body: `${completeCount} developments had a complete two-sided relationship signal. ${partial} had a one-sided signal and ${noClear} described no clear relationship. Open the source-linked weekly evidence for the basis of each reading.`,
   };
 }
 
@@ -168,7 +168,7 @@ function renderScope(current, index) {
     "scope-pool",
     pool.all_prior_events_considered && through
       ? `${start} through ${through}`
-      : "Pilot pool begins 5 August 2026; longitudinal scope is provisional",
+      : "Pilot pool begins 5 August 2026; the longitudinal scope is still growing",
   );
   setText("scope-through", formatDateTime(current.data_current_through || current.generated_at) || "Not available");
   setText("scope-revision", `Revision ${Number(current.revision || index.current_revision || 1)}`);

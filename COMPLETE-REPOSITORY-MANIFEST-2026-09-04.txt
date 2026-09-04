@@ -1,0 +1,29 @@
+AI Empowerment Observatory complete repository manifest
+4 September 2026
+
+This is a source-repository delivery, not a changed-files overlay.
+
+The package contains the complete repository tree required to build, validate,
+operate, and publish the Observatory, including:
+
+  .github/       GitHub Actions release, integrity, multilingual, and QC workflows
+  config/        Discovery-market configuration, including English and French Canada
+  data/          Release, history, public and operational data snapshots
+  edu/           This-week public interface
+  methodology/   Public methodology interface
+  report/        Public report-acquisition interface
+  reports/       Public report library interface
+  scripts/       Collection, routing, normalization, release, audit, and build code
+  validation/    Private quality-control assets and owner gold-set storage
+  review/        Private review workbenches and generated review outputs
+  supabase/      Database migrations and schema support
+  root web files Frontend assets and public site entry point
+
+The delivery intentionally excludes only generated local build/cache material:
+
+  _site/          Rebuilt by `python3 scripts/build_public_site.py`
+  __pycache__/    Python bytecode cache
+  _pycache_/      Legacy Python bytecode cache
+  *.pyc           Python bytecode cache
+
+Read FULL-REPOSITORY-HANDOFF.md before deployment.

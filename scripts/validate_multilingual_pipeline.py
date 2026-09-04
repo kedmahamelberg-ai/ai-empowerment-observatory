@@ -11,6 +11,13 @@ import json
 from pathlib import Path
 
 from brief_content_common import MIN_FULL_BODY_EVIDENCE_UNITS, evidence_unit_count
+from language_routing import (
+    ROUTE_CHINESE_AUDITED,
+    ROUTE_ENGLISH_PASSTHROUGH,
+    ROUTE_MULTILINGUAL,
+    resolve_source_language,
+    translation_route,
+)
 from translation_policy import (
     CURRENT_TRANSLATION_PROFILE,
     preferred_translation_rows,
@@ -72,6 +79,92 @@ def test_translation_profile_precedence() -> None:
     )
 
 
+def test_language_routing_contract() -> None:
+    """Prove non-English sources cannot fall into an English-only exclusion path."""
+
+    french = resolve_source_language(
+        headline="La France accélère sur l’intelligence artificielle",
+        detected_language="fr",
+        confidence=0.98,
+        observed_search_languages=["fr"],
+    )
+    require(french[0] == "fr", "French source was not retained as French")
+    require(
+        translation_route(french[0]) == ROUTE_MULTILINGUAL,
+        "French source was not routed through multilingual normalization",
+    )
+
+    chinese = resolve_source_language(
+        headline="人工智能服务为研究人员提供新的工具",
+        detected_language="en",
+        confidence=0.97,
+        observed_search_languages=["zh-cn"],
+    )
+    require(chinese[0] == "zh", "Han-script source was not routed as Chinese")
+    require(
+        translation_route(chinese[0]) == ROUTE_CHINESE_AUDITED,
+        "Chinese source was not assigned its primary-plus-audit route",
+    )
+
+    french_in_canadian_english_search = resolve_source_language(
+        headline="Les services d’IA changent le travail au Canada",
+        detected_language="fr",
+        confidence=0.93,
+        observed_search_languages=["en"],
+    )
+    require(
+        french_in_canadian_english_search[0] == "fr",
+        "French reporting found via an English Canadian search was overwritten as English",
+    )
+    require(
+        translation_route(french_in_canadian_english_search[0]) == ROUTE_MULTILINGUAL,
+        "French Canadian reporting was not sent to multilingual normalization",
+    )
+
+    bilingual_canadian = resolve_source_language(
+        headline="Canada announces new AI rules — règles pour l’intelligence artificielle",
+        detected_language="en",
+        confidence=0.88,
+        observed_search_languages=["en"],
+        language_candidates=[("en", 0.88), ("fr", 0.18)],
+    )
+    require(
+        bilingual_canadian[0] == "un" and bilingual_canadian[3],
+        "Bilingual Canadian source was treated as English-only",
+    )
+    require(
+        translation_route(bilingual_canadian[0]) == ROUTE_MULTILINGUAL,
+        "Bilingual Canadian source was not sent to multilingual normalization",
+    )
+
+    uncertain_non_english = resolve_source_language(
+        headline="خبر جديد عن الذكاء الاصطناعي",
+        detected_language="en",
+        confidence=0.52,
+        observed_search_languages=["en"],
+    )
+    require(
+        uncertain_non_english[0] == "un" and uncertain_non_english[3],
+        "Uncertain non-English source was treated as reliable English",
+    )
+    require(
+        translation_route(uncertain_non_english[0]) == ROUTE_MULTILINGUAL,
+        "Uncertain source was excluded instead of sent to multilingual normalization",
+    )
+
+    reliable_english = resolve_source_language(
+        headline="Researchers gain access to a new AI tool",
+        detected_language="en",
+        confidence=0.99,
+        observed_search_languages=["en"],
+        language_candidates=[("en", 0.99), ("de", 0.002)],
+    )
+    require(
+        translation_route(reliable_english[0]) == ROUTE_ENGLISH_PASSTHROUGH,
+        "Reliable English should be the only passthrough route",
+    )
+
+
 def test_collection_and_routing_contract() -> None:
     collector = (ROOT / "scripts" / "brief_backfill_article_content.py").read_text(encoding="utf-8")
     resolver = (ROOT / "scripts" / "translate_headlines.py").read_text(encoding="utf-8")
@@ -82,18 +175,11 @@ def test_collection_and_routing_contract() -> None:
 
     require("Accept-Language" not in collector, "body collector still asks publishers for an English variant")
     require("decode_article_html" in collector, "body collector lacks multilingual charset decoding")
-    require("qwen_primary_items" in resolver, "translation router does not process non-English languages")
+    require("translation_route" in resolver, "translation router does not use the tested route policy")
+    require("ROUTE_MULTILINGUAL" in resolver, "translation router lacks the multilingual route")
     require(
-        'lang not in {"en", "fr", "zh"}' not in resolver,
-        "translation router still rejects every language outside English, French and Chinese",
-    )
-    require(
-        "routed through multilingual normalization" in resolver,
-        "low-confidence language detection can still silently assume English",
-    )
-    require(
-        "lingua_english_conflicts_with_discovery_language" in resolver,
-        "a French, Chinese or bilingual discovery-language conflict can still pass through as English",
+        "resolve_source_language" in resolver,
+        "translation router lacks the source-language conflict safeguard",
     )
     for name, script in (("dual-lens classifier", dual_lens), ("relationship classifier", symbiosis)):
         require(
@@ -130,6 +216,7 @@ def test_market_configuration() -> None:
 def main() -> int:
     test_evidence_counter()
     test_translation_profile_precedence()
+    test_language_routing_contract()
     test_collection_and_routing_contract()
     test_market_configuration()
     print("Multilingual full-body pipeline regression checks passed.")

@@ -252,7 +252,7 @@ def validate(*, allow_stale: bool = False) -> tuple[dict[str, Any], dict[str, An
     symbiosis_status = str(symbiosis.get("public_status") or "classification_in_progress")
     if symbiosis_status not in {
         "classification_in_progress",
-        "model_coded_provisional",
+        "current_evidence_reading",
         "review_in_progress",  # backwards-compatible with archived placeholders
         "human_reviewed",
     }:

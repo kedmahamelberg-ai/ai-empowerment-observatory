@@ -35,14 +35,12 @@ jobs:
           node --check edu/dashboard.js
       - name: Validate current relationship arithmetic
         run: python scripts/validate_public_relationship_consistency.py
-      - name: Ensure internal process labels are not exposed in the public interface
-        shell: bash
+      - name: Validate full multilingual and public-artifact contract
         run: |
-          set -euo pipefail
-          if grep -R -n -E 'Model-coded provisional signal|model-coded weekly lens' index.html site.js edu/index.html edu/dashboard.js; then
-            echo "Internal process wording is exposed in the public interface."
-            exit 1
-          fi
+          python scripts/validate_multilingual_pipeline.py
+          python scripts/normalize_public_release_copy.py --check
+          python scripts/audit_public_signal_denominators.py
+          python scripts/validate_repository_integrity.py
   publish:
     needs: validate
     uses: ./.github/workflows/publish-observatory-release.yml

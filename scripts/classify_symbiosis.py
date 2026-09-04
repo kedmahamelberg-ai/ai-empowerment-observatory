@@ -9,7 +9,7 @@ The unit of interpretation is release-specific:
 
 This matters longitudinally. A stable event can receive different framing in a
 later week, so Event Lens unit keys include the release ID. Every model result is written with review_status=pending. The live Observatory can
-display the model-coded weekly signal, while optional owner quality control can
+display the current source-evidence reading, while optional owner quality control can
 accept or correct sampled rows and add those adjudications to the gold set.
 
 Scopes:
@@ -488,7 +488,7 @@ def release_units(
                 if str(article.get("content_basis") or "") == "full_text"
             ]
             # Do not give the model an event summary that may itself have been
-            # created from headlines. A multi-source event can be model-coded
+            # created from headlines. A multi-source event can be classified
             # only from the source bodies that are actually stored.
             if not full_text_members:
                 content_basis = "not_available"

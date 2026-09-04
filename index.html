@@ -8,7 +8,7 @@
   <link rel="canonical" href="https://observatory.hamelberg-ai.com/">
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@6.5.0/dist/maplibre-gl.css">
   <link rel="stylesheet" href="/globe.css?v=6.1.0">
-  <link rel="stylesheet" href="/site.css?v=6.2.0">
+  <link rel="stylesheet" href="/site.css?v=6.4.0">
   <link rel="stylesheet" href="/analytics-consent.css">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96">
@@ -40,7 +40,13 @@
     <section class="signal-overview" aria-labelledby="signal-overview-title">
       <div class="signal-overview-heading">
         <div><p class="eyebrow">This week's reading</p><h2 id="signal-overview-title">What does this week's AI news show for people?</h2></div>
-        <div class="assessment-copy"><p id="signal-denominator">Loading this week's developments...</p><p id="assessment-status" class="assessment-status">Checking the evidence basis...</p></div>
+        <div class="assessment-copy">
+          <p id="signal-denominator">Loading this week's developments...</p>
+          <details class="assessment-info">
+            <summary aria-label="How this week's evidence was assessed">i</summary>
+            <div class="assessment-info-panel"><strong>About this reading</strong><p id="assessment-status" class="assessment-status">Checking the evidence basis...</p></div>
+          </details>
+        </div>
       </div>
 
       <div id="people-signal-board" class="people-signal-board" aria-live="polite">
@@ -95,7 +101,7 @@
 
     <section class="movement-section" aria-labelledby="movement-title">
       <div class="section-title-row">
-        <div><p class="eyebrow">A closer look</p><h2 id="movement-title">When the source mentioned people and AI together</h2></div>
+        <div><p class="eyebrow">A closer look</p><h2 id="movement-title">When a source made both sides clear</h2></div>
         <p id="movement-scope" class="section-side-note">Loading...</p>
       </div>
       <div id="movement-grid" class="movement-grid" aria-live="polite">
@@ -104,7 +110,7 @@
         <article class="movement-card ai-held"><div class="movement-arrows"><span>People improve</span><span>AI limited</span></div><strong id="pattern-ai-held">Not available</strong><h3>People benefit while AI is limited</h3></article>
         <article class="movement-card both-down"><div class="movement-arrows"><span>People lose ground</span><span>AI limited</span></div><strong id="pattern-both-down">Not available</strong><h3>People and AI both face a setback</h3></article>
       </div>
-      <p class="overlap-explainer">These details can overlap. They explain the source's relationship pattern and are not another set of weekly totals.</p>
+      <p class="overlap-explainer">This is a narrower subset, not another weekly total. A development can show more than one pattern, so the four cards are descriptions rather than slices of a pie.</p>
     </section>
 
     <section id="source-markets" class="market-section" aria-labelledby="source-market-title">
@@ -125,7 +131,7 @@
   </main>
 
   <footer><span>© 2026 AI Empowerment Observatory</span><nav aria-label="Footer navigation"><a href="/edu/">This week</a><a href="/reports/">Reports</a><a href="/methodology/">How it works</a><a href="/privacy/">Privacy</a><a href="mailto:kedma@hamelberg-ai.com">Contact</a></nav></footer>
-  <script type="module" src="/site.js?v=6.3.0"></script>
+  <script type="module" src="/site.js?v=6.4.0"></script>
   <script src="/analytics.js"></script>
 </body>
 </html>

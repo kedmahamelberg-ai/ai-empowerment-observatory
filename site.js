@@ -2,7 +2,7 @@
 
 import { initDiscoveryGlobe } from "/globe.js?v=6.1.0";
 
-const BUILD_ID = "6.3.0";
+const BUILD_ID = "6.4.0";
 const CURRENT_URL = "/data/releases/current.json";
 const SYMBIOSIS_URL = "/data/symbiosis/current.json";
 const COUNTRIES_URL = "/edu/countries.json";
@@ -189,21 +189,36 @@ function primaryOutcomeSummary(symbiosis, signalData, total) {
   return { counts, basis, uneven };
 }
 
-function outcomeStatus(key, count, basis, total) {
-  const detail = basis?.[key] || { fullBody: 0, other: 0 };
-  if (count > 0 && detail.fullBody + detail.other === count && (detail.fullBody || detail.other)) {
-    const fullText = `${detail.fullBody} with a full article`;
-    const other = `${detail.other} without a full article`;
-    return detail.fullBody && detail.other ? `${fullText}; ${other}` : detail.fullBody ? fullText : other;
-  }
-  return `of ${total} developments`;
+function outcomeStatus(count, total) {
+  return count ? `of ${total} developments` : "No developments this week";
 }
 
 function assessmentStatus(symbiosis, total) {
   const covered = fullBodyEvidenceCount(symbiosis?.people_signals || {});
   if (!total) return "The weekly picture is being prepared.";
   if (covered >= total) return "A full source article was available for every development.";
-  return `A full source article was available for ${covered} of ${total} developments. The rest are kept separate as not enough evidence.`;
+  return `${covered} of ${total} developments included at least one full source article. For the rest, the source links show the evidence that was available; too-thin evidence is kept separate rather than treated as a result.`;
+}
+
+function clearTwoSidedCount(symbiosis, signalData) {
+  const rows = Array.isArray(symbiosis?.evidence) ? symbiosis.evidence : [];
+  const core = ["mutualism", "ai_benefiting_parasitism", "human_benefiting_parasitism", "competition"];
+  if (rows.length) {
+    return rows.reduce((count, row) => (
+      core.some((key) => Boolean(row?.relationship_patterns?.[key])) ? count + 1 : count
+    ), 0);
+  }
+  // The public relationship cards are built from these explicit patterns, not
+  // from the separate classifier-configuration buckets.
+  const patterns = signalData?.relationship_pattern_counts || {};
+  if (core.some((key) => Object.hasOwn(patterns, key))) {
+    return core.reduce((sum, key) => sum + Number(patterns[key] || 0), 0);
+  }
+  const value = symbiosis?.event?.display_complete_configuration_count
+    ?? symbiosis?.event?.complete_configuration_count;
+  const numeric = Number(value);
+  if (Number.isFinite(numeric) && numeric >= 0) return numeric;
+  return 0;
 }
 
 function takeawayCopy(counts) {
@@ -233,14 +248,14 @@ function renderSignals(signalData, release, symbiosis) {
     const value = Number(counts[key] || 0);
     setText(countId, ready ? value : "Not available");
     setText(percentId, ready ? formatPercent(value, total) : "Not available");
-    setText(statusId, ready ? outcomeStatus(key, value, primary.basis, total) : "Count being prepared");
+    setText(statusId, ready ? outcomeStatus(value, total) : "Count being prepared");
     card?.classList.toggle("is-pending", !ready);
   });
   const fullBodyCount = fullBodyEvidenceCount(signalData);
   setText(
     "signal-denominator",
     complete
-      ? `${total} developments in this week's reading.${fullBodyCount ? ` Full article evidence was used for ${fullBodyCount}.` : ""}`
+      ? `${total} developments checked this week`
       : `${classified} of ${total} relationship classifications published`,
   );
   setText("assessment-status", assessmentStatus(symbiosis, total));
@@ -263,7 +278,13 @@ function renderSignals(signalData, release, symbiosis) {
   setText("pattern-people-down", complete ? Number(patterns.ai_benefiting_parasitism || 0) : "Not available");
   setText("pattern-ai-held", complete ? Number(patterns.human_benefiting_parasitism || 0) : "Not available");
   setText("pattern-both-down", complete ? Number(patterns.competition || 0) : "Not available");
-  setText("movement-scope", complete ? `${total} developments checked` : "Picture being prepared");
+  const twoSided = clearTwoSidedCount(symbiosis, signalData);
+  setText(
+    "movement-scope",
+    complete
+      ? `${twoSided} of ${total} developments gave a clear two-sided picture. The other ${Math.max(0, total - twoSided)} did not meet that narrower condition.`
+      : "Picture being prepared",
+  );
 }
 
 function marketRows(release, iso3) {

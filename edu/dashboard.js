@@ -2,7 +2,7 @@
 
 import { initDiscoveryGlobe } from "/globe.js?v=6.1.0";
 
-const BUILD_ID = "6.3.0";
+const BUILD_ID = "6.4.0";
 const CURRENT_URL = "/data/releases/current.json";
 const INDEX_URL = "/data/releases/index.json";
 const COUNTRIES_URL = "/edu/countries.json";
@@ -194,21 +194,35 @@ function primaryOutcomeSummary() {
   return { counts, basis, uneven };
 }
 
-function outcomeStatus(key, count, basis, total) {
-  const detail = basis?.[key] || { fullBody: 0, other: 0 };
-  if (count > 0 && detail.fullBody + detail.other === count && (detail.fullBody || detail.other)) {
-    const fullText = `${detail.fullBody} with a full article`;
-    const other = `${detail.other} without a full article`;
-    return detail.fullBody && detail.other ? `${fullText}; ${other}` : detail.fullBody ? fullText : other;
-  }
-  return `of ${total} developments`;
+function outcomeStatus(count, total) {
+  return count ? `of ${total} developments` : "No developments this week";
 }
 
 function assessmentStatus(total) {
   const covered = fullBodyEvidenceCount(signalSummary);
   if (!total) return "The weekly picture is being prepared.";
   if (covered >= total) return "A full source article was available for every development.";
-  return `A full source article was available for ${covered} of ${total} developments. The rest are kept separate as not enough evidence.`;
+  return `${covered} of ${total} developments included at least one full source article. For the rest, the source links show the evidence that was available; too-thin evidence is kept separate rather than treated as a result.`;
+}
+
+function clearTwoSidedCount() {
+  const rows = Array.isArray(currentSymbiosis?.evidence) ? currentSymbiosis.evidence : [];
+  const core = ["mutualism", "ai_benefiting_parasitism", "human_benefiting_parasitism", "competition"];
+  if (rows.length) {
+    return rows.reduce((count, row) => (
+      core.some((key) => Boolean(row?.relationship_patterns?.[key])) ? count + 1 : count
+    ), 0);
+  }
+  // Match the public relationship cards, which use explicit pattern fields.
+  const patterns = signalSummary?.relationship_pattern_counts || {};
+  if (core.some((key) => Object.hasOwn(patterns, key))) {
+    return core.reduce((sum, key) => sum + Number(patterns[key] || 0), 0);
+  }
+  const value = currentSymbiosis?.event?.display_complete_configuration_count
+    ?? currentSymbiosis?.event?.complete_configuration_count;
+  const numeric = Number(value);
+  if (Number.isFinite(numeric) && numeric >= 0) return numeric;
+  return 0;
 }
 
 function takeawayCopy(counts) {
@@ -243,7 +257,7 @@ function renderSignals() {
     const value = Number(counts[key] || 0);
     setText(countId, ready ? value : "Not available");
     setText(percentId, ready ? formatPercent(value, total) : "Not available");
-    setText(statusId, ready ? outcomeStatus(key, value, primary.basis, total) : "Count being prepared");
+    setText(statusId, ready ? outcomeStatus(value, total) : "Count being prepared");
     document.querySelector(`[data-signal-card="${key}"]`)?.classList.toggle("is-pending", !ready);
     const filter = document.querySelector(`[data-signal-view="${key}"]`);
     if (filter) {
@@ -262,8 +276,13 @@ function renderSignals() {
   setText("movement-people-down", ready ? Number(patterns.ai_benefiting_parasitism || 0) : "Not available");
   setText("movement-ai-held", ready ? Number(patterns.human_benefiting_parasitism || 0) : "Not available");
   setText("movement-both-down", ready ? Number(patterns.competition || 0) : "Not available");
-  const fullBodyCount = fullBodyEvidenceCount(signalSummary);
-  setText("movement-scope", ready ? `${total} developments checked. Full article evidence was used for ${fullBodyCount}.` : "Picture being prepared");
+  const twoSided = clearTwoSidedCount();
+  setText(
+    "movement-scope",
+    ready
+      ? `${twoSided} of ${total} developments gave a clear two-sided picture. The other ${Math.max(0, total - twoSided)} did not meet that narrower condition.`
+      : "Picture being prepared",
+  );
 }
 
 function renderTape() {
