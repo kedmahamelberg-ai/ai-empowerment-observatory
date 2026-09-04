@@ -73,11 +73,19 @@ jobs:
           if [[ -n "${{ inputs.release_id }}" ]]; then args+=(--release-id "${{ inputs.release_id }}"); fi
           if [[ "${{ inputs.require_complete }}" == "true" ]]; then args+=(--require-complete); fi
           python scripts/publish_symbiosis_release.py "${args[@]}"
+      - name: Build public relationship audit index
+        if: ${{ inputs.placeholder == false }}
+        run: python scripts/build_relationship_audit.py
       - name: Commit relationship artifact
         shell: bash
         run: |
           set -euo pipefail
-          mapfile -t generated_files < <(find data/symbiosis -type f -name '*.json' -print | sort)
+          mapfile -t generated_files < <(
+            {
+              find data/symbiosis -type f -name '*.json' -print
+              find review/relationship-audit -type f -name '*.json' -print 2>/dev/null || true
+            } | sort
+          )
           if (( ${#generated_files[@]} == 0 )); then
             echo "::error::No generated symbiosis JSON files were found."
             exit 1

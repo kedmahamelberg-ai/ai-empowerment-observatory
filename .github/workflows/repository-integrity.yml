@@ -41,11 +41,18 @@ jobs:
             scripts/apply_symbiosis_reviews.py \
             scripts/migrate_public_people_signals.py \
             scripts/validate_public_relationship_consistency.py \
+            scripts/build_relationship_audit.py \
+            scripts/export_relationship_evidence_audit.py \
+            scripts/brief_backfill_article_content.py \
+            scripts/brief_backfill_article_content_resumable.py \
+            scripts/validate_relationship_audit.py \
             scripts/validate_repository_integrity.py
       - name: Validate repository guardrails
         run: python scripts/validate_repository_integrity.py
       - name: Validate symbiosis resilience contract
         run: python scripts/validate_symbiosis_resilience.py
+      - name: Validate the public relationship audit index
+        run: python scripts/validate_relationship_audit.py
       - name: Confirm relationship placeholder cannot pass publication
         shell: bash
         run: |

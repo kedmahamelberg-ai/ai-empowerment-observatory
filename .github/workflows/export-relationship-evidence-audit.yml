@@ -1,0 +1,45 @@
+name: Export Relationship Evidence Audit
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_id:
+        description: "Weekly release ID, or leave blank for the current week"
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    name: Export body and classification metadata only
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install audit dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Export full-body availability and relationship audit
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=()
+          if [[ -n "${{ inputs.release_id }}" ]]; then args+=(--release-id "${{ inputs.release_id }}"); fi
+          python scripts/export_relationship_evidence_audit.py "${args[@]}"
+      - name: Upload audit for review
+        uses: actions/upload-artifact@v7
+        with:
+          name: relationship-evidence-audit-${{ github.run_id }}
+          path: review/relationship-audit/export/
+          retention-days: 30

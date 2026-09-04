@@ -1,0 +1,96 @@
+name: Recover Missing Full Article Bodies
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_id:
+        description: "Weekly release to audit and recover, for example 2026-W35"
+        required: true
+        default: "2026-W35"
+        type: string
+      dry_run:
+        description: "Inspect every missing source without storing a newly recovered private body"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: aieo-full-body-recovery-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  recover-and-audit:
+    name: Safely retry missing bodies and export audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v7
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install recovery and audit dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install \
+            "supabase>=2,<3" \
+            "requests>=2.32,<3" \
+            "beautifulsoup4>=4.12,<5" \
+            "trafilatura>=2,<3"
+
+      - name: Validate private body-evidence contract
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: python scripts/validate_body_evidence_contract.py
+
+      - name: Safely retry every missing current-week source
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(
+            --scope release
+            --release-id "${{ inputs.release_id }}"
+            --retry-mode all
+            --max-runtime-minutes 68
+            --per-source-timeout-seconds 50
+            --sleep 0.25
+            --report-output review/full-body-recovery/recovery-report.json
+          )
+          if [[ "${{ inputs.dry_run }}" == "true" ]]; then
+            args+=(--dry-run)
+          fi
+          python scripts/brief_backfill_article_content_resumable.py "${args[@]}"
+
+      - name: Export source-by-source body and classification audit
+        if: ${{ always() }}
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/export_relationship_evidence_audit.py \
+            --release-id "${{ inputs.release_id }}" \
+            --output-dir review/full-body-recovery/audit
+
+      - name: Upload recovery report and private audit
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: full-body-recovery-audit-${{ github.run_id }}
+          path: review/full-body-recovery/
+          if-no-files-found: warn
+          retention-days: 90

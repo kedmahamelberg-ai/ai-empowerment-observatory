@@ -37,13 +37,20 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
         run: python scripts/publish_symbiosis_release.py
+      - name: Build public relationship audit index
+        run: python scripts/build_relationship_audit.py
       - name: Reject missing or partial relationship results before commit
         run: python scripts/validate_public_relationship_consistency.py
       - name: Commit complete relationship artifact
         shell: bash
         run: |
           set -euo pipefail
-          mapfile -t generated_files < <(find data/symbiosis -type f -name '*.json' -print | sort)
+          mapfile -t generated_files < <(
+            {
+              find data/symbiosis -type f -name '*.json' -print
+              find review/relationship-audit -type f -name '*.json' -print 2>/dev/null || true
+            } | sort
+          )
           if (( ${#generated_files[@]} == 0 )); then
             echo "::error::No generated relationship JSON files were found."
             exit 1

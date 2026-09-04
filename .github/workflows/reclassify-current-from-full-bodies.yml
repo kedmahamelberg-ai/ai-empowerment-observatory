@@ -9,11 +9,16 @@ on:
         default: "2026-W35"
         type: string
       retry_mode:
-        description: "Body retries: none still collects sources never attempted"
+        description: "Normally leave this as none. Missing bodies are recovered and audited in the separate recovery workflow."
         required: true
         default: none
         type: choice
         options: [none, retryable, all]
+      confirm_body_audit:
+        description: "Set true only after reviewing the downloaded full-body recovery audit."
+        required: true
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -41,6 +46,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          if [[ "${{ inputs.confirm_body_audit }}" != "true" ]]; then
+            echo "::error::This is a classification and publication workflow. First run 'Recover Missing Full Article Bodies' and review its private audit."
+            exit 1
+          fi
           python - <<'PY'
           import json
           import os
@@ -86,7 +95,7 @@ jobs:
       period_start: ${{ needs.guard-current-release.outputs.period_start }}
       period_end: ${{ needs.guard-current-release.outputs.period_end }}
       replace: true
-      revision_reason: "Full-body-first reclassification and owner quality-control audit"
+      revision_reason: "Full article body reclassification after source availability audit"
       rebuild_index_only: false
     secrets: inherit
 
