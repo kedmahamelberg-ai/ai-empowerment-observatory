@@ -1,0 +1,152 @@
+{
+  "schema_version": "aieo_symbiosis_public_v1.0",
+  "release_id": "2026-W35",
+  "release_type": "weekly_relationship_lens",
+  "revision": 7,
+  "period_start": "2026-08-24",
+  "period_end": "2026-08-30",
+  "generated_at": "2026-09-03T20:30:49.909749Z",
+  "codebook_version": "aieo_news_symbiosis_v0.1",
+  "public_status": "classification_in_progress",
+  "source_release_sha256": "2b1176924c47e1e860de718bb61d4fdb04d9831d5e230fd9153646e5e6b631eb",
+  "scope_note": "This lens classifies how source evidence represents human-AI relations. Relationship classification runs after the core weekly release. Once available, the live distribution is model-coded and versioned, with accepted human corrections incorporated later.",
+  "review": {
+    "complete": false,
+    "event_complete": false,
+    "coverage_complete": false,
+    "event_reviewed": 0,
+    "event_total": 110,
+    "coverage_reviewed": 0,
+    "coverage_total": 111
+  },
+  "definitions": {
+    "mutualism": "Both people and the AI side are represented as gaining",
+    "ai_benefiting_parasitism": "The AI or operator side gains while people are constrained",
+    "human_benefiting_parasitism": "People gain while the AI system is constrained",
+    "competition": "People and the AI side are both constrained",
+    "partial_signals": "Only one side of the relationship is established by the source evidence.",
+    "no_clear_relational_signal": "No clear human-AI relationship is described",
+    "insufficient_evidence": "There is not enough source evidence to classify the relationship"
+  },
+  "event": {
+    "expected_units": 110,
+    "classified_units": 0,
+    "reviewed_units": 0,
+    "unreviewed_units": 110,
+    "configuration_counts": {
+      "mutualism": 0,
+      "ai_benefiting_parasitism": 0,
+      "human_benefiting_parasitism": 0,
+      "competition": 0,
+      "human_enabling_only": 0,
+      "human_constraining_only": 0,
+      "ai_enabling_only": 0,
+      "ai_constraining_only": 0,
+      "no_clear_relational_signal": 0,
+      "ambiguous_relational_signal": 0,
+      "insufficient_evidence": 0
+    },
+    "complete_configuration_count": 0,
+    "partial_signal_count": 0,
+    "no_clear_relational_signal_count": 0,
+    "ambiguous_relational_signal_count": 0,
+    "insufficient_evidence_count": 0,
+    "core_four_distribution": {
+      "ai_benefiting_parasitism": 0.0,
+      "competition": 0.0,
+      "human_benefiting_parasitism": 0.0,
+      "mutualism": 0.0
+    },
+    "denominator_note": "Relationship classification is still running for this release."
+  },
+  "coverage": {
+    "expected_units": 111,
+    "classified_units": 0,
+    "reviewed_units": 0,
+    "unreviewed_units": 111,
+    "configuration_counts": {
+      "mutualism": 0,
+      "ai_benefiting_parasitism": 0,
+      "human_benefiting_parasitism": 0,
+      "competition": 0,
+      "human_enabling_only": 0,
+      "human_constraining_only": 0,
+      "ai_enabling_only": 0,
+      "ai_constraining_only": 0,
+      "no_clear_relational_signal": 0,
+      "ambiguous_relational_signal": 0,
+      "insufficient_evidence": 0
+    },
+    "complete_configuration_count": 0,
+    "partial_signal_count": 0,
+    "no_clear_relational_signal_count": 0,
+    "ambiguous_relational_signal_count": 0,
+    "insufficient_evidence_count": 0,
+    "core_four_distribution": {
+      "ai_benefiting_parasitism": 0.0,
+      "competition": 0.0,
+      "human_benefiting_parasitism": 0.0,
+      "mutualism": 0.0
+    },
+    "denominator_note": "Relationship classification is still running for this release."
+  },
+  "secondary_empowerment": {
+    "event": {
+      "reviewed_units": 0,
+      "scored_units": 0,
+      "excluded_unclear": 0,
+      "empowerment_index": null,
+      "status_counts": {
+        "expanding": 0,
+        "contracting": 0,
+        "mixed": 0,
+        "non_empowerment": 0,
+        "unclear": 0
+      },
+      "status_distribution": {
+        "expanding": 0.0,
+        "contracting": 0.0,
+        "mixed": 0.0,
+        "non_empowerment": 0.0,
+        "unclear": 0.0
+      },
+      "note": "The core weekly empowerment lens is published separately; this relationship-review placeholder contains no secondary relationship-derived values yet."
+    },
+    "coverage": {
+      "reviewed_units": 0,
+      "scored_units": 0,
+      "excluded_unclear": 0,
+      "empowerment_index": null,
+      "status_counts": {
+        "expanding": 0,
+        "contracting": 0,
+        "mixed": 0,
+        "non_empowerment": 0,
+        "unclear": 0
+      },
+      "status_distribution": {
+        "expanding": 0.0,
+        "contracting": 0.0,
+        "mixed": 0.0,
+        "non_empowerment": 0.0,
+        "unclear": 0.0
+      },
+      "note": "The core weekly empowerment lens is published separately; this relationship-review placeholder contains no secondary relationship-derived values yet."
+    }
+  },
+  "evidence": [],
+  "technical_labels": {
+    "mutualism": "Mutualism",
+    "ai_benefiting_parasitism": "AI-benefiting parasitism",
+    "human_benefiting_parasitism": "Human-benefiting parasitism",
+    "competition": "Competition or co-constraint",
+    "human_enabling_only": "Human-side enabling signal only",
+    "human_constraining_only": "Human-side constraining signal only",
+    "ai_enabling_only": "AI-side enabling signal only",
+    "ai_constraining_only": "AI-side constraining signal only",
+    "no_clear_relational_signal": "No clear relational signal",
+    "ambiguous_relational_signal": "Ambiguous relational signal",
+    "insufficient_evidence": "Insufficient evidence"
+  },
+  "content_sha256": "a9b7fe3285445088b296a5000a77a637fe6e0a5478e6945a295a0d53a21f5217"
+}
