@@ -27,8 +27,33 @@ jobs:
         uses: actions/setup-python@v7
         with:
           python-version: "3.12"
-      - name: Install public-brief dependency
-        run: python -m pip install "reportlab>=4.4,<5"
+      - name: Install publication dependencies
+        run: >-
+          python -m pip install
+          "supabase>=2.18,<3"
+          "reportlab>=4.4,<5"
+      - name: Materialize saved relationship classifications
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: python scripts/publish_symbiosis_release.py
+      - name: Reject missing or partial relationship results before commit
+        run: python scripts/validate_public_relationship_consistency.py
+      - name: Commit complete relationship artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t generated_files < <(find data/symbiosis -type f -name '*.json' -print | sort)
+          if (( ${#generated_files[@]} == 0 )); then
+            echo "::error::No generated relationship JSON files were found."
+            exit 1
+          fi
+          bash scripts/commit_generated_files.sh \
+            "Publish saved relationship results [$(date -u +%Y-%m-%d)]" \
+            main \
+            "${generated_files[@]}"
+      - name: Refresh after relationship commit
+        run: git pull --ff-only origin main
       - name: Regenerate release-bound public derivatives
         run: |
           python scripts/generate_public_insights.py

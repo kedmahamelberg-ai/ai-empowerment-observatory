@@ -45,10 +45,16 @@ jobs:
         run: python scripts/validate_repository_integrity.py
       - name: Validate symbiosis resilience contract
         run: python scripts/validate_symbiosis_resilience.py
-      - name: Refresh local relationship placeholder for current release
-        run: python scripts/create_symbiosis_placeholder.py
-      - name: Validate public relationship arithmetic
-        run: python scripts/validate_public_relationship_consistency.py
+      - name: Confirm relationship placeholder cannot pass publication
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/create_symbiosis_placeholder.py
+          if python scripts/validate_public_relationship_consistency.py; then
+            echo "::error::The public gate incorrectly accepted a relationship placeholder."
+            exit 1
+          fi
+          echo "The public gate correctly rejected the relationship placeholder."
       - name: Validate JavaScript syntax
         run: |
           node --check site.js
