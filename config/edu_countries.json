@@ -1,6 +1,6 @@
 {
   "meta": {
-    "edition": "Observatory Edu — five-country collection pilot",
+    "edition": "Observatory Edu five-country multilingual-market collection pilot",
     "selection_metric": "Private AI investment in 2025",
     "source": "Stanford AI Index Report 2026, Chapter 4, Figure 4.2.8",
     "note": "The investment ranking selects the Edu case countries only. Investment is not used to calculate empowerment.",
@@ -54,7 +54,16 @@
       "gl": "ca",
       "hl": "en",
       "private_ai_investment_2025_usd_billion": 4.28,
-      "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"intelligence artificielle\" OR \"IA générative\" OR \"AI regulation\") when:8d"
+      "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
+    },
+    {
+      "country": "Canada",
+      "iso2": "CA",
+      "iso3": "CAN",
+      "gl": "ca",
+      "hl": "fr",
+      "private_ai_investment_2025_usd_billion": 4.28,
+      "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
     }
   ]
 }
