@@ -1,18 +1,18 @@
 {
   "meta": {
     "version": "public_insights_v4_release_bound",
-    "generated_at": "2026-08-31T19:26:38.497100Z",
+    "generated_at": "2026-09-04T08:57:28.862505Z",
     "release_id": "2026-W35",
-    "release_revision": 2,
-    "classification_run_id": "65b4aab8-c176-457f-9fdb-1f197de50e55",
+    "release_revision": 4,
+    "classification_run_id": "42f88c7f-ceb8-4901-bc49-b96bfc05650a",
     "collection_run_id": "afa1afef-947d-4589-baae-e24a7dfcd2bc",
     "observation_start": "2026-08-24",
     "observation_end": "2026-08-30",
     "source_of_truth": "/data/releases/current.json",
-    "coverage_units": 112,
-    "event_units": 111,
+    "coverage_units": 111,
+    "event_units": 110,
     "extra_coverage": 1,
-    "first_time_event_records": 108,
+    "first_time_event_records": 107,
     "follow_on_event_records": 0,
     "recurring_event_records": 0,
     "source_method": "Publications and organisations are dynamically observed through the current discovery workflow; this is not a fixed journal whitelist.",
@@ -84,38 +84,6 @@
       "note": "Discovery-market counts can overlap because the same article may appear in more than one search market."
     },
     {
-      "country_iso3": "CAN",
-      "name": "Canada",
-      "article_count": 25,
-      "unique_publishers": 14,
-      "languages": [
-        "en"
-      ],
-      "top_publishers": [
-        {
-          "publisher": "The Globe and Mail",
-          "article_count": 10
-        },
-        {
-          "publisher": "WSJ",
-          "article_count": 2
-        },
-        {
-          "publisher": "CBC",
-          "article_count": 2
-        },
-        {
-          "publisher": "The Regulatory Review",
-          "article_count": 1
-        },
-        {
-          "publisher": "Lexpert",
-          "article_count": 1
-        }
-      ],
-      "note": "Discovery-market counts can overlap because the same article may appear in more than one search market."
-    },
-    {
       "country_iso3": "CHN",
       "name": "China",
       "article_count": 25,
@@ -142,6 +110,38 @@
         },
         {
           "publisher": "nwpu.edu.cn",
+          "article_count": 1
+        }
+      ],
+      "note": "Discovery-market counts can overlap because the same article may appear in more than one search market."
+    },
+    {
+      "country_iso3": "CAN",
+      "name": "Canada",
+      "article_count": 24,
+      "unique_publishers": 14,
+      "languages": [
+        "en"
+      ],
+      "top_publishers": [
+        {
+          "publisher": "The Globe and Mail",
+          "article_count": 9
+        },
+        {
+          "publisher": "WSJ",
+          "article_count": 2
+        },
+        {
+          "publisher": "CBC",
+          "article_count": 2
+        },
+        {
+          "publisher": "The Regulatory Review",
+          "article_count": 1
+        },
+        {
+          "publisher": "Lexpert",
           "article_count": 1
         }
       ],
@@ -185,8 +185,8 @@
     "rows": [
       {
         "publisher": "The Globe and Mail",
-        "article_count": 10,
-        "unique_event_count": 10
+        "article_count": 9,
+        "unique_event_count": 9
       },
       {
         "publisher": "中国科技网",
@@ -599,126 +599,129 @@
     "themes": [
       {
         "label": "Other AI developments",
-        "count": 45,
-        "share": 0.4018
-      },
-      {
-        "label": "AI products & model releases",
-        "count": 14,
-        "share": 0.125
-      },
-      {
-        "label": "Business, markets & investment",
-        "count": 14,
-        "share": 0.125
+        "count": 30,
+        "share": 0.2703
       },
       {
         "label": "Government & rules",
-        "count": 8,
-        "share": 0.0714
+        "count": 12,
+        "share": 0.1081
       },
       {
-        "label": "Government, rights & regulation",
+        "label": "Business, markets & investment",
+        "count": 10,
+        "share": 0.0901
+      },
+      {
+        "label": "AI products & model releases",
+        "count": 9,
+        "share": 0.0811
+      },
+      {
+        "label": "Business & productivity",
+        "count": 9,
+        "share": 0.0811
+      },
+      {
+        "label": "Education & research",
+        "count": 8,
+        "share": 0.0721
+      },
+      {
+        "label": "Work & jobs",
+        "count": 6,
+        "share": 0.0541
+      },
+      {
+        "label": "Consumer services",
         "count": 4,
-        "share": 0.0357
+        "share": 0.036
+      },
+      {
+        "label": "Healthcare",
+        "count": 4,
+        "share": 0.036
       },
       {
         "label": "Science & research",
         "count": 4,
-        "share": 0.0357
+        "share": 0.036
       },
       {
-        "label": "Education & research",
+        "label": "Government, rights & regulation",
         "count": 3,
-        "share": 0.0268
-      },
-      {
-        "label": "Healthcare",
-        "count": 3,
-        "share": 0.0268
+        "share": 0.027
       },
       {
         "label": "Safety, security & misinformation",
         "count": 3,
-        "share": 0.0268
-      },
-      {
-        "label": "Business & productivity",
-        "count": 2,
-        "share": 0.0179
+        "share": 0.027
       },
       {
         "label": "Education & learning",
         "count": 2,
-        "share": 0.0179
+        "share": 0.018
       },
       {
         "label": "Infrastructure & investment",
         "count": 2,
-        "share": 0.0179
+        "share": 0.018
       },
       {
         "label": "Infrastructure, chips & energy",
         "count": 2,
-        "share": 0.0179
-      },
-      {
-        "label": "Consumer services",
-        "count": 1,
-        "share": 0.0089
+        "share": 0.018
       },
       {
         "label": "Events & ecosystem",
         "count": 1,
-        "share": 0.0089
+        "share": 0.009
       },
       {
         "label": "Health & medicine",
         "count": 1,
-        "share": 0.0089
-      },
-      {
-        "label": "International affairs & defence",
-        "count": 1,
-        "share": 0.0089
-      },
-      {
-        "label": "Work & jobs",
-        "count": 1,
-        "share": 0.0089
+        "share": 0.009
       },
       {
         "label": "Work, jobs & skills",
         "count": 1,
-        "share": 0.0089
+        "share": 0.009
       }
     ],
     "by_status": {
+      "contracting": {
+        "count": 3,
+        "share": 0.027
+      },
+      "expanding": {
+        "count": 10,
+        "share": 0.0901
+      },
       "non_empowerment": {
-        "count": 71,
-        "share": 0.6339
+        "count": 67,
+        "share": 0.6036
       },
       "unclear": {
-        "count": 41,
-        "share": 0.3661
+        "count": 31,
+        "share": 0.2793
       }
     },
     "by_narrative": {
       "contested": {
-        "count": 13,
-        "share": 0.1161
+        "count": 14,
+        "share": 0.1261
       },
       "descriptive_neutral": {
-        "count": 90,
-        "share": 0.8036
+        "count": 74,
+        "share": 0.6667
       },
       "opportunity": {
-        "count": 5,
-        "share": 0.0446
+        "count": 16,
+        "share": 0.1441
       },
       "threat": {
-        "count": 4,
-        "share": 0.0357
+        "count": 7,
+        "share": 0.0631
       }
     }
   },
@@ -726,297 +729,300 @@
     "themes": [
       {
         "label": "Other AI developments",
-        "count": 43,
-        "share": 0.3874
-      },
-      {
-        "label": "AI products & model releases",
-        "count": 14,
-        "share": 0.1261
-      },
-      {
-        "label": "Business, markets & investment",
-        "count": 14,
-        "share": 0.1261
+        "count": 28,
+        "share": 0.2545
       },
       {
         "label": "Government & rules",
-        "count": 9,
-        "share": 0.0811
+        "count": 13,
+        "share": 0.1182
       },
       {
-        "label": "Government, rights & regulation",
+        "label": "Business, markets & investment",
+        "count": 10,
+        "share": 0.0909
+      },
+      {
+        "label": "AI products & model releases",
+        "count": 9,
+        "share": 0.0818
+      },
+      {
+        "label": "Business & productivity",
+        "count": 9,
+        "share": 0.0818
+      },
+      {
+        "label": "Education & research",
+        "count": 8,
+        "share": 0.0727
+      },
+      {
+        "label": "Work & jobs",
+        "count": 6,
+        "share": 0.0545
+      },
+      {
+        "label": "Consumer services",
         "count": 4,
-        "share": 0.036
+        "share": 0.0364
+      },
+      {
+        "label": "Healthcare",
+        "count": 4,
+        "share": 0.0364
       },
       {
         "label": "Science & research",
         "count": 4,
-        "share": 0.036
+        "share": 0.0364
       },
       {
-        "label": "Education & research",
+        "label": "Government, rights & regulation",
         "count": 3,
-        "share": 0.027
-      },
-      {
-        "label": "Healthcare",
-        "count": 3,
-        "share": 0.027
+        "share": 0.0273
       },
       {
         "label": "Safety, security & misinformation",
         "count": 3,
-        "share": 0.027
-      },
-      {
-        "label": "Business & productivity",
-        "count": 2,
-        "share": 0.018
+        "share": 0.0273
       },
       {
         "label": "Education & learning",
         "count": 2,
-        "share": 0.018
+        "share": 0.0182
       },
       {
         "label": "Infrastructure & investment",
         "count": 2,
-        "share": 0.018
+        "share": 0.0182
       },
       {
         "label": "Infrastructure, chips & energy",
         "count": 2,
-        "share": 0.018
-      },
-      {
-        "label": "Consumer services",
-        "count": 1,
-        "share": 0.009
+        "share": 0.0182
       },
       {
         "label": "Events & ecosystem",
         "count": 1,
-        "share": 0.009
+        "share": 0.0091
       },
       {
         "label": "Health & medicine",
         "count": 1,
-        "share": 0.009
-      },
-      {
-        "label": "International affairs & defence",
-        "count": 1,
-        "share": 0.009
-      },
-      {
-        "label": "Work & jobs",
-        "count": 1,
-        "share": 0.009
+        "share": 0.0091
       },
       {
         "label": "Work, jobs & skills",
         "count": 1,
-        "share": 0.009
+        "share": 0.0091
       }
     ],
     "by_status": {
+      "contracting": {
+        "count": 3,
+        "share": 0.0273
+      },
+      "expanding": {
+        "count": 10,
+        "share": 0.0909
+      },
       "non_empowerment": {
-        "count": 71,
-        "share": 0.6396
+        "count": 67,
+        "share": 0.6091
       },
       "unclear": {
-        "count": 40,
-        "share": 0.3604
+        "count": 30,
+        "share": 0.2727
       }
     },
     "by_narrative": {
       "contested": {
-        "count": 13,
-        "share": 0.1171
+        "count": 14,
+        "share": 0.1273
       },
       "descriptive_neutral": {
-        "count": 90,
-        "share": 0.8108
+        "count": 74,
+        "share": 0.6727
       },
       "opportunity": {
-        "count": 4,
-        "share": 0.036
+        "count": 15,
+        "share": 0.1364
       },
       "threat": {
-        "count": 4,
-        "share": 0.036
+        "count": 7,
+        "share": 0.0636
       }
     }
   },
   "non_empowerment": {
     "coverage": {
-      "unit_count": 71,
+      "unit_count": 67,
       "themes": [
         {
           "label": "Other AI developments",
-          "count": 24,
-          "share": 0.338
+          "count": 18,
+          "share": 0.2687
         },
         {
           "label": "AI products & model releases",
-          "count": 12,
-          "share": 0.169
-        },
-        {
-          "label": "Business, markets & investment",
-          "count": 10,
-          "share": 0.1408
-        },
-        {
-          "label": "Government & rules",
-          "count": 4,
-          "share": 0.0563
-        },
-        {
-          "label": "Government, rights & regulation",
-          "count": 4,
-          "share": 0.0563
-        },
-        {
-          "label": "Healthcare",
-          "count": 3,
-          "share": 0.0423
+          "count": 8,
+          "share": 0.1194
         },
         {
           "label": "Business & productivity",
-          "count": 2,
-          "share": 0.0282
-        },
-        {
-          "label": "Education & research",
-          "count": 2,
-          "share": 0.0282
-        },
-        {
-          "label": "Infrastructure & investment",
-          "count": 2,
-          "share": 0.0282
-        },
-        {
-          "label": "Science & research",
-          "count": 2,
-          "share": 0.0282
-        },
-        {
-          "label": "Education & learning",
-          "count": 1,
-          "share": 0.0141
-        },
-        {
-          "label": "Events & ecosystem",
-          "count": 1,
-          "share": 0.0141
-        },
-        {
-          "label": "Health & medicine",
-          "count": 1,
-          "share": 0.0141
-        },
-        {
-          "label": "Infrastructure, chips & energy",
-          "count": 1,
-          "share": 0.0141
-        },
-        {
-          "label": "International affairs & defence",
-          "count": 1,
-          "share": 0.0141
-        },
-        {
-          "label": "Safety, security & misinformation",
-          "count": 1,
-          "share": 0.0141
-        }
-      ]
-    },
-    "event": {
-      "unit_count": 71,
-      "themes": [
-        {
-          "label": "Other AI developments",
-          "count": 23,
-          "share": 0.3239
-        },
-        {
-          "label": "AI products & model releases",
-          "count": 12,
-          "share": 0.169
+          "count": 8,
+          "share": 0.1194
         },
         {
           "label": "Business, markets & investment",
-          "count": 10,
-          "share": 0.1408
+          "count": 8,
+          "share": 0.1194
         },
         {
           "label": "Government & rules",
           "count": 5,
-          "share": 0.0704
-        },
-        {
-          "label": "Government, rights & regulation",
-          "count": 4,
-          "share": 0.0563
-        },
-        {
-          "label": "Healthcare",
-          "count": 3,
-          "share": 0.0423
-        },
-        {
-          "label": "Business & productivity",
-          "count": 2,
-          "share": 0.0282
+          "share": 0.0746
         },
         {
           "label": "Education & research",
-          "count": 2,
-          "share": 0.0282
+          "count": 3,
+          "share": 0.0448
         },
         {
-          "label": "Infrastructure & investment",
+          "label": "Government, rights & regulation",
+          "count": 3,
+          "share": 0.0448
+        },
+        {
+          "label": "Consumer services",
           "count": 2,
-          "share": 0.0282
+          "share": 0.0299
+        },
+        {
+          "label": "Healthcare",
+          "count": 2,
+          "share": 0.0299
+        },
+        {
+          "label": "Safety, security & misinformation",
+          "count": 2,
+          "share": 0.0299
         },
         {
           "label": "Science & research",
           "count": 2,
-          "share": 0.0282
+          "share": 0.0299
         },
         {
-          "label": "Education & learning",
-          "count": 1,
-          "share": 0.0141
+          "label": "Work & jobs",
+          "count": 2,
+          "share": 0.0299
         },
         {
           "label": "Events & ecosystem",
           "count": 1,
-          "share": 0.0141
+          "share": 0.0149
         },
         {
           "label": "Health & medicine",
           "count": 1,
-          "share": 0.0141
+          "share": 0.0149
+        },
+        {
+          "label": "Infrastructure & investment",
+          "count": 1,
+          "share": 0.0149
         },
         {
           "label": "Infrastructure, chips & energy",
           "count": 1,
-          "share": 0.0141
+          "share": 0.0149
+        }
+      ]
+    },
+    "event": {
+      "unit_count": 67,
+      "themes": [
+        {
+          "label": "Other AI developments",
+          "count": 17,
+          "share": 0.2537
         },
         {
-          "label": "International affairs & defence",
-          "count": 1,
-          "share": 0.0141
+          "label": "AI products & model releases",
+          "count": 8,
+          "share": 0.1194
+        },
+        {
+          "label": "Business & productivity",
+          "count": 8,
+          "share": 0.1194
+        },
+        {
+          "label": "Business, markets & investment",
+          "count": 8,
+          "share": 0.1194
+        },
+        {
+          "label": "Government & rules",
+          "count": 6,
+          "share": 0.0896
+        },
+        {
+          "label": "Education & research",
+          "count": 3,
+          "share": 0.0448
+        },
+        {
+          "label": "Government, rights & regulation",
+          "count": 3,
+          "share": 0.0448
+        },
+        {
+          "label": "Consumer services",
+          "count": 2,
+          "share": 0.0299
+        },
+        {
+          "label": "Healthcare",
+          "count": 2,
+          "share": 0.0299
         },
         {
           "label": "Safety, security & misinformation",
+          "count": 2,
+          "share": 0.0299
+        },
+        {
+          "label": "Science & research",
+          "count": 2,
+          "share": 0.0299
+        },
+        {
+          "label": "Work & jobs",
+          "count": 2,
+          "share": 0.0299
+        },
+        {
+          "label": "Events & ecosystem",
           "count": 1,
-          "share": 0.0141
+          "share": 0.0149
+        },
+        {
+          "label": "Health & medicine",
+          "count": 1,
+          "share": 0.0149
+        },
+        {
+          "label": "Infrastructure & investment",
+          "count": 1,
+          "share": 0.0149
+        },
+        {
+          "label": "Infrastructure, chips & energy",
+          "count": 1,
+          "share": 0.0149
         }
       ]
     }
