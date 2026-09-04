@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Stage 7C.1a — repair QA/review outputs without rerunning Qwen.
+"""Stage 7C.5 full-body-only post-processing without rerunning Qwen.
 
 Why:
-The substantive 7C.1 classifications were successfully stored, but nearly all
-units entered the review queue because:
+The substantive Stage 7C classifications are stored before this step. This
+script keeps their evidence boundary intact while repairing normal QA output:
 1. Qwen's self-reported numeric confidence was not calibrated and frequently 0.
 2. auxiliary normalization warnings (especially geography) were treated as
    core classification failures.
@@ -38,8 +38,8 @@ ROOT = Path(__file__).resolve().parents[1]
 REVIEW_OUTPUT = ROOT / "review" / "classification" / "latest.json"
 PUBLIC_OUTPUT = ROOT / "data" / "lenses" / "latest.json"
 
-POSTPROCESS_VERSION = "7C.1b"
-TARGET_CLASSIFIER_VERSION = "7C.1"
+POSTPROCESS_VERSION = "7C.5a_full_body_required"
+TARGET_CLASSIFIER_VERSION = "7C.5_full_body_required"
 TRANSLATION_PROFILE = "validated_language_routing_v3"
 EVENT_METHOD = "article_to_event_v1"
 
@@ -123,7 +123,7 @@ def load_classifications(
 
     if not rows:
         raise RepairError(
-            "The latest successful Stage 7C.1 run has no lens classifications."
+            "The latest successful full-body-required Stage 7C run has no lens classifications."
         )
 
     return rows
@@ -202,6 +202,12 @@ def apply_non_empowerment_residual(
     Returns True when a row is normalized.
     """
 
+    raw_output = row.get("raw_output")
+    if isinstance(raw_output, dict) and raw_output.get("classification_not_run"):
+        # Missing full article text is an evidence-availability state.  It is
+        # not evidence for a non-empowerment finding.
+        return False
+
     if str(row.get("empowerment_status")) != "unclear":
         return False
 
@@ -259,6 +265,10 @@ def core_review_reasons(row: dict[str, Any]) -> list[str]:
     Therefore a remaining `unclear` status should represent genuine core
     ambiguity rather than merely absent evidence of empowerment.
     """
+
+    raw_output = row.get("raw_output")
+    if isinstance(raw_output, dict) and raw_output.get("classification_not_run"):
+        return ["full article body unavailable; model classification not run"]
 
     reasons: list[str] = []
 

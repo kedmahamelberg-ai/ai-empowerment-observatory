@@ -21,12 +21,15 @@ RETRYABLE = {
     "source_timeout",
     "too_little_extractable_text",
     "robots_unavailable",
+    "tdm_unavailable",
 }
 
 TERMINAL_PRIOR_OUTCOMES = {
     "blocked_paywall_or_login",
     "blocked_robots",
     "blocked_tdm_reserved",
+    "blocked_access_control",
+    "blocked_bot_challenge",
     "non_article_media",
 }
 
@@ -193,6 +196,12 @@ def should_skip(article_id, stored, latest_outcome, retry_mode):
     prior = latest_outcome.get(article_id)
     if not prior:
         return False, None
+    # "all" means exactly that: recheck every unresolved source, including a
+    # publisher policy block. The fetcher will respect the current robots/TDM
+    # decision and never bypass a paywall or login. This lets an owner learn
+    # whether a policy or a temporary technical condition has changed.
+    if retry_mode == "all":
+        return False, None
     if prior in TERMINAL_PRIOR_OUTCOMES:
         return True, f"terminal_prior_{prior}"
     if retry_mode == "none":
@@ -281,12 +290,14 @@ def main():
         except SourceDeadlineExceeded as exc:
             result = {
                 "outcome": "source_timeout",
-                "error": str(exc),
+                "error_class": type(exc).__name__,
+                "error_message": str(exc),
             }
         except Exception as exc:
             result = {
                 "outcome": "exception",
-                "error": f"{type(exc).__name__}: {exc}",
+                "error_class": type(exc).__name__,
+                "error_message": str(exc),
             }
 
         outcome = str(result.get("outcome") or "unknown")

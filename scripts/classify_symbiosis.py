@@ -66,6 +66,7 @@ OWNER_GOLD_PATH = ROOT / "validation" / "symbiosis-owner-gold.json"
 MAX_ARTICLE_EVIDENCE_CHARS = 14000
 MAX_EVENT_EVIDENCE_CHARS = 22000
 MIN_FULL_TEXT_WORDS = 80
+FULL_BODY_REQUIRED_POLICY = "full_article_body_required_v1"
 
 
 class SymbiosisClassificationError(RuntimeError):
@@ -276,6 +277,8 @@ def evidence_basis_summary(articles: list[dict[str, Any]]) -> dict[str, Any]:
         "article_summary_sources": counts.get("article_summary", 0),
         "snippet_sources": counts.get("headline_and_snippet", 0),
         "headline_only_sources": counts.get("headline_only", 0),
+        "not_available_sources": counts.get("not_available", 0),
+        "input_policy": FULL_BODY_REQUIRED_POLICY,
         "body_coverage": (
             "all_sources" if total and full == total
             else "some_sources" if full
@@ -351,12 +354,15 @@ def load_articles(client: Client, article_ids: list[str]) -> dict[str, dict[str,
         metadata = parse_metadata(row.get("source_metadata"))
         evidence_text, content_basis = evidence_from_metadata(metadata)
         full_text = full_text_map.get(article_id) or {}
-        # Full publisher evidence always outranks a previously generated or
-        # discovery-time summary. Summaries remain the lawful fallback when a
-        # body could not be retained.
+        # Relationship labels are deliberately full-body-only. A discovery
+        # summary remains useful operational metadata, but cannot become model
+        # evidence when the publisher body was not collected.
         if full_text.get("body_text"):
             evidence_text = str(full_text["body_text"])
             content_basis = "full_text"
+        else:
+            evidence_text = ""
+            content_basis = "not_available"
         result[article_id] = {
             "article_id": article_id,
             "headline_original": original,
@@ -390,7 +396,7 @@ def fallback_article(source: dict[str, Any]) -> dict[str, Any] | None:
         "date": str(source.get("published_date") or ""),
         "source_language": str(source.get("source_language") or "en"),
         "evidence_text": "",
-        "content_basis": "headline_only",
+        "content_basis": "not_available",
         "search_markets": [],
         "search_languages": [],
         "min_rank": 9999,
@@ -473,9 +479,20 @@ def release_units(
             if not members:
                 continue
             event_summary = str(event.get("event_summary") or "").strip()
-            content_basis = "multiple_sources" if len(members) > 1 else members[0]["content_basis"]
-            if event_summary and content_basis == "headline_only":
-                content_basis = "article_summary"
+            full_text_members = [
+                article
+                for article in members
+                if str(article.get("content_basis") or "") == "full_text"
+            ]
+            # Do not give the model an event summary that may itself have been
+            # created from headlines. A multi-source event can be model-coded
+            # only from the source bodies that are actually stored.
+            if not full_text_members:
+                content_basis = "not_available"
+            elif len(full_text_members) == 1:
+                content_basis = "full_text"
+            else:
+                content_basis = "multiple_sources"
             units.append(
                 (
                     "event",
@@ -491,6 +508,7 @@ def release_units(
                         "content_basis": content_basis,
                         "evidence_basis_summary": evidence_basis_summary(members),
                         "member_articles": members,
+                        "model_member_articles": full_text_members,
                     },
                 )
             )
@@ -516,10 +534,11 @@ def successful_existing_unit_keys(
                 client,
                 "symbiosis_classifications",
                 "unit_key,content_basis,raw_output,codebook_version,symbiosis_run_id,"
-                "symbiosis_classification_runs!inner(status)",
+                "symbiosis_classification_runs!inner(status,classifier_version)",
                 apply=lambda query, keys=selected_keys: (
                     query.eq("codebook_version", CODEBOOK_VERSION)
                     .eq("symbiosis_classification_runs.status", "success")
+                    .eq("symbiosis_classification_runs.classifier_version", CLASSIFIER_VERSION)
                     .in_("unit_key", keys)
                 ),
             )
@@ -568,7 +587,7 @@ def start_run(
                 "evidence_policy_version": EVIDENCE_POLICY_VERSION,
                 "model_name": QWEN_REPO,
                 "model_revision": model_revision,
-                "notes": "Release-specific model proposals. Rows are eligible for optional owner QC; manual review is not required every week.",
+                "notes": "Release-specific relationship classifications. The classifier uses stored full article bodies only; unavailable bodies receive a transparent non-model evidence state.",
             }
         )
         .select("symbiosis_run_id")
@@ -940,13 +959,14 @@ DECISION BOUNDARY POLICY
 15. A development can contain several relationship patterns at once. Mark every pattern directly supported by the evidence. Do not force the whole development into one compromise pattern.
 16. Mark unequal human outcomes only when the evidence says that some groups benefit more, face different conditions, or are put at a disadvantage relative to others.
 17. Write public_takeaway as one short sentence in everyday language. State what the development means for people; avoid method labels and academic terminology.
-18. Return only one JSON object.{calibration_section}
+18. Write people_evidence in at most 280 characters. If you choose a people benefit or downside, identify the specific source-supported fact behind it. Otherwise write "no people outcome stated" or "not enough evidence". Do not quote long passages.
+19. Return only one JSON object.{calibration_section}
 
 Required keys:
 ai_relevant, evidence_status, relational_signal, human_experience_type,
 ai_expressive_role, human_reasoning, ai_reasoning, summary, confidence,
 topic, geographic_scope, country_iso3s, relationship_patterns,
-distribution_signal, public_takeaway.
+distribution_signal, public_takeaway, people_evidence.
 
 confidence must be a JSON number from 0 through 1, for example 0.85. Do not
 return a word such as high, medium, or low.
@@ -971,6 +991,41 @@ Content basis: {content_basis}
 EVIDENCE
 {evidence}
 """.strip()
+
+def classification_audit(unit: dict[str, Any], result: dict[str, Any]) -> dict[str, Any]:
+    """Persist a compact, inspectable claim-and-provenance record with each row."""
+    evidence_summary = unit.get("evidence_basis_summary") or {}
+    full_sources = int(evidence_summary.get("full_text_sources") or 0)
+    signals = result.get("public_signals") or {}
+    directional = bool(signals.get("people_gaining") or signals.get("people_losing_ground"))
+    model_not_called = bool((result.get("raw_output") or {}).get("classification_not_run"))
+    flags: list[str] = []
+    if model_not_called:
+        flags.extend(["full_article_body_unavailable", "model_not_called"])
+    if directional and full_sources == 0:
+        flags.append("invalid_directional_result_without_full_article_body")
+    if directional and result.get("evidence_status") != "sufficient":
+        flags.append("directional_result_with_partial_evidence")
+    if result.get("evidence_status") == "insufficient":
+        flags.append("insufficient_evidence")
+    evidence_claim = " ".join(str(result.get("people_evidence") or "").split())[:280]
+    if directional and not evidence_claim:
+        flags.append("missing_people_evidence_claim")
+    return {
+        "schema_version": "aieo_relationship_classification_audit_v1",
+        "input": {
+            "content_basis": str(unit.get("content_basis") or "headline_only"),
+            "source_count": int(evidence_summary.get("source_count") or 0),
+            "full_text_sources": full_sources,
+            "body_coverage": str(evidence_summary.get("body_coverage") or "not_recorded"),
+            "input_policy": str(evidence_summary.get("input_policy") or FULL_BODY_REQUIRED_POLICY),
+        },
+        "people_evidence": evidence_claim,
+        "directional_people_result": directional,
+        "classification_not_run": model_not_called,
+        "flags": flags,
+    }
+
 
 def call_classifier(*, lens: str, evidence: str, content_basis: str) -> dict[str, Any]:
     prompt = classifier_prompt(lens=lens, evidence=evidence, content_basis=content_basis)
@@ -1010,6 +1065,7 @@ def call_classifier(*, lens: str, evidence: str, content_basis: str) -> dict[str
                 "relationship_patterns": normalized["relationship_patterns"],
                 "distribution_signal": normalized["distribution_signal"],
                 "public_takeaway": normalized["public_takeaway"],
+                "people_evidence": normalized["people_evidence"],
                 "public_signal_schema_version": normalized["schema_version"],
                 "normalization_warnings": normalized.get("normalization_warnings") or [],
             }
@@ -1037,7 +1093,7 @@ def article_evidence(article: dict[str, Any]) -> str:
         }.get(str(article.get("content_basis") or ""), "Available source evidence")
         lines.append(f"{label}: {article['evidence_text']}")
     else:
-        lines.append("No source summary or snippet is stored. Classify cautiously from the headline only.")
+        lines.append("No full article body is available. Do not classify this source from the headline.")
     return "\n".join(lines)
 
 
@@ -1046,10 +1102,8 @@ def event_evidence(event: dict[str, Any]) -> str:
         f"Development title: {event['event_title']}",
         f"Development date: {event['event_date']}",
     ]
-    if event.get("event_summary"):
-        lines.append(f"Stored development summary: {event['event_summary']}")
-    lines.append("Source evidence represented in this weekly release:")
-    members = event["member_articles"]
+    lines.append("Collected full article bodies represented in this weekly release:")
+    members = event.get("model_member_articles") or []
     per_source_limit = max(2600, min(MAX_ARTICLE_EVIDENCE_CHARS, MAX_EVENT_EVIDENCE_CHARS // max(1, len(members))))
     for article in members:
         line = f"- {article['publisher']}: {article['headline_english']} ({article['date']})"
@@ -1058,6 +1112,45 @@ def event_evidence(event: dict[str, Any]) -> str:
             line += f" | Evidence basis: {article.get('content_basis')} | {excerpt}"
         lines.append(line)
     return "\n".join(lines)
+
+
+def unavailable_full_body_result(unit: dict[str, Any]) -> dict[str, Any]:
+    """Create a transparent non-model row when no full source body exists."""
+    title = str(unit.get("headline_english") or unit.get("event_title") or "this development")
+    result = validate_model_payload(
+        {
+            "ai_relevant": True,
+            "human_experience_type": "unclear",
+            "ai_expressive_role": "unclear",
+            "evidence_status": "insufficient",
+            "relational_signal": "unclear",
+            "confidence": 0.0,
+            "topic": "other",
+            "geographic_scope": "unclear",
+            "country_iso3s": [],
+            "summary": "No full article body was available, so the source was not model-classified.",
+            "public_takeaway": "The full source article was not available to read, so no conclusion about people was made.",
+            "people_evidence": "",
+            "relationship_patterns": {
+                "mutualism": False,
+                "ai_benefiting_parasitism": False,
+                "human_benefiting_parasitism": False,
+                "competition": False,
+            },
+            "distribution_signal": "not_shown",
+        }
+    )
+    result["raw_output"] = {
+        "classification_not_run": True,
+        "reason": "full_article_body_unavailable",
+        "input_policy": FULL_BODY_REQUIRED_POLICY,
+        "unit_title": title,
+        "relationship_patterns": result["relationship_patterns"],
+        "distribution_signal": result["distribution_signal"],
+        "public_takeaway": result["public_takeaway"],
+        "people_evidence": "",
+    }
+    return result
 
 
 def insert_result(
@@ -1099,6 +1192,8 @@ def insert_result(
             **result["raw_output"],
             "input_evidence": unit.get("evidence_basis_summary") or {},
             "content_basis": unit["content_basis"],
+            "input_policy": FULL_BODY_REQUIRED_POLICY,
+            "classification_audit": classification_audit(unit, result),
         },
         "review_status": "pending",
         "updated_at": iso_z(utc_now()),
@@ -1277,6 +1372,11 @@ def main() -> int:
             flush=True,
         )
 
+    def unit_has_full_body_model_evidence(lens: str, unit: dict[str, Any]) -> bool:
+        if lens == "coverage":
+            return str(unit.get("content_basis") or "") == "full_text"
+        return bool(unit.get("model_member_articles"))
+
     process: subprocess.Popen[Any] | None = None
     handle: Any | None = None
     newly_written: list[dict[str, Any]] = []
@@ -1287,7 +1387,7 @@ def main() -> int:
         else None
     )
     try:
-        if pending_units:
+        if any(unit_has_full_body_model_evidence(lens, unit) for lens, unit in pending_units):
             process, handle = start_server()
         for position, (lens, unit) in enumerate(pending_units, start=1):
             if deadline is not None and time.monotonic() >= deadline:
@@ -1306,8 +1406,11 @@ def main() -> int:
                 print(json.dumps(status, indent=2))
                 return 0
             print(f"[{position}/{len(pending_units)}] {lens}: {unit['unit_key']}", flush=True)
-            evidence = article_evidence(unit) if lens == "coverage" else event_evidence(unit)
-            result = call_classifier(lens=lens, evidence=evidence, content_basis=unit["content_basis"])
+            if unit_has_full_body_model_evidence(lens, unit):
+                evidence = article_evidence(unit) if lens == "coverage" else event_evidence(unit)
+                result = call_classifier(lens=lens, evidence=evidence, content_basis=unit["content_basis"])
+            else:
+                result = unavailable_full_body_result(unit)
             row = insert_result(client, run_id=run_id, lens=lens, unit=unit, result=result)
             newly_written.append(row)
             review_rows.append(

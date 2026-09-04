@@ -2,9 +2,13 @@
 """Stage 7C — classify Coverage Lens + Event Lens and calculate indices.
 
 Efficiency:
-- classify each current article once for Coverage Lens;
+- classify each current article with a stored full body once for Coverage Lens;
 - singleton events reuse their article classification deterministically;
-- only multi-article events receive an additional event-level Qwen call.
+- only multi-article events with a stored full body receive an additional
+  event-level Qwen call.
+
+Sources without a full article body are retained as unavailable evidence. They
+are not sent to the model and do not receive a substantive classifier result.
 
 This preserves the conceptual difference:
 - Coverage Lens = article weighted.
@@ -45,10 +49,11 @@ ROOT = Path(__file__).resolve().parents[1]
 REVIEW_OUTPUT = ROOT / "review" / "classification" / "latest.json"
 PUBLIC_OUTPUT = ROOT / "data" / "lenses" / "latest.json"
 
-CLASSIFIER_VERSION = "7C.4"
+CLASSIFIER_VERSION = "7C.5_full_body_required"
 CODEBOOK_VERSION = "observatory_dual_lens_v1.1"
 EVENT_METHOD = "article_to_event_v1"
 TRANSLATION_PROFILE = "validated_language_routing_v3"
+FULL_BODY_REQUIRED_POLICY = "full_article_body_required_v1"
 
 QWEN_REPO = "Qwen/Qwen3-4B-GGUF"
 QWEN_QUANT = "Q4_K_M"
@@ -212,8 +217,9 @@ CLASSIFICATION_JSON_SCHEMA = {
             "maximum": 1,
             "description": (
                 "Diagnostic self-rating of categorical certainty. Headline-only "
-                "evidence does not automatically imply zero confidence. Use 0 "
-                "only when no defensible categorical judgement can be made."
+                "evidence is never supplied to this classifier. Use 0 only "
+                "when no defensible categorical judgement can be made from "
+                "the supplied full article body."
             ),
         },
         "reasoning": {"type": "string"}
@@ -618,7 +624,10 @@ def load_current_articles(
             evidence_text = str(full_text["body_text"])
             content_basis = "full_text"
         else:
-            evidence_text = snippet
+            # Preserve snippets for the owner's private audit, but never pass
+            # them to the model.  A missing full article body is a source
+            # availability state, not permission to fall back to a headline.
+            evidence_text = ""
             content_basis = "headline_and_snippet" if snippet else "headline_only"
 
         date_value = row.get("published_at") or row.get("first_seen_at")
@@ -792,8 +801,10 @@ def register_model(client: Client) -> tuple[str, str]:
                     "JSON-object mode with prompt-only fallback and client-side validation; "
                     "diagnostic self-confidence is reported but does not "
                     "control the index or review queue. "
-                    "Coverage articles classified once; singleton events "
-                    "inherit article classification."
+                    "Full article body evidence is required for every model "
+                    "call; unavailable sources are recorded without a model "
+                    "classification. Coverage articles classified once; "
+                    "singleton events inherit article classification."
                 ),
             },
             on_conflict=(
@@ -1600,10 +1611,12 @@ Do not use external knowledge.
 Do not use publisher location as event geography unless the evidence itself
 locates the development there.
 
+Full article body evidence is required for this model call. A headline may
+orient the reader, but it cannot independently support a classification.
+
 Confidence is a diagnostic self-rating of categorical certainty, not a rating
-of how much source text was available. Headline-only evidence does not by
-itself require confidence 0. Use confidence 0 only when no defensible
-categorical judgement can be made.
+of how much source text was available. Use confidence 0 only when no
+defensible categorical judgement can be made from the supplied full body.
 
 Return exactly one JSON object and no surrounding prose.
 
@@ -1750,10 +1763,79 @@ present, direction, degree, confidence, reasoning.
         f"fallback modes: {last_error}"
     )
 
+
+def unavailable_full_body_result(
+    *,
+    title: str,
+    source_basis: str,
+    lens: str,
+) -> dict[str, Any]:
+    """Record an unavailable source without asking the model to guess.
+
+    The source remains in the current collection so the release and private
+    audit can account for it.  Its substantive classification is deliberately
+    not inferred from its title, snippet, event summary, or external knowledge.
+    ``content_basis`` stays within the live database's existing vocabulary;
+    ``raw_output`` records that no model input was supplied.
+    """
+    safe_basis = source_basis if source_basis in VALID_CONTENT_BASIS else "headline_only"
+    dimensions = {
+        dimension: {
+            "present": False,
+            "direction": None,
+            "degree": 0,
+            "confidence": 0.0,
+            "reasoning": "No full article body was available for this dimension.",
+        }
+        for dimension in sorted(VALID_DIMENSIONS)
+    }
+    reason = "Full article body unavailable; model classification was not run."
+    return {
+        # The source passed the collection's AI-news scope.  This is not a
+        # model judgement about its substance, and keeps the unit visible in
+        # the release-level provenance and full-body recovery audit.
+        "ai_relevant": True,
+        "empowerment_status": "unclear",
+        "empowerment_degree": 0,
+        "unit_score": None,
+        "narrative_frame": "unclear",
+        "distribution_breadth": "unclear",
+        "dominant_dimension": None,
+        "dimensions": dimensions,
+        "ai_authority_shift": "unclear",
+        "topic": "other",
+        "geographic_scope": "unclear",
+        "country_iso3s": [],
+        "primary_country_iso3": None,
+        "content_basis": safe_basis,
+        "confidence": 0.0,
+        "reasoning": reason,
+        "requires_review": True,
+        "review_reason": reason,
+        "_raw_model_output": {
+            "classification_not_run": True,
+            "reason": "full_article_body_unavailable",
+            "input_policy": FULL_BODY_REQUIRED_POLICY,
+            "lens": lens,
+            "title_for_audit": title,
+            "source_basis": safe_basis,
+        },
+    }
+
+
 def article_evidence(article: dict[str, Any]) -> str:
     basis = str(article.get("content_basis") or "headline_only")
     evidence = str(article.get("evidence_text") or "")
-    evidence_label = "Collected article body" if basis == "full_text" else "Source snippet"
+    if basis != "full_text":
+        return f"""
+Lens unit: one news article
+Publisher: {article["publisher"]}
+Date: {article["date"]}
+Original headline: {article["headline_original"]}
+English normalization: {article["headline_english"]}
+Full article body: unavailable
+Model input policy: {FULL_BODY_REQUIRED_POLICY}
+""".strip()
 
     return f"""
 Lens unit: one news article
@@ -1761,8 +1843,8 @@ Publisher: {article["publisher"]}
 Date: {article["date"]}
 Original headline: {article["headline_original"]}
 English normalization: {article["headline_english"]}
-{evidence_label}: {evidence}
-Evidence basis available: {basis}
+Collected full article body: {evidence}
+Evidence basis available: full_text
 """.strip()
 
 
@@ -1770,6 +1852,11 @@ def event_evidence(
     event: dict[str, Any],
     members: list[dict[str, Any]],
 ) -> str:
+    if any(str(article.get("content_basis") or "") != "full_text" for article in members):
+        raise ClassificationError(
+            "Event evidence may include only sources with a stored full article body."
+        )
+
     blocks = []
 
     per_source_limit = max(2600, min(MAX_ARTICLE_EVIDENCE_CHARS, MAX_EVENT_EVIDENCE_CHARS // max(1, len(members))))
@@ -1784,8 +1871,7 @@ Publisher: {article["publisher"]}
 Date: {article["date"]}
 Original headline: {article["headline_original"]}
 English normalization: {article["headline_english"]}
-Evidence basis: {article.get("content_basis") or "headline_only"}
-Source evidence: {compact_evidence_text(article.get("evidence_text") or "", per_source_limit)}
+Full article body: {compact_evidence_text(article.get("evidence_text") or "", per_source_limit)}
 """.strip()
         )
 
@@ -1793,12 +1879,11 @@ Source evidence: {compact_evidence_text(article.get("evidence_text") or "", per_
 Lens unit: one unique real-world event
 Canonical event title: {event.get("event_title") or ""}
 Event date: {event.get("event_date") or ""}
-Event summary: {event.get("event_summary") or ""}
-Number of source articles: {len(members)}
+Number of full-body source articles: {len(members)}
 
 {chr(10).join(blocks)}
 
-Evidence basis available: multiple_sources
+Model input policy: {FULL_BODY_REQUIRED_POLICY}
 """.strip()
 
 
@@ -2626,6 +2711,8 @@ def main() -> int:
 
     classified_count = 0
     qwen_calls = 0
+    model_coverage_results: list[dict[str, Any]] = []
+    model_sanity_checked = False
     coverage_results: list[
         dict[str, Any]
     ] = []
@@ -2641,23 +2728,32 @@ def main() -> int:
             raise PassBudgetReached(stage)
 
     try:
-        current_article_ids = {
+        current_article_ids_requiring_model = {
             str(article["article_id"])
             for article in articles
+            if str(article.get("content_basis") or "") == "full_text"
         }
-        current_multi_event_ids = {
+        current_multi_event_ids_requiring_model = {
             str(event["event_id"])
             for event in events
-            if len(membership[str(event["event_id"])]) > 1
+            if (
+                len(membership[str(event["event_id"])]) > 1
+                and any(
+                    str(article_map[article_id].get("content_basis") or "")
+                    == "full_text"
+                    for article_id in membership[str(event["event_id"])]
+                )
+            )
         }
         needs_server = bool(
-            current_article_ids.difference(saved_coverage)
-            or current_multi_event_ids.difference(saved_events)
+            current_article_ids_requiring_model.difference(saved_coverage)
+            or current_multi_event_ids_requiring_model.difference(saved_events)
         )
         if needs_server:
             process, handle = start_server()
 
-        # 1. COVERAGE LENS — every article gets one classification.
+        # 1. COVERAGE LENS: every article gets a provenance record, but only
+        # full-body sources are sent to the model.
         for index, article in enumerate(
             articles,
             start=1,
@@ -2667,7 +2763,6 @@ def main() -> int:
                 f"{article['headline_english'][:100]}"
             )
 
-            qwen_calls += 1
             article_id = str(article["article_id"])
             saved_result = saved_coverage.get(article_id)
 
@@ -2682,30 +2777,41 @@ def main() -> int:
                     flush=True,
                 )
             else:
-                require_pass_budget("coverage")
-                result = call_classifier(
-                    codebook_prompt=str(
-                        codebook[
-                            "prompt_text"
-                        ]
-                    ),
-                    lens="coverage",
-                    evidence_text=article_evidence(
-                        article
-                    ),
-                    content_basis=(
-                        article.get("content_basis")
-                        or "headline_only"
-                    ),
-                )
+                if str(article.get("content_basis") or "") == "full_text":
+                    require_pass_budget("coverage")
+                    qwen_calls += 1
+                    result = call_classifier(
+                        codebook_prompt=str(
+                            codebook[
+                                "prompt_text"
+                            ]
+                        ),
+                        lens="coverage",
+                        evidence_text=article_evidence(
+                            article
+                        ),
+                        content_basis="full_text",
+                    )
+                    model_coverage_results.append(result)
 
-                print(
-                    "  -> "
-                    f"status={result['empowerment_status']} "
-                    f"frame={result['narrative_frame']} "
-                    f"confidence={result['confidence']:.2f}",
-                    flush=True,
-                )
+                    print(
+                        "  -> "
+                        f"status={result['empowerment_status']} "
+                        f"frame={result['narrative_frame']} "
+                        f"confidence={result['confidence']:.2f}",
+                        flush=True,
+                    )
+                else:
+                    result = unavailable_full_body_result(
+                        title=str(article.get("headline_english") or ""),
+                        source_basis=str(article.get("content_basis") or "headline_only"),
+                        lens="coverage",
+                    )
+                    print(
+                        "  -> full article body unavailable; "
+                        "model classification not run",
+                        flush=True,
+                    )
 
                 classification_id = (
                     insert_classification(
@@ -2741,10 +2847,11 @@ def main() -> int:
 
             classified_count += 1
 
-            if index == 8:
+            if len(model_coverage_results) >= 8 and not model_sanity_checked:
+                model_sanity_checked = True
                 if max(
                     row["confidence"]
-                    for row in coverage_results
+                    for row in model_coverage_results
                 ) == 0:
                     print(
                         "Warning: first 8 Qwen confidence self-ratings are 0. "
@@ -2771,7 +2878,7 @@ def main() -> int:
 
                 if all(
                     is_default_collapse(row)
-                    for row in coverage_results
+                    for row in model_coverage_results
                 ):
                     raise ClassificationError(
                         "Structured-output sanity check failed: first 8 "
@@ -2800,10 +2907,13 @@ def main() -> int:
                 article_map[aid]
                 for aid in member_ids
             ]
+            full_body_members = [
+                article
+                for article in members
+                if str(article.get("content_basis") or "") == "full_text"
+            ]
 
             saved_result = saved_events.get(event_id)
-            if len(member_ids) > 1:
-                qwen_calls += 1
 
             if saved_result is not None:
                 result = dict(saved_result)
@@ -2833,12 +2943,37 @@ def main() -> int:
                         f"{event.get('event_title','')[:90]}"
                     )
 
+                elif not full_body_members:
+                    source_basis = (
+                        "headline_and_snippet"
+                        if any(str(member.get("snippet") or "").strip() for member in members)
+                        else "headline_only"
+                    )
+                    result = unavailable_full_body_result(
+                        title=str(event.get("event_title") or ""),
+                        source_basis=source_basis,
+                        lens="event",
+                    )
+                    derived_from = None
+                    print(
+                        f"[Event {index}/{len(events)}] "
+                        "no full article body; model classification not run: "
+                        f"{event.get('event_title','')[:80]}"
+                    )
+
                 else:
                     require_pass_budget("event")
+                    qwen_calls += 1
+                    event_content_basis = (
+                        "full_text"
+                        if len(full_body_members) == 1
+                        else "multiple_sources"
+                    )
 
                     print(
                         f"[Event {index}/{len(events)}] "
-                        f"multi-source Qwen ({len(member_ids)} sources): "
+                        f"full-body Qwen ({len(full_body_members)} of "
+                        f"{len(member_ids)} sources): "
                         f"{event.get('event_title','')[:80]}"
                     )
 
@@ -2851,9 +2986,9 @@ def main() -> int:
                         lens="event",
                         evidence_text=event_evidence(
                             event,
-                            members,
+                            full_body_members,
                         ),
-                        content_basis="multiple_sources",
+                        content_basis=event_content_basis,
                     )
 
                     derived_from = None
@@ -2914,9 +3049,15 @@ def main() -> int:
                         event.get("event_date")
                         or ""
                     ),
-                    "_review_evidence": event_evidence(
-                        event,
-                        members,
+                    "_review_evidence": (
+                        event_evidence(event, full_body_members)
+                        if full_body_members
+                        else (
+                            "Lens unit: one unique real-world event\n"
+                            f"Canonical event title: {event.get('event_title') or ''}\n"
+                            "Full article body: unavailable\n"
+                            f"Model input policy: {FULL_BODY_REQUIRED_POLICY}"
+                        )
                     ),
                     "_member_count": len(
                         member_ids

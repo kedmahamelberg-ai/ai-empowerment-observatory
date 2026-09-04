@@ -16,6 +16,7 @@ from typing import Any
 from supabase import Client, create_client
 
 from symbiosis_common import (
+    CLASSIFIER_VERSION,
     CODEBOOK_VERSION,
     CORE_FOUR,
     PARTIALS,
@@ -130,9 +131,10 @@ def latest_rows(
     for start in range(0, len(ids), 100):
         response = (
             client.table("symbiosis_classifications")
-            .select("*,symbiosis_classification_runs!inner(status)")
+            .select("*,symbiosis_classification_runs!inner(status,classifier_version)")
             .eq("codebook_version", CODEBOOK_VERSION)
             .eq("symbiosis_classification_runs.status", "success")
+            .eq("symbiosis_classification_runs.classifier_version", CLASSIFIER_VERSION)
             .eq("release_id", release_id)
             .eq("lens", lens)
             .in_(column, ids[start:start + 100])
@@ -262,8 +264,8 @@ def configuration_summary(
         "display_insufficient_evidence_count": display_summary["insufficient_evidence_count"],
         "display_core_four_distribution": display_summary["core_four_distribution"],
         "denominator_note": (
-            "The live weekly display is model-coded and incorporates accepted human corrections as they arrive. "
-            "The finalized human-reviewed fields remain separate until every required review is complete."
+            "The weekly display reports the source evidence available for the current release. "
+            "A development is kept separate when the available source evidence is not enough to show a clear people outcome."
         ),
     }
 
@@ -579,6 +581,7 @@ def event_public_rows(
                 "evidence_status": final["evidence_status"],
                 "content_basis": final.get("content_basis"),
                 "evidence_basis_summary": final.get("evidence_basis_summary") or {},
+                "classification_audit": final.get("classification_audit") or {},
                 "story_country_iso3s": final["story_country_iso3s"],
                 "evidence_summary": final["evidence_summary"],
                 "reasoning": final["reasoning"],
@@ -757,7 +760,7 @@ def main() -> int:
         ),
         "scope_note": (
             "This lens classifies how source evidence represents human-AI relations. "
-            "The weekly display is model-coded and versioned, with accepted human corrections incorporated when available. "
+            "Each people outcome is tied to the source evidence available for that development. "
             "It does not claim objective system performance, consciousness, intentions, or biological fitness."
         ),
         "review": {

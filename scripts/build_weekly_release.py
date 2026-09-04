@@ -47,6 +47,7 @@ from release_common import (
 
 BASELINE_DIR = ROOT / "data" / "releases" / "baselines"
 RESURFACE_DAYS = 28.0
+STAGE7C_CLASSIFIER_VERSION = "7C.5_full_body_required"
 
 
 def latest_successful_classification(client) -> dict[str, Any]:
@@ -59,13 +60,16 @@ def latest_successful_classification(client) -> dict[str, Any]:
             "review_required_count"
         )
         .eq("status", "success")
+        .eq("classifier_version", STAGE7C_CLASSIFIER_VERSION)
         .order("completed_at", desc=True)
         .limit(1)
         .execute()
     )
     data = getattr(response, "data", None) or []
     if not data:
-        raise ReleaseError("No successful Stage 7C classification run exists.")
+        raise ReleaseError(
+            "No successful full-body-required Stage 7C classification run exists."
+        )
     return data[0]
 
 

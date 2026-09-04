@@ -72,6 +72,7 @@ def main() -> int:
     for marker in (
         "Materialize saved relationship classifications",
         "python scripts/publish_symbiosis_release.py",
+        "Build public relationship audit index",
         "Commit complete relationship artifact",
     ):
         if marker not in publish:
@@ -94,22 +95,36 @@ def main() -> int:
     site_script = (ROOT / "site.js").read_text(encoding="utf-8")
     for marker in (
         "const complete = total > 0 && classified === total;",
-        "const ready = complete && available[key] === true;",
+        "function primaryOutcomeSummary(",
+        "function assessmentStatus(",
         "Missing classifications are not counted as unclear results.",
     ):
         if marker not in site_script:
             fail(f"the public site can misrepresent missing relationship data: {marker}")
     home_page = (ROOT / "index.html").read_text(encoding="utf-8")
-    if '/site.js?v=6.1.2' not in home_page or 'const BUILD_ID = "6.1.2";' not in site_script:
+    if '/site.js?v=6.3.0' not in home_page or 'const BUILD_ID = "6.3.0";' not in site_script:
         fail("the relationship-data safety fix is missing its browser cache-busting version")
     education_page = (ROOT / "edu" / "index.html").read_text(encoding="utf-8")
     education_script = (ROOT / "edu" / "dashboard.js").read_text(encoding="utf-8")
-    if '/edu/dashboard.js?v=6.1.2' not in education_page or 'const BUILD_ID = "6.1.2";' not in education_script:
+    if '/edu/dashboard.js?v=6.3.0' not in education_page or 'const BUILD_ID = "6.3.0";' not in education_script:
         fail("the education interface is missing its relationship-provenance cache bust")
     for script_name, script in (("site.js", site_script), ("edu/dashboard.js", education_script)):
-        for marker in ("not_enough_evidence", "no_directional_people_change", "fullBodyEvidenceCount"):
+        for marker in ("primaryOutcomeSummary", "not_enough_evidence", "fullBodyEvidenceCount"):
             if marker not in script:
                 fail(f"{script_name} is missing the public evidence breakdown: {marker}")
+
+    audit_builder = ROOT / "scripts" / "build_relationship_audit.py"
+    audit_validator = ROOT / "scripts" / "validate_relationship_audit.py"
+    audit_exporter = ROOT / "scripts" / "export_relationship_evidence_audit.py"
+    audit_workflow = WORKFLOWS / "export-relationship-evidence-audit.yml"
+    for path in (audit_builder, audit_validator, audit_exporter, audit_workflow):
+        if not path.is_file():
+            fail(f"relationship audit handoff is missing {path.relative_to(ROOT)}")
+    audit_exporter_text = audit_exporter.read_text(encoding="utf-8")
+    if '"body_text_exported": False' not in audit_exporter_text or "never includes private article body text" not in audit_exporter_text:
+        fail("relationship evidence export must guard private article body text")
+    if "Export Relationship Evidence Audit" not in audit_workflow.read_text(encoding="utf-8"):
+        fail("relationship evidence audit workflow has the wrong contract")
 
     repository_integrity = (WORKFLOWS / "repository-integrity.yml").read_text(
         encoding="utf-8"
@@ -204,6 +219,34 @@ def main() -> int:
             "Stage 7C resumability guard is incomplete: "
             + ", ".join(missing_resume_guards)
         )
+    for marker in (
+        'CLASSIFIER_VERSION = "7C.5_full_body_required"',
+        'FULL_BODY_REQUIRED_POLICY = "full_article_body_required_v1"',
+        "def unavailable_full_body_result(",
+        "model classification was not run",
+        "current_article_ids_requiring_model",
+    ):
+        if marker not in stage7c_script:
+            fail(f"Stage 7C full-body-only boundary is missing: {marker}")
+
+    stage7c_finalizer = (ROOT / "scripts" / "finalize_stage7c_residual.py").read_text(
+        encoding="utf-8"
+    )
+    release_builder_script = (ROOT / "scripts" / "build_weekly_release.py").read_text(
+        encoding="utf-8"
+    )
+    for marker in (
+        'TARGET_CLASSIFIER_VERSION = "7C.5_full_body_required"',
+        "classification_not_run",
+    ):
+        if marker not in stage7c_finalizer:
+            fail(f"Stage 7C finalizer can use stale headline-era output: {marker}")
+    for marker in (
+        'STAGE7C_CLASSIFIER_VERSION = "7C.5_full_body_required"',
+        '.eq("classifier_version", STAGE7C_CLASSIFIER_VERSION)',
+    ):
+        if marker not in release_builder_script:
+            fail(f"weekly release can use a stale Stage 7C run: {marker}")
 
     symbiosis_workflow = (WORKFLOWS / "classify-current-symbiosis.yml").read_text(
         encoding="utf-8"
@@ -219,19 +262,37 @@ def main() -> int:
     if symbiosis_workflow.count("args+=(--resume-only)") < 3:
         fail("each relationship-classification pass must support safe resume-only recovery")
 
-    recovery_workflow_path = WORKFLOWS / "resume-full-body-relationship-results.yml"
+    recovery_workflow_path = WORKFLOWS / "recover-missing-full-article-bodies.yml"
     if not recovery_workflow_path.is_file():
-        fail("the one-click full-body relationship recovery workflow is missing")
+        fail("the safe missing-body recovery workflow is missing")
     recovery_workflow = recovery_workflow_path.read_text(encoding="utf-8")
     for marker in (
-        "Resume Full-Body Relationship Results",
-        "python scripts/check_symbiosis_resume.py",
-        "replace: true",
-        "resume_only: true",
-        "publish-observatory-release.yml",
+        "Recover Missing Full Article Bodies",
+        "brief_backfill_article_content_resumable.py",
+        "--retry-mode all",
+        "export_relationship_evidence_audit.py",
+        "full-body-recovery-audit",
     ):
         if marker not in recovery_workflow:
-            fail(f"full-body relationship recovery is missing: {marker}")
+            fail(f"safe missing-body recovery is missing: {marker}")
+    for forbidden in (
+        "classify-dual-lenses.yml",
+        "classify-current-symbiosis.yml",
+        "publish-observatory-release.yml",
+    ):
+        if forbidden in recovery_workflow:
+            fail(f"safe missing-body recovery must not start {forbidden}")
+
+    reclassification_workflow = (
+        WORKFLOWS / "reclassify-current-from-full-bodies.yml"
+    ).read_text(encoding="utf-8")
+    for marker in (
+        "confirm_body_audit",
+        "First run 'Recover Missing Full Article Bodies'",
+        "default: none",
+    ):
+        if marker not in reclassification_workflow:
+            fail(f"full-body reclassification safety gate is missing: {marker}")
 
     symbiosis_script = (ROOT / "scripts" / "classify_symbiosis.py").read_text(
         encoding="utf-8"
@@ -264,6 +325,7 @@ def main() -> int:
     for marker in (
         "def normalize_ai_role(",
         "def evidence_basis_covers(",
+        'CLASSIFIER_VERSION = "symbiosis_news_v0.5_full_body_required"',
         "ai_expressive_role",
         "normalized to",
         'return _AI_ROLE_ALIASES.get(token, "unclear")',
@@ -342,6 +404,17 @@ def main() -> int:
     ):
         if required not in body_resumer:
             fail(f"body enrichment resumability guard is missing {required}")
+    for required in (
+        "FETCH_RETRY_ATTEMPTS",
+        "extract_embedded_json_article_body",
+        "public_alternate_urls",
+        "same_publisher_site",
+        "MAX_REDIRECTS",
+        "detect_access_challenge",
+        "safe_public_recovery_v2",
+    ):
+        if required not in body_fetcher:
+            fail(f"safe full-body recovery is missing {required}")
 
     print("Repository integrity checks passed.")
     return 0

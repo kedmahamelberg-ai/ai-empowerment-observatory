@@ -59,6 +59,7 @@ def main() -> int:
         "relationship_patterns": {},
         "distribution_signal": "not_shown",
         "public_takeaway": "The source describes AI growth but no clear outcome for people.",
+        "people_evidence": "no people outcome stated",
     }
     require(
         validate_model_payload({**model_payload, "confidence": "high"})["confidence"] == 0.85,
@@ -74,6 +75,10 @@ def main() -> int:
     require(
         alias_result["normalization_warnings"],
         "aliased model values must be retained as an audit warning",
+    )
+    require(
+        validate_model_payload(model_payload)["people_evidence"] == "no people outcome stated",
+        "a compact people-evidence claim must be kept for later audit",
     )
     require(
         not evidence_basis_covers(
@@ -118,6 +123,11 @@ def main() -> int:
         "--status-output",
         "--resume-only",
         "time_budget_reached",
+        "def classification_audit(",
+        "def unavailable_full_body_result(",
+        "FULL_BODY_REQUIRED_POLICY",
+        "people_evidence",
+        "classification_not_run",
     )
     for marker in required_source:
         require(marker in source, f"Missing symbiosis resilience marker: {marker}")

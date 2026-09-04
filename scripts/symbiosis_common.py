@@ -12,8 +12,8 @@ from pathlib import Path
 from typing import Any
 
 CODEBOOK_VERSION = "aieo_news_symbiosis_v0.1"
-CLASSIFIER_VERSION = "symbiosis_news_v0.4"
-EVIDENCE_POLICY_VERSION = "aieo_evidence_basis_v4_full_text_first"
+CLASSIFIER_VERSION = "symbiosis_news_v0.5_full_body_required"
+EVIDENCE_POLICY_VERSION = "aieo_evidence_basis_v5_full_body_required"
 PUBLIC_SIGNAL_SCHEMA_VERSION = "aieo_people_signals_v1"
 
 HUMAN_TYPES = {
@@ -696,6 +696,7 @@ def validate_model_payload(payload: dict[str, Any]) -> dict[str, Any]:
         public_takeaway=str(payload.get("public_takeaway") or payload.get("summary") or ""),
     )
 
+    people_evidence = " ".join(str(payload.get("people_evidence") or "").split())[:280]
     return {
         "ai_relevant": bool(payload.get("ai_relevant", True)),
         "evidence_status": evidence_status,
@@ -709,6 +710,7 @@ def validate_model_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "technical_label": TECHNICAL_LABELS[configuration],
         "human_reasoning": str(payload.get("human_reasoning") or "").strip(),
         "ai_reasoning": str(payload.get("ai_reasoning") or "").strip(),
+        "people_evidence": people_evidence,
         "summary": str(payload.get("summary") or "").strip(),
         "confidence": confidence,
         "topic": str(payload.get("topic") or "other").strip(),
@@ -769,5 +771,8 @@ def final_payload_from_classification(row: dict[str, Any]) -> dict[str, Any]:
         "empowerment_status": row.get("final_empowerment_status"),
         "empowerment_degree": row.get("final_empowerment_degree"),
         "empowerment_reasoning": row.get("final_empowerment_reasoning"),
+        "classification_audit": raw_output.get("classification_audit")
+        if isinstance(raw_output.get("classification_audit"), dict)
+        else {},
         **public_layer,
     }
