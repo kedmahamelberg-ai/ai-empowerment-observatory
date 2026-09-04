@@ -86,6 +86,7 @@ def main() -> int:
         "publish the saved relationship classifications before deploying Pages",
         "coverage_classified != coverage_expected",
         'classification_in_progress',
+        "stale_full_text_events",
     ):
         if marker not in relationship_gate:
             fail(f"the public relationship completeness gate is missing: {marker}")
@@ -99,8 +100,16 @@ def main() -> int:
         if marker not in site_script:
             fail(f"the public site can misrepresent missing relationship data: {marker}")
     home_page = (ROOT / "index.html").read_text(encoding="utf-8")
-    if '/site.js?v=6.1.1' not in home_page or 'const BUILD_ID = "6.1.1";' not in site_script:
+    if '/site.js?v=6.1.2' not in home_page or 'const BUILD_ID = "6.1.2";' not in site_script:
         fail("the relationship-data safety fix is missing its browser cache-busting version")
+    education_page = (ROOT / "edu" / "index.html").read_text(encoding="utf-8")
+    education_script = (ROOT / "edu" / "dashboard.js").read_text(encoding="utf-8")
+    if '/edu/dashboard.js?v=6.1.2' not in education_page or 'const BUILD_ID = "6.1.2";' not in education_script:
+        fail("the education interface is missing its relationship-provenance cache bust")
+    for script_name, script in (("site.js", site_script), ("edu/dashboard.js", education_script)):
+        for marker in ("not_enough_evidence", "no_directional_people_change", "fullBodyEvidenceCount"):
+            if marker not in script:
+                fail(f"{script_name} is missing the public evidence breakdown: {marker}")
 
     repository_integrity = (WORKFLOWS / "repository-integrity.yml").read_text(
         encoding="utf-8"
@@ -111,6 +120,7 @@ def main() -> int:
         "Confirm relationship placeholder cannot pass publication"
         not in repository_integrity
         or "if python scripts/validate_public_relationship_consistency.py" not in repository_integrity
+        or "--force-placeholder-for-test" not in repository_integrity
     ):
         fail("repository integrity must prove that the public gate rejects a relationship placeholder")
 
@@ -138,6 +148,12 @@ def main() -> int:
             "historical relationship QC rollback guard is incomplete: "
             + ", ".join(missing_guards)
         )
+    for marker in (
+        "require_current_full_text_lineage",
+        "Saved successful relationship rows are stale",
+    ):
+        if marker not in sym_publish:
+            fail(f"relationship publication is missing its full-body lineage guard: {marker}")
 
     owner_qc = (WORKFLOWS / "apply-owner-symbiosis-qc.yml").read_text(encoding="utf-8")
     if "needs.apply.outputs.is_current == 'true'" not in owner_qc:
@@ -200,6 +216,22 @@ def main() -> int:
         fail("relationship classification is missing its downstream completion gate")
     if symbiosis_workflow.count("validate_symbiosis_resilience.py") < 3:
         fail("each relationship-classification pass must verify the resilience contract")
+    if symbiosis_workflow.count("args+=(--resume-only)") < 3:
+        fail("each relationship-classification pass must support safe resume-only recovery")
+
+    recovery_workflow_path = WORKFLOWS / "resume-full-body-relationship-results.yml"
+    if not recovery_workflow_path.is_file():
+        fail("the one-click full-body relationship recovery workflow is missing")
+    recovery_workflow = recovery_workflow_path.read_text(encoding="utf-8")
+    for marker in (
+        "Resume Full-Body Relationship Results",
+        "python scripts/check_symbiosis_resume.py",
+        "replace: true",
+        "resume_only: true",
+        "publish-observatory-release.yml",
+    ):
+        if marker not in recovery_workflow:
+            fail(f"full-body relationship recovery is missing: {marker}")
 
     symbiosis_script = (ROOT / "scripts" / "classify_symbiosis.py").read_text(
         encoding="utf-8"
@@ -210,6 +242,7 @@ def main() -> int:
         "checkpoint_run",
         "--time-budget-minutes",
         "--status-output",
+        "--resume-only",
         "time_budget_reached",
     ]
     missing_symbiosis_guards = [
@@ -230,6 +263,7 @@ def main() -> int:
         fail("relationship confidence values must accept model labels without aborting a run")
     for marker in (
         "def normalize_ai_role(",
+        "def evidence_basis_covers(",
         "ai_expressive_role",
         "normalized to",
         'return _AI_ROLE_ALIASES.get(token, "unclear")',
@@ -240,6 +274,8 @@ def main() -> int:
     symbiosis_contract_test = ROOT / "scripts" / "validate_symbiosis_resilience.py"
     if not symbiosis_contract_test.is_file():
         fail("symbiosis resilience regression test is missing")
+    if not (ROOT / "scripts" / "check_symbiosis_resume.py").is_file():
+        fail("the safe interrupted-run preflight is missing")
 
     # Supabase stores an absent lens dimension as NULL direction and a
     # non-null degree of 0.  Saved rows are deliberately converted back to a

@@ -115,6 +115,11 @@ def update_index(payload: dict[str, Any]) -> None:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--release-id", default="")
+    parser.add_argument(
+        "--force-placeholder-for-test",
+        action="store_true",
+        help="Replace a same-release artifact only inside an ephemeral integrity test.",
+    )
     return parser.parse_args()
 
 
@@ -137,7 +142,7 @@ def main() -> int:
     replacement_revision = 1
     if isinstance(existing, dict) and str(existing.get("release_id") or "") == release_id:
         same_source = str(existing.get("source_release_sha256") or "") == str(release.get("content_sha256") or "")
-        if same_source:
+        if same_source and not args.force_placeholder_for_test:
             # Never erase model classifications, review progress, or reviewed findings
             # when they are already bound to the exact same canonical release revision.
             write(CURRENT_PATH, existing)

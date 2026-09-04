@@ -12,6 +12,7 @@ from pathlib import Path
 
 from symbiosis_common import (
     coerce_confidence,
+    evidence_basis_covers,
     normalize_ai_role,
     validate_model_payload,
 )
@@ -74,15 +75,48 @@ def main() -> int:
         alias_result["normalization_warnings"],
         "aliased model values must be retained as an audit warning",
     )
+    require(
+        not evidence_basis_covers(
+            stored_content_basis="headline_only",
+            stored_evidence_summary={"source_count": 1, "headline_only_sources": 1},
+            current_content_basis="full_text",
+            current_evidence_summary={"source_count": 1, "full_text_sources": 1},
+        ),
+        "a headline-only success must not suppress a new full-body classification",
+    )
+    require(
+        evidence_basis_covers(
+            stored_content_basis="full_text",
+            stored_evidence_summary={"source_count": 1, "full_text_sources": 1},
+            current_content_basis="full_text",
+            current_evidence_summary={"source_count": 1, "full_text_sources": 1},
+        ),
+        "a matching full-body success should remain reusable",
+    )
+    require(
+        not evidence_basis_covers(
+            stored_content_basis="multiple_sources",
+            stored_evidence_summary={"source_count": 2, "headline_only_sources": 2},
+            current_content_basis="multiple_sources",
+            current_evidence_summary={
+                "source_count": 2,
+                "full_text_sources": 1,
+                "headline_only_sources": 1,
+            },
+        ),
+        "a multi-source row must be refreshed when one source gains a full body",
+    )
 
     source = CLASSIFIER.read_text(encoding="utf-8")
     workflow = WORKFLOW.read_text(encoding="utf-8")
     required_source = (
         "def resume_or_start_run(",
         "def saved_rows_for_run(",
+        "def reusable_saved_rows(",
         "def checkpoint_run(",
         "--time-budget-minutes",
         "--status-output",
+        "--resume-only",
         "time_budget_reached",
     )
     for marker in required_source:
@@ -91,7 +125,14 @@ def main() -> int:
         'delete().eq("symbiosis_run_id", run_id)' not in source,
         "Symbiosis failures must preserve committed classifications for resume.",
     )
-    for marker in ("pass_1:", "pass_2:", "pass_3:", "time-budget-minutes \"225\"", "ensure_complete:"):
+    for marker in (
+        "pass_1:",
+        "pass_2:",
+        "pass_3:",
+        "time-budget-minutes \"225\"",
+        "resume_only:",
+        "ensure_complete:",
+    ):
         require(marker in workflow, f"Missing resumable workflow marker: {marker}")
 
     print("Validated symbiosis confidence parsing and resumable workflow contract.")

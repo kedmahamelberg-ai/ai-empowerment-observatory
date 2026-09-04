@@ -42,6 +42,8 @@ from symbiosis_common import (
     CLASSIFIER_VERSION,
     CODEBOOK_VERSION,
     EVIDENCE_POLICY_VERSION,
+    classification_input_evidence,
+    evidence_basis_covers,
     release_identifier,
     release_review_scope,
     validate_model_payload,
@@ -495,17 +497,48 @@ def release_units(
     return units
 
 
-def successful_existing_unit_keys(client: Client) -> set[str]:
-    rows = paged_table(
-        client,
-        "symbiosis_classifications",
-        "unit_key,codebook_version,symbiosis_run_id,symbiosis_classification_runs!inner(status)",
-        apply=lambda query: (
-            query.eq("codebook_version", CODEBOOK_VERSION)
-            .eq("symbiosis_classification_runs.status", "success")
-        ),
-    )
-    return {str(row["unit_key"]) for row in rows if row.get("unit_key")}
+def successful_existing_unit_keys(
+    client: Client,
+    units: list[tuple[str, dict[str, Any]]],
+) -> set[str]:
+    """Return only successful rows that cover the unit's current evidence.
+
+    A matching unit key is not enough: when a full body arrives after a
+    headline-only classification, the old success must be replaced.
+    """
+    current_by_key = {str(unit["unit_key"]): unit for _, unit in units}
+    rows: list[dict[str, Any]] = []
+    unit_keys = sorted(current_by_key)
+    for start in range(0, len(unit_keys), 100):
+        selected_keys = unit_keys[start:start + 100]
+        rows.extend(
+            paged_table(
+                client,
+                "symbiosis_classifications",
+                "unit_key,content_basis,raw_output,codebook_version,symbiosis_run_id,"
+                "symbiosis_classification_runs!inner(status)",
+                apply=lambda query, keys=selected_keys: (
+                    query.eq("codebook_version", CODEBOOK_VERSION)
+                    .eq("symbiosis_classification_runs.status", "success")
+                    .in_("unit_key", keys)
+                ),
+            )
+        )
+    existing: set[str] = set()
+    for row in rows:
+        unit_key = str(row.get("unit_key") or "")
+        current = current_by_key.get(unit_key)
+        if not current:
+            continue
+        stored_basis, stored_summary = classification_input_evidence(row)
+        if evidence_basis_covers(
+            stored_content_basis=stored_basis,
+            stored_evidence_summary=stored_summary,
+            current_content_basis=current.get("content_basis"),
+            current_evidence_summary=current.get("evidence_basis_summary"),
+        ):
+            existing.add(unit_key)
+    return existing
 
 
 def start_run(
@@ -583,6 +616,7 @@ def resume_or_start_run(
     collection_run_id: str | None,
     empowerment_run_id: str | None,
     model_revision: str,
+    resume_only: bool = False,
 ) -> tuple[str, str, bool]:
     """Reuse the latest interrupted run with the same durable codebook contract."""
     query = (
@@ -597,6 +631,8 @@ def resume_or_start_run(
         query = query.eq("target_release_id", target_release_id)
     else:
         query = query.is_("target_release_id", "null")
+    if collection_run_id:
+        query = query.eq("collection_run_id", collection_run_id)
     response = query.order("started_at", desc=True).limit(1).execute()
     rows = getattr(response, "data", None) or []
     if rows:
@@ -611,6 +647,12 @@ def resume_or_start_run(
         )
         print(f"Resuming durable symbiosis run {run_key}.", flush=True)
         return run_id, run_key, True
+
+    if resume_only:
+        raise SymbiosisClassificationError(
+            "No interrupted relationship run matches the current release and full-body "
+            "classification lineage. Refusing to start a new multi-hour run in --resume-only mode."
+        )
 
     run_id, run_key = start_run(
         client,
@@ -628,9 +670,35 @@ def saved_rows_for_run(client: Client, run_id: str) -> list[dict[str, Any]]:
     return paged_table(
         client,
         "symbiosis_classifications",
-        "symbiosis_classification_id,unit_key,lens,model_configuration",
+        "symbiosis_classification_id,unit_key,lens,model_configuration,content_basis,raw_output",
         apply=lambda query: query.eq("symbiosis_run_id", run_id),
     )
+
+
+def reusable_saved_rows(
+    rows: list[dict[str, Any]],
+    units: list[tuple[str, dict[str, Any]]],
+) -> tuple[list[dict[str, Any]], list[str]]:
+    """Keep interrupted rows only when their recorded input still covers now."""
+    current_by_key = {str(unit["unit_key"]): unit for _, unit in units}
+    reusable: list[dict[str, Any]] = []
+    stale: list[str] = []
+    for row in rows:
+        unit_key = str(row.get("unit_key") or "")
+        current = current_by_key.get(unit_key)
+        if not current:
+            continue
+        stored_basis, stored_summary = classification_input_evidence(row)
+        if evidence_basis_covers(
+            stored_content_basis=stored_basis,
+            stored_evidence_summary=stored_summary,
+            current_content_basis=current.get("content_basis"),
+            current_evidence_summary=current.get("evidence_basis_summary"),
+        ):
+            reusable.append(row)
+        else:
+            stale.append(unit_key)
+    return reusable, stale
 
 
 def start_server() -> tuple[subprocess.Popen[Any], Any]:
@@ -1054,6 +1122,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--limit", type=int, default=0, help="Maximum units in this batch; 0 means all selected units")
     parser.add_argument("--replace", action="store_true", help="Reclassify release-specific units already coded under this codebook")
     parser.add_argument(
+        "--resume-only",
+        action="store_true",
+        help="Resume a matching interrupted run; fail instead of starting a new run.",
+    )
+    parser.add_argument(
         "--time-budget-minutes",
         type=float,
         default=0.0,
@@ -1104,6 +1177,8 @@ def main() -> int:
     args = parse_args()
     if args.time_budget_minutes < 0:
         raise SymbiosisClassificationError("--time-budget-minutes must be zero or greater.")
+    if args.resume_only and not args.replace:
+        raise SymbiosisClassificationError("--resume-only requires --replace so all saved run units are considered.")
     releases, skipped_references = selected_releases(args.scope, args.release_id)
     client: Client = create_client(required_env("SUPABASE_URL"), required_env("SUPABASE_SECRET_KEY"))
 
@@ -1112,7 +1187,7 @@ def main() -> int:
         units.extend(release_units(client, release, lens=args.lens))
 
     if not args.replace:
-        existing = successful_existing_unit_keys(client)
+        existing = successful_existing_unit_keys(client, units)
         units = [(lens, unit) for lens, unit in units if unit["unit_key"] not in existing]
 
     units.sort(key=lambda item: item[1]["unit_key"])
@@ -1165,9 +1240,34 @@ def main() -> int:
         collection_run_id=str(lineage.get("collection_run_id")) if lineage.get("collection_run_id") else None,
         empowerment_run_id=str(lineage.get("classification_run_id")) if lineage.get("classification_run_id") else None,
         model_revision=model_revision,
+        resume_only=args.resume_only,
     )
 
-    saved_rows = saved_rows_for_run(client, run_id)
+    loaded_saved_rows = saved_rows_for_run(client, run_id)
+    saved_rows, stale_saved_keys = reusable_saved_rows(loaded_saved_rows, units)
+    if stale_saved_keys:
+        (
+            client.table("symbiosis_classification_runs")
+            .update({"status": "failed", "completed_at": iso_z(utc_now())})
+            .eq("symbiosis_run_id", run_id)
+            .execute()
+        )
+        if args.resume_only:
+            raise SymbiosisClassificationError(
+                "The interrupted run contains "
+                f"{len(stale_saved_keys)} rows classified from weaker evidence. "
+                "Refusing to restart or reuse them in --resume-only mode."
+            )
+        run_id, run_key = start_run(
+            client,
+            scope="latest_release" if args.scope == "latest" else "historical_releases",
+            target_release_id=target_release_id,
+            collection_run_id=str(lineage.get("collection_run_id")) if lineage.get("collection_run_id") else None,
+            empowerment_run_id=str(lineage.get("classification_run_id")) if lineage.get("classification_run_id") else None,
+            model_revision=model_revision,
+        )
+        resumed = False
+        saved_rows = []
     saved_keys = {str(row.get("unit_key") or "") for row in saved_rows}
     pending_units = [(lens, unit) for lens, unit in units if unit["unit_key"] not in saved_keys]
     if resumed:

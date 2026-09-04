@@ -11,6 +11,8 @@ import json
 from collections import Counter
 from pathlib import Path
 
+from symbiosis_common import evidence_basis_strength, release_full_text_requirements
+
 ROOT = Path(__file__).resolve().parents[1]
 RELEASE_PATH = ROOT / "data" / "releases" / "current.json"
 SYMBIOSIS_PATH = ROOT / "data" / "symbiosis" / "current.json"
@@ -160,6 +162,27 @@ def main() -> int:
     evidence = [row for row in (sym.get("evidence") or []) if isinstance(row, dict)]
     if len(evidence) != expected:
         fail(f"relationship evidence contains {len(evidence)} rows, not {expected}")
+    _, event_full_text_requirements = release_full_text_requirements(release)
+    evidence_by_id = {
+        str(row.get("event_id") or ""): row
+        for row in evidence
+        if row.get("event_id")
+    }
+    stale_full_text_events = []
+    for event_id, required_full_text_sources in event_full_text_requirements.items():
+        row = evidence_by_id.get(event_id) or {}
+        used_full_text_sources = evidence_basis_strength(
+            row.get("content_basis"),
+            row.get("evidence_basis_summary"),
+        )[0]
+        if used_full_text_sources < required_full_text_sources:
+            stale_full_text_events.append(event_id)
+    if stale_full_text_events:
+        fail(
+            "relationship evidence is stale: "
+            f"{len(stale_full_text_events)}/{len(event_full_text_requirements)} developments "
+            "with available full article bodies were classified from weaker evidence"
+        )
     aggregate_patterns = Counter()
     aggregate_signals = Counter()
     explicit_multi = 0

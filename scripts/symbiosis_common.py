@@ -93,6 +93,131 @@ _EVIDENCE_STATUS_ALIASES = {
     "insufficient_evidence": "insufficient",
 }
 
+_EVIDENCE_BASIS_RANK = {
+    "not_available": -1,
+    "headline_only": 0,
+    "headline_and_snippet": 1,
+    "article_summary": 2,
+    "multiple_sources": 0,
+    "full_text": 3,
+    "full_text_supplied_by_owner": 3,
+}
+
+
+def _evidence_count(summary: dict[str, Any], key: str) -> int:
+    try:
+        return max(0, int(summary.get(key) or 0))
+    except (TypeError, ValueError):
+        return 0
+
+
+def evidence_basis_strength(
+    content_basis: Any,
+    evidence_summary: Any,
+) -> tuple[int, int, int]:
+    """Return comparable evidence strength as full bodies, best tier, sources.
+
+    This is intentionally about input provenance, not the model's confidence.
+    It lets a later full article body invalidate an older successful headline
+    classification even when the unit key and codebook version are unchanged.
+    """
+    basis = _normalized_token(content_basis) or "headline_only"
+    summary = evidence_summary if isinstance(evidence_summary, dict) else {}
+    full = _evidence_count(summary, "full_text_sources")
+    article_summaries = _evidence_count(summary, "article_summary_sources")
+    snippets = _evidence_count(summary, "snippet_sources")
+    headlines = _evidence_count(summary, "headline_only_sources")
+    sources = _evidence_count(summary, "source_count")
+
+    # Older rows may have a trustworthy content_basis but predate the detailed
+    # input_evidence counters. Preserve that provenance rather than treating it
+    # as absent.
+    if basis in {"full_text", "full_text_supplied_by_owner"}:
+        full = max(full, 1)
+    elif basis == "article_summary":
+        article_summaries = max(article_summaries, 1)
+    elif basis == "headline_and_snippet":
+        snippets = max(snippets, 1)
+    elif basis == "headline_only" and not any((full, article_summaries, snippets, headlines)):
+        headlines = 1
+
+    sources = max(sources, full + article_summaries + snippets + headlines, 1)
+    tier = _EVIDENCE_BASIS_RANK.get(basis, 0)
+    if full:
+        tier = max(tier, 3)
+    elif article_summaries:
+        tier = max(tier, 2)
+    elif snippets:
+        tier = max(tier, 1)
+    return full, tier, sources
+
+
+def evidence_basis_covers(
+    *,
+    stored_content_basis: Any,
+    stored_evidence_summary: Any,
+    current_content_basis: Any,
+    current_evidence_summary: Any,
+) -> bool:
+    """Whether a saved classification used evidence at least as strong as now."""
+    stored = evidence_basis_strength(stored_content_basis, stored_evidence_summary)
+    current = evidence_basis_strength(current_content_basis, current_evidence_summary)
+    return all(saved >= required for saved, required in zip(stored, current))
+
+
+def classification_input_evidence(row: dict[str, Any]) -> tuple[Any, dict[str, Any]]:
+    """Read the evidence provenance persisted beside one model result."""
+    raw_output = row.get("raw_output") if isinstance(row.get("raw_output"), dict) else {}
+    summary = raw_output.get("input_evidence")
+    if not isinstance(summary, dict):
+        summary = row.get("evidence_basis_summary")
+    return (
+        row.get("content_basis") or raw_output.get("content_basis") or "headline_only",
+        summary if isinstance(summary, dict) else {},
+    )
+
+
+def release_full_text_requirements(
+    release: dict[str, Any],
+) -> tuple[dict[str, int], dict[str, int]]:
+    """Return required full-body source counts for coverage and event units."""
+    full_body_articles: set[str] = set()
+    coverage_requirements: dict[str, int] = {}
+    for row in release.get("units", {}).get("coverage_articles", []) or []:
+        if not isinstance(row, dict) or not row.get("article_id"):
+            continue
+        classification = row.get("classification") if isinstance(row.get("classification"), dict) else {}
+        if classification.get("ai_relevant") is False:
+            continue
+        article_id = str(row["article_id"])
+        if str(classification.get("content_basis") or "") == "full_text":
+            full_body_articles.add(article_id)
+            coverage_requirements[article_id] = 1
+
+    event_requirements: dict[str, int] = {}
+    for event in release.get("evidence") or []:
+        if not isinstance(event, dict):
+            continue
+        classification = event.get("classification") if isinstance(event.get("classification"), dict) else {}
+        if classification.get("ai_relevant") is False:
+            continue
+        event_id = str(event.get("effective_event_id") or event.get("event_id") or "").strip()
+        if not event_id:
+            continue
+        member_ids = [str(value) for value in event.get("member_article_ids") or [] if value]
+        if not member_ids:
+            member_ids = [
+                str(source.get("article_id"))
+                for source in event.get("sources") or []
+                if isinstance(source, dict) and source.get("article_id")
+            ]
+        full_count = sum(article_id in full_body_articles for article_id in set(member_ids))
+        if not full_count and str(classification.get("content_basis") or "") == "full_text":
+            full_count = 1
+        if full_count:
+            event_requirements[event_id] = full_count
+    return coverage_requirements, event_requirements
+
 
 def _normalized_token(value: Any) -> str:
     return str(value or "").strip().casefold().replace("-", "_").replace(" ", "_").strip("_")

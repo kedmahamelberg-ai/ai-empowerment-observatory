@@ -24,6 +24,8 @@ from symbiosis_common import (
     RELATIONSHIP_PATTERN_KEYS,
     TECHNICAL_LABELS,
     derive_configuration,
+    classification_input_evidence,
+    evidence_basis_strength,
     final_payload_from_classification,
     normalize_ai_role,
     normalize_distribution_signal,
@@ -31,6 +33,7 @@ from symbiosis_common import (
     normalize_human_type,
     normalize_relationship_patterns,
     public_signals_from_patterns,
+    release_full_text_requirements,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -143,6 +146,45 @@ def latest_rows(
         if key:
             latest.setdefault(key, row)
     return latest
+
+
+def full_text_sources_used(row: dict[str, Any] | None) -> int:
+    if not row:
+        return 0
+    content_basis, summary = classification_input_evidence(row)
+    return evidence_basis_strength(content_basis, summary)[0]
+
+
+def require_current_full_text_lineage(
+    release: dict[str, Any],
+    coverage_rows: dict[str, dict[str, Any]],
+    event_rows: dict[str, dict[str, Any]],
+    source_body_corrections: dict[str, dict[str, Any]],
+) -> None:
+    """Refuse to republish headline rows after full bodies became available."""
+    coverage_required, event_required = release_full_text_requirements(release)
+    stale_coverage = [
+        article_id
+        for article_id, required in coverage_required.items()
+        if full_text_sources_used(coverage_rows.get(article_id)) < required
+    ]
+    stale_events = []
+    for event_id, required in event_required.items():
+        row = event_rows.get(event_id)
+        used = full_text_sources_used(row)
+        correction = source_body_corrections.get(event_id)
+        if correction:
+            used = max(used, full_text_sources_used(correction))
+        if used < required:
+            stale_events.append(event_id)
+    if stale_coverage or stale_events:
+        raise PublishError(
+            "Saved successful relationship rows are stale relative to the current full-body release: "
+            f"{len(stale_coverage)}/{len(coverage_required)} required full-body coverage rows and "
+            f"{len(stale_events)}/{len(event_required)} required full-body event rows were still "
+            "classified from weaker evidence. Resume the interrupted replacement run; do not publish "
+            "or restart body collection."
+        )
 
 
 def configuration_summary(
@@ -664,6 +706,12 @@ def main() -> int:
     event_rows = latest_rows(client, release_id=release_id, lens="event", ids=event_ids)
     owner_gold = owner_gold_for_release(release_id)
     source_body_corrections = source_body_corrections_for_release(release_id)
+    require_current_full_text_lineage(
+        release,
+        coverage_rows,
+        event_rows,
+        source_body_corrections,
+    )
     event_display_overrides = {
         event_id: resolved_public_payload(
             event_rows.get(event_id),
