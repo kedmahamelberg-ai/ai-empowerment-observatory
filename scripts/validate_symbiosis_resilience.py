@@ -12,6 +12,7 @@ from pathlib import Path
 
 from symbiosis_common import (
     coerce_confidence,
+    content_basis_for_storage,
     evidence_basis_covers,
     normalize_ai_role,
     validate_model_payload,
@@ -42,6 +43,14 @@ def main() -> int:
     require(
         normalize_ai_role("unknown model wording") == "unclear",
         "unknown AI role wording must remain conservative and non-fatal",
+    )
+    require(
+        content_basis_for_storage("not_available") == "headline_only",
+        "an unavailable full body must use the database-safe storage basis",
+    )
+    require(
+        content_basis_for_storage("full_text") == "full_text",
+        "a collected full body must retain its database storage basis",
     )
 
     model_payload = {
@@ -128,6 +137,8 @@ def main() -> int:
         "FULL_BODY_REQUIRED_POLICY",
         "people_evidence",
         "classification_not_run",
+        "content_basis_for_storage",
+        "storage_content_basis",
     )
     for marker in required_source:
         require(marker in source, f"Missing symbiosis resilience marker: {marker}")

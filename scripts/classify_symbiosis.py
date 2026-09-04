@@ -44,6 +44,7 @@ from symbiosis_common import (
     CODEBOOK_VERSION,
     EVIDENCE_POLICY_VERSION,
     classification_input_evidence,
+    content_basis_for_storage,
     evidence_basis_covers,
     release_identifier,
     release_review_scope,
@@ -1170,6 +1171,7 @@ def insert_result(
     unit: dict[str, Any],
     result: dict[str, Any],
 ) -> dict[str, Any]:
+    storage_content_basis = content_basis_for_storage(unit["content_basis"])
     payload = {
         "symbiosis_run_id": run_id,
         "codebook_version": CODEBOOK_VERSION,
@@ -1181,7 +1183,7 @@ def insert_result(
         "article_id": unit.get("article_id") if lens == "coverage" else None,
         "event_id": unit.get("event_id") if lens == "event" else None,
         "ai_relevant": result["ai_relevant"],
-        "content_basis": unit["content_basis"],
+        "content_basis": storage_content_basis,
         "evidence_status": result["evidence_status"],
         "relational_signal": result["relational_signal"],
         "model_human_experience_type": result["human_experience_type"],
@@ -1201,6 +1203,7 @@ def insert_result(
             **result["raw_output"],
             "input_evidence": unit.get("evidence_basis_summary") or {},
             "content_basis": unit["content_basis"],
+            "storage_content_basis": storage_content_basis,
             "input_policy": FULL_BODY_REQUIRED_POLICY,
             "classification_audit": classification_audit(unit, result),
         },

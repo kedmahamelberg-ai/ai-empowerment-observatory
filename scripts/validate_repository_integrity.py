@@ -401,6 +401,8 @@ def main() -> int:
         "resume_or_start_run",
         "saved_rows_for_run",
         "checkpoint_run",
+        "content_basis_for_storage",
+        "storage_content_basis",
         "--time-budget-minutes",
         "--status-output",
         "--resume-only",
@@ -425,7 +427,8 @@ def main() -> int:
     for marker in (
         "def normalize_ai_role(",
         "def evidence_basis_covers(",
-        'CLASSIFIER_VERSION = "symbiosis_news_v0.5_full_body_required"',
+        'CLASSIFIER_VERSION = "symbiosis_news_v0.6_full_body_required"',
+        "def content_basis_for_storage(",
         "ai_expressive_role",
         "normalized to",
         'return _AI_ROLE_ALIASES.get(token, "unclear")',

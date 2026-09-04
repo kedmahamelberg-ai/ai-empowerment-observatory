@@ -12,7 +12,11 @@ from pathlib import Path
 from typing import Any
 
 CODEBOOK_VERSION = "aieo_news_symbiosis_v0.1"
-CLASSIFIER_VERSION = "symbiosis_news_v0.5_full_body_required"
+# v0.6 keeps the full-body policy unchanged but adds a write-boundary
+# compatibility layer for the live Supabase check constraint.  A fresh run is
+# intentionally required after the correction: no failed v0.5 row can be
+# mistaken for a v0.6 result.
+CLASSIFIER_VERSION = "symbiosis_news_v0.6_full_body_required"
 EVIDENCE_POLICY_VERSION = "aieo_evidence_basis_v5_full_body_required"
 PUBLIC_SIGNAL_SCHEMA_VERSION = "aieo_people_signals_v1"
 
@@ -102,6 +106,21 @@ _EVIDENCE_BASIS_RANK = {
     "full_text": 3,
     "full_text_supplied_by_owner": 3,
 }
+
+# The live ``symbiosis_classifications.content_basis`` column predates the
+# transparent ``not_available`` state.  Its check constraint accepts only the
+# established source-evidence vocabulary below.  Preserve ``not_available``
+# in the row's JSON provenance and public output, but translate it at the SQL
+# write boundary so a missing body can never abort an otherwise valid run.
+DATABASE_CONTENT_BASIS = frozenset(
+    {
+        "headline_only",
+        "headline_and_snippet",
+        "article_summary",
+        "multiple_sources",
+        "full_text",
+    }
+)
 
 
 def _evidence_count(summary: dict[str, Any], key: str) -> int:
@@ -221,6 +240,20 @@ def release_full_text_requirements(
 
 def _normalized_token(value: Any) -> str:
     return str(value or "").strip().casefold().replace("-", "_").replace(" ", "_").strip("_")
+
+
+def content_basis_for_storage(value: Any) -> str:
+    """Return a value accepted by the live database's content-basis check.
+
+    This is deliberately a storage translation only.  Callers retain the
+    original source-evidence state in ``raw_output`` and the compact audit so
+    public reporting can still say that no full body was available rather than
+    implying that a headline was used as model evidence.
+    """
+    basis = _normalized_token(value)
+    if basis in DATABASE_CONTENT_BASIS:
+        return basis
+    return "headline_only"
 
 
 def normalize_ai_role(value: Any) -> str:
@@ -745,6 +778,14 @@ def final_payload_from_classification(row: dict[str, Any]) -> dict[str, Any]:
         ),
     )
     raw_output = row.get("raw_output") if isinstance(row.get("raw_output"), dict) else {}
+    stored_basis = row.get("content_basis") or raw_output.get("content_basis") or "headline_only"
+    # ``not_available`` is represented as ``headline_only`` only in the
+    # constrained database column.  Restore the truthful provenance for the
+    # public/audit artifact when the classifier was intentionally not run.
+    if raw_output.get("classification_not_run") and raw_output.get("content_basis") == "not_available":
+        reported_basis = "not_available"
+    else:
+        reported_basis = stored_basis
     input_evidence = (
         raw_output.get("input_evidence")
         if isinstance(raw_output.get("input_evidence"), dict)
@@ -763,7 +804,7 @@ def final_payload_from_classification(row: dict[str, Any]) -> dict[str, Any]:
         "human_direction": human_direction,
         "ai_direction": ai_direction,
         "evidence_status": evidence_status,
-        "content_basis": row.get("content_basis") or raw_output.get("content_basis") or "headline_only",
+        "content_basis": reported_basis,
         "evidence_basis_summary": input_evidence,
         "story_country_iso3s": row.get("final_story_country_iso3s") or row.get("country_iso3s") or [],
         "evidence_summary": row.get("final_evidence_summary") or row.get("model_summary") or "",
