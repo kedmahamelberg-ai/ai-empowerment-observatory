@@ -43,12 +43,20 @@ jobs:
             scripts/validate_public_relationship_consistency.py \
             scripts/build_relationship_audit.py \
             scripts/export_relationship_evidence_audit.py \
+            scripts/brief_content_common.py \
             scripts/brief_backfill_article_content.py \
             scripts/brief_backfill_article_content_resumable.py \
+            scripts/audit_brief_article_content.py \
+            scripts/translation_policy.py \
+            scripts/translate_headlines.py \
+            scripts/classify_dual_lens.py \
+            scripts/validate_multilingual_pipeline.py \
             scripts/validate_relationship_audit.py \
             scripts/validate_repository_integrity.py
       - name: Validate repository guardrails
         run: python scripts/validate_repository_integrity.py
+      - name: Validate multilingual full-body pipeline
+        run: python scripts/validate_multilingual_pipeline.py
       - name: Validate symbiosis resilience contract
         run: python scripts/validate_symbiosis_resilience.py
       - name: Validate the public relationship audit index

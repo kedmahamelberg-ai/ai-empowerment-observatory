@@ -74,6 +74,17 @@ jobs:
           fi
           python scripts/brief_backfill_article_content_resumable.py "${args[@]}"
 
+      - name: Audit every stored body in the selected release
+        if: ${{ inputs.dry_run == false }}
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: |
+          python scripts/audit_brief_article_content.py \
+            --scope release \
+            --release-id "${{ inputs.release_id }}" \
+            --limit 0
+
       - name: Export source-by-source body and classification audit
         if: ${{ always() }}
         env:

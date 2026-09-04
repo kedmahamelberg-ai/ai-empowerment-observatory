@@ -103,11 +103,21 @@ jobs:
           fi
           python scripts/brief_backfill_article_content_resumable.py "${args[@]}"
 
-      - name: Audit newly stored content
+      - name: Audit every stored full body in the selected scope
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
-        run: python scripts/audit_brief_article_content.py --limit 30
+        shell: bash
+        run: |
+          set -euo pipefail
+          scope="${{ inputs.scope || 'latest_collection' }}"
+          release_id="${{ inputs.release_id || '' }}"
+          args=(--scope "$scope" --limit 0)
+          if [[ "$scope" == "release" ]]; then
+            test -n "$release_id" || { echo "release_id is required for release scope"; exit 1; }
+            args+=(--release-id "$release_id")
+          fi
+          python scripts/audit_brief_article_content.py "${args[@]}"
 
       - name: Upload body-coverage report
         uses: actions/upload-artifact@v7

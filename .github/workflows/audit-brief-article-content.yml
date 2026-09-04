@@ -3,10 +3,16 @@ name: Audit AIEO Brief Article Content
 on:
   workflow_dispatch:
     inputs:
-      sample_size:
-        description: "Number of current snapshots to preview"
+      scope:
+        description: "Audit every stored body in the latest collection, one release, or the full archive"
         required: true
-        default: "20"
+        default: latest_collection
+        type: choice
+        options: [latest_collection, release, all]
+      release_id:
+        description: "Required only for release scope, for example 2026-W35"
+        required: false
+        default: ""
         type: string
 
 permissions:
@@ -25,4 +31,12 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
-        run: python scripts/audit_brief_article_content.py --limit "${{ inputs.sample_size }}"
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(--scope "${{ inputs.scope }}" --limit 0)
+          if [[ "${{ inputs.scope }}" == "release" ]]; then
+            test -n "${{ inputs.release_id }}" || { echo "release_id is required for release scope"; exit 1; }
+            args+=(--release-id "${{ inputs.release_id }}")
+          fi
+          python scripts/audit_brief_article_content.py "${args[@]}"
