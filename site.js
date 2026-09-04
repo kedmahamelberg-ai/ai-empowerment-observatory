@@ -2,7 +2,7 @@
 
 import { initDiscoveryGlobe } from "/globe.js?v=6.1.0";
 
-const BUILD_ID = "6.1.1";
+const BUILD_ID = "6.1.2";
 const CURRENT_URL = "/data/releases/current.json";
 const SYMBIOSIS_URL = "/data/symbiosis/current.json";
 const COUNTRIES_URL = "/edu/countries.json";
@@ -137,11 +137,23 @@ function renderRelease(release) {
   );
 }
 
-function takeawayCopy(counts, total) {
+function fullBodyEvidenceCount(signalData) {
+  const counts = signalData?.body_coverage_counts || {};
+  return Number(counts.all_sources || 0)
+    + Number(counts.some_sources || 0)
+    + Number(counts.owner_supplied_full_body || 0);
+}
+
+function takeawayCopy(counts, total, breakdown = {}) {
   const gaining = Number(counts.people_gaining || 0);
   const losing = Number(counts.people_losing_ground || 0);
   const unclear = Number(counts.not_clear_yet || 0);
+  const insufficient = Number(breakdown.not_enough_evidence || 0);
+  const noDirection = Number(breakdown.no_directional_people_change || 0);
   if (unclear > total / 2) {
+    if (insufficient + noDirection === unclear) {
+      return `${insufficient} developments lacked enough evidence, while ${noDirection} had evidence but showed no clear gain or loss for people. Among the directional developments, ${gaining} pointed to gains and ${losing} to people losing ground.`;
+    }
     return `Most AI news still did not show a clear change for people. Among the clearer developments, ${gaining} pointed to gains and ${losing} to people losing ground.`;
   }
   if (gaining > losing) return `Gains appeared more often than losses, but the picture was not the same for every person or every use of AI.`;
@@ -155,6 +167,7 @@ function renderSignals(signalData, release) {
   const complete = total > 0 && classified === total;
   const counts = signalData?.people_signal_counts || {};
   const available = signalData?.availability || {};
+  const breakdown = signalData?.not_clear_breakdown || {};
   const cards = [
     ["people_gaining", "signal-people-gaining", "percent-people-gaining", "status-people-gaining"],
     ["people_losing_ground", "signal-people-losing", "percent-people-losing", "status-people-losing"],
@@ -168,19 +181,25 @@ function renderSignals(signalData, release) {
     const value = Number(counts[key] || 0);
     setText(countId, ready ? value : "—");
     setText(percentId, ready ? formatPercent(value, total) : "—");
-    setText(statusId, ready ? `of ${total} developments` : "New count coming after review");
+    const insufficient = Number(breakdown.not_enough_evidence || 0);
+    const noDirection = Number(breakdown.no_directional_people_change || 0);
+    const status = key === "not_clear_yet" && insufficient + noDirection === value
+      ? `${insufficient} lack evidence · ${noDirection} show no gain/loss`
+      : `of ${total} developments`;
+    setText(statusId, ready ? status : "New count coming after review");
     card?.classList.toggle("is-pending", !ready);
   });
+  const fullBodyCount = fullBodyEvidenceCount(signalData);
   setText(
     "signal-denominator",
     complete
-      ? `${total} developments checked this week`
+      ? `${total} developments checked this week${fullBodyCount ? ` · full article evidence used for ${fullBodyCount}` : ""}`
       : `${classified} of ${total} relationship classifications published`,
   );
   setText(
     "week-takeaway",
     complete
-      ? takeawayCopy(counts, total)
+      ? takeawayCopy(counts, total, breakdown)
       : "The people-first picture is still being prepared. Missing classifications are not counted as unclear results.",
   );
 
