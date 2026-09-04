@@ -2,7 +2,7 @@
 
 import { initDiscoveryGlobe } from "/globe.js?v=6.1.0";
 
-const BUILD_ID = "6.1.2";
+const BUILD_ID = "6.3.0";
 const CURRENT_URL = "/data/releases/current.json";
 const INDEX_URL = "/data/releases/index.json";
 const COUNTRIES_URL = "/edu/countries.json";
@@ -10,12 +10,12 @@ const SYMBIOSIS_URL = "/data/symbiosis/current.json";
 const dateLong = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric" });
 const dateShort = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short" });
 
-const SIGNAL_LABELS = {
-  people_gaining: "People gaining",
-  people_losing_ground: "People losing ground",
-  mixed_picture: "A mixed picture",
-  not_everyone_benefits: "Not everyone benefits",
-  not_clear_yet: "Not clear yet",
+const PRIMARY_OUTCOME_LABELS = {
+  benefit_shown: "A benefit was reported",
+  downside_shown: "A downside was reported",
+  benefit_and_downside: "Both were reported",
+  no_clear_people_change: "No clear change was reported",
+  too_little_evidence: "Too little evidence",
 };
 
 let currentRelease = null;
@@ -37,7 +37,7 @@ function normalizeEvidenceView(value) {
 }
 
 function normalizeSignalView(value) {
-  return ["all", ...Object.keys(SIGNAL_LABELS)].includes(value) ? value : "all";
+  return ["all", ...Object.keys(PRIMARY_OUTCOME_LABELS)].includes(value) ? value : "all";
 }
 
 function escapeHTML(value) {
@@ -68,7 +68,7 @@ function formatRange(startValue, endValue) {
   const end = parseDate(endValue);
   if (!start || !end) return "Current week";
   const sameMonth = start.getUTCMonth() === end.getUTCMonth() && start.getUTCFullYear() === end.getUTCFullYear();
-  return sameMonth ? `${start.getUTCDate()}–${dateLong.format(end)}` : `${dateLong.format(start)}–${dateLong.format(end)}`;
+  return sameMonth ? `${start.getUTCDate()} to ${dateLong.format(end)}` : `${dateLong.format(start)} to ${dateLong.format(end)}`;
 }
 
 function formatShortRange(startValue, endValue) {
@@ -76,7 +76,7 @@ function formatShortRange(startValue, endValue) {
   const end = parseDate(endValue);
   if (!start || !end) return "Date unavailable";
   if (start.toISOString().slice(0, 10) === end.toISOString().slice(0, 10)) return dateShort.format(start);
-  return `${dateShort.format(start)}–${dateShort.format(end)}`;
+  return `${dateShort.format(start)} to ${dateShort.format(end)}`;
 }
 
 function plural(value, singular, pluralForm = `${singular}s`) {
@@ -85,12 +85,12 @@ function plural(value, singular, pluralForm = `${singular}s`) {
 
 function setText(id, value) {
   const element = document.getElementById(id);
-  if (element) element.textContent = String(value ?? "—");
+  if (element) element.textContent = String(value ?? "Not available");
 }
 
 function formatPercent(value, total) {
   const denominator = Number(total || 0);
-  if (!denominator) return "—";
+  if (!denominator) return "Not available";
   return `${((Number(value || 0) / denominator) * 100).toFixed(1)}%`;
 }
 
@@ -137,10 +137,12 @@ function plainSignalData(symbiosis) {
   if (symbiosis.people_signals) return symbiosis.people_signals;
   const event = symbiosis.event || {};
   const counts = event.display_configuration_counts || event.configuration_counts || {};
+  const classified = Number(event.display_classified_units ?? event.classified_units ?? 0);
   const gaining = Number(counts.mutualism || 0) + Number(counts.human_benefiting_parasitism || 0) + Number(counts.human_enabling_only || 0);
   const losing = Number(counts.ai_benefiting_parasitism || 0) + Number(counts.competition || 0) + Number(counts.human_constraining_only || 0);
   return {
     expected_units: total,
+    classified_units: classified,
     people_signal_counts: { people_gaining: gaining, people_losing_ground: losing, mixed_picture: 0, not_everyone_benefits: 0, not_clear_yet: Math.max(0, total - gaining - losing) },
     relationship_pattern_counts: { mutualism: Number(counts.mutualism || 0), ai_benefiting_parasitism: Number(counts.ai_benefiting_parasitism || 0), human_benefiting_parasitism: Number(counts.human_benefiting_parasitism || 0), competition: Number(counts.competition || 0) },
     availability: { people_gaining: true, people_losing_ground: true, mixed_picture: false, not_everyone_benefits: false, not_clear_yet: true },
@@ -154,69 +156,114 @@ function fullBodyEvidenceCount(signalData) {
     + Number(counts.owner_supplied_full_body || 0);
 }
 
-function takeawayCopy(counts, total, breakdown = {}) {
-  const gaining = Number(counts.people_gaining || 0);
-  const losing = Number(counts.people_losing_ground || 0);
-  const unclear = Number(counts.not_clear_yet || 0);
-  const insufficient = Number(breakdown.not_enough_evidence || 0);
-  const noDirection = Number(breakdown.no_directional_people_change || 0);
-  if (unclear > total / 2 && insufficient + noDirection === unclear) {
-    return `${insufficient} developments lacked enough evidence, while ${noDirection} had evidence but showed no clear gain or loss for people. Among the directional developments, ${gaining} pointed to gains and ${losing} to people losing ground.`;
+function primaryOutcomeFor(relationship) {
+  const signals = relationship?.public_signals || {};
+  const gaining = Boolean(signals.people_gaining);
+  const losing = Boolean(signals.people_losing_ground);
+  if (gaining && losing) return "benefit_and_downside";
+  if (gaining) return "benefit_shown";
+  if (losing) return "downside_shown";
+  if (String(relationship?.evidence_status || "") === "insufficient") return "too_little_evidence";
+  return "no_clear_people_change";
+}
+
+function primaryOutcomeSummary() {
+  const total = Number(signalSummary?.expected_units || periodCounts(currentRelease).events || 0);
+  const counts = Object.fromEntries(Object.keys(PRIMARY_OUTCOME_LABELS).map((key) => [key, 0]));
+  const basis = Object.fromEntries(Object.keys(PRIMARY_OUTCOME_LABELS).map((key) => [key, { fullBody: 0, other: 0 }]));
+  const rows = Array.isArray(currentSymbiosis?.evidence) ? currentSymbiosis.evidence : [];
+  let uneven = 0;
+  if (rows.length === total && total > 0) {
+    rows.forEach((row) => {
+      const key = primaryOutcomeFor(row);
+      counts[key] += 1;
+      if (Number(row?.evidence_basis_summary?.full_text_sources || 0) > 0) basis[key].fullBody += 1;
+      else basis[key].other += 1;
+      if (row?.public_signals?.not_everyone_benefits) uneven += 1;
+    });
+    return { counts, basis, uneven };
   }
-  if (unclear > total / 2) return `Most AI news still did not show a clear change for people. Among the clearer developments, ${gaining} pointed to gains and ${losing} to people losing ground.`;
-  if (gaining > losing) return `Gains appeared more often than losses, but the picture was not the same for every person or every use of AI.`;
-  if (losing > gaining) return `More developments showed people losing ground than gaining, with ${unclear} still not clear enough to call.`;
-  return `The week showed a balanced picture of gains and losses, with ${unclear} developments still not clear enough to call.`;
+  const legacy = signalSummary?.people_signal_counts || {};
+  const breakdown = signalSummary?.not_clear_breakdown || {};
+  counts.benefit_shown = Number(legacy.people_gaining || 0);
+  counts.downside_shown = Number(legacy.people_losing_ground || 0);
+  counts.benefit_and_downside = Number(legacy.mixed_picture || 0);
+  counts.too_little_evidence = Number(breakdown.not_enough_evidence || 0);
+  counts.no_clear_people_change = Math.max(0, total - counts.benefit_shown - counts.downside_shown - counts.benefit_and_downside - counts.too_little_evidence);
+  uneven = Number(legacy.not_everyone_benefits || 0);
+  return { counts, basis, uneven };
+}
+
+function outcomeStatus(key, count, basis, total) {
+  const detail = basis?.[key] || { fullBody: 0, other: 0 };
+  if (count > 0 && detail.fullBody + detail.other === count && (detail.fullBody || detail.other)) {
+    const fullText = `${detail.fullBody} with a full article`;
+    const other = `${detail.other} without a full article`;
+    return detail.fullBody && detail.other ? `${fullText}; ${other}` : detail.fullBody ? fullText : other;
+  }
+  return `of ${total} developments`;
+}
+
+function assessmentStatus(total) {
+  const covered = fullBodyEvidenceCount(signalSummary);
+  if (!total) return "The weekly picture is being prepared.";
+  if (covered >= total) return "A full source article was available for every development.";
+  return `A full source article was available for ${covered} of ${total} developments. The rest are kept separate as not enough evidence.`;
+}
+
+function takeawayCopy(counts) {
+  const benefit = Number(counts.benefit_shown || 0);
+  const downside = Number(counts.downside_shown || 0);
+  const noChange = Number(counts.no_clear_people_change || 0);
+  const insufficient = Number(counts.too_little_evidence || 0);
+  return `This week, ${insufficient} developments did not have enough source evidence and ${noChange} did not show a clear change for people. ${benefit} reported a benefit and ${downside} reported a downside.`;
 }
 
 function renderOpening() {
   const counts = periodCounts(currentRelease);
-  setText("week-badge", `This week · ${formatRange(currentRelease.period_start, currentRelease.period_end)}`);
-  setText("week-intro", `${counts.articles} source pages were grouped into ${counts.events} distinct developments. Start with what those developments mean for people, then open the news behind them.`);
+  setText("week-badge", `This week, ${formatRange(currentRelease.period_start, currentRelease.period_end)}`);
+  setText("week-intro", `${counts.articles} source pages were grouped into ${counts.events} distinct developments. Start with what the sources show for people, then open the news behind them.`);
 }
 
 function renderSignals() {
   const total = Number(signalSummary?.expected_units || periodCounts(currentRelease).events || 0);
-  const counts = signalSummary?.people_signal_counts || {};
-  const available = signalSummary?.availability || {};
-  const breakdown = signalSummary?.not_clear_breakdown || {};
+  const classified = Number(signalSummary?.classified_units || 0);
+  const complete = total > 0 && classified === total;
+  const primary = primaryOutcomeSummary();
+  const counts = primary.counts;
+  const ready = complete && Object.values(counts).reduce((sum, value) => sum + Number(value || 0), 0) === total;
   const cards = [
-    ["people_gaining", "week-signal-gaining", "week-percent-gaining", "week-status-gaining"],
-    ["people_losing_ground", "week-signal-losing", "week-percent-losing", "week-status-losing"],
-    ["mixed_picture", "week-signal-mixed", "week-percent-mixed", "week-status-mixed"],
-    ["not_everyone_benefits", "week-signal-unequal", "week-percent-unequal", "week-status-unequal"],
-    ["not_clear_yet", "week-signal-unclear", "week-percent-unclear", "week-status-unclear"],
+    ["benefit_shown", "week-signal-benefit", "week-percent-benefit", "week-status-benefit"],
+    ["downside_shown", "week-signal-downside", "week-percent-downside", "week-status-downside"],
+    ["benefit_and_downside", "week-signal-both", "week-percent-both", "week-status-both"],
+    ["no_clear_people_change", "week-signal-no-change", "week-percent-no-change", "week-status-no-change"],
+    ["too_little_evidence", "week-signal-insufficient", "week-percent-insufficient", "week-status-insufficient"],
   ];
   cards.forEach(([key, countId, percentId, statusId]) => {
-    const ready = available[key] === true;
     const value = Number(counts[key] || 0);
-    setText(countId, ready ? value : "—");
-    setText(percentId, ready ? formatPercent(value, total) : "—");
-    const insufficient = Number(breakdown.not_enough_evidence || 0);
-    const noDirection = Number(breakdown.no_directional_people_change || 0);
-    const status = key === "not_clear_yet" && insufficient + noDirection === value
-      ? `${insufficient} lack evidence · ${noDirection} show no gain/loss`
-      : `of ${total}`;
-    setText(statusId, ready ? status : "Count coming after review");
+    setText(countId, ready ? value : "Not available");
+    setText(percentId, ready ? formatPercent(value, total) : "Not available");
+    setText(statusId, ready ? outcomeStatus(key, value, primary.basis, total) : "Count being prepared");
     document.querySelector(`[data-signal-card="${key}"]`)?.classList.toggle("is-pending", !ready);
     const filter = document.querySelector(`[data-signal-view="${key}"]`);
     if (filter) {
       filter.disabled = !ready;
-      filter.title = ready ? "" : "This new count is being added through the current review.";
+      filter.title = ready ? "" : "This count is being prepared from the available source evidence.";
     }
   });
-  if (signalView !== "all" && available[signalView] !== true) signalView = "all";
-  setText("weekly-takeaway-copy", signalSummary ? takeawayCopy(counts, total, breakdown) : "The people-first picture is still being prepared for this week.");
+  if (signalView !== "all" && !ready) signalView = "all";
+  setText("weekly-takeaway-copy", ready ? takeawayCopy(counts) : "The people-first picture is still being prepared for this week.");
+  setText("weekly-assessment-status", assessmentStatus(total));
 
   const patterns = signalSummary?.relationship_pattern_counts || {};
   const grid = document.getElementById("movement-grid");
   if (grid) grid.hidden = !signalSummary;
-  setText("movement-together", Number(patterns.mutualism || 0));
-  setText("movement-people-down", Number(patterns.ai_benefiting_parasitism || 0));
-  setText("movement-ai-held", Number(patterns.human_benefiting_parasitism || 0));
-  setText("movement-both-down", Number(patterns.competition || 0));
+  setText("movement-together", ready ? Number(patterns.mutualism || 0) : "Not available");
+  setText("movement-people-down", ready ? Number(patterns.ai_benefiting_parasitism || 0) : "Not available");
+  setText("movement-ai-held", ready ? Number(patterns.human_benefiting_parasitism || 0) : "Not available");
+  setText("movement-both-down", ready ? Number(patterns.competition || 0) : "Not available");
   const fullBodyCount = fullBodyEvidenceCount(signalSummary);
-  setText("movement-scope", signalSummary ? `${total} developments checked${fullBodyCount ? ` · full article evidence used for ${fullBodyCount}` : ""}` : "Picture being prepared");
+  setText("movement-scope", ready ? `${total} developments checked. Full article evidence was used for ${fullBodyCount}.` : "Picture being prepared");
 }
 
 function renderTape() {
@@ -269,7 +316,7 @@ function eventMatchesView(event) {
 
 function eventMatchesSignal(event) {
   if (signalView === "all") return true;
-  return Boolean(fallbackSignals(relationshipEventById(event))[signalView]);
+  return primaryOutcomeFor(relationshipEventById(event)) === signalView;
 }
 
 function storyLocation(event, relationship) {
@@ -281,7 +328,7 @@ function storyLocation(event, relationship) {
 }
 
 function evidenceScopeCopy(count) {
-  const meaning = signalView === "all" ? "" : ` marked “${SIGNAL_LABELS[signalView]}”`;
+  const meaning = signalView === "all" ? "" : ` marked ${PRIMARY_OUTCOME_LABELS[signalView]}`;
   const market = selectedMarket ? ` found through the ${markets[selectedMarket]?.name || selectedMarket} search` : "";
   return `${count} current-week ${plural(count, "development")}${meaning}${market}.`;
 }
@@ -289,7 +336,7 @@ function evidenceScopeCopy(count) {
 function noveltyLabel(event) {
   const novelty = String(event.novelty_status || "");
   if (novelty === "recurring" || event.recurring_in_period) return "Seen before";
-  if (novelty === "follow_on_development" || event.follow_on_development) return "First recorded · follow-on";
+  if (novelty === "follow_on_development" || event.follow_on_development) return "First recorded, follow-on";
   if (novelty === "first_time" || event.first_time_in_period) return "First recorded";
   if (novelty === "possible_historical_match" || event.possible_historical_match) return "History link being checked";
   return "History link being checked";
@@ -297,10 +344,37 @@ function noveltyLabel(event) {
 
 function signalBadges(relationship) {
   const signals = fallbackSignals(relationship);
-  return Object.entries(SIGNAL_LABELS)
-    .filter(([key]) => signals[key])
-    .map(([key, label]) => `<span class="meaning-badge ${escapeHTML(key)}">${escapeHTML(label)}</span>`)
-    .join("");
+  const primary = primaryOutcomeFor(relationship);
+  const badges = [`<span class="meaning-badge ${escapeHTML(primary)}">${escapeHTML(PRIMARY_OUTCOME_LABELS[primary])}</span>`];
+  if (signals.not_everyone_benefits) badges.push('<span class="meaning-badge uneven-effect">Different effects for different groups</span>');
+  return badges.join("");
+}
+
+function sourceMarketLabel(marketsFound) {
+  const names = marketsFound.map((iso3) => markets[iso3]?.name || iso3).filter(Boolean);
+  if (!names.length) return "Source market not recorded";
+  return `${names.length === 1 ? "Source market" : "Source markets"}: ${names.join(", ")}`;
+}
+
+function sourceMarketLabelForSource(source) {
+  const articleId = String(source?.article_id || "");
+  const row = coverageByArticle.get(articleId);
+  const names = (row?.search_markets || [])
+    .map((iso3) => markets[iso3]?.name || iso3)
+    .filter(Boolean);
+  if (!names.length) return "Source market not recorded";
+  return `Source market: ${names.join(", ")}`;
+}
+
+function evidenceBasisLabel(relationship) {
+  const basis = relationship?.evidence_basis_summary || {};
+  const full = Number(basis.full_text_sources || 0);
+  const summaries = Number(basis.article_summary_sources || 0);
+  const total = Number(basis.source_count || 0);
+  if (full > 0 && full === total) return "Full article used";
+  if (full > 0) return "Full article used with other sources";
+  if (summaries > 0) return "Summary or excerpt used";
+  return "Full article not available";
 }
 
 function renderEvidence() {
@@ -328,15 +402,17 @@ function renderEvidence() {
     const eventDate = sourceDates.length ? formatShortRange(sourceDates[0], sourceDates.at(-1)) : formatShortRange(event.event_date, event.event_date);
     const marketsFound = eventDiscoveryMarkets(event);
     const marketButtons = marketsFound.length
-      ? marketsFound.map((iso3) => `<button type="button" class="market-evidence-chip" data-globe-market="${escapeHTML(iso3)}">${escapeHTML(markets[iso3]?.name || iso3)} search</button>`).join("")
+      ? marketsFound.map((iso3) => `<button type="button" class="market-evidence-chip" data-globe-market="${escapeHTML(iso3)}">Found through ${escapeHTML(markets[iso3]?.name || iso3)} search</button>`).join("")
       : "Search market not available";
     const takeaway = String(relationship?.public_takeaway || "").trim();
+    const evidenceBasis = evidenceBasisLabel(relationship);
+    const sourceMarket = sourceMarketLabel(marketsFound);
     return `
       <details class="evidence-card">
-        <summary><div class="evidence-summary-main"><div class="evidence-badges">${signalBadges(relationship)}</div><h3>${escapeHTML(event.event_title || "Untitled development")}</h3><div class="evidence-meta"><span>${escapeHTML(eventDate)}</span><span>${sources.length} ${plural(sources.length, "source")}</span><span>${escapeHTML(noveltyLabel(event))}</span></div></div><span class="open-cue">Open</span></summary>
+        <summary><div class="evidence-summary-main"><div class="evidence-badges">${signalBadges(relationship)}</div><h3>${escapeHTML(event.event_title || "Untitled development")}</h3><div class="evidence-meta"><span>${escapeHTML(eventDate)}</span><span>${sources.length} ${plural(sources.length, "source")}</span><span class="source-market-label">${escapeHTML(sourceMarket)}</span><span class="evidence-basis-label">${escapeHTML(evidenceBasis)}</span><span>${escapeHTML(noveltyLabel(event))}</span></div></div><span class="open-cue">Open</span></summary>
         <div class="evidence-body">
-          ${takeaway ? `<p class="plain-takeaway"><strong>Why it matters:</strong> ${escapeHTML(takeaway)}</p>` : ""}
-          <div class="source-links">${sources.map((source) => `<a href="${escapeHTML(safeUrl(source.url))}" target="_blank" rel="noopener noreferrer"><span><strong>${escapeHTML(source.publisher || "Publication")}</strong>: ${escapeHTML(source.headline || "Open source")}</span><small>${escapeHTML(source.published_date || "")}</small></a>`).join("")}</div>
+          ${takeaway ? `<p class="plain-takeaway"><strong>What this source reports:</strong> ${escapeHTML(takeaway)}</p>` : ""}
+          <div class="source-links">${sources.map((source) => `<a href="${escapeHTML(safeUrl(source.url))}" target="_blank" rel="noopener noreferrer"><span><strong>${escapeHTML(source.publisher || "Publication")}</strong>: ${escapeHTML(source.headline || "Open source")}</span><small>${escapeHTML(source.published_date || "")} | ${escapeHTML(sourceMarketLabelForSource(source))}</small></a>`).join("")}</div>
           <details class="compact-more"><summary>Where it was found</summary><div class="market-evidence-chips">${marketButtons}</div><p><strong>Story location:</strong> ${escapeHTML(storyLocation(event, relationship))}</p></details>
         </div>
       </details>`;

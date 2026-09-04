@@ -7,8 +7,8 @@
   <meta name="description" content="See who is gaining from AI, who is losing ground, and the source-linked news behind this week's picture.">
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@6.5.0/dist/maplibre-gl.css">
   <link rel="stylesheet" href="/globe.css?v=6.1.0">
-  <link rel="stylesheet" href="/site.css?v=6.1.0">
-  <link rel="stylesheet" href="/edu/observatory.css?v=6.1.0">
+  <link rel="stylesheet" href="/site.css?v=6.2.0">
+  <link rel="stylesheet" href="/edu/observatory.css?v=6.2.0">
   <link rel="stylesheet" href="/analytics-consent.css">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96">
@@ -36,13 +36,13 @@
     </section>
 
     <section class="weekly-signals" aria-labelledby="people-title">
-      <div class="section-title-row"><div><p class="eyebrow">Start with people</p><h2 id="people-title">What is AI changing for people?</h2></div><p class="section-side-note">One development can fit more than one card.</p></div>
+      <div class="section-title-row"><div><p class="eyebrow">Start with people</p><h2 id="people-title">What did the news show for people?</h2></div><p id="weekly-assessment-status" class="section-side-note">Checking how the reading was made.</p></div>
       <div id="week-people-board" class="week-people-board" aria-live="polite">
-        <article class="week-people-card gaining" data-signal-card="people_gaining"><span aria-hidden="true">↑</span><div class="week-card-metric"><strong id="week-signal-gaining">—</strong><b id="week-percent-gaining">—</b></div><h3>People gaining</h3><p>More ability, access, opportunity or control.</p><small id="week-status-gaining">Loading</small></article>
-        <article class="week-people-card losing" data-signal-card="people_losing_ground"><span aria-hidden="true">↓</span><div class="week-card-metric"><strong id="week-signal-losing">—</strong><b id="week-percent-losing">—</b></div><h3>People losing ground</h3><p>Less control, weaker skills, lost opportunity or new risk.</p><small id="week-status-losing">Loading</small></article>
-        <article class="week-people-card mixed" data-signal-card="mixed_picture"><span aria-hidden="true">↕</span><div class="week-card-metric"><strong id="week-signal-mixed">—</strong><b id="week-percent-mixed">—</b></div><h3>A mixed picture</h3><p>Gains and downsides in the same story.</p><small id="week-status-mixed">Loading</small></article>
-        <article class="week-people-card unequal" data-signal-card="not_everyone_benefits"><span aria-hidden="true">≠</span><div class="week-card-metric"><strong id="week-signal-unequal">—</strong><b id="week-percent-unequal">—</b></div><h3>Not everyone benefits</h3><p>AI helps some people more than others.</p><small id="week-status-unequal">Loading</small></article>
-        <article class="week-people-card unclear" data-signal-card="not_clear_yet"><span aria-hidden="true">?</span><div class="week-card-metric"><strong id="week-signal-unclear">—</strong><b id="week-percent-unclear">—</b></div><h3>Not clear yet</h3><p>No clear gain or loss is shown yet.</p><small id="week-status-unclear">Loading</small></article>
+        <article class="week-people-card gaining" data-signal-card="benefit_shown"><span aria-hidden="true">↑</span><div class="week-card-metric"><strong id="week-signal-benefit">Not available</strong><b id="week-percent-benefit">Not available</b></div><h3>A benefit was reported</h3><p>The source showed a direct benefit for people.</p><small id="week-status-benefit">Loading</small></article>
+        <article class="week-people-card losing" data-signal-card="downside_shown"><span aria-hidden="true">↓</span><div class="week-card-metric"><strong id="week-signal-downside">Not available</strong><b id="week-percent-downside">Not available</b></div><h3>A downside was reported</h3><p>The source showed a direct drawback for people.</p><small id="week-status-downside">Loading</small></article>
+        <article class="week-people-card mixed" data-signal-card="benefit_and_downside"><span aria-hidden="true">↕</span><div class="week-card-metric"><strong id="week-signal-both">Not available</strong><b id="week-percent-both">Not available</b></div><h3>Both were reported</h3><p>The source showed both a benefit and a downside.</p><small id="week-status-both">Loading</small></article>
+        <article class="week-people-card nochange" data-signal-card="no_clear_people_change"><span aria-hidden="true">○</span><div class="week-card-metric"><strong id="week-signal-no-change">Not available</strong><b id="week-percent-no-change">Not available</b></div><h3>No clear change was reported</h3><p>The source discussed AI but did not show a clear change for people.</p><small id="week-status-no-change">Loading</small></article>
+        <article class="week-people-card insufficient" data-signal-card="too_little_evidence"><span aria-hidden="true">?</span><div class="week-card-metric"><strong id="week-signal-insufficient">Not available</strong><b id="week-percent-insufficient">Not available</b></div><h3>Too little evidence</h3><p>The available source was too thin for a fair judgment.</p><small id="week-status-insufficient">Loading</small></article>
       </div>
       <div class="weekly-takeaway"><span>This week in one sentence</span><p id="weekly-takeaway-copy">Loading...</p></div>
     </section>
@@ -50,7 +50,7 @@
     <section id="evidence" class="weekly-section evidence-section" aria-labelledby="evidence-title">
       <div class="section-title-row"><div><p class="eyebrow">Choose what matters to you</p><h2 id="evidence-title">Open the news behind the picture</h2></div><p id="evidence-scope" class="section-side-note">Loading current-week developments...</p></div>
       <div class="filter-panel">
-        <div class="filter-row"><strong>Show me</strong><div id="signal-filters" class="filter-chips" aria-label="Filter by what the news means for people"><button type="button" data-signal-view="all">Everything</button><button type="button" data-signal-view="people_gaining">People gaining</button><button type="button" data-signal-view="people_losing_ground">People losing ground</button><button type="button" data-signal-view="mixed_picture">A mixed picture</button><button type="button" data-signal-view="not_everyone_benefits">Not everyone benefits</button><button type="button" data-signal-view="not_clear_yet">Not clear yet</button></div></div>
+        <div class="filter-row"><strong>Show me</strong><div id="signal-filters" class="filter-chips" aria-label="Filter by what the news showed for people"><button type="button" data-signal-view="all">Everything</button><button type="button" data-signal-view="benefit_shown">A benefit was reported</button><button type="button" data-signal-view="downside_shown">A downside was reported</button><button type="button" data-signal-view="benefit_and_downside">Both were reported</button><button type="button" data-signal-view="no_clear_people_change">No clear change</button><button type="button" data-signal-view="too_little_evidence">Too little evidence</button></div></div>
         <div class="filter-row secondary"><strong>Also narrow by</strong><div id="time-filters" class="filter-chips" aria-label="Filter by whether the development was seen before"><button type="button" data-evidence-view="all">All this week</button><button type="button" data-evidence-view="new">First recorded</button><button type="button" data-evidence-view="recurring">Seen before</button><button type="button" data-evidence-view="review">History link being checked</button></div></div>
       </div>
       <div id="evidence-list" class="evidence-list"></div>
@@ -89,7 +89,7 @@
   </main>
 
   <footer><span>© 2026 AI Empowerment Observatory</span><nav aria-label="Footer navigation"><a href="/">Home</a><a href="/reports/">Reports</a><a href="/methodology/">How it works</a><a href="/privacy/">Privacy</a><a href="mailto:kedma@hamelberg-ai.com">Contact</a></nav></footer>
-  <script type="module" src="/edu/dashboard.js?v=6.1.2"></script>
+  <script type="module" src="/edu/dashboard.js?v=6.3.0"></script>
   <script src="/analytics.js"></script>
 </body>
 </html>
