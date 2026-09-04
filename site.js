@@ -2,7 +2,7 @@
 
 import { initDiscoveryGlobe } from "/globe.js?v=6.1.0";
 
-const BUILD_ID = "6.1.0";
+const BUILD_ID = "6.1.1";
 const CURRENT_URL = "/data/releases/current.json";
 const SYMBIOSIS_URL = "/data/symbiosis/current.json";
 const COUNTRIES_URL = "/edu/countries.json";
@@ -91,17 +91,19 @@ function plainSignalData(symbiosis, release) {
 
   const event = symbiosis.event || {};
   const counts = event.display_configuration_counts || event.configuration_counts || {};
+  const classified = Number(event.display_classified_units ?? event.classified_units ?? 0);
+  const complete = total > 0 && classified === total;
   const gaining = Number(counts.mutualism || 0) + Number(counts.human_benefiting_parasitism || 0) + Number(counts.human_enabling_only || 0);
   const losing = Number(counts.ai_benefiting_parasitism || 0) + Number(counts.competition || 0) + Number(counts.human_constraining_only || 0);
   return {
     expected_units: total,
-    classified_units: Number(event.display_classified_units ?? event.classified_units ?? 0),
+    classified_units: classified,
     people_signal_counts: {
       people_gaining: gaining,
       people_losing_ground: losing,
       mixed_picture: 0,
       not_everyone_benefits: 0,
-      not_clear_yet: Math.max(0, total - gaining - losing),
+      not_clear_yet: complete ? Math.max(0, total - gaining - losing) : 0,
     },
     relationship_pattern_counts: {
       mutualism: Number(counts.mutualism || 0),
@@ -110,11 +112,11 @@ function plainSignalData(symbiosis, release) {
       competition: Number(counts.competition || 0),
     },
     availability: {
-      people_gaining: true,
-      people_losing_ground: true,
+      people_gaining: complete,
+      people_losing_ground: complete,
       mixed_picture: false,
       not_everyone_benefits: false,
-      not_clear_yet: true,
+      not_clear_yet: complete,
     },
   };
 }
@@ -149,6 +151,8 @@ function takeawayCopy(counts, total) {
 
 function renderSignals(signalData, release) {
   const total = Number(signalData?.expected_units || releaseCounts(release).events || 0);
+  const classified = Number(signalData?.classified_units || 0);
+  const complete = total > 0 && classified === total;
   const counts = signalData?.people_signal_counts || {};
   const available = signalData?.availability || {};
   const cards = [
@@ -160,22 +164,32 @@ function renderSignals(signalData, release) {
   ];
   cards.forEach(([key, countId, percentId, statusId]) => {
     const card = document.querySelector(`[data-signal="${key}"]`);
-    const ready = available[key] === true;
+    const ready = complete && available[key] === true;
     const value = Number(counts[key] || 0);
     setText(countId, ready ? value : "—");
     setText(percentId, ready ? formatPercent(value, total) : "—");
     setText(statusId, ready ? `of ${total} developments` : "New count coming after review");
     card?.classList.toggle("is-pending", !ready);
   });
-  setText("signal-denominator", `${total} developments checked this week`);
-  setText("week-takeaway", signalData ? takeawayCopy(counts, total) : "The people-first picture is still being prepared for this week.");
+  setText(
+    "signal-denominator",
+    complete
+      ? `${total} developments checked this week`
+      : `${classified} of ${total} relationship classifications published`,
+  );
+  setText(
+    "week-takeaway",
+    complete
+      ? takeawayCopy(counts, total)
+      : "The people-first picture is still being prepared. Missing classifications are not counted as unclear results.",
+  );
 
   const patterns = signalData?.relationship_pattern_counts || {};
-  setText("pattern-together", Number(patterns.mutualism || 0));
-  setText("pattern-people-down", Number(patterns.ai_benefiting_parasitism || 0));
-  setText("pattern-ai-held", Number(patterns.human_benefiting_parasitism || 0));
-  setText("pattern-both-down", Number(patterns.competition || 0));
-  setText("movement-scope", signalData ? `${total} developments checked` : "Picture being prepared");
+  setText("pattern-together", complete ? Number(patterns.mutualism || 0) : "—");
+  setText("pattern-people-down", complete ? Number(patterns.ai_benefiting_parasitism || 0) : "—");
+  setText("pattern-ai-held", complete ? Number(patterns.human_benefiting_parasitism || 0) : "—");
+  setText("pattern-both-down", complete ? Number(patterns.competition || 0) : "—");
+  setText("movement-scope", complete ? `${total} developments checked` : "Picture being prepared");
 }
 
 function marketRows(release, iso3) {
