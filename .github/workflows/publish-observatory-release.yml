@@ -27,6 +27,28 @@ jobs:
         uses: actions/setup-python@v7
         with:
           python-version: "3.12"
+      - name: Install public-brief dependency
+        run: python -m pip install "reportlab>=4.4,<5"
+      - name: Regenerate release-bound public derivatives
+        run: |
+          python scripts/generate_public_insights.py
+          python scripts/generate_public_brief.py
+      - name: Commit release-bound public derivatives
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/insights/latest.json data/history/releases.json \
+            data/reports/latest.json reports/ai-empowerment-pulse-latest.pdf
+          if ! git diff --cached --quiet; then
+            git commit -m "Refresh release-bound public derivatives"
+            git push origin HEAD:main
+          else
+            echo "Public derivatives are unchanged."
+          fi
+      - name: Refresh after derivative commit
+        run: git pull --ff-only origin main
       - name: Validate canonical release and every public derivative
         run: python scripts/validate_and_publish_release.py
       - name: Validate relationship arithmetic and people-side derivation
