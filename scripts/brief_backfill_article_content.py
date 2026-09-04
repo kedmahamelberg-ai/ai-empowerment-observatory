@@ -26,9 +26,10 @@ MIN_WORDS = 80
 FETCH_RETRY_ATTEMPTS = 3
 MAX_ALTERNATE_URLS = 3
 MAX_REDIRECTS = 4
-RECOVERY_STRATEGY_VERSION = "safe_public_recovery_v2"
+RECOVERY_STRATEGY_VERSION = "safe_public_recovery_v4"
 TRANSIENT_STATUS_CODES = {408, 425, 429, 500, 502, 503, 504}
 REDIRECT_STATUS_CODES = {301, 302, 303, 307, 308}
+CJK_CHARACTER_RE = re.compile(r"[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF\u3040-\u30FF\uAC00-\uD7AF]")
 
 
 def _request_headers(*, accept: str) -> dict[str, str]:
@@ -129,13 +130,23 @@ def robots_allowed(url: str) -> tuple[bool | None, str, dict[str, Any]]:
         return None, robots_url, detail
     detail["http_status"] = response.status_code
     if response.status_code in {401, 403}:
+        detail["policy_state"] = "access_denied"
         return False, robots_url, detail
+    # RFC 9309 defines a missing robots resource as unavailable. That means
+    # there are no robots rules to apply, not that the article is blocked.
+    # The article itself still goes through the separate TDM, paywall and
+    # access-control checks below.
+    if response.status_code in {404, 410}:
+        detail["policy_state"] = "absent"
+        return True, robots_url, detail
     if response.status_code != 200:
+        detail["policy_state"] = "unavailable"
         return None, robots_url, detail
     try:
         rp = RobotFileParser()
         rp.set_url(robots_url)
         rp.parse(response.text.splitlines())
+        detail["policy_state"] = "parsed"
         return bool(rp.can_fetch(USER_AGENT, url)), robots_url, detail
     except Exception as exc:
         detail.update(
@@ -258,7 +269,19 @@ def detect_access_challenge(html: str) -> bool:
     return any(marker in lower for marker in markers)
 
 def word_count(text: str) -> int:
-    return len(re.findall(r"\S+", text or ""))
+    """Count evidence words without rejecting space-free CJK article text.
+
+    English and many other languages separate words with whitespace. Chinese,
+    Japanese and Korean commonly do not, so treating every uninterrupted CJK
+    article as one token silently discards a real public article body.
+    """
+    value = text or ""
+    cjk_characters = CJK_CHARACTER_RE.findall(value)
+    if not cjk_characters:
+        return len(re.findall(r"\S+", value))
+    without_cjk = CJK_CHARACTER_RE.sub(" ", value)
+    non_cjk_words = re.findall(r"[^\W_]+", without_cjk, flags=re.UNICODE)
+    return len(cjk_characters) + len(non_cjk_words)
 
 def clean_text(value: str) -> str:
     lines = [normalize_space(x) for x in (value or "").splitlines()]

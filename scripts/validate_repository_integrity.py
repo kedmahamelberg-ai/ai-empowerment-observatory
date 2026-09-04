@@ -283,6 +283,20 @@ def main() -> int:
         if forbidden in recovery_workflow:
             fail(f"safe missing-body recovery must not start {forbidden}")
 
+    body_recovery = (ROOT / "scripts" / "brief_backfill_article_content.py").read_text(
+        encoding="utf-8"
+    )
+    for marker in (
+        'RECOVERY_STRATEGY_VERSION = "safe_public_recovery_v4"',
+        "if response.status_code in {404, 410}",
+        'detail["policy_state"] = "absent"',
+        "separate TDM, paywall and",
+        "CJK_CHARACTER_RE",
+        "space-free CJK article text",
+    ):
+        if marker not in body_recovery:
+            fail(f"safe missing-body recovery mishandles an absent robots policy: {marker}")
+
     reclassification_workflow = (
         WORKFLOWS / "reclassify-current-from-full-bodies.yml"
     ).read_text(encoding="utf-8")
@@ -411,7 +425,7 @@ def main() -> int:
         "same_publisher_site",
         "MAX_REDIRECTS",
         "detect_access_challenge",
-        "safe_public_recovery_v2",
+        "safe_public_recovery_v4",
     ):
         if required not in body_fetcher:
             fail(f"safe full-body recovery is missing {required}")
