@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Fail publication when relationship arithmetic cannot reconcile.
+"""Fail publication unless the relationship layer is complete and reconciled.
 
-A placeholder relationship artifact (0 classified units) is allowed because the
-core weekly release may publish before the relationship classifier finishes.
-Once relationship classifications exist, every displayed bucket must reconcile
-to the current weekly development denominator.
+Release construction may create an internal 0-row placeholder while relationship
+classification is running.  A public Pages deployment must never accept that
+placeholder or present missing classifications as substantive results.
 """
 from __future__ import annotations
 
@@ -77,10 +76,31 @@ def main() -> int:
 
     classified = int(event.get("display_classified_units", event.get("classified_units", 0)) or 0)
     if classified == 0:
-        print(f"Relationship placeholder accepted for {release_id}: 0/{expected} classified.")
-        return 0
+        fail(
+            f"relationship artifact is still a 0/{expected} placeholder; "
+            "publish the saved relationship classifications before deploying Pages"
+        )
     if classified != expected:
         fail(f"display classified units={classified} but expected_units={expected}")
+
+    coverage = sym.get("coverage") or {}
+    coverage_expected = int(coverage.get("expected_units") or 0)
+    weekly_coverage = int((release.get("counts") or {}).get("ai_relevant_articles") or 0)
+    if coverage_expected != weekly_coverage:
+        fail(
+            f"relationship coverage expected_units={coverage_expected} "
+            f"but current weekly articles={weekly_coverage}"
+        )
+    coverage_classified = int(
+        coverage.get("display_classified_units", coverage.get("classified_units", 0)) or 0
+    )
+    if coverage_classified != coverage_expected:
+        fail(
+            f"relationship coverage classified units={coverage_classified} "
+            f"but expected_units={coverage_expected}"
+        )
+    if str(sym.get("public_status") or "") == "classification_in_progress":
+        fail("relationship artifact is marked classification_in_progress")
 
     counts = event.get("display_configuration_counts") or event.get("configuration_counts") or {}
     values = {key: int(counts.get(key) or 0) for key in ALL}

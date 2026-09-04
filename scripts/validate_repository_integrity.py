@@ -69,6 +69,38 @@ def main() -> int:
     publish = (WORKFLOWS / "publish-observatory-release.yml").read_text(encoding="utf-8")
     if "validate_public_relationship_consistency.py" not in publish:
         fail("publication workflow is missing the relationship arithmetic gate")
+    for marker in (
+        "Materialize saved relationship classifications",
+        "python scripts/publish_symbiosis_release.py",
+        "Commit complete relationship artifact",
+    ):
+        if marker not in publish:
+            fail(f"publication workflow cannot materialize saved relationship results: {marker}")
+
+    relationship_gate = (
+        ROOT / "scripts" / "validate_public_relationship_consistency.py"
+    ).read_text(encoding="utf-8")
+    if "placeholder accepted" in relationship_gate.casefold():
+        fail("the public relationship gate still accepts a 0-row placeholder")
+    for marker in (
+        "publish the saved relationship classifications before deploying Pages",
+        "coverage_classified != coverage_expected",
+        'classification_in_progress',
+    ):
+        if marker not in relationship_gate:
+            fail(f"the public relationship completeness gate is missing: {marker}")
+
+    site_script = (ROOT / "site.js").read_text(encoding="utf-8")
+    for marker in (
+        "const complete = total > 0 && classified === total;",
+        "const ready = complete && available[key] === true;",
+        "Missing classifications are not counted as unclear results.",
+    ):
+        if marker not in site_script:
+            fail(f"the public site can misrepresent missing relationship data: {marker}")
+    home_page = (ROOT / "index.html").read_text(encoding="utf-8")
+    if '/site.js?v=6.1.1' not in home_page or 'const BUILD_ID = "6.1.1";' not in site_script:
+        fail("the relationship-data safety fix is missing its browser cache-busting version")
 
     repository_integrity = (WORKFLOWS / "repository-integrity.yml").read_text(
         encoding="utf-8"
@@ -76,11 +108,11 @@ def main() -> int:
     if "scripts/create_symbiosis_placeholder.py" not in repository_integrity:
         fail("repository integrity must compile the release-bound relationship placeholder helper")
     if (
-        "Refresh local relationship placeholder for current release"
+        "Confirm relationship placeholder cannot pass publication"
         not in repository_integrity
-        or "python scripts/create_symbiosis_placeholder.py" not in repository_integrity
+        or "if python scripts/validate_public_relationship_consistency.py" not in repository_integrity
     ):
-        fail("repository integrity must refresh the local relationship placeholder before arithmetic validation")
+        fail("repository integrity must prove that the public gate rejects a relationship placeholder")
 
     release_builder = (WORKFLOWS / "build-weekly-release.yml").read_text(
         encoding="utf-8"
