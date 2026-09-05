@@ -81,8 +81,8 @@ jobs:
       - name: Install Python dependencies
         run: |
           set -euo pipefail
-          python -m pip install -r requirements.txt
-          python -m pip install "huggingface_hub>=0.34,<2"
+          python -m pip install -r requirements-relationship.txt PyYAML
+          python -m unittest discover -s tests -v
       - name: Install llama.cpp build dependencies
         run: |
           set -euo pipefail
@@ -91,7 +91,10 @@ jobs:
       - name: Build llama.cpp server
         run: |
           set -euo pipefail
-          git clone --depth 1 https://github.com/ggml-org/llama.cpp.git /tmp/llama.cpp
+          git init /tmp/llama.cpp
+          git -C /tmp/llama.cpp remote add origin https://github.com/ggml-org/llama.cpp.git
+          git -C /tmp/llama.cpp fetch --depth 1 origin 427291b5b34cd914a31b3fd3b61a68f6184f4b9f
+          git -C /tmp/llama.cpp checkout --detach FETCH_HEAD
           cmake -S /tmp/llama.cpp -B /tmp/llama.cpp/build \
             -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=OFF -DLLAMA_CURL=ON
           cmake --build /tmp/llama.cpp/build --target llama-server -j2
@@ -118,10 +121,19 @@ jobs:
           print(json.dumps(status, indent=2))
           PY
 
+      - name: Save pass diagnostics
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: symbiosis-pass-1-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/symbiosis-status-${{ github.job }}.json
+          if-no-files-found: ignore
+          retention-days: 14
+
   pass_2:
     name: Classification pass 2
     needs: pass_1
-    if: needs.pass_1.outputs.complete != 'true'
+    if: ${{ always() && !cancelled() && needs.pass_1.outputs.complete != 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 285
     outputs:
@@ -150,8 +162,8 @@ jobs:
       - name: Install Python dependencies
         run: |
           set -euo pipefail
-          python -m pip install -r requirements.txt
-          python -m pip install "huggingface_hub>=0.34,<2"
+          python -m pip install -r requirements-relationship.txt PyYAML
+          python -m unittest discover -s tests -v
       - name: Install llama.cpp build dependencies
         run: |
           set -euo pipefail
@@ -160,7 +172,10 @@ jobs:
       - name: Build llama.cpp server
         run: |
           set -euo pipefail
-          git clone --depth 1 https://github.com/ggml-org/llama.cpp.git /tmp/llama.cpp
+          git init /tmp/llama.cpp
+          git -C /tmp/llama.cpp remote add origin https://github.com/ggml-org/llama.cpp.git
+          git -C /tmp/llama.cpp fetch --depth 1 origin 427291b5b34cd914a31b3fd3b61a68f6184f4b9f
+          git -C /tmp/llama.cpp checkout --detach FETCH_HEAD
           cmake -S /tmp/llama.cpp -B /tmp/llama.cpp/build \
             -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=OFF -DLLAMA_CURL=ON
           cmake --build /tmp/llama.cpp/build --target llama-server -j2
@@ -187,14 +202,22 @@ jobs:
           print(json.dumps(status, indent=2))
           PY
 
+      - name: Save pass diagnostics
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: symbiosis-pass-2-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/symbiosis-status-${{ github.job }}.json
+          if-no-files-found: ignore
+          retention-days: 14
+
   pass_3:
     name: Classification pass 3
     needs: [pass_1, pass_2]
     if: >-
       always() &&
-      needs.pass_1.result == 'success' &&
+      !cancelled() &&
       needs.pass_1.outputs.complete != 'true' &&
-      needs.pass_2.result == 'success' &&
       needs.pass_2.outputs.complete != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 285
@@ -224,8 +247,8 @@ jobs:
       - name: Install Python dependencies
         run: |
           set -euo pipefail
-          python -m pip install -r requirements.txt
-          python -m pip install "huggingface_hub>=0.34,<2"
+          python -m pip install -r requirements-relationship.txt PyYAML
+          python -m unittest discover -s tests -v
       - name: Install llama.cpp build dependencies
         run: |
           set -euo pipefail
@@ -234,7 +257,10 @@ jobs:
       - name: Build llama.cpp server
         run: |
           set -euo pipefail
-          git clone --depth 1 https://github.com/ggml-org/llama.cpp.git /tmp/llama.cpp
+          git init /tmp/llama.cpp
+          git -C /tmp/llama.cpp remote add origin https://github.com/ggml-org/llama.cpp.git
+          git -C /tmp/llama.cpp fetch --depth 1 origin 427291b5b34cd914a31b3fd3b61a68f6184f4b9f
+          git -C /tmp/llama.cpp checkout --detach FETCH_HEAD
           cmake -S /tmp/llama.cpp -B /tmp/llama.cpp/build \
             -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=OFF -DLLAMA_CURL=ON
           cmake --build /tmp/llama.cpp/build --target llama-server -j2
@@ -261,6 +287,15 @@ jobs:
           print(json.dumps(status, indent=2))
           PY
 
+      - name: Save pass diagnostics
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: symbiosis-pass-3-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/symbiosis-status-${{ github.job }}.json
+          if-no-files-found: ignore
+          retention-days: 14
+
   ensure_complete:
     name: Require complete relationship classification
     needs: [pass_1, pass_2, pass_3]
@@ -271,6 +306,9 @@ jobs:
       PASS_1_COMPLETE: ${{ needs.pass_1.outputs.complete }}
       PASS_2_COMPLETE: ${{ needs.pass_2.outputs.complete }}
       PASS_3_COMPLETE: ${{ needs.pass_3.outputs.complete }}
+      PASS_1_RESULT: ${{ needs.pass_1.result }}
+      PASS_2_RESULT: ${{ needs.pass_2.result }}
+      PASS_3_RESULT: ${{ needs.pass_3.result }}
     steps:
       - name: Require a completed symbiosis run
         shell: bash
@@ -282,7 +320,7 @@ jobs:
             echo "Relationship classification completed successfully."
             exit 0
           fi
-          echo "::error::Relationship classification did not complete within three resumable passes. No downstream publication was started."
+          echo "::error::Relationship results remain incomplete. Pass results: 1=$PASS_1_RESULT, 2=$PASS_2_RESULT, 3=$PASS_3_RESULT. Saved rows remain resumable; inspect the pass diagnostics. Publication is blocked."
           exit 1
 
   build_review_workbench:
@@ -304,7 +342,7 @@ jobs:
           python-version: "3.12"
           cache: pip
       - name: Install review dependencies
-        run: python -m pip install -r requirements.txt
+        run: python -m pip install -r requirements-relationship.txt
       - name: Build self-contained review workbench
         run: python scripts/build_symbiosis_review_workbench.py --scope latest
       - name: Upload review workbench

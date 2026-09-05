@@ -1,19 +1,70 @@
-name: Deprecated Full-Body Relationship Resume
+name: Recover and Publish Current Observatory Week
 
 on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: observatory-current-week-recovery
+  cancel-in-progress: false
 
 jobs:
-  stop:
-    name: Stop before a classification or publication run
+  validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - name: Explain the replacement path
-        shell: bash
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r requirements-relationship.txt PyYAML
+      - run: python -m unittest discover -s tests -v
+      - run: python scripts/validate_multilingual_pipeline.py
+
+  recover:
+    needs: validate
+    uses: ./.github/workflows/classify-current-symbiosis.yml
+    with:
+      lens: both
+      # Reuse successful results and interrupted checkpoints. No recollection.
+      replace: false
+      resume_only: false
+      release_id: ""
+    secrets: inherit
+
+  period_summaries:
+    needs: recover
+    uses: ./.github/workflows/build-period-summaries.yml
+    secrets: inherit
+
+  publish:
+    needs: period_summaries
+    uses: ./.github/workflows/publish-observatory-release.yml
+    secrets: inherit
+
+  export_review:
+    needs: publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Export every development and a repeatable quality sample
         run: |
-          set -euo pipefail
-          echo "::error::This workflow is retired. First run 'Recover Missing Full Article Bodies', download the private audit, and decide whether another classification run is justified."
-          exit 1
+          python scripts/export_symbiosis_qc.py --mode all --output review/exports/current-week-all.csv
+          python scripts/export_symbiosis_qc.py --mode stratified_random --sample-size 24 --output review/exports/current-week-sample.csv
+      - uses: actions/upload-artifact@v7
+        with:
+          name: observatory-current-week-review-${{ github.run_id }}
+          path: review/exports/current-week-*
+          retention-days: 30

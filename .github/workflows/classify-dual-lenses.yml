@@ -43,8 +43,8 @@ jobs:
       - name: Install Python dependencies
         run: |
           set -euo pipefail
-          python -m pip install -r requirements.txt
-          python -m pip install "huggingface_hub>=0.34,<2"
+          python -m pip install -r requirements-relationship.txt PyYAML
+          python -m unittest discover -s tests -v
       - name: Install llama.cpp build dependencies
         run: |
           set -euo pipefail
@@ -53,7 +53,10 @@ jobs:
       - name: Build llama.cpp server
         run: |
           set -euo pipefail
-          git clone --depth 1 https://github.com/ggml-org/llama.cpp.git /tmp/llama.cpp
+          git init /tmp/llama.cpp
+          git -C /tmp/llama.cpp remote add origin https://github.com/ggml-org/llama.cpp.git
+          git -C /tmp/llama.cpp fetch --depth 1 origin 427291b5b34cd914a31b3fd3b61a68f6184f4b9f
+          git -C /tmp/llama.cpp checkout --detach FETCH_HEAD
           cmake -S /tmp/llama.cpp -B /tmp/llama.cpp/build \
             -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=OFF -DLLAMA_CURL=ON
           cmake --build /tmp/llama.cpp/build --target llama-server -j2
@@ -87,7 +90,7 @@ jobs:
   pass_2:
     name: Classification pass 2
     needs: pass_1
-    if: needs.pass_1.outputs.complete != 'true'
+    if: ${{ always() && !cancelled() && needs.pass_1.outputs.complete != 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 285
     outputs:
@@ -117,8 +120,8 @@ jobs:
       - name: Install Python dependencies
         run: |
           set -euo pipefail
-          python -m pip install -r requirements.txt
-          python -m pip install "huggingface_hub>=0.34,<2"
+          python -m pip install -r requirements-relationship.txt PyYAML
+          python -m unittest discover -s tests -v
       - name: Install llama.cpp build dependencies
         run: |
           set -euo pipefail
@@ -127,7 +130,10 @@ jobs:
       - name: Build llama.cpp server
         run: |
           set -euo pipefail
-          git clone --depth 1 https://github.com/ggml-org/llama.cpp.git /tmp/llama.cpp
+          git init /tmp/llama.cpp
+          git -C /tmp/llama.cpp remote add origin https://github.com/ggml-org/llama.cpp.git
+          git -C /tmp/llama.cpp fetch --depth 1 origin 427291b5b34cd914a31b3fd3b61a68f6184f4b9f
+          git -C /tmp/llama.cpp checkout --detach FETCH_HEAD
           cmake -S /tmp/llama.cpp -B /tmp/llama.cpp/build \
             -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=OFF -DLLAMA_CURL=ON
           cmake --build /tmp/llama.cpp/build --target llama-server -j2
@@ -163,9 +169,8 @@ jobs:
     needs: [pass_1, pass_2]
     if: >-
       always() &&
-      needs.pass_1.result == 'success' &&
+      !cancelled() &&
       needs.pass_1.outputs.complete != 'true' &&
-      needs.pass_2.result == 'success' &&
       needs.pass_2.outputs.complete != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 285
@@ -196,8 +201,8 @@ jobs:
       - name: Install Python dependencies
         run: |
           set -euo pipefail
-          python -m pip install -r requirements.txt
-          python -m pip install "huggingface_hub>=0.34,<2"
+          python -m pip install -r requirements-relationship.txt PyYAML
+          python -m unittest discover -s tests -v
       - name: Install llama.cpp build dependencies
         run: |
           set -euo pipefail
@@ -206,7 +211,10 @@ jobs:
       - name: Build llama.cpp server
         run: |
           set -euo pipefail
-          git clone --depth 1 https://github.com/ggml-org/llama.cpp.git /tmp/llama.cpp
+          git init /tmp/llama.cpp
+          git -C /tmp/llama.cpp remote add origin https://github.com/ggml-org/llama.cpp.git
+          git -C /tmp/llama.cpp fetch --depth 1 origin 427291b5b34cd914a31b3fd3b61a68f6184f4b9f
+          git -C /tmp/llama.cpp checkout --detach FETCH_HEAD
           cmake -S /tmp/llama.cpp -B /tmp/llama.cpp/build \
             -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=OFF -DLLAMA_CURL=ON
           cmake --build /tmp/llama.cpp/build --target llama-server -j2

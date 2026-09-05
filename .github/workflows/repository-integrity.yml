@@ -2,11 +2,14 @@ name: Observatory Repository Integrity
 
 on:
   workflow_dispatch:
+  pull_request:
   push:
     branches: [main]
     paths:
       - ".github/workflows/**"
       - "scripts/**"
+      - "tests/**"
+      - "requirements-relationship.txt"
       - "index.html"
       - "site.js"
       - "site.css"
@@ -34,6 +37,10 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
+      - name: Install classification test dependencies
+        run: python -m pip install -r requirements-relationship.txt PyYAML
+      - name: Exercise model failures, saved-run recovery, and multilingual bodies
+        run: python -m unittest discover -s tests -v
       - name: Compile critical Python scripts
         run: |
           python -m py_compile \
