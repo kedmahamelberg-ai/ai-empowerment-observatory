@@ -23,6 +23,7 @@ system performance, consciousness, intentions, or biological fitness.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -51,6 +52,9 @@ from symbiosis_common import (
     validate_model_payload,
 )
 from translation_policy import SUPPORTED_TRANSLATION_PROFILES, preferred_translation_rows
+from symbiosis_model_output import (
+    ModelOutputError, RESPONSE_SCHEMA, TRANSPORT_VERSION, extract_json, response_result,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 RELEASES_DIR = ROOT / "data" / "releases"
@@ -248,7 +252,9 @@ def load_full_text_map(client: Client, article_ids: list[str]) -> dict[str, dict
     for row in rows:
         article_id = str(row.get("article_id") or "")
         body = compact_evidence_text(row.get("body_text"))
-        words = int(row.get("word_count") or evidence_unit_count(body))
+        # Stored whitespace counts from older collectors can be 1 for Chinese.
+        # Measure the actual supplied body, including mixed-language articles.
+        words = evidence_unit_count(body)
         if article_id and article_id not in result and body and words >= MIN_FULL_TEXT_WORDS:
             result[article_id] = {**row, "body_text": body, "word_count": words}
     return result
@@ -693,7 +699,7 @@ def saved_rows_for_run(client: Client, run_id: str) -> list[dict[str, Any]]:
     return paged_table(
         client,
         "symbiosis_classifications",
-        "symbiosis_classification_id,unit_key,lens,model_configuration,content_basis,raw_output",
+        "*",
         apply=lambda query: query.eq("symbiosis_run_id", run_id),
     )
 
@@ -724,6 +730,27 @@ def reusable_saved_rows(
     return reusable, stale
 
 
+def carry_forward_saved_rows(client: Client, rows: list[dict[str, Any]], run_id: str) -> list[dict[str, Any]]:
+    """Copy still-valid results to a continuation, retaining the original audit.
+
+    This is used only when strengthened source evidence invalidates part of an
+    interrupted run. The original rows and human decisions are never deleted.
+    """
+    copied = []
+    for row in rows:
+        payload = {key: value for key, value in row.items() if key not in {
+            "symbiosis_classification_id", "created_at", "updated_at",
+        }}
+        payload["symbiosis_run_id"] = run_id
+        payload["raw_output"] = {
+            **(row.get("raw_output") or {}),
+            "continued_from_classification_id": row["symbiosis_classification_id"],
+        }
+        response = client.table("symbiosis_classifications").insert(payload).select("*").execute()
+        copied.append(first_row(response, "preserving a valid classification in a continuation"))
+    return copied
+
+
 def start_server() -> tuple[subprocess.Popen[Any], Any]:
     log_path = Path("/tmp/aieo-symbiosis-qwen.log")
     handle = log_path.open("w", encoding="utf-8")
@@ -737,10 +764,12 @@ def start_server() -> tuple[subprocess.Popen[Any], Any]:
             "--port",
             "8080",
             "-c",
-            "12288",
+            "32768",
             "-np",
             "1",
             "--jinja",
+            "--chat-template-kwargs",
+            '{"enable_thinking": false}',
             "-ngl",
             "0",
         ],
@@ -776,27 +805,6 @@ def stop_server(process: subprocess.Popen[Any] | None, handle: Any | None) -> No
             process.wait(timeout=10)
     if handle is not None:
         handle.close()
-
-
-def extract_json(text: str) -> dict[str, Any]:
-    raw = text.strip()
-    if raw.startswith("```"):
-        raw = raw.strip("`")
-        if raw.startswith("json"):
-            raw = raw[4:].strip()
-    try:
-        payload = json.loads(raw)
-        if isinstance(payload, dict):
-            return payload
-    except json.JSONDecodeError:
-        pass
-    start = raw.find("{")
-    end = raw.rfind("}")
-    if start >= 0 and end > start:
-        payload = json.loads(raw[start:end + 1])
-        if isinstance(payload, dict):
-            return payload
-    raise SymbiosisClassificationError("Model response did not contain a JSON object.")
 
 
 def _gold_tokens(text: str) -> set[str]:
@@ -965,7 +973,8 @@ DECISION BOUNDARY POLICY
 17. Write public_takeaway as one short sentence in everyday language. State what the development means for people; avoid method labels and academic terminology.
 18. Write people_evidence in at most 280 characters. If you choose a people benefit or downside, identify the specific source-supported fact behind it. Otherwise write "no people outcome stated" or "not enough evidence". Do not quote long passages.
 19. The collected full article body may be written in any language. Treat the original-language body as evidence. English headline normalisation is only an aid for matching and review. Do not mark evidence insufficient merely because the source is not English.
-20. Return only one JSON object.{calibration_section}
+20. Return only one JSON object.
+21. Keep human_reasoning, ai_reasoning, and summary to one short sentence each, under 280 characters. Do not include a thinking trace.{calibration_section}
 
 Required keys:
 ai_relevant, evidence_status, relational_signal, human_experience_type,
@@ -974,7 +983,8 @@ topic, geographic_scope, country_iso3s, relationship_patterns,
 distribution_signal, public_takeaway, people_evidence.
 
 confidence must be a JSON number from 0 through 1, for example 0.85. Do not
-return a word such as high, medium, or low.
+return a word such as high, medium, or low. Use steps of 0.05. This is a
+diagnostic self-rating, not a substantive outcome or an index weight.
 
 relationship_patterns must be an object with exactly these boolean keys:
 - mutualism: AI works, spreads, or grows while people gain
@@ -1034,13 +1044,12 @@ def classification_audit(unit: dict[str, Any], result: dict[str, Any]) -> dict[s
 
 def call_classifier(*, lens: str, evidence: str, content_basis: str) -> dict[str, Any]:
     prompt = classifier_prompt(lens=lens, evidence=evidence, content_basis=content_basis)
-    modes = [
-        ("json_object", {"response_format": {"type": "json_object"}}, 0.1),
-        ("prompt_only", {}, 0.1),
-        ("retry", {}, 0.4),
-    ]
+    # Qwen3 thinking must be disabled in the template, not only by /no_think.
+    # Every attempt is schema-constrained. Never fall back to free-form text.
+    modes = [("schema", 1600), ("schema_retry", 2400), ("schema_retry_large", 3200)]
     last_error: Exception | None = None
-    for index, (name, extra, temperature) in enumerate(modes, start=1):
+    attempts: list[dict[str, Any]] = []
+    for index, (name, max_tokens) in enumerate(modes, start=1):
         try:
             response = requests.post(
                 SERVER_URL,
@@ -1053,17 +1062,20 @@ def call_classifier(*, lens: str, evidence: str, content_basis: str) -> dict[str
                         },
                         {"role": "user", "content": prompt},
                     ],
-                    "temperature": temperature,
+                    "temperature": 0.7,
                     "top_p": 0.8,
-                    "max_tokens": 900,
+                    "top_k": 20,
+                    "min_p": 0,
+                    "seed": 42,
+                    "max_tokens": max_tokens,
+                    "chat_template_kwargs": {"enable_thinking": False},
+                    "response_format": {"type": "json_object", "schema": RESPONSE_SCHEMA},
                     "stream": False,
-                    **extra,
                 },
-                timeout=300,
+                timeout=(10, 420),
             )
             response.raise_for_status()
-            text = str(response.json()["choices"][0]["message"]["content"])
-            raw = extract_json(text)
+            raw, diagnostics = response_result(response.json())
             normalized = validate_model_payload(raw)
             normalized["raw_output"] = {
                 "model_response": raw,
@@ -1073,15 +1085,25 @@ def call_classifier(*, lens: str, evidence: str, content_basis: str) -> dict[str
                 "people_evidence": normalized["people_evidence"],
                 "public_signal_schema_version": normalized["schema_version"],
                 "normalization_warnings": normalized.get("normalization_warnings") or [],
+                "transport_version": TRANSPORT_VERSION,
+                "prompt_sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
+                "sampling": {"temperature": 0.7, "top_p": 0.8, "top_k": 20, "min_p": 0, "seed": 42},
+                "generation": {**diagnostics, "max_tokens": max_tokens, "thinking": False, "mode": name},
+                "recovered_attempts": attempts,
             }
             normalized["structured_output_mode"] = name
             return normalized
-        except Exception as exc:
+        except (ModelOutputError, requests.RequestException, ValueError) as exc:
             last_error = exc
-            print(f"Warning: symbiosis request {index}/{len(modes)} failed: {exc}", file=sys.stderr)
+            detail = {"attempt": index, "max_tokens": max_tokens, "error_type": type(exc).__name__}
+            if isinstance(exc, ModelOutputError):
+                detail.update(exc.diagnostics[-1] if exc.diagnostics else {})
+                detail["reason"] = str(exc)
+            attempts.append(detail)
+            print(f"Warning: symbiosis request {index}/{len(modes)} failed: {json.dumps(detail)}", file=sys.stderr, flush=True)
             if index < len(modes):
                 time.sleep(2)
-    raise SymbiosisClassificationError(f"Model failed after all modes: {last_error}")
+    raise ModelOutputError(f"Model failed after {len(modes)} structured attempts ({type(last_error).__name__}).", attempts)
 
 
 def article_evidence(article: dict[str, Any]) -> str:
@@ -1374,7 +1396,8 @@ def main() -> int:
             model_revision=model_revision,
         )
         resumed = False
-        saved_rows = []
+        saved_rows = carry_forward_saved_rows(client, saved_rows, run_id)
+        print(f"Preserved {len(saved_rows)} valid results; refreshing {len(stale_saved_keys)} results after evidence changed.", flush=True)
     saved_keys = {str(row.get("unit_key") or "") for row in saved_rows}
     pending_units = [(lens, unit) for lens, unit in units if unit["unit_key"] not in saved_keys]
     if resumed:
@@ -1393,6 +1416,7 @@ def main() -> int:
     handle: Any | None = None
     newly_written: list[dict[str, Any]] = []
     review_rows: list[dict[str, Any]] = []
+    failed_units: list[dict[str, Any]] = []
     deadline = (
         time.monotonic() + args.time_budget_minutes * 60
         if args.time_budget_minutes > 0
@@ -1414,13 +1438,21 @@ def main() -> int:
                     new_units=len(newly_written),
                     reason="time_budget_reached",
                 )
+                status["failed_units"] = failed_units
                 write_pass_status(args.status_output, status)
                 print(json.dumps(status, indent=2))
                 return 0
             print(f"[{position}/{len(pending_units)}] {lens}: {unit['unit_key']}", flush=True)
             if unit_has_full_body_model_evidence(lens, unit):
                 evidence = article_evidence(unit) if lens == "coverage" else event_evidence(unit)
-                result = call_classifier(lens=lens, evidence=evidence, content_basis=unit["content_basis"])
+                try:
+                    result = call_classifier(lens=lens, evidence=evidence, content_basis=unit["content_basis"])
+                except ModelOutputError as exc:
+                    # One bad response must not starve the rest of the release.
+                    # Leave this unit unsaved; the next pass retries only gaps.
+                    failed_units.append({"unit_key": unit["unit_key"], "attempts": exc.diagnostics})
+                    print(f"Deferred {unit['unit_key']}: {exc}", file=sys.stderr, flush=True)
+                    continue
             else:
                 result = unavailable_full_body_result(unit)
             row = insert_result(client, run_id=run_id, lens=lens, unit=unit, result=result)
@@ -1445,6 +1477,19 @@ def main() -> int:
                 }
             )
         all_rows = saved_rows + newly_written
+        if failed_units:
+            checkpoint_run(client, run_id, rows=all_rows)
+            status = pass_status_payload(
+                complete=False, run_id=run_id, run_key=run_key,
+                selected_units=len(units), saved_units=len(all_rows),
+                new_units=len(newly_written), reason="model_results_pending",
+            )
+            status["failed_units"] = failed_units
+            write_pass_status(args.status_output, status)
+            print(json.dumps(status, indent=2))
+            # A bounded pass completed; the research run remains incomplete.
+            # The publication gate still requires complete=true.
+            return 0
         finish_run(client, run_id, status="success", rows=all_rows)
         payload = {
             "status": "success",

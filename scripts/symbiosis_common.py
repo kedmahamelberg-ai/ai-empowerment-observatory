@@ -191,7 +191,7 @@ def classification_input_evidence(row: dict[str, Any]) -> tuple[Any, dict[str, A
     if not isinstance(summary, dict):
         summary = row.get("evidence_basis_summary")
     return (
-        row.get("content_basis") or raw_output.get("content_basis") or "headline_only",
+        raw_output.get("content_basis") or row.get("content_basis") or "headline_only",
         summary if isinstance(summary, dict) else {},
     )
 

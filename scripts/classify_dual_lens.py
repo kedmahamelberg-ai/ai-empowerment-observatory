@@ -46,6 +46,7 @@ from supabase import Client, create_client
 
 from brief_content_common import MIN_FULL_BODY_EVIDENCE_UNITS, evidence_unit_count
 from translation_policy import SUPPORTED_TRANSLATION_PROFILES, preferred_translation_rows
+from symbiosis_model_output import CONFIDENCE_VALUES, ModelOutputError, TRANSPORT_VERSION, dimension_schema, response_result
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -177,6 +178,7 @@ CLASSIFICATION_JSON_SCHEMA = {
                         "degree": {"type": "integer", "minimum": 0, "maximum": 3},
                         "confidence": {
                             "type": "number",
+                            "enum": CONFIDENCE_VALUES,
                             "minimum": 0,
                             "maximum": 1,
                             "description": (
@@ -215,6 +217,7 @@ CLASSIFICATION_JSON_SCHEMA = {
         "country_iso3s": {"type": "array", "items": {"type": "string"}},
         "confidence": {
             "type": "number",
+            "enum": CONFIDENCE_VALUES,
             "minimum": 0,
             "maximum": 1,
             "description": (
@@ -234,6 +237,13 @@ CLASSIFICATION_JSON_SCHEMA = {
     ],
     "additionalProperties": False
 }
+
+
+# Enforce interdependent fields in the decoding grammar, not only after a
+# generation has already contradicted itself. Keep the documented schema above
+# as the field reference and replace each dimension with its valid alternatives.
+for _dimension in ("operational", "creative", "agentic", "normative"):
+    CLASSIFICATION_JSON_SCHEMA["properties"]["dimensions"]["properties"][_dimension] = dimension_schema()
 
 
 class ClassificationError(RuntimeError):
@@ -502,7 +512,9 @@ def load_current_full_text(client: Client, article_ids: list[str]) -> dict[str, 
     for row in rows:
         article_id = str(row.get("article_id") or "")
         body = compact_evidence_text(row.get("body_text"))
-        words = int(row.get("word_count") or evidence_unit_count(body))
+        # Recount the supplied multilingual text; legacy whitespace counts can
+        # be 1 for an entire Chinese article.
+        words = evidence_unit_count(body)
         if article_id and article_id not in result and body and words >= MIN_FULL_TEXT_WORDS:
             result[article_id] = {**row, "body_text": body, "word_count": words}
     return result
@@ -1106,10 +1118,12 @@ def start_server() -> tuple[subprocess.Popen, Any]:
             "--port",
             "8080",
             "-c",
-            "12288",
+            "32768",
             "-np",
             "1",
             "--jinja",
+            "--chat-template-kwargs",
+            '{"enable_thinking": false}',
             "-ngl",
             "0",
         ],
@@ -1616,6 +1630,11 @@ source body is not English.
 Confidence is a diagnostic self-rating of categorical certainty, not a rating
 of how much source text was available. Use confidence 0 only when no
 defensible categorical judgement can be made from the supplied full body.
+All confidence fields, including each dimension, must be numbers from 0 to 1
+in steps of 0.05, for example 0.85. Never use percentages or the degree scale
+for confidence. Degree uses integers from 0 to 3; confidence does not.
+When a dimension is absent, use present=false, direction=not_present, degree=0.
+When it is present, use present=true, a directional label, and degree=1, 2 or 3.
 
 Return exactly one JSON object and no surrounding prose.
 
@@ -1640,29 +1659,27 @@ present, direction, degree, confidence, reasoning.
             f"Invalid deterministic content_basis: {content_basis}"
         )
 
-    # Do not make the weekly release depend on llama.cpp's conversion of a
-    # large nested JSON Schema into a grammar. The first mode requests a plain
-    # JSON object. If that interface is rejected by a particular llama.cpp
-    # build, the second and third modes rely on the prompt and the existing
-    # strict client-side validator below.
+    # Keep every attempt structured and disable Qwen3 thinking at the API
+    # boundary. /no_think alone did not prevent empty/truncated final answers.
     request_modes = [
         {
-            "name": "json_object",
+            "name": "schema",
             "extra": {
                 "response_format": {
                     "type": "json_object",
+                    "schema": CLASSIFICATION_JSON_SCHEMA,
                 },
             },
             "temperature": 0.2,
         },
         {
-            "name": "prompt_only",
-            "extra": {},
+            "name": "schema_retry",
+            "extra": {"response_format": {"type": "json_object", "schema": CLASSIFICATION_JSON_SCHEMA}},
             "temperature": 0.2,
         },
         {
-            "name": "prompt_only_retry",
-            "extra": {},
+            "name": "schema_retry_larger",
+            "extra": {"response_format": {"type": "json_object", "schema": CLASSIFICATION_JSON_SCHEMA}},
             "temperature": 0.5,
         },
     ]
@@ -1692,7 +1709,8 @@ present, direction, degree, confidence, reasoning.
                 ],
                 "temperature": mode["temperature"],
                 "top_p": 0.8,
-                "max_tokens": 1100,
+                "max_tokens": 1600 + (attempt - 1) * 800,
+                "chat_template_kwargs": {"enable_thinking": False},
                 "stream": False,
                 **mode["extra"],
             }
@@ -1712,20 +1730,11 @@ present, direction, degree, confidence, reasoning.
 
             response_data = response.json()
 
-            raw_text = str(
-                response_data[
-                    "choices"
-                ][0][
-                    "message"
-                ][
-                    "content"
-                ]
-            )
-
-            raw_json = extract_json(raw_text)
+            raw_json, diagnostics = response_result(response_data, CLASSIFICATION_JSON_SCHEMA)
             normalized, _ = validate_output(raw_json)
             normalized["content_basis"] = content_basis
             normalized["_raw_model_output"] = raw_json
+            normalized["_raw_model_output"]["generation"] = {**diagnostics, "transport_version": TRANSPORT_VERSION, "thinking": False}
             normalized["_structured_output_mode"] = mode["name"]
 
             if attempt > 1:
@@ -1744,6 +1753,7 @@ present, direction, degree, confidence, reasoning.
             TypeError,
             ValueError,
             ClassificationError,
+            ModelOutputError,
         ) as exc:
             last_error = exc
             print(
