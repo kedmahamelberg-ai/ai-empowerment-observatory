@@ -7,8 +7,8 @@
   "period_end": "2026-12-31",
   "observed_week_start": "2026-08-10",
   "observed_week_end": "2026-08-30",
-  "generated_at": "2026-09-05T11:21:24.796058Z",
-  "revision": 4,
+  "generated_at": "2026-08-31T19:26:28.552298Z",
+  "revision": 3,
   "weekly_release_ids": [
     "2026-W33",
     "2026-W34",
@@ -17,18 +17,18 @@
   "weekly_revisions": {
     "2026-W33": 5,
     "2026-W34": 3,
-    "2026-W35": 4
+    "2026-W35": 2
   },
   "reality": {
-    "distinct_event_records": 346,
-    "new_developments": 343,
-    "first_time_event_records": 342,
+    "distinct_event_records": 347,
+    "new_developments": 344,
+    "first_time_event_records": 343,
     "follow_on_developments": 1,
     "active_story_families": 1
   },
   "attention": {
-    "published_coverage_articles": 362,
-    "coverage_episode_count": 362,
+    "published_coverage_articles": 363,
+    "coverage_episode_count": 363,
     "recurring_event_appearances": 0,
     "resurfaced_event_appearances": 0,
     "same_event_new_coverage_articles": 0,
@@ -50,21 +50,21 @@
   },
   "distributions": {
     "topics": {
-      "other": 235,
-      "government_regulation": 39,
-      "education_research": 19,
-      "work_employment": 13,
-      "business_productivity": 12,
-      "healthcare": 11,
+      "other": 261,
+      "government_regulation": 35,
+      "education_research": 14,
       "infrastructure_investment": 11,
-      "consumer_services": 5,
+      "healthcare": 10,
+      "work_employment": 8,
+      "business_productivity": 5,
+      "consumer_services": 2,
       "privacy_security": 1
     },
     "empowerment_status": {
-      "non_empowerment": 204,
-      "unclear": 124,
-      "expanding": 14,
-      "contracting": 4
+      "non_empowerment": 208,
+      "unclear": 134,
+      "expanding": 4,
+      "contracting": 1
     }
   },
   "historical_pool": {
@@ -77,11 +77,11 @@
     "weekly_revisions_included": {
       "2026-W33": 5,
       "2026-W34": 3,
-      "2026-W35": 4
+      "2026-W35": 2
     },
     "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
   },
-  "story": "AIEO observed 362 newly published AI-news articles. They represented 343 new developments.",
+  "story": "AIEO observed 363 newly published AI-news articles. They represented 344 new developments.",
   "disclosure": "Distinct events are deduplicated across the full period by effective event ID. Recurring appearances remain in the Attention view and are not counted as new developments.",
   "revision_reason": "An included weekly release was restated after longitudinal reconciliation.",
   "revision_history": [
@@ -104,18 +104,8 @@
         "2026-W34": 3,
         "2026-W35": 2
       }
-    },
-    {
-      "revision": 4,
-      "changed_at": "2026-09-05T11:21:24.796058Z",
-      "reason": "An included weekly release was restated after longitudinal reconciliation.",
-      "weekly_revisions": {
-        "2026-W33": 5,
-        "2026-W34": 3,
-        "2026-W35": 4
-      }
     }
   ],
-  "previous_revision_path": "/data/releases/annual/archive/2026/revision-3.json",
-  "content_sha256": "e66bbebf157f4ef3a3a93e451499d5fcf54fcdd91b122bbf6f824e19f17140a2"
+  "previous_revision_path": "/data/releases/annual/archive/2026/revision-2.json",
+  "content_sha256": "200453a41e4eb64066c7be440e5315d839e5519284d02e5f7370950082468c8a"
 }
