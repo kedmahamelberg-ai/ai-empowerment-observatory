@@ -1,10 +1,10 @@
 {
   "schema_version": "aieo_relationship_evidence_audit_v1",
-  "generated_at": "2026-09-04T14:17:17.109954Z",
+  "generated_at": "2026-09-05T11:21:48.632792Z",
   "release_id": "2026-W35",
   "period_start": "2026-08-24",
   "period_end": "2026-08-30",
-  "public_status": "model_coded_provisional",
+  "public_status": "current_evidence_reading",
   "review": {
     "complete": false,
     "event_complete": false,
@@ -17,27 +17,25 @@
   "summary": {
     "development_count": 110,
     "primary_outcome_counts": {
-      "benefit_shown": 21,
-      "downside_shown": 10,
+      "benefit_shown": 17,
+      "downside_shown": 6,
       "benefit_and_downside": 0,
-      "no_clear_people_change": 70,
-      "too_little_evidence": 9
+      "no_clear_people_change": 41,
+      "too_little_evidence": 46
     },
     "uneven_effect_count": 2,
     "body_coverage_counts": {
-      "all_sources": 44,
-      "no_full_body": 63,
+      "all_sources": 63,
+      "no_full_body": 44,
       "owner_supplied_full_body": 3
     },
     "reported_body_coverage_counts": {
-      "all_sources": 44,
-      "no_full_body": 63,
+      "all_sources": 63,
+      "no_full_body": 44,
       "owner_supplied_full_body": 3
     },
     "audit_flag_counts": {
-      "directional_result_without_full_article_body": 12,
-      "insufficient_evidence": 9,
-      "model_reading_not_human_checked": 110
+      "insufficient_evidence": 46
     },
     "plain_language_note": "The five primary outcome counts add up to the weekly total. An uneven effect is a separate detail that can overlap with any outcome."
   },
@@ -46,17 +44,30 @@
       "event_id": "f9c0c2c3-fd2b-40bb-9525-94c2909a3588",
       "title": "2 Premier Artificial Intelligence (AI) Stocks That Can Plunge Up to 63%, According to Select Wall Street Analysts",
       "date": "2026-08-28",
-      "primary_outcome": "downside_shown",
-      "primary_outcome_label": "Clear downside shown",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "partial",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "competition",
+        "configuration": "ai_constraining_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people-side benefit or constraint is explicitly stated in the evidence.",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -86,9 +97,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "1aeb2829-ecd4-4c3c-b547-eb50a1db2a90",
@@ -104,7 +113,20 @@
         "review_status": "pending",
         "configuration": "no_clear_relational_signal",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "no people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -119,7 +141,7 @@
         "FRA"
       ],
       "story_country_iso3s": [
-        "GEO"
+        "FRA"
       ],
       "sources": [
         {
@@ -134,33 +156,48 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "9e28b8bb-10e0-4f0c-99d0-5fd0c49d9720",
       "title": "A Generative AI Behind the Genome of a New Virus",
       "date": "2026-08-28",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -181,7 +218,7 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
@@ -198,7 +235,22 @@
         "review_status": "pending",
         "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -213,9 +265,7 @@
         "FRA"
       ],
       "story_country_iso3s": [
-        "F",
-        "R",
-        "A"
+        "FRA"
       ],
       "sources": [
         {
@@ -231,7 +281,6 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked",
         "insufficient_evidence"
       ]
     },
@@ -249,7 +298,20 @@
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -279,43 +341,54 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "d6852802-925f-4a23-89f2-f52ca8ee2e0e",
       "title": "AI policy watch: need-to-know updates from August 2026",
       "date": "2026-08-28",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
         "GBR"
       ],
-      "story_country_iso3s": [
-        "U",
-        "S",
-        "A"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "5341a68abb3de70576c841ffe108a231",
@@ -330,32 +403,49 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
       "event_id": "51b36745-7cfa-47e8-a276-9b70444e613b",
       "title": "AI-powered, diagnosis first! Business district holds “Artificial Intelligence + Manufacturing” diagnosis exchange event",
       "date": "2026-08-26",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -376,7 +466,7 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
@@ -393,7 +483,20 @@
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "no people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -408,7 +511,6 @@
         "FRA"
       ],
       "story_country_iso3s": [
-        "FRA",
         "USA"
       ],
       "sources": [
@@ -424,9 +526,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "ddffdcda-b6bf-4957-9831-8ce95fb05e75",
@@ -442,7 +542,20 @@
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "no people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -456,7 +569,9 @@
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "3b865edebbb9c2627217b7d9ab2e82e7",
@@ -470,25 +585,36 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "aa90c16e-14e9-47f0-9e94-54bd3dd561a3",
       "title": "Artificial Intelligence As It Once Was",
       "date": "2026-08-25",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
-        "evidence_status": "insufficient",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "no people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -520,10 +646,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked",
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "ac3d7417-8087-4c84-a2ec-dd1b8768976a",
@@ -539,7 +662,22 @@
         "review_status": "pending",
         "configuration": "competition",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "directional_result_with_partial_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "AI agents are being restricted due to financial and operational challenges.",
+          "classification_not_run": false,
+          "directional_people_result": true
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -554,9 +692,7 @@
         "CAN"
       ],
       "story_country_iso3s": [
-        "U",
-        "S",
-        "A"
+        "USA"
       ],
       "sources": [
         {
@@ -571,9 +707,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "16fb7116-2b40-47e1-ae66-0fc7814a024a",
@@ -589,7 +723,20 @@
         "review_status": "source_body_qc_ai_assisted",
         "configuration": "ai_benefiting_parasitism",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article supplied by the owner",
@@ -619,33 +766,48 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "b35eace4-8e33-4b65-9fd7-687cd9d1b78b",
       "title": "Artificial Intelligence: ChatGPT Can't Publish It",
       "date": "2026-08-28",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_constraining_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -666,32 +828,49 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
       "event_id": "172e55ac-d3d8-4909-b0d9-e33d1778109e",
       "title": "Artificial Intelligence: Five Things to Know About Anthropic Before Its IPO That Could Exceed SpaceX's Record",
       "date": "2026-08-28",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -712,48 +891,55 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
       "event_id": "82e67fff-c7c6-44fc-9ce9-f7fc9a2a33e9",
       "title": "Artificial Intelligence: How AI Made Me Marxist",
       "date": "2026-08-25",
-      "primary_outcome": "benefit_shown",
-      "primary_outcome_label": "Clear benefit shown",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "mutualism",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
         "FRA"
       ],
-      "story_country_iso3s": [
-        "U",
-        "N",
-        "D",
-        "E",
-        "F",
-        "I",
-        "N",
-        "E",
-        "D"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "24638d900278aa9e329ea1d003c2b1d8",
@@ -768,33 +954,49 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked",
-        "directional_result_without_full_article_body"
+        "insufficient_evidence"
       ]
     },
     {
       "event_id": "8bf3d389-7766-466d-8f25-3480ec85cb98",
       "title": "Artificial Intelligence: How Algorithms Reproduce Racist Biases",
       "date": "2026-08-27",
-      "primary_outcome": "downside_shown",
-      "primary_outcome_label": "Clear downside shown",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "competition",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -815,33 +1017,49 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked",
-        "directional_result_without_full_article_body"
+        "insufficient_evidence"
       ]
     },
     {
       "event_id": "6522d107-8d62-462d-95bd-41ced83a9a9b",
       "title": "Artificial Intelligence: Introduction to Usage Conditions",
       "date": "2026-08-26",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -862,42 +1080,55 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
       "event_id": "e9664542-5c26-4611-85e2-21e94b6cbabd",
       "title": "Artificial intelligence can democratize access to knowledge while deepening a new social divide",
       "date": "2026-08-25",
-      "primary_outcome": "downside_shown",
-      "primary_outcome_label": "Clear downside shown",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "competition",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
         "FRA"
       ],
-      "story_country_iso3s": [
-        "F",
-        "R",
-        "A"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "a4dabc397c20631535c0fc7ac266c263",
@@ -912,8 +1143,7 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked",
-        "directional_result_without_full_article_body"
+        "insufficient_evidence"
       ]
     },
     {
@@ -930,7 +1160,20 @@
         "review_status": "pending",
         "configuration": "ai_constraining_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "no people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -945,7 +1188,9 @@
         "USA"
       ],
       "story_country_iso3s": [
-        "USA"
+        "USA",
+        "CAN",
+        "MEX"
       ],
       "sources": [
         {
@@ -960,9 +1205,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "cf64f370-2129-4f56-b669-c0d0350f1146",
@@ -978,7 +1221,20 @@
         "review_status": "pending",
         "configuration": "mutualism",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "Users of AI gain three hours of work per week on average.",
+          "classification_not_run": false,
+          "directional_people_result": true
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -993,17 +1249,7 @@
         "FRA"
       ],
       "story_country_iso3s": [
-        "FRA",
-        "DEU",
-        "GBR",
-        "ESP",
-        "ITA",
-        "NLD",
-        "PRT",
-        "CZE",
-        "LUX",
-        "SWE",
-        "FIN"
+        "FRA"
       ],
       "sources": [
         {
@@ -1018,16 +1264,14 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "207bb492-9b47-45e4-9a02-06433350195d",
       "title": "Artificial intelligence: Trump administration sanctions against Anthropic canceled by a federal judge",
       "date": "2026-08-28",
-      "primary_outcome": "downside_shown",
-      "primary_outcome_label": "Clear downside shown",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
@@ -1036,7 +1280,20 @@
         "review_status": "pending",
         "configuration": "ai_constraining_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -1066,39 +1323,52 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "3aa32691-d132-4eb1-9ed7-32fa4e617154",
       "title": "Artificial intelligence’s impact on the labor market",
       "date": "2026-08-27",
-      "primary_outcome": "downside_shown",
-      "primary_outcome_label": "Clear downside shown",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "competition",
+        "configuration": "mutualism",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "AI is reorganizing the workforce, not eliminating jobs, suggesting people are extending their capacity through AI.",
+          "classification_not_run": false,
+          "directional_people_result": true
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
-        "body_coverage": "no_full_body"
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "89c40b1d3b8e1756c0d5c2fb35e8cac0",
@@ -1112,34 +1382,48 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked",
-        "directional_result_without_full_article_body"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "395c2036-a625-42fe-a461-6a270cd997e3",
       "title": "Ask a Journalist: How Generative A.I. Is Changing Education",
       "date": "2026-08-27",
-      "primary_outcome": "benefit_shown",
-      "primary_outcome_label": "Clear benefit shown",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "mutualism",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -1160,43 +1444,55 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked",
-        "directional_result_without_full_article_body"
+        "insufficient_evidence"
       ]
     },
     {
       "event_id": "e3ec7e9d-9a52-4151-89f9-c0c54c89b2dc",
       "title": "Australia Bans Generative A.I. From Official Music Charts",
       "date": "2026-08-25",
-      "primary_outcome": "downside_shown",
-      "primary_outcome_label": "Clear downside shown",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "competition",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [
-        "A",
-        "U",
-        "S"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "0dc8b258a0c728afcc2ae647a4345bc9",
@@ -1211,33 +1507,49 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked",
-        "directional_result_without_full_article_body"
+        "insufficient_evidence"
       ]
     },
     {
       "event_id": "3bb6abc9-be60-4500-bd65-8e3f6696bf3a",
       "title": "Ban AI\": Free Software Developers Reject Artificial Intelligence",
       "date": "2026-08-28",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "partial",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_constraining_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -1258,38 +1570,53 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
       "event_id": "a8cec4b6-1473-4f0f-81e8-94bf140ff4dd",
       "title": "Baolong Industry’s Rise: The AI Wave Approaches, Listed Companies Competing to Take Action",
       "date": "2026-08-26",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "partial",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "configuration": "mutualism",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "Listed companies are expanding their presence in the AI industry through the development of the Bayou Future Technology Park.",
+          "classification_not_run": false,
+          "directional_people_result": true
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
-        "body_coverage": "no_full_body"
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CHN"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "CHN"
+      ],
       "sources": [
         {
           "article_id": "f15b9aaf402e7c0069cc73af2c671a5e",
@@ -1303,9 +1630,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "e832909f-b43d-4646-8f89-b635eb5851ea",
@@ -1321,7 +1646,20 @@
         "review_status": "pending",
         "configuration": "mutualism",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "People are using AI to solve problems in manufacturing, which extends their capacity.",
+          "classification_not_run": false,
+          "directional_people_result": true
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -1353,9 +1691,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "9ed95a40-ab46-4d76-b701-7cfd031b1133",
@@ -1371,7 +1707,20 @@
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -1386,9 +1735,7 @@
         "CAN"
       ],
       "story_country_iso3s": [
-        "U",
-        "S",
-        "A"
+        "USA"
       ],
       "sources": [
         {
@@ -1403,9 +1750,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "1115366b-1c5e-4835-8a89-f72a446312ed",
@@ -1416,12 +1761,25 @@
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
-        "evidence_status": "sufficient",
+        "evidence_status": "partial",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people-side benefit or constraint is explicitly stated.",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -1436,9 +1794,7 @@
         "CAN"
       ],
       "story_country_iso3s": [
-        "U",
-        "S",
-        "A"
+        "USA"
       ],
       "sources": [
         {
@@ -1453,33 +1809,48 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "a32aac7a-55a0-4a04-934e-7645928b64fb",
       "title": "Can municipal candidates use AI in their campaigns?",
       "date": "2026-08-30",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "partial",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -1500,32 +1871,49 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
       "event_id": "2ff5d6f9-c42e-4684-b657-a4d553aecbec",
       "title": "Can you rely on artificial intelligence for investment advice?",
       "date": "2026-08-27",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "partial",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -1546,7 +1934,7 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
@@ -1563,7 +1951,20 @@
         "review_status": "pending",
         "configuration": "mutualism",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "55% of Spanish internet users use generative AI tools, and 58% of large companies in Spain use AI in 2025.",
+          "classification_not_run": false,
+          "directional_people_result": true
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -1578,12 +1979,8 @@
         "GBR"
       ],
       "story_country_iso3s": [
-        "USA",
         "ESP",
-        "FRA",
-        "CHN",
-        "IND",
-        "CAN",
+        "USA",
         "GBR"
       ],
       "sources": [
@@ -1599,34 +1996,45 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "85693635-5d76-4edb-9617-ecd81637d6b1",
       "title": "ChatGPT Images: Bring Your Ideas to Life",
       "date": "2026-08-29",
-      "primary_outcome": "benefit_shown",
-      "primary_outcome_label": "Clear benefit shown",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "mutualism",
+        "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
-        "body_coverage": "no_full_body"
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN",
@@ -1651,34 +2059,48 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked",
-        "directional_result_without_full_article_body"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "0b6a05bf-f28d-43c5-8325-bac94d9170f6",
       "title": "China Telecom Artificial Intelligence Technology (Beijing) Co., Ltd. Launches Full Campus Recruitment for the 2027 Class",
       "date": "2026-08-27",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -1699,7 +2121,7 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
@@ -1710,28 +2132,50 @@
       "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
-        "body_coverage": "no_full_body"
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "GBR",
         "USA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA",
+        "GBR",
+        "CAN",
+        "ARE",
+        "GBR",
+        "USA",
+        "USA",
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "72d6f8821659e919519d83c799cf5c0a",
@@ -1746,9 +2190,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "a0efe330-8ed8-4a67-ab8c-5960ee82c3fb",
@@ -1764,7 +2206,20 @@
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people-side benefit or constraint is explicitly stated.",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -1778,7 +2233,11 @@
       "source_markets": [
         "GBR"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA",
+        "FRA",
+        "GBR"
+      ],
       "sources": [
         {
           "article_id": "5945fcf32accb5ec4224df701112b675",
@@ -1792,9 +2251,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "2d35d24e-ecd1-4ecc-a6db-a20743a85385",
@@ -1810,7 +2267,20 @@
         "review_status": "pending",
         "configuration": "no_clear_relational_signal",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -1825,9 +2295,7 @@
         "FRA"
       ],
       "story_country_iso3s": [
-        "F",
-        "R",
-        "A"
+        "FRA"
       ],
       "sources": [
         {
@@ -1842,9 +2310,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "45596d7e-5fe3-4121-a477-16b61f8041d0",
@@ -1858,9 +2324,22 @@
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_constraining_only",
+        "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "no people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -1875,9 +2354,7 @@
         "USA"
       ],
       "story_country_iso3s": [
-        "U",
-        "S",
-        "A"
+        "USA"
       ],
       "sources": [
         {
@@ -1892,33 +2369,48 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "7fb83c64-1155-48d2-a591-6dea4a2fd95b",
       "title": "EXL acquires physical AI model developer iMerit",
       "date": "2026-08-28",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "partial",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -1939,32 +2431,49 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
       "event_id": "7cbc3ee3-679b-4840-8685-1cc1befa55c3",
       "title": "FDA Seeks Input on How to Regulate Generative AI-Enabled Medical Devices to Shape Upcoming Guidance",
       "date": "2026-08-28",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -1985,7 +2494,7 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
@@ -1996,27 +2505,42 @@
       "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "partial",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "no people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
-        "body_coverage": "no_full_body"
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "2ef39d3871e7460e4d0c8ef3aa8e6a83",
@@ -2030,33 +2554,48 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "59929de9-31be-48e6-b65d-1670f4851345",
       "title": "Feds spend more than $600K on artificial intelligence projects in northern Ontario",
       "date": "2026-08-28",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -2077,7 +2616,7 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
@@ -2088,27 +2627,42 @@
       "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "no_clear_relational_signal",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "no people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
-        "body_coverage": "no_full_body"
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "cd1762422a47eeef2dacae738452b484",
@@ -2122,42 +2676,53 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "9272dce9-381b-4345-bdaf-f8142923a32b",
       "title": "From Chinese Practices to Global Collaboration: New Challenges for Young Entrepreneurs in the Age of Artificial Intelligence",
       "date": "2026-08-26",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "Young entrepreneurs are extending their capacity to engage with AI in global contexts.",
+          "classification_not_run": false,
+          "directional_people_result": true
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
-        "body_coverage": "no_full_body"
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CHN"
       ],
       "story_country_iso3s": [
-        "C",
-        "H",
-        "N"
+        "CHN",
+        "HKG",
+        "CHI"
       ],
       "sources": [
         {
@@ -2172,9 +2737,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "ea450577-ad19-48e8-a02a-48270b40ee30",
@@ -2190,7 +2753,20 @@
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -2205,11 +2781,7 @@
         "GBR",
         "USA"
       ],
-      "story_country_iso3s": [
-        "A",
-        "U",
-        "S"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "7714ab01001a80e6deb08c958da69b6d",
@@ -2224,33 +2796,48 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "2dccc286-c4c7-482d-a07c-a885f0c7d011",
       "title": "From technical validation to production implementation, digital intelligence productivity kicks off a new cycle for AI.",
       "date": "2026-08-28",
-      "primary_outcome": "benefit_shown",
-      "primary_outcome_label": "Clear benefit shown",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "mutualism",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -2271,25 +2858,37 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked",
-        "directional_result_without_full_article_body"
+        "insufficient_evidence"
       ]
     },
     {
       "event_id": "7b5d8532-d0b5-412f-8f2b-a9e0a0bdf83d",
       "title": "From “1+1+N” to Large-Scale Application——The Practice of AI Development at Bank of Communications",
       "date": "2026-08-25",
-      "primary_outcome": "benefit_shown",
-      "primary_outcome_label": "Clear benefit shown",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "mutualism",
+        "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -2319,9 +2918,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "b77af074-24ee-44f9-86d1-718e27aedefb",
@@ -2337,7 +2934,20 @@
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "no people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -2351,7 +2961,9 @@
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "a61ece5dbd7299c734a39b794bd234e9",
@@ -2365,43 +2977,54 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "88b3bea6-bc29-4565-bc30-f646c2da8fc1",
       "title": "Generative AI Is Fading. Here Are 4 Bets on What’s Next in Tech",
       "date": "2026-08-25",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_constraining_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [
-        "U",
-        "S",
-        "A"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "6ffcbcd5e776d031e0e5f69cf4b7744b",
@@ -2416,33 +3039,46 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
       "event_id": "3267186f-024f-47aa-b406-6096185cca97",
       "title": "Generative AI and HR Decisions: Can We Really Rely on It?",
       "date": "2026-08-28",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
-      "uneven_effect_noted": false,
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
+      "uneven_effect_noted": true,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "competition",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "AI's lack of legal knowledge and contextual awareness leads to potential errors in HR decisions, which can result in legal consequences for employers.",
+          "classification_not_run": false,
+          "directional_people_result": true
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
-        "body_coverage": "no_full_body"
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "FRA"
@@ -2463,9 +3099,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "7a2046e0-9d27-44f9-b9f8-83a8253eb280",
@@ -2475,21 +3109,38 @@
       "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "not_available",
         "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -2510,7 +3161,6 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked",
         "insufficient_evidence"
       ]
     },
@@ -2528,7 +3178,20 @@
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people-side benefit or constraint is explicitly stated.",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -2543,9 +3206,7 @@
         "FRA"
       ],
       "story_country_iso3s": [
-        "F",
-        "R",
-        "A"
+        "FRA"
       ],
       "sources": [
         {
@@ -2560,25 +3221,36 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "27459097-7617-4a62-81cf-ba1835f7f467",
       "title": "Global Cognitive Computing and Artificial Intelligence",
       "date": "2026-08-27",
-      "primary_outcome": "benefit_shown",
-      "primary_outcome_label": "Clear benefit shown",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "mutualism",
+        "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -2595,10 +3267,7 @@
       "story_country_iso3s": [
         "USA",
         "FRA",
-        "BRA",
-        "GBR",
-        "CHI",
-        "IND"
+        "BRA"
       ],
       "sources": [
         {
@@ -2613,42 +3282,54 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "688d2116-cde9-4293-9b86-a4ec2585cea7",
       "title": "Guangxi launches AI-driven field research in various industries",
       "date": "2026-08-25",
-      "primary_outcome": "benefit_shown",
-      "primary_outcome_label": "Clear benefit shown",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "mutualism",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
         "CHN"
       ],
-      "story_country_iso3s": [
-        "C",
-        "N"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "5cbb33c1e47fe85e6ac4a48ac061faa3",
@@ -2663,8 +3344,7 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked",
-        "directional_result_without_full_article_body"
+        "insufficient_evidence"
       ]
     },
     {
@@ -2675,27 +3355,43 @@
       "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
-        "body_coverage": "no_full_body"
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CHN"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA",
+        "CHN"
+      ],
       "sources": [
         {
           "article_id": "b7e68813bc52615c3ea65bede9b5e0e5",
@@ -2709,41 +3405,54 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "397bf0ad-6578-456f-abd0-513969ffe9f0",
       "title": "Henan hosts an artificial intelligence session of “Longzi Lake Science and Innovation Roadshow”.",
       "date": "2026-08-25",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
         "CHN"
       ],
-      "story_country_iso3s": [
-        "CHN"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "4ec3563ab20db8d7e81ce2e1714469b4",
@@ -2758,7 +3467,7 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
@@ -2775,7 +3484,20 @@
         "review_status": "pending",
         "configuration": "mutualism",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "China is expanding access to AI through open-source models and education reforms, enabling more people to benefit from AI technologies.",
+          "classification_not_run": false,
+          "directional_people_result": true
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -2805,9 +3527,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "9fe18eeb-fd47-4eb4-ab2a-c00b61992673",
@@ -2823,7 +3543,24 @@
         "review_status": "source_body_qc_ai_assisted",
         "configuration": "mutualism",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article supplied by the owner",
@@ -2851,9 +3588,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "3a9a70d7-0c5d-4317-83a1-bb6dbfb36833",
@@ -2863,30 +3598,41 @@
       "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
-        "body_coverage": "no_full_body"
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN"
       ],
       "story_country_iso3s": [
-        "U",
-        "S",
-        "A"
+        "CAN"
       ],
       "sources": [
         {
@@ -2901,33 +3647,48 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "55b446cb-c17d-4c5a-b544-f034cfcfcb94",
       "title": "LICC: Exploring the adoption of artificial intelligence in the care sector",
       "date": "2026-08-27",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -2948,32 +3709,49 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
       "event_id": "5f682ae1-17c1-4bba-8db1-b4a8590cef83",
       "title": "Life-inspired interoceptive artificial intelligence for autonomous and adaptive agents",
       "date": "2026-08-26",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -2998,38 +3776,62 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
       "event_id": "896c07f2-3e72-40eb-b114-fb9bc7507b14",
       "title": "Link chip and scenario – AI intelligent baseboard accelerates on-device application implementation",
       "date": "2026-08-25",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "configuration": "mutualism",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "AI intelligent baseboard enables faster AI application deployment in various industries, expanding access to AI technology.",
+          "classification_not_run": false,
+          "directional_people_result": true
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
-        "body_coverage": "no_full_body"
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CHN"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA",
+        "CHN",
+        "FRA",
+        "JPN",
+        "GER",
+        "ITA",
+        "BRA",
+        "IND",
+        "RSA",
+        "MEX"
+      ],
       "sources": [
         {
           "article_id": "c75a6a2bd91856d1dae7d4ec7d04ba5f",
@@ -3043,9 +3845,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "699bf4f4-7e3d-4b9d-9b09-321fdc622202",
@@ -3061,7 +3861,20 @@
         "review_status": "pending",
         "configuration": "mutualism",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "People engage with AI and XR to co-create and reconstruct memories, extending their capacity to participate in memory formation.",
+          "classification_not_run": false,
+          "directional_people_result": true
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -3076,15 +3889,11 @@
         "GBR"
       ],
       "story_country_iso3s": [
-        "U",
-        "N",
-        "D",
-        "E",
-        "F",
-        "I",
-        "N",
-        "E",
-        "D"
+        "GBR",
+        "USA",
+        "FRA",
+        "CHI",
+        "BRA"
       ],
       "sources": [
         {
@@ -3099,9 +3908,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "fd6d4d29-b7b7-4a92-ac71-8ca32de98186",
@@ -3117,16 +3924,29 @@
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 2,
+            "body_coverage": "all_sources",
+            "content_basis": "multiple_sources",
+            "full_text_sources": 2
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article used for every source",
         "source_count": 2,
-        "full_text_sources": 0,
+        "full_text_sources": 2,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 2,
-        "body_coverage": "no_full_body"
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CHN"
@@ -3158,33 +3978,48 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "686c3177-6cc8-4603-b17d-365c62ab1f35",
       "title": "More than a third of the Web is written by AI",
       "date": "2026-08-27",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -3205,24 +4040,37 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
       "event_id": "bfd5a0e6-d61a-4a97-a6dd-cf8e559f6e50",
       "title": "Ningxia: Artificial intelligence enters the transportation sector, creating new opportunities for the integration of technology and intelligence",
       "date": "2026-08-29",
-      "primary_outcome": "benefit_shown",
-      "primary_outcome_label": "Clear benefit shown",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "mutualism",
+        "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -3237,9 +4085,7 @@
         "CHN"
       ],
       "story_country_iso3s": [
-        "X",
-        "K",
-        "N"
+        "XCN"
       ],
       "sources": [
         {
@@ -3254,33 +4100,48 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "87319c4b-d0c5-4610-9fd5-6f9cf53714c0",
       "title": "On and off the robot arena, AI is accelerating its \"run\" into real-world scenarios",
       "date": "2026-08-28",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -3301,7 +4162,7 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
@@ -3312,21 +4173,38 @@
       "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "not_available",
         "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -3347,7 +4225,6 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked",
         "insufficient_evidence"
       ]
     },
@@ -3359,30 +4236,41 @@
       "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "no people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
-        "body_coverage": "no_full_body"
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CHN"
       ],
       "story_country_iso3s": [
-        "USA",
-        "CHN",
-        "FRA"
+        "CHN"
       ],
       "sources": [
         {
@@ -3397,9 +4285,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "2cce67b0-7fa9-49e1-b76f-ebe366fff9e9",
@@ -3415,7 +4301,20 @@
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people-side benefit or constraint is explicitly stated in the evidence.",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -3445,9 +4344,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "602ed24e-b928-4b87-8fad-f9bfd2e9544b",
@@ -3463,7 +4360,20 @@
         "review_status": "pending",
         "configuration": "ai_constraining_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "no people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -3493,43 +4403,54 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "6c125f41-0a5f-44fb-8af8-ef2f281ee194",
       "title": "Patient factors in medical artificial intelligence: a systematic review",
       "date": "2026-08-26",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
         "GBR"
       ],
-      "story_country_iso3s": [
-        "USA",
-        "GBR",
-        "FRA"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "b33725d1307518f5d641dc1c4bf56de6",
@@ -3544,7 +4465,7 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
@@ -3555,21 +4476,38 @@
       "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "not_available",
         "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -3590,7 +4528,6 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked",
         "insufficient_evidence"
       ]
     },
@@ -3603,12 +4540,25 @@
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
-        "evidence_status": "partial",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -3623,9 +4573,7 @@
         "CAN"
       ],
       "story_country_iso3s": [
-        "U",
-        "S",
-        "A"
+        "USA"
       ],
       "sources": [
         {
@@ -3640,33 +4588,48 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "c32b8f67-a885-4975-8aa5-e713940b0e67",
       "title": "Promote the integrated development of artificial intelligence and service consumption",
       "date": "2026-08-29",
-      "primary_outcome": "benefit_shown",
-      "primary_outcome_label": "Clear benefit shown",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "mutualism",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -3687,8 +4650,7 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked",
-        "directional_result_without_full_article_body"
+        "insufficient_evidence"
       ]
     },
     {
@@ -3705,7 +4667,20 @@
         "review_status": "pending",
         "configuration": "mutualism",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "AI automates price matching processes that previously required manual intervention.",
+          "classification_not_run": false,
+          "directional_people_result": true
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -3721,8 +4696,15 @@
       ],
       "story_country_iso3s": [
         "USA",
+        "GBR",
         "FRA",
-        "GBR"
+        "DEU",
+        "CAN",
+        "BRA",
+        "IND",
+        "JPN",
+        "CHN",
+        "AUS"
       ],
       "sources": [
         {
@@ -3737,33 +4719,48 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "d6ca4c57-8f70-450b-a93f-37c26e2b5a1c",
       "title": "Regulating Agentic Artificial Intelligence",
       "date": "2026-08-29",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_constraining_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -3788,7 +4785,7 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
@@ -3805,7 +4802,20 @@
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "no people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -3820,7 +4830,7 @@
         "USA"
       ],
       "story_country_iso3s": [
-        "USA"
+        "USD"
       ],
       "sources": [
         {
@@ -3835,33 +4845,48 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "143ad789-0ff0-4645-9380-98153c556ab3",
       "title": "Reviewing Artificial Intelligence in Materials Discovery",
       "date": "2026-08-28",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -3886,7 +4911,7 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
@@ -3897,36 +4922,41 @@
       "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "The article discusses mixed opinions on AI's role in mental health, with both potential benefits and risks.",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
-        "body_coverage": "no_full_body"
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "GBR"
       ],
       "story_country_iso3s": [
-        "U",
-        "N",
-        "D",
-        "E",
-        "F",
-        "I",
-        "N",
-        "E",
-        "D"
+        "GBR"
       ],
       "sources": [
         {
@@ -3941,9 +4971,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "152394eb-4b37-4022-97bd-01ecd82e4114",
@@ -3959,7 +4987,22 @@
         "review_status": "pending",
         "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "no people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -3973,11 +5016,7 @@
       "source_markets": [
         "FRA"
       ],
-      "story_country_iso3s": [
-        "F",
-        "R",
-        "A"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "334d6d34580f2adc4efebdda477759b6",
@@ -3992,7 +5031,6 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked",
         "insufficient_evidence"
       ]
     },
@@ -4004,21 +5042,38 @@
       "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "not_available",
         "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -4039,7 +5094,6 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked",
         "insufficient_evidence"
       ]
     },
@@ -4057,7 +5111,20 @@
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "no people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -4087,9 +5154,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "64d6926a-442c-440d-8372-21b1009e8b40",
@@ -4099,28 +5164,58 @@
       "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "mutualism",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "Private enterprises are gaining access to AI tools and knowledge to enhance productivity and innovation.",
+          "classification_not_run": false,
+          "directional_people_result": true
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
-        "body_coverage": "no_full_body"
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CHN"
       ],
       "story_country_iso3s": [
-        "CHN"
+        "CNZ",
+        "CNE",
+        "CNL",
+        "CNO",
+        "CNP",
+        "CNU",
+        "CNW",
+        "CNX",
+        "CNY",
+        "CNZ",
+        "CNE",
+        "CNL",
+        "CNO",
+        "CNP",
+        "CNU",
+        "CNW",
+        "CNX",
+        "CNY"
       ],
       "sources": [
         {
@@ -4135,10 +5230,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked",
-        "directional_result_without_full_article_body"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "909a35b9-e480-4605-ba61-1503c17455e1",
@@ -4154,7 +5246,20 @@
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people-side benefit or constraint is explicitly stated.",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -4169,9 +5274,7 @@
         "USA"
       ],
       "story_country_iso3s": [
-        "U",
-        "S",
-        "A"
+        "USA"
       ],
       "sources": [
         {
@@ -4186,9 +5289,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "6c231012-a07f-4152-b560-782d82f10ec6",
@@ -4204,7 +5305,20 @@
         "review_status": "pending",
         "configuration": "mutualism",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "Teenagers are being exposed to AI, which is a form of extension of their experience with technology.",
+          "classification_not_run": false,
+          "directional_people_result": true
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -4234,41 +5348,54 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "b138984a-ffa5-41c8-9cac-dc409388c86d",
       "title": "The 2026 Yangtze River First City “Artificial Intelligence +” Innovation and Development Conference was held in Yibin, Sichuan.",
       "date": "2026-08-28",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
         "CHN"
       ],
-      "story_country_iso3s": [
-        "CHN"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "47627c8e5a6003fe27e0194a003420e4",
@@ -4283,49 +5410,56 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
       "event_id": "faeac2bd-3bc2-4d29-88da-cf5a41acc662",
       "title": "The High-Level Digital & Artificial Intelligence Policy Leaders Forum",
       "date": "2026-08-30",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
         "CAN",
         "GBR"
       ],
-      "story_country_iso3s": [
-        "U",
-        "N",
-        "D",
-        "E",
-        "F",
-        "I",
-        "N",
-        "E",
-        "D"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "c4e4a7fea2529beaeceddff2b8935267",
@@ -4341,7 +5475,7 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
@@ -4358,7 +5492,20 @@
         "review_status": "pending",
         "configuration": "competition",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "The article discusses how AI is being used to enable individuals to challenge systems that are perceived as oppressive, but it also suggests that AI could be seen as a tool that limits human autonomy.",
+          "classification_not_run": false,
+          "directional_people_result": true
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -4388,9 +5535,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "e8f1cb55-715e-4863-a2e6-e68bfb707026",
@@ -4406,7 +5551,20 @@
         "review_status": "pending",
         "configuration": "ai_constraining_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -4434,34 +5592,45 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "bc5adac5-8703-4c42-9b43-08af379576c7",
       "title": "The artificial intelligence exhibition team showcases its cutting-edge innovation capabilities",
       "date": "2026-08-29",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "AI exhibits allow humans to interact with and benefit from AI technologies.",
+          "classification_not_run": false,
+          "directional_people_result": true
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
-        "body_coverage": "no_full_body"
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CHN"
@@ -4482,9 +5651,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "0f88ac0e-34c9-4291-a626-9ebe99b4c9bd",
@@ -4494,30 +5661,41 @@
       "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "mutualism",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "AI is enhancing scientific research, enabling new capabilities and efficiencies for researchers.",
+          "classification_not_run": false,
+          "directional_people_result": true
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
-        "body_coverage": "no_full_body"
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CHN"
       ],
       "story_country_iso3s": [
-        "C",
-        "H",
-        "N"
+        "CHN"
       ],
       "sources": [
         {
@@ -4532,10 +5710,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked",
-        "directional_result_without_full_article_body"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "a8960241-1c98-46b5-bcd2-3b399874d1d2",
@@ -4551,7 +5726,20 @@
         "review_status": "pending",
         "configuration": "mutualism",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "Consumers are delegating purchasing decisions to AI, indicating an extension of human capacity through AI.",
+          "classification_not_run": false,
+          "directional_people_result": true
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -4581,33 +5769,48 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "36f54cf1-3ab5-4496-9f36-a369fa4e62bd",
       "title": "The school held a special report meeting on artificial intelligence empowering higher education.",
       "date": "2026-08-28",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -4628,32 +5831,49 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
       "event_id": "1e5f8b9a-8366-4555-8ffa-d67018eb6c5f",
       "title": "The state of AI in 2026: On the road to ROI",
       "date": "2026-08-25",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -4678,7 +5898,7 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
@@ -4695,7 +5915,20 @@
         "review_status": "source_body_qc_ai_assisted",
         "configuration": "mutualism",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people benefit or loss is explicitly stated.",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article supplied by the owner",
@@ -4710,9 +5943,9 @@
         "USA"
       ],
       "story_country_iso3s": [
-        "U",
-        "S",
-        "A"
+        "USA",
+        "GBR",
+        "FRA"
       ],
       "sources": [
         {
@@ -4727,9 +5960,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "65ab52b1-c922-472b-843a-ca8cc3070d2b",
@@ -4740,12 +5971,25 @@
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
-        "evidence_status": "partial",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "ai_constraining_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "no people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -4760,9 +6004,8 @@
         "CHN"
       ],
       "story_country_iso3s": [
-        "U",
-        "S",
-        "A"
+        "USA",
+        "CHN"
       ],
       "sources": [
         {
@@ -4777,41 +6020,54 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "e563c6d1-3a01-4d7f-97ea-1b92559e1853",
       "title": "Trump’s AI Model Executive Order Poses First Amendment Questions",
       "date": "2026-08-27",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_constraining_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [
-        "USA"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "0cdc760276f9d39b98632cd9a85404c2",
@@ -4826,32 +6082,49 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
       "event_id": "7078c1bf-f3f4-4ab6-a30a-42a054c6caaa",
       "title": "U.S. Stocks Mixed on Artificial-Intelligence Jitters",
       "date": "2026-08-24",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -4874,15 +6147,15 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
       "event_id": "4a3b473a-414c-4c6f-8693-da501c118d13",
       "title": "US futures mostly higher as the artificial intelligence business booms",
       "date": "2026-08-27",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
@@ -4891,7 +6164,20 @@
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": true
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -4906,7 +6192,10 @@
         "CAN"
       ],
       "story_country_iso3s": [
-        "USA"
+        "USA",
+        "FRA",
+        "KOR",
+        "CHN"
       ],
       "sources": [
         {
@@ -4921,9 +6210,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "e1866f35-a7c0-4ec3-940f-fe2dd155a512",
@@ -4931,7 +6218,7 @@
       "date": "2026-08-28",
       "primary_outcome": "downside_shown",
       "primary_outcome_label": "Clear downside shown",
-      "uneven_effect_noted": true,
+      "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
@@ -4939,7 +6226,20 @@
         "review_status": "pending",
         "configuration": "competition",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "87% of Canadian musicians view generative AI negatively, with concerns about devaluing human artistry and copyright issues.",
+          "classification_not_run": false,
+          "directional_people_result": true
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -4954,9 +6254,7 @@
         "CAN"
       ],
       "story_country_iso3s": [
-        "C",
-        "A",
-        "N"
+        "CAN"
       ],
       "sources": [
         {
@@ -4971,9 +6269,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "bc7b4584-d90a-4faf-85fd-a78e41c167b5",
@@ -4989,7 +6285,20 @@
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -5004,9 +6313,7 @@
         "USA"
       ],
       "story_country_iso3s": [
-        "U",
-        "S",
-        "A"
+        "USA"
       ],
       "sources": [
         {
@@ -5021,33 +6328,48 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "9ebd7c71-a290-4de4-97f0-ec5ee065042d",
       "title": "VIDEO - \"We should not wait for a major impact of artificial intelligence on the growth of countries\": Jacques Attali's Minute",
       "date": "2026-08-29",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "sufficient",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -5068,7 +6390,7 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
@@ -5079,21 +6401,38 @@
       "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "not_available",
         "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -5114,7 +6453,6 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked",
         "insufficient_evidence"
       ]
     },
@@ -5127,12 +6465,25 @@
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
-        "evidence_status": "sufficient",
+        "evidence_status": "partial",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "no people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -5162,9 +6513,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "15aba3c7-7559-4e74-8ea9-993be6fb3261",
@@ -5175,12 +6524,25 @@
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
-        "evidence_status": "partial",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people-side benefit or constraint is explicitly stated.",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
         "label": "Full article used for every source",
@@ -5195,7 +6557,7 @@
         "GBR"
       ],
       "story_country_iso3s": [
-        "GB"
+        "USA"
       ],
       "sources": [
         {
@@ -5210,9 +6572,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "e76ed7b0-1150-47fd-8853-2299c271b948",
@@ -5222,21 +6582,38 @@
       "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "not_available",
         "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -5257,7 +6634,6 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked",
         "insufficient_evidence"
       ]
     },
@@ -5265,25 +6641,42 @@
       "event_id": "00396d3e-532a-4f9c-ae6d-69e909d3f426",
       "title": "Z.ai shares surge 8% after releasing new AI model running only on Chinese chips",
       "date": "2026-08-27",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "too_little_evidence",
+      "primary_outcome_label": "Too little evidence",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
-        "evidence_status": "partial",
+        "content_basis": "not_available",
+        "evidence_status": "insufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "configuration": "insufficient_evidence",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [
+            "full_article_body_unavailable",
+            "model_not_called",
+            "insufficient_evidence"
+          ],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "no_full_body",
+            "content_basis": "not_available",
+            "full_text_sources": 0
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "",
+          "classification_not_run": true,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article not available",
         "source_count": 1,
         "full_text_sources": 0,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
+        "headline_only_sources": 0,
         "body_coverage": "no_full_body"
       },
       "source_markets": [
@@ -5304,7 +6697,7 @@
         }
       ],
       "audit_flags": [
-        "model_reading_not_human_checked"
+        "insufficient_evidence"
       ]
     },
     {
@@ -5315,22 +6708,35 @@
       "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "ai_enabling_only",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "No people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
-        "body_coverage": "no_full_body"
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CHN"
@@ -5351,9 +6757,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "1cc7aa2a-089c-476e-9c7f-4a0c5dce3774",
@@ -5363,34 +6767,42 @@
       "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "headline_only",
+        "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
         "configuration": "no_clear_relational_signal",
         "model_confidence": null,
-        "classification_audit": {}
+        "classification_audit": {
+          "flags": [],
+          "input": {
+            "input_policy": "full_article_body_required_v1",
+            "source_count": 1,
+            "body_coverage": "all_sources",
+            "content_basis": "full_text",
+            "full_text_sources": 1
+          },
+          "schema_version": "aieo_relationship_classification_audit_v1",
+          "people_evidence": "no people outcome stated",
+          "classification_not_run": false,
+          "directional_people_result": false
+        }
       },
       "body_evidence": {
-        "label": "Headline only",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
-        "headline_only_sources": 1,
-        "body_coverage": "no_full_body"
+        "headline_only_sources": 0,
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CHN"
       ],
       "story_country_iso3s": [
-        "U",
-        "S",
-        "A",
-        ",",
-        "C",
-        "H",
-        "N"
+        "USA",
+        "CHN"
       ],
       "sources": [
         {
@@ -5405,9 +6817,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "model_reading_not_human_checked"
-      ]
+      "audit_flags": []
     }
   ]
 }
