@@ -17,7 +17,22 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      period_start: ${{ steps.week.outputs.period_start }}
+      period_end: ${{ steps.week.outputs.period_end }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Pin the completed week and verify all five markets
+        id: week
+        run: python scripts/plan_weekly_collection.py
+
   collect:
+    needs: plan
     uses: ./.github/workflows/update-observatory.yml
     secrets: inherit
 
@@ -58,11 +73,11 @@ jobs:
     secrets: inherit
 
   build-weekly-release:
-    needs: finalize-residual
+    needs: [plan, finalize-residual]
     uses: ./.github/workflows/build-weekly-release.yml
     with:
-      period_start: ""
-      period_end: ""
+      period_start: ${{ needs.plan.outputs.period_start }}
+      period_end: ${{ needs.plan.outputs.period_end }}
       replace: false
       revision_reason: ""
       rebuild_index_only: false
