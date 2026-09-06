@@ -36,7 +36,7 @@ from build_relationship_audit import (
 
 DEFAULT_OUTPUT_DIR = ROOT / "review" / "relationship-audit" / "export"
 SCHEMA_VERSION = "aieo_private_full_body_audit_v3_multilingual"
-FULL_BODY_STAGE7C_VERSION = "7C.5_full_body_required"
+FULL_BODY_STAGE7C_VERSION = "7C.6_validated_whole_sources"
 
 POLICY_OR_ACCESS_OUTCOMES = {
     "blocked_paywall_or_login",

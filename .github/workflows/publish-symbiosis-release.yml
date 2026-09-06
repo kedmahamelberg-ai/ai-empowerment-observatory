@@ -82,7 +82,7 @@ jobs:
           set -euo pipefail
           mapfile -t generated_files < <(
             {
-              find data/symbiosis -type f -name '*.json' -print
+              find data/symbiosis -type f \( -name '*.json' -o -name '*.csv' \) -print
               find review/relationship-audit -type f -name '*.json' -print 2>/dev/null || true
             } | sort
           )

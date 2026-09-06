@@ -29,6 +29,8 @@ from symbiosis_model_output import ModelOutputError, dimension_schema, require_s
 
 def model_payload():
     return {
+        "axis_directions": {"human": "gain", "ai": "gain"},
+        "relationship_evidence": {"mutualism": "Researchers gain access as the service becomes available.", "ai_benefiting_parasitism": "", "human_benefiting_parasitism": "", "competition": ""},
         "ai_relevant": True, "evidence_status": "sufficient", "relational_signal": "complete",
         "human_experience_type": "expansion", "ai_expressive_role": "ai_extension",
         "human_reasoning": "The source describes new access for researchers.",

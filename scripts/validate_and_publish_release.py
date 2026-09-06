@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import hashlib
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -231,6 +232,16 @@ def validate(*, allow_stale: bool = False) -> tuple[dict[str, Any], dict[str, An
     ):
         if not nearly_equal(report_meta.get(key), expected_value, tolerance=1e-4):
             raise ReleaseError(f"Public PDF metadata {key} differs from current.json.")
+    from public_directional_release import validate_directional_release
+    validate_directional_release(release, symbiosis)
+    for label, artifact in (("PDF", report_meta), ("Insights", insights)):
+        if artifact.get("directional_summary") != symbiosis.get("directional_summary"):
+            raise ReleaseError(f"{label} directional counts differ from the canonical readings.")
+        if artifact.get("source_relationship_sha256") != symbiosis.get("content_sha256"):
+            raise ReleaseError(f"{label} is from an older relationship revision.")
+    pdf_path = ROOT / str(report_meta.get("file") or "").lstrip("/")
+    if not pdf_path.is_file() or hashlib.sha256(pdf_path.read_bytes()).hexdigest() != report_meta.get("pdf_sha256"):
+        raise ReleaseError("The PDF bytes do not match the validated metadata.")
     pdf_value = str(report_meta.get("file") or "")
     if not pdf_value.startswith("/reports/") or not (ROOT / pdf_value.lstrip("/")).exists():
         raise ReleaseError("Public PDF file referenced by metadata is missing.")

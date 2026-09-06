@@ -1,3 +1,4 @@
+import {weeklyModel} from '../public-data.js?v=7.2.0';
 "use strict";
 
 const BUILD_ID = "6.4.0";
@@ -52,7 +53,7 @@ async function init() {
   const pool = release.historical_pool || {};
   setText("scope-pool", pool.all_prior_events_considered ? `All accepted evidence since ${String(pool.starts_at || "5 August 2026").slice(0,10)}` : "Pilot history from 5 August 2026");
   setText("scope-release", `${release.release_id} revision ${Number(release.revision || 1)}`);
-  const relationshipCurrent = symbiosis && String(symbiosis.release_id || "") === String(release.release_id || "");
+  const relationshipCurrent = weeklyModel(release, symbiosis).ready;
   const developments = Number(symbiosis?.people_signals?.expected_units || release.counts?.ai_relevant_event_records || 0);
   setText("scope-picture", relationshipCurrent ? `${developments} source-linked developments` : "Current picture being prepared");
 }

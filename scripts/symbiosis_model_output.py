@@ -10,7 +10,7 @@ import math
 import re
 from typing import Any
 
-TRANSPORT_VERSION = "symbiosis_json_v2"
+TRANSPORT_VERSION = "symbiosis_json_v3_independent_axes"
 CONFIDENCE_VALUES = [round(index / 20, 2) for index in range(21)]
 PATTERNS = ("mutualism", "ai_benefiting_parasitism", "human_benefiting_parasitism", "competition")
 
@@ -26,6 +26,14 @@ def enum(*values: str) -> dict[str, Any]:
 
 
 PROPERTIES = {
+    "axis_directions": {
+        "type": "object", "properties": {key: enum("gain", "loss", "mixed", "none", "unresolved") for key in ("human", "ai")},
+        "required": ["human", "ai"], "additionalProperties": False,
+    },
+    "relationship_evidence": {
+        "type": "object", "properties": {key: {"type": "string"} for key in PATTERNS},
+        "required": list(PATTERNS), "additionalProperties": False,
+    },
     "ai_relevant": {"type": "boolean"},
     "evidence_status": enum("sufficient", "partial", "insufficient"),
     "relational_signal": enum("complete", "human_only", "ai_only", "none", "unclear"),
@@ -72,21 +80,10 @@ def extract_json(text: str) -> dict[str, Any]:
 
 
 def require_result_fields(payload: dict[str, Any]) -> None:
-    missing = set(PROPERTIES) - payload.keys()
-    if missing:
-        raise ModelOutputError("Model result is missing required fields: " + ", ".join(sorted(missing)))
-    for key, spec in PROPERTIES.items():
-        value = payload[key]
-        kind = spec["type"]
-        valid = (
-            (kind == "boolean" and type(value) is bool)
-            or (kind == "string" and isinstance(value, str) and bool(value.strip()))
-            or (kind == "number" and type(value) in (int, float) and math.isfinite(value) and 0 <= value <= 1)
-            or (kind == "array" and isinstance(value, list) and all(isinstance(v, str) and re.fullmatch(r"[A-Z]{3}", v) for v in value))
-            or (kind == "object" and isinstance(value, dict) and set(value) == set(PATTERNS) and all(type(v) is bool for v in value.values()))
-        )
-        if not valid or ("enum" in spec and value not in spec["enum"]):
-            raise ModelOutputError(f"Model result has an invalid {key} field.")
+    require_schema(payload, RESPONSE_SCHEMA)
+    for key in ("human_reasoning", "ai_reasoning", "summary", "public_takeaway"):
+        if not payload[key].strip():
+            raise ModelOutputError(f"Empty model field: {key}")
 
 
 def require_schema(value: Any, schema: dict[str, Any], path: str = "result") -> None:
@@ -106,7 +103,11 @@ def require_schema(value: Any, schema: dict[str, Any], path: str = "result") -> 
         raise ModelOutputError(f"Invalid model field: {path}.")
     if kind in {"number", "integer"} and not schema.get("minimum", -math.inf) <= value <= schema.get("maximum", math.inf):
         raise ModelOutputError(f"Out-of-range model field: {path} ({value}).")
+    if kind == "string" and schema.get("pattern") and not re.fullmatch(schema["pattern"], value):
+        raise ModelOutputError(f"Invalid string format: {path}.")
     if kind == "object":
+        if schema.get("additionalProperties") is False and set(value) - set(schema.get("properties", {})):
+            raise ModelOutputError(f"Unexpected model fields: {path}.")
         if set(schema.get("required", [])) - value.keys():
             raise ModelOutputError(f"Incomplete model object: {path}.")
         for key, spec in schema.get("properties", {}).items():

@@ -12,6 +12,7 @@ from typing import Any
 
 from supabase import Client, create_client
 
+from independent_axes import validate_axes, signals_from_axes
 from symbiosis_common import (
     AI_ROLES,
     CODEBOOK_VERSION,
@@ -179,7 +180,12 @@ def normalize_final(decision: dict[str, Any], row: dict[str, Any]) -> dict[str, 
         evidence_status=evidence_status,
         distribution_signal=distribution_signal,
     )
+    accepted_axes = supplied_final.get("axes")
+    if accepted_axes is not None:
+        validate_axes(accepted_axes)
+        public_signals = signals_from_axes(accepted_axes, distribution=distribution_signal)
     return {
+        **({"axes": accepted_axes} if accepted_axes is not None else {}),
         "review_status": status,
         "human_experience_type": human_type,
         "ai_expressive_role": ai_role,
@@ -311,6 +317,8 @@ def main() -> int:
                 "final_empowerment_reasoning": final["empowerment_reasoning"],
                 "updated_at": now_iso(),
             }
+            if final.get("axes"):
+                update_payload["raw_output"] = {**(row.get("raw_output") or {}), "accepted_axes": final["axes"]}
             (
                 client.table("symbiosis_classifications")
                 .update(update_payload)

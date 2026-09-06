@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -122,34 +123,24 @@ def main() -> int:
         if marker not in relationship_gate:
             fail(f"the public relationship completeness gate is missing: {marker}")
 
-    site_script = (ROOT / "site.js").read_text(encoding="utf-8")
-    for marker in (
-        "const complete = total > 0 && classified === total;",
-        "function primaryOutcomeSummary(",
-        "function assessmentStatus(",
-        "Missing classifications are not counted as unclear results.",
-    ):
-        if marker not in site_script:
-            fail(f"the public site can misrepresent missing relationship data: {marker}")
-    home_page = (ROOT / "index.html").read_text(encoding="utf-8")
-    if '/site.js?v=6.4.0' not in home_page or 'const BUILD_ID = "6.4.0";' not in site_script:
-        fail("the relationship-data safety fix is missing its browser cache-busting version")
-    education_page = (ROOT / "edu" / "index.html").read_text(encoding="utf-8")
-    education_script = (ROOT / "edu" / "dashboard.js").read_text(encoding="utf-8")
-    if '/edu/dashboard.js?v=6.4.0' not in education_page or 'const BUILD_ID = "6.4.0";' not in education_script:
-        fail("the education interface is missing its relationship-provenance cache bust")
-    report_page = (ROOT / "report" / "index.html").read_text(encoding="utf-8")
-    if '/report/report.js?v=5.10.0' not in report_page:
-        fail("the report preview is missing its public-copy cache bust")
-    for script_name, script in (("site.js", site_script), ("edu/dashboard.js", education_script)):
-        for marker in (
-            "primaryOutcomeSummary",
-            "not_enough_evidence",
-            "fullBodyEvidenceCount",
-            "clearTwoSidedCount",
-        ):
-            if marker not in script:
-                fail(f"{script_name} is missing the public evidence breakdown: {marker}")
+    # Exercise the shared data contract, including incomplete and mixed-result
+    # weeks. Function-name checks cannot establish the behaviour of a renderer.
+    shared = ROOT / "public-data.js"
+    tests = ROOT / "tests" / "test_public_display.mjs"
+    if not shared.is_file() or not tests.is_file():
+        fail("the shared public interpretation or its regression checks are missing")
+    version_match = re.search(r"BUILD_ID\s*=\s*['\"]([^'\"]+)['\"]", shared.read_text(encoding="utf-8"))
+    if not version_match:
+        fail("the shared public interpretation is missing its asset version")
+    version = version_match.group(1)
+    for page_name, script_name in (("index.html", "site.js"), ("edu/index.html", "edu/dashboard.js"), ("report/index.html", "report/report.js")):
+        page = (ROOT / page_name).read_text(encoding="utf-8")
+        script = (ROOT / script_name).read_text(encoding="utf-8")
+        if f"/{script_name}?v={version}" not in page or "weeklyModel" not in script:
+            fail(f"{page_name} is missing the shared release-bound interpretation or asset version")
+    result = subprocess.run(["node", "--test", str(tests)], cwd=ROOT, text=True, capture_output=True)
+    if result.returncode:
+        fail("public-data regression checks failed:\n" + result.stdout + result.stderr)
 
     audit_builder = ROOT / "scripts" / "build_relationship_audit.py"
     audit_validator = ROOT / "scripts" / "validate_relationship_audit.py"
@@ -268,7 +259,7 @@ def main() -> int:
             + ", ".join(missing_resume_guards)
         )
     for marker in (
-        'CLASSIFIER_VERSION = "7C.5_full_body_required"',
+        'CLASSIFIER_VERSION = "7C.6_validated_whole_sources"',
         'FULL_BODY_REQUIRED_POLICY = "full_article_body_required_v1"',
         "def unavailable_full_body_result(",
         "model classification was not run",
@@ -284,13 +275,13 @@ def main() -> int:
         encoding="utf-8"
     )
     for marker in (
-        'TARGET_CLASSIFIER_VERSION = "7C.5_full_body_required"',
+        'TARGET_CLASSIFIER_VERSION = "7C.6_validated_whole_sources"',
         "classification_not_run",
     ):
         if marker not in stage7c_finalizer:
             fail(f"Stage 7C finalizer can use stale headline-era output: {marker}")
     for marker in (
-        'STAGE7C_CLASSIFIER_VERSION = "7C.5_full_body_required"',
+        'STAGE7C_CLASSIFIER_VERSION = "7C.6_validated_whole_sources"',
         '.eq("classifier_version", STAGE7C_CLASSIFIER_VERSION)',
     ):
         if marker not in release_builder_script:
@@ -427,7 +418,7 @@ def main() -> int:
     for marker in (
         "def normalize_ai_role(",
         "def evidence_basis_covers(",
-        'CLASSIFIER_VERSION = "symbiosis_news_v0.6_full_body_required"',
+        'CLASSIFIER_VERSION = "symbiosis_news_v0.7_independent_axes_full_sources"',
         "def content_basis_for_storage(",
         "ai_expressive_role",
         "normalized to",

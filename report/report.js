@@ -1,3 +1,5 @@
+import {weeklyModel, weeklyTakeaway} from '../public-data.js?v=7.2.0';
+import {setupNavigation} from '../site.js?v=7.2.0';
 "use strict";
 
 const CURRENT_URL = "/data/releases/current.json";
@@ -89,55 +91,19 @@ function periodCounts(current) {
   };
 }
 
-function relationshipCard(symbiosis, releaseId) {
-  const sameRelease = String(symbiosis?.release_id || "") === String(releaseId || "");
-  if (!sameRelease) {
-    return {
-      label: "Human-AI relationship lens",
-      title: "Relationship classification is being prepared",
-      body: "The core weekly evidence is already available. This additional reading appears when the same-release classification finishes.",
-    };
-  }
-  const status = String(symbiosis?.public_status || "classification_in_progress");
-  const humanReviewed = status === "human_reviewed" && Boolean(symbiosis?.review?.event_complete);
-  const event = symbiosis?.event || {};
-  const classified = humanReviewed ? Number(event.classified_units || event.expected_units || 0) : Number(event.display_classified_units || event.classified_units || 0);
-  if (status === "classification_in_progress" || status === "review_in_progress" || classified === 0) {
-    return {
-      label: "Human-AI relationship lens",
-      title: "Relationship classification is still running",
-      body: "No older relationship percentages are substituted. This same-release reading will appear when classification completes.",
-    };
-  }
-
-  const counts = humanReviewed ? (event.configuration_counts || {}) : (event.display_configuration_counts || event.configuration_counts || {});
-  const candidates = [
-    ["mutualism", Number(counts.mutualism || 0)],
-    ["ai_benefiting_parasitism", Number(counts.ai_benefiting_parasitism || 0)],
-    ["human_benefiting_parasitism", Number(counts.human_benefiting_parasitism || 0)],
-    ["competition", Number(counts.competition || 0)],
-  ];
-  candidates.sort((a, b) => b[1] - a[1]);
-  const [key, count] = candidates[0];
-  const labels = {
-    mutualism: "Both people and the AI side gain",
-    ai_benefiting_parasitism: "The AI or operator side gains while people are constrained",
-    human_benefiting_parasitism: "People gain while the AI system is constrained",
-    competition: "People and the AI side are both constrained",
-  };
-  const completeCount = humanReviewed ? Number(event.complete_configuration_count || 0) : Number(event.display_complete_configuration_count ?? event.complete_configuration_count ?? 0);
-  const noClear = humanReviewed ? Number(event.no_clear_relational_signal_count || 0) : Number(event.display_no_clear_relational_signal_count ?? event.no_clear_relational_signal_count ?? 0);
-  const partial = humanReviewed ? Number(event.partial_signal_count || 0) : Number(event.display_partial_signal_count ?? event.partial_signal_count ?? 0);
+function relationshipCard(symbiosis, current) {
+  const model = weeklyModel(current, symbiosis);
+  if (!model.ready) return {label:'People and AI', title:'Assessment being prepared', body:'The source-linked news remains available.'};
   return {
-    label: humanReviewed ? "Human-AI relationship lens · reviewed evidence" : "Human-AI relationship lens",
-    title: count ? `${count} ${plural(count, "development")} showed: ${labels[key]}` : "No complete two-sided pattern dominated",
-    body: `${completeCount} developments had a complete two-sided relationship signal. ${partial} had a one-sided signal and ${noClear} described no clear relationship. Open the source-linked weekly evidence for the basis of each reading.`,
+    label:'People and AI',
+    title:model.axesReady ? `${model.aiCounts.gain} describe AI gains only; ${model.aiCounts.mixed} describe gains and limitations` : "AI reading being prepared",
+    body:model.axesReady ? `${model.aiCounts.loss} describe AI limitations only. The same ${model.total} developments are assessed independently for people and AI.` : "",
   };
 }
 
 function renderPreview(current, symbiosis) {
   const c = periodCounts(current);
-  const relationship = relationshipCard(symbiosis, current?.release_id);
+  const relationship = relationshipCard(symbiosis, current);
   const cards = [
     {
       label: "First recorded",
@@ -145,9 +111,9 @@ function renderPreview(current, symbiosis) {
       body: c.followOn ? `${c.first} were first recorded in AIEO weekly history with this release; ${c.followOn} were distinct follow-on developments in continuing stories.` : `These developments were first recorded in AIEO weekly history with this release.${c.possible + c.unclassified ? ` ${c.possible + c.unclassified} additional history-match ${plural(c.possible + c.unclassified, "case is", "cases are")} kept separately while validation is unresolved.` : ""}`,
     },
     {
-      label: "Recurring attention",
-      title: `${c.recurring} previously seen ${plural(c.recurring, "development")}`,
-      body: `${c.recurring} ${plural(c.recurring, "development was", "developments were")} established before this weekly period and received coverage again. Collection retries and rediscovery alone do not make a development recurring.`,
+      label: 'What the sources say about people',
+      title: weeklyTakeaway(weeklyModel(current, symbiosis)),
+      body: 'Open the weekly evidence for source articles and the complete breakdown.',
     },
     relationship,
   ];
@@ -175,6 +141,7 @@ function renderScope(current, index) {
 }
 
 async function init() {
+  setupNavigation();
   updateNextEdition();
   try {
     const [current, index, symbiosis] = await Promise.all([
@@ -184,10 +151,10 @@ async function init() {
     ]);
     const c = periodCounts(current);
     const period = formatRange(current.period_start, current.period_end);
-    setText("report-period", `Current weekly evidence feeding the next monthly edition · ${period}`);
+    setText("report-period", `Latest completed week · ${period}`);
     setText("cover-coverage-count", c.articles);
     setText("preview-new", c.newDevelopments);
-    setText("preview-recurring", c.recurring);
+    setText("preview-events", c.events);
     renderPreview(current, symbiosis);
     renderScope(current, index);
   } catch (error) {

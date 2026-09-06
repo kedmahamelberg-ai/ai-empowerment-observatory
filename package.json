@@ -1,0 +1,13 @@
+{
+  "name": "ai-empowerment-observatory",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "test:public": "node --test tests/test_public_display.mjs"
+  },
+  "devDependencies": {
+    "d3-geo": "3.1.1",
+    "vite": "7.1.5"
+  }
+}

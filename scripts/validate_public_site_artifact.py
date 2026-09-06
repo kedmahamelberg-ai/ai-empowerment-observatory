@@ -5,6 +5,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import hashlib
+from build_public_site import PRIVATE_JSON_KEYS
+from public_directional_release import validate_directional_release
 from pathlib import Path
 
 
@@ -80,6 +83,23 @@ def main() -> int:
     if str(release.get("release_id") or "") != str(symbiosis.get("release_id") or ""):
         fail("current release and relationship artifact disagree on release_id")
 
+    validate_directional_release(release, symbiosis)
+    def inspect_private(value, path):
+        if isinstance(value, dict):
+            if set(value) & PRIVATE_JSON_KEYS:
+                fail(f"Private decision provenance in {path}")
+            for item in value.values(): inspect_private(item, path)
+        elif isinstance(value, list):
+            for item in value: inspect_private(item, path)
+    for path in site.rglob("*.json"):
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        inspect_private(payload, path.relative_to(site))
+        if isinstance(payload, dict) and payload.get("release_id"):
+            declared = payload.pop("public_content_sha256", None)
+            actual = hashlib.sha256(json.dumps(payload,sort_keys=True,ensure_ascii=False,separators=(",",":")).encode()).hexdigest()
+            if actual != declared: fail(f"Public download checksum mismatch: {path.relative_to(site)}")
+    if not (site / "data/symbiosis/current.csv").is_file():
+        fail("The public classification CSV is missing")
     print(f"Public Pages artifact checks passed for {release.get('release_id')}.")
     return 0
 

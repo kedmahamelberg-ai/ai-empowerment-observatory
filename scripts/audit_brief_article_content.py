@@ -15,6 +15,7 @@ from pathlib import Path
 
 from supabase import create_client
 
+from source_evidence_quality import assess_body
 from brief_content_common import MIN_FULL_BODY_EVIDENCE_UNITS, evidence_unit_count
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -111,7 +112,7 @@ def target_article_ids(client, scope: str, release_id: str) -> set[str] | None:
 def snapshots_for_ids(client, article_ids: set[str] | None, limit: int):
     columns = (
         "article_id,source_domain,word_count,extraction_quality,"
-        "retrieval_method,retrieved_at,is_current,body_text"
+        "retrieval_method,retrieved_at,is_current,body_text,text_sha256,content_basis,paywall_detected"
     )
     rows = []
     if article_ids is None:
@@ -190,6 +191,9 @@ def main():
     audited = []
     for row in rows:
         text = row.get("body_text") or ""
+        quality = assess_body(row)
+        for flag in quality["flags"]:
+            issues.append({"article_id": row["article_id"], "issue": flag, "excluded_from_complete_evidence": True})
         units = evidence_unit_count(text)
         stored = int(row.get("word_count") or 0)
         if units != stored:
@@ -214,6 +218,8 @@ def main():
                 "article_id": row["article_id"],
                 "domain": row.get("source_domain"),
                 "evidence_units": units,
+                "usable_complete_body": quality["usable_complete_body"],
+                "source_quality_flags": quality["flags"],
                 "quality": row.get("extraction_quality"),
                 "method": row.get("retrieval_method"),
                 "retrieved_at": row.get("retrieved_at"),
@@ -223,16 +229,18 @@ def main():
     stored_ids = {
         str(row.get("article_id") or "")
         for row in rows
-        if row.get("article_id")
+        if row.get("article_id") and assess_body(row)["usable_complete_body"]
     }
     outcome_counts = latest_fetch_outcomes(client, ids)
 
     result = {
-        "audit_policy": "multilingual_full_body_evidence_units_v1",
+        "audit_policy": "validated_written_source_availability_v2",
         "scope": args.scope,
         "release_id": args.release_id or None,
         "target_article_count": len(ids) if ids is not None else None,
         "stored_bodies_audited": len(audited),
+        "usable_complete_bodies": len(stored_ids),
+        "excluded_bodies": sum(not row["usable_complete_body"] for row in audited),
         "target_articles_without_current_body": (
             len(ids - stored_ids) if ids is not None else None
         ),
@@ -242,8 +250,11 @@ def main():
         "latest_fetch_outcomes_in_scope": outcome_counts,
     }
     print(json.dumps(result, indent=2, ensure_ascii=False))
+    # This is an availability report. Rejected sources remain explicit gaps;
+    # the classifiers independently exclude them using the same quality check.
+    # Legacy word-count metadata is diagnostic, not a reason to stop all sources.
     if issues:
-        raise SystemExit("Content quality audit found structural issues.")
+        print("Source issues recorded; excluded bodies are not classified as complete evidence.")
     return 0
 
 

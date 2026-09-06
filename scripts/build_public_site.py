@@ -13,6 +13,8 @@ layer available through GitHub Pages without exposing private pipeline files.
 from __future__ import annotations
 
 import shutil
+import json
+import hashlib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,7 +24,11 @@ ROOT_FILES = [
     "index.html",
     "site.css",
     "site.js",
+    "public-data.js",
+    "editorial.css",
     "globe.js",
+    "vendor/globe-geometry.js",
+    "vendor/globe-geometry.LICENSE.txt",
     "globe.css",
     "analytics.js",
     "analytics-consent.css",
@@ -63,7 +69,37 @@ OPTIONAL_DATA_FILES = [
 OPTIONAL_PUBLIC_JSON_DIRS = [
     "data/releases",
     "data/symbiosis",
+    "data/geography",
 ]
+
+
+# Publication strips execution traces and private decision provenance. The
+# source content hash remains the identity of the versioned source artifact.
+PRIVATE_JSON_KEYS = {
+    "raw_output", "raw_model_output", "_raw_model_output", "prompt_text", "prompt",
+    "correction_provenance", "signal_provenance", "reviewed", "review_status",
+    "review_reason", "review_reasoning", "reviewer", "reviewer_id", "reviewed_at",
+    "owner_gold", "owner_qc", "classification_audit", "review", "requires_review",
+    "source_body_qc", "provenance", "audit_selection", "audit_status", "governance",
+    "display_basis", "reviewed_units", "unreviewed_units", "review_queue_count",
+    "human_audited", "release_status", "review_required_count",
+}
+
+def public_json(value):
+    if isinstance(value, dict):
+        if value.get("schema_version") == "aieo_symbiosis_public_v2.0":
+            value = dict(value)
+            value["event"] = {"expected_units": value["directional_summary"]["total"]}
+            value["coverage"] = {"expected_units": value["coverage"]["expected_units"], "scope": "source_page_inventory"}
+            value.pop("definitions", None)
+            value.pop("secondary_empowerment", None)
+            value["classification_scope"] = {key:item for key,item in value["classification_scope"].items() if not key.startswith("legacy_")}
+            legacy_fields = {"configuration","plain_label","technical_label","human_experience_type","ai_expressive_role","human_direction","ai_direction","empowerment_secondary"}
+            value["evidence"] = [{key:item for key,item in row.items() if key not in legacy_fields} for row in value["evidence"]]
+        return {key: public_json(item) for key,item in value.items() if key not in PRIVATE_JSON_KEYS}
+    if isinstance(value, list):
+        return [public_json(item) for item in value]
+    return value
 
 
 def copy_required_file(source: Path, destination: Path) -> None:
@@ -149,6 +185,15 @@ def main() -> None:
         copied_release_files.extend(copy_optional_json_tree(source, destination))
         verify_json_tree(source, destination)
 
+    for source in (ROOT / "data/symbiosis").rglob("*.csv"):
+        copy_optional_file(source, SITE / source.relative_to(ROOT))
+    for target in SITE.rglob("*.json"):
+        cleaned = public_json(json.loads(target.read_text(encoding="utf-8")))
+        if isinstance(cleaned, dict) and cleaned.get("release_id"):
+            cleaned["public_projection_version"] = "aieo_public_projection_v2"
+            cleaned.pop("public_content_sha256", None)
+            cleaned["public_content_sha256"] = hashlib.sha256(json.dumps(cleaned,sort_keys=True,ensure_ascii=False,separators=(",",":")).encode()).hexdigest()
+        target.write_text(json.dumps(cleaned, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("Built public Pages artifact at", SITE)
     if copied_release_files:
         print(

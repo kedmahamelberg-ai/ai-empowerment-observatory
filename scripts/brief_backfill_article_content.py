@@ -29,6 +29,7 @@ USER_AGENT = "AIEOResearchBot/1.2 (+https://observatory.hamelberg-ai.com/methodo
 ROBOTS_TIMEOUT = (5, 10)
 TDM_TIMEOUT = (5, 10)
 ARTICLE_TIMEOUT = (10, 30)
+from source_evidence_quality import assess_body
 MIN_WORDS = MIN_FULL_BODY_EVIDENCE_UNITS
 FETCH_RETRY_ATTEMPTS = 3
 MAX_ALTERNATE_URLS = 3
@@ -737,6 +738,12 @@ def fetch_public_candidate(
     picked = choose_best_extraction(html)
     if picked["word_count"] < MIN_WORDS:
         return {**result, "outcome": "too_little_extractable_text", "word_count": picked["word_count"]}
+    quality = assess_body({"body_text": picked["text"]})
+    if not quality["usable_complete_body"]:
+        preview = "subscriber_preview_or_access_gate" in quality["flags"]
+        return {**result, "outcome": "blocked_paywall_or_login" if preview else "too_little_extractable_text",
+                "paywall_detected": preview, "word_count": picked["word_count"],
+                "error_class": "SourceEvidenceQuality", "error_message": ", ".join(quality["flags"])}
     soup = BeautifulSoup(html, "html.parser")
     title = normalize_space(soup.title.get_text(" ", strip=True)) if soup.title else ""
     return {
@@ -874,6 +881,9 @@ def insert_attempt(client, article_id, url, result, workflow_run_id):
 def store_snapshot(client, row, url, result):
     article_id = str(row.get("article_id") or row.get("id") or "").strip()
     text = result["body_text"]
+    quality = assess_body(result)
+    if not quality["usable_complete_body"]:
+        raise ValueError("Rejected source body: " + ", ".join(quality["flags"]))
     digest = sha256_text(text)
 
     client.table("brief_article_content_snapshots").update({"is_current":False}).eq(

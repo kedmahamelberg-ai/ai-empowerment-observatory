@@ -11,13 +11,15 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+from independent_axes import axes_in_raw, model_axes, signals_from_axes, supported_patterns, make_axes, AXIS_SCHEMA
+
 CODEBOOK_VERSION = "aieo_news_symbiosis_v0.1"
 # v0.6 keeps the full-body policy unchanged but adds a write-boundary
 # compatibility layer for the live Supabase check constraint.  A fresh run is
 # intentionally required after the correction: no failed v0.5 row can be
 # mistaken for a v0.6 result.
-CLASSIFIER_VERSION = "symbiosis_news_v0.6_full_body_required"
-EVIDENCE_POLICY_VERSION = "aieo_evidence_basis_v5_full_body_required"
+CLASSIFIER_VERSION = "symbiosis_news_v0.7_independent_axes_full_sources"
+EVIDENCE_POLICY_VERSION = "aieo_evidence_basis_v6_validated_whole_sources"
 PUBLIC_SIGNAL_SCHEMA_VERSION = "aieo_people_signals_v1"
 
 HUMAN_TYPES = {
@@ -179,6 +181,11 @@ def evidence_basis_covers(
     current_evidence_summary: Any,
 ) -> bool:
     """Whether a saved classification used evidence at least as strong as now."""
+    stored_summary = stored_evidence_summary if isinstance(stored_evidence_summary, dict) else {}
+    current_summary = current_evidence_summary if isinstance(current_evidence_summary, dict) else {}
+    fingerprints = current_summary.get("source_fingerprints")
+    if fingerprints is not None and fingerprints != stored_summary.get("source_fingerprints"):
+        return False
     stored = evidence_basis_strength(stored_content_basis, stored_evidence_summary)
     current = evidence_basis_strength(current_content_basis, current_evidence_summary)
     return all(saved >= required for saved, required in zip(stored, current))
@@ -603,7 +610,17 @@ def public_signal_payload(
         evidence_status=evidence_status,
         distribution_signal=distribution_signal,
     )
+    axes = axes_in_raw(raw)
+    axis_fields = {}
+    if axes is not None:
+        signals = signals_from_axes(axes, distribution=distribution_signal)
+        linked = raw.get("relationship_evidence") or nested.get("relationship_evidence") or {}
+        patterns = supported_patterns(axes, patterns, linked)
+        axis_fields = {"axes": axes, "relationship_evidence": linked,
+                       "relationship_pattern_status": "assessed"}
+        explicit_patterns = True
     return {
+        **axis_fields,
         "schema_version": PUBLIC_SIGNAL_SCHEMA_VERSION,
         "relationship_patterns": patterns,
         "public_signals": signals,
@@ -766,8 +783,19 @@ def final_payload_from_classification(row: dict[str, Any]) -> dict[str, Any]:
     human_direction = row.get("final_human_direction") if reviewed else row.get("model_human_direction")
     ai_direction = row.get("final_ai_direction") if reviewed else row.get("model_ai_direction")
     evidence_status = row.get("final_evidence_status") if reviewed else row.get("evidence_status")
+    raw_for_public = dict(row.get("raw_output") or {})
+    if reviewed:
+        mapping = {"enabling": "gain", "constraining": "loss", "neutral": "none", "unclear": "unresolved", "mixed": "mixed"}
+        accepted_axes = raw_for_public.get("accepted_axes")
+        if not isinstance(accepted_axes, dict):
+            accepted_axes = make_axes(
+                mapping.get(str(human_direction), "unresolved"), mapping.get(str(ai_direction), "unresolved"),
+                human_evidence=str(row.get("final_evidence_summary") or row.get("final_reasoning") or "Accepted source reading"),
+                ai_evidence=str(row.get("final_evidence_summary") or row.get("final_reasoning") or "Accepted source reading"),
+                complete_evidence=evidence_status != "insufficient")
+        raw_for_public["axes"] = accepted_axes
     public_layer = public_signal_payload(
-        raw_payload=row.get("raw_output") if isinstance(row.get("raw_output"), dict) else {},
+        raw_payload=raw_for_public,
         configuration=str(configuration or ""),
         human_direction=str(human_direction or ""),
         evidence_status=str(evidence_status or ""),

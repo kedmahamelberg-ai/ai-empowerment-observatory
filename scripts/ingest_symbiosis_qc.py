@@ -17,6 +17,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from independent_axes import make_axes, signals_from_axes, PATTERNS
 from symbiosis_common import (
     AI_ROLES,
     CODEBOOK_VERSION,
@@ -114,21 +115,19 @@ def plain_row_labels(row: dict[str, Any], row_number: int) -> tuple[dict[str, An
     human_lose = fields["people_lose"] == "yes" if enough else False
     ai_advance = fields["ai_advance"] == "yes" if enough else False
     ai_limited = fields["ai_limited"] == "yes" if enough else False
-    patterns = {
-        "mutualism": human_gain and ai_advance,
-        "ai_benefiting_parasitism": human_lose and ai_advance,
-        "human_benefiting_parasitism": human_gain and ai_limited,
-        "competition": human_lose and ai_limited,
-    }
+    # Independent answers do not assert a causal link between the two sides.
+    patterns = {key: False for key in PATTERNS}
+    def axis(up, down):
+        return "mixed" if up and down else "gain" if up else "loss" if down else "none" if enough else "unresolved"
+    explanation = str(row.get("HUMAN_reasoning") or "").strip()
+    if enough and any((human_gain, human_lose, ai_advance, ai_limited)) and not explanation:
+        return None, [f"row {row_number}: add source-based reasoning for the directional reading"]
+    axes = make_axes(axis(human_gain, human_lose), axis(ai_advance, ai_limited),
+        human_evidence=explanation, ai_evidence=explanation, complete_evidence=enough)
     distribution_signal = "unequal" if fields["unequal"] == "yes" else "not_shown"
-    public_signals = public_signals_from_patterns(
-        patterns,
-        configuration=configuration,
-        human_direction=human_direction,
-        evidence_status=evidence_status,
-        distribution_signal=distribution_signal,
-    )
+    public_signals = signals_from_axes(axes, distribution=distribution_signal)
     return {
+        "axes": axes,
         "human_type": human_type,
         "ai_role": ai_role,
         "evidence_status": evidence_status,
@@ -221,6 +220,7 @@ def main() -> int:
     confusion: dict[str, Counter[str]] = defaultdict(Counter)
 
     for index, row in enumerate(rows, start=2):
+        axes = None
         if plain_schema:
             parsed, row_errors = plain_row_labels(row, index)
             if row_errors:
@@ -228,6 +228,7 @@ def main() -> int:
                 continue
             if parsed is None:
                 continue
+            axes = parsed["axes"]
             human_type = parsed["human_type"]
             ai_role = parsed["ai_role"]
             evidence_status = parsed["evidence_status"]
@@ -340,6 +341,7 @@ def main() -> int:
 
         decision_id = f"owner-qc-event-{release_id}-{event_id}-v1"
         final = {
+            **({"axes": axes} if axes else {}),
             "human_experience_type": human_type,
             "ai_expressive_role": ai_role,
             "evidence_status": evidence_status,
@@ -390,6 +392,7 @@ def main() -> int:
                         "relationship_patterns": model_patterns,
                     },
                     "final": {
+                        **({"axes": axes} if axes else {}),
                         "configuration": configuration,
                         "plain_label": plain_label,
                         "human_experience_type": human_type,

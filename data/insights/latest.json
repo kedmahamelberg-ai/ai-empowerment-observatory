@@ -1,7 +1,7 @@
 {
   "meta": {
     "version": "public_insights_v4_release_bound",
-    "generated_at": "2026-09-05T11:21:50.664515Z",
+    "generated_at": "2026-09-06T04:32:36.183455Z",
     "release_id": "2026-W35",
     "release_revision": 4,
     "classification_run_id": "42f88c7f-ceb8-4901-bc49-b96bfc05650a",
@@ -1026,5 +1026,27 @@
         }
       ]
     }
-  }
+  },
+  "directional_summary": {
+    "schema_version": "aieo_independent_directions_v2",
+    "policy_version": "source_representations_independent_axes_2026_09",
+    "total": 110,
+    "human": {
+      "gain": 45,
+      "loss": 3,
+      "mixed": 26,
+      "none": 8,
+      "unresolved": 28
+    },
+    "ai": {
+      "gain": 36,
+      "loss": 2,
+      "mixed": 38,
+      "none": 6,
+      "unresolved": 28
+    },
+    "evidence_complete": 82,
+    "counting_rule": "Each axis partitions the same records. Mixed is one category. The two axes are not added together."
+  },
+  "source_relationship_sha256": "b96d20f410dc6ef665b538700aeecdf83fa1cc85ffcccdc64239ffdd348bb84d"
 }

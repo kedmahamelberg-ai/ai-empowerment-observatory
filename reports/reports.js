@@ -1,6 +1,6 @@
 "use strict";
 
-const BUILD_ID = "5.9.1";
+const BUILD_ID = "7.2.0";
 const PERIOD_INDEX_URL = "/data/releases/period-index.json";
 const RELEASE_INDEX_URL = "/data/releases/index.json";
 
@@ -104,7 +104,7 @@ function currentId(periodIndex, type, rows) {
 function statusLabel(row, isCurrent) {
   const status = String(row.status || "available").toLowerCase();
   if (isCurrent && status === "accumulating") return "Live and updating";
-  if (status === "complete") return "Complete";
+  if (status === "complete") return "Period closed";
   if (status === "accumulating") return "Still building";
   return status.replaceAll("_", " ");
 }
@@ -126,6 +126,7 @@ function currentCard(row, summary, isCurrent) {
         <span class="status-pill">${escapeHTML(statusLabel(row, isCurrent))}</span>
       </header>
       <p class="period-range">${escapeHTML(formatRange(row.period_start, row.period_end))}</p>
+      <p class="period-range">Observed weeks: ${escapeHTML(formatRange(summary?.observed_week_start || row.observed_week_start, summary?.observed_week_end || row.observed_week_end))}</p>
       <div class="period-metrics">
         ${metric("coverage items", values.coverage)}
         ${metric("distinct developments", values.developments)}
@@ -176,7 +177,7 @@ async function loadSummaries(rows) {
 
 function renderOverview(rows, releaseIndex) {
   const currentRows = rows.filter((row) => row.status === "accumulating" || row.current === true);
-  const summaryCount = currentRows.length || Math.min(3, rows.length);
+  const summaryCount = new Set(rows.map(row => row.period_type)).size;
   const weeklyCount = Array.isArray(releaseIndex?.weekly) ? releaseIndex.weekly.length : 0;
   document.getElementById("summary-count").textContent = `${summaryCount} current ${plural(summaryCount, "summary", "summaries")}`;
   document.getElementById("weekly-basis").textContent = weeklyCount
@@ -212,7 +213,9 @@ async function renderReports(periodIndex, releaseIndex) {
     }
   });
 
-  status.textContent = `${currentRows.length} reporting ${plural(currentRows.length, "window is", "windows are")} open. Each updates when a new standardized week is accepted.`;
+  status.textContent = `${currentRows.length} reporting views. Totals cover the observed weeks shown in each view.`;
+  const scopes = currentRows.map(row => JSON.stringify(summaries.get(row.period_id)?.weekly_release_ids || []));
+  if (currentRows.length > 1 && scopes.every(scope => scope === scopes[0])) status.textContent = "These views currently cover the same completed weeks, so their totals match.";
   currentContainer.innerHTML = currentRows.map((row) => currentCard(row, summaries.get(row.period_id), true)).join("");
 
   const archiveRows = rows

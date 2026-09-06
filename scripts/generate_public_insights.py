@@ -395,6 +395,12 @@ def main() -> int:
             },
         },
     }
+    relationship = json.loads((ROOT / "data/symbiosis/current.json").read_text(encoding="utf-8"))
+    from public_directional_release import validate_directional_release
+    validate_directional_release(release, relationship)
+    insights["directional_summary"] = relationship["directional_summary"]
+    insights["source_relationship_sha256"] = relationship["content_sha256"]
+
 
     history = history_from_release_index(index)
     write_json(INSIGHTS_PATH, insights)

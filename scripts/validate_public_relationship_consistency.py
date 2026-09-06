@@ -11,6 +11,7 @@ import json
 from collections import Counter
 from pathlib import Path
 
+from public_directional_release import validate_directional_release, release_corrections
 from symbiosis_common import evidence_basis_strength, release_full_text_requirements
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -162,7 +163,14 @@ def main() -> int:
     evidence = [row for row in (sym.get("evidence") or []) if isinstance(row, dict)]
     if len(evidence) != expected:
         fail(f"relationship evidence contains {len(evidence)} rows, not {expected}")
-    _, event_full_text_requirements = release_full_text_requirements(release)
+    if sym.get("directional_summary"):
+        validate_directional_release(release, sym)
+        # The audited current policy distinguishes actual complete sources from
+        # legacy cache flags. The frozen correction manifest validates its lineage.
+        release_corrections(release)
+        event_full_text_requirements = {}
+    else:
+        _, event_full_text_requirements = release_full_text_requirements(release)
     evidence_by_id = {
         str(row.get("event_id") or ""): row
         for row in evidence

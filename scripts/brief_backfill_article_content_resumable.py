@@ -166,15 +166,20 @@ def article_rows(client, target_ids):
         )
         yield from rows
 
+from source_evidence_quality import assess_body
+
 def load_state(client):
     stored = set()
+    invalid_stored = set()
     for row in paged_rows(
         client,
         "brief_article_content_snapshots",
-        "article_id,is_current",
+        "article_id,is_current,body_text,text_sha256,content_basis,paywall_detected",
     ):
-        if row.get("is_current"):
+        if row.get("is_current") and assess_body(row)["usable_complete_body"]:
             stored.add(str(row.get("article_id") or ""))
+        elif row.get("is_current"):
+            invalid_stored.add(str(row.get("article_id") or ""))
 
     latest = {}
     for row in paged_rows(
@@ -188,7 +193,7 @@ def load_state(client):
         stamp = str(row.get("attempted_at") or "")
         if article_id not in latest or stamp >= latest[article_id][0]:
             latest[article_id] = (stamp, str(row.get("outcome") or "unknown"))
-    return stored, {k: v[1] for k, v in latest.items()}
+    return stored, {k: v[1] for k, v in latest.items() if k not in invalid_stored}
 
 def should_skip(article_id, stored, latest_outcome, retry_mode):
     if article_id in stored:

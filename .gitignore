@@ -16,3 +16,10 @@ __pycache__/
 *.py[cod]
 .venv/
 .env
+
+# Local development dependencies
+node_modules/
+
+# macOS folder metadata
+.DS_Store
+._*

@@ -48,7 +48,7 @@ from translation_policy import SUPPORTED_TRANSLATION_PROFILES, preferred_transla
 
 BASELINE_DIR = ROOT / "data" / "releases" / "baselines"
 RESURFACE_DAYS = 28.0
-STAGE7C_CLASSIFIER_VERSION = "7C.5_full_body_required"
+STAGE7C_CLASSIFIER_VERSION = "7C.6_validated_whole_sources"
 
 
 def latest_successful_classification(client) -> dict[str, Any]:

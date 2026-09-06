@@ -1,44 +1,14 @@
 "use strict";
-
-
-function releaseName(value) {
-  const text = String(value || "");
-  if (text.startsWith("human_audited")) return "Human-audited baseline";
-  if (text.includes("audited")) return "Audited public release";
-  if (text.includes("provisional")) return "Provisional automated release";
-  return text ? text.replaceAll("_", " ") : "—";
-}
-
+const escapeText = value => String(value ?? '—').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 async function init() {
-  const response = await fetch(
-    "/data/status/latest.json",
-    { cache: "no-store" }
-  );
-
+  const response = await fetch('/data/status/latest.json', {cache:'no-store'});
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
   const data = await response.json();
   const latest = data.latest || {};
-
-  document.getElementById("status").innerHTML = `
-    <div class="card">
-      <strong>${data.system_status}</strong>
-      · ${releaseName(data.release_status)}
-      · structural gate ${data.structural_gate}
-    </div>
-    <div class="card">
-      ${latest.coverage_units ?? "—"} article units ·
-      ${latest.event_units ?? "—"} resolved event records ·
-      ${latest.review_queue_count ?? "—"} asynchronous review cases
-    </div>
-    <div class="card">
-      Updated ${data.generated_at}
-    </div>
-  `;
+  document.getElementById('status').innerHTML = `
+    <div class="card"><strong>${escapeText(data.system_status)}</strong> · Release checks ${escapeText(data.structural_gate)}</div>
+    <div class="card">${escapeText(latest.coverage_units)} source pages · ${escapeText(latest.event_units)} developments</div>
+    <div class="card">${escapeText(data.period_start)} to ${escapeText(data.period_end)} · <a href="/edu/">Explore the source readings</a></div>
+    <div class="card">Updated ${escapeText(data.generated_at)}</div>`;
 }
-
-init().catch(error => {
-  console.error(error);
-  document.getElementById("status").textContent =
-    "Status data are currently unavailable.";
-});
+init().catch(error => {console.error(error);document.getElementById('status').textContent='Status data are currently unavailable.';});

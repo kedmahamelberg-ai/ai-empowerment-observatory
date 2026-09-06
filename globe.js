@@ -1,244 +1,143 @@
-"use strict";
+import {geoOrthographic, geoPath, geoDistance} from './vendor/globe-geometry.js';
 
-const MAPLIBRE_MODULE = "https://unpkg.com/maplibre-gl@6.5.0/dist/maplibre-gl.mjs";
-const MAP_STYLE = "https://tiles.openfreemap.org/styles/positron";
+// Local geometry and a 2D canvas work without WebGL or an external tile service.
 const INITIAL_CENTER = [8, 27];
-const ROTATION_DEGREES_PER_MS = 0.00135;
+const SPEED = 0.002; // One quiet revolution in three minutes.
 
-function reducedMotion() {
-  return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true;
-}
-
-function coarsePointer() {
-  return window.matchMedia?.("(pointer: coarse)").matches === true;
-}
-
-function startZoom() {
-  if (window.innerWidth < 480) return 0.3;
-  if (window.innerWidth < 760) return 0.6;
-  if (window.innerWidth < 1080) return 0.95;
-  return 1.2;
-}
-
-function marketName(market) {
-  return String(market?.name || market?.short_name || "market");
-}
-
-export async function initDiscoveryGlobe({
-  containerId,
-  toggleId,
-  promptId,
-  fallbackId,
-  markets,
-  onSelect,
-}) {
+export async function initDiscoveryGlobe({containerId, toggleId, promptId, fallbackId, markets, onSelect}) {
   const container = document.getElementById(containerId);
   const toggle = document.getElementById(toggleId);
   const prompt = document.getElementById(promptId);
   const fallback = document.getElementById(fallbackId);
-  if (!container) throw new Error(`Globe container #${containerId} was not found.`);
-
-  let maplibregl;
+  if (!container) throw new Error(`Missing globe container: ${containerId}`);
+  const canvas = document.createElement('canvas');
+  canvas.setAttribute('role', 'img');
+  canvas.setAttribute('aria-label', 'Rotating world globe. Use the five market buttons below to explore sources.');
+  const context = canvas.getContext('2d');
+  let land;
   try {
-    maplibregl = await import(MAPLIBRE_MODULE);
+    if (!context) throw new Error('Canvas is unavailable.');
+    const response = await fetch('/data/geography/land.json');
+    if (!response.ok) throw new Error('Land geometry is unavailable.');
+    land = await response.json();
   } catch (error) {
-    console.error("MapLibre could not be loaded", error);
     if (fallback) fallback.hidden = false;
     if (toggle) toggle.hidden = true;
     throw error;
   }
-
-  let map;
-  try {
-    map = new maplibregl.Map({
-      container,
-      style: MAP_STYLE,
-      center: INITIAL_CENTER,
-      zoom: startZoom(),
-      minZoom: 0.15,
-      maxZoom: 7,
-      pitch: 0,
-      bearing: 0,
-      attributionControl: true,
-      antialias: true,
-      cooperativeGestures: true,
-    });
-  } catch (error) {
-    console.error("MapLibre could not create a map", error);
-    if (fallback) fallback.hidden = false;
-    if (toggle) toggle.hidden = true;
-    throw error;
-  }
-
-  map.addControl(
-    new maplibregl.NavigationControl({ showCompass: false, visualizePitch: false }),
-    "bottom-right",
-  );
-
+  container.replaceChildren(canvas);
+  if (fallback) fallback.hidden = true;
+  if (toggle) toggle.hidden = false;
+  const projection = geoOrthographic().clipAngle(90).precision(0.35);
+  const path = geoPath(projection, context);
+  const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const listeners = new AbortController();
+  let center = [...INITIAL_CENTER], selected = null, moving = !motionPreference.matches;
+  let width = 0, height = 0, ratio = 1, visible = true, hovering = false, dirty = true;
+  let frame = 0, previous = 0, destroyed = false, drag = null;
   const markers = new Map();
-  let selectedIso = null;
-  let requestedMotion = !reducedMotion() && !coarsePointer();
-  let interactionPaused = false;
-  let pointerInside = false;
-  let visible = true;
-  let programmaticMove = false;
-  let destroyed = false;
-  let previousFrame = performance.now();
-  let frameId = null;
-  let mapReady = false;
-  const fallbackTimer = window.setTimeout(() => {
-    if (!mapReady) {
-      if (fallback) fallback.hidden = false;
-      if (toggle) toggle.hidden = true;
-    }
-  }, 12000);
-
-  function rotating() {
-    return requestedMotion && visible && !interactionPaused && !pointerInside && !selectedIso;
-  }
 
   function updateToggle() {
     if (!toggle) return;
-    if (requestedMotion && (interactionPaused || selectedIso)) {
-      toggle.textContent = "Resume globe";
-      toggle.setAttribute("aria-pressed", "false");
-    } else if (requestedMotion) {
-      toggle.textContent = "Pause globe";
-      toggle.setAttribute("aria-pressed", "true");
-    } else {
-      toggle.textContent = "Play globe";
-      toggle.setAttribute("aria-pressed", "false");
-    }
+    toggle.textContent = moving ? 'Pause globe' : 'Play globe';
+    toggle.setAttribute('aria-pressed', String(moving));
   }
-
-  function markSelected(iso3) {
-    markers.forEach((button, key) => {
-      button.setAttribute("aria-current", key === iso3 ? "true" : "false");
+  function draw() {
+    context.setTransform(ratio, 0, 0, ratio, 0, 0);
+    context.clearRect(0, 0, width, height);
+    projection.rotate([-center[0], -center[1], 0]);
+    context.beginPath(); path({type:'Sphere'});
+    context.fillStyle = '#f6f9fa'; context.fill();
+    context.strokeStyle = '#b7c8d3'; context.lineWidth = 0.8; context.stroke();
+    context.beginPath(); path(land);
+    context.fillStyle = '#b9cbd5'; context.fill();
+    context.strokeStyle = '#94adb9'; context.lineWidth = 0.45; context.stroke();
+    markers.forEach(({button, position}, code) => {
+      const front = geoDistance(center, position) < Math.PI / 2 - 0.035;
+      button.hidden = !front;
+      if (front) {
+        const xy = projection(position);
+        button.style.left = `${xy[0]}px`; button.style.top = `${xy[1]}px`;
+      }
+      button.setAttribute('aria-current', String(code === selected));
     });
+    dirty = false;
   }
-
-  function move(options) {
-    programmaticMove = true;
-    map.easeTo({ duration: 850, essential: false, ...options });
-    map.once("moveend", () => { programmaticMove = false; });
+  function resize() {
+    const bounds = container.getBoundingClientRect();
+    width = bounds.width; height = bounds.height;
+    ratio = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(width * ratio); canvas.height = Math.round(height * ratio);
+    canvas.style.width = `${width}px`; canvas.style.height = `${height}px`;
+    projection.translate([width / 2, (height - 32) / 2]).scale(Math.max(1, Math.min(width - 42, height - 52) / 2));
+    dirty = true;
   }
-
-  function selectMarket(iso3, { notify = true } = {}) {
-    const market = markets?.[iso3];
+  function selectMarket(code, {notify = true} = {}) {
+    const market = markets?.[code];
     if (!market) return;
-    selectedIso = iso3;
-    interactionPaused = true;
-    markSelected(iso3);
-    if (prompt) prompt.textContent = `${marketName(market)} selected`;
-    move({
-      center: [Number(market.longitude), Number(market.latitude)],
-      zoom: Number(market.zoom || 2.6),
-    });
-    updateToggle();
-    if (notify && typeof onSelect === "function") onSelect(iso3);
+    selected = code; moving = false;
+    center = [Number(market.longitude), Number(market.latitude)];
+    if (prompt) prompt.textContent = `${market.name || code} selected`;
+    updateToggle(); dirty = true;
+    if (notify) onSelect?.(code);
   }
-
-  function reset({ resume = true } = {}) {
-    selectedIso = null;
-    interactionPaused = false;
-    requestedMotion = resume;
-    markSelected(null);
-    if (prompt) prompt.textContent = "Drag the globe or choose a market";
-    move({ center: INITIAL_CENTER, zoom: startZoom() });
-    updateToggle();
-    if (typeof onSelect === "function") onSelect(null);
+  function reset({resume = true} = {}) {
+    selected = null; moving = resume; center = [...INITIAL_CENTER];
+    if (prompt) prompt.textContent = 'Drag to explore';
+    updateToggle(); dirty = true; onSelect?.(null);
   }
-
-  function pauseForInteraction() {
-    if (programmaticMove) return;
-    interactionPaused = true;
-    updateToggle();
-  }
-
-  function rotate(now) {
-    if (destroyed) return;
-    const elapsed = Math.min(80, Math.max(0, now - previousFrame));
-    previousFrame = now;
-    if (rotating() && map.loaded() && !map.isMoving()) {
-      const center = map.getCenter();
-      map.setCenter([center.lng + elapsed * ROTATION_DEGREES_PER_MS, center.lat]);
-    }
-    frameId = requestAnimationFrame(rotate);
-  }
-
-  map.on("style.load", () => {
-    try {
-      map.setProjection({ type: "globe" });
-    } catch (error) {
-      console.warn("Globe projection unavailable; using map projection", error);
-    }
+  Object.entries(markets || {}).forEach(([code, market]) => {
+    const button = document.createElement('button');
+    button.type = 'button'; button.className = 'market-marker';
+    button.title = market.name || code;
+    button.setAttribute('aria-label', `Explore ${market.name || code}`);
+    // Stable keyboard controls are the labelled country buttons below the globe.
+    button.tabIndex = -1;
+    button.addEventListener('click', () => selectMarket(code), {signal:listeners.signal});
+    container.append(button);
+    markers.set(code, {button, position:[Number(market.longitude), Number(market.latitude)]});
   });
-
-  map.on("load", () => {
-    mapReady = true;
-    window.clearTimeout(fallbackTimer);
-    Object.entries(markets || {}).forEach(([iso3, market]) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "market-marker";
-      button.title = marketName(market);
-      button.setAttribute("aria-label", `Explore ${marketName(market)}`);
-      button.setAttribute("aria-current", "false");
-      button.addEventListener("click", (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        selectMarket(iso3);
-      });
-      markers.set(iso3, button);
-      new maplibregl.Marker({ element: button, anchor: "center" })
-        .setLngLat([Number(market.longitude), Number(market.latitude)])
-        .addTo(map);
-    });
-    if (fallback) fallback.hidden = true;
-    updateToggle();
-  });
-
-  ["dragstart", "zoomstart", "rotatestart", "pitchstart"].forEach((eventName) => {
-    map.on(eventName, pauseForInteraction);
-  });
-  map.on("error", (event) => console.warn("MapLibre error", event?.error || event));
-
-  container.addEventListener("pointerenter", () => { pointerInside = true; });
-  container.addEventListener("pointerleave", () => { pointerInside = false; });
-  container.addEventListener("touchstart", pauseForInteraction, { passive: true });
-  container.addEventListener("wheel", pauseForInteraction, { passive: true });
-
-  toggle?.addEventListener("click", () => {
-    if (requestedMotion && !interactionPaused && !selectedIso) {
-      requestedMotion = false;
-      updateToggle();
-    } else {
-      reset({ resume: true });
-    }
-  });
-
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      visible = Boolean(entry?.isIntersecting);
-      if (visible) map.resize();
-    },
-    { threshold: 0.1 },
-  );
+  toggle?.addEventListener('click', () => {
+    if (moving) {moving = false; updateToggle();}
+    else reset({resume:true});
+  }, {signal:listeners.signal});
+  canvas.addEventListener('pointerdown', event => {
+    moving = false; updateToggle();
+    drag = {id:event.pointerId, x:event.clientX, y:event.clientY, center:[...center]};
+    canvas.setPointerCapture(event.pointerId);
+  }, {signal:listeners.signal});
+  canvas.addEventListener('pointermove', event => {
+    if (!drag || drag.id !== event.pointerId) return;
+    const sensitivity = 70 / projection.scale();
+    center = [drag.center[0] - (event.clientX-drag.x)*sensitivity,
+      Math.max(-75, Math.min(75, drag.center[1] + (event.clientY-drag.y)*sensitivity))];
+    selected = null; dirty = true;
+    if (prompt) prompt.textContent = 'Drag to explore';
+  }, {signal:listeners.signal});
+  const endDrag = () => {if (drag) {drag = null; onSelect?.(null);}};
+  canvas.addEventListener('pointerup', endDrag, {signal:listeners.signal});
+  canvas.addEventListener('pointercancel', endDrag, {signal:listeners.signal});
+  container.addEventListener('pointerenter', () => {hovering = true;}, {signal:listeners.signal});
+  container.addEventListener('pointerleave', () => {hovering = false;}, {signal:listeners.signal});
+  motionPreference.addEventListener('change', () => {if (motionPreference.matches) {moving=false; updateToggle();}}, {signal:listeners.signal});
+  const resizeObserver = new ResizeObserver(resize);
+  resizeObserver.observe(container);
+  const observer = new IntersectionObserver(([entry]) => {visible=entry.isIntersecting;}, {threshold:0.1});
   observer.observe(container);
-
-  updateToggle();
-  frameId = requestAnimationFrame(rotate);
-
-  return {
-    selectMarket,
-    reset,
-    resize: () => map.resize(),
-    destroy() {
-      destroyed = true;
-      observer.disconnect();
-      window.clearTimeout(fallbackTimer);
-      if (frameId) cancelAnimationFrame(frameId);
-      map.remove();
-    },
-  };
+  function tick(now) {
+    if (destroyed) return;
+    if (now-previous >= 32) {
+      const elapsed = Math.min(80, now-previous); previous = now;
+      if (visible && !document.hidden && moving && !hovering && !drag) {
+        center[0] = (center[0] + elapsed*SPEED + 540) % 360 - 180; dirty = true;
+      }
+      if (visible && dirty) draw();
+    }
+    frame = requestAnimationFrame(tick);
+  }
+  resize(); draw(); updateToggle(); frame = requestAnimationFrame(tick);
+  return {selectMarket, reset, resize, destroy() {
+    destroyed=true; cancelAnimationFrame(frame); listeners.abort();
+    resizeObserver.disconnect(); observer.disconnect(); container.replaceChildren();
+  }};
 }

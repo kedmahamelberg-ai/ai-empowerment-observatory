@@ -1,3 +1,7 @@
+# Current complete update
+
+The integrated website, independent source readings and weekly automation are documented in [COMPLETE-UPDATE-README.md](COMPLETE-UPDATE-README.md). Start there for installation and the current evidence scope.
+
 # AI Empowerment Observatory
 
 A source-linked weekly view of what AI news means for people: who is gaining,

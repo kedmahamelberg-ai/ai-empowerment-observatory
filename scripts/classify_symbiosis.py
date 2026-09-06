@@ -40,7 +40,10 @@ from huggingface_hub import HfApi
 from supabase import Client, create_client
 
 from brief_content_common import MIN_FULL_BODY_EVIDENCE_UNITS, evidence_unit_count
+from source_evidence_quality import assess_body, evidence_chunks
+from independent_axes import make_axes, merge_chunk_axes, signals_from_axes, supported_patterns
 from symbiosis_common import (
+    derive_configuration,
     CLASSIFIER_VERSION,
     CODEBOOK_VERSION,
     EVIDENCE_POLICY_VERSION,
@@ -218,13 +221,10 @@ def parse_metadata(value: Any) -> dict[str, Any]:
 
 
 def compact_evidence_text(value: Any, max_chars: int = MAX_ARTICLE_EVIDENCE_CHARS) -> str:
+    # Kept as a compatibility function: evidence is never shortened. Long
+    # sources are covered by separately hashed, overlapping model segments.
     text = re.sub(r"[ \t]+", " ", str(value or ""))
-    text = re.sub(r"\n{3,}", "\n\n", text).strip()
-    if len(text) <= max_chars:
-        return text
-    head_chars = int(max_chars * 0.72)
-    tail_chars = max_chars - head_chars
-    return f"{text[:head_chars].rstrip()}\n\n[Middle shortened for classification]\n\n{text[-tail_chars:].lstrip()}"
+    return re.sub(r"\n{3,}", "\n\n", text).strip()
 
 
 def load_full_text_map(client: Client, article_ids: list[str]) -> dict[str, dict[str, Any]]:
@@ -233,7 +233,7 @@ def load_full_text_map(client: Client, article_ids: list[str]) -> dict[str, dict
     for start in range(0, len(article_ids), 150):
         response = (
             client.table("brief_article_content_snapshots")
-            .select("article_id,body_text,word_count,extraction_quality,retrieval_method,retrieved_at")
+            .select("article_id,body_text,word_count,extraction_quality,retrieval_method,retrieved_at,text_sha256,content_basis,paywall_detected")
             .eq("is_current", True)
             .in_("article_id", article_ids[start:start + 150])
             .execute()
@@ -251,12 +251,13 @@ def load_full_text_map(client: Client, article_ids: list[str]) -> dict[str, dict
     result: dict[str, dict[str, Any]] = {}
     for row in rows:
         article_id = str(row.get("article_id") or "")
+        quality = assess_body(row)
         body = compact_evidence_text(row.get("body_text"))
         # Stored whitespace counts from older collectors can be 1 for Chinese.
         # Measure the actual supplied body, including mixed-language articles.
         words = evidence_unit_count(body)
-        if article_id and article_id not in result and body and words >= MIN_FULL_TEXT_WORDS:
-            result[article_id] = {**row, "body_text": body, "word_count": words}
+        if article_id and article_id not in result and quality["usable_complete_body"]:
+            result[article_id] = {**row, "body_text": body, "word_count": words, "source_quality": quality}
     return result
 
 
@@ -282,6 +283,8 @@ def evidence_basis_summary(articles: list[dict[str, Any]]) -> dict[str, Any]:
     total = len(articles)
     full = counts.get("full_text", 0)
     return {
+        "source_fingerprints": {str(a.get("article_id")): (a.get("source_quality") or {}).get("body_sha256") for a in articles},
+        "source_quality": {str(a.get("article_id")): a.get("source_quality") or {"flags": ["body_missing"]} for a in articles},
         "source_count": total,
         "full_text_sources": full,
         "article_summary_sources": counts.get("article_summary", 0),
@@ -383,6 +386,7 @@ def load_articles(client: Client, article_ids: list[str]) -> dict[str, dict[str,
             "source_language": str(translation.get("source_language_iso2") or row.get("language") or "und"),
             "evidence_text": evidence_text,
             "content_basis": content_basis,
+            "source_quality": full_text.get("source_quality") or {"usable_complete_body": False, "flags": ["no_usable_complete_body"]},
             "evidence_word_count": int(full_text.get("word_count") or 0),
             "retrieval_method": str(full_text.get("retrieval_method") or ""),
             "search_markets": sorted(observation_meta[article_id]["search_markets"]),
@@ -900,6 +904,7 @@ def owner_gold_calibration_block(*, lens: str, evidence: str, limit: int = 4) ->
             [
                 f"Example {index} evidence: {_gold_example_text(row)}",
                 (
+                    f"Independent axes: {json.dumps(final.get('axes') or {}, ensure_ascii=False)}. "
                     f"Example {index} labels: human={final.get('human_experience_type')}; "
                     f"AI={final.get('ai_expressive_role')}; evidence_status={final.get('evidence_status')}; "
                     f"configuration={final.get('configuration')}; "
@@ -955,14 +960,14 @@ EVIDENCE STATUS
 
 DECISION BOUNDARY POLICY
 1. Do not force every AI story into mutualism, parasitism, or competition.
-2. Do not use insufficient as a default for a story that is clearly non-relational. If the headline clearly describes a stock/valuation story, conference announcement, ranking/list, corporate transaction, or other AI-themed item but establishes no human or AI directional relation, code human=neutral, AI=neutral, evidence_status=sufficient. That yields no_clear_relational_signal.
+2. Do not use insufficient as a default for a story that is clearly non-relational. If the supplied article body clearly describes a stock/valuation story, conference announcement, ranking/list, corporate transaction, or other AI-themed item but establishes no human or AI directional relation, code human=neutral, AI=neutral, evidence_status=sufficient. That yields no_clear_relational_signal.
 3. A model launch, investment, institutional announcement, conference, or policy mention is not automatically a gain. Require an explicit capability, adoption, operative-reach, access, productivity, constraint, or other directional cue.
 4. If one side is directional and the other side is not established, use the directional label plus neutral and evidence_status=partial. Do not mark the whole unit insufficient merely because the second side is neutral.
 5. An explicit ban, halt, withdrawal, blocking rule, or operational limitation can support an AI-side restriction even when no people-side outcome is stated. A stated failure/degradation can support AI-side reduction.
 6. Explicit deployment/use/application can support AI-side extension. Code a people-side gain only when the evidence says or clearly entails that people gain capacity, access, protection, productivity, opportunity, or another defined benefit.
-7. Human extension requires an observable human capacity or action. Mere exposure to AI, growing up with AI, discussing AI, or saying that AI is changing a domain does not by itself establish human extension or gain.
+7. Human extension requires a stated human capacity, opportunity or action. Attributed claims, anticipated benefits, stated risks, recommendations and fictional representations are discourse evidence when labeled as such; they need not be independently verified outcomes. Mere exposure to AI, growing up with AI, discussing AI, or saying that AI is changing a domain does not by itself establish human extension or gain.
 8. Distinguish attitudes from outcomes. Dislike, concern, controversy, or split opinion does not by itself mean people or AI are constrained.
-9. If the evidence explicitly presents both a human gain and a human cost and no single direction can be supported, use human=unclear rather than neutral. A genuine directional conflict is ambiguous, not no-clear.
+9. If a source represents both gains and losses on an axis, set that axis_directions value to mixed. Mixed is a substantive finding, never unclear or neutral. Both dimensions are independent: a missing AI direction cannot erase a supported human direction, and vice versa. Use the legacy component type unclear only as a database compatibility value for mixed; axis_directions preserves the full scientific result.
 10. Governance artifacts are not automatically AI gains. A policy, standard, proposed guidance, legal analysis, or regulatory discussion supports AI restriction only when it actually limits or blocks the AI/operator; otherwise keep the AI side neutral unless a separate capability/adoption cue is present.
 11. Allegations remain allegations. A lawsuit or complaint is a real human action, but it does not prove liability or a court outcome.
 12. When a source reports that human work, data, likeness, or creative output feeds AI training without consent, control, or compensation, human restriction or reduction and AI expansion may be supported.
@@ -973,14 +978,17 @@ DECISION BOUNDARY POLICY
 17. Write public_takeaway as one short sentence in everyday language. State what the development means for people; avoid method labels and academic terminology.
 18. Write people_evidence in at most 280 characters. If you choose a people benefit or downside, identify the specific source-supported fact behind it. Otherwise write "no people outcome stated" or "not enough evidence". Do not quote long passages.
 19. The collected full article body may be written in any language. Treat the original-language body as evidence. English headline normalisation is only an aid for matching and review. Do not mark evidence insufficient merely because the source is not English.
-20. Return only one JSON object.
+20. Return only one JSON object. Do not treat newsletter advertisements, unrelated recommended stories or navigation as evidence about the focal development. Distinguish a company or expert claim from an established result. Do not infer human gains from share prices or AI investment alone.
+22. axis_directions must give human and ai independently as gain, loss, mixed, none, or unresolved. Use none when this source segment contains no directional statement on that side; use unresolved only for opaque or missing evidence. Record supported benefits and costs even when they concern different groups. A forecast remains a forecast in the explanation.
+23. relationship_evidence must supply one short paraphrase linking the two sides for every true relationship_patterns flag. For false flags use an empty string. Unrelated human and AI statements in the same article are not enough for a linked pattern. A mixed axis does not automatically imply all four patterns.
 21. Keep human_reasoning, ai_reasoning, and summary to one short sentence each, under 280 characters. Do not include a thinking trace.{calibration_section}
 
 Required keys:
 ai_relevant, evidence_status, relational_signal, human_experience_type,
 ai_expressive_role, human_reasoning, ai_reasoning, summary, confidence,
 topic, geographic_scope, country_iso3s, relationship_patterns,
-distribution_signal, public_takeaway, people_evidence.
+distribution_signal, public_takeaway, people_evidence, axis_directions,
+relationship_evidence.
 
 confidence must be a JSON number from 0 through 1, for example 0.85. Do not
 return a word such as high, medium, or low. Use steps of 0.05. This is a
@@ -1042,7 +1050,7 @@ def classification_audit(unit: dict[str, Any], result: dict[str, Any]) -> dict[s
     }
 
 
-def call_classifier(*, lens: str, evidence: str, content_basis: str) -> dict[str, Any]:
+def _call_classifier_chunk(*, lens: str, evidence: str, content_basis: str) -> dict[str, Any]:
     prompt = classifier_prompt(lens=lens, evidence=evidence, content_basis=content_basis)
     # Qwen3 thinking must be disabled in the template, not only by /no_think.
     # Every attempt is schema-constrained. Never fall back to free-form text.
@@ -1079,6 +1087,9 @@ def call_classifier(*, lens: str, evidence: str, content_basis: str) -> dict[str
             normalized = validate_model_payload(raw)
             normalized["raw_output"] = {
                 "model_response": raw,
+                "axes": normalized.get("axes"),
+                "relationship_evidence": raw.get("relationship_evidence") or {},
+                "prompt_text": prompt,
                 "relationship_patterns": normalized["relationship_patterns"],
                 "distribution_signal": normalized["distribution_signal"],
                 "public_takeaway": normalized["public_takeaway"],
@@ -1104,6 +1115,51 @@ def call_classifier(*, lens: str, evidence: str, content_basis: str) -> dict[str
             if index < len(modes):
                 time.sleep(2)
     raise ModelOutputError(f"Model failed after {len(modes)} structured attempts ({type(last_error).__name__}).", attempts)
+
+
+def call_classifier(*, lens: str, evidence: str, content_basis: str) -> dict[str, Any]:
+    chunks = evidence_chunks(evidence)
+    if not chunks:
+        raise ModelOutputError("No source evidence was supplied")
+    header = "\n".join(evidence.splitlines()[:3])[:500]
+    results = []
+    for index, chunk in enumerate(chunks):
+        part = chunk["text"] if len(chunks) == 1 else (
+            f"FOCAL SOURCE\n{header}\nWritten evidence segment {index + 1} of {len(chunks)}. "
+            "Assess only statements in this segment. Other segments are assessed separately; "
+            "do not invent them. A direction absent here is none, not an assertion about the whole article.\n"
+            + chunk["text"]
+        )
+        results.append(_call_classifier_chunk(lens=lens, evidence=part, content_basis=content_basis))
+    final = dict(results[0])
+    axes = merge_chunk_axes(results)
+    linked = {key: " ".join(dict.fromkeys(str((r["raw_output"].get("relationship_evidence") or {}).get(key) or "") for r in results)).strip()
+              for key in ("mutualism", "ai_benefiting_parasitism", "human_benefiting_parasitism", "competition")}
+    patterns = {key: any(r["relationship_patterns"].get(key) for r in results) for key in linked}
+    final.update({"axes": axes, "public_signals": signals_from_axes(axes, distribution=final["distribution_signal"]),
+                  "relationship_patterns": supported_patterns(axes, patterns, linked),
+                  "human_reasoning": axes["human"]["evidence"], "ai_reasoning": axes["ai"]["evidence"]})
+    if any(axes[side]["direction"] in {"gain", "loss", "mixed"} for side in ("human", "ai")):
+        final["evidence_status"] = "sufficient"
+    # SQL keeps its established single-direction vocabulary. The versioned
+    # axes in raw_output retain mixed directions without a destructive migration.
+    h, a = axes["human"]["direction"], axes["ai"]["direction"]
+    final["human_experience_type"] = {"gain":"extension","loss":"restriction","mixed":"unclear","none":"neutral","unresolved":"unclear"}[h]
+    final["ai_expressive_role"] = {"gain":"ai_extension","loss":"ai_restriction","mixed":"unclear","none":"neutral","unresolved":"unclear"}[a]
+    if final["evidence_status"] == "insufficient" and (h != "unresolved" or a != "unresolved"):
+        final["evidence_status"] = "sufficient"
+    final["configuration"], final["human_direction"], final["ai_direction"], final["plain_label"] = derive_configuration(final["human_experience_type"], final["ai_expressive_role"], final["evidence_status"])
+    final["people_evidence"] = axes["human"]["evidence"]
+    final["public_takeaway"] = axes["human"]["evidence"] or final["public_takeaway"]
+    final["raw_output"] = {
+        **final["raw_output"], "axes": axes, "relationship_patterns": final["relationship_patterns"],
+        "relationship_evidence": linked, "public_takeaway": final["public_takeaway"],
+        "input_text_sha256": hashlib.sha256(evidence.encode("utf-8")).hexdigest(),
+        "input_characters": len(evidence), "input_fully_covered": True,
+        "segments": [{**{k: v for k, v in chunk.items() if k != "text"},
+                      "result": result["raw_output"]} for chunk, result in zip(chunks, results)],
+    }
+    return final
 
 
 def article_evidence(article: dict[str, Any]) -> str:
@@ -1194,6 +1250,10 @@ def insert_result(
     result: dict[str, Any],
 ) -> dict[str, Any]:
     storage_content_basis = content_basis_for_storage(unit["content_basis"])
+    if "axes" not in result:
+        result["axes"] = make_axes("unresolved", "unresolved", complete_evidence=False,
+                                   unresolved_reason="complete_written_source_unavailable")
+    result["raw_output"]["axes"] = result["axes"]
     payload = {
         "symbiosis_run_id": run_id,
         "codebook_version": CODEBOOK_VERSION,

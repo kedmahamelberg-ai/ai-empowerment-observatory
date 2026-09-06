@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any
 
 from supabase import Client, create_client
+from public_directional_release import (release_corrections, build_directional_release, validate_directional_release, export_public_csv)
 
 from symbiosis_common import (
     CLASSIFIER_VERSION,
@@ -563,6 +564,9 @@ def event_public_rows(
         )
         result.append(
             {
+                "axes": final.get("axes"),
+                "relationship_evidence": final.get("relationship_evidence") or {},
+                "relationship_pattern_status": final.get("relationship_pattern_status") or "legacy_single_label",
                 "event_id": event_id,
                 "event_title": source.get("event_title") or "Untitled development",
                 "event_date": source.get("event_date"),
@@ -692,6 +696,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--release-id", default="")
     parser.add_argument("--require-complete", action="store_true")
+    parser.add_argument("--offline-corrections", action="store_true", help="Build an exact release-bound correction from the supplied publication snapshot without database access")
     return parser.parse_args()
 
 
@@ -702,6 +707,32 @@ def main() -> int:
     if not release_id:
         raise PublishError("Release JSON lacks release_id.")
     article_ids, event_ids, evidence = unit_ids(release)
+    corrections = release_corrections(release)
+    if corrections:
+        target = OUTPUT_DIR / "weekly" / f"{release_id}.json"
+        original = read_json(target)
+        if not args.offline_corrections:
+            client = create_client(required_env("SUPABASE_URL"), required_env("SUPABASE_SECRET_KEY"))
+            # Preserve accepted corrections even when they were made under an
+            # earlier model version. Publication corrections never become gold.
+            accepted = client.table("symbiosis_classifications").select("*").eq("release_id", release_id).eq("lens", "event").in_("review_status", ["accepted", "corrected", "insufficient_evidence"]).execute()
+            selected = {}
+            for row in sorted(accepted.data or [], key=lambda value: str(value.get("updated_at") or value.get("created_at") or ""), reverse=True):
+                selected.setdefault(str(row.get("event_id")), row)
+            for row in original["evidence"]:
+                if row["event_id"] in selected:
+                    row.update(final_payload_from_classification(selected[row["event_id"]]))
+        payload = build_directional_release(release, original, corrections=corrections, owner_gold=owner_gold_for_release(release_id))
+        payload["generated_at"] = now_iso()
+        validate_directional_release(release, payload)
+        revision, changed, _, is_current = persist_release_payload(target=target, payload=payload, release_id=release_id)
+        export_public_csv(payload, OUTPUT_DIR / "weekly" / f"{release_id}.csv")
+        if is_current:
+            export_public_csv(payload, OUTPUT_DIR / "current.csv")
+        print(json.dumps({"release_id": release_id, "revision": revision, "changed": changed, "directional_summary": payload["directional_summary"]}, indent=2))
+        return 0
+    if args.offline_corrections:
+        raise PublishError("No exact correction manifest is available for offline publication")
     client: Client = create_client(required_env("SUPABASE_URL"), required_env("SUPABASE_SECRET_KEY"))
     coverage_rows = latest_rows(client, release_id=release_id, lens="coverage", ids=article_ids)
     event_rows = latest_rows(client, release_id=release_id, lens="event", ids=event_ids)
@@ -801,11 +832,16 @@ def main() -> int:
         ),
     }
 
+    payload = build_directional_release(release, payload, owner_gold=owner_gold)
+    validate_directional_release(release, payload)
     target = OUTPUT_DIR / "weekly" / f"{release_id}.json"
     revision, changed, canonical_current, is_current_release = persist_release_payload(
         target=target, payload=payload, release_id=release_id
     )
 
+    export_public_csv(payload, OUTPUT_DIR / "weekly" / f"{release_id}.csv")
+    if is_current_release:
+        export_public_csv(payload, OUTPUT_DIR / "current.csv")
     print(
         json.dumps(
             {

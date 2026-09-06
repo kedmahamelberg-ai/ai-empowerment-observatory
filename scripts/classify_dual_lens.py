@@ -46,6 +46,7 @@ from supabase import Client, create_client
 
 from brief_content_common import MIN_FULL_BODY_EVIDENCE_UNITS, evidence_unit_count
 from translation_policy import SUPPORTED_TRANSLATION_PROFILES, preferred_translation_rows
+from source_evidence_quality import assess_body, evidence_chunks
 from symbiosis_model_output import CONFIDENCE_VALUES, ModelOutputError, TRANSPORT_VERSION, dimension_schema, response_result
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -53,7 +54,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REVIEW_OUTPUT = ROOT / "review" / "classification" / "latest.json"
 PUBLIC_OUTPUT = ROOT / "data" / "lenses" / "latest.json"
 
-CLASSIFIER_VERSION = "7C.5_full_body_required"
+CLASSIFIER_VERSION = "7C.6_validated_whole_sources"
 CODEBOOK_VERSION = "observatory_dual_lens_v1.1"
 EVENT_METHOD = "article_to_event_v1"
 FULL_BODY_REQUIRED_POLICY = "full_article_body_required_v1"
@@ -482,11 +483,8 @@ def parse_source_metadata(value: Any) -> dict[str, Any]:
 def compact_evidence_text(value: Any, max_chars: int = MAX_ARTICLE_EVIDENCE_CHARS) -> str:
     text = re.sub(r"[ \t]+", " ", str(value or ""))
     text = re.sub(r"\n{3,}", "\n\n", text).strip()
-    if len(text) <= max_chars:
-        return text
-    head_chars = int(max_chars * 0.72)
-    tail_chars = max_chars - head_chars
-    return f"{text[:head_chars].rstrip()}\n\n[Middle shortened for classification]\n\n{text[-tail_chars:].lstrip()}"
+    return text
+
 
 
 def load_current_full_text(client: Client, article_ids: list[str]) -> dict[str, dict[str, Any]]:
@@ -494,7 +492,7 @@ def load_current_full_text(client: Client, article_ids: list[str]) -> dict[str, 
     for start in range(0, len(article_ids), 150):
         response = (
             client.table("brief_article_content_snapshots")
-            .select("article_id,body_text,word_count,extraction_quality,retrieval_method,retrieved_at")
+            .select("article_id,body_text,word_count,extraction_quality,retrieval_method,retrieved_at,text_sha256,content_basis,paywall_detected")
             .eq("is_current", True)
             .in_("article_id", article_ids[start:start + 150])
             .execute()
@@ -515,8 +513,9 @@ def load_current_full_text(client: Client, article_ids: list[str]) -> dict[str, 
         # Recount the supplied multilingual text; legacy whitespace counts can
         # be 1 for an entire Chinese article.
         words = evidence_unit_count(body)
-        if article_id and article_id not in result and body and words >= MIN_FULL_TEXT_WORDS:
-            result[article_id] = {**row, "body_text": body, "word_count": words}
+        quality = assess_body(row)
+        if article_id and article_id not in result and quality["usable_complete_body"]:
+            result[article_id] = {**row, "body_text": body, "word_count": words, "source_quality": quality}
     return result
 
 
@@ -1589,7 +1588,7 @@ def _http_error_detail(response: requests.Response) -> str:
     return body[:3000]
 
 
-def call_classifier(
+def _call_classifier_chunk(
     *,
     codebook_prompt: str,
     lens: str,
@@ -1619,7 +1618,9 @@ Do not use external knowledge.
 Do not use publisher location as event geography unless the evidence itself
 locates the development there.
 
-Full article body evidence is required for this model call. A headline may
+Code statements, attributed claims, risks, forecasts and recommendations in the supplied source. Do not require proof of realised causal effects. Exclude navigation, advertisements and unrelated recommended stories. Retain both expanding and contracting statements as mixed; do not cancel them into unclear.
+
+Complete written source evidence, supplied in consecutive segments if necessary, is required for this model call. A headline may
 orient the reader, but it cannot independently support a classification.
 
 The full article body may be written in any language. Treat the original-
@@ -1734,6 +1735,7 @@ present, direction, degree, confidence, reasoning.
             normalized, _ = validate_output(raw_json)
             normalized["content_basis"] = content_basis
             normalized["_raw_model_output"] = raw_json
+            normalized["_raw_model_output"]["prompt_text"] = prompt
             normalized["_raw_model_output"]["generation"] = {**diagnostics, "transport_version": TRANSPORT_VERSION, "thinking": False}
             normalized["_structured_output_mode"] = mode["name"]
 
@@ -1771,6 +1773,56 @@ present, direction, degree, confidence, reasoning.
         "Qwen failed to return a valid classification after all "
         f"fallback modes: {last_error}"
     )
+
+
+def call_classifier(*, codebook_prompt: str, lens: str, evidence_text: str, content_basis: str) -> dict[str, Any]:
+    """Read all source segments; union directional evidence without dropping the middle."""
+    chunks = evidence_chunks(evidence_text)
+    results = [_call_classifier_chunk(codebook_prompt=codebook_prompt, lens=lens,
+        evidence_text=f"Source segment {i+1}/{len(chunks)}. Classify only statements present here.\n" + chunk["text"],
+        content_basis=content_basis) for i, chunk in enumerate(chunks)]
+    if not results:
+        raise ClassificationError("Empty evidence is not a model classification input")
+    def merge_direction(values, absent="non_empowerment"):
+        values = set(values)
+        up = bool(values & {"expanding", "mixed"})
+        down = bool(values & {"contracting", "mixed"})
+        return "mixed" if up and down else "expanding" if up else "contracting" if down else "unclear" if "unclear" in values else absent
+    def combine(field):
+        return " ".join(dict.fromkeys(str(r[field]) for r in results if r.get(field)))
+    result = dict(results[0])
+    result["ai_relevant"] = any(r["ai_relevant"] for r in results)
+    result["empowerment_status"] = merge_direction(r["empowerment_status"] for r in results)
+    result["empowerment_degree"] = max(r["empowerment_degree"] for r in results)
+    result["unit_score"] = score_unit(result["empowerment_status"], result["empowerment_degree"])
+    result["reasoning"] = combine("reasoning")
+    result["dimensions"] = {}
+    for key in sorted(VALID_DIMENSIONS):
+        parts = [r["dimensions"][key] for r in results]
+        present = any(d["present"] for d in parts)
+        result["dimensions"][key] = {"present": present,
+            "direction": merge_direction((d["direction"] for d in parts if d["present"]), absent=None) if present else None,
+            "degree": max(d["degree"] for d in parts) if present else 0,
+            "confidence": min(d["confidence"] for d in parts if d["present"]) if present else 0.0,
+            "reasoning": " ".join(dict.fromkeys(d["reasoning"] for d in parts if d["present"])) or "Dimension not stated in the written source."}
+    present = [key for key, d in result["dimensions"].items() if d["present"]]
+    result["dominant_dimension"] = max(present, key=lambda k: result["dimensions"][k]["degree"]) if present else None
+    frames = {r["narrative_frame"] for r in results} - {"unclear", "descriptive_neutral"}
+    result["narrative_frame"] = "contested" if len(frames) > 1 else next(iter(frames), results[0]["narrative_frame"])
+    countries = sorted({c for r in results for c in r["country_iso3s"]})
+    result["country_iso3s"] = countries
+    result["primary_country_iso3"] = countries[0] if countries else None
+    result["geographic_scope"] = "global" if any(r["geographic_scope"] == "global" for r in results) else "multi_country" if len(countries) > 1 else "country" if countries else "unclear"
+    for field in ("distribution_breadth", "ai_authority_shift"):
+        values = {r[field] for r in results} - {"unclear"}
+        result[field] = next(iter(values)) if len(values) == 1 else "unclear"
+    result["confidence"] = min(r["confidence"] for r in results)
+    result["requires_review"] = any(r["requires_review"] for r in results)
+    result["review_reason"] = combine("review_reason")
+    result["_raw_model_output"] = {"input_policy": FULL_BODY_REQUIRED_POLICY,
+        "input_characters": len(evidence_text), "input_sha256": hashlib.sha256(evidence_text.encode()).hexdigest(),
+        "fully_covered": True, "segments": [{k:v for k,v in c.items() if k != "text"} | {"result": r["_raw_model_output"]} for c,r in zip(chunks,results)]}
+    return result
 
 
 def unavailable_full_body_result(

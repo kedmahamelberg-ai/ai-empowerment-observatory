@@ -41,7 +41,7 @@ REVIEW_OUTPUT = ROOT / "review" / "classification" / "latest.json"
 PUBLIC_OUTPUT = ROOT / "data" / "lenses" / "latest.json"
 
 POSTPROCESS_VERSION = "7C.5a_full_body_required"
-TARGET_CLASSIFIER_VERSION = "7C.5_full_body_required"
+TARGET_CLASSIFIER_VERSION = "7C.6_validated_whole_sources"
 EVENT_METHOD = "article_to_event_v1"
 
 AUDIT_TARGET = 12
