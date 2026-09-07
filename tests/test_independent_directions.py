@@ -1,6 +1,7 @@
 """Regressions for this week's audit and the next automatic release."""
 import copy
 import csv
+import gzip
 import hashlib
 import json
 import sys
@@ -27,6 +28,18 @@ def axes(h='gain',a='gain',complete=True):
     return make_axes(h,a,human_evidence='The source describes new access and a privacy risk.',ai_evidence='The operator gains users and faces operating limits.',complete_evidence=complete)
 
 class IndependentDirectionsTests(unittest.TestCase):
+    def setUp(self):
+        # Historical regression inputs must be frozen together. Reconciliation
+        # may legitimately restate data/releases while the next week is running.
+        # The actual publication boundary still validates the live files strictly.
+        path = ROOT / 'tests/fixtures/w35-audit-revision-4.json.gz'
+        self.audit = json.loads(gzip.decompress(path.read_bytes()))
+        fixture_root = Path(self.enterContext(tempfile.TemporaryDirectory()))
+        correction = fixture_root / 'validation/corrections/2026-W35-independent-directions.json'
+        correction.parent.mkdir(parents=True)
+        correction.write_text(json.dumps(self.audit['corrections']))
+        self.enterContext(patch('public_directional_release.ROOT', fixture_root))
+
     def test_human_and_ai_are_independent_and_mixed_is_preserved(self):
         rows=[{'event_id':str(i),'axes':axes(h,a)} for i,(h,a) in enumerate([('gain','none'),('none','gain'),('mixed','mixed')])]
         summary=summarize_axes(rows)
@@ -90,8 +103,8 @@ class IndependentDirectionsTests(unittest.TestCase):
         self.assertFalse(assess_body({'body_text':body})['usable_complete_body'])
         self.assertFalse(assess_body({'body_text':'complete news '*100,'text_sha256':'wrong'})['usable_complete_body'])
         self.assertFalse(evidence_basis_covers(stored_content_basis='full_text',current_content_basis='full_text',stored_evidence_summary={'source_fingerprints':{'1':'old'}},current_evidence_summary={'source_fingerprints':{'1':'new'}}))
-    def test_current_audit_accounts_for_every_record_without_claiming_110_full_readings(self):
-        release=read('data/releases/weekly/2026-W35.json');pub=read('data/symbiosis/weekly/2026-W35.json')
+    def test_frozen_audit_accounts_for_every_record_without_claiming_110_full_readings(self):
+        release=self.audit['release'];pub=self.audit['public']
         validate_directional_release(release,pub)
         self.assertEqual(len(release_corrections(release)),110)
         audit=summarize_axes(list(release_corrections(release).values()))
@@ -99,15 +112,27 @@ class IndependentDirectionsTests(unittest.TestCase):
         self.assertEqual(audit['ai'],dict(gain=36,loss=2,mixed=38,none=6,unresolved=28))
         self.assertEqual(audit['evidence_complete'],82)
     def test_stale_correction_cannot_spill_into_a_different_source_revision_or_week(self):
-        release=read('data/releases/weekly/2026-W35.json');release['content_sha256']='different'
+        release=self.audit['release'];release['content_sha256']='different'
         with self.assertRaises(ValueError):release_corrections(release)
         release['release_id']='2027-W03'
         self.assertEqual(release_corrections(release),{})
     def test_owner_mixed_reading_overrides_the_assistant_audit(self):
-        release=read('data/releases/weekly/2026-W35.json');pub=read('data/symbiosis/weekly/2026-W35.json');eid=pub['evidence'][0]['event_id']
+        release=self.audit['release'];pub=self.audit['public'];eid=pub['evidence'][0]['event_id']
         out=build_directional_release(release,pub,corrections=release_corrections(release),owner_gold={eid:{'final':{'axes':axes('mixed','none')}}})
         row=next(r for r in out['evidence'] if r['event_id']==eid)
         self.assertEqual(row['axes']['human']['direction'],'mixed');self.assertTrue(row['reviewed'])
+    def test_history_restatement_cannot_rebind_old_audit_or_relax_publication(self):
+        original = self.audit['release']
+        updated = copy.deepcopy(original)
+        updated['revision'] = 5
+        updated['content_sha256'] = 'new-reconciliation-revision'
+        with self.assertRaises(ValueError):
+            release_corrections(updated)
+        with self.assertRaises(ValueError):
+            validate_directional_release(updated, self.audit['public'])
+        validate_directional_release(original, self.audit['public'])
+        self.assertEqual(len(release_corrections(original)), 110)
+
     def test_optional_qc_preserves_mixed_and_human_only_answers(self):
         row={f'HUMAN_{k}':'No' for k in ('enough_to_judge','people_gaining','people_losing_ground','ai_advancing','ai_limited','unequal_benefits')}
         row.update(HUMAN_enough_to_judge='Yes',HUMAN_people_gaining='Yes',HUMAN_people_losing_ground='Yes',HUMAN_reasoning='The source describes gains and losses for people.')
@@ -115,7 +140,7 @@ class IndependentDirectionsTests(unittest.TestCase):
         self.assertFalse(errors);self.assertEqual(result['axes']['human']['direction'],'mixed');self.assertEqual(result['axes']['ai']['direction'],'none')
         self.assertFalse(any(result['relationship_patterns'].values()))
     def test_public_csv_has_all_rows_and_same_axes_without_private_provenance(self):
-        payload=read('data/symbiosis/weekly/2026-W35.json')
+        payload=self.audit['public']
         with tempfile.TemporaryDirectory() as temp:
             path=Path(temp)/'readings.csv';export_public_csv(payload,path)
             with path.open(encoding='utf-8-sig') as h:rows=list(csv.DictReader(h))

@@ -80,6 +80,14 @@ jobs:
               handle.write(f"complete={complete}\n")
           print(json.dumps(status, indent=2))
           PY
+      - name: Keep classification progress even when a pass fails
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: stage7c-progress-${{ github.job }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/stage7c-status-*.json
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Commit completed Stage 7C outputs safely
         if: steps.stage7c.outputs.complete == 'true'
         run: |
@@ -157,6 +165,14 @@ jobs:
               handle.write(f"complete={complete}\n")
           print(json.dumps(status, indent=2))
           PY
+      - name: Keep classification progress even when a pass fails
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: stage7c-progress-${{ github.job }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/stage7c-status-*.json
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Commit completed Stage 7C outputs safely
         if: steps.stage7c.outputs.complete == 'true'
         run: |
@@ -238,6 +254,14 @@ jobs:
               handle.write(f"complete={complete}\n")
           print(json.dumps(status, indent=2))
           PY
+      - name: Keep classification progress even when a pass fails
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: stage7c-progress-${{ github.job }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/stage7c-status-*.json
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Commit completed Stage 7C outputs safely
         if: steps.stage7c.outputs.complete == 'true'
         run: |
