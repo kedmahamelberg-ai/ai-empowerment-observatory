@@ -1,17 +1,17 @@
 {
   "meta": {
-    "stage": "7C.6_validated_whole_sources",
+    "stage": "7C.5a_full_body_required",
     "provisional": true,
     "classification_run_id": "3411d904-d3dd-4f2b-b2d7-b855d3332f97",
     "run_key": "dual_lens_20260907T103926Z",
-    "collection_run_key": "run_20260907T043912Z",
-    "codebook": "observatory_dual_lens_v1.1",
+    "confidence_calibrated": false,
+    "residual_normalized_count": 86,
+    "confidence_note": "Model self-confidence is excluded from index weighting and quality-review selection.",
     "method": {
       "coverage_lens": "one weight per observed AI-relevant article",
       "event_lens": "one weight per unique active AI event",
       "empowerment_index": "mean deterministic unit score x 100",
       "directional_amplification_gap": "Coverage Empowerment Index - Event Empowerment Index",
-      "country_rule": "primary event country only in pilot country aggregation; global/multi-country metadata is retained separately",
       "country_signal_min_n": 3
     }
   },
@@ -22,16 +22,16 @@
       "country_iso3": null,
       "unit_count_total": 148,
       "unit_count_ai_relevant": 147,
-      "unit_count_scored": 146,
-      "review_required_count": 119,
-      "empowerment_index": 10.9589,
-      "mean_confidence": 0.3344,
+      "unit_count_scored": 68,
+      "review_required_count": 79,
+      "empowerment_index": 23.5294,
+      "mean_confidence": null,
       "status_distribution": {
         "expanding": 0.1905,
         "contracting": 0.0272,
         "mixed": 0.0136,
-        "non_empowerment": 0.1769,
-        "unclear": 0.5918
+        "non_empowerment": 0.2313,
+        "unclear": 0.5374
       },
       "narrative_distribution": {
         "opportunity": 0.1905,
@@ -61,15 +61,15 @@
       "unit_count_total": 142,
       "unit_count_ai_relevant": 141,
       "unit_count_scored": 138,
-      "review_required_count": 114,
+      "review_required_count": 5,
       "empowerment_index": 12.0773,
-      "mean_confidence": 0.3606,
+      "mean_confidence": null,
       "status_distribution": {
         "expanding": 0.2057,
         "contracting": 0.0284,
         "mixed": 0.0142,
-        "non_empowerment": 0.1631,
-        "unclear": 0.5887
+        "non_empowerment": 0.7163,
+        "unclear": 0.0355
       },
       "narrative_distribution": {
         "opportunity": 0.2057,
@@ -95,9 +95,9 @@
     "amplification": {
       "scope": "global",
       "country_iso3": null,
-      "coverage_index": 10.9589,
+      "coverage_index": 23.5294,
       "event_index": 12.0773,
-      "directional_amplification_gap": -1.1184,
+      "directional_amplification_gap": 11.4521,
       "coverage_unit_count": 147,
       "event_unit_count": 141,
       "coverage_event_ratio": 1.0426,
