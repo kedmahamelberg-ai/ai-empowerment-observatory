@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import csv
+from datetime import datetime, timezone
 import os
 import signal
 import time
@@ -22,6 +24,11 @@ RETRYABLE = {
     "too_little_extractable_text",
     "robots_unavailable",
     "tdm_unavailable",
+    "browser_error",
+    "browser_timeout",
+    "browser_data_unavailable",
+    "db_error",
+    "stored",
 }
 
 TERMINAL_PRIOR_OUTCOMES = {
@@ -168,52 +175,67 @@ def article_rows(client, target_ids):
 
 from source_evidence_quality import assess_body
 
-def load_state(client):
-    stored = set()
-    invalid_stored = set()
-    for row in paged_rows(
-        client,
-        "brief_article_content_snapshots",
-        "article_id,is_current,body_text,text_sha256,content_basis,paywall_detected",
-    ):
-        if row.get("is_current") and assess_body(row)["usable_complete_body"]:
-            stored.add(str(row.get("article_id") or ""))
-        elif row.get("is_current"):
-            invalid_stored.add(str(row.get("article_id") or ""))
+def scoped_rows(client, table, columns, target_ids=None):
+    if target_ids is None:
+        yield from paged_rows(client, table, columns)
+        return
+    ids = sorted(target_ids)
+    for offset in range(0, len(ids), 100):
+        start = 0
+        while True:
+            rows = (client.table(table).select(columns).in_("article_id", ids[offset:offset+100])
+                .order("article_id").range(start, start+499).execute().data or [])
+            yield from rows
+            if len(rows) < 500:
+                break
+            start += 500
 
+
+def load_state(client, target_ids=None, *, details=False):
+    stored, invalid_stored = set(), set()
+    for row in scoped_rows(client, "brief_article_content_snapshots",
+            "article_id,is_current,body_text,text_sha256,content_basis,paywall_detected", target_ids):
+        if row.get("is_current"):
+            (stored if assess_body(row)["usable_complete_body"] else invalid_stored).add(str(row.get("article_id") or ""))
     latest = {}
-    for row in paged_rows(
-        client,
-        "brief_article_fetch_attempts",
-        "article_id,outcome,attempted_at",
-    ):
+    for row in scoped_rows(client, "brief_article_fetch_attempts",
+            "article_id,outcome,attempted_at,retrieval_method,workflow_run_id,metadata", target_ids):
         article_id = str(row.get("article_id") or "")
-        if not article_id:
-            continue
-        stamp = str(row.get("attempted_at") or "")
-        if article_id not in latest or stamp >= latest[article_id][0]:
-            latest[article_id] = (stamp, str(row.get("outcome") or "unknown"))
-    return stored, {k: v[1] for k, v in latest.items() if k not in invalid_stored}
+        if article_id and (article_id not in latest or str(row.get("attempted_at") or "") >= str(latest[article_id].get("attempted_at") or "")):
+            latest[article_id] = row
+    for article_id in invalid_stored:
+        latest.pop(article_id, None)
+    outcomes = {key: str(row.get("outcome") or "unknown") for key, row in latest.items()}
+    return (stored, outcomes, latest) if details else (stored, outcomes)
 
-def should_skip(article_id, stored, latest_outcome, retry_mode):
+
+def should_skip(article_id, stored, latest_outcome, retry_mode, *, detail=None, session_id="", now=None):
     if article_id in stored:
         return True, "already_stored"
+    detail = detail or {}
+    metadata = detail.get("metadata") or {}
+    if session_id and metadata.get("recovery_session") == session_id:
+        return True, "checked_this_recovery"
     prior = latest_outcome.get(article_id)
-    if not prior:
+    if not prior or retry_mode == "all":
         return False, None
-    # "all" means exactly that: recheck every unresolved source, including a
-    # publisher policy block. The fetcher will respect the current robots/TDM
-    # decision and never bypass a paywall or login. This lets an owner learn
-    # whether a policy or a temporary technical condition has changed.
-    if retry_mode == "all":
-        return False, None
-    if prior in TERMINAL_PRIOR_OUTCOMES:
-        return True, f"terminal_prior_{prior}"
     if retry_mode == "none":
         return True, "already_attempted"
-    if retry_mode == "retryable" and prior not in RETRYABLE:
-        return True, f"terminal_prior_{prior}"
-    return False, None
+    # Old heuristics can misidentify a comment CAPTCHA or footer as a gate.
+    # Re-evaluate with the new detector; current publisher restrictions still apply.
+    if detail.get("retrieval_method") != base.RECOVERY_STRATEGY_VERSION:
+        return False, None
+    try:
+        stamp = datetime.fromisoformat(str(detail.get("attempted_at", "")).replace("Z", "+00:00"))
+        age = ((now or datetime.now(timezone.utc)) - stamp).total_seconds()
+    except (ValueError, TypeError):
+        age = float("inf")
+    cooldown = 7*86400 if prior in TERMINAL_PRIOR_OUTCOMES or prior == "pdf_needs_review" else 6*3600
+    if prior == "stored":
+        # The attempt ledger alone never proves the snapshot write succeeded.
+        return False, None
+    return (True, "retry_cooldown") if age < cooldown else (False, None)
+
 
 def is_obvious_media(url):
     value = str(url or "").casefold()
@@ -250,12 +272,18 @@ def main():
     )
     parser.add_argument("--release-id", default="")
     parser.add_argument("--report-output", default="")
+    parser.add_argument("--session-id", default="")
     args = parser.parse_args()
 
     client = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SECRET_KEY"])
     workflow_run_id = os.environ.get("GITHUB_RUN_ID")
-    stored, latest_outcome = load_state(client)
     target_ids, target_label = target_scope(client, args.scope, args.release_id)
+    stored, latest_outcome, attempt_details = load_state(client, target_ids, details=True)
+    stored_before = set(stored)
+    rows = list(article_rows(client, target_ids))
+    # Oldest/unattempted failures first prevents starvation after a bounded pass.
+    rows.sort(key=lambda row: (str(attempt_details.get(str(row.get("article_id")), {}).get("attempted_at") or ""), str(row.get("article_id"))))
+    checked = set()
 
     counts = defaultdict(int)
     methods = defaultdict(int)
@@ -264,7 +292,7 @@ def main():
     soft_stopped = False
     started = time.monotonic()
 
-    for row in article_rows(client, target_ids):
+    for row in rows:
         scanned += 1
 
         if (time.monotonic() - started) / 60 >= args.max_runtime_minutes:
@@ -278,7 +306,7 @@ def main():
             counts["missing_id_or_url"] += 1
             continue
 
-        skip, reason = should_skip(article_id, stored, latest_outcome, args.retry_mode)
+        skip, reason = should_skip(article_id, stored, latest_outcome, args.retry_mode, detail=attempt_details.get(article_id), session_id=args.session_id)
         if skip:
             counts[f"skipped_{reason}"] += 1
             continue
@@ -291,7 +319,7 @@ def main():
 
         try:
             with source_deadline(args.per_source_timeout_seconds):
-                result = media_result() if is_obvious_media(source_url) else base.fetch_and_extract(source_url)
+                result = media_result() if is_obvious_media(source_url) else base.fetch_and_extract(source_url, expected_title=str(row.get("headline_original") or row.get("title") or row.get("headline") or ""))
         except SourceDeadlineExceeded as exc:
             result = {
                 "outcome": "source_timeout",
@@ -316,20 +344,23 @@ def main():
             flush=True,
         )
 
+        result["recovery_session"] = args.session_id
+        checked.add(article_id)
         if not args.dry_run:
             try:
-                base.insert_attempt(client, article_id, source_url, result, workflow_run_id)
-                latest_outcome[article_id] = outcome
                 if outcome == "stored":
+                    # Report stored only after the complete snapshot was persisted.
                     base.store_snapshot(client, row, source_url, result)
                     stored.add(article_id)
+                base.insert_attempt(client, article_id, source_url, result, workflow_run_id)
+                latest_outcome[article_id] = outcome
             except Exception as exc:
                 counts["db_error"] += 1
                 print(f"  DB ERROR: {type(exc).__name__}: {exc}", flush=True)
 
         time.sleep(max(0.0, args.sleep))
 
-    stored_after, latest_after = load_state(client)
+    stored_after, latest_after, details_after = load_state(client, target_ids, details=True)
     target_set = target_ids if target_ids is not None else {
         str(row.get("article_id") or "")
         for row in paged_rows(client, "articles", "article_id")
@@ -343,7 +374,10 @@ def main():
         unresolved_outcomes[latest_after.get(article_id, "never_attempted")] += 1
 
     summary = {
-        "schema_version": "aieo_body_collection_report_v1",
+        "schema_version": "aieo_body_collection_report_v2",
+        "strategy": base.RECOVERY_STRATEGY_VERSION,
+        "new_bodies_saved": len((stored_after - stored_before) & target_set),
+        "remaining_unattempted": len([i for i in unresolved if i not in checked and not should_skip(i, stored_after, latest_after, args.retry_mode, detail=details_after.get(i), session_id=args.session_id)[0]]),
         "scope": args.scope,
         "target": target_label or "all_articles",
         "release_id": args.release_id or None,
@@ -360,25 +394,55 @@ def main():
         "counts": dict(sorted(counts.items())),
         "extraction_methods": dict(sorted(methods.items())),
     }
-    print(json.dumps(summary, indent=2))
+    rows_by_id = {str(row.get("article_id")): row for row in rows}
+    records = []
+    for article_id in sorted(target_set):
+        detail = details_after.get(article_id, {})
+        meta = detail.get("metadata") or {}
+        row = rows_by_id.get(article_id, {})
+        records.append({"article_id": article_id, "source_url": article_url(row),
+            "title": str(row.get("headline_original") or row.get("title") or row.get("headline") or ""),
+            "full_body_available": article_id in full_ids,
+            "recovered_this_pass": article_id in (stored_after - stored_before),
+            "outcome": "stored" if article_id in full_ids else latest_after.get(article_id, "never_attempted"),
+            "attempted_at": detail.get("attempted_at"), "strategy": detail.get("retrieval_method"),
+            "final_url": meta.get("final_url"), "extraction_method": meta.get("extraction_method"),
+            "error_class": meta.get("error_class"), "error_message": meta.get("error_message"),
+            "recovery_trace": meta.get("recovery_trace", [])})
+    summary["articles"] = records
+    print(json.dumps({k: v for k, v in summary.items() if k != "articles"}, indent=2))
 
     if args.report_output:
         report_path = Path(args.report_output)
         if not report_path.is_absolute():
             report_path = ROOT / report_path
         report_path.parent.mkdir(parents=True, exist_ok=True)
-        report_path.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
+        report_path.write_text(json.dumps(summary, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        fields = [key for key in records[0] if key != "recovery_trace"] if records else ["article_id", "outcome"]
+        with report_path.with_suffix(".csv").open("w", encoding="utf-8-sig", newline="") as handle:
+            writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore")
+            writer.writeheader()
+            for row in records:
+                # Spreadsheet formula injection is possible in publisher titles/URLs.
+                writer.writerow({key: ("'"+value if isinstance(value, str) and value.startswith(("=", "+", "-", "@")) else value) for key, value in row.items()})
 
+    output_path = os.environ.get("GITHUB_OUTPUT")
+    if output_path:
+        with open(output_path, "a", encoding="utf-8") as handle:
+            handle.write(f"new_bodies_saved={summary['new_bodies_saved']}\n")
+            handle.write(f"remaining_unattempted={summary['remaining_unattempted']}\n")
     summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary_path:
         with open(summary_path, "a", encoding="utf-8") as handle:
-            handle.write("## AIEO Brief resumable backfill\n\n")
-            handle.write(f"- Processed: **{processed}**\n")
-            handle.write(f"- Soft stopped: **{soft_stopped}**\n")
-            handle.write(f"- Retry mode: **{args.retry_mode}**\n\n")
-            handle.write("```json\n")
-            handle.write(json.dumps(summary, indent=2))
-            handle.write("\n```\n")
+            handle.write("## Article body recovery\n\n")
+            handle.write(f"Scope: **{target_label or args.scope}**. **{len(full_ids)} / {target_total}** sources now have usable bodies.\n\n")
+            handle.write(f"New bodies saved this pass: **{summary['new_bodies_saved']}**. Still unavailable: **{len(unresolved)}**.\n\n")
+            handle.write(f"Sources still awaiting an attempt: **{summary['remaining_unattempted']}**.\n\n")
+            handle.write("The artifact lists every source, method and remaining reason. No article text is exposed in the report.\n\n")
+            for outcome, count in sorted(unresolved_outcomes.items()):
+                handle.write(f"- {outcome}: {count}\n")
+    if counts.get("db_error"):
+        return 1
     return 0
 
 if __name__ == "__main__":

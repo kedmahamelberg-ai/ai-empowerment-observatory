@@ -1,0 +1,81 @@
+name: Recover Missing Article Bodies and Refresh Observatory
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_id:
+        description: 'Published week to repair; leave blank for the current edition'
+        type: string
+        default: ''
+        required: false
+  schedule:
+    # Catch late-available bodies after Monday, then retry technical failures.
+    - cron: '37 3 * * 2,3,5'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  # Serialize the entire repair with weekly releases, including publication.
+  group: aieo-weekly-pipeline
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      release_id: ${{ steps.release.outputs.release_id }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Pin this repair to the published edition
+        id: release
+        env:
+          REQUESTED_RELEASE: ${{ inputs.release_id }}
+        run: |
+          python - <<'PY'
+          import json, os, re
+          current = json.load(open('data/releases/current.json'))['release_id']
+          requested = os.environ.get('REQUESTED_RELEASE') or current
+          if not re.fullmatch(r'\d{4}-W\d{2}', requested) or requested != current:
+              raise SystemExit('This workflow repairs the current published edition. Use its release ID or leave the field blank.')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as handle:
+              handle.write(f'release_id={requested}\n')
+          print(f'Repairing article bodies for {requested}. Existing bodies and source IDs are preserved.')
+          PY
+
+  recover_bodies:
+    needs: plan
+    uses: ./.github/workflows/enrich-new-brief-article-bodies.yml
+    with:
+      scope: release
+      release_id: ${{ needs.plan.outputs.release_id }}
+      # Manual recovery rechecks all failures; scheduled follow-ups use cooldowns.
+      retry_mode: ${{ github.event_name == 'workflow_dispatch' && 'all' || 'retryable' }}
+    secrets: inherit
+
+  refresh_readings:
+    needs: [plan, recover_bodies]
+    uses: ./.github/workflows/classify-current-symbiosis.yml
+    with:
+      lens: both
+      replace: false
+      release_id: ${{ needs.plan.outputs.release_id }}
+    secrets: inherit
+
+  period_summaries:
+    needs: refresh_readings
+    uses: ./.github/workflows/build-period-summaries.yml
+    secrets: inherit
+
+  publish:
+    needs: period_summaries
+    uses: ./.github/workflows/publish-observatory-release.yml
+    secrets: inherit

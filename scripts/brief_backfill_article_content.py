@@ -6,7 +6,15 @@ import json
 import os
 import re
 import time
+import ipaddress
+import signal
+import socket
+import subprocess
+import sys
+from functools import lru_cache
+from pathlib import Path
 from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from typing import Any
 from urllib.parse import urljoin, urlsplit
 from urllib.robotparser import RobotFileParser
@@ -30,13 +38,28 @@ ROBOTS_TIMEOUT = (5, 10)
 TDM_TIMEOUT = (5, 10)
 ARTICLE_TIMEOUT = (10, 30)
 from source_evidence_quality import assess_body
+import article_recovery_support as recovery
 MIN_WORDS = MIN_FULL_BODY_EVIDENCE_UNITS
 FETCH_RETRY_ATTEMPTS = 3
-MAX_ALTERNATE_URLS = 3
+MAX_ALTERNATE_URLS = 6
 MAX_REDIRECTS = 4
-RECOVERY_STRATEGY_VERSION = "safe_public_recovery_v4"
+RECOVERY_STRATEGY_VERSION = "publisher_body_recovery_v5_2026_09_08"
+MAX_RESPONSE_BYTES = 12_000_000
+_POLICY_CACHE = {}
 TRANSIENT_STATUS_CODES = {408, 425, 429, 500, 502, 503, 504}
 REDIRECT_STATUS_CODES = {301, 302, 303, 307, 308}
+
+
+@lru_cache(maxsize=1024)
+def public_url(url):
+    try:
+        p = urlsplit(url)
+        if p.scheme not in {"https", "http"} or not p.hostname or p.username or p.password or p.port not in {None, 80, 443}:
+            return False
+        addresses = socket.getaddrinfo(p.hostname, p.port or (443 if p.scheme == "https" else 80), type=socket.SOCK_STREAM)
+        return bool(addresses) and all(ipaddress.ip_address(row[4][0]).is_global for row in addresses)
+    except (ValueError, OSError):
+        return False
 
 
 def _request_headers(*, accept: str) -> dict[str, str]:
@@ -60,8 +83,13 @@ def retry_delay_seconds(response: requests.Response | None, attempt: int) -> flo
     if response is not None:
         retry_after = str(response.headers.get("Retry-After") or "").strip()
     try:
-        return max(0.0, min(8.0, float(retry_after)))
+        return max(0.0, float(retry_after))
     except (TypeError, ValueError):
+        if retry_after:
+            try:
+                return max(0.0, (parsedate_to_datetime(retry_after) - datetime.now(timezone.utc)).total_seconds())
+            except (TypeError, ValueError):
+                pass
         return min(4.0, 0.8 * (2 ** max(0, attempt - 1)))
 
 
@@ -79,17 +107,19 @@ def decode_article_html(response: requests.Response) -> str:
 
     candidates: list[str] = []
     content_type = str(response.headers.get("content-type") or "")
-    header_match = re.search(r"charset\\s*=\\s*['\"]?([^;\\s'\"]+)", content_type, re.I)
+    header_match = re.search(r"charset\s*=\s*['\"]?([^;\s'\"]+)", content_type, re.I)
     if header_match:
         candidates.append(header_match.group(1))
 
     head = raw[:8192].decode("ascii", errors="ignore")
-    meta_match = re.search(r"<meta[^>]+charset\\s*=\\s*['\"]?([^\\s'\">/]+)", head, re.I)
+    meta_match = re.search(r"<meta[^>]+charset\s*=\s*['\"]?([^\s'\">/]+)", head, re.I)
     if not meta_match:
-        meta_match = re.search(r"charset\\s*=\\s*['\"]?([^;\\s'\">]+)", head, re.I)
+        meta_match = re.search(r"charset\s*=\s*['\"]?([^;\s'\">]+)", head, re.I)
     if meta_match:
         candidates.append(meta_match.group(1))
 
+    # A valid UTF-8 byte stream is stronger than a statistical charset guess.
+    candidates.append("utf-8-sig")
     apparent = str(getattr(response, "apparent_encoding", "") or "").strip()
     if apparent:
         candidates.append(apparent)
@@ -118,6 +148,7 @@ def public_get(
     accept: str,
     max_attempts: int = FETCH_RETRY_ATTEMPTS,
     allow_redirects: bool = False,
+    _redirect_hops: int = 0,
 ) -> tuple[requests.Response | None, list[dict[str, Any]], dict[str, str] | None]:
     """Fetch a public URL with bounded retries for transient failures only.
 
@@ -125,6 +156,12 @@ def public_get(
     publisher's explicit access decision. It is solely for ordinary temporary
     transport failures and the HTTP statuses publishers label as retryable.
     """
+    if not public_url(url):
+        return None, [], {"error_class": "InvalidPublicURL", "error_message": "URL is not a public HTTP(S) resource"}
+    is_policy = urlsplit(url).path in {"/robots.txt", "/.well-known/tdmrep.json"}
+    cached = _POLICY_CACHE.get(url) if is_policy else None
+    if cached and time.monotonic() - cached[0] < 3600:
+        return cached[1], [{"cached": True, "http_status": cached[1].status_code, "elapsed_ms": 0}], None
     history: list[dict[str, Any]] = []
     last_error: dict[str, str] | None = None
     for attempt in range(1, max(1, max_attempts) + 1):
@@ -135,8 +172,21 @@ def public_get(
                 url,
                 headers=_request_headers(accept=accept),
                 timeout=timeout,
-                allow_redirects=allow_redirects,
+                allow_redirects=False,
+                stream=True,
             )
+            limit = 512_000 if is_policy else MAX_RESPONSE_BYTES
+            chunks, size = [], 0
+            try:
+                for chunk in response.iter_content(65536):
+                    size += len(chunk)
+                    if size > limit:
+                        return None, history, {"error_class": "ResponseSizeLimit", "error_message": f"Response exceeded {limit} bytes"}
+                    chunks.append(chunk)
+                response._content = b"".join(chunks)
+                response._content_consumed = True
+            finally:
+                response.close()
             elapsed_ms = round((time.monotonic() - started) * 1000)
             history.append(
                 {
@@ -146,9 +196,22 @@ def public_get(
                     "final_url": str(response.url or url),
                 }
             )
+            if allow_redirects and response.status_code in REDIRECT_STATUS_CODES:
+                target = urljoin(url, response.headers.get("location", ""))
+                if _redirect_hops >= MAX_REDIRECTS or target == url:
+                    return response, history, None
+                redirected, extra, error = public_get(target, timeout=timeout, accept=accept,
+                    max_attempts=max_attempts, allow_redirects=True, _redirect_hops=_redirect_hops+1)
+                return redirected, history + extra, error
+            if is_policy and response.status_code in {200, 404, 410}:
+                _POLICY_CACHE[url] = (time.monotonic(), response)
             if response.status_code not in TRANSIENT_STATUS_CODES or attempt >= max_attempts:
                 return response, history, None
-            time.sleep(retry_delay_seconds(response, attempt))
+            delay = retry_delay_seconds(response, attempt)
+            if delay > 8:
+                # Defer this source to a later run instead of ignoring Retry-After.
+                return response, history, None
+            time.sleep(delay)
         except requests.RequestException as exc:
             elapsed_ms = round((time.monotonic() - started) * 1000)
             last_error = {
@@ -291,37 +354,13 @@ def html_tdm_signal(response: requests.Response, html: str) -> tuple[str, str | 
         policy = str(pnode.get("content")).strip()
     return reservation or "unset", policy
 
-def detect_paywall(html: str) -> bool:
-    lower = html.casefold()
-    markers = [
-        '"isaccessibleforfree":false',
-        '"isaccessibleforfree": false',
-        'meteredcontent',
-        'subscriptionrequired',
-        'subscribe to continue',
-        'sign in to continue',
-        'already a subscriber',
-    ]
-    return any(m in lower for m in markers)
+def detect_paywall(html: str, url: str = "") -> bool:
+    return recovery.paywall(html, url)
 
 
 def detect_access_challenge(html: str) -> bool:
-    """Recognize a challenge page so the audit explains the real blocker.
+    return recovery.access_challenge(html)
 
-    The collector does not attempt to solve a CAPTCHA or evade a bot-control
-    service.  Naming the response prevents repeated retries from being
-    mistaken for an extraction failure.
-    """
-    lower = html.casefold()
-    markers = [
-        "cf-chl-",
-        "challenge-platform",
-        "just a moment...",
-        "verify you are human",
-        "captcha",
-        "access denied by security policy",
-    ]
-    return any(marker in lower for marker in markers)
 
 def word_count(text: str) -> int:
     """Backwards-compatible name for the shared multilingual body measure."""
@@ -482,29 +521,39 @@ def extraction_quality(text: str, method: str) -> float:
         score += 0.05
     return round(min(score, 1.0), 3)
 
-def choose_best_extraction(html: str):
-    attempts = []
-    for method, fn in [
-        ("trafilatura_precision", lambda: extract_trafilatura(html, True)),
-        ("jsonld_articleBody", lambda: extract_jsonld_article_body(html)),
-        ("embedded_json_article_body", lambda: extract_embedded_json_article_body(html)),
-        ("trafilatura_recall", lambda: extract_trafilatura(html, False)),
-        ("semantic_html", lambda: extract_semantic_article(html)),
-    ]:
+def choose_best_extraction(html: str, url: str = ""):
+    candidates = list(recovery.embedded_bodies(html, url))
+    soup = BeautifulSoup(html, "html.parser")
+    for node in soup.select(recovery.ARTICLE_SELECTORS):
+        # Skip broad containers of unrelated article cards.
+        if len(node.select("article")) <= 1:
+            candidates.append(("semantic_html", recovery.html_text(str(node))))
+    for precision in (True, False):
         try:
-            text = fn()
+            text = trafilatura.extract(html, url=url or None, include_comments=False,
+                include_tables=True, favor_precision=precision, favor_recall=not precision) or ""
+            candidates.append(("trafilatura_precision" if precision else "trafilatura_recall", clean_text(text)))
         except Exception:
-            text = ""
-        n = word_count(text)
-        if n >= MIN_WORDS:
-            q = extraction_quality(text, method)
-            attempts.append((q, n, method, text))
-    if not attempts:
+            continue
+    accepted = []
+    for method, text in candidates:
+        if word_count(text) < MIN_WORDS or not assess_body({"body_text": text})["usable_complete_body"]:
+            continue
+        # Prefer article-specific structure; never pick generic app JSON or page text.
+        score = extraction_quality(text, method)
+        accepted.append((score, min(word_count(text), 10000), method, text))
+    if not accepted:
         return {"text": "", "method": None, "word_count": 0, "quality": 0.0}
-    # Quality first, then length. Prevent giant boilerplate from winning just by length.
-    attempts.sort(reverse=True, key=lambda x: (x[0], min(x[1], 2500)))
-    q, n, method, text = attempts[0]
-    return {"text": text, "method": method, "word_count": n, "quality": q}
+    accepted.sort(reverse=True)
+    _, _, method, text = accepted[0]
+    # If a verified article container extends the selected text, preserve its ending.
+    # This is containment, not concatenation of different candidates/stories.
+    compact = normalize_space(text)
+    for _, _, other_method, other in accepted:
+        if other_method in {"semantic_html", "jsonld_articleBody", "embedded_json_article_body", "embedded_json_article_blocks"}:
+            if compact in normalize_space(other) and len(other) > len(text):
+                method, text, compact = other_method, other, normalize_space(other)
+    return {"text": text, "method": method, "word_count": word_count(text), "quality": extraction_quality(text, method)}
 
 
 def same_origin_url(candidate: str, base_url: str) -> bool:
@@ -521,59 +570,11 @@ def same_origin_url(candidate: str, base_url: str) -> bool:
 
 
 def same_publisher_site(candidate: str, base_url: str) -> bool:
-    """Allow an explicit publisher link to a normal related subdomain.
-
-    This permits ordinary `www` and `amp` variants while still rejecting a
-    third-party mirror.  Every selected URL receives its own robots and TDM
-    check before its body can be collected.
-    """
-    try:
-        base_host = (urlsplit(base_url).hostname or "").casefold()
-        target = urlsplit(candidate)
-        target_host = (target.hostname or "").casefold()
-    except ValueError:
-        return False
-    if target.scheme not in {"http", "https"} or not base_host or not target_host:
-        return False
-    if base_host.startswith("www."):
-        base_host = base_host[4:]
-    if target_host.startswith("www."):
-        target_host = target_host[4:]
-    return (
-        target_host == base_host
-        or target_host.endswith("." + base_host)
-        or base_host.endswith("." + target_host)
-    )
+    return recovery.same_publisher(candidate, base_url)
 
 
 def public_alternate_urls(html: str, base_url: str) -> list[dict[str, str]]:
-    """Use only same-origin alternates the publisher explicitly links to."""
-    soup = BeautifulSoup(html, "html.parser")
-    found: list[dict[str, str]] = []
-    seen = {base_url}
-    for node in soup.find_all("link", href=True):
-        rel = {str(value).casefold() for value in (node.get("rel") or [])}
-        link_type = str(node.get("type") or "").casefold()
-        media = str(node.get("media") or "").casefold()
-        kind = ""
-        if "canonical" in rel:
-            kind = "publisher_linked_canonical"
-        elif "amphtml" in rel or "application/amp+html" in link_type:
-            kind = "publisher_linked_amp"
-        elif "alternate" in rel and "amp" in link_type:
-            kind = "publisher_linked_amp"
-        elif "print" in media:
-            kind = "publisher_linked_print"
-        if not kind:
-            continue
-        candidate = urljoin(base_url, str(node.get("href") or "").strip())
-        if not candidate or candidate in seen or not same_publisher_site(candidate, base_url):
-            continue
-        seen.add(candidate)
-        found.append({"url": candidate, "kind": kind})
-        if len(found) >= MAX_ALTERNATE_URLS:
-            break
-    return found
+    return recovery.alternate_links(html, base_url)
 
 
 def trace_item(result: dict[str, Any], *, requested_url: str, kind: str) -> dict[str, Any]:
@@ -600,6 +601,7 @@ def fetch_public_candidate(
     *,
     kind: str,
     redirect_hops: int = 0,
+    identity_url: str = "",
 ) -> dict[str, Any]:
     """Collect one public candidate only after every access check succeeds.
 
@@ -607,6 +609,8 @@ def fetch_public_candidate(
     target URL gets its own robots and TDM check before it is requested, so a
     redirect cannot turn a permitted source into an unchecked collection.
     """
+    if not public_url(url):
+        return {"outcome": "http_error", "error_class": "InvalidPublicURL", "candidate_kind": kind}
     robots, robots_url, robots_detail = robots_allowed(url)
     if robots is False:
         return {
@@ -684,6 +688,7 @@ def fetch_public_candidate(
         "response_bytes": len(response.content),
         "final_url": str(response.url or url),
         "_html": html,
+        "_headers": dict(response.headers),
     }
     if response.status_code in REDIRECT_STATUS_CODES:
         location = str(response.headers.get("location") or "").strip()
@@ -714,6 +719,7 @@ def fetch_public_candidate(
             target,
             kind=f"{kind}_redirect",
             redirect_hops=redirect_hops + 1,
+            identity_url=identity_url,
         )
         redirected["redirect_chain"] = [
             redirect,
@@ -730,92 +736,120 @@ def fetch_public_candidate(
     if response.status_code != 200:
         return {**result, "outcome": "http_error"}
     if not html:
-        return {**result, "outcome": "non_article_media"}
+        return extract_non_html(response, result, identity_url or url)
+    return extract_html_result(html, result)
+
+
+def extract_html_result(html, result):
+    title = recovery.page_title(html)
+    if re.match(r"^(?:404(?:\s*[-:|]\s*.*)?|page not found(?:\s*[-|].*)?|not found|page introuvable(?:\s*[-|].*)?|页面不存在|页面未找到)\s*$", title, re.I):
+        return {**result, "outcome": "source_unavailable", "error_class": "PublisherSoft404"}
     if detect_access_challenge(html):
         return {**result, "outcome": "blocked_bot_challenge"}
-    if detect_paywall(html):
+    if detect_paywall(html, result.get("final_url", "")):
         return {**result, "outcome": "blocked_paywall_or_login", "paywall_detected": True}
-    picked = choose_best_extraction(html)
+    if recovery.abstract_only(html):
+        return {**result, "outcome": "abstract_only"}
+    picked = choose_best_extraction(html, result.get("final_url", ""))
     if picked["word_count"] < MIN_WORDS:
         return {**result, "outcome": "too_little_extractable_text", "word_count": picked["word_count"]}
-    quality = assess_body({"body_text": picked["text"]})
-    if not quality["usable_complete_body"]:
-        preview = "subscriber_preview_or_access_gate" in quality["flags"]
-        return {**result, "outcome": "blocked_paywall_or_login" if preview else "too_little_extractable_text",
-                "paywall_detected": preview, "word_count": picked["word_count"],
-                "error_class": "SourceEvidenceQuality", "error_message": ", ".join(quality["flags"])}
-    soup = BeautifulSoup(html, "html.parser")
-    title = normalize_space(soup.title.get_text(" ", strip=True)) if soup.title else ""
-    return {
-        **result,
-        "outcome": "stored",
-        "paywall_detected": False,
-        "body_text": picked["text"],
-        "word_count": picked["word_count"],
-        "extraction_method": picked["method"],
-        "extraction_quality": picked["quality"],
-        "title_extracted": title,
-    }
+    return {**result, "outcome": "stored", "paywall_detected": False,
+        "body_text": picked["text"], "word_count": picked["word_count"],
+        "extraction_method": picked["method"], "extraction_quality": picked["quality"],
+        "title_extracted": title}
+
+
+def extract_non_html(response, result, identity_url):
+    from article_recovery_formats import publisher_content, pdf_content
+    mime = result.get("content_type", "").lower()
+    kind = result.get("candidate_kind", "")
+    if "pdf" in mime and (kind.startswith("publisher_linked_pdf") or urlsplit(identity_url).path.lower().endswith(".pdf")):
+        try:
+            picked = pdf_content(response.content)
+        except Exception as exc:
+            return {**result, "outcome": "pdf_needs_review", "error_class": type(exc).__name__, "error_message": compact_error(exc)}
+        if word_count(picked["text"]) >= MIN_WORDS and assess_body({"body_text": picked["text"]})["usable_complete_body"]:
+            return {**result, "outcome": "stored", "body_text": picked["text"], "word_count": word_count(picked["text"]), "extraction_method": picked["method"], "extraction_quality": .8, "pdf_pages": picked["pages"], "identity_url": identity_url}
+    if kind.startswith(("publisher_linked_cms", "publisher_linked_feed")):
+        picked = publisher_content(response.content, mime, identity_url)
+        if picked and not detect_paywall(picked["html"]) and not detect_access_challenge(picked["html"]):
+            text = picked["text"]
+            # Full feeds must not end with a continuation/teaser link.
+            teaser = re.search(r"(?:read (?:more|the full (?:article|story))|continue reading|lire la suite)\W*$", text, re.I)
+            if not teaser and word_count(text) >= MIN_WORDS and assess_body({"body_text": text})["usable_complete_body"]:
+                return {**result, "outcome": "stored", "body_text": text, "word_count": word_count(text), "extraction_method": picked["method"], "extraction_quality": .85, "title_extracted": picked["title"], "identity_url": identity_url}
+        return {**result, "outcome": "no_matching_full_content"}
+    return {**result, "outcome": "non_article_media"}
 
 
 def without_private_html(result: dict[str, Any]) -> dict[str, Any]:
     output = dict(result)
-    output.pop("_html", None)
+    output = {key: value for key, value in output.items() if not key.startswith("_")}
     return output
 
 
-def fetch_and_extract(url: str):
-    """Try a public article page, then its explicitly linked public variants.
+def render_fallback(primary):
+    if os.environ.get("AIEO_RENDER_ARTICLES", "0").lower() not in {"1", "true"}:
+        return {"outcome": "browser_not_enabled"}
+    request = {"url": primary["final_url"], "html": primary["_html"], "headers": primary.get("_headers", {})}
+    proc = subprocess.Popen([sys.executable, str(Path(__file__).with_name("render_public_article.py"))],
+        stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, start_new_session=True)
+    try:
+        stdout, _ = proc.communicate(json.dumps(request), timeout=65)
+        data = json.loads(stdout)
+        if data.get("error_class"):
+            return {"outcome": "browser_error", **data}
+        if data.get("blocked_requests"):
+            return {"outcome": "browser_data_unavailable", "error_message": ", ".join(data["blocked_requests"])}
+        if not data.get("html") or data.get("final_url") != primary["final_url"]:
+            return {"outcome": "browser_identity_mismatch"}
+        rendered = {**primary, "_html": data["html"], "candidate_kind": "browser_rendered_public_page"}
+        result = extract_html_result(data["html"], rendered)
+        if result.get("outcome") == "stored":
+            result["extraction_method"] = "browser_" + result["extraction_method"]
+        return result
+    except subprocess.TimeoutExpired:
+        return {"outcome": "browser_timeout"}
+    except (ValueError, OSError) as exc:
+        return {"outcome": "browser_error", "error_class": type(exc).__name__, "error_message": compact_error(exc)}
+    finally:
+        if proc.poll() is None:
+            os.killpg(proc.pid, signal.SIGKILL)
+        proc.communicate()
 
-    The recovery is deliberately limited: every candidate must be same-origin,
-    publicly linked by the publisher, allowed by robots.txt, and free of an
-    applicable TDM reservation. We do not bypass logins, paywalls, challenges,
-    publisher blocks, or access controls.
-    """
+
+def fetch_and_extract(url: str, expected_title: str = ""):
+    """Try accessible publisher representations of the same original article."""
     primary = fetch_public_candidate(url, kind="canonical_public_page")
     trace = [trace_item(primary, requested_url=url, kind="canonical_public_page")]
-    primary_html = str(primary.get("_html") or "")
-
-    # A paywall/access refusal is final. An AMP or print variant may be a
-    # different public representation, but using it after a paywall would be a
-    # circumvention attempt rather than technical recovery.
-    if primary.get("outcome") in {
-        "stored",
-        "blocked_paywall_or_login",
-        "blocked_robots",
-        "blocked_tdm_reserved",
-        "blocked_access_control",
-        "blocked_bot_challenge",
-        "robots_unavailable",
-        "tdm_unavailable",
-    }:
-        result = without_private_html(primary)
-        result["recovery_strategy_version"] = RECOVERY_STRATEGY_VERSION
-        result["recovery_trace"] = trace
-        return result
-
-    if primary.get("outcome") != "too_little_extractable_text" or not primary_html:
-        result = without_private_html(primary)
-        result["recovery_strategy_version"] = RECOVERY_STRATEGY_VERSION
-        result["recovery_trace"] = trace
-        return result
-
-    for alternate in public_alternate_urls(primary_html, str(primary.get("final_url") or url)):
-        candidate = fetch_public_candidate(alternate["url"], kind=alternate["kind"])
+    def finish(result):
+        return {**without_private_html(result), "recovery_strategy_version": RECOVERY_STRATEGY_VERSION, "recovery_trace": trace}
+    if primary.get("outcome") == "stored" and expected_title and primary.get("final_url") and recovery.url_identity(primary["final_url"]) != recovery.url_identity(url):
+        if not recovery.same_article(primary.get("_html", ""), primary["final_url"], url, expected_title):
+            return finish({**primary, "outcome": "article_identity_mismatch", "body_text": ""})
+    if primary.get("outcome") not in {"too_little_extractable_text", "abstract_only"} or not primary.get("_html"):
+        return finish(primary)
+    original = str(primary.get("final_url") or url)
+    title = recovery.page_title(primary["_html"]) or expected_title
+    # These links are discovered on an accessible original page, never a gate.
+    for alternate in public_alternate_urls(primary["_html"], original):
+        candidate = fetch_public_candidate(alternate["url"], kind=alternate["kind"], identity_url=original)
+        if candidate.get("outcome") == "stored":
+            verified = candidate.get("identity_url") == original or recovery.same_article(candidate.get("_html", ""), candidate.get("final_url", alternate["url"]), original, title)
+            if not verified:
+                candidate = {**candidate, "outcome": "article_identity_mismatch"}
         trace.append(trace_item(candidate, requested_url=alternate["url"], kind=alternate["kind"]))
         if candidate.get("outcome") == "stored":
-            result = without_private_html(candidate)
-            result["recovery_strategy_version"] = RECOVERY_STRATEGY_VERSION
-            result["recovery_trace"] = trace
-            result["recovered_from_alternate"] = True
-            return result
+            candidate["recovered_from_alternate"] = True
+            return finish(candidate)
+    rendered = render_fallback(primary)
+    trace.append(trace_item(rendered, requested_url=original, kind="browser_rendered_public_page"))
+    if rendered.get("outcome") == "stored":
+        return finish(rendered)
+    if rendered.get("outcome") in {"blocked_paywall_or_login", "blocked_bot_challenge", "browser_error", "browser_timeout", "browser_data_unavailable"}:
+        return finish({**primary, **without_private_html(rendered)})
+    return finish(primary)
 
-    # Keep the canonical result as the decisive reason, while retaining every
-    # attempted public alternate in the audit trace.
-    result = without_private_html(primary)
-    result["recovery_strategy_version"] = RECOVERY_STRATEGY_VERSION
-    result["recovery_trace"] = trace
-    return result
 
 def page_rows(client, page_size=200):
     start = 0
@@ -841,7 +875,7 @@ def insert_attempt(client, article_id, url, result, workflow_run_id):
     recovery_trace = result.get("recovery_trace")
     if not isinstance(recovery_trace, list):
         recovery_trace = []
-    safe_trace = [item for item in recovery_trace if isinstance(item, dict)][: MAX_ALTERNATE_URLS + 1]
+    safe_trace = [item for item in recovery_trace if isinstance(item, dict)][: MAX_ALTERNATE_URLS + 2]
     tdm_reserved = str((result.get("tdm") or {}).get("reservation") or "").strip() == "1"
     client.table("brief_article_fetch_attempts").insert({
         "article_id":article_id,
@@ -859,6 +893,7 @@ def insert_attempt(client, article_id, url, result, workflow_run_id):
         "response_bytes":result.get("response_bytes"),
         "elapsed_ms":result.get("elapsed_ms"),
         "metadata":{
+            "recovery_session": result.get("recovery_session"),
             "recovery_strategy_version": result.get("recovery_strategy_version") or RECOVERY_STRATEGY_VERSION,
             "candidate_kind": result.get("candidate_kind"),
             "robots_url":result.get("robots_url"),
@@ -886,10 +921,11 @@ def store_snapshot(client, row, url, result):
         raise ValueError("Rejected source body: " + ", ".join(quality["flags"]))
     digest = sha256_text(text)
 
-    client.table("brief_article_content_snapshots").update({"is_current":False}).eq(
-        "article_id", article_id
-    ).execute()
-
+    previous = client.table("brief_article_content_snapshots").select("text_sha256").eq("article_id", article_id).eq("is_current", True).execute().data or []
+    if any(item.get("text_sha256") == digest for item in previous):
+        return
+    # Stage new bytes before clearing the old current pointer. A failed insert
+    # must not remove a previously available source body.
     client.table("brief_article_content_snapshots").upsert({
         "article_id":article_id,
         "source_url":result.get("final_url") or url,
@@ -909,8 +945,15 @@ def store_snapshot(client, row, url, result):
         "tdm_reservation":str((result.get("tdm") or {}).get("reservation") or "").strip() == "1",
         "tdm_policy_url":(result.get("tdm") or {}).get("policy"),
         "paywall_detected":False,
-        "is_current":True,
+        "is_current":False,
     }, on_conflict="article_id,text_sha256").execute()
+    try:
+        client.table("brief_article_content_snapshots").update({"is_current": False}).eq("article_id", article_id).execute()
+        client.table("brief_article_content_snapshots").update({"is_current": True}).eq("article_id", article_id).eq("text_sha256", digest).execute()
+    except Exception:
+        for item in previous:
+            client.table("brief_article_content_snapshots").update({"is_current": True}).eq("article_id", article_id).eq("text_sha256", item["text_sha256"]).execute()
+        raise
 
 def main():
     parser = argparse.ArgumentParser()

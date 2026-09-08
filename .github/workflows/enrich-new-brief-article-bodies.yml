@@ -2,6 +2,9 @@ name: Enrich New AIEO Brief Article Bodies
 
 on:
   workflow_call:
+    outputs:
+      new_bodies_saved:
+        value: ${{ jobs.enrich.outputs.new_bodies_saved }}
     inputs:
       scope:
         required: false
@@ -53,7 +56,9 @@ jobs:
       github.event_name != 'workflow_run' ||
       github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 145
+    outputs:
+      new_bodies_saved: ${{ steps.finish.outputs.new_bodies_saved }}
 
     steps:
       - uses: actions/checkout@v7
@@ -67,11 +72,12 @@ jobs:
 
       - name: Install source extraction dependencies
         run: |
-          python -m pip install \
-            "supabase>=2,<3" \
-            "requests>=2.32,<3" \
-            "beautifulsoup4>=4.12,<5" \
-            "trafilatura>=2,<3"
+          python -m pip install -r requirements-extraction.txt
+          python -m playwright install --with-deps chromium
+      - name: Check article recovery before writing any snapshots
+        env:
+          AIEO_TEST_BROWSER: "1"
+        run: python -m unittest discover -s tests -p 'test_article_body_recovery.py' -v
 
       - name: Validate private body-evidence contract
         env:
@@ -79,38 +85,58 @@ jobs:
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
         run: python scripts/validate_body_evidence_contract.py
 
-      - name: Enrich article bodies with bounded retries
+      - name: Recover every source in bounded resumable passes
+        id: recover
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          AIEO_RENDER_ARTICLES: "1"
+          RECOVERY_SCOPE: ${{ inputs.scope || 'latest_collection' }}
+          RECOVERY_RELEASE: ${{ inputs.release_id || '' }}
+          RECOVERY_RETRY: ${{ inputs.retry_mode || 'retryable' }}
+          RECOVERY_SESSION: ${{ github.run_id }}-${{ github.run_attempt }}
         run: |
           set -euo pipefail
-          scope="${{ inputs.scope || 'latest_collection' }}"
-          release_id="${{ inputs.release_id || '' }}"
-          retry_mode="${{ inputs.retry_mode || 'retryable' }}"
-          args=(
-            --limit 0
-            --scope "$scope"
-            --retry-mode "$retry_mode"
-            --max-runtime-minutes 40
-            --per-source-timeout-seconds 75
-            --report-output review/body-evidence/latest-collection-report.json
-          )
-          if [[ "$scope" == "release" ]]; then
-            test -n "$release_id" || { echo "release_id is required for release scope"; exit 1; }
-            args+=(--release-id "$release_id")
+          mkdir -p review/body-evidence
+          args=(--limit 0 --scope "$RECOVERY_SCOPE" --retry-mode "$RECOVERY_RETRY"
+            --max-runtime-minutes 40 --per-source-timeout-seconds 150
+            --session-id "$RECOVERY_SESSION")
+          if [[ "$RECOVERY_SCOPE" == release ]]; then
+            test -n "$RECOVERY_RELEASE" || { echo 'release_id is required'; exit 1; }
+            args+=(--release-id "$RECOVERY_RELEASE")
           fi
-          python scripts/brief_backfill_article_content_resumable.py "${args[@]}"
+          for pass in 1 2 3; do
+            report="review/body-evidence/pass-$pass.json"
+            python scripts/brief_backfill_article_content_resumable.py "${args[@]}" --report-output "$report"
+            remaining="$(python -c 'import json,sys; print(json.load(open(sys.argv[1]))["remaining_unattempted"])' "$report")"
+            [[ "$remaining" != 0 ]] || break
+          done
+          if [[ "$remaining" != 0 ]]; then
+            echo '::error::Some sources still await their first attempt. Saved bodies are safe. Run this recovery again to continue.'
+            exit 1
+          fi
+      - name: Summarize saved bodies
+        id: finish
+        if: always()
+        run: |
+          python - <<'PY'
+          import glob, json, os
+          reports = [json.load(open(path)) for path in sorted(glob.glob('review/body-evidence/pass-*.json'))]
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as handle:
+              handle.write(f"new_bodies_saved={sum(r['new_bodies_saved'] for r in reports)}\n")
+          PY
 
       - name: Audit every stored full body in the selected scope
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          RECOVERY_SCOPE: ${{ inputs.scope || 'latest_collection' }}
+          RECOVERY_RELEASE: ${{ inputs.release_id || '' }}
         shell: bash
         run: |
           set -euo pipefail
-          scope="${{ inputs.scope || 'latest_collection' }}"
-          release_id="${{ inputs.release_id || '' }}"
+          scope="$RECOVERY_SCOPE"
+          release_id="$RECOVERY_RELEASE"
           args=(--scope "$scope" --limit 0)
           if [[ "$scope" == "release" ]]; then
             test -n "$release_id" || { echo "release_id is required for release scope"; exit 1; }
@@ -119,9 +145,10 @@ jobs:
           python scripts/audit_brief_article_content.py "${args[@]}"
 
       - name: Upload body-coverage report
+        if: always()
         uses: actions/upload-artifact@v7
         with:
           name: body-evidence-report-${{ github.run_id }}
-          path: review/body-evidence/latest-collection-report.json
+          path: review/body-evidence/pass-*
           if-no-files-found: error
           retention-days: 90
