@@ -2,10 +2,10 @@
   "schema_version": "aieo_symbiosis_public_v2.0",
   "release_id": "2026-W36",
   "release_type": "weekly_relationship_lens",
-  "revision": 3,
+  "revision": 4,
   "period_start": "2026-08-31",
   "period_end": "2026-09-06",
-  "generated_at": "2026-09-08T09:33:16.121786Z",
+  "generated_at": "2026-09-08T13:34:08.939145Z",
   "codebook_version": "aieo_news_symbiosis_v0.1",
   "source_release_sha256": "badf075e19afbbded1aaccb369f089c3beae8a0207c0bd7070b4e76472b53198",
   "public_status": "current_evidence_reading",
@@ -60,57 +60,57 @@
     "display_basis": "current_evidence_reading_with_reviewed_corrections",
     "display_classified_units": 132,
     "display_configuration_counts": {
-      "mutualism": 11,
+      "mutualism": 12,
       "ai_benefiting_parasitism": 0,
       "human_benefiting_parasitism": 0,
       "competition": 1,
       "human_enabling_only": 3,
-      "human_constraining_only": 0,
+      "human_constraining_only": 1,
       "ai_enabling_only": 0,
       "ai_constraining_only": 0,
-      "no_clear_relational_signal": 58,
+      "no_clear_relational_signal": 65,
       "ambiguous_relational_signal": 3,
-      "insufficient_evidence": 56
+      "insufficient_evidence": 47
     },
-    "display_complete_configuration_count": 12,
-    "display_partial_signal_count": 3,
-    "display_no_clear_relational_signal_count": 58,
+    "display_complete_configuration_count": 13,
+    "display_partial_signal_count": 4,
+    "display_no_clear_relational_signal_count": 65,
     "display_ambiguous_relational_signal_count": 3,
-    "display_insufficient_evidence_count": 56,
+    "display_insufficient_evidence_count": 47,
     "display_core_four_distribution": {
-      "mutualism": 0.916667,
+      "mutualism": 0.923077,
       "ai_benefiting_parasitism": 0.0,
       "human_benefiting_parasitism": 0.0,
-      "competition": 0.083333
+      "competition": 0.076923
     },
     "denominator_note": "The weekly display reports the source evidence available for the current release. A development is kept separate when the available source evidence is not enough to show a clear people outcome.",
     "human_direction_counts": {
-      "neutral": 58,
-      "unclear": 56,
+      "neutral": 65,
+      "unclear": 47,
       "mixed": 3,
-      "constraining": 1,
-      "enabling": 14
+      "constraining": 2,
+      "enabling": 15
     },
     "ai_direction_counts": {
-      "neutral": 62,
-      "unclear": 56,
+      "neutral": 70,
+      "unclear": 47,
       "mixed": 2,
       "constraining": 1,
-      "enabling": 11
+      "enabling": 12
     },
     "display_human_direction_counts": {
-      "neutral": 58,
-      "unclear": 56,
+      "neutral": 65,
+      "unclear": 47,
       "mixed": 3,
-      "constraining": 1,
-      "enabling": 14
+      "constraining": 2,
+      "enabling": 15
     },
     "display_ai_direction_counts": {
-      "neutral": 62,
-      "unclear": 56,
+      "neutral": 70,
+      "unclear": 47,
       "mixed": 2,
       "constraining": 1,
-      "enabling": 11
+      "enabling": 12
     }
   },
   "people_signals": {
@@ -118,17 +118,17 @@
     "expected_units": 132,
     "classified_units": 132,
     "relationship_pattern_counts": {
-      "mutualism": 13,
+      "mutualism": 14,
       "ai_benefiting_parasitism": 0,
       "human_benefiting_parasitism": 0,
       "competition": 1
     },
     "people_signal_counts": {
-      "people_gaining": 17,
-      "people_losing_ground": 4,
+      "people_gaining": 18,
+      "people_losing_ground": 5,
       "mixed_picture": 3,
-      "not_everyone_benefits": 1,
-      "not_clear_yet": 114
+      "not_everyone_benefits": 2,
+      "not_clear_yet": 112
     },
     "availability": {
       "people_gaining": true,
@@ -140,12 +140,12 @@
     "explicit_multi_label_units": 132,
     "distribution_coded_units": 132,
     "body_coverage_counts": {
-      "complete_written_source": 76,
-      "incomplete_written_source": 56
+      "complete_written_source": 85,
+      "incomplete_written_source": 47
     },
     "not_clear_breakdown": {
-      "not_enough_evidence": 56,
-      "no_directional_people_change": 58
+      "not_enough_evidence": 47,
+      "no_directional_people_change": 65
     },
     "overlap_note": "A development may contain more than one signal, so these counts do not have to add up to the weekly total.",
     "relationship_patterns_assessed": 132
@@ -193,18 +193,18 @@
       "human_benefiting_parasitism": 0,
       "competition": 0,
       "human_enabling_only": 2,
-      "human_constraining_only": 0,
+      "human_constraining_only": 1,
       "ai_enabling_only": 3,
       "ai_constraining_only": 0,
-      "no_clear_relational_signal": 55,
+      "no_clear_relational_signal": 63,
       "ambiguous_relational_signal": 4,
-      "insufficient_evidence": 58
+      "insufficient_evidence": 49
     },
     "display_complete_configuration_count": 16,
-    "display_partial_signal_count": 5,
-    "display_no_clear_relational_signal_count": 55,
+    "display_partial_signal_count": 6,
+    "display_no_clear_relational_signal_count": 63,
     "display_ambiguous_relational_signal_count": 4,
-    "display_insufficient_evidence_count": 58,
+    "display_insufficient_evidence_count": 49,
     "display_core_four_distribution": {
       "ai_benefiting_parasitism": 0.0,
       "competition": 0.0,
@@ -2212,21 +2212,28 @@
     {
       "axes": {
         "ai": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "No AI-side relation is described in the evidence.",
+          "direction": "none"
         },
         "human": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "No human-side relation is described in the evidence.",
+          "direction": "none"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [],
+        "evidence_types": [
+          "source_representation"
+        ],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": false,
-        "unresolved_reason": "complete_written_source_unavailable"
+        "evidence_complete": true,
+        "unresolved_reason": ""
       },
-      "relationship_evidence": {},
+      "relationship_evidence": {
+        "mutualism": "",
+        "competition": "",
+        "ai_benefiting_parasitism": "",
+        "human_benefiting_parasitism": ""
+      },
       "relationship_pattern_status": "assessed",
       "event_id": "23af84b3-78cd-4c90-8504-ef0bb7390004",
       "event_title": "The new mobile app of Paris Match designed with generative AI",
@@ -2244,47 +2251,51 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "insufficient_evidence",
-      "plain_label": "There is not enough source evidence to classify the relationship",
-      "human_experience_type": "unclear",
-      "ai_expressive_role": "unclear",
-      "human_direction": "unclear",
-      "ai_direction": "unclear",
-      "evidence_status": "insufficient",
-      "content_basis": "not_available",
+      "configuration": "no_clear_relational_signal",
+      "plain_label": "No clear human-AI relationship is described",
+      "human_experience_type": "neutral",
+      "ai_expressive_role": "neutral",
+      "human_direction": "neutral",
+      "ai_direction": "neutral",
+      "evidence_status": "sufficient",
+      "content_basis": "full_text",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "no_full_body",
+        "body_coverage": "all_sources",
         "source_quality": {
           "4dbdc266a00d64110b0c9798fae5664f": {
-            "flags": [
-              "no_usable_complete_body"
-            ],
-            "usable_complete_body": false
+            "flags": [],
+            "scope": "written_page",
+            "characters": 1667,
+            "body_sha256": "6cf2670720c5c4e2a2b5f708b1966bed70f0ca59ef1fea555c876771577fc82a",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "source_fingerprints": {
-          "4dbdc266a00d64110b0c9798fae5664f": null
+          "4dbdc266a00d64110b0c9798fae5664f": "6cf2670720c5c4e2a2b5f708b1966bed70f0ca59ef1fea555c876771577fc82a"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 1,
+        "not_available_sources": 0,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": false,
-        "people_evidence": "",
-        "ai_evidence": "",
-        "flags": [
-          "incomplete_written_source"
-        ]
+        "source_reading_complete": true,
+        "people_evidence": "No human-side relation is described in the evidence.",
+        "ai_evidence": "No AI-side relation is described in the evidence.",
+        "flags": []
       },
-      "story_country_iso3s": [],
-      "evidence_summary": "No full article body was available, so the source was not model-classified.",
-      "reasoning": "No full article body was available, so the source was not model-classified.",
+      "story_country_iso3s": [
+        "FRA"
+      ],
+      "evidence_summary": "The article describes the launch of a new mobile app for Paris Match that uses generative AI, but it does not describe any specific human or AI-side relation.",
+      "reasoning": "The article describes the launch of a new mobile app for Paris Match that uses generative AI, but it does not describe any specific human or AI-side relation.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -2298,8 +2309,8 @@
         "not_everyone_benefits": false,
         "not_clear_yet": true
       },
-      "distribution_signal": "not_shown",
-      "public_takeaway": "",
+      "distribution_signal": "broadly_shared",
+      "public_takeaway": "No human-side relation is described in the evidence.",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -3929,21 +3940,28 @@
     {
       "axes": {
         "ai": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "No specific AI benefit or loss is stated in the text.",
+          "direction": "none"
         },
         "human": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "No specific human benefit or loss is stated in the text.",
+          "direction": "none"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [],
+        "evidence_types": [
+          "source_representation"
+        ],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": false,
-        "unresolved_reason": "complete_written_source_unavailable"
+        "evidence_complete": true,
+        "unresolved_reason": ""
       },
-      "relationship_evidence": {},
+      "relationship_evidence": {
+        "mutualism": "",
+        "competition": "",
+        "ai_benefiting_parasitism": "",
+        "human_benefiting_parasitism": ""
+      },
       "relationship_pattern_status": "assessed",
       "event_id": "41be96d7-4ba8-492e-bd0c-d9d9880b96ac",
       "event_title": "Artificial Intelligence and Building Design",
@@ -3961,47 +3979,51 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "insufficient_evidence",
-      "plain_label": "There is not enough source evidence to classify the relationship",
-      "human_experience_type": "unclear",
-      "ai_expressive_role": "unclear",
-      "human_direction": "unclear",
-      "ai_direction": "unclear",
-      "evidence_status": "insufficient",
-      "content_basis": "not_available",
+      "configuration": "no_clear_relational_signal",
+      "plain_label": "No clear human-AI relationship is described",
+      "human_experience_type": "neutral",
+      "ai_expressive_role": "neutral",
+      "human_direction": "neutral",
+      "ai_direction": "neutral",
+      "evidence_status": "sufficient",
+      "content_basis": "full_text",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "no_full_body",
+        "body_coverage": "all_sources",
         "source_quality": {
           "65d57a0d2efd44b0e58736bc640ff0c7": {
-            "flags": [
-              "no_usable_complete_body"
-            ],
-            "usable_complete_body": false
+            "flags": [],
+            "scope": "written_page",
+            "characters": 3410,
+            "body_sha256": "8caafa52b1d8298f3b421b462df9ccbdfa1051d1aca2de1d59012194f3038747",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "source_fingerprints": {
-          "65d57a0d2efd44b0e58736bc640ff0c7": null
+          "65d57a0d2efd44b0e58736bc640ff0c7": "8caafa52b1d8298f3b421b462df9ccbdfa1051d1aca2de1d59012194f3038747"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 1,
+        "not_available_sources": 0,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": false,
-        "people_evidence": "",
-        "ai_evidence": "",
-        "flags": [
-          "incomplete_written_source"
-        ]
+        "source_reading_complete": true,
+        "people_evidence": "No specific human benefit or loss is stated in the text.",
+        "ai_evidence": "No specific AI benefit or loss is stated in the text.",
+        "flags": []
       },
-      "story_country_iso3s": [],
-      "evidence_summary": "No full article body was available, so the source was not model-classified.",
-      "reasoning": "No full article body was available, so the source was not model-classified.",
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "evidence_summary": "The text discusses the integration of AI in building design and senior housing, but does not provide clear directional signals for either humans or AI.",
+      "reasoning": "The text discusses the integration of AI in building design and senior housing, but does not provide clear directional signals for either humans or AI.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -4015,8 +4037,8 @@
         "not_everyone_benefits": false,
         "not_clear_yet": true
       },
-      "distribution_signal": "not_shown",
-      "public_takeaway": "",
+      "distribution_signal": "broadly_shared",
+      "public_takeaway": "No specific human benefit or loss is stated in the text.",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -4982,21 +5004,28 @@
     {
       "axes": {
         "ai": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "No AI-side relation is described in the evidence.",
+          "direction": "none"
         },
         "human": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "No human-side relation is described in the evidence.",
+          "direction": "none"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [],
+        "evidence_types": [
+          "source_representation"
+        ],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": false,
-        "unresolved_reason": "complete_written_source_unavailable"
+        "evidence_complete": true,
+        "unresolved_reason": ""
       },
-      "relationship_evidence": {},
+      "relationship_evidence": {
+        "mutualism": "",
+        "competition": "",
+        "ai_benefiting_parasitism": "",
+        "human_benefiting_parasitism": ""
+      },
       "relationship_pattern_status": "assessed",
       "event_id": "597361eb-15a8-4428-8b37-5158b8d2f7ee",
       "event_title": "The Case of Jean-François Desaulniers | Detecting Artificial Intelligence in the Electoral Campaign in Quebec",
@@ -5014,47 +5043,49 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "insufficient_evidence",
-      "plain_label": "There is not enough source evidence to classify the relationship",
-      "human_experience_type": "unclear",
-      "ai_expressive_role": "unclear",
-      "human_direction": "unclear",
-      "ai_direction": "unclear",
-      "evidence_status": "insufficient",
-      "content_basis": "not_available",
+      "configuration": "no_clear_relational_signal",
+      "plain_label": "No clear human-AI relationship is described",
+      "human_experience_type": "neutral",
+      "ai_expressive_role": "neutral",
+      "human_direction": "neutral",
+      "ai_direction": "neutral",
+      "evidence_status": "sufficient",
+      "content_basis": "full_text",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "no_full_body",
+        "body_coverage": "all_sources",
         "source_quality": {
           "b56e034203d1299c77669907433b81fb": {
-            "flags": [
-              "no_usable_complete_body"
-            ],
-            "usable_complete_body": false
+            "flags": [],
+            "scope": "written_page",
+            "characters": 1055,
+            "body_sha256": "8b47890a4d5caf5a7608a59b299e6804bab59e01dc293a7d2ead41c561b5802e",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "source_fingerprints": {
-          "b56e034203d1299c77669907433b81fb": null
+          "b56e034203d1299c77669907433b81fb": "8b47890a4d5caf5a7608a59b299e6804bab59e01dc293a7d2ead41c561b5802e"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 1,
+        "not_available_sources": 0,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": false,
-        "people_evidence": "",
-        "ai_evidence": "",
-        "flags": [
-          "incomplete_written_source"
-        ]
+        "source_reading_complete": true,
+        "people_evidence": "No human-side relation is described in the evidence.",
+        "ai_evidence": "No AI-side relation is described in the evidence.",
+        "flags": []
       },
       "story_country_iso3s": [],
-      "evidence_summary": "No full article body was available, so the source was not model-classified.",
-      "reasoning": "No full article body was available, so the source was not model-classified.",
+      "evidence_summary": "The article discusses the role of AI in the Quebec electoral campaign but does not describe any specific human or AI relationship.",
+      "reasoning": "The article discusses the role of AI in the Quebec electoral campaign but does not describe any specific human or AI relationship.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -5069,7 +5100,7 @@
         "not_clear_yet": true
       },
       "distribution_signal": "not_shown",
-      "public_takeaway": "",
+      "public_takeaway": "No human-side relation is described in the evidence.",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -5836,21 +5867,28 @@
     {
       "axes": {
         "ai": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "no AI-side enabling or constraining signal is described No AI-side relation is described",
+          "direction": "none"
         },
         "human": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "no people outcome stated No human-side relation is described",
+          "direction": "none"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [],
+        "evidence_types": [
+          "source_representation"
+        ],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": false,
-        "unresolved_reason": "complete_written_source_unavailable"
+        "evidence_complete": true,
+        "unresolved_reason": ""
       },
-      "relationship_evidence": {},
+      "relationship_evidence": {
+        "mutualism": "",
+        "competition": "",
+        "ai_benefiting_parasitism": "",
+        "human_benefiting_parasitism": ""
+      },
       "relationship_pattern_status": "assessed",
       "event_id": "67ac90b6-b067-4967-bf41-a4e616d9e741",
       "event_title": "The Amazon Service Named \"Artificial Artificial Intelligence\" is Closing Permanently",
@@ -5868,47 +5906,49 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "insufficient_evidence",
-      "plain_label": "There is not enough source evidence to classify the relationship",
-      "human_experience_type": "unclear",
-      "ai_expressive_role": "unclear",
-      "human_direction": "unclear",
-      "ai_direction": "unclear",
-      "evidence_status": "insufficient",
-      "content_basis": "not_available",
+      "configuration": "no_clear_relational_signal",
+      "plain_label": "No clear human-AI relationship is described",
+      "human_experience_type": "neutral",
+      "ai_expressive_role": "neutral",
+      "human_direction": "neutral",
+      "ai_direction": "neutral",
+      "evidence_status": "sufficient",
+      "content_basis": "full_text",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "no_full_body",
+        "body_coverage": "all_sources",
         "source_quality": {
           "a8f2d07a510d29088a363af4cb786a75": {
-            "flags": [
-              "no_usable_complete_body"
-            ],
-            "usable_complete_body": false
+            "flags": [],
+            "scope": "written_page",
+            "characters": 6167,
+            "body_sha256": "97584409753979a7f39e1e3e6e812328c21dd2b46c1c8c38e5a906619c4c0249",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "source_fingerprints": {
-          "a8f2d07a510d29088a363af4cb786a75": null
+          "a8f2d07a510d29088a363af4cb786a75": "97584409753979a7f39e1e3e6e812328c21dd2b46c1c8c38e5a906619c4c0249"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 1,
+        "not_available_sources": 0,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": false,
-        "people_evidence": "",
-        "ai_evidence": "",
-        "flags": [
-          "incomplete_written_source"
-        ]
+        "source_reading_complete": true,
+        "people_evidence": "no people outcome stated No human-side relation is described",
+        "ai_evidence": "no AI-side enabling or constraining signal is described No AI-side relation is described",
+        "flags": []
       },
       "story_country_iso3s": [],
-      "evidence_summary": "No full article body was available, so the source was not model-classified.",
-      "reasoning": "No full article body was available, so the source was not model-classified.",
+      "evidence_summary": "Amazon is shutting down a service that relied on human workers for tasks that AI can now perform, signaling a shift in AI strategy.",
+      "reasoning": "Amazon is shutting down a service that relied on human workers for tasks that AI can now perform, signaling a shift in AI strategy.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -5922,8 +5962,8 @@
         "not_everyone_benefits": false,
         "not_clear_yet": true
       },
-      "distribution_signal": "not_shown",
-      "public_takeaway": "",
+      "distribution_signal": "broadly_shared",
+      "public_takeaway": "no people outcome stated No human-side relation is described",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -11773,21 +11813,28 @@
     {
       "axes": {
         "ai": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "AI is not shown to be restricted or expanded in the evidence.",
+          "direction": "none"
         },
         "human": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "People lose critical thinking ability due to overuse of AI.",
+          "direction": "loss"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [],
+        "evidence_types": [
+          "source_representation"
+        ],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": false,
-        "unresolved_reason": "complete_written_source_unavailable"
+        "evidence_complete": true,
+        "unresolved_reason": ""
       },
-      "relationship_evidence": {},
+      "relationship_evidence": {
+        "mutualism": "",
+        "competition": "true",
+        "ai_benefiting_parasitism": "",
+        "human_benefiting_parasitism": ""
+      },
       "relationship_pattern_status": "assessed",
       "event_id": "d69cc405-aaec-4ad4-be80-c162bf08a6f1",
       "event_title": "People who use a lot of AI lose their critical thinking ability.",
@@ -11805,47 +11852,51 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "insufficient_evidence",
-      "plain_label": "There is not enough source evidence to classify the relationship",
-      "human_experience_type": "unclear",
-      "ai_expressive_role": "unclear",
-      "human_direction": "unclear",
-      "ai_direction": "unclear",
-      "evidence_status": "insufficient",
-      "content_basis": "not_available",
+      "configuration": "human_constraining_only",
+      "plain_label": "A human-side cost is visible; the AI side is not established",
+      "human_experience_type": "restriction",
+      "ai_expressive_role": "neutral",
+      "human_direction": "constraining",
+      "ai_direction": "neutral",
+      "evidence_status": "sufficient",
+      "content_basis": "full_text",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "no_full_body",
+        "body_coverage": "all_sources",
         "source_quality": {
           "8491f86162cfa548c215a5c1023dff15": {
-            "flags": [
-              "no_usable_complete_body"
-            ],
-            "usable_complete_body": false
+            "flags": [],
+            "scope": "written_page",
+            "characters": 983,
+            "body_sha256": "7f0ef88da808ee273088f310e2824ddad0fdc31df309d92eb2c58056d94195d9",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "source_fingerprints": {
-          "8491f86162cfa548c215a5c1023dff15": null
+          "8491f86162cfa548c215a5c1023dff15": "7f0ef88da808ee273088f310e2824ddad0fdc31df309d92eb2c58056d94195d9"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 1,
+        "not_available_sources": 0,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": false,
-        "people_evidence": "",
-        "ai_evidence": "",
-        "flags": [
-          "incomplete_written_source"
-        ]
+        "source_reading_complete": true,
+        "people_evidence": "People lose critical thinking ability due to overuse of AI.",
+        "ai_evidence": "AI is not shown to be restricted or expanded in the evidence.",
+        "flags": []
       },
-      "story_country_iso3s": [],
-      "evidence_summary": "No full article body was available, so the source was not model-classified.",
-      "reasoning": "No full article body was available, so the source was not model-classified.",
+      "story_country_iso3s": [
+        "CAN"
+      ],
+      "evidence_summary": "Overuse of AI leads to loss of critical thinking ability in humans.",
+      "reasoning": "Overuse of AI leads to loss of critical thinking ability in humans.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -11854,13 +11905,13 @@
       },
       "public_signals": {
         "people_gaining": false,
-        "people_losing_ground": false,
+        "people_losing_ground": true,
         "mixed_picture": false,
-        "not_everyone_benefits": false,
-        "not_clear_yet": true
+        "not_everyone_benefits": true,
+        "not_clear_yet": false
       },
-      "distribution_signal": "not_shown",
-      "public_takeaway": "",
+      "distribution_signal": "unequal",
+      "public_takeaway": "People lose critical thinking ability due to overuse of AI.",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -11973,21 +12024,28 @@
     {
       "axes": {
         "ai": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "The AI system is described as lacking judgment, consciousness, and accountability. No AI-side relation is described in the evidence.",
+          "direction": "none"
         },
         "human": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "No human benefit or loss is stated in the evidence. No human-side relation is described in the evidence.",
+          "direction": "none"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [],
+        "evidence_types": [
+          "source_representation"
+        ],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": false,
-        "unresolved_reason": "complete_written_source_unavailable"
+        "evidence_complete": true,
+        "unresolved_reason": ""
       },
-      "relationship_evidence": {},
+      "relationship_evidence": {
+        "mutualism": "",
+        "competition": "",
+        "ai_benefiting_parasitism": "",
+        "human_benefiting_parasitism": ""
+      },
       "relationship_pattern_status": "assessed",
       "event_id": "d9cba3eb-4b9f-4ac9-a024-7d9939c77c9e",
       "event_title": "The Chief Judges Issue Strict Guidelines to Judges Regarding Generative AI",
@@ -12005,47 +12063,51 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "insufficient_evidence",
-      "plain_label": "There is not enough source evidence to classify the relationship",
-      "human_experience_type": "unclear",
-      "ai_expressive_role": "unclear",
-      "human_direction": "unclear",
-      "ai_direction": "unclear",
-      "evidence_status": "insufficient",
-      "content_basis": "not_available",
+      "configuration": "no_clear_relational_signal",
+      "plain_label": "No clear human-AI relationship is described",
+      "human_experience_type": "neutral",
+      "ai_expressive_role": "neutral",
+      "human_direction": "neutral",
+      "ai_direction": "neutral",
+      "evidence_status": "sufficient",
+      "content_basis": "full_text",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "no_full_body",
+        "body_coverage": "all_sources",
         "source_quality": {
           "f1f57cad019163dcaf30e23ae9e2a463": {
-            "flags": [
-              "no_usable_complete_body"
-            ],
-            "usable_complete_body": false
+            "flags": [],
+            "scope": "written_page",
+            "characters": 6169,
+            "body_sha256": "800aa68841d96fdd29070bb42bcd45304a3a961541d21bda7ee8e505ebaa3933",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "source_fingerprints": {
-          "f1f57cad019163dcaf30e23ae9e2a463": null
+          "f1f57cad019163dcaf30e23ae9e2a463": "800aa68841d96fdd29070bb42bcd45304a3a961541d21bda7ee8e505ebaa3933"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 1,
+        "not_available_sources": 0,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": false,
-        "people_evidence": "",
-        "ai_evidence": "",
-        "flags": [
-          "incomplete_written_source"
-        ]
+        "source_reading_complete": true,
+        "people_evidence": "No human benefit or loss is stated in the evidence. No human-side relation is described in the evidence.",
+        "ai_evidence": "The AI system is described as lacking judgment, consciousness, and accountability. No AI-side relation is described in the evidence.",
+        "flags": []
       },
-      "story_country_iso3s": [],
-      "evidence_summary": "No full article body was available, so the source was not model-classified.",
-      "reasoning": "No full article body was available, so the source was not model-classified.",
+      "story_country_iso3s": [
+        "CAN"
+      ],
+      "evidence_summary": "The Quebec courts have issued strict guidelines prohibiting the use of generative AI in judicial decision-making, emphasizing that the role of judging remains fundamentally human.",
+      "reasoning": "The Quebec courts have issued strict guidelines prohibiting the use of generative AI in judicial decision-making, emphasizing that the role of judging remains fundamentally human.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -12060,7 +12122,7 @@
         "not_clear_yet": true
       },
       "distribution_signal": "not_shown",
-      "public_takeaway": "",
+      "public_takeaway": "No human benefit or loss is stated in the evidence. No human-side relation is described in the evidence.",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -12707,21 +12769,28 @@
     {
       "axes": {
         "ai": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "The AI system is described as being tested and used for a specific purpose.",
+          "direction": "none"
         },
         "human": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "No human outcome is stated in the evidence.",
+          "direction": "none"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [],
+        "evidence_types": [
+          "source_representation"
+        ],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": false,
-        "unresolved_reason": "complete_written_source_unavailable"
+        "evidence_complete": true,
+        "unresolved_reason": ""
       },
-      "relationship_evidence": {},
+      "relationship_evidence": {
+        "mutualism": "",
+        "competition": "",
+        "ai_benefiting_parasitism": "",
+        "human_benefiting_parasitism": ""
+      },
       "relationship_pattern_status": "assessed",
       "event_id": "e10e8619-5773-4920-8345-e13187705e73",
       "event_title": "Pilot project in the metro | Artificial intelligence at STM: \"There is no facial recognition",
@@ -12739,47 +12808,49 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "insufficient_evidence",
-      "plain_label": "There is not enough source evidence to classify the relationship",
-      "human_experience_type": "unclear",
-      "ai_expressive_role": "unclear",
-      "human_direction": "unclear",
-      "ai_direction": "unclear",
-      "evidence_status": "insufficient",
-      "content_basis": "not_available",
+      "configuration": "no_clear_relational_signal",
+      "plain_label": "No clear human-AI relationship is described",
+      "human_experience_type": "neutral",
+      "ai_expressive_role": "neutral",
+      "human_direction": "neutral",
+      "ai_direction": "neutral",
+      "evidence_status": "sufficient",
+      "content_basis": "full_text",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "no_full_body",
+        "body_coverage": "all_sources",
         "source_quality": {
           "662195cdb537847d081ecdddffc317ab": {
-            "flags": [
-              "no_usable_complete_body"
-            ],
-            "usable_complete_body": false
+            "flags": [],
+            "scope": "written_page",
+            "characters": 967,
+            "body_sha256": "18a249c124a988afe27bc0a883ebebbce306971435381d2c413633c663ff7cb4",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "source_fingerprints": {
-          "662195cdb537847d081ecdddffc317ab": null
+          "662195cdb537847d081ecdddffc317ab": "18a249c124a988afe27bc0a883ebebbce306971435381d2c413633c663ff7cb4"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 1,
+        "not_available_sources": 0,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": false,
-        "people_evidence": "",
-        "ai_evidence": "",
-        "flags": [
-          "incomplete_written_source"
-        ]
+        "source_reading_complete": true,
+        "people_evidence": "No human outcome is stated in the evidence.",
+        "ai_evidence": "The AI system is described as being tested and used for a specific purpose.",
+        "flags": []
       },
       "story_country_iso3s": [],
-      "evidence_summary": "No full article body was available, so the source was not model-classified.",
-      "reasoning": "No full article body was available, so the source was not model-classified.",
+      "evidence_summary": "The STM is testing an AI system for optimizing station closure during nighttime hours, but no clear human or AI relationship is described.",
+      "reasoning": "The STM is testing an AI system for optimizing station closure during nighttime hours, but no clear human or AI relationship is described.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -12794,7 +12865,7 @@
         "not_clear_yet": true
       },
       "distribution_signal": "not_shown",
-      "public_takeaway": "",
+      "public_takeaway": "No human outcome is stated in the evidence.",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -13007,21 +13078,28 @@
     {
       "axes": {
         "ai": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "AIIDPZ facilitates the expansion of AI-related industries and green technological innovation by improving input support, knowledge production, and technology diffusion. AIIDPZ may strengthen the local innovation base, improve the efficiency of green knowledge creation, and promote the wider diffusion and application of green technologies. AI integration into R&D processes enhances efficiency and reduces costs, supporting technological progress.",
+          "direction": "gain"
         },
         "human": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "AIIDPZ supports the expansion of green innovation and productivity through enhanced environmental governance and industrial structure upgrading. AIIDPZ may accelerate the diffusion and practical application of green technologies, contributing to broader sustainability outcomes in China. AI integration lowers innovation costs and improves efficiency for green technologies, contributing to GTFP growth.",
+          "direction": "gain"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [],
+        "evidence_types": [
+          "source_representation"
+        ],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": false,
-        "unresolved_reason": "complete_written_source_unavailable"
+        "evidence_complete": true,
+        "unresolved_reason": ""
       },
-      "relationship_evidence": {},
+      "relationship_evidence": {
+        "mutualism": "false AI and human activities are both enhanced through AIIDPZ, with AI facilitating green innovation and human activities benefiting from improved productivity and environmental governance. AIIDPZ may influence urban GTFP by strengthening the local innovation base, improving the efficiency of green knowledge creation, and promoting the wider diffusion and application of green technologies. true",
+        "competition": "false",
+        "ai_benefiting_parasitism": "false",
+        "human_benefiting_parasitism": "false"
+      },
       "relationship_pattern_status": "assessed",
       "event_id": "e5795415-71b8-4100-a353-48946f22632c",
       "event_title": "Can artificial intelligence be the answer to green development? evidence from China’s artificial intelligence innovation and development pilot zones",
@@ -13039,62 +13117,66 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "insufficient_evidence",
-      "plain_label": "There is not enough source evidence to classify the relationship",
-      "human_experience_type": "unclear",
-      "ai_expressive_role": "unclear",
-      "human_direction": "unclear",
-      "ai_direction": "unclear",
-      "evidence_status": "insufficient",
-      "content_basis": "not_available",
+      "configuration": "mutualism",
+      "plain_label": "Both people and the AI side are represented as gaining",
+      "human_experience_type": "extension",
+      "ai_expressive_role": "ai_extension",
+      "human_direction": "enabling",
+      "ai_direction": "enabling",
+      "evidence_status": "sufficient",
+      "content_basis": "full_text",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "no_full_body",
+        "body_coverage": "all_sources",
         "source_quality": {
           "d24d5eea91509453b4bc220793cd783d": {
-            "flags": [
-              "no_usable_complete_body"
-            ],
-            "usable_complete_body": false
+            "flags": [],
+            "scope": "written_page",
+            "characters": 73921,
+            "body_sha256": "e0229212ed7a1aca01acf3f62ea74521c40211efc8eb25af892412eeb8da59fd",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "source_fingerprints": {
-          "d24d5eea91509453b4bc220793cd783d": null
+          "d24d5eea91509453b4bc220793cd783d": "e0229212ed7a1aca01acf3f62ea74521c40211efc8eb25af892412eeb8da59fd"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 1,
+        "not_available_sources": 0,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": false,
-        "people_evidence": "",
-        "ai_evidence": "",
-        "flags": [
-          "incomplete_written_source"
-        ]
+        "source_reading_complete": true,
+        "people_evidence": "AIIDPZ supports the expansion of green innovation and productivity through enhanced environmental governance and industrial structure upgrading. AIIDPZ may accelerate the diffusion and practical application of green technologies, contributing to broader sustainability outcomes in China. AI integration lowers innovation costs and improves efficiency for green technologies, contributing to GTFP growth.",
+        "ai_evidence": "AIIDPZ facilitates the expansion of AI-related industries and green technological innovation by improving input support, knowledge production, and technology diffusion. AIIDPZ may strengthen the local innovation base, improve the efficiency of green knowledge creation, and promote the wider diffusion and application of green technologies. AI integration into R&D processes enhances efficiency and reduces costs, supporting technological progress.",
+        "flags": []
       },
-      "story_country_iso3s": [],
-      "evidence_summary": "No full article body was available, so the source was not model-classified.",
-      "reasoning": "No full article body was available, so the source was not model-classified.",
+      "story_country_iso3s": [
+        "CHN"
+      ],
+      "evidence_summary": "The study explores whether AI-oriented policies can contribute to green development but does not describe any specific human or AI relation.",
+      "reasoning": "The study explores whether AI-oriented policies can contribute to green development but does not describe any specific human or AI relation.",
       "relationship_patterns": {
-        "mutualism": false,
+        "mutualism": true,
         "ai_benefiting_parasitism": false,
         "human_benefiting_parasitism": false,
         "competition": false
       },
       "public_signals": {
-        "people_gaining": false,
+        "people_gaining": true,
         "people_losing_ground": false,
         "mixed_picture": false,
         "not_everyone_benefits": false,
-        "not_clear_yet": true
+        "not_clear_yet": false
       },
-      "distribution_signal": "not_shown",
-      "public_takeaway": "",
+      "distribution_signal": "broadly_shared",
+      "public_takeaway": "AIIDPZ supports the expansion of green innovation and productivity through enhanced environmental governance and industrial structure upgrading. AIIDPZ may accelerate the diffusion and practical application of green technologies, contributing to broader sustainability outcomes in China. AI integration lowers innovation costs and improves efficiency for green technologies, contributing to GTFP growth.",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -13307,21 +13389,28 @@
     {
       "axes": {
         "ai": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "No AI-side relation is described",
+          "direction": "none"
         },
         "human": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "No human-side relation is described",
+          "direction": "none"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [],
+        "evidence_types": [
+          "source_representation"
+        ],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": false,
-        "unresolved_reason": "complete_written_source_unavailable"
+        "evidence_complete": true,
+        "unresolved_reason": ""
       },
-      "relationship_evidence": {},
+      "relationship_evidence": {
+        "mutualism": "",
+        "competition": "",
+        "ai_benefiting_parasitism": "",
+        "human_benefiting_parasitism": ""
+      },
       "relationship_pattern_status": "assessed",
       "event_id": "ed2de16b-eddd-45ee-88e0-412f82075580",
       "event_title": "Deceptive Photos | Artificial Intelligence Enters Real Estate Brokerage Sites",
@@ -13339,47 +13428,51 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "insufficient_evidence",
-      "plain_label": "There is not enough source evidence to classify the relationship",
-      "human_experience_type": "unclear",
-      "ai_expressive_role": "unclear",
-      "human_direction": "unclear",
-      "ai_direction": "unclear",
-      "evidence_status": "insufficient",
-      "content_basis": "not_available",
+      "configuration": "no_clear_relational_signal",
+      "plain_label": "No clear human-AI relationship is described",
+      "human_experience_type": "neutral",
+      "ai_expressive_role": "neutral",
+      "human_direction": "neutral",
+      "ai_direction": "neutral",
+      "evidence_status": "sufficient",
+      "content_basis": "full_text",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "no_full_body",
+        "body_coverage": "all_sources",
         "source_quality": {
           "5471c205b02b2925c303ce3a061f83e4": {
-            "flags": [
-              "no_usable_complete_body"
-            ],
-            "usable_complete_body": false
+            "flags": [],
+            "scope": "written_page",
+            "characters": 835,
+            "body_sha256": "6f4dcc63af19c79ed6fe17ddcc0089fd85671b1f7f28c2cf8075a9cf44bf456f",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "source_fingerprints": {
-          "5471c205b02b2925c303ce3a061f83e4": null
+          "5471c205b02b2925c303ce3a061f83e4": "6f4dcc63af19c79ed6fe17ddcc0089fd85671b1f7f28c2cf8075a9cf44bf456f"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 1,
+        "not_available_sources": 0,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": false,
-        "people_evidence": "",
-        "ai_evidence": "",
-        "flags": [
-          "incomplete_written_source"
-        ]
+        "source_reading_complete": true,
+        "people_evidence": "No human-side relation is described",
+        "ai_evidence": "No AI-side relation is described",
+        "flags": []
       },
-      "story_country_iso3s": [],
-      "evidence_summary": "No full article body was available, so the source was not model-classified.",
-      "reasoning": "No full article body was available, so the source was not model-classified.",
+      "story_country_iso3s": [
+        "FRQ"
+      ],
+      "evidence_summary": "The article discusses the use of AI-generated images in real estate brokerage sites and the potential for deception.",
+      "reasoning": "The article discusses the use of AI-generated images in real estate brokerage sites and the potential for deception.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -13394,7 +13487,7 @@
         "not_clear_yet": true
       },
       "distribution_signal": "not_shown",
-      "public_takeaway": "",
+      "public_takeaway": "No human-side relation is described",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -14405,29 +14498,29 @@
     "policy_version": "source_representations_independent_axes_2026_09",
     "total": 132,
     "human": {
-      "gain": 14,
-      "loss": 1,
+      "gain": 15,
+      "loss": 2,
       "mixed": 3,
-      "none": 58,
-      "unresolved": 56
+      "none": 65,
+      "unresolved": 47
     },
     "ai": {
-      "gain": 11,
+      "gain": 12,
       "loss": 1,
       "mixed": 2,
-      "none": 62,
-      "unresolved": 56
+      "none": 70,
+      "unresolved": 47
     },
-    "evidence_complete": 76,
+    "evidence_complete": 85,
     "counting_rule": "Each axis partitions the same records. Mixed is one category. The two axes are not added together."
   },
   "direction_policy_version": "source_representations_independent_axes_2026_09",
   "classification_scope": {
     "unit": "development",
     "total": 132,
-    "complete_written_sources": 76,
-    "incomplete_written_sources": 56,
+    "complete_written_sources": 85,
+    "incomplete_written_sources": 47,
     "legacy_configuration_note": "Legacy single-label fields are retained for compatibility; independent axis categories are authoritative under the current policy."
   },
-  "content_sha256": "42b1de06ec18b64c70efaa784d32b326ac42a192700f6cd3673b1b6cd77af134"
+  "content_sha256": "f3c825261a376d085ddd6fcf2c01763dc5a8791b2bd455e5d4f682ddc7436dba"
 }

@@ -1,6 +1,6 @@
 {
   "schema_version": "aieo_relationship_evidence_audit_v1",
-  "generated_at": "2026-09-08T11:20:27.067428Z",
+  "generated_at": "2026-09-08T13:34:09.161351Z",
   "release_id": "2026-W36",
   "period_start": "2026-08-31",
   "period_end": "2026-09-06",
@@ -17,24 +17,24 @@
   "summary": {
     "development_count": 132,
     "primary_outcome_counts": {
-      "benefit_shown": 14,
-      "downside_shown": 1,
+      "benefit_shown": 15,
+      "downside_shown": 2,
       "benefit_and_downside": 3,
-      "no_clear_people_change": 58,
-      "too_little_evidence": 56
+      "no_clear_people_change": 65,
+      "too_little_evidence": 47
     },
-    "uneven_effect_count": 1,
+    "uneven_effect_count": 2,
     "body_coverage_counts": {
-      "all_sources": 75,
-      "no_full_body": 56,
+      "all_sources": 84,
+      "no_full_body": 47,
       "some_sources": 1
     },
     "reported_body_coverage_counts": {
-      "complete_written_source": 76,
-      "incomplete_written_source": 56
+      "complete_written_source": 85,
+      "incomplete_written_source": 47
     },
     "audit_flag_counts": {
-      "insufficient_evidence": 56
+      "insufficient_evidence": 47
     },
     "plain_language_note": "The five primary outcome counts add up to the weekly total. An uneven effect is a separate detail that can overlap with any outcome."
   },
@@ -1009,39 +1009,39 @@
       "event_id": "41be96d7-4ba8-492e-bd0c-d9d9880b96ac",
       "title": "Artificial Intelligence and Building Design",
       "date": "2026-09-03",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No specific human benefit or loss is stated in the text.",
+          "ai_evidence": "No specific AI benefit or loss is stated in the text.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "65d57a0d2efd44b0e58736bc640ff0c7",
@@ -1055,9 +1055,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "773354b6-1079-450e-8e5e-3935431a225b",
@@ -2432,39 +2430,39 @@
       "event_id": "e5795415-71b8-4100-a353-48946f22632c",
       "title": "Can artificial intelligence be the answer to green development? evidence from China’s artificial intelligence innovation and development pilot zones",
       "date": "2026-09-04",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "AIIDPZ supports the expansion of green innovation and productivity through enhanced environmental governance and industrial structure upgrading. AIIDPZ may accelerate the diffusion and practical application of green technologies, contributing to broader sustainability outcomes in China. AI integration lowers innovation costs and improves efficiency for green technologies, contributing to GTFP growth.",
+          "ai_evidence": "AIIDPZ facilitates the expansion of AI-related industries and green technological innovation by improving input support, knowledge production, and technology diffusion. AIIDPZ may strengthen the local innovation base, improve the efficiency of green knowledge creation, and promote the wider diffusion and application of green technologies. AI integration into R&D processes enhances efficiency and reduces costs, supporting technological progress.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "GBR"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "CHN"
+      ],
       "sources": [
         {
           "article_id": "d24d5eea91509453b4bc220793cd783d",
@@ -2478,9 +2476,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "f0119089-ef78-4d1b-83e0-53e08997277b",
@@ -2596,39 +2592,39 @@
       "event_id": "ed2de16b-eddd-45ee-88e0-412f82075580",
       "title": "Deceptive Photos | Artificial Intelligence Enters Real Estate Brokerage Sites",
       "date": "2026-09-04",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No human-side relation is described",
+          "ai_evidence": "No AI-side relation is described",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "FRQ"
+      ],
       "sources": [
         {
           "article_id": "5471c205b02b2925c303ce3a061f83e4",
@@ -2642,9 +2638,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "5bf25621-e911-4ba0-bdb7-ccc0140103b5",
@@ -4686,39 +4680,39 @@
       "event_id": "d69cc405-aaec-4ad4-be80-c162bf08a6f1",
       "title": "People who use a lot of AI lose their critical thinking ability.",
       "date": "2026-09-04",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
-      "uneven_effect_noted": false,
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
+      "uneven_effect_noted": true,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "human_constraining_only",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "People lose critical thinking ability due to overuse of AI.",
+          "ai_evidence": "AI is not shown to be restricted or expanded in the evidence.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "CAN"
+      ],
       "sources": [
         {
           "article_id": "8491f86162cfa548c215a5c1023dff15",
@@ -4732,42 +4726,38 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "e10e8619-5773-4920-8345-e13187705e73",
       "title": "Pilot project in the metro | Artificial intelligence at STM: \"There is no facial recognition",
       "date": "2026-09-04",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No human outcome is stated in the evidence.",
+          "ai_evidence": "The AI system is described as being tested and used for a specific purpose.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN"
@@ -4786,9 +4776,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "d2e3da8c-5231-459c-9744-f3203ec75193",
@@ -5337,34 +5325,32 @@
       "event_id": "67ac90b6-b067-4967-bf41-a4e616d9e741",
       "title": "The Amazon Service Named \"Artificial Artificial Intelligence\" is Closing Permanently",
       "date": "2026-09-06",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "no people outcome stated No human-side relation is described",
+          "ai_evidence": "no AI-side enabling or constraining signal is described No AI-side relation is described",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN"
@@ -5383,9 +5369,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "e1d8387d-cedc-44d8-8532-cf6df54c38f6",
@@ -5497,34 +5481,32 @@
       "event_id": "597361eb-15a8-4428-8b37-5158b8d2f7ee",
       "title": "The Case of Jean-François Desaulniers | Detecting Artificial Intelligence in the Electoral Campaign in Quebec",
       "date": "2026-09-02",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No human-side relation is described in the evidence.",
+          "ai_evidence": "No AI-side relation is described in the evidence.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN"
@@ -5543,47 +5525,45 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "d9cba3eb-4b9f-4ac9-a024-7d9939c77c9e",
       "title": "The Chief Judges Issue Strict Guidelines to Judges Regarding Generative AI",
       "date": "2026-09-05",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No human benefit or loss is stated in the evidence. No human-side relation is described in the evidence.",
+          "ai_evidence": "The AI system is described as lacking judgment, consciousness, and accountability. No AI-side relation is described in the evidence.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "CAN"
+      ],
       "sources": [
         {
           "article_id": "f1f57cad019163dcaf30e23ae9e2a463",
@@ -5597,9 +5577,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "17ab9564-5a2b-4731-bcc6-10512c2f5c13",
@@ -6090,39 +6068,39 @@
       "event_id": "23af84b3-78cd-4c90-8504-ef0bb7390004",
       "title": "The new mobile app of Paris Match designed with generative AI",
       "date": "2026-09-06",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No human-side relation is described in the evidence.",
+          "ai_evidence": "No AI-side relation is described in the evidence.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "FRA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "FRA"
+      ],
       "sources": [
         {
           "article_id": "4dbdc266a00d64110b0c9798fae5664f",
@@ -6136,9 +6114,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "4c5ce73c-c3be-4a83-a144-40f53e9e66e4",
