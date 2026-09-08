@@ -9,30 +9,30 @@
   "observation_window": "31 August - 06 September 2026",
   "source_of_truth": "/data/analysis/current.json",
   "source_release_sha256": "badf075e19afbbded1aaccb369f089c3beae8a0207c0bd7070b4e76472b53198",
-  "source_relationship_sha256": "f3c825261a376d085ddd6fcf2c01763dc5a8791b2bd455e5d4f682ddc7436dba",
+  "source_relationship_sha256": "187efa3167b64b2ce64e4b8e6ddc126584369651aedd48a379465e5395fe543e",
   "directional_summary": {
     "schema_version": "aieo_independent_directions_v2",
     "policy_version": "source_representations_independent_axes_2026_09",
-    "total": 81,
-    "evidence_complete": 81,
+    "total": 89,
+    "evidence_complete": 89,
     "human": {
-      "gain": 15,
-      "loss": 1,
+      "gain": 17,
+      "loss": 2,
       "mixed": 3,
-      "none": 62,
+      "none": 67,
       "unresolved": 0
     },
     "ai": {
-      "gain": 12,
-      "loss": 1,
+      "gain": 13,
+      "loss": 2,
       "mixed": 2,
-      "none": 66,
+      "none": 72,
       "unresolved": 0
     }
   },
   "file": "/reports/ai-empowerment-pulse-latest.pdf",
-  "coverage_units": 85,
-  "event_units": 81,
+  "coverage_units": 94,
+  "event_units": 89,
   "collection_inventory": {
     "coverage_units": 138,
     "event_units": 132,
@@ -41,25 +41,25 @@
     "directional_amplification_gap": 9.9285,
     "scope": "Legacy collection indices; not complete-content findings."
   },
-  "coverage_event_ratio": 1.0493827160493827,
+  "coverage_event_ratio": 1.0561797752808988,
   "complete_content": {
     "policy_version": "complete_content_2026_09_v1",
-    "content_sha256": "58c805325c554f5830e2770708b61bc23b266e7b0be1be386df2632fe02ee13e",
+    "content_sha256": "92aa2e63a5422560b37eb3272b570a194ae7605e857a66a2be776d9feb61d606",
     "counts": {
       "collected_developments": 132,
       "collected_sources": 138,
-      "eligible_developments": 81,
-      "eligible_sources": 85,
-      "excluded_developments": 51,
-      "excluded_sources": 53
+      "eligible_developments": 89,
+      "eligible_sources": 94,
+      "excluded_developments": 43,
+      "excluded_sources": 44
     },
     "denominator": {
       "unit": "distinct_development",
-      "value": 81
+      "value": 89
     }
   },
   "pages": 2,
   "schema_version": "aieo_public_brief_v2",
-  "pdf_sha256": "bbf99fe1ecce73e79304e20a688caa71a2f108f4d7b0f35d2b160442e54f63cf",
-  "generated_at": "2026-09-08T19:14:48.330081+00:00"
+  "pdf_sha256": "e57a031a694615faac5a3631ddd96ce1ff3be6b40ef66fabc28aacb3ae0e2ce3",
+  "generated_at": "2026-09-08T20:06:57.419835+00:00"
 }
