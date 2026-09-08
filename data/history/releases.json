@@ -2,14 +2,14 @@
   "meta": {
     "series": "weekly_public_releases",
     "cumulative": false,
-    "generated_at": "2026-09-06T17:54:56.188145Z",
+    "generated_at": "2026-09-08T03:30:36.231757Z",
     "source": "/data/releases/index.json",
     "note": "Each point is one standardized weekly Observatory release. Counts are not cumulatively summed."
   },
   "points": [
     {
       "release_id": "2026-W33",
-      "revision": 5,
+      "revision": 6,
       "window_start": "2026-08-10",
       "window_end": "2026-08-16",
       "coverage_count": 120,
@@ -22,7 +22,7 @@
     },
     {
       "release_id": "2026-W34",
-      "revision": 3,
+      "revision": 4,
       "window_start": "2026-08-17",
       "window_end": "2026-08-23",
       "coverage_count": 131,
@@ -35,7 +35,7 @@
     },
     {
       "release_id": "2026-W35",
-      "revision": 4,
+      "revision": 5,
       "window_start": "2026-08-24",
       "window_end": "2026-08-30",
       "coverage_count": 111,
@@ -45,6 +45,19 @@
       "event_index": 4.9844,
       "amplification_gap": 1.6823,
       "coverage_event_ratio": 1.0091
+    },
+    {
+      "release_id": "2026-W36",
+      "revision": 1,
+      "window_start": "2026-08-31",
+      "window_end": "2026-09-06",
+      "coverage_count": 138,
+      "event_count": 132,
+      "extra_article_instances": 6,
+      "coverage_index": 19.6721,
+      "event_index": 9.7436,
+      "amplification_gap": 9.9285,
+      "coverage_event_ratio": 1.0455
     }
   ]
 }
