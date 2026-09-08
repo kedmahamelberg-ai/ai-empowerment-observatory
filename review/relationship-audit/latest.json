@@ -1,6 +1,6 @@
 {
   "schema_version": "aieo_relationship_evidence_audit_v1",
-  "generated_at": "2026-09-08T19:14:45.808599Z",
+  "generated_at": "2026-09-08T20:06:54.764425Z",
   "release_id": "2026-W36",
   "period_start": "2026-08-31",
   "period_end": "2026-09-06",
@@ -17,24 +17,24 @@
   "summary": {
     "development_count": 132,
     "primary_outcome_counts": {
-      "benefit_shown": 15,
-      "downside_shown": 2,
+      "benefit_shown": 17,
+      "downside_shown": 3,
       "benefit_and_downside": 3,
-      "no_clear_people_change": 65,
-      "too_little_evidence": 47
+      "no_clear_people_change": 70,
+      "too_little_evidence": 39
     },
     "uneven_effect_count": 2,
     "body_coverage_counts": {
-      "all_sources": 84,
-      "no_full_body": 47,
+      "all_sources": 92,
+      "no_full_body": 39,
       "some_sources": 1
     },
     "reported_body_coverage_counts": {
-      "complete_written_source": 85,
-      "incomplete_written_source": 47
+      "complete_written_source": 93,
+      "incomplete_written_source": 39
     },
     "audit_flag_counts": {
-      "insufficient_evidence": 47
+      "insufficient_evidence": 39
     },
     "plain_language_note": "The five primary outcome counts add up to the weekly total. An uneven effect is a separate detail that can overlap with any outcome."
   },
@@ -1648,34 +1648,32 @@
       "event_id": "30bf5f2a-6410-4f23-a0a2-4ff6e1a34789",
       "title": "Artificial Intelligence: U.S. Report Warns of Risk of a Generation That \"Forgets to Learn",
       "date": "2026-09-01",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No people-side benefit or loss is explicitly stated.",
+          "ai_evidence": "No AI-side gain or loss is explicitly stated.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "FRA"
@@ -1694,9 +1692,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "f1abf7ae-f64e-4b0e-87e3-17e0e340a2f6",
@@ -1808,40 +1804,40 @@
       "event_id": "9a00aba1-9893-4596-a882-f4441e0b2bd8",
       "title": "Artificial intelligence could cause global economic downturn, Bank of England governor warns",
       "date": "2026-08-31",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No human-side relation is described in the evidence.",
+          "ai_evidence": "No AI-side relation is described in the evidence.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used with other source evidence",
         "source_count": 2,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "some_sources"
       },
       "source_markets": [
         "FRA",
         "GBR"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "GBR"
+      ],
       "sources": [
         {
           "article_id": "efe9f46bcf020842ca591435e71cfea4",
@@ -1866,9 +1862,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "a1694695-eb25-46b7-bdee-3022e7ec2ed1",
@@ -3276,34 +3270,32 @@
       "event_id": "2e775ad5-0983-4568-a9bc-d3a72dc003a8",
       "title": "Generative AI banned on LAUSD-issued devices for students",
       "date": "2026-09-02",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "Students using LAUSD-issued devices are restricted from using generative AI, which limits their access to a potential resource.",
+          "ai_evidence": "The AI system is not explicitly described as being restricted or expanded in the text, but the policy is in place to limit its use.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "USA"
@@ -3322,9 +3314,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "8ca1d082-3d5a-45a9-bd74-b3b4567649f1",
@@ -3380,39 +3370,39 @@
       "event_id": "0f371306-78fa-41b0-a71a-3237a7b03b99",
       "title": "Guandu District Artificial Intelligence Industry Development Conference held; multiple projects signed on the spot",
       "date": "2026-09-01",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No people-side benefit or constraint is explicitly stated.",
+          "ai_evidence": "No AI-side benefit or constraint is explicitly stated.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CHN"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "CNA"
+      ],
       "sources": [
         {
           "article_id": "b04afdf2a903f87fe8283c070d6369f5",
@@ -3426,9 +3416,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "a81f4d37-bee4-4b0c-81b2-6754d03a2a86",
@@ -3804,40 +3792,38 @@
       "event_id": "bd7c60d8-c9f6-4f1c-a37e-854c40fafb80",
       "title": "In New York, the use of artificial intelligence will be prohibited for all students until third grade.",
       "date": "2026-09-02",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "full_text",
+        "content_basis": "multiple_sources",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "competition",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "The ban restricts access to AI for students, limiting their ability to use AI tools in education.",
-          "ai_evidence": "The AI system is not directly restricted or expanded in the text, as the focus is on human access rather than AI capabilities.",
+          "people_evidence": "Students in New York are restricted from using AI until third grade.",
+          "ai_evidence": "The use of AI is prohibited for students in New York until third grade.",
           "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article used with other source evidence",
+        "label": "Full article used for every source",
         "source_count": 2,
-        "full_text_sources": 1,
+        "full_text_sources": 2,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "some_sources"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN",
         "FRA"
       ],
-      "story_country_iso3s": [
-        "USA"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "b54ca62885e4974c858be0a996cf52b3",
@@ -4287,39 +4273,39 @@
       "event_id": "71a63729-a029-4530-babf-a6a31142d7c1",
       "title": "Ministry of Education: Will implement the “Artificial Intelligence + Teacher Development” initiative",
       "date": "2026-09-04",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "human_enabling_only",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "The initiative aims to enhance teacher capabilities through AI, providing new opportunities for professional development.",
+          "ai_evidence": "The AI system is being integrated into teacher training to support and extend educational outcomes.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CHN"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "CHN"
+      ],
       "sources": [
         {
           "article_id": "d8d5736d0f819b19165889e33fe8c3cd",
@@ -4333,9 +4319,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "465b44bd-5916-49ac-b41c-fba8eade1e4e",
@@ -4782,34 +4766,32 @@
       "event_id": "d2e3da8c-5231-459c-9744-f3203ec75193",
       "title": "Pinar Yanardag receives NSF CAREER award to democratize video production with artificial intelligence",
       "date": "2026-09-03",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "The research allows educators, scientists, filmmakers, and students to create professional-quality videos without specialized equipment or expertise. Yanardag's research expands access to video production through AI, making it more inclusive.",
+          "ai_evidence": "The AI system is being developed to give users director-like control over video production, making it more accessible and user-friendly.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "USA"
@@ -4828,9 +4810,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "eeebe01b-abfb-40cb-ab8d-590ba175bf69",
@@ -4888,34 +4868,32 @@
       "event_id": "d8688fe5-b296-4348-8bcc-76e4049fe1d2",
       "title": "Scranton Faculty and Staff Analyze Papal Encyclical on Artificial Intelligence",
       "date": "2026-09-03",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No specific human benefit or loss is stated in the evidence.",
+          "ai_evidence": "No specific AI benefit or loss is stated in the evidence.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "USA"
@@ -4934,9 +4912,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "e8493da9-a236-4682-a671-622201325f49",
@@ -5218,34 +5194,32 @@
       "event_id": "a2110819-497f-4676-ba83-78b8276636fa",
       "title": "TfL facing surge in FOI appeals as people turn to Artificial Intelligence",
       "date": "2026-09-02",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No specific human benefit or loss is stated.",
+          "ai_evidence": "No specific AI benefit or loss is stated.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "GBR"
@@ -5264,9 +5238,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "307bb2d7-dbce-4128-8333-643af0544163",
