@@ -49,7 +49,8 @@ def completion(content=None, reason="stop"):
 
 
 def http_reply(payload):
-    return SimpleNamespace(raise_for_status=lambda: None, json=lambda: payload)
+    return SimpleNamespace(raise_for_status=lambda: None, json=lambda: payload,
+                           headers={"Content-Type": "application/json"}, close=lambda: None)
 
 
 class MemoryDB:

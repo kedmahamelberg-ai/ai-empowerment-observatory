@@ -10,7 +10,7 @@ import math
 import re
 from typing import Any
 
-TRANSPORT_VERSION = "symbiosis_json_v3_independent_axes"
+TRANSPORT_VERSION = "symbiosis_json_v4_bounded_output"
 CONFIDENCE_VALUES = [round(index / 20, 2) for index in range(21)]
 PATTERNS = ("mutualism", "ai_benefiting_parasitism", "human_benefiting_parasitism", "competition")
 
@@ -31,7 +31,7 @@ PROPERTIES = {
         "required": ["human", "ai"], "additionalProperties": False,
     },
     "relationship_evidence": {
-        "type": "object", "properties": {key: {"type": "string"} for key in PATTERNS},
+        "type": "object", "properties": {key: {"type": "string", "maxLength": 280} for key in PATTERNS},
         "required": list(PATTERNS), "additionalProperties": False,
     },
     "ai_relevant": {"type": "boolean"},
@@ -39,9 +39,10 @@ PROPERTIES = {
     "relational_signal": enum("complete", "human_only", "ai_only", "none", "unclear"),
     "human_experience_type": enum("extension", "expansion", "restriction", "reduction", "neutral", "unclear"),
     "ai_expressive_role": enum("ai_extension", "ai_expansion", "ai_restriction", "ai_reduction", "neutral", "unclear"),
-    **{key: {"type": "string"} for key in (
-        "human_reasoning", "ai_reasoning", "summary", "topic", "public_takeaway", "people_evidence"
+    **{key: {"type": "string", "maxLength": 280} for key in (
+        "human_reasoning", "ai_reasoning", "summary", "public_takeaway", "people_evidence"
     )},
+    "topic": {"type": "string", "maxLength": 80},
     # llama.cpp's number grammar does not enforce minimum/maximum. A numeric
     # enum makes the diagnostic 0..1 scale a real decoding constraint.
     "confidence": {"type": "number", "enum": CONFIDENCE_VALUES, "minimum": 0, "maximum": 1},
@@ -105,6 +106,8 @@ def require_schema(value: Any, schema: dict[str, Any], path: str = "result") -> 
         raise ModelOutputError(f"Out-of-range model field: {path} ({value}).")
     if kind == "string" and schema.get("pattern") and not re.fullmatch(schema["pattern"], value):
         raise ModelOutputError(f"Invalid string format: {path}.")
+    if kind == "string" and not schema.get("minLength", 0) <= len(value) <= schema.get("maxLength", math.inf):
+        raise ModelOutputError(f"Model text field exceeds its length bounds: {path}.")
     if kind == "object":
         if schema.get("additionalProperties") is False and set(value) - set(schema.get("properties", {})):
             raise ModelOutputError(f"Unexpected model fields: {path}.")

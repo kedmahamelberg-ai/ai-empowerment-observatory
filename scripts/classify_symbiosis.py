@@ -58,6 +58,7 @@ from translation_policy import SUPPORTED_TRANSLATION_PROFILES, preferred_transla
 from symbiosis_model_output import (
     ModelOutputError, RESPONSE_SCHEMA, TRANSPORT_VERSION, extract_json, response_result,
 )
+from symbiosis_stream import chat_completion
 
 ROOT = Path(__file__).resolve().parents[1]
 RELEASES_DIR = ROOT / "data" / "releases"
@@ -1058,10 +1059,14 @@ def _call_classifier_chunk(*, lens: str, evidence: str, content_basis: str) -> d
     last_error: Exception | None = None
     attempts: list[dict[str, Any]] = []
     for index, (name, max_tokens) in enumerate(modes, start=1):
+        if attempts and attempts[-1].get("finish_reason") != "length":
+            # A slow connection does not need a larger answer. Increase the
+            # output allowance only after a verified token-limit finish.
+            max_tokens = attempts[-1]["max_tokens"]
         try:
-            response = requests.post(
+            response_payload = chat_completion(
                 SERVER_URL,
-                json={
+                payload={
                     "model": f"{QWEN_REPO}:{QWEN_QUANT}",
                     "messages": [
                         {
@@ -1074,16 +1079,13 @@ def _call_classifier_chunk(*, lens: str, evidence: str, content_basis: str) -> d
                     "top_p": 0.8,
                     "top_k": 20,
                     "min_p": 0,
-                    "seed": 42,
+                    "seed": 41 + index,
                     "max_tokens": max_tokens,
                     "chat_template_kwargs": {"enable_thinking": False},
                     "response_format": {"type": "json_object", "schema": RESPONSE_SCHEMA},
-                    "stream": False,
                 },
-                timeout=(10, 420),
             )
-            response.raise_for_status()
-            raw, diagnostics = response_result(response.json())
+            raw, diagnostics = response_result(response_payload)
             normalized = validate_model_payload(raw)
             normalized["raw_output"] = {
                 "model_response": raw,
@@ -1098,8 +1100,8 @@ def _call_classifier_chunk(*, lens: str, evidence: str, content_basis: str) -> d
                 "normalization_warnings": normalized.get("normalization_warnings") or [],
                 "transport_version": TRANSPORT_VERSION,
                 "prompt_sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
-                "sampling": {"temperature": 0.7, "top_p": 0.8, "top_k": 20, "min_p": 0, "seed": 42},
-                "generation": {**diagnostics, "max_tokens": max_tokens, "thinking": False, "mode": name},
+                "sampling": {"temperature": 0.7, "top_p": 0.8, "top_k": 20, "min_p": 0, "seed": 41 + index},
+                "generation": {**diagnostics, **response_payload.get("stream_diagnostics", {}), "max_tokens": max_tokens, "thinking": False, "mode": name},
                 "recovered_attempts": attempts,
             }
             normalized["structured_output_mode"] = name
