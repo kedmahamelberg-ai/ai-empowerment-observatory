@@ -40,6 +40,36 @@ def response(raw, mime="text/html", status=200, url=URL):
 
 
 class AcquisitionTests(unittest.TestCase):
+    def test_nested_hidden_styles_do_not_crash_or_contribute_visible_text(self):
+        for style in ('display: none', 'visibility:hidden'):
+            with self.subTest(style=style):
+                hidden = f'<div style="{style}"><span style="color:red"><b style="font-weight:bold">Hidden advert</b></span></div>'
+                html = page(extra=hidden)
+                self.assertNotIn('Hidden advert', support.visible_text(html))
+                result = base.extract_html_result(html, {'final_url': URL})
+                self.assertEqual(result['outcome'], 'stored')
+                self.assertIn('Paragraph 7', result['body_text'])
+                self.assertNotIn('Hidden advert', result['body_text'])
+
+    def test_visible_paywall_after_nested_hidden_elements_is_still_blocked(self):
+        hidden = '<div style="display:none"><span style="color:red">Old widget</span></div>'
+        html = page(BODY+' Subscribe to read the full article.', extra=hidden)
+        self.assertEqual(base.extract_html_result(html, {'final_url': URL})['outcome'], 'blocked_paywall_or_login')
+
+    def test_policy_failure_trace_names_the_failed_check_without_fetching_article(self):
+        for failed_check in ('robots', 'tdm'):
+            with self.subTest(failed_check=failed_check):
+                responses = [response('', status=503)] if failed_check == 'robots' else [response('', status=404), response('', status=403)]
+                with patch.object(base, 'public_url', return_value=True), patch.object(base, 'public_get', side_effect=[(r, [{'attempt': 1, 'http_status': r.status_code}], None) for r in responses]) as get, patch.object(base, 'extract_html_result') as extract:
+                    result = base.fetch_and_extract(URL)
+                self.assertEqual(result['outcome'], failed_check+'_unavailable')
+                self.assertEqual(get.call_count, len(responses))
+                extract.assert_not_called()
+                trace = result['recovery_trace'][0]
+                self.assertEqual(trace[failed_check+'_http_status'], 503 if failed_check == 'robots' else 403)
+                self.assertEqual(trace[failed_check+'_request_attempts'][0]['attempt'], 1)
+                self.assertNotIn('body_text', result)
+
     def test_comment_captcha_is_not_a_page_challenge(self):
         html = page(extra='<script src="https://www.google.com/recaptcha/api.js"></script>')
         self.assertFalse(base.detect_access_challenge(html))
@@ -262,7 +292,7 @@ class MemoryDatabase:
 
 
 class RecoveryCLITests(unittest.TestCase):
-    def run_recovery(self, db):
+    def run_recovery(self, db, fetch_result=None, fetch_exception=None):
         temporary = self.enterContext(tempfile.TemporaryDirectory())
         root = Path(temporary)
         release = root/'data/releases/weekly/2026-W36.json'
@@ -274,9 +304,40 @@ class RecoveryCLITests(unittest.TestCase):
         self.enterContext(patch.dict(os.environ, {'SUPABASE_URL': 'https://unused.example', 'SUPABASE_SECRET_KEY': 'fixture', 'GITHUB_OUTPUT': str(root/'outputs'), 'GITHUB_STEP_SUMMARY': str(root/'summary')}))
         self.enterContext(patch.object(sys, 'argv', ['recover', '--scope', 'release', '--release-id', '2026-W36', '--retry-mode', 'all', '--sleep', '0', '--session-id', 'one', '--report-output', str(report)]))
         self.enterContext(patch('sys.stdout', new=io.StringIO()))
-        with patch.object(base, 'fetch_and_extract', return_value={'outcome': 'stored', 'body_text': BODY+' New recovered ending.', 'final_url': URL+'-b', 'extraction_method': 'semantic_html'}) as fetch:
+        default_result = {'outcome': 'stored', 'body_text': BODY+' New recovered ending.', 'final_url': URL+'-b', 'extraction_method': 'semantic_html'}
+        with patch.object(base, 'fetch_and_extract', return_value=fetch_result if fetch_result is not None else default_result, side_effect=fetch_exception) as fetch:
             result = runner.main()
         return result, json.loads(report.read_text()), fetch.call_count
+
+    def test_policy_details_survive_storage_and_reach_the_owner_report(self):
+        db = MemoryDatabase()
+        failure = {'outcome': 'tdm_unavailable', 'robots_url': URL+'/robots.txt',
+            'robots_detail': {'http_status': 200, 'policy_state': 'parsed'},
+            'tdm': {'url': URL+'/.well-known/tdmrep.json', 'http_status': 200,
+                'check_state': 'unavailable', 'error_class': 'JSONDecodeError',
+                'error_message': 'Expecting value: line 1 column 1', 'request_attempts': [{'attempt': 1, 'http_status': 200}]}}
+        result, report, _ = self.run_recovery(db, fetch_result=failure)
+        row = next(row for row in report['articles'] if row['article_id'] == 'b')
+        self.assertEqual(row['robots_http_status'], 200)
+        self.assertEqual(row['tdm_http_status'], 200)
+        self.assertEqual(row['tdm_error_class'], 'JSONDecodeError')
+        self.assertEqual(row['tdm_check_state'], 'unavailable')
+        self.assertEqual(report['new_bodies_saved'], 0)
+        meta = db.tables['brief_article_fetch_attempts'][0]['metadata']
+        self.assertEqual(meta['tdm_request_attempts'], [{'attempt': 1, 'http_status': 200}])
+        self.assertNotIn(BODY, json.dumps(report))
+
+    def test_unexpected_parser_error_reports_its_location_without_losing_saved_body(self):
+        db = MemoryDatabase()
+        _, report, _ = self.run_recovery(db, fetch_exception=AttributeError("'NoneType' object has no attribute 'get'"))
+        row = next(row for row in report['articles'] if row['article_id'] == 'b')
+        self.assertEqual(row['outcome'], 'exception')
+        self.assertEqual(row['error_class'], 'AttributeError')
+        self.assertIn('brief_backfill_article_content_resumable.py:main:', row['error_location'])
+        self.assertNotIn('/', row['error_location'])
+        self.assertEqual(report['new_bodies_saved'], 0)
+        self.assertEqual(report['target_articles_with_full_body'], 1)
+        self.assertNotIn(BODY, json.dumps(report))
 
     def test_cli_saves_only_missing_body_and_reports_every_article(self):
         db = MemoryDatabase()

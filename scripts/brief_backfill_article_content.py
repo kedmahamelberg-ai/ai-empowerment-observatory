@@ -11,6 +11,7 @@ import signal
 import socket
 import subprocess
 import sys
+import traceback
 from functools import lru_cache
 from pathlib import Path
 from datetime import datetime, timezone
@@ -43,7 +44,7 @@ MIN_WORDS = MIN_FULL_BODY_EVIDENCE_UNITS
 FETCH_RETRY_ATTEMPTS = 3
 MAX_ALTERNATE_URLS = 6
 MAX_REDIRECTS = 4
-RECOVERY_STRATEGY_VERSION = "publisher_body_recovery_v5_2026_09_08"
+RECOVERY_STRATEGY_VERSION = "publisher_body_recovery_v6_2026_09_08"
 MAX_RESPONSE_BYTES = 12_000_000
 _POLICY_CACHE = {}
 TRANSIENT_STATUS_CODES = {408, 425, 429, 500, 502, 503, 504}
@@ -75,6 +76,38 @@ def _request_headers(*, accept: str) -> dict[str, str]:
 def compact_error(error: Any, limit: int = 280) -> str:
     """Keep useful diagnostics without persisting response or body content."""
     return re.sub(r"\s+", " ", str(error or "")).strip()[:limit]
+
+
+def exception_result(exc: Exception) -> dict[str, Any]:
+    """Record the failing collector function, never locals or source HTML."""
+    frames = traceback.extract_tb(exc.__traceback__)
+    local = [frame for frame in frames if Path(frame.filename).parent == Path(__file__).resolve().parent]
+    frame = (local or frames)[-1] if frames else None
+    return {
+        "outcome": "exception", "error_class": type(exc).__name__,
+        "error_message": compact_error(exc),
+        "error_location": f"{Path(frame.filename).name}:{frame.name}:{frame.lineno}" if frame else None,
+    }
+
+
+def policy_diagnostics(result: dict[str, Any]) -> dict[str, Any]:
+    """Expose the failed prerequisite separately from the article response."""
+    robots = result.get("robots_detail") or {}
+    tdm = result.get("tdm") or {}
+    return {
+        "robots_url": result.get("robots_url"),
+        "robots_http_status": robots.get("http_status"),
+        "robots_policy_state": robots.get("policy_state"),
+        "robots_error_class": robots.get("error_class"),
+        "robots_error_message": compact_error(robots.get("error_message")),
+        "robots_request_attempts": robots.get("request_attempts") or [],
+        "tdmrep_url": tdm.get("url"),
+        "tdm_http_status": tdm.get("http_status"),
+        "tdm_check_state": tdm.get("check_state"),
+        "tdm_error_class": tdm.get("error_class"),
+        "tdm_error_message": compact_error(tdm.get("error_message")),
+        "tdm_request_attempts": tdm.get("request_attempts") or [],
+    }
 
 
 def retry_delay_seconds(response: requests.Response | None, attempt: int) -> float:
@@ -591,8 +624,11 @@ def trace_item(result: dict[str, Any], *, requested_url: str, kind: str) -> dict
         "word_count": int(result.get("word_count") or 0),
         "extraction_method": result.get("extraction_method"),
         "error_class": result.get("error_class"),
+        "error_message": compact_error(result.get("error_message")),
+        "error_location": result.get("error_location"),
         "redirect_chain": result.get("redirect_chain") or [],
         "request_attempts": result.get("request_attempts") or [],
+        **policy_diagnostics(result),
     }
 
 
@@ -893,6 +929,7 @@ def insert_attempt(client, article_id, url, result, workflow_run_id):
         "response_bytes":result.get("response_bytes"),
         "elapsed_ms":result.get("elapsed_ms"),
         "metadata":{
+            **policy_diagnostics(result),
             "recovery_session": result.get("recovery_session"),
             "recovery_strategy_version": result.get("recovery_strategy_version") or RECOVERY_STRATEGY_VERSION,
             "candidate_kind": result.get("candidate_kind"),
@@ -910,6 +947,7 @@ def insert_attempt(client, article_id, url, result, workflow_run_id):
             "recovery_trace":safe_trace,
             "error_class":result.get("error_class"),
             "error_message":compact_error(result.get("error_message")),
+            "error_location":result.get("error_location"),
         },
     }).execute()
 
@@ -985,11 +1023,7 @@ def main():
         try:
             result = fetch_and_extract(url)
         except Exception as exc:
-            result = {
-                "outcome": "exception",
-                "error_class": type(exc).__name__,
-                "error_message": compact_error(exc),
-            }
+            result = exception_result(exc)
 
         outcome = result.get("outcome") or "unknown"
         counters[outcome] = counters.get(outcome,0)+1

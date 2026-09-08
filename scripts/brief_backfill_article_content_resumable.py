@@ -327,11 +327,7 @@ def main():
                 "error_message": str(exc),
             }
         except Exception as exc:
-            result = {
-                "outcome": "exception",
-                "error_class": type(exc).__name__,
-                "error_message": str(exc),
-            }
+            result = base.exception_result(exc)
 
         outcome = str(result.get("outcome") or "unknown")
         counts[outcome] += 1
@@ -408,6 +404,17 @@ def main():
             "attempted_at": detail.get("attempted_at"), "strategy": detail.get("retrieval_method"),
             "final_url": meta.get("final_url"), "extraction_method": meta.get("extraction_method"),
             "error_class": meta.get("error_class"), "error_message": meta.get("error_message"),
+            "error_location": meta.get("error_location"),
+            "robots_url": meta.get("robots_url"),
+            "robots_http_status": meta.get("robots_http_status", (meta.get("robots_detail") or {}).get("http_status")),
+            "robots_policy_state": meta.get("robots_policy_state", (meta.get("robots_detail") or {}).get("policy_state")),
+            "robots_error_class": meta.get("robots_error_class", (meta.get("robots_detail") or {}).get("error_class")),
+            "robots_error_message": meta.get("robots_error_message", (meta.get("robots_detail") or {}).get("error_message")),
+            "tdmrep_url": meta.get("tdmrep_url"),
+            "tdm_http_status": meta.get("tdm_http_status"),
+            "tdm_check_state": meta.get("tdm_check_state"),
+            "tdm_error_class": meta.get("tdm_error_class"),
+            "tdm_error_message": meta.get("tdm_error_message"),
             "recovery_trace": meta.get("recovery_trace", [])})
     summary["articles"] = records
     print(json.dumps({k: v for k, v in summary.items() if k != "articles"}, indent=2))

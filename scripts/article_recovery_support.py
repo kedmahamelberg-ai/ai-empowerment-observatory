@@ -95,7 +95,9 @@ def visible_text(html, strip_layout=True):
         selector += ", nav, footer, aside"
     for node in soup.select(selector):
         node.decompose()
-    for node in soup.select("[style]"):
+    # A removed parent decomposes its children too. Visit children first so a
+    # nested styled element is never inspected after its attrs became None.
+    for node in reversed(soup.select("[style]")):
         if re.search(r"(?:display\s*:\s*none|visibility\s*:\s*hidden)", node.get("style", ""), re.I):
             node.decompose()
     return soup.get_text(" ", strip=True)
