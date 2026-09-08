@@ -2,6 +2,7 @@
 """Fast repository-level guardrails for the Observatory automation."""
 from __future__ import annotations
 
+import ast
 import re
 import subprocess
 from pathlib import Path
@@ -39,6 +40,64 @@ def major_after(text: str, prefix: str) -> list[int]:
     for match in re.finditer(re.escape(prefix) + r"v(\d+)", text):
         values.append(int(match.group(1)))
     return values
+
+
+def validate_body_recovery_contract(source: str) -> None:
+    # A new recovery version invalidates earlier retry decisions. Check that
+    # provenance is still present, without pinning this guard to an old version
+    # or importing the collector's optional extraction dependencies.
+    try:
+        tree = ast.parse(source)
+    except SyntaxError as exc:
+        fail(f"article recovery source cannot be parsed: {exc}")
+    versions = []
+    for node in tree.body:
+        if isinstance(node, ast.Assign):
+            targets = node.targets
+        elif isinstance(node, ast.AnnAssign):
+            targets = [node.target]
+        else:
+            continue
+        if any(isinstance(target, ast.Name) and target.id == "RECOVERY_STRATEGY_VERSION" for target in targets):
+            versions.append(node.value)
+    if (
+        len(versions) != 1
+        or not isinstance(versions[0], ast.Constant)
+        or not isinstance(versions[0].value, str)
+        or not versions[0].value.strip()
+    ):
+        fail("article recovery must declare a non-empty RECOVERY_STRATEGY_VERSION string")
+    if not any(
+        isinstance(node, ast.Name)
+        and node.id == "RECOVERY_STRATEGY_VERSION"
+        and isinstance(node.ctx, ast.Load)
+        for node in ast.walk(tree)
+    ):
+        fail("article recovery must use RECOVERY_STRATEGY_VERSION in its provenance")
+
+    for marker in (
+        "if response.status_code in {404, 410}",
+        'detail["policy_state"] = "absent"',
+        "separate TDM, paywall and",
+        "decode_article_html",
+        "Do not ask publishers for an English variant",
+        "evidence_unit_count",
+        "ROBOTS_TIMEOUT",
+        "TDM_TIMEOUT",
+        "ARTICLE_TIMEOUT",
+        "FETCH_RETRY_ATTEMPTS",
+        "extract_embedded_json_article_body",
+        "public_alternate_urls",
+        "same_publisher_site",
+        "MAX_REDIRECTS",
+        "detect_access_challenge",
+    ):
+        if marker not in source:
+            fail(f"article recovery contract is missing {marker}")
+    if "Accept-Language" in source:
+        fail("full-body collection must not request an English publisher variant")
+    if "rp.read()" in source:
+        fail("robots.txt must not be read through an unbounded RobotFileParser request")
 
 
 def main() -> int:
@@ -325,19 +384,7 @@ def main() -> int:
     body_recovery = (ROOT / "scripts" / "brief_backfill_article_content.py").read_text(
         encoding="utf-8"
     )
-    for marker in (
-        'RECOVERY_STRATEGY_VERSION = "safe_public_recovery_v4"',
-        "if response.status_code in {404, 410}",
-        'detail["policy_state"] = "absent"',
-        "separate TDM, paywall and",
-        "decode_article_html",
-        "Do not ask publishers for an English variant",
-        "evidence_unit_count",
-    ):
-        if marker not in body_recovery:
-            fail(f"safe missing-body recovery mishandles an absent robots policy: {marker}")
-    if "Accept-Language" in body_recovery:
-        fail("full-body collection must not request an English publisher variant")
+    validate_body_recovery_contract(body_recovery)
 
     multilingual_contract = ROOT / "scripts" / "validate_multilingual_pipeline.py"
     language_routing = ROOT / "scripts" / "language_routing.py"
@@ -479,15 +526,6 @@ def main() -> int:
     if "--per-source-timeout-seconds" not in body_workflow:
         fail("body enrichment is missing its per-source watchdog")
 
-    body_fetcher = (
-        ROOT / "scripts" / "brief_backfill_article_content.py"
-    ).read_text(encoding="utf-8")
-    if "rp.read()" in body_fetcher:
-        fail("robots.txt must not be read through an unbounded RobotFileParser request")
-    for required in ("ROBOTS_TIMEOUT", "TDM_TIMEOUT", "ARTICLE_TIMEOUT"):
-        if required not in body_fetcher:
-            fail(f"body fetcher is missing {required}")
-
     body_resumer = (
         ROOT / "scripts" / "brief_backfill_article_content_resumable.py"
     ).read_text(encoding="utf-8")
@@ -498,18 +536,6 @@ def main() -> int:
     ):
         if required not in body_resumer:
             fail(f"body enrichment resumability guard is missing {required}")
-    for required in (
-        "FETCH_RETRY_ATTEMPTS",
-        "extract_embedded_json_article_body",
-        "public_alternate_urls",
-        "same_publisher_site",
-        "MAX_REDIRECTS",
-        "detect_access_challenge",
-        "safe_public_recovery_v4",
-    ):
-        if required not in body_fetcher:
-            fail(f"safe full-body recovery is missing {required}")
-
     print("Repository integrity checks passed.")
     return 0
 

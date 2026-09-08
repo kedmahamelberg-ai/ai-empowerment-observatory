@@ -16,6 +16,8 @@ import shutil
 import json
 import hashlib
 from pathlib import Path
+from complete_content import build_cohort, brief_export, export_audit_csv
+from public_directional_release import export_public_csv
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "_site"
@@ -187,6 +189,21 @@ def main() -> None:
 
     for source in (ROOT / "data/symbiosis").rglob("*.csv"):
         copy_optional_file(source, SITE / source.relative_to(ROOT))
+    # Keep the collection snapshots intact. Every current analytical surface
+    # and downstream consumer gets the same version-bound complete-content set.
+    release = json.loads((SITE / "data/releases/current.json").read_text(encoding="utf-8"))
+    relationship_path = SITE / "data/symbiosis/current.json"
+    relationship = json.loads(relationship_path.read_text(encoding="utf-8"))
+    cohort = build_cohort(release, relationship)
+    export = brief_export(release, relationship, cohort)
+    relationship["complete_content"] = cohort
+    relationship_path.write_text(json.dumps(relationship, ensure_ascii=False) + "\n", encoding="utf-8")
+    for relative, value in (("data/analysis/current.json", cohort), ("data/brief/current.json", export)):
+        path = SITE / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(value, ensure_ascii=False) + "\n", encoding="utf-8")
+    export_audit_csv(cohort, release, SITE / "data/analysis/audit.csv")
+    export_public_csv(export["relationship"], SITE / "data/analysis/current.csv")
     for target in SITE.rglob("*.json"):
         cleaned = public_json(json.loads(target.read_text(encoding="utf-8")))
         if isinstance(cleaned, dict) and cleaned.get("release_id"):

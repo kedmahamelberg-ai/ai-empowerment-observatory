@@ -128,12 +128,13 @@ function currentCard(row, summary, isCurrent) {
       <p class="period-range">${escapeHTML(formatRange(row.period_start, row.period_end))}</p>
       <p class="period-range">Observed weeks: ${escapeHTML(formatRange(summary?.observed_week_start || row.observed_week_start, summary?.observed_week_end || row.observed_week_end))}</p>
       <div class="period-metrics">
-        ${metric("coverage items", values.coverage)}
-        ${metric("distinct developments", values.developments)}
+        ${metric("collected source pages", values.coverage)}
+        ${metric("collected developments", values.developments)}
         ${metric("seen-before appearances", values.recurring)}
       </div>
       <details class="period-story">
-        <summary>Read the period takeaway</summary>
+        <summary>Read the collection history note</summary>
+        <p>This original collection-level note may include sources without complete bodies. It is not a complete-content analytical finding.</p>
         <p>${escapeHTML(values.story)}</p>
         ${values.lag != null ? `<small>Median return delay: ${Math.round(values.lag)} ${plural(Math.round(values.lag), "day")}.</small>` : ""}
       </details>
@@ -156,11 +157,12 @@ function archiveCard(row, summary) {
         <p>${escapeHTML(formatRange(row.period_start, row.period_end))}</p>
       </div>
       <div class="archive-stats">
-        <span><strong>${values.coverage}</strong> coverage</span>
-        <span><strong>${values.developments}</strong> developments</span>
+        <span><strong>${values.coverage}</strong> collected sources</span>
+        <span><strong>${values.developments}</strong> collected developments</span>
       </div>
       <details>
-        <summary>Takeaway</summary>
+        <summary>Original collection note</summary>
+        <p>Archived collection record; complete-content eligibility has not been applied to this historical total.</p>
         <p>${escapeHTML(values.story)}</p>
       </details>
     </article>
@@ -213,9 +215,9 @@ async function renderReports(periodIndex, releaseIndex) {
     }
   });
 
-  status.textContent = `${currentRows.length} reporting views. Totals cover the observed weeks shown in each view.`;
+  status.textContent = `${currentRows.length} collection audit views. Totals include unavailable sources; the current analytical report is linked above.`;
   const scopes = currentRows.map(row => JSON.stringify(summaries.get(row.period_id)?.weekly_release_ids || []));
-  if (currentRows.length > 1 && scopes.every(scope => scope === scopes[0])) status.textContent = "These views currently cover the same completed weeks, so their totals match.";
+  if (currentRows.length > 1 && scopes.every(scope => scope === scopes[0])) status.textContent = "These collection audit views cover the same completed weeks, including unavailable sources. Their totals match.";
   currentContainer.innerHTML = currentRows.map((row) => currentCard(row, summaries.get(row.period_id), true)).join("");
 
   const archiveRows = rows

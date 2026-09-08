@@ -398,7 +398,20 @@ def main() -> int:
     relationship = json.loads((ROOT / "data/symbiosis/current.json").read_text(encoding="utf-8"))
     from public_directional_release import validate_directional_release
     validate_directional_release(release, relationship)
-    insights["directional_summary"] = relationship["directional_summary"]
+    from complete_content import build_cohort
+    cohort = build_cohort(release, relationship)
+    inventory_distributions = {key: insights.pop(key) for key in list(insights) if key != "meta"}
+    insights["directional_summary"] = cohort["directional_summary"]
+    insights["complete_content"] = {key: cohort[key] for key in ("policy_version", "content_sha256", "counts", "denominator")}
+    # Legacy lens distributions describe the collection inventory, not this
+    # analytical sample. Preserve them explicitly as audit-only data.
+    insights["collection_inventory"] = {"coverage_units": expected_coverage, "event_units": expected_events,
+        "scope": "Collection inventory; excluded from complete-content findings.",
+        "legacy_distributions": inventory_distributions}
+    insights["meta"]["coverage_units"] = cohort["counts"]["eligible_sources"]
+    insights["meta"]["event_units"] = cohort["counts"]["eligible_developments"]
+    insights["meta"]["source_of_truth"] = "/data/analysis/current.json"
+    insights["meta"]["population"] = "complete_content_developments"
     insights["source_relationship_sha256"] = relationship["content_sha256"]
 
 
@@ -413,7 +426,7 @@ def main() -> int:
                 "coverage_units": len(coverage_rows),
                 "event_units": len(event_rows),
                 "unique_sources": len(sources),
-                "discovery_markets": len(insights["discovery_markets"]),
+                "discovery_markets": len(inventory_distributions["discovery_markets"]),
                 "history_points": len(history["points"]),
             },
             indent=2,

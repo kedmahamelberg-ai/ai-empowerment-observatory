@@ -159,12 +159,14 @@ class IndependentDirectionsTests(unittest.TestCase):
         for filename in ('build_weekly_release.py','finalize_stage7c_residual.py'):
             self.assertIn(dual.CLASSIFIER_VERSION,(ROOT/'scripts'/filename).read_text())
     def test_pages_and_pdf_source_metadata_use_the_identical_reading_revision(self):
+        from complete_content import build_cohort, POLICY
         rel=read('data/symbiosis/current.json')
         source=read('data/releases/current.json')
-        if not rel.get('directional_summary') or rel.get('source_release_sha256') != source.get('content_sha256') or read('data/reports/latest.json').get('source_relationship_sha256') != rel.get('content_sha256'):
+        if not rel.get('directional_summary') or rel.get('source_release_sha256') != source.get('content_sha256') or read('data/reports/latest.json').get('source_relationship_sha256') != rel.get('content_sha256') or read('data/reports/latest.json').get('complete_content',{}).get('policy_version') != POLICY:
             self.skipTest('Public derivatives are being rebuilt; the publication gate still requires a complete match.')
+        cohort=build_cohort(source,rel)
         for filename in ('data/reports/latest.json','data/insights/latest.json'):
-            meta=read(filename);self.assertEqual(meta['source_relationship_sha256'],rel['content_sha256']);self.assertEqual(meta['directional_summary'],rel['directional_summary'])
+            meta=read(filename);self.assertEqual(meta['source_relationship_sha256'],rel['content_sha256']);self.assertEqual(meta['directional_summary'],cohort['directional_summary']);self.assertEqual(meta['complete_content']['content_sha256'],cohort['content_sha256'])
         meta=read('data/reports/latest.json');pdf=ROOT/meta['file'].lstrip('/')
         self.assertEqual(hashlib.sha256(pdf.read_bytes()).hexdigest(),meta['pdf_sha256'])
 if __name__=='__main__':unittest.main()

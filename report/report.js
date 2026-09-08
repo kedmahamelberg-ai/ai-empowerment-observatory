@@ -1,5 +1,5 @@
-import {weeklyModel, weeklyTakeaway} from '../public-data.js?v=7.2.0';
-import {setupNavigation} from '../site.js?v=7.2.0';
+import {weeklyModel, weeklyTakeaway} from '../public-data.js?v=7.3.0';
+import {setupNavigation} from '../site.js?v=7.3.0';
 "use strict";
 
 const CURRENT_URL = "/data/releases/current.json";
@@ -102,7 +102,9 @@ function relationshipCard(symbiosis, current) {
 }
 
 function renderPreview(current, symbiosis) {
-  const c = periodCounts(current);
+  const model = weeklyModel(current, symbiosis);
+  if (!model.ready) throw new Error('Complete-content cohort unavailable');
+  const c = periodCounts(model.analysisRelease);
   const relationship = relationshipCard(symbiosis, current);
   const cards = [
     {
@@ -149,9 +151,11 @@ async function init() {
       fetchJSON(INDEX_URL),
       fetchOptionalJSON(SYMBIOSIS_URL),
     ]);
-    const c = periodCounts(current);
+    const model = weeklyModel(current, symbiosis);
+    if (!model.ready) throw new Error('Complete-content cohort unavailable');
+    const c = periodCounts(model.analysisRelease);
     const period = formatRange(current.period_start, current.period_end);
-    setText("report-period", `Latest completed week · ${period}`);
+    setText("report-period", `Latest completed week · Complete source content · ${period}`);
     setText("cover-coverage-count", c.articles);
     setText("preview-new", c.newDevelopments);
     setText("preview-events", c.events);

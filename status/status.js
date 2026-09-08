@@ -7,7 +7,7 @@ async function init() {
   const latest = data.latest || {};
   document.getElementById('status').innerHTML = `
     <div class="card"><strong>${escapeText(data.system_status)}</strong> · Release checks ${escapeText(data.structural_gate)}</div>
-    <div class="card">${escapeText(latest.coverage_units)} source pages · ${escapeText(latest.event_units)} developments</div>
+    <div class="card">${escapeText(latest.coverage_units)} supporting source pages · ${escapeText(latest.event_units)} developments with complete source content</div>
     <div class="card">${escapeText(data.period_start)} to ${escapeText(data.period_end)} · <a href="/edu/">Explore the source readings</a></div>
     <div class="card">Updated ${escapeText(data.generated_at)}</div>`;
 }

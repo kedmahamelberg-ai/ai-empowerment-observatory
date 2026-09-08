@@ -16,6 +16,7 @@ from pathlib import Path
 from typing import Any
 
 from release_common import iso_week_id, previous_complete_week
+from complete_content import build_cohort
 
 ROOT = Path(__file__).resolve().parents[1]
 RELEASE = ROOT / "data" / "releases" / "current.json"
@@ -213,14 +214,17 @@ def validate(*, allow_stale: bool = False) -> tuple[dict[str, Any], dict[str, An
     require_release_id(insights, release_id, "Public insights")
     require_release_id(report_meta, release_id, "Public PDF metadata")
     require_release_id(symbiosis, release_id, "Relationship-lens artifact")
+    cohort = build_cohort(release, symbiosis)
+    analytical_sources = cohort["counts"]["eligible_sources"]
+    analytical_events = cohort["counts"]["eligible_developments"]
 
     insight_meta = insights.get("meta") or {}
-    if int(insight_meta.get("coverage_units") or 0) != coverage_n or int(insight_meta.get("event_units") or 0) != event_n:
-        raise ReleaseError("Public insights counts differ from current.json.")
+    if int(insight_meta.get("coverage_units") or 0) != analytical_sources or int(insight_meta.get("event_units") or 0) != analytical_events:
+        raise ReleaseError("Public insights counts differ from the complete-content cohort.")
     if str(insight_meta.get("observation_start") or "") != period_start or str(insight_meta.get("observation_end") or "") != period_end:
         raise ReleaseError("Public insights observation window differs from current.json.")
 
-    for key, expected_value in (("coverage_units", coverage_n), ("event_units", event_n)):
+    for key, expected_value in (("coverage_units", analytical_sources), ("event_units", analytical_events)):
         if int(report_meta.get(key) or 0) != expected_value:
             raise ReleaseError(f"Public PDF metadata {key} differs from current.json.")
     if str(report_meta.get("period_start") or "") != period_start or str(report_meta.get("period_end") or "") != period_end:
@@ -230,13 +234,15 @@ def validate(*, allow_stale: bool = False) -> tuple[dict[str, Any], dict[str, An
         ("event_index", event_index),
         ("directional_amplification_gap", float(gap)),
     ):
-        if not nearly_equal(report_meta.get(key), expected_value, tolerance=1e-4):
+        if not nearly_equal((report_meta.get("collection_inventory") or {}).get(key), expected_value, tolerance=1e-4):
             raise ReleaseError(f"Public PDF metadata {key} differs from current.json.")
     from public_directional_release import validate_directional_release
     validate_directional_release(release, symbiosis)
     for label, artifact in (("PDF", report_meta), ("Insights", insights)):
-        if artifact.get("directional_summary") != symbiosis.get("directional_summary"):
-            raise ReleaseError(f"{label} directional counts differ from the canonical readings.")
+        if artifact.get("directional_summary") != cohort["directional_summary"]:
+            raise ReleaseError(f"{label} directional counts differ from the complete-content cohort.")
+        if (artifact.get("complete_content") or {}).get("content_sha256") != cohort["content_sha256"]:
+            raise ReleaseError(f"{label} complete-content cohort is stale.")
         if artifact.get("source_relationship_sha256") != symbiosis.get("content_sha256"):
             raise ReleaseError(f"{label} is from an older relationship revision.")
     pdf_path = ROOT / str(report_meta.get("file") or "").lstrip("/")
@@ -306,11 +312,10 @@ def validate(*, allow_stale: bool = False) -> tuple[dict[str, Any], dict[str, An
         "source_of_truth": "/data/releases/current.json",
         "latest": {
             "release_id": release_id,
-            "coverage_units": coverage_n,
-            "event_units": event_n,
-            "coverage_empowerment_index": coverage_index,
-            "event_empowerment_index": event_index,
-            "directional_amplification_gap": float(gap),
+            "coverage_units": analytical_sources,
+            "event_units": analytical_events,
+            "complete_content_cohort_sha256": cohort["content_sha256"],
+            "collection_inventory": cohort["counts"],
             "review_queue_count": review_queue_count,
             "relationship_status": symbiosis_status,
         },

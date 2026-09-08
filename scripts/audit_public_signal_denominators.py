@@ -138,8 +138,8 @@ def build_audit(release: dict[str, Any], symbiosis: dict[str, Any]) -> dict[str,
         raise SystemExit("SIGNAL AUDIT ERROR: two-sided count is outside the weekly denominator")
 
     full_body = sum(full_body_available(row) for row in evidence)
-    return {
-        "schema_version": "aieo_public_signal_audit_v1",
+    inventory = {
+        "schema_version": "aieo_collection_signal_audit_v1",
         "release_id": release_id,
         "period_start": release.get("period_start"),
         "period_end": release.get("period_end"),
@@ -163,6 +163,16 @@ def build_audit(release: dict[str, Any], symbiosis: dict[str, Any]) -> dict[str,
             "displayed_relationship_patterns_match_evidence_rows": True,
         },
     }
+    if symbiosis.get("directional_summary"):
+        from complete_content import build_cohort
+        cohort = build_cohort(release, symbiosis)
+        axis = cohort["directional_summary"]["human"]
+        return {"schema_version": "aieo_public_signal_audit_v2", "release_id": release_id,
+                "event_denominator": cohort["counts"]["eligible_developments"],
+                "people_outcomes": dict(zip(OUTCOME_KEYS, (axis["gain"], axis["loss"], axis["mixed"], axis["none"], axis["unresolved"]))),
+                "complete_content": {key:cohort[key] for key in ("policy_version", "content_sha256", "counts", "denominator")},
+                "collection_inventory": inventory}
+    return inventory
 
 
 def parse_args() -> argparse.Namespace:

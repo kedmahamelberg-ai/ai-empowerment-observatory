@@ -6,8 +6,10 @@ from __future__ import annotations
 import argparse
 import json
 import hashlib
+import csv
 from build_public_site import PRIVATE_JSON_KEYS
 from public_directional_release import validate_directional_release
+from complete_content import build_cohort, brief_export
 from pathlib import Path
 
 
@@ -23,6 +25,10 @@ REQUIRED = (
     "reports/index.html",
     "data/releases/current.json",
     "data/symbiosis/current.json",
+    "data/analysis/current.json",
+    "data/analysis/current.csv",
+    "data/analysis/audit.csv",
+    "data/brief/current.json",
 )
 PRIVATE_TOP_LEVEL = {"scripts", "config", "supabase", "validation", "review"}
 PRIVATE_DATA_PREFIXES = (
@@ -84,6 +90,25 @@ def main() -> int:
         fail("current release and relationship artifact disagree on release_id")
 
     validate_directional_release(release, symbiosis)
+    expected = build_cohort(release, symbiosis)
+    cohort = json.loads((site / "data/analysis/current.json").read_text(encoding="utf-8"))
+    def without_projection(payload):
+        return {key:value for key,value in payload.items() if key not in ("public_projection_version", "public_content_sha256")}
+    if without_projection(cohort) != expected or symbiosis.get("complete_content") != expected:
+        fail("The complete-content cohort differs from the saved source lineage")
+    exported = json.loads((site / "data/brief/current.json").read_text(encoding="utf-8"))
+    if without_projection(exported) != brief_export(release, symbiosis, expected):
+        fail("The Brief export does not contain exactly the complete-content cohort")
+    def csv_rows(relative):
+        with (site / relative).open(encoding="utf-8-sig", newline="") as handle:
+            return list(csv.DictReader(handle))
+    included = {row["event_id"] for row in expected["records"] if row["eligible"]}
+    readings_csv = csv_rows("data/analysis/current.csv")
+    audit_csv = csv_rows("data/analysis/audit.csv")
+    if len(readings_csv) != len(included) or {row["event_id"] for row in readings_csv} != included:
+        fail("The included-readings CSV differs from the analytical denominator")
+    if len(audit_csv) != len(expected["records"]) or {row["event_id"] for row in audit_csv} != {row["event_id"] for row in expected["records"]} or {row["event_id"] for row in audit_csv if row["included_in_analysis"] == "true"} != included:
+        fail("The audit CSV does not reconcile all collected developments")
     def inspect_private(value, path):
         if isinstance(value, dict):
             if set(value) & PRIVATE_JSON_KEYS:

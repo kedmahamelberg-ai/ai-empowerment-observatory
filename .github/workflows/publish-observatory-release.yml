@@ -122,7 +122,7 @@ jobs:
         run: python scripts/build_public_site.py
       - name: Verify the exact Pages artifact before upload
         run: |
-          node --test tests/test_public_display.mjs
+          node --test tests/test_public_display.mjs tests/test_complete_content.mjs
           python scripts/normalize_public_release_copy.py --check
           python scripts/audit_public_signal_denominators.py
           python scripts/validate_public_site_artifact.py

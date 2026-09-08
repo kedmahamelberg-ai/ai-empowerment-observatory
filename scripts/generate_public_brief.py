@@ -14,6 +14,7 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import mm
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak
 from public_directional_release import validate_directional_release
+from complete_content import build_cohort
 
 ROOT = Path(__file__).resolve().parents[1]
 REPORT_PATH = ROOT / 'reports/ai-empowerment-pulse-latest.pdf'
@@ -44,36 +45,41 @@ def main():
     release = read(ROOT / 'data/releases/current.json')
     relationship = read(ROOT / 'data/symbiosis/current.json')
     validate_directional_release(release, relationship)
-    summary = relationship['directional_summary']
+    cohort = build_cohort(release, relationship)
+    summary = cohort['directional_summary']
     n = summary['total']; complete = summary['evidence_complete']
-    source_n = release['counts']['ai_relevant_articles']
+    source_n = cohort['counts']['eligible_sources']
     start, end = (datetime.fromisoformat(release[k]) for k in ('period_start', 'period_end'))
     window = f'{start:%d %B} - {end:%d %B %Y}'
     story = [p('AI EMPOWERMENT OBSERVATORY', SMALL), Spacer(1, 8*mm), p('The weekly AI picture', H1), p(window, H2),
-        p(f'{n} developments. {source_n} source pages. Two separate questions: what is changing for people, and what is changing for AI?'),
+        p(f'{n} developments with complete source content, supported by {source_n} source pages. What is changing for people, and what is changing for AI?'),
         p('What the sources describe', H2)]
     table = [[p('Source reading', SMALL), p('People', SMALL), p('AI / operators', SMALL)]]
-    for key in ('gain','loss','mixed','none','unresolved'):
-        table.append([p(LABELS[key]), p(f"{summary['human'][key]}  ({summary['human'][key]/n:.1%})"), p(f"{summary['ai'][key]}  ({summary['ai'][key]/n:.1%})")])
+    for key in ('gain','loss','mixed','none'):
+        def cell(side):
+            value = summary[side][key]
+            share = f'{value/n:.1%}' if n else 'not available'
+            return p(f'{value}  ({share})')
+        table.append([p(LABELS[key]), cell('human'), cell('ai')])
     table.append([p('Total'),p(str(n)),p(str(n))])
     t = Table(table, colWidths=[88*mm, 40*mm, 42*mm], hAlign='LEFT')
     t.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP'), ('LEFTPADDING',(0,0),(-1,-1),0), ('RIGHTPADDING',(0,0),(-1,-1),10),
         ('TOPPADDING',(0,0),(-1,-1),8), ('BOTTOMPADDING',(0,0),(-1,-1),8), ('LINEBELOW',(0,0),(-1,0),1,TEAL),
         ('LINEBELOW',(0,1),(-1,-2),0.5,RULE), ('LINEABOVE',(0,-1),(-1,-1),1,TEAL)]))
-    story += [t, Spacer(1, 7*mm), p('Each column counts every development once. Mixed findings occupy their own category. The two columns are not added together.', SMALL),
+    story += [t, Spacer(1, 7*mm), p('Each column counts every included development once. Percentages are rounded. Mixed findings occupy their own category. The two columns are not added together.', SMALL),
         p('Read the evidence before the headline number', H2),
-        p(f'{complete} developments have complete written-source readings. {n-complete} have incomplete written evidence. They remain in the weekly total and are not treated as neutral findings.'),
+        p(f"The collection contains {cohort['counts']['collected_developments']} developments. {cohort['counts']['excluded_developments']} are excluded from these percentages because complete source evidence or a completed reading is unavailable. They remain in the downloadable audit inventory."),
         p('These figures describe source reporting, including attributed claims, anticipated benefits, risks and recommendations. They do not establish independently verified effects or how many people experienced them.'),
         PageBreak(), p('Follow the finding to the source', H1),
         p('Each development has an individual human reading and an individual AI reading, with the source links in the online record and downloadable CSV. A source does not have to discuss both dimensions.'),
         p('For people', H2), p('Gains and losses concern ability, access, opportunity, control or welfare. A credible description of a risk or expected benefit is recorded as a source claim; it is not converted into proof that the effect occurred.'),
         p('For AI and its operators', H2), p('Gains and limitations concern capabilities, use, reach, resources and operating conditions. Investment or adoption can inform this side without automatically establishing a benefit for people.'),
-        p('Mixed and missing mean different things', H2), p('A source can describe gains and losses together, including effects on different groups. That is mixed. No direction stated means the complete written source did not state a direction on that side. Incomplete evidence means the source could not be read completely.'),
+        p('Mixed and missing mean different things', H2), p('A source can describe gains and losses together. No direction stated is a valid complete-source reading and stays in the denominator. Missing bodies and media summaries without complete transcripts are excluded.'),
         p('Scope and comparison', H2), p(f'{source_n} source pages were grouped into {n} developments. English, French and Chinese reporting is collected through five search markets. Those markets are a research sample, and source location does not establish where an event happened.'),
-        p('This edition introduces the independent-direction policy. Earlier single-category relationship totals are not directly comparable. Weekly news-volume comparisons remain available. Fictional and cultural material is identified within the relevant record.'),
+        p('Availability checks are automatic, not a certification of classification accuracy. Unavailable publishers can bias this sample. Earlier collection-volume totals are audit records and are not directly comparable with these complete-content findings.'),
         p('Explore and download', H2),
         Paragraph('<link href="https://observatory.hamelberg-ai.com/edu/" color="#087f85">Open the individual readings and sources</link>', BODY),
-        Paragraph('<link href="https://observatory.hamelberg-ai.com/data/symbiosis/current.csv" color="#087f85">Download the full weekly classification table</link>', BODY),
+        Paragraph('<link href="https://observatory.hamelberg-ai.com/data/analysis/current.csv" color="#087f85">Download the included readings</link> | <link href="https://observatory.hamelberg-ai.com/data/analysis/audit.csv" color="#087f85">Download the collection and exclusion audit</link>', BODY),
         p('A research initiative by Kedma Hamelberg.', SMALL)]
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     SimpleDocTemplate(str(REPORT_PATH), pagesize=A4, rightMargin=20*mm,leftMargin=20*mm, topMargin=20*mm,bottomMargin=27*mm,
@@ -86,11 +92,14 @@ def main():
     meta = {'slug':'ai-empowerment-pulse-latest','title':'AI Empowerment Pulse', 'edition':'Weekly source readings',
         'release_id':release['release_id'], 'release_revision':release.get('revision'),
         'period_start':release['period_start'],'period_end':release['period_end'], 'observation_window':window,
-        'source_of_truth':'/data/symbiosis/current.json','source_release_sha256':release['content_sha256'],
+        'source_of_truth':'/data/analysis/current.json','source_release_sha256':release['content_sha256'],
         'source_relationship_sha256':relationship['content_sha256'], 'directional_summary':summary,
         'file':'/reports/ai-empowerment-pulse-latest.pdf','coverage_units':source_n,'event_units':n,
-        'coverage_index':coverage.get('empowerment_index'),'event_index':event.get('empowerment_index'),
-        'directional_amplification_gap':amp.get('directional_gap'), 'coverage_event_ratio':source_n/n,
+        'collection_inventory':{'coverage_units':release['counts']['ai_relevant_articles'],'event_units':release['counts']['ai_relevant_event_records'],
+            'coverage_index':coverage.get('empowerment_index'),'event_index':event.get('empowerment_index'),
+            'directional_amplification_gap':amp.get('directional_gap'),'scope':'Legacy collection indices; not complete-content findings.'},
+        'coverage_event_ratio':source_n/n if n else None,
+        'complete_content':{key:cohort[key] for key in ('policy_version','content_sha256','counts','denominator')},
         'pages':2,'schema_version':'aieo_public_brief_v2', 'pdf_sha256':hashlib.sha256(REPORT_PATH.read_bytes()).hexdigest(),
         'generated_at':datetime.now(timezone.utc).isoformat()}
     META_PATH.parent.mkdir(parents=True,exist_ok=True)

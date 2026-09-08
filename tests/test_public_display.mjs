@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {weeklyModel, outcomeFor, weeklyTakeaway, OUTCOMES, PATTERNS} from '../public-data.js';
+import {inventoryModel as weeklyModel, outcomeFor, weeklyTakeaway, OUTCOMES, PATTERNS} from '../public-data.js';
 const read=p=>JSON.parse(fs.readFileSync(new URL('../'+p,import.meta.url),'utf8'));
 const release=read('data/releases/current.json');
 const relationship=read('data/symbiosis/current.json');

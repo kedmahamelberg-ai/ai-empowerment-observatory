@@ -1,5 +1,5 @@
 /* One interpretation of the published weekly evidence for every public page. */
-export const BUILD_ID = '7.2.0';
+export const BUILD_ID = '7.3.0';
 export const OUTCOMES = {
   benefit_shown: 'Benefits only',
   downside_shown: 'Downsides only',
@@ -57,7 +57,7 @@ export function outcomeFor(row) {
   if (s.people_losing_ground) return 'downside_shown';
   return row.evidence_status === 'insufficient' ? 'too_little_evidence' : 'no_clear_people_change';
 }
-export function weeklyModel(release, relationships) {
+export function inventoryModel(release, relationships) {
   const c = releaseCounts(release);
   const model = {...c, ready:false, release, relationships, counts:Object.fromEntries(Object.keys(OUTCOMES).map(k => [k,0])), patterns:Object.fromEntries(Object.keys(PATTERNS).map(k => [k,0])), rows:new Map(), fullBody:0, noBody:0, insufficientWithBody:0, twoSided:0, uneven:0, axesReady:false, aiCounts:Object.fromEntries(DIRECTION_KEYS.map(k=>[k,0])), humanCounts:Object.fromEntries(DIRECTION_KEYS.map(k=>[k,0]))};
   if (!relationships || !c.total || relationships.release_id !== release?.release_id) return model;
@@ -103,8 +103,58 @@ export function weeklyModel(release, relationships) {
   model.ready = Object.values(model.counts).reduce((a,b) => a+b,0) === c.total;
   return model;
 }
+export function weeklyModel(release, relationships) {
+  const inventory = inventoryModel(release, relationships);
+  const pending = {...inventory, ready:false, total:0, articles:0};
+  const cohort = relationships?.complete_content;
+  if (!inventory.ready || cohort?.policy_version !== 'complete_content_2026_09_v1' || cohort.release_id !== release.release_id || cohort.source_release_sha256 !== release.content_sha256 || cohort.source_relationship_sha256 !== relationships.content_sha256 || cohort.period_start !== release.period_start || cohort.period_end !== release.period_end) return pending;
+  const records = cohort.records;
+  if (!Array.isArray(records) || records.length !== inventory.total || new Set(records.map(r=>r.event_id)).size !== inventory.total || records.some(r=>!inventory.rows.has(r.event_id) || typeof r.eligible !== 'boolean')) return pending;
+  const auditRecords = new Map(records.map(r=>[r.event_id,r]));
+  const included = records.filter(r=>r.eligible);
+  const sourceIds = new Set();
+  const rows = new Map();
+  for (const item of included) {
+    const row = inventory.rows.get(item.event_id);
+    const ids = item.eligible_article_ids;
+    if (row.axes?.evidence_complete !== true || !Array.isArray(ids) || !ids.length || item.reason_codes?.length || new Set(ids).size !== ids.length || ['human','ai'].some(side=>row.axes[side]?.direction === 'unresolved')) return pending;
+    const sources = row.sources.filter(s=>ids.includes(String(s.article_id)));
+    if (sources.length !== ids.length) return pending;
+    for (const source of sources) {
+      const id = String(source.article_id), basis = row.evidence_basis_summary || {};
+      const quality = basis.source_quality?.[id];
+      if (quality?.usable_complete_body !== true || quality.flags?.length || !/^[a-f0-9]{64}$/.test(quality.body_sha256 || '') || basis.source_fingerprints?.[id] !== quality.body_sha256) return pending;
+      sourceIds.add(id);
+    }
+    rows.set(item.event_id,{...row,sources});
+  }
+  if (cohort.counts?.collected_developments !== inventory.total || cohort.counts?.collected_sources !== inventory.articles || cohort.counts?.eligible_developments !== rows.size || cohort.counts?.eligible_sources !== sourceIds.size || cohort.counts?.excluded_developments !== inventory.total-rows.size || cohort.counts?.excluded_sources !== inventory.articles-sourceIds.size || cohort.denominator?.value !== rows.size) return pending;
+  const events = (release.evidence || []).filter(r=>rows.has(String(r.effective_event_id || r.event_id))).map(r=>({...r,sources:rows.get(String(r.effective_event_id || r.event_id)).sources,member_article_ids:rows.get(String(r.effective_event_id || r.event_id)).sources.map(s=>s.article_id)}));
+  const counts = {ai_relevant_articles:sourceIds.size,ai_relevant_event_records:rows.size,extra_coverage:sourceIds.size-rows.size,
+    new_event_records:events.filter(r=>['first_time','follow_on_development'].includes(r.novelty_status)).length,
+    recurring_event_records:events.filter(r=>r.novelty_status==='recurring').length,
+    possible_historical_match_event_records:events.filter(r=>!['first_time','follow_on_development','recurring'].includes(r.novelty_status)).length};
+  const analysisRelease = {...release,counts,evidence:events,units:{coverage_articles:(release.units?.coverage_articles || []).filter(r=>sourceIds.has(String(r.article_id)))}};
+  const model = {...inventory,...releaseCounts(analysisRelease),rows,allRows:inventory.rows,auditRecords,cohort,analysisRelease,inventory,fullBody:rows.size,noBody:0,insufficientWithBody:0,
+    counts:Object.fromEntries(Object.keys(OUTCOMES).map(k=>[k,0])),patterns:Object.fromEntries(Object.keys(PATTERNS).map(k=>[k,0])),twoSided:0,uneven:0,
+    aiCounts:Object.fromEntries(DIRECTION_KEYS.map(k=>[k,0])),humanCounts:Object.fromEntries(DIRECTION_KEYS.map(k=>[k,0]))};
+  for (const row of rows.values()) {
+    model.counts[outcomeFor(row)]++;
+    for (const side of ['human','ai']) model[`${side}Counts`][row.axes[side].direction]++;
+    const patterns = Object.keys(PATTERNS).filter(k=>row.relationship_patterns?.[k]===true);
+    patterns.forEach(k=>model.patterns[k]++);
+    if (patterns.length) model.twoSided++;
+    if (row.public_signals.not_everyone_benefits) model.uneven++;
+  }
+  const summary = cohort.directional_summary;
+  if (summary?.total !== rows.size || summary?.evidence_complete !== rows.size) return pending;
+  for (const side of ['human','ai']) for (const key of DIRECTION_KEYS) if (summary[side]?.[key] !== model[`${side}Counts`][key]) return pending;
+  model.ready = true;
+  return model;
+}
 export function weeklyTakeaway(model) {
   if (!model.ready) return 'The latest weekly assessment is being prepared.';
+  if (!model.total) return 'No developments currently meet the complete-content rule.';
   const c = model.counts;
   const parts = [];
   if (c.benefit_shown) parts.push(`${c.benefit_shown} ${c.benefit_shown === 1 ? "development describes" : "developments describe"} benefits only`);
