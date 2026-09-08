@@ -9,26 +9,26 @@
   "observation_window": "31 August - 06 September 2026",
   "source_of_truth": "/data/symbiosis/current.json",
   "source_release_sha256": "badf075e19afbbded1aaccb369f089c3beae8a0207c0bd7070b4e76472b53198",
-  "source_relationship_sha256": "42b1de06ec18b64c70efaa784d32b326ac42a192700f6cd3673b1b6cd77af134",
+  "source_relationship_sha256": "f3c825261a376d085ddd6fcf2c01763dc5a8791b2bd455e5d4f682ddc7436dba",
   "directional_summary": {
     "schema_version": "aieo_independent_directions_v2",
     "policy_version": "source_representations_independent_axes_2026_09",
     "total": 132,
     "human": {
-      "gain": 14,
-      "loss": 1,
+      "gain": 15,
+      "loss": 2,
       "mixed": 3,
-      "none": 58,
-      "unresolved": 56
+      "none": 65,
+      "unresolved": 47
     },
     "ai": {
-      "gain": 11,
+      "gain": 12,
       "loss": 1,
       "mixed": 2,
-      "none": 62,
-      "unresolved": 56
+      "none": 70,
+      "unresolved": 47
     },
-    "evidence_complete": 76,
+    "evidence_complete": 85,
     "counting_rule": "Each axis partitions the same records. Mixed is one category. The two axes are not added together."
   },
   "file": "/reports/ai-empowerment-pulse-latest.pdf",
@@ -40,6 +40,6 @@
   "coverage_event_ratio": 1.0454545454545454,
   "pages": 2,
   "schema_version": "aieo_public_brief_v2",
-  "pdf_sha256": "306522b98d342c4e8b126979b0c9971a8a4b7a6f0fa831eb466fdc7700b34b84",
-  "generated_at": "2026-09-08T11:20:29.807514+00:00"
+  "pdf_sha256": "89bb26acef13f6b2ea81018bcea0c0b3a150d1dbf67439142beebc45bdbba813",
+  "generated_at": "2026-09-08T13:34:12.190474+00:00"
 }
