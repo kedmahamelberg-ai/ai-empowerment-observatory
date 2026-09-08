@@ -59,14 +59,14 @@ class AcquisitionTests(unittest.TestCase):
     def test_policy_failure_trace_names_the_failed_check_without_fetching_article(self):
         for failed_check in ('robots', 'tdm'):
             with self.subTest(failed_check=failed_check):
-                responses = [response('', status=503)] if failed_check == 'robots' else [response('', status=404), response('', status=403)]
+                responses = [response('', status=503)] if failed_check == 'robots' else [response('', status=404), response('', status=503)]
                 with patch.object(base, 'public_url', return_value=True), patch.object(base, 'public_get', side_effect=[(r, [{'attempt': 1, 'http_status': r.status_code}], None) for r in responses]) as get, patch.object(base, 'extract_html_result') as extract:
                     result = base.fetch_and_extract(URL)
                 self.assertEqual(result['outcome'], failed_check+'_unavailable')
                 self.assertEqual(get.call_count, len(responses))
                 extract.assert_not_called()
                 trace = result['recovery_trace'][0]
-                self.assertEqual(trace[failed_check+'_http_status'], 503 if failed_check == 'robots' else 403)
+                self.assertEqual(trace[failed_check+'_http_status'], 503)
                 self.assertEqual(trace[failed_check+'_request_attempts'][0]['attempt'], 1)
                 self.assertNotIn('body_text', result)
 
@@ -214,7 +214,158 @@ class AcquisitionTests(unittest.TestCase):
         self.assertIn('Paragraph 7', result['body_text'])
 
 
+class PolicyDiscoveryTests(unittest.TestCase):
+    """Exercise observed discovery failures through real HTTP/extraction code."""
+
+    ROBOTS = 'https://news.example.com/robots.txt'
+    TDM = 'https://news.example.com/.well-known/tdmrep.json'
+
+    def tearDown(self):
+        base._POLICY_CACHE.clear()
+
+    def collect(self, *, robots=None, tdm=None, article=None, extra=None):
+        base._POLICY_CACHE.clear()
+        replies = {
+            self.ROBOTS: robots if robots is not None else response('User-agent: *\nDisallow:', 'text/plain'),
+            self.TDM: tdm if tdm is not None else response('', status=404),
+            URL: article if article is not None else response(page()),
+            **(extra or {}),
+        }
+        fetched = []
+
+        def get(url, **kwargs):
+            fetched.append(url)
+            item = replies[url]
+            if isinstance(item, Exception):
+                raise item
+            item.url = url
+            return item
+
+        with patch.object(base, 'public_url', return_value=True), patch.object(base.requests, 'get', side_effect=get), patch.object(base.time, 'sleep'):
+            result = base.fetch_public_candidate(URL, kind='original')
+        return result, fetched
+
+    def test_optional_endpoint_4xx_does_not_block_an_accessible_article(self):
+        # The actual W36 failures include nine 403s and one 400 at this
+        # endpoint. They must not masquerade as article-access responses.
+        for status in (400, 401, 403, 404, 406, 410):
+            with self.subTest(status=status):
+                result, fetched = self.collect(tdm=response('', status=status))
+                self.assertEqual(result['outcome'], 'stored')
+                self.assertIn('Paragraph 7', result['body_text'])
+                self.assertEqual(fetched, [self.ROBOTS, self.TDM, URL])
+                self.assertEqual(result['tdm']['reservation'], 'unset')
+                self.assertEqual(result['tdm']['check_state'], 'not_implemented')
+                self.assertEqual(result['tdm']['http_status'], status)
+
+    def test_html_or_plain_text_at_optional_endpoint_is_not_a_declaration(self):
+        for text, mime in (('<html><title>Publisher home</title></html>', 'text/html'),
+                           ('Not found', 'text/plain'), ('', 'text/plain')):
+            with self.subTest(mime=mime, text=text):
+                result, fetched = self.collect(tdm=response(text, mime))
+                self.assertEqual(result['outcome'], 'stored')
+                self.assertEqual(result['tdm']['check_state'], 'not_implemented')
+                self.assertEqual(result['tdm']['reservation'], 'unset')
+                trace = base.trace_item(result, requested_url=URL, kind='original')
+                self.assertEqual(trace['tdm_http_status'], 200)
+                self.assertEqual(trace['tdm_check_state'], 'not_implemented')
+                self.assertIn('DecodeError', trace['tdm_error_class'])
+                self.assertNotIn('Paragraph', json.dumps(trace))
+                self.assertEqual(fetched[-1], URL)
+
+    def test_robots_406_no_longer_stops_article_retrieval(self):
+        result, fetched = self.collect(robots=response('', status=406))
+        self.assertEqual(result['outcome'], 'stored')
+        self.assertEqual(result['robots_detail']['policy_state'], 'unavailable_4xx')
+        self.assertEqual(result['robots_detail']['http_status'], 406)
+        self.assertEqual(fetched[-1], URL)
+
+    def test_temporary_policy_failures_are_still_deferred_before_article_fetch(self):
+        for resource in ('robots', 'tdm'):
+            for status in (408, 425, 429, 500, 502, 503, 504):
+                with self.subTest(resource=resource, status=status):
+                    result, fetched = self.collect(**{resource: response('', status=status)})
+                    self.assertEqual(result['outcome'], resource+'_unavailable')
+                    self.assertNotIn(URL, fetched)
+                    self.assertNotIn('body_text', result)
+
+    def test_tls_and_network_failures_are_not_interpreted_as_absent_files(self):
+        for resource in ('robots', 'tdm'):
+            for error in (base.requests.exceptions.SSLError('certificate verification failed'),
+                          base.requests.exceptions.Timeout('connection timed out')):
+                with self.subTest(resource=resource, error=type(error).__name__):
+                    result, fetched = self.collect(**{resource: error})
+                    self.assertEqual(result['outcome'], resource+'_unavailable')
+                    self.assertNotIn(URL, fetched)
+
+    def test_malformed_declared_json_is_deferred_instead_of_erasing_rules(self):
+        for raw, mime in (('[{"location":"/",', 'text/plain'),
+                          ('{"location":"/","tdm-reservation":1}', 'application/json'),
+                          ('null', 'application/json'), ('<html>Broken response</html>', 'application/json')):
+            with self.subTest(raw=raw, mime=mime):
+                result, fetched = self.collect(tdm=response(raw, mime))
+                self.assertEqual(result['outcome'], 'tdm_unavailable')
+                self.assertEqual(result['tdm']['check_state'], 'invalid')
+                self.assertNotIn(URL, fetched)
+
+    def test_explicit_site_reservation_remains_blocked_even_with_wrong_mime(self):
+        rules = json.dumps([None, {'location': '/', 'tdm-reservation': 1,
+                                  'tdm-policy': 'https://news.example.com/licensing'}])
+        result, fetched = self.collect(tdm=response(rules, 'text/plain'))
+        self.assertEqual(result['outcome'], 'blocked_tdm_reserved')
+        self.assertEqual(result['tdm']['policy'], 'https://news.example.com/licensing')
+        self.assertNotIn(URL, fetched)
+
+    def test_article_tdm_headers_and_meta_are_checked_after_discovery_403(self):
+        for signal in ('header', 'meta'):
+            with self.subTest(signal=signal):
+                r = response(page(extra='<meta name="tdm-reservation" content="1">' if signal == 'meta' else ''))
+                if signal == 'header':
+                    r.headers['tdm-reservation'] = '1'
+                result, fetched = self.collect(tdm=response('', status=403), article=r)
+                self.assertEqual(result['outcome'], 'blocked_tdm_reserved')
+                self.assertEqual(fetched[-1], URL)
+                self.assertNotIn('body_text', result)
+
+    def test_article_access_controls_and_paywalls_are_not_discovery_failures(self):
+        for r, expected in ((response(page(), status=403), 'blocked_access_control'),
+                            (response(page(), status=401), 'blocked_access_control'),
+                            (response(page(BODY+' Subscribe to continue reading')), 'blocked_paywall_or_login'),
+                            (response('<h1>Verify you are human</h1>'), 'blocked_bot_challenge'),
+                            (response(page('Only a short preview.')), 'too_little_extractable_text')):
+            with self.subTest(expected=expected, status=r.status_code):
+                result, fetched = self.collect(tdm=response('', status=403), article=r)
+                self.assertEqual(result['outcome'], expected)
+                self.assertNotIn('body_text', result)
+                self.assertEqual(fetched[-1], URL)
+
+    def test_robots_exclusions_and_auth_refusals_still_stop_before_article(self):
+        for r in (response('User-agent: *\nDisallow: /', 'text/plain'),
+                  response('', status=401), response('', status=403)):
+            with self.subTest(status=r.status_code):
+                result, fetched = self.collect(robots=r)
+                self.assertEqual(result['outcome'], 'blocked_robots')
+                self.assertEqual(fetched, [self.ROBOTS])
+
+    def test_redirect_target_gets_its_own_discovery_and_access_checks(self):
+        redirect = response('', status=302)
+        redirect.headers['location'] = 'https://other.example.com/story'
+        result, fetched = self.collect(tdm=response('', status=403), article=redirect,
+            extra={'https://other.example.com/robots.txt': response('User-agent: *\nDisallow: /', 'text/plain')})
+        self.assertEqual(result['outcome'], 'blocked_robots')
+        self.assertNotIn('https://other.example.com/story', fetched)
+        self.assertNotIn('body_text', result)
+
+
 class ResumeTests(unittest.TestCase):
+    def test_v7_policy_failures_are_retried_once_by_v8(self):
+        now = datetime.now(timezone.utc)
+        for outcome in ('tdm_unavailable', 'robots_unavailable'):
+            with self.subTest(outcome=outcome):
+                detail = {'retrieval_method': 'publisher_body_recovery_v7_consent_2026_09_08', 'attempted_at': now.isoformat()}
+                self.assertFalse(runner.should_skip('a', set(), {'a': outcome}, 'retryable', detail=detail, now=now)[0])
+                self.assertTrue(runner.should_skip('a', {'a'}, {'a': outcome}, 'all', detail=detail, now=now)[0])
+
     def test_old_false_blocks_are_rechecked_but_saved_bodies_are_reused(self):
         prior = {'a': 'blocked_bot_challenge'}
         self.assertFalse(runner.should_skip('a', set(), prior, 'retryable', detail={'retrieval_method': 'safe_public_recovery_v4'})[0])

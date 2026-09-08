@@ -46,7 +46,7 @@ MIN_WORDS = MIN_FULL_BODY_EVIDENCE_UNITS
 FETCH_RETRY_ATTEMPTS = 3
 MAX_ALTERNATE_URLS = 6
 MAX_REDIRECTS = 4
-RECOVERY_STRATEGY_VERSION = "publisher_body_recovery_v7_consent_2026_09_08"
+RECOVERY_STRATEGY_VERSION = "publisher_body_recovery_v8_policy_discovery_2026_09_08"
 MAX_RESPONSE_BYTES = 12_000_000
 _POLICY_CACHE = {}
 TRANSIENT_STATUS_CODES = {408, 425, 429, 500, 502, 503, 504}
@@ -285,12 +285,13 @@ def robots_allowed(url: str) -> tuple[bool | None, str, dict[str, Any]]:
     if response.status_code in {401, 403}:
         detail["policy_state"] = "access_denied"
         return False, robots_url, detail
-    # RFC 9309 defines a missing robots resource as unavailable. That means
-    # there are no robots rules to apply, not that the article is blocked.
-    # The article itself still goes through the separate TDM, paywall and
-    # access-control checks below.
-    if response.status_code in {404, 410}:
-        detail["policy_state"] = "absent"
+    # RFC 9309 section 2.3.1.3 allows resource access after a robots 4xx,
+    # including 406, not only 404/410. Keep the conservative auth refusal
+    # above and defer retryable statuses (408/425/429). This interpretation
+    # applies only to robots.txt. The article itself still goes through the
+    # separate TDM, paywall and access-control checks below.
+    if 400 <= response.status_code < 500 and response.status_code not in TRANSIENT_STATUS_CODES:
+        detail["policy_state"] = "absent" if response.status_code in {404, 410} else "unavailable_4xx"
         return True, robots_url, detail
     if response.status_code != 200:
         detail["policy_state"] = "unavailable"
@@ -311,6 +312,14 @@ def robots_allowed(url: str) -> tuple[bool | None, str, dict[str, Any]]:
         return None, robots_url, detail
 
 def tdmrep_for(url: str) -> dict:
+    """Discover the optional site-wide declaration, not a TDM licence.
+
+    TDMRep section 6.1 distinguishes a server without a representation at
+    this well-known endpoint from a publisher's explicit reservation. An
+    absent representation leaves the value unset; article headers and HTML
+    metadata are still checked. Temporary transport failures and malformed
+    declared JSON remain deferred so a damaged declaration is not discarded.
+    """
     parts = urlsplit(url)
     endpoint = f"{parts.scheme}://{parts.netloc}/.well-known/tdmrep.json"
     out: dict[str, Any] = {
@@ -334,9 +343,12 @@ def tdmrep_for(url: str) -> dict:
         out["check_state"] = "unavailable"
         return out
     out["http_status"] = response.status_code
-    # 404 and 410 mean no TDMRep resource is published. A 401/403 or a server
-    # error is not treated as permission to collect the page.
-    if response.status_code in {404, 410}:
+    # Only this optional discovery endpoint gets this interpretation.
+    # A 403 here does not mean the article itself returned 403. Nor is an
+    # unset reservation an affirmative licence. No linked tdm-policy is
+    # fetched by this function (section 5.2 describes that separate resource).
+    if 400 <= response.status_code < 500 and response.status_code not in TRANSIENT_STATUS_CODES:
+        out["check_state"] = "not_implemented"
         return out
     if response.status_code != 200:
         out["check_state"] = "unavailable"
@@ -344,9 +356,16 @@ def tdmrep_for(url: str) -> dict:
     try:
         rules = response.json()
     except (TypeError, ValueError, requests.RequestException) as exc:
+        content_type = str(response.headers.get("content-type") or "").casefold()
+        prefix = response.content.lstrip(b"\xef\xbb\xbf \t\r\n")[:1]
+        # Many sites serve their HTML homepage/error page with HTTP 200 at
+        # unknown paths. That is not a broken TDM declaration. Conversely,
+        # declared JSON or a JSON-looking payload could be a truncated file;
+        # leave it deferred rather than losing a possible reservation.
+        looks_like_declaration = "json" in content_type or prefix in {b"[", b"{"}
         out.update(
             {
-                "check_state": "unavailable",
+                "check_state": "invalid" if looks_like_declaration else "not_implemented",
                 "error_class": type(exc).__name__,
                 "error_message": compact_error(exc),
             }

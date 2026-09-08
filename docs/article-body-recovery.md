@@ -91,9 +91,57 @@ body-free action trace, so the next run can measure actual gains.
 
 Robots and explicit TDM restrictions remain in effect. An actual paywall or
 access-control response ends that source's attempt. This patch does not claim
-that every source can be collected. Unavailable policy checks stay recorded;
-they are not treated as permission. Missing bodies and real restrictions stay
+that every source can be collected. Missing bodies and real restrictions stay
 in the report, with their source links.
+
+## Optional declaration discovery (8 September, v8)
+
+Recovery run 34263872439 completed with zero new bodies: 90 of 139 targets
+still had usable bodies, and 49 remained unresolved. Its 36 acquisition tests
+and 24 consent tests passed in GitHub, including the real Chromium cases.
+Cookie handling therefore passed its regression gate, but did not increase
+coverage in that run. The collector needs to reach an article before its
+cookie handling can help.
+
+The per-source diagnostic report from run 34220178757 identified these earlier
+failures; the latest run repeated the same 15 TDM and four robots outcomes:
+
+| Discovery response | Sources | v8 behavior |
+| --- | ---: | --- |
+| Optional `/.well-known/tdmrep.json` returned 403 | 9 | Record `not_implemented` / reservation `unset`, then check the article |
+| Optional declaration returned 400 | 1 | Same handling for a definitive client-error response |
+| Optional declaration returned 200 but could not be parsed as JSON | 5 | HTML/plain-text fallback pages mean no declaration; malformed declared JSON still defers |
+| `robots.txt` returned 406 | 3 | Record `unavailable_4xx`, then check the article |
+| Robots request failed TLS verification | 1 | Keep deferred; certificate verification stays enabled |
+
+The first 18 sources are candidates for additional attempts, not 18 confirmed
+recoveries. Once reached, a source may still return a real access refusal,
+reservation, subscription preview, incomplete paper or insufficient body.
+
+[TDMRep section 6.1](https://www.w3.org/community/reports/tdmrep/CG-FINAL-tdmrep-20240510/)
+treats failure to provide a machine-readable site-wide declaration as absence
+of that protocol implementation. The previous collector conflated this optional
+discovery file with the separate linked licensing policy in section 5.2.
+It stopped before requesting the article on any discovery 403 or non-JSON
+200 response. v8 keeps an absent declaration as `unset`, never as an affirmative
+licence. Article HTTP responses and TDM header/meta declarations are still
+checked, including after consent and on redirects. Explicit reservations still
+stop collection. This change does not fetch or assume terms for a linked
+`tdm-policy` licensing document.
+
+[RFC 9309 section 2.3.1.3](https://www.rfc-editor.org/rfc/rfc9309.html#section-2.3.1.3)
+allows retrieval after a robots 4xx, which includes the observed Nature 406s.
+The collector retains its conservative refusal on robots 401/403. Retryable
+408/425/429, server errors, TLS/network failures, invalid JSON declarations and
+unresolved redirects still defer. No request identity, proxy, credentials,
+certificate setting or publisher access rule is changed.
+
+The existing report fields preserve each discovery HTTP status, check state,
+JSON error class and body-free recovery trace. The new strategy version retries
+older failures while reusing saved usable bodies. These changes are in the
+shared collector used by both current-week recovery and future weekly runs.
+No new API service or paid model is needed. Complete-content denominators and
+the Brief's eligible source export still require complete evidence.
 
 ## Persistence, timing and recovery
 
@@ -148,7 +196,10 @@ job colour, establishes how many bodies are available.
 - [Schema.org NewsArticle](https://schema.org/NewsArticle) documents articleBody
   and article-level metadata used to select the matching source.
 - [W3C TDM Reservation Protocol](https://www.w3.org/community/reports/tdmrep/CG-FINAL-tdmrep-20240510/)
-  was checked when retaining the publisher-reservation handling.
+  sections 6.1 and 5.2 distinguish optional declaration discovery from a linked
+  licensing policy. v8 corrects the earlier overbroad failure handling.
+- [RFC 9309](https://www.rfc-editor.org/rfc/rfc9309.html#section-2.3.1.3)
+  distinguishes unavailable robots resources from unreachable servers.
 - [Unpaywall API](https://unpaywall.org/products/api) was considered for research
   papers. It is not enabled in this patch: replacing a news article with the
   underlying paper would not recover the same source, and authorized scholarly
