@@ -405,6 +405,8 @@ def main():
             "final_url": meta.get("final_url"), "extraction_method": meta.get("extraction_method"),
             "error_class": meta.get("error_class"), "error_message": meta.get("error_message"),
             "error_location": meta.get("error_location"),
+            "consent_status": (meta.get("consent") or {}).get("status"),
+            "consent_clicks": (meta.get("consent") or {}).get("click_count", 0),
             "robots_url": meta.get("robots_url"),
             "robots_http_status": meta.get("robots_http_status", (meta.get("robots_detail") or {}).get("http_status")),
             "robots_policy_state": meta.get("robots_policy_state", (meta.get("robots_detail") or {}).get("policy_state")),

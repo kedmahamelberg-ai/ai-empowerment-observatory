@@ -17,6 +17,7 @@ from pathlib import Path
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from typing import Any
+from types import SimpleNamespace
 from urllib.parse import urljoin, urlsplit
 from urllib.robotparser import RobotFileParser
 
@@ -40,11 +41,12 @@ TDM_TIMEOUT = (5, 10)
 ARTICLE_TIMEOUT = (10, 30)
 from source_evidence_quality import assess_body
 import article_recovery_support as recovery
+from article_consent import needs_consent_browser
 MIN_WORDS = MIN_FULL_BODY_EVIDENCE_UNITS
 FETCH_RETRY_ATTEMPTS = 3
 MAX_ALTERNATE_URLS = 6
 MAX_REDIRECTS = 4
-RECOVERY_STRATEGY_VERSION = "publisher_body_recovery_v6_2026_09_08"
+RECOVERY_STRATEGY_VERSION = "publisher_body_recovery_v7_consent_2026_09_08"
 MAX_RESPONSE_BYTES = 12_000_000
 _POLICY_CACHE = {}
 TRANSIENT_STATUS_CODES = {408, 425, 429, 500, 502, 503, 504}
@@ -626,6 +628,7 @@ def trace_item(result: dict[str, Any], *, requested_url: str, kind: str) -> dict
         "error_class": result.get("error_class"),
         "error_message": compact_error(result.get("error_message")),
         "error_location": result.get("error_location"),
+        "consent": result.get("consent"),
         "redirect_chain": result.get("redirect_chain") or [],
         "request_attempts": result.get("request_attempts") or [],
         **policy_diagnostics(result),
@@ -776,12 +779,14 @@ def fetch_public_candidate(
     return extract_html_result(html, result)
 
 
-def extract_html_result(html, result):
+def extract_html_result(html, result, *, consent_checked=False):
     title = recovery.page_title(html)
     if re.match(r"^(?:404(?:\s*[-:|]\s*.*)?|page not found(?:\s*[-|].*)?|not found|page introuvable(?:\s*[-|].*)?|页面不存在|页面未找到)\s*$", title, re.I):
         return {**result, "outcome": "source_unavailable", "error_class": "PublisherSoft404"}
     if detect_access_challenge(html):
         return {**result, "outcome": "blocked_bot_challenge"}
+    if not consent_checked and needs_consent_browser(html):
+        return {**result, "outcome": "consent_required"}
     if detect_paywall(html, result.get("final_url", "")):
         return {**result, "outcome": "blocked_paywall_or_login", "paywall_detected": True}
     if recovery.abstract_only(html):
@@ -835,12 +840,19 @@ def render_fallback(primary):
         data = json.loads(stdout)
         if data.get("error_class"):
             return {"outcome": "browser_error", **data}
+        consent = data.get("consent") or {}
+        if consent.get("status") == "unresolved":
+            return {"outcome": "consent_unresolved", "consent": consent}
         if data.get("blocked_requests"):
-            return {"outcome": "browser_data_unavailable", "error_message": ", ".join(data["blocked_requests"])}
+            return {"outcome": "browser_data_unavailable", "consent": consent, "error_message": ", ".join(data["blocked_requests"])}
         if not data.get("html") or data.get("final_url") != primary["final_url"]:
             return {"outcome": "browser_identity_mismatch"}
-        rendered = {**primary, "_html": data["html"], "candidate_kind": "browser_rendered_public_page"}
-        result = extract_html_result(data["html"], rendered)
+        rendered = {**primary, "_html": data["html"], "consent": consent, "candidate_kind": "browser_rendered_public_page"}
+        # Recheck publisher reservation signals in the post-consent document.
+        reservation, _ = html_tdm_signal(SimpleNamespace(headers=primary.get('_headers', {})), data['html'])
+        if reservation == '1':
+            return {**rendered, 'outcome': 'blocked_tdm_reserved', 'tdm': {**(primary.get('tdm') or {}), 'reservation': '1'}}
+        result = extract_html_result(data["html"], rendered, consent_checked=True)
         if result.get("outcome") == "stored":
             result["extraction_method"] = "browser_" + result["extraction_method"]
         return result
@@ -863,6 +875,15 @@ def fetch_and_extract(url: str, expected_title: str = ""):
     if primary.get("outcome") == "stored" and expected_title and primary.get("final_url") and recovery.url_identity(primary["final_url"]) != recovery.url_identity(url):
         if not recovery.same_article(primary.get("_html", ""), primary["final_url"], url, expected_title):
             return finish({**primary, "outcome": "article_identity_mismatch", "body_text": ""})
+    if primary.get("outcome") == "consent_required":
+        # Resolve the original dialog before considering another representation.
+        # Acceptance is not evidence of completeness: all extraction gates run again.
+        rendered = render_fallback(primary)
+        trace.append(trace_item(rendered, requested_url=primary.get('final_url') or url, kind='browser_cookie_consent'))
+        if rendered.get('outcome') == 'stored' and expected_title and recovery.url_identity(rendered.get('final_url', url)) != recovery.url_identity(url):
+            if not recovery.same_article(rendered.get('_html', ''), rendered['final_url'], url, expected_title):
+                rendered = {**rendered, 'outcome': 'article_identity_mismatch', 'body_text': ''}
+        return finish({**primary, **rendered})
     if primary.get("outcome") not in {"too_little_extractable_text", "abstract_only"} or not primary.get("_html"):
         return finish(primary)
     original = str(primary.get("final_url") or url)
@@ -882,7 +903,7 @@ def fetch_and_extract(url: str, expected_title: str = ""):
     trace.append(trace_item(rendered, requested_url=original, kind="browser_rendered_public_page"))
     if rendered.get("outcome") == "stored":
         return finish(rendered)
-    if rendered.get("outcome") in {"blocked_paywall_or_login", "blocked_bot_challenge", "browser_error", "browser_timeout", "browser_data_unavailable"}:
+    if rendered.get("outcome") in {"blocked_paywall_or_login", "blocked_bot_challenge", "browser_error", "browser_timeout", "browser_data_unavailable", "consent_unresolved", "blocked_tdm_reserved"}:
         return finish({**primary, **without_private_html(rendered)})
     return finish(primary)
 
@@ -948,6 +969,7 @@ def insert_attempt(client, article_id, url, result, workflow_run_id):
             "error_class":result.get("error_class"),
             "error_message":compact_error(result.get("error_message")),
             "error_location":result.get("error_location"),
+            "consent":result.get("consent"),
         },
     }).execute()
 

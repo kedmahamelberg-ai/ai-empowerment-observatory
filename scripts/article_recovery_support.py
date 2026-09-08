@@ -128,6 +128,7 @@ def paywall(html, url=""):
     return bool(re.search(
         r"(?:subscribe|sign in|log in) to (?:continue(?: reading)?|read (?:the full|this) article)|"
         r"(?:cet article|la suite de cet article|contenu) est r[eé]serv[eé](?:e)? aux abonn[eé]s|"
+        r"(?:la lecture des articles|cet article|la suite|ce contenu) (?:est |sont )?r[eé]serv[eé][e·.]*s? aux abonn[eé][e·.]*s|"
         r"(?:abonnez-vous|connectez-vous) pour (?:lire|continuer)|"
         r"(?:subscribe|subscription) (?:is )?required to (?:read|access)|"
         r"订阅后(?:可)?阅读|登录后阅读全文", text, re.I))

@@ -77,7 +77,9 @@ jobs:
       - name: Check article recovery before writing any snapshots
         env:
           AIEO_TEST_BROWSER: "1"
-        run: python -m unittest discover -s tests -p 'test_article_body_recovery.py' -v
+        run: |
+          python -m unittest discover -s tests -p 'test_article_body_recovery.py' -v
+          python -m unittest discover -s tests -p 'test_article_consent.py' -v
 
       - name: Validate private body-evidence contract
         env:

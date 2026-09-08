@@ -47,10 +47,47 @@ identity instead of treating the landing page as an empty article.
    are rejected. Scholarly abstracts are not full papers; linked PDFs must have
    usable text on every page. Scanned PDFs require OCR/manual review and stay
    explicitly unresolved in this version.
-5. If the public page still has no body, render it in isolated Chromium for up
-   to 65 seconds. No login, cookie-consent clicks, challenge solving, proxy,
-   identity rotation or paid retrieval service is used. Private addresses and
-   unrelated article-data origins are blocked. A failed renderer is reported.
+5. When a cookie dialog or known consent system is detected, render the original
+   page first and accept its actual visible consent control. Also use Chromium
+   for an accessible page that still has no body. The renderer gets at most 65
+   seconds. Private addresses and unrelated article-data origins are blocked.
+   A failed renderer is reported.
+
+## Cookie acceptance (8 September follow-up)
+
+The owner explicitly requested automatic cookie acceptance. The collector now
+uses known consent controls independently of their displayed language, followed
+by exact translated acceptance labels in a cookie/privacy dialog. It supports
+the supplied “Accepter & fermer”, “Accepter” and “I Accept” examples, as well as
+English, French, Chinese and many other language variants. This is not a claim
+that every custom banner or language is recognized. Unrecognized/stuck dialogs
+receive `consent_unresolved` instead of contributing banner prose to evidence.
+
+The browser inspects the main document, embedded consent frames and open shadow
+roots. It waits for delayed dialogs, clicks at most three consent controls,
+checks that they close and waits for article rendering. The publisher's actual
+click handler creates any consent cookie; the collector never fabricates one
+or removes a modal. Browser cookies are discarded with the isolated source
+context and are not exported, logged or reused as owner login credentials.
+
+Established consent-provider frames and data endpoints can load. Consent
+submissions are allowed after a recognized acceptance click; provider message
+and configuration requests can initialize the dialog before it. Same-article
+reloads are supported after acceptance, with fresh robots/TDM checks. Other
+navigation, login, subscription/payment submission and challenge solving remain
+outside this collector. Original article access checks and every post-consent
+paywall, publisher reservation and source-quality check still apply.
+
+The Mediapart screenshot shows a subscriber-only preview even after consent.
+Its inclusive French wording is now explicitly recognized. Such a preview stays
+excluded from complete-content totals and from the eligible Brief export.
+
+The latest supplied recovery artifact reported 90 usable bodies from 139 target
+sources, with 49 unresolved. It recorded L'Alsace and La Dépêche as
+`blocked_tdm_reserved`; a consent click does not clear that independent publisher
+restriction. These are baseline findings, not measured results of this update.
+The new report includes `consent_status` and `consent_clicks` per source plus a
+body-free action trace, so the next run can measure actual gains.
 
 Robots and explicit TDM restrictions remain in effect. An actual paywall or
 access-control response ends that source's attempt. This patch does not claim
@@ -102,6 +139,10 @@ job colour, establishes how many bodies are available.
   already used Trafilatura; installing a different model would not fix fetches.
 - [Playwright Python network controls](https://playwright.dev/python/docs/network)
   informed the bounded renderer and request interception.
+- [Playwright frames](https://playwright.dev/python/docs/frames),
+  [locators and shadow DOM](https://playwright.dev/python/docs/locators), and
+  [actionability checks](https://playwright.dev/python/docs/actionability)
+  informed consent-frame discovery, real locator clicks and visibility checks.
 - [WordPress Posts REST API](https://developer.wordpress.org/rest-api/reference/posts/)
   documents the public post URL, content, excerpt and publication-status fields.
 - [Schema.org NewsArticle](https://schema.org/NewsArticle) documents articleBody
@@ -120,5 +161,8 @@ fixtures cover false blockers, genuine gates, languages, identity, full feeds,
 public CMS content, abstracts/PDF gaps, deadlines, retries and database failures.
 They do not constitute a live recovery count. The GitHub enrichment workflow
 installs Chromium and requires a real JavaScript-rendering smoke test before
-any production snapshot writes. Live article recovery and deployment must run
+any production snapshot writes. It also now requires the multilingual consent,
+iframe, shadow-root, delayed/stuck banner and subscriber-preview browser tests.
+The package records local skips separately; browser tests are not represented
+as passed when no usable test browser is available. Live recovery and deployment must run
 in the owner's GitHub account using its existing Supabase secrets.
