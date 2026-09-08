@@ -1,7 +1,7 @@
 {
   "meta": {
     "version": "public_insights_v4_release_bound",
-    "generated_at": "2026-09-08T07:18:02.319051Z",
+    "generated_at": "2026-09-08T09:33:19.058601Z",
     "release_id": "2026-W36",
     "release_revision": 1,
     "classification_run_id": "3411d904-d3dd-4f2b-b2d7-b855d3332f97",
@@ -1134,21 +1134,21 @@
     "policy_version": "source_representations_independent_axes_2026_09",
     "total": 132,
     "human": {
-      "gain": 12,
+      "gain": 14,
       "loss": 1,
-      "mixed": 2,
-      "none": 46,
-      "unresolved": 71
+      "mixed": 3,
+      "none": 58,
+      "unresolved": 56
     },
     "ai": {
-      "gain": 9,
+      "gain": 11,
       "loss": 1,
-      "mixed": 1,
-      "none": 50,
-      "unresolved": 71
+      "mixed": 2,
+      "none": 62,
+      "unresolved": 56
     },
-    "evidence_complete": 61,
+    "evidence_complete": 76,
     "counting_rule": "Each axis partitions the same records. Mixed is one category. The two axes are not added together."
   },
-  "source_relationship_sha256": "25f72bb9b2dec45c7d36080084000e26265ce954861055343cf20ba7453a82f6"
+  "source_relationship_sha256": "42b1de06ec18b64c70efaa784d32b326ac42a192700f6cd3673b1b6cd77af134"
 }
