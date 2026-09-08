@@ -6,35 +6,37 @@
   "period_start": "2026-07-01",
   "period_end": "2026-09-30",
   "observed_week_start": "2026-08-10",
-  "observed_week_end": "2026-08-30",
-  "generated_at": "2026-09-05T11:21:24.799214Z",
-  "revision": 4,
+  "observed_week_end": "2026-09-06",
+  "generated_at": "2026-09-08T03:30:04.000270Z",
+  "revision": 5,
   "weekly_release_ids": [
     "2026-W33",
     "2026-W34",
-    "2026-W35"
+    "2026-W35",
+    "2026-W36"
   ],
   "weekly_revisions": {
-    "2026-W33": 5,
-    "2026-W34": 3,
-    "2026-W35": 4
+    "2026-W33": 6,
+    "2026-W34": 4,
+    "2026-W35": 5,
+    "2026-W36": 1
   },
   "reality": {
-    "distinct_event_records": 346,
-    "new_developments": 343,
-    "first_time_event_records": 342,
+    "distinct_event_records": 477,
+    "new_developments": 462,
+    "first_time_event_records": 461,
     "follow_on_developments": 1,
     "active_story_families": 1
   },
   "attention": {
-    "published_coverage_articles": 362,
-    "coverage_episode_count": 362,
-    "recurring_event_appearances": 0,
+    "published_coverage_articles": 499,
+    "coverage_episode_count": 500,
+    "recurring_event_appearances": 1,
     "resurfaced_event_appearances": 0,
     "same_event_new_coverage_articles": 0,
-    "rediscovered_article_records": 141,
-    "unique_publications": 246,
-    "unique_domains": 245
+    "rediscovered_article_records": 146,
+    "unique_publications": 323,
+    "unique_domains": 320
   },
   "replication_delay": {
     "observed_recurrence_count": 0,
@@ -43,47 +45,49 @@
     "p90_days": null
   },
   "article_rediscovery_delay": {
-    "observed_rediscovery_count": 139,
+    "observed_rediscovery_count": 144,
     "median_days": 0.0,
     "p75_days": 0.0,
-    "p90_days": 0.0
+    "p90_days": 5.02
   },
   "distributions": {
     "topics": {
-      "other": 235,
-      "government_regulation": 39,
-      "education_research": 19,
-      "work_employment": 13,
-      "business_productivity": 12,
-      "healthcare": 11,
-      "infrastructure_investment": 11,
-      "consumer_services": 5,
-      "privacy_security": 1
+      "other": 313,
+      "government_regulation": 51,
+      "education_research": 34,
+      "infrastructure_investment": 21,
+      "work_employment": 18,
+      "healthcare": 15,
+      "business_productivity": 14,
+      "consumer_services": 9,
+      "privacy_security": 2
     },
     "empowerment_status": {
-      "non_empowerment": 204,
-      "unclear": 124,
-      "expanding": 14,
-      "contracting": 4
+      "non_empowerment": 303,
+      "unclear": 128,
+      "expanding": 36,
+      "contracting": 8,
+      "mixed": 2
     }
   },
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-08-31T13:53:33.22983+00:00",
+    "considered_through": "2026-09-07T05:18:32.075763+00:00",
     "scope": "All prior event records available to the included reconciliations."
   },
   "reconciliation": {
-    "current_through": "2026-08-31T14:49:03.794193+00:00",
+    "current_through": "2026-09-07T07:49:23.941976+00:00",
     "weekly_revisions_included": {
-      "2026-W33": 5,
-      "2026-W34": 3,
-      "2026-W35": 4
+      "2026-W33": 6,
+      "2026-W34": 4,
+      "2026-W35": 5,
+      "2026-W36": 1
     },
     "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
   },
-  "story": "AIEO observed 362 newly published AI-news articles. They represented 343 new developments.",
+  "story": "AIEO observed 499 newly published AI-news articles. They represented 462 new developments and 1 appearances of developments already in memory.",
   "disclosure": "Distinct events are deduplicated across the full period by effective event ID. Recurring appearances remain in the Attention view and are not counted as new developments.",
-  "revision_reason": "An included weekly release was restated after longitudinal reconciliation.",
+  "revision_reason": "A newly completed weekly release was added to this period.",
   "revision_history": [
     {
       "revision": 2,
@@ -114,8 +118,19 @@
         "2026-W34": 3,
         "2026-W35": 4
       }
+    },
+    {
+      "revision": 5,
+      "changed_at": "2026-09-08T03:30:04.000270Z",
+      "reason": "A newly completed weekly release was added to this period.",
+      "weekly_revisions": {
+        "2026-W33": 6,
+        "2026-W34": 4,
+        "2026-W35": 5,
+        "2026-W36": 1
+      }
     }
   ],
-  "previous_revision_path": "/data/releases/quarterly/archive/2026-Q3/revision-3.json",
-  "content_sha256": "3b2ea142da4ad4841768eb849cb3fa2dd20195b6449dbd1a764238ea50918699"
+  "previous_revision_path": "/data/releases/quarterly/archive/2026-Q3/revision-4.json",
+  "content_sha256": "d48edbc91330ee70ee76d178740d1448a7e8720551895cb5b1648902e48a3cd8"
 }
