@@ -2,10 +2,10 @@
   "schema_version": "aieo_symbiosis_public_v2.0",
   "release_id": "2026-W36",
   "release_type": "weekly_relationship_lens",
-  "revision": 3,
+  "revision": 2,
   "period_start": "2026-08-31",
   "period_end": "2026-09-06",
-  "generated_at": "2026-09-08T09:33:16.121786Z",
+  "generated_at": "2026-09-08T03:30:33.185404Z",
   "codebook_version": "aieo_news_symbiosis_v0.1",
   "source_release_sha256": "badf075e19afbbded1aaccb369f089c3beae8a0207c0bd7070b4e76472b53198",
   "public_status": "current_evidence_reading",
@@ -60,7 +60,7 @@
     "display_basis": "current_evidence_reading_with_reviewed_corrections",
     "display_classified_units": 132,
     "display_configuration_counts": {
-      "mutualism": 11,
+      "mutualism": 9,
       "ai_benefiting_parasitism": 0,
       "human_benefiting_parasitism": 0,
       "competition": 1,
@@ -68,49 +68,49 @@
       "human_constraining_only": 0,
       "ai_enabling_only": 0,
       "ai_constraining_only": 0,
-      "no_clear_relational_signal": 58,
-      "ambiguous_relational_signal": 3,
-      "insufficient_evidence": 56
+      "no_clear_relational_signal": 46,
+      "ambiguous_relational_signal": 2,
+      "insufficient_evidence": 71
     },
-    "display_complete_configuration_count": 12,
+    "display_complete_configuration_count": 10,
     "display_partial_signal_count": 3,
-    "display_no_clear_relational_signal_count": 58,
-    "display_ambiguous_relational_signal_count": 3,
-    "display_insufficient_evidence_count": 56,
+    "display_no_clear_relational_signal_count": 46,
+    "display_ambiguous_relational_signal_count": 2,
+    "display_insufficient_evidence_count": 71,
     "display_core_four_distribution": {
-      "mutualism": 0.916667,
+      "mutualism": 0.9,
       "ai_benefiting_parasitism": 0.0,
       "human_benefiting_parasitism": 0.0,
-      "competition": 0.083333
+      "competition": 0.1
     },
     "denominator_note": "The weekly display reports the source evidence available for the current release. A development is kept separate when the available source evidence is not enough to show a clear people outcome.",
     "human_direction_counts": {
-      "neutral": 58,
-      "unclear": 56,
-      "mixed": 3,
+      "neutral": 46,
+      "unclear": 71,
+      "mixed": 2,
       "constraining": 1,
-      "enabling": 14
+      "enabling": 12
     },
     "ai_direction_counts": {
-      "neutral": 62,
-      "unclear": 56,
-      "mixed": 2,
+      "neutral": 50,
+      "unclear": 71,
+      "mixed": 1,
       "constraining": 1,
-      "enabling": 11
+      "enabling": 9
     },
     "display_human_direction_counts": {
-      "neutral": 58,
-      "unclear": 56,
-      "mixed": 3,
-      "constraining": 1,
-      "enabling": 14
-    },
-    "display_ai_direction_counts": {
-      "neutral": 62,
-      "unclear": 56,
+      "neutral": 46,
+      "unclear": 71,
       "mixed": 2,
       "constraining": 1,
-      "enabling": 11
+      "enabling": 12
+    },
+    "display_ai_direction_counts": {
+      "neutral": 50,
+      "unclear": 71,
+      "mixed": 1,
+      "constraining": 1,
+      "enabling": 9
     }
   },
   "people_signals": {
@@ -118,17 +118,17 @@
     "expected_units": 132,
     "classified_units": 132,
     "relationship_pattern_counts": {
-      "mutualism": 13,
+      "mutualism": 10,
       "ai_benefiting_parasitism": 0,
       "human_benefiting_parasitism": 0,
       "competition": 1
     },
     "people_signal_counts": {
-      "people_gaining": 17,
-      "people_losing_ground": 4,
-      "mixed_picture": 3,
+      "people_gaining": 14,
+      "people_losing_ground": 3,
+      "mixed_picture": 2,
       "not_everyone_benefits": 1,
-      "not_clear_yet": 114
+      "not_clear_yet": 117
     },
     "availability": {
       "people_gaining": true,
@@ -140,12 +140,12 @@
     "explicit_multi_label_units": 132,
     "distribution_coded_units": 132,
     "body_coverage_counts": {
-      "complete_written_source": 76,
-      "incomplete_written_source": 56
+      "complete_written_source": 61,
+      "incomplete_written_source": 71
     },
     "not_clear_breakdown": {
-      "not_enough_evidence": 56,
-      "no_directional_people_change": 58
+      "not_enough_evidence": 71,
+      "no_directional_people_change": 46
     },
     "overlap_note": "A development may contain more than one signal, so these counts do not have to add up to the weekly total.",
     "relationship_patterns_assessed": 132
@@ -188,23 +188,23 @@
     "display_basis": "current_evidence_reading_with_reviewed_corrections",
     "display_classified_units": 138,
     "display_configuration_counts": {
-      "mutualism": 16,
+      "mutualism": 12,
       "ai_benefiting_parasitism": 0,
       "human_benefiting_parasitism": 0,
       "competition": 0,
       "human_enabling_only": 2,
       "human_constraining_only": 0,
-      "ai_enabling_only": 3,
+      "ai_enabling_only": 2,
       "ai_constraining_only": 0,
-      "no_clear_relational_signal": 55,
+      "no_clear_relational_signal": 43,
       "ambiguous_relational_signal": 4,
-      "insufficient_evidence": 58
+      "insufficient_evidence": 75
     },
-    "display_complete_configuration_count": 16,
-    "display_partial_signal_count": 5,
-    "display_no_clear_relational_signal_count": 55,
+    "display_complete_configuration_count": 12,
+    "display_partial_signal_count": 4,
+    "display_no_clear_relational_signal_count": 43,
     "display_ambiguous_relational_signal_count": 4,
-    "display_insufficient_evidence_count": 58,
+    "display_insufficient_evidence_count": 75,
     "display_core_four_distribution": {
       "ai_benefiting_parasitism": 0.0,
       "competition": 0.0,
@@ -2065,11 +2065,11 @@
     {
       "axes": {
         "ai": {
-          "evidence": "No AI-side relation is described in the evidence.",
+          "evidence": "No AI-side benefit or constraint is explicitly stated.",
           "direction": "none"
         },
         "human": {
-          "evidence": "No human-side relation is described in the evidence.",
+          "evidence": "No people-side benefit or constraint is explicitly stated.",
           "direction": "none"
         },
         "evidence_scope": "written_source",
@@ -2131,17 +2131,13 @@
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 3,
-        "body_coverage": "all_sources",
+        "body_coverage": "some_sources",
         "source_quality": {
           "52edba333a2e7e68b6c5fcc93599647b": {
-            "flags": [],
-            "scope": "written_page",
-            "characters": 2769,
-            "body_sha256": "e930ae6cab25c7ff41053be611568a923472815345ff41c074d36873e7f952ee",
-            "quality_version": "stored_source_quality_v2",
-            "source_language": "",
-            "usable_complete_body": true,
-            "automated_check_is_not_completeness_certification": true
+            "flags": [
+              "no_usable_complete_body"
+            ],
+            "usable_complete_body": false
           },
           "7f10ec1a68f31d51ba1be8bf8e7bae41": {
             "flags": [],
@@ -2165,26 +2161,28 @@
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 3,
+        "full_text_sources": 2,
         "source_fingerprints": {
-          "52edba333a2e7e68b6c5fcc93599647b": "e930ae6cab25c7ff41053be611568a923472815345ff41c074d36873e7f952ee",
+          "52edba333a2e7e68b6c5fcc93599647b": null,
           "7f10ec1a68f31d51ba1be8bf8e7bae41": "2138e3060e0cd2841dde16c340793ab07d70e8763f2803f007d01e72d37572cd",
           "d282334c846e30501ca31d9e59167059": "eb25d139478a211964f929526303fb43fcaccbe2b7d0fe982cd9c06a6b57b057"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 0,
+        "not_available_sources": 1,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
         "source_reading_complete": true,
-        "people_evidence": "No human-side relation is described in the evidence.",
-        "ai_evidence": "No AI-side relation is described in the evidence.",
+        "people_evidence": "No people-side benefit or constraint is explicitly stated.",
+        "ai_evidence": "No AI-side benefit or constraint is explicitly stated.",
         "flags": []
       },
-      "story_country_iso3s": [],
-      "evidence_summary": "OpenAI's new AI model GPT-6 Astra is described as powerful and capable of autonomous operations, but its capabilities are restricted and monitored to prevent misuse.",
-      "reasoning": "OpenAI's new AI model GPT-6 Astra is described as powerful and capable of autonomous operations, but its capabilities are restricted and monitored to prevent misuse.",
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "evidence_summary": "The release of GPT-6 Astra by OpenAI is described as a technical development without clear human or AI directional relations.",
+      "reasoning": "The release of GPT-6 Astra by OpenAI is described as a technical development without clear human or AI directional relations.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -2199,7 +2197,7 @@
         "not_clear_yet": true
       },
       "distribution_signal": "broadly_shared",
-      "public_takeaway": "No human-side relation is described in the evidence.",
+      "public_takeaway": "No people-side benefit or constraint is explicitly stated.",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -2312,28 +2310,21 @@
     {
       "axes": {
         "ai": {
-          "evidence": "No AI-side relation is described in the evidence.",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "human": {
-          "evidence": "No human-side relation is described in the evidence.",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [
-          "source_representation"
-        ],
+        "evidence_types": [],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": true,
-        "unresolved_reason": ""
+        "evidence_complete": false,
+        "unresolved_reason": "complete_written_source_unavailable"
       },
-      "relationship_evidence": {
-        "mutualism": "",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
+      "relationship_evidence": {},
       "relationship_pattern_status": "assessed",
       "event_id": "2a2c1673-b9fc-4424-852c-6f246f5b1faa",
       "event_title": "FSB Chair warns of risks arising from frontier Artificial Intelligence (AI) models",
@@ -2351,51 +2342,47 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "no_clear_relational_signal",
-      "plain_label": "No clear human-AI relationship is described",
-      "human_experience_type": "neutral",
-      "ai_expressive_role": "neutral",
-      "human_direction": "neutral",
-      "ai_direction": "neutral",
-      "evidence_status": "sufficient",
-      "content_basis": "full_text",
+      "configuration": "insufficient_evidence",
+      "plain_label": "There is not enough source evidence to classify the relationship",
+      "human_experience_type": "unclear",
+      "ai_expressive_role": "unclear",
+      "human_direction": "unclear",
+      "ai_direction": "unclear",
+      "evidence_status": "insufficient",
+      "content_basis": "not_available",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "no_full_body",
         "source_quality": {
           "79d0126e2120b658fc17535c190858da": {
-            "flags": [],
-            "scope": "written_page",
-            "characters": 3151,
-            "body_sha256": "452a8acece5cdc29ac444b49ef14f7458260cb0b61400b6686a9b845823301c0",
-            "quality_version": "stored_source_quality_v2",
-            "source_language": "",
-            "usable_complete_body": true,
-            "automated_check_is_not_completeness_certification": true
+            "flags": [
+              "no_usable_complete_body"
+            ],
+            "usable_complete_body": false
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 1,
+        "full_text_sources": 0,
         "source_fingerprints": {
-          "79d0126e2120b658fc17535c190858da": "452a8acece5cdc29ac444b49ef14f7458260cb0b61400b6686a9b845823301c0"
+          "79d0126e2120b658fc17535c190858da": null
         },
         "headline_only_sources": 0,
-        "not_available_sources": 0,
+        "not_available_sources": 1,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": true,
-        "people_evidence": "No human-side relation is described in the evidence.",
-        "ai_evidence": "No AI-side relation is described in the evidence.",
-        "flags": []
+        "source_reading_complete": false,
+        "people_evidence": "",
+        "ai_evidence": "",
+        "flags": [
+          "incomplete_written_source"
+        ]
       },
-      "story_country_iso3s": [
-        "USD"
-      ],
-      "evidence_summary": "The FSB Chair warns of risks from frontier AI models, highlighting concerns about cyber risk and the need for responsible deployment.",
-      "reasoning": "The FSB Chair warns of risks from frontier AI models, highlighting concerns about cyber risk and the need for responsible deployment.",
+      "story_country_iso3s": [],
+      "evidence_summary": "No full article body was available, so the source was not model-classified.",
+      "reasoning": "No full article body was available, so the source was not model-classified.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -2409,8 +2396,8 @@
         "not_everyone_benefits": false,
         "not_clear_yet": true
       },
-      "distribution_signal": "broadly_shared",
-      "public_takeaway": "No human-side relation is described in the evidence.",
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -3046,28 +3033,21 @@
     {
       "axes": {
         "ai": {
-          "evidence": "AI is used to generate creative content, showing that the AI system is extending its operative reach. AI systems are becoming more capable and flawed AI is used to provide personalized education and support for students in various subjects.",
-          "direction": "mixed"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "human": {
-          "evidence": "The author and their children use AI to create a story, showing that people can extend their creative capacity through AI. AI systems are making basic skills redundant AI provides personalized education that enhances student learning and understanding.",
-          "direction": "mixed"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [
-          "source_representation"
-        ],
+        "evidence_types": [],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": true,
-        "unresolved_reason": ""
+        "evidence_complete": false,
+        "unresolved_reason": "complete_written_source_unavailable"
       },
-      "relationship_evidence": {
-        "mutualism": "AI and humans both benefit from the use of AI in education and creative processes.  true",
-        "competition": "false",
-        "ai_benefiting_parasitism": "false",
-        "human_benefiting_parasitism": "false"
-      },
+      "relationship_evidence": {},
       "relationship_pattern_status": "assessed",
       "event_id": "33018ed3-7996-4cca-a937-09b4f91a74ab",
       "event_title": "I’m a father of three who studies the impact of artificial intelligence: this is what parents need to know about AI",
@@ -3085,64 +3065,62 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "ambiguous_relational_signal",
-      "plain_label": "A relationship is suggested, but its direction is unclear",
+      "configuration": "insufficient_evidence",
+      "plain_label": "There is not enough source evidence to classify the relationship",
       "human_experience_type": "unclear",
       "ai_expressive_role": "unclear",
-      "human_direction": "mixed",
-      "ai_direction": "mixed",
-      "evidence_status": "sufficient",
-      "content_basis": "full_text",
+      "human_direction": "unclear",
+      "ai_direction": "unclear",
+      "evidence_status": "insufficient",
+      "content_basis": "not_available",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "no_full_body",
         "source_quality": {
           "e0b49a58c78598e4c1f2f86a78a3b7df": {
-            "flags": [],
-            "scope": "written_page",
-            "characters": 18422,
-            "body_sha256": "3918623aa09f0678eee8c6cdbe67bde7160068d340ca6a0d72a43026f084fa48",
-            "quality_version": "stored_source_quality_v2",
-            "source_language": "",
-            "usable_complete_body": true,
-            "automated_check_is_not_completeness_certification": true
+            "flags": [
+              "no_usable_complete_body"
+            ],
+            "usable_complete_body": false
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 1,
+        "full_text_sources": 0,
         "source_fingerprints": {
-          "e0b49a58c78598e4c1f2f86a78a3b7df": "3918623aa09f0678eee8c6cdbe67bde7160068d340ca6a0d72a43026f084fa48"
+          "e0b49a58c78598e4c1f2f86a78a3b7df": null
         },
         "headline_only_sources": 0,
-        "not_available_sources": 0,
+        "not_available_sources": 1,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": true,
-        "people_evidence": "The author and their children use AI to create a story, showing that people can extend their creative capacity through AI. AI systems are making basic skills redundant AI provides personalized education that enhances student learning and understanding.",
-        "ai_evidence": "AI is used to generate creative content, showing that the AI system is extending its operative reach. AI systems are becoming more capable and flawed AI is used to provide personalized education and support for students in various subjects.",
-        "flags": []
+        "source_reading_complete": false,
+        "people_evidence": "",
+        "ai_evidence": "",
+        "flags": [
+          "incomplete_written_source"
+        ]
       },
       "story_country_iso3s": [],
-      "evidence_summary": "AI and humans both benefit from the use of AI in education and creative processes.",
-      "reasoning": "AI and humans both benefit from the use of AI in education and creative processes.",
+      "evidence_summary": "No full article body was available, so the source was not model-classified.",
+      "reasoning": "No full article body was available, so the source was not model-classified.",
       "relationship_patterns": {
-        "mutualism": true,
+        "mutualism": false,
         "ai_benefiting_parasitism": false,
         "human_benefiting_parasitism": false,
         "competition": false
       },
       "public_signals": {
-        "people_gaining": true,
-        "people_losing_ground": true,
-        "mixed_picture": true,
+        "people_gaining": false,
+        "people_losing_ground": false,
+        "mixed_picture": false,
         "not_everyone_benefits": false,
-        "not_clear_yet": false
+        "not_clear_yet": true
       },
-      "distribution_signal": "broadly_shared",
-      "public_takeaway": "The author and their children use AI to create a story, showing that people can extend their creative capacity through AI. AI systems are making basic skills redundant AI provides personalized education that enhances student learning and understanding.",
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -3155,28 +3133,21 @@
     {
       "axes": {
         "ai": {
-          "evidence": "No AI-side relation is described",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "human": {
-          "evidence": "No human-side relation is described",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [
-          "source_representation"
-        ],
+        "evidence_types": [],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": true,
-        "unresolved_reason": ""
+        "evidence_complete": false,
+        "unresolved_reason": "complete_written_source_unavailable"
       },
-      "relationship_evidence": {
-        "mutualism": "",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
+      "relationship_evidence": {},
       "relationship_pattern_status": "assessed",
       "event_id": "38d9e439-8ce2-4560-8d2c-50a2d09e563b",
       "event_title": "ASU Professor Finds Term 'Artificial Intelligence' in 1588 Book",
@@ -3194,51 +3165,47 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "no_clear_relational_signal",
-      "plain_label": "No clear human-AI relationship is described",
-      "human_experience_type": "neutral",
-      "ai_expressive_role": "neutral",
-      "human_direction": "neutral",
-      "ai_direction": "neutral",
-      "evidence_status": "sufficient",
-      "content_basis": "full_text",
+      "configuration": "insufficient_evidence",
+      "plain_label": "There is not enough source evidence to classify the relationship",
+      "human_experience_type": "unclear",
+      "ai_expressive_role": "unclear",
+      "human_direction": "unclear",
+      "ai_direction": "unclear",
+      "evidence_status": "insufficient",
+      "content_basis": "not_available",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "no_full_body",
         "source_quality": {
           "15c1f6a4e65d2a002296070f70a145f0": {
-            "flags": [],
-            "scope": "written_page",
-            "characters": 4777,
-            "body_sha256": "cd671bd55da24bf55649d305960f6d5a92b17d6968407f0184483496ee3e7231",
-            "quality_version": "stored_source_quality_v2",
-            "source_language": "",
-            "usable_complete_body": true,
-            "automated_check_is_not_completeness_certification": true
+            "flags": [
+              "no_usable_complete_body"
+            ],
+            "usable_complete_body": false
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 1,
+        "full_text_sources": 0,
         "source_fingerprints": {
-          "15c1f6a4e65d2a002296070f70a145f0": "cd671bd55da24bf55649d305960f6d5a92b17d6968407f0184483496ee3e7231"
+          "15c1f6a4e65d2a002296070f70a145f0": null
         },
         "headline_only_sources": 0,
-        "not_available_sources": 0,
+        "not_available_sources": 1,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": true,
-        "people_evidence": "No human-side relation is described",
-        "ai_evidence": "No AI-side relation is described",
-        "flags": []
+        "source_reading_complete": false,
+        "people_evidence": "",
+        "ai_evidence": "",
+        "flags": [
+          "incomplete_written_source"
+        ]
       },
-      "story_country_iso3s": [
-        "GBR"
-      ],
-      "evidence_summary": "The discovery of the term 'artificial intelligence' in a 1588 book does not indicate a human or AI-side relation.",
-      "reasoning": "The discovery of the term 'artificial intelligence' in a 1588 book does not indicate a human or AI-side relation.",
+      "story_country_iso3s": [],
+      "evidence_summary": "No full article body was available, so the source was not model-classified.",
+      "reasoning": "No full article body was available, so the source was not model-classified.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -3253,7 +3220,7 @@
         "not_clear_yet": true
       },
       "distribution_signal": "not_shown",
-      "public_takeaway": "No human-side relation is described",
+      "public_takeaway": "",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -4551,28 +4518,21 @@
     {
       "axes": {
         "ai": {
-          "evidence": "No AI-side relation is described in the evidence.",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "human": {
-          "evidence": "No human-side relation is described in the evidence.",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [
-          "source_representation"
-        ],
+        "evidence_types": [],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": true,
-        "unresolved_reason": ""
+        "evidence_complete": false,
+        "unresolved_reason": "complete_written_source_unavailable"
       },
-      "relationship_evidence": {
-        "mutualism": "",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
+      "relationship_evidence": {},
       "relationship_pattern_status": "assessed",
       "event_id": "52997965-d132-4493-b555-6119c7b73658",
       "event_title": "Masons, nurses, electricians… These professions are currently beyond the reach of artificial intelligence",
@@ -4590,51 +4550,47 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "no_clear_relational_signal",
-      "plain_label": "No clear human-AI relationship is described",
-      "human_experience_type": "neutral",
-      "ai_expressive_role": "neutral",
-      "human_direction": "neutral",
-      "ai_direction": "neutral",
-      "evidence_status": "sufficient",
-      "content_basis": "full_text",
+      "configuration": "insufficient_evidence",
+      "plain_label": "There is not enough source evidence to classify the relationship",
+      "human_experience_type": "unclear",
+      "ai_expressive_role": "unclear",
+      "human_direction": "unclear",
+      "ai_direction": "unclear",
+      "evidence_status": "insufficient",
+      "content_basis": "not_available",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "no_full_body",
         "source_quality": {
           "4b0f4735a23a7a5940a3ca49a20cddd8": {
-            "flags": [],
-            "scope": "written_page",
-            "characters": 2133,
-            "body_sha256": "19ebd39642623ec4e8bbd5a5489f3bc62e45a7bf9bfaf6bd05ef77b47836c67e",
-            "quality_version": "stored_source_quality_v2",
-            "source_language": "",
-            "usable_complete_body": true,
-            "automated_check_is_not_completeness_certification": true
+            "flags": [
+              "no_usable_complete_body"
+            ],
+            "usable_complete_body": false
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 1,
+        "full_text_sources": 0,
         "source_fingerprints": {
-          "4b0f4735a23a7a5940a3ca49a20cddd8": "19ebd39642623ec4e8bbd5a5489f3bc62e45a7bf9bfaf6bd05ef77b47836c67e"
+          "4b0f4735a23a7a5940a3ca49a20cddd8": null
         },
         "headline_only_sources": 0,
-        "not_available_sources": 0,
+        "not_available_sources": 1,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": true,
-        "people_evidence": "No human-side relation is described in the evidence.",
-        "ai_evidence": "No AI-side relation is described in the evidence.",
-        "flags": []
+        "source_reading_complete": false,
+        "people_evidence": "",
+        "ai_evidence": "",
+        "flags": [
+          "incomplete_written_source"
+        ]
       },
-      "story_country_iso3s": [
-        "CHE"
-      ],
-      "evidence_summary": "The article discusses professions that are currently beyond the reach of AI, suggesting that some jobs may be less threatened by AI.",
-      "reasoning": "The article discusses professions that are currently beyond the reach of AI, suggesting that some jobs may be less threatened by AI.",
+      "story_country_iso3s": [],
+      "evidence_summary": "No full article body was available, so the source was not model-classified.",
+      "reasoning": "No full article body was available, so the source was not model-classified.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -4649,7 +4605,7 @@
         "not_clear_yet": true
       },
       "distribution_signal": "not_shown",
-      "public_takeaway": "No human-side relation is described in the evidence.",
+      "public_takeaway": "",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -5503,28 +5459,21 @@
     {
       "axes": {
         "ai": {
-          "evidence": "No AI-side relation is described",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "human": {
-          "evidence": "No human-side relation is described",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [
-          "source_representation"
-        ],
+        "evidence_types": [],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": true,
-        "unresolved_reason": ""
+        "evidence_complete": false,
+        "unresolved_reason": "complete_written_source_unavailable"
       },
-      "relationship_evidence": {
-        "mutualism": "",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
+      "relationship_evidence": {},
       "relationship_pattern_status": "assessed",
       "event_id": "63bd4191-6fb9-4537-94cc-78c70eef8434",
       "event_title": "US to Press G20 on Light-Touch AI Regulation",
@@ -5542,51 +5491,47 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "no_clear_relational_signal",
-      "plain_label": "No clear human-AI relationship is described",
-      "human_experience_type": "neutral",
-      "ai_expressive_role": "neutral",
-      "human_direction": "neutral",
-      "ai_direction": "neutral",
-      "evidence_status": "sufficient",
-      "content_basis": "full_text",
+      "configuration": "insufficient_evidence",
+      "plain_label": "There is not enough source evidence to classify the relationship",
+      "human_experience_type": "unclear",
+      "ai_expressive_role": "unclear",
+      "human_direction": "unclear",
+      "ai_direction": "unclear",
+      "evidence_status": "insufficient",
+      "content_basis": "not_available",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "no_full_body",
         "source_quality": {
           "09726e832cbef59ce1a11d52fc7d72f5": {
-            "flags": [],
-            "scope": "written_page",
-            "characters": 4135,
-            "body_sha256": "c6680b508c88106d65ccf357049e5e40ce1d9e2ea599d3357550b24d8ed0750f",
-            "quality_version": "stored_source_quality_v2",
-            "source_language": "",
-            "usable_complete_body": true,
-            "automated_check_is_not_completeness_certification": true
+            "flags": [
+              "no_usable_complete_body"
+            ],
+            "usable_complete_body": false
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 1,
+        "full_text_sources": 0,
         "source_fingerprints": {
-          "09726e832cbef59ce1a11d52fc7d72f5": "c6680b508c88106d65ccf357049e5e40ce1d9e2ea599d3357550b24d8ed0750f"
+          "09726e832cbef59ce1a11d52fc7d72f5": null
         },
         "headline_only_sources": 0,
-        "not_available_sources": 0,
+        "not_available_sources": 1,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": true,
-        "people_evidence": "No human-side relation is described",
-        "ai_evidence": "No AI-side relation is described",
-        "flags": []
+        "source_reading_complete": false,
+        "people_evidence": "",
+        "ai_evidence": "",
+        "flags": [
+          "incomplete_written_source"
+        ]
       },
-      "story_country_iso3s": [
-        "USA"
-      ],
-      "evidence_summary": "The U.S. is pushing for light-touch AI regulation at the G20, but no specific human or AI relationship is described.",
-      "reasoning": "The U.S. is pushing for light-touch AI regulation at the G20, but no specific human or AI relationship is described.",
+      "story_country_iso3s": [],
+      "evidence_summary": "No full article body was available, so the source was not model-classified.",
+      "reasoning": "No full article body was available, so the source was not model-classified.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -5600,8 +5545,8 @@
         "not_everyone_benefits": false,
         "not_clear_yet": true
       },
-      "distribution_signal": "broadly_shared",
-      "public_takeaway": "No human-side relation is described",
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -5614,28 +5559,21 @@
     {
       "axes": {
         "ai": {
-          "evidence": "AI is used to enhance the capabilities of villagers, allowing them to create and distribute promotional material more efficiently. AI systems are extended and optimized for rural use, improving efficiency and accessibility. AI is expanded through practical training and application in local settings, enabling its use in cultural, economic, and governance contexts.",
-          "direction": "gain"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "human": {
-          "evidence": "Villagers gained new economic opportunities and organizational capacity through AI integration. Villagers gain access to AI-based tools for content creation, enabling them to promote local products and services effectively. Villagers gain access to new media tools and economic opportunities through AI. People gain access to practical AI skills that enhance their ability to use AI in local contexts. People gain access to new opportunities through AI in rural areas.",
-          "direction": "gain"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [
-          "source_representation"
-        ],
+        "evidence_types": [],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": true,
-        "unresolved_reason": ""
+        "evidence_complete": false,
+        "unresolved_reason": "complete_written_source_unavailable"
       },
-      "relationship_evidence": {
-        "mutualism": "false true AI and people both benefit: villagers gain access to new media tools and economic opportunities, while AI systems are extended and optimized for rural use.",
-        "competition": "false",
-        "ai_benefiting_parasitism": "false",
-        "human_benefiting_parasitism": "true false"
-      },
+      "relationship_evidence": {},
       "relationship_pattern_status": "assessed",
       "event_id": "64fa70e7-454a-4c16-8f89-068f25115a81",
       "event_title": "Artificial Intelligence in the Hands of the People: The Rongjiang Experiment",
@@ -5653,66 +5591,62 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "mutualism",
-      "plain_label": "Both people and the AI side are represented as gaining",
-      "human_experience_type": "extension",
-      "ai_expressive_role": "ai_extension",
-      "human_direction": "enabling",
-      "ai_direction": "enabling",
-      "evidence_status": "sufficient",
-      "content_basis": "full_text",
+      "configuration": "insufficient_evidence",
+      "plain_label": "There is not enough source evidence to classify the relationship",
+      "human_experience_type": "unclear",
+      "ai_expressive_role": "unclear",
+      "human_direction": "unclear",
+      "ai_direction": "unclear",
+      "evidence_status": "insufficient",
+      "content_basis": "not_available",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "no_full_body",
         "source_quality": {
           "2fe9ae6a2fcf496b5758cb6412bd1680": {
-            "flags": [],
-            "scope": "written_page",
-            "characters": 24403,
-            "body_sha256": "d2973fca24411f32f3b76043c23a7eb6bfda799bfe2185a36a25297c0ee6ddda",
-            "quality_version": "stored_source_quality_v2",
-            "source_language": "",
-            "usable_complete_body": true,
-            "automated_check_is_not_completeness_certification": true
+            "flags": [
+              "no_usable_complete_body"
+            ],
+            "usable_complete_body": false
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 1,
+        "full_text_sources": 0,
         "source_fingerprints": {
-          "2fe9ae6a2fcf496b5758cb6412bd1680": "d2973fca24411f32f3b76043c23a7eb6bfda799bfe2185a36a25297c0ee6ddda"
+          "2fe9ae6a2fcf496b5758cb6412bd1680": null
         },
         "headline_only_sources": 0,
-        "not_available_sources": 0,
+        "not_available_sources": 1,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": true,
-        "people_evidence": "Villagers gained new economic opportunities and organizational capacity through AI integration. Villagers gain access to AI-based tools for content creation, enabling them to promote local products and services effectively. Villagers gain access to new media tools and economic opportunities through AI. People gain access to practical AI skills that enhance their ability to use AI in local contexts. People gain access to new opportunities through AI in rural areas.",
-        "ai_evidence": "AI is used to enhance the capabilities of villagers, allowing them to create and distribute promotional material more efficiently. AI systems are extended and optimized for rural use, improving efficiency and accessibility. AI is expanded through practical training and application in local settings, enabling its use in cultural, economic, and governance contexts.",
-        "flags": []
+        "source_reading_complete": false,
+        "people_evidence": "",
+        "ai_evidence": "",
+        "flags": [
+          "incomplete_written_source"
+        ]
       },
-      "story_country_iso3s": [
-        "CHN"
-      ],
-      "evidence_summary": "AI is being used to empower villagers through new economic opportunities and organizational capacity.",
-      "reasoning": "AI is being used to empower villagers through new economic opportunities and organizational capacity.",
+      "story_country_iso3s": [],
+      "evidence_summary": "No full article body was available, so the source was not model-classified.",
+      "reasoning": "No full article body was available, so the source was not model-classified.",
       "relationship_patterns": {
-        "mutualism": true,
+        "mutualism": false,
         "ai_benefiting_parasitism": false,
         "human_benefiting_parasitism": false,
         "competition": false
       },
       "public_signals": {
-        "people_gaining": true,
+        "people_gaining": false,
         "people_losing_ground": false,
         "mixed_picture": false,
         "not_everyone_benefits": false,
-        "not_clear_yet": false
+        "not_clear_yet": true
       },
-      "distribution_signal": "broadly_shared",
-      "public_takeaway": "Villagers gained new economic opportunities and organizational capacity through AI integration. Villagers gain access to AI-based tools for content creation, enabling them to promote local products and services effectively. Villagers gain access to new media tools and economic opportunities through AI. People gain access to practical AI skills that enhance their ability to use AI in local contexts. People gain access to new opportunities through AI in rural areas.",
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -6907,28 +6841,21 @@
     {
       "axes": {
         "ai": {
-          "evidence": "No AI-side relation is described in the article.",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "human": {
-          "evidence": "No human-side relation is described in the article.",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [
-          "source_representation"
-        ],
+        "evidence_types": [],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": true,
-        "unresolved_reason": ""
+        "evidence_complete": false,
+        "unresolved_reason": "complete_written_source_unavailable"
       },
-      "relationship_evidence": {
-        "mutualism": "",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
+      "relationship_evidence": {},
       "relationship_pattern_status": "assessed",
       "event_id": "774fc675-1a43-4d20-8128-5f606d0d70b9",
       "event_title": "Broadcom vs. Nvidia: 1 Critical Metric Shows Which Artificial Intelligence (AI) Chipmaker Is the Better Buy After Earnings",
@@ -6946,51 +6873,47 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "no_clear_relational_signal",
-      "plain_label": "No clear human-AI relationship is described",
-      "human_experience_type": "neutral",
-      "ai_expressive_role": "neutral",
-      "human_direction": "neutral",
-      "ai_direction": "neutral",
-      "evidence_status": "sufficient",
-      "content_basis": "full_text",
+      "configuration": "insufficient_evidence",
+      "plain_label": "There is not enough source evidence to classify the relationship",
+      "human_experience_type": "unclear",
+      "ai_expressive_role": "unclear",
+      "human_direction": "unclear",
+      "ai_direction": "unclear",
+      "evidence_status": "insufficient",
+      "content_basis": "not_available",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "no_full_body",
         "source_quality": {
           "536e7b176c0b4c98a4014c204f52dc85": {
-            "flags": [],
-            "scope": "written_page",
-            "characters": 4850,
-            "body_sha256": "89d07bec8ab6ae63642a1f0f3d1af8049922fd20788c8a49f2e9bee5f268a8e9",
-            "quality_version": "stored_source_quality_v2",
-            "source_language": "",
-            "usable_complete_body": true,
-            "automated_check_is_not_completeness_certification": true
+            "flags": [
+              "no_usable_complete_body"
+            ],
+            "usable_complete_body": false
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 1,
+        "full_text_sources": 0,
         "source_fingerprints": {
-          "536e7b176c0b4c98a4014c204f52dc85": "89d07bec8ab6ae63642a1f0f3d1af8049922fd20788c8a49f2e9bee5f268a8e9"
+          "536e7b176c0b4c98a4014c204f52dc85": null
         },
         "headline_only_sources": 0,
-        "not_available_sources": 0,
+        "not_available_sources": 1,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": true,
-        "people_evidence": "No human-side relation is described in the article.",
-        "ai_evidence": "No AI-side relation is described in the article.",
-        "flags": []
+        "source_reading_complete": false,
+        "people_evidence": "",
+        "ai_evidence": "",
+        "flags": [
+          "incomplete_written_source"
+        ]
       },
-      "story_country_iso3s": [
-        "USA"
-      ],
-      "evidence_summary": "The article discusses the financial performance and future prospects of Broadcom and Nvidia in the AI chip market, but does not describe any direct human or AI relational signals.",
-      "reasoning": "The article discusses the financial performance and future prospects of Broadcom and Nvidia in the AI chip market, but does not describe any direct human or AI relational signals.",
+      "story_country_iso3s": [],
+      "evidence_summary": "No full article body was available, so the source was not model-classified.",
+      "reasoning": "No full article body was available, so the source was not model-classified.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -7004,8 +6927,8 @@
         "not_everyone_benefits": false,
         "not_clear_yet": true
       },
-      "distribution_signal": "broadly_shared",
-      "public_takeaway": "No human-side relation is described in the article.",
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -7018,28 +6941,21 @@
     {
       "axes": {
         "ai": {
-          "evidence": "No AI-side relation is described in the evidence.",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "human": {
-          "evidence": "No human-side relation is described in the evidence.",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [
-          "source_representation"
-        ],
+        "evidence_types": [],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": true,
-        "unresolved_reason": ""
+        "evidence_complete": false,
+        "unresolved_reason": "complete_written_source_unavailable"
       },
-      "relationship_evidence": {
-        "mutualism": "",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
+      "relationship_evidence": {},
       "relationship_pattern_status": "assessed",
       "event_id": "78c2f5af-e751-412a-9344-cc485fa2863b",
       "event_title": "Meta claims to have caught up with OpenAI and Anthropic with its new AI model",
@@ -7057,51 +6973,47 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "no_clear_relational_signal",
-      "plain_label": "No clear human-AI relationship is described",
-      "human_experience_type": "neutral",
-      "ai_expressive_role": "neutral",
-      "human_direction": "neutral",
-      "ai_direction": "neutral",
-      "evidence_status": "sufficient",
-      "content_basis": "full_text",
+      "configuration": "insufficient_evidence",
+      "plain_label": "There is not enough source evidence to classify the relationship",
+      "human_experience_type": "unclear",
+      "ai_expressive_role": "unclear",
+      "human_direction": "unclear",
+      "ai_direction": "unclear",
+      "evidence_status": "insufficient",
+      "content_basis": "not_available",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "no_full_body",
         "source_quality": {
           "7333e430449257fdbf4a2562696f42d2": {
-            "flags": [],
-            "scope": "written_page",
-            "characters": 2438,
-            "body_sha256": "c1b5d15b950aea4a3603a5cfb3106e99eb9486e4ef94fa401b694f13db87bc80",
-            "quality_version": "stored_source_quality_v2",
-            "source_language": "",
-            "usable_complete_body": true,
-            "automated_check_is_not_completeness_certification": true
+            "flags": [
+              "no_usable_complete_body"
+            ],
+            "usable_complete_body": false
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 1,
+        "full_text_sources": 0,
         "source_fingerprints": {
-          "7333e430449257fdbf4a2562696f42d2": "c1b5d15b950aea4a3603a5cfb3106e99eb9486e4ef94fa401b694f13db87bc80"
+          "7333e430449257fdbf4a2562696f42d2": null
         },
         "headline_only_sources": 0,
-        "not_available_sources": 0,
+        "not_available_sources": 1,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": true,
-        "people_evidence": "No human-side relation is described in the evidence.",
-        "ai_evidence": "No AI-side relation is described in the evidence.",
-        "flags": []
+        "source_reading_complete": false,
+        "people_evidence": "",
+        "ai_evidence": "",
+        "flags": [
+          "incomplete_written_source"
+        ]
       },
-      "story_country_iso3s": [
-        "USD"
-      ],
-      "evidence_summary": "The article discusses Meta's new AI model and its competitive positioning against OpenAI and Anthropic, but does not describe any clear human or AI-side relation.",
-      "reasoning": "The article discusses Meta's new AI model and its competitive positioning against OpenAI and Anthropic, but does not describe any clear human or AI-side relation.",
+      "story_country_iso3s": [],
+      "evidence_summary": "No full article body was available, so the source was not model-classified.",
+      "reasoning": "No full article body was available, so the source was not model-classified.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -7115,8 +7027,8 @@
         "not_everyone_benefits": false,
         "not_clear_yet": true
       },
-      "distribution_signal": "broadly_shared",
-      "public_takeaway": "No human-side relation is described in the evidence.",
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -7440,28 +7352,21 @@
     {
       "axes": {
         "ai": {
-          "evidence": "No specific AI benefit or loss is stated in the article.",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "human": {
-          "evidence": "No specific human benefit or loss is stated in the article.",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [
-          "source_representation"
-        ],
+        "evidence_types": [],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": true,
-        "unresolved_reason": ""
+        "evidence_complete": false,
+        "unresolved_reason": "complete_written_source_unavailable"
       },
-      "relationship_evidence": {
-        "mutualism": "",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
+      "relationship_evidence": {},
       "relationship_pattern_status": "assessed",
       "event_id": "8ca1d082-3d5a-45a9-bd74-b3b4567649f1",
       "event_title": "Got $1,000? 3 Stocks Building the Physical AI Era",
@@ -7479,49 +7384,47 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "no_clear_relational_signal",
-      "plain_label": "No clear human-AI relationship is described",
-      "human_experience_type": "neutral",
-      "ai_expressive_role": "neutral",
-      "human_direction": "neutral",
-      "ai_direction": "neutral",
-      "evidence_status": "sufficient",
-      "content_basis": "full_text",
+      "configuration": "insufficient_evidence",
+      "plain_label": "There is not enough source evidence to classify the relationship",
+      "human_experience_type": "unclear",
+      "ai_expressive_role": "unclear",
+      "human_direction": "unclear",
+      "ai_direction": "unclear",
+      "evidence_status": "insufficient",
+      "content_basis": "not_available",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "no_full_body",
         "source_quality": {
           "94a23df27e1e1fb9d304716e299fe49e": {
-            "flags": [],
-            "scope": "written_page",
-            "characters": 5182,
-            "body_sha256": "bdfe5efa5692d3c42ba4bd344fb6200810058a9a4e34553d919e4a9c75c9a43f",
-            "quality_version": "stored_source_quality_v2",
-            "source_language": "",
-            "usable_complete_body": true,
-            "automated_check_is_not_completeness_certification": true
+            "flags": [
+              "no_usable_complete_body"
+            ],
+            "usable_complete_body": false
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 1,
+        "full_text_sources": 0,
         "source_fingerprints": {
-          "94a23df27e1e1fb9d304716e299fe49e": "bdfe5efa5692d3c42ba4bd344fb6200810058a9a4e34553d919e4a9c75c9a43f"
+          "94a23df27e1e1fb9d304716e299fe49e": null
         },
         "headline_only_sources": 0,
-        "not_available_sources": 0,
+        "not_available_sources": 1,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": true,
-        "people_evidence": "No specific human benefit or loss is stated in the article.",
-        "ai_evidence": "No specific AI benefit or loss is stated in the article.",
-        "flags": []
+        "source_reading_complete": false,
+        "people_evidence": "",
+        "ai_evidence": "",
+        "flags": [
+          "incomplete_written_source"
+        ]
       },
       "story_country_iso3s": [],
-      "evidence_summary": "The article discusses physical infrastructure needs for AI without specifying direct human or AI benefits or losses.",
-      "reasoning": "The article discusses physical infrastructure needs for AI without specifying direct human or AI benefits or losses.",
+      "evidence_summary": "No full article body was available, so the source was not model-classified.",
+      "reasoning": "No full article body was available, so the source was not model-classified.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -7535,8 +7438,8 @@
         "not_everyone_benefits": false,
         "not_clear_yet": true
       },
-      "distribution_signal": "broadly_shared",
-      "public_takeaway": "No specific human benefit or loss is stated in the article.",
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -7882,28 +7785,21 @@
     {
       "axes": {
         "ai": {
-          "evidence": "No specific AI benefit or loss is stated in the text. No AI-side relation is described",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "human": {
-          "evidence": "No specific human benefit or loss is stated in the text. No human-side relation is described",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [
-          "source_representation"
-        ],
+        "evidence_types": [],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": true,
-        "unresolved_reason": ""
+        "evidence_complete": false,
+        "unresolved_reason": "complete_written_source_unavailable"
       },
-      "relationship_evidence": {
-        "mutualism": "",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
+      "relationship_evidence": {},
       "relationship_pattern_status": "assessed",
       "event_id": "95f21dd4-08db-414a-8056-6878e77489df",
       "event_title": "Understanding AI: A Practical Guide for Businesses",
@@ -7921,49 +7817,47 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "no_clear_relational_signal",
-      "plain_label": "No clear human-AI relationship is described",
-      "human_experience_type": "neutral",
-      "ai_expressive_role": "neutral",
-      "human_direction": "neutral",
-      "ai_direction": "neutral",
-      "evidence_status": "sufficient",
-      "content_basis": "full_text",
+      "configuration": "insufficient_evidence",
+      "plain_label": "There is not enough source evidence to classify the relationship",
+      "human_experience_type": "unclear",
+      "ai_expressive_role": "unclear",
+      "human_direction": "unclear",
+      "ai_direction": "unclear",
+      "evidence_status": "insufficient",
+      "content_basis": "not_available",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "no_full_body",
         "source_quality": {
           "0023a10a5edba6ec625b8e8c20914b65": {
-            "flags": [],
-            "scope": "written_page",
-            "characters": 6792,
-            "body_sha256": "7e2f47821ecbd140570cd17890814a192e6df7f3534ce6fa21d30b0c681bf7ab",
-            "quality_version": "stored_source_quality_v2",
-            "source_language": "",
-            "usable_complete_body": true,
-            "automated_check_is_not_completeness_certification": true
+            "flags": [
+              "no_usable_complete_body"
+            ],
+            "usable_complete_body": false
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 1,
+        "full_text_sources": 0,
         "source_fingerprints": {
-          "0023a10a5edba6ec625b8e8c20914b65": "7e2f47821ecbd140570cd17890814a192e6df7f3534ce6fa21d30b0c681bf7ab"
+          "0023a10a5edba6ec625b8e8c20914b65": null
         },
         "headline_only_sources": 0,
-        "not_available_sources": 0,
+        "not_available_sources": 1,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": true,
-        "people_evidence": "No specific human benefit or loss is stated in the text. No human-side relation is described",
-        "ai_evidence": "No specific AI benefit or loss is stated in the text. No AI-side relation is described",
-        "flags": []
+        "source_reading_complete": false,
+        "people_evidence": "",
+        "ai_evidence": "",
+        "flags": [
+          "incomplete_written_source"
+        ]
       },
       "story_country_iso3s": [],
-      "evidence_summary": "The article discusses the challenges of AI adoption in organizations, focusing on the need for understanding and governance.",
-      "reasoning": "The article discusses the challenges of AI adoption in organizations, focusing on the need for understanding and governance.",
+      "evidence_summary": "No full article body was available, so the source was not model-classified.",
+      "reasoning": "No full article body was available, so the source was not model-classified.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -7978,7 +7872,7 @@
         "not_clear_yet": true
       },
       "distribution_signal": "not_shown",
-      "public_takeaway": "No specific human benefit or loss is stated in the text. No human-side relation is described",
+      "public_takeaway": "",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -9961,28 +9855,21 @@
     {
       "axes": {
         "ai": {
-          "evidence": "The AI system is not directly restricted or expanded in the text, as the focus is on human access rather than AI capabilities.",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "human": {
-          "evidence": "The ban restricts access to AI for students, limiting their ability to use AI tools in education.",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [
-          "source_representation"
-        ],
+        "evidence_types": [],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": true,
-        "unresolved_reason": ""
+        "evidence_complete": false,
+        "unresolved_reason": "complete_written_source_unavailable"
       },
-      "relationship_evidence": {
-        "mutualism": "",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
+      "relationship_evidence": {},
       "relationship_pattern_status": "assessed",
       "event_id": "bd7c60d8-c9f6-4f1c-a37e-854c40fafb80",
       "event_title": "In New York, the use of artificial intelligence will be prohibited for all students until third grade.",
@@ -10008,28 +9895,24 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "no_clear_relational_signal",
-      "plain_label": "No clear human-AI relationship is described",
-      "human_experience_type": "neutral",
-      "ai_expressive_role": "neutral",
-      "human_direction": "neutral",
-      "ai_direction": "neutral",
-      "evidence_status": "sufficient",
-      "content_basis": "full_text",
+      "configuration": "insufficient_evidence",
+      "plain_label": "There is not enough source evidence to classify the relationship",
+      "human_experience_type": "unclear",
+      "ai_expressive_role": "unclear",
+      "human_direction": "unclear",
+      "ai_direction": "unclear",
+      "evidence_status": "insufficient",
+      "content_basis": "not_available",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 2,
-        "body_coverage": "some_sources",
+        "body_coverage": "no_full_body",
         "source_quality": {
           "7d1eec92edf706d652710846baea1e42": {
-            "flags": [],
-            "scope": "written_page",
-            "characters": 2703,
-            "body_sha256": "52784401b8c9a0ee3a3387b03cbe61e132f236f4d2687e30cdf531a9b84161d7",
-            "quality_version": "stored_source_quality_v2",
-            "source_language": "",
-            "usable_complete_body": true,
-            "automated_check_is_not_completeness_certification": true
+            "flags": [
+              "no_usable_complete_body"
+            ],
+            "usable_complete_body": false
           },
           "b54ca62885e4974c858be0a996cf52b3": {
             "flags": [
@@ -10039,27 +9922,27 @@
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 1,
+        "full_text_sources": 0,
         "source_fingerprints": {
-          "7d1eec92edf706d652710846baea1e42": "52784401b8c9a0ee3a3387b03cbe61e132f236f4d2687e30cdf531a9b84161d7",
+          "7d1eec92edf706d652710846baea1e42": null,
           "b54ca62885e4974c858be0a996cf52b3": null
         },
         "headline_only_sources": 0,
-        "not_available_sources": 1,
+        "not_available_sources": 2,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": true,
-        "people_evidence": "The ban restricts access to AI for students, limiting their ability to use AI tools in education.",
-        "ai_evidence": "The AI system is not directly restricted or expanded in the text, as the focus is on human access rather than AI capabilities.",
-        "flags": []
+        "source_reading_complete": false,
+        "people_evidence": "",
+        "ai_evidence": "",
+        "flags": [
+          "incomplete_written_source"
+        ]
       },
-      "story_country_iso3s": [
-        "USA"
-      ],
-      "evidence_summary": "The ban on AI in schools restricts student access to AI tools, but the AI system itself is not directly constrained.",
-      "reasoning": "The ban on AI in schools restricts student access to AI tools, but the AI system itself is not directly constrained.",
+      "story_country_iso3s": [],
+      "evidence_summary": "No full article body was available, so the source was not model-classified.",
+      "reasoning": "No full article body was available, so the source was not model-classified.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -10074,7 +9957,7 @@
         "not_clear_yet": true
       },
       "distribution_signal": "not_shown",
-      "public_takeaway": "The ban restricts access to AI for students, limiting their ability to use AI tools in education.",
+      "public_takeaway": "",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -10087,28 +9970,21 @@
     {
       "axes": {
         "ai": {
-          "evidence": "No AI-side relation is described",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "human": {
-          "evidence": "No human-side relation is described",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [
-          "source_representation"
-        ],
+        "evidence_types": [],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": true,
-        "unresolved_reason": ""
+        "evidence_complete": false,
+        "unresolved_reason": "complete_written_source_unavailable"
       },
-      "relationship_evidence": {
-        "mutualism": "",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
+      "relationship_evidence": {},
       "relationship_pattern_status": "assessed",
       "event_id": "bedfedab-eb0d-4f88-bb4c-7e75b2d10a56",
       "event_title": "Broadcom's Artificial Intelligence (AI) Chip Sales Surged 221% to $16.7 Billion Last Quarter: Is the Stock a Screaming Buy Right Now?",
@@ -10126,51 +10002,47 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "no_clear_relational_signal",
-      "plain_label": "No clear human-AI relationship is described",
-      "human_experience_type": "neutral",
-      "ai_expressive_role": "neutral",
-      "human_direction": "neutral",
-      "ai_direction": "neutral",
-      "evidence_status": "sufficient",
-      "content_basis": "full_text",
+      "configuration": "insufficient_evidence",
+      "plain_label": "There is not enough source evidence to classify the relationship",
+      "human_experience_type": "unclear",
+      "ai_expressive_role": "unclear",
+      "human_direction": "unclear",
+      "ai_direction": "unclear",
+      "evidence_status": "insufficient",
+      "content_basis": "not_available",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "no_full_body",
         "source_quality": {
           "39a1480ef4875029d9355a9d731c09b9": {
-            "flags": [],
-            "scope": "written_page",
-            "characters": 4233,
-            "body_sha256": "0643c87e8044022c7cb16255054e07225aa304de86b755dec9161692a66746c7",
-            "quality_version": "stored_source_quality_v2",
-            "source_language": "",
-            "usable_complete_body": true,
-            "automated_check_is_not_completeness_certification": true
+            "flags": [
+              "no_usable_complete_body"
+            ],
+            "usable_complete_body": false
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 1,
+        "full_text_sources": 0,
         "source_fingerprints": {
-          "39a1480ef4875029d9355a9d731c09b9": "0643c87e8044022c7cb16255054e07225aa304de86b755dec9161692a66746c7"
+          "39a1480ef4875029d9355a9d731c09b9": null
         },
         "headline_only_sources": 0,
-        "not_available_sources": 0,
+        "not_available_sources": 1,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": true,
-        "people_evidence": "No human-side relation is described",
-        "ai_evidence": "No AI-side relation is described",
-        "flags": []
+        "source_reading_complete": false,
+        "people_evidence": "",
+        "ai_evidence": "",
+        "flags": [
+          "incomplete_written_source"
+        ]
       },
-      "story_country_iso3s": [
-        "USA"
-      ],
-      "evidence_summary": "The article discusses Broadcom's AI chip sales growth but does not describe any human or AI-side relation.",
-      "reasoning": "The article discusses Broadcom's AI chip sales growth but does not describe any human or AI-side relation.",
+      "story_country_iso3s": [],
+      "evidence_summary": "No full article body was available, so the source was not model-classified.",
+      "reasoning": "No full article body was available, so the source was not model-classified.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -10184,8 +10056,8 @@
         "not_everyone_benefits": false,
         "not_clear_yet": true
       },
-      "distribution_signal": "broadly_shared",
-      "public_takeaway": "No human-side relation is described",
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -13827,28 +13699,21 @@
     {
       "axes": {
         "ai": {
-          "evidence": "No AI-side relation is described",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "human": {
-          "evidence": "No human-side relation is described",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [
-          "source_representation"
-        ],
+        "evidence_types": [],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": true,
-        "unresolved_reason": ""
+        "evidence_complete": false,
+        "unresolved_reason": "complete_written_source_unavailable"
       },
-      "relationship_evidence": {
-        "mutualism": "",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
+      "relationship_evidence": {},
       "relationship_pattern_status": "assessed",
       "event_id": "f43ef28e-4940-4f12-a103-dec4ccd6a947",
       "event_title": "Amazon vs. Microsoft: One Key Metric Reveals the Superior AI Cloud Stock",
@@ -13866,51 +13731,47 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "no_clear_relational_signal",
-      "plain_label": "No clear human-AI relationship is described",
-      "human_experience_type": "neutral",
-      "ai_expressive_role": "neutral",
-      "human_direction": "neutral",
-      "ai_direction": "neutral",
-      "evidence_status": "sufficient",
-      "content_basis": "full_text",
+      "configuration": "insufficient_evidence",
+      "plain_label": "There is not enough source evidence to classify the relationship",
+      "human_experience_type": "unclear",
+      "ai_expressive_role": "unclear",
+      "human_direction": "unclear",
+      "ai_direction": "unclear",
+      "evidence_status": "insufficient",
+      "content_basis": "not_available",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "no_full_body",
         "source_quality": {
           "ee8e2bc3473a4edac756c4e9bd38bc73": {
-            "flags": [],
-            "scope": "written_page",
-            "characters": 4065,
-            "body_sha256": "e93f75ce38e1fef503da0acdb3b3c5f7589bc5b593a2e04baee15bc313683a72",
-            "quality_version": "stored_source_quality_v2",
-            "source_language": "",
-            "usable_complete_body": true,
-            "automated_check_is_not_completeness_certification": true
+            "flags": [
+              "no_usable_complete_body"
+            ],
+            "usable_complete_body": false
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 1,
+        "full_text_sources": 0,
         "source_fingerprints": {
-          "ee8e2bc3473a4edac756c4e9bd38bc73": "e93f75ce38e1fef503da0acdb3b3c5f7589bc5b593a2e04baee15bc313683a72"
+          "ee8e2bc3473a4edac756c4e9bd38bc73": null
         },
         "headline_only_sources": 0,
-        "not_available_sources": 0,
+        "not_available_sources": 1,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": true,
-        "people_evidence": "No human-side relation is described",
-        "ai_evidence": "No AI-side relation is described",
-        "flags": []
+        "source_reading_complete": false,
+        "people_evidence": "",
+        "ai_evidence": "",
+        "flags": [
+          "incomplete_written_source"
+        ]
       },
-      "story_country_iso3s": [
-        "USA"
-      ],
-      "evidence_summary": "The article compares Amazon and Microsoft's AI cloud businesses, focusing on growth rates and operating margins, but does not describe any direct human or AI relationship.",
-      "reasoning": "The article compares Amazon and Microsoft's AI cloud businesses, focusing on growth rates and operating margins, but does not describe any direct human or AI relationship.",
+      "story_country_iso3s": [],
+      "evidence_summary": "No full article body was available, so the source was not model-classified.",
+      "reasoning": "No full article body was available, so the source was not model-classified.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -13924,8 +13785,8 @@
         "not_everyone_benefits": false,
         "not_clear_yet": true
       },
-      "distribution_signal": "broadly_shared",
-      "public_takeaway": "No human-side relation is described",
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -13938,28 +13799,21 @@
     {
       "axes": {
         "ai": {
-          "evidence": "The AI system is extended through the Snickers Hungr.AI initiative, which provides a new method for AI to receive data and improve its performance by engaging with users.",
-          "direction": "gain"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "human": {
-          "evidence": "People gain access to a new way to interact with AI through the Snickers Hungr.AI initiative, which is designed to help AI systems perform better by providing them with 'bytes' to 'satiate' their digital assistants.",
-          "direction": "gain"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [
-          "source_representation"
-        ],
+        "evidence_types": [],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": true,
-        "unresolved_reason": ""
+        "evidence_complete": false,
+        "unresolved_reason": "complete_written_source_unavailable"
       },
-      "relationship_evidence": {
-        "mutualism": "Snickers and AI both benefit from the initiative: Snickers gains brand engagement and a new marketing channel, while AI gains a new way to interact with users.",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
+      "relationship_evidence": {},
       "relationship_pattern_status": "assessed",
       "event_id": "fb3a9764-c7b4-4cfe-b262-59390f0a073d",
       "event_title": "Snickers Delivers Digital Treats for Hungry Artificial Intelligence",
@@ -13977,66 +13831,62 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "mutualism",
-      "plain_label": "Both people and the AI side are represented as gaining",
-      "human_experience_type": "extension",
-      "ai_expressive_role": "ai_extension",
-      "human_direction": "enabling",
-      "ai_direction": "enabling",
-      "evidence_status": "sufficient",
-      "content_basis": "full_text",
+      "configuration": "insufficient_evidence",
+      "plain_label": "There is not enough source evidence to classify the relationship",
+      "human_experience_type": "unclear",
+      "ai_expressive_role": "unclear",
+      "human_direction": "unclear",
+      "ai_direction": "unclear",
+      "evidence_status": "insufficient",
+      "content_basis": "not_available",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "no_full_body",
         "source_quality": {
           "5dab2f1100d5b574fa065374b64202dc": {
-            "flags": [],
-            "scope": "written_page",
-            "characters": 2306,
-            "body_sha256": "590ffdca12584eca972a4ec7a833bf53b5ed5d3423e869fb0cf5827cd67870b7",
-            "quality_version": "stored_source_quality_v2",
-            "source_language": "",
-            "usable_complete_body": true,
-            "automated_check_is_not_completeness_certification": true
+            "flags": [
+              "no_usable_complete_body"
+            ],
+            "usable_complete_body": false
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 1,
+        "full_text_sources": 0,
         "source_fingerprints": {
-          "5dab2f1100d5b574fa065374b64202dc": "590ffdca12584eca972a4ec7a833bf53b5ed5d3423e869fb0cf5827cd67870b7"
+          "5dab2f1100d5b574fa065374b64202dc": null
         },
         "headline_only_sources": 0,
-        "not_available_sources": 0,
+        "not_available_sources": 1,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": true,
-        "people_evidence": "People gain access to a new way to interact with AI through the Snickers Hungr.AI initiative, which is designed to help AI systems perform better by providing them with 'bytes' to 'satiate' their digital assistants.",
-        "ai_evidence": "The AI system is extended through the Snickers Hungr.AI initiative, which provides a new method for AI to receive data and improve its performance by engaging with users.",
-        "flags": []
+        "source_reading_complete": false,
+        "people_evidence": "",
+        "ai_evidence": "",
+        "flags": [
+          "incomplete_written_source"
+        ]
       },
-      "story_country_iso3s": [
-        "USA"
-      ],
-      "evidence_summary": "Snickers and AI both benefit from the initiative: Snickers gains brand engagement and a new marketing channel, while AI gains a new way to interact with users.",
-      "reasoning": "Snickers and AI both benefit from the initiative: Snickers gains brand engagement and a new marketing channel, while AI gains a new way to interact with users.",
+      "story_country_iso3s": [],
+      "evidence_summary": "No full article body was available, so the source was not model-classified.",
+      "reasoning": "No full article body was available, so the source was not model-classified.",
       "relationship_patterns": {
-        "mutualism": true,
+        "mutualism": false,
         "ai_benefiting_parasitism": false,
         "human_benefiting_parasitism": false,
         "competition": false
       },
       "public_signals": {
-        "people_gaining": true,
+        "people_gaining": false,
         "people_losing_ground": false,
         "mixed_picture": false,
         "not_everyone_benefits": false,
-        "not_clear_yet": false
+        "not_clear_yet": true
       },
-      "distribution_signal": "broadly_shared",
-      "public_takeaway": "People gain access to a new way to interact with AI through the Snickers Hungr.AI initiative, which is designed to help AI systems perform better by providing them with 'bytes' to 'satiate' their digital assistants.",
+      "distribution_signal": "not_shown",
+      "public_takeaway": "",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -14049,28 +13899,21 @@
     {
       "axes": {
         "ai": {
-          "evidence": "The AI system is not being extended or expanded, and there is no clear indication of it being restricted or reduced in this context.",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "human": {
-          "evidence": "The policy restricts access to generative AI for younger students, limiting their autonomy and opportunities for engagement with AI technology.",
-          "direction": "none"
+          "evidence": "",
+          "direction": "unresolved"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [
-          "source_representation"
-        ],
+        "evidence_types": [],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": true,
-        "unresolved_reason": ""
+        "evidence_complete": false,
+        "unresolved_reason": "complete_written_source_unavailable"
       },
-      "relationship_evidence": {
-        "mutualism": "",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
+      "relationship_evidence": {},
       "relationship_pattern_status": "assessed",
       "event_id": "fce3a7c6-33bd-4451-baa4-9ef93df156db",
       "event_title": "Generative AI Banned for Younger Students",
@@ -14088,49 +13931,47 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "no_clear_relational_signal",
-      "plain_label": "No clear human-AI relationship is described",
-      "human_experience_type": "neutral",
-      "ai_expressive_role": "neutral",
-      "human_direction": "neutral",
-      "ai_direction": "neutral",
-      "evidence_status": "sufficient",
-      "content_basis": "full_text",
+      "configuration": "insufficient_evidence",
+      "plain_label": "There is not enough source evidence to classify the relationship",
+      "human_experience_type": "unclear",
+      "ai_expressive_role": "unclear",
+      "human_direction": "unclear",
+      "ai_direction": "unclear",
+      "evidence_status": "insufficient",
+      "content_basis": "not_available",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "no_full_body",
         "source_quality": {
           "49003642879400f91266bcad303229b2": {
-            "flags": [],
-            "scope": "written_page",
-            "characters": 5399,
-            "body_sha256": "8c94d2d79148b3e5ea0e7e447a3864bfad894b4dc1039422af9d3ece2e778376",
-            "quality_version": "stored_source_quality_v2",
-            "source_language": "",
-            "usable_complete_body": true,
-            "automated_check_is_not_completeness_certification": true
+            "flags": [
+              "no_usable_complete_body"
+            ],
+            "usable_complete_body": false
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 1,
+        "full_text_sources": 0,
         "source_fingerprints": {
-          "49003642879400f91266bcad303229b2": "8c94d2d79148b3e5ea0e7e447a3864bfad894b4dc1039422af9d3ece2e778376"
+          "49003642879400f91266bcad303229b2": null
         },
         "headline_only_sources": 0,
-        "not_available_sources": 0,
+        "not_available_sources": 1,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": true,
-        "people_evidence": "The policy restricts access to generative AI for younger students, limiting their autonomy and opportunities for engagement with AI technology.",
-        "ai_evidence": "The AI system is not being extended or expanded, and there is no clear indication of it being restricted or reduced in this context.",
-        "flags": []
+        "source_reading_complete": false,
+        "people_evidence": "",
+        "ai_evidence": "",
+        "flags": [
+          "incomplete_written_source"
+        ]
       },
       "story_country_iso3s": [],
-      "evidence_summary": "A policy bans generative AI for younger students, restricting their access and engagement with AI technology.",
-      "reasoning": "A policy bans generative AI for younger students, restricting their access and engagement with AI technology.",
+      "evidence_summary": "No full article body was available, so the source was not model-classified.",
+      "reasoning": "No full article body was available, so the source was not model-classified.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -14145,7 +13986,7 @@
         "not_clear_yet": true
       },
       "distribution_signal": "not_shown",
-      "public_takeaway": "The policy restricts access to generative AI for younger students, limiting their autonomy and opportunities for engagement with AI technology.",
+      "public_takeaway": "",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -14274,11 +14115,11 @@
     {
       "axes": {
         "ai": {
-          "evidence": "no AI-side enabling or constraining signal is described No AI-side relation is described",
+          "evidence": "No AI-side relation is described",
           "direction": "none"
         },
         "human": {
-          "evidence": "no people outcome stated No human-side relation is described",
+          "evidence": "No human-side relation is described",
           "direction": "none"
         },
         "evidence_scope": "written_source",
@@ -14291,10 +14132,10 @@
         "unresolved_reason": ""
       },
       "relationship_evidence": {
-        "mutualism": "false",
-        "competition": "false",
-        "ai_benefiting_parasitism": "false",
-        "human_benefiting_parasitism": "false"
+        "mutualism": "",
+        "competition": "",
+        "ai_benefiting_parasitism": "",
+        "human_benefiting_parasitism": ""
       },
       "relationship_pattern_status": "assessed",
       "event_id": "ff45a3c0-38e7-4038-8fd8-cd526b7eb344",
@@ -14328,21 +14169,17 @@
       "human_direction": "neutral",
       "ai_direction": "neutral",
       "evidence_status": "sufficient",
-      "content_basis": "multiple_sources",
+      "content_basis": "full_text",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 2,
-        "body_coverage": "all_sources",
+        "body_coverage": "some_sources",
         "source_quality": {
           "55f90ec2bdb667f92170940dcd7fdec8": {
-            "flags": [],
-            "scope": "written_page",
-            "characters": 4145,
-            "body_sha256": "619e34797bd8e5dc8ddad7dfc5d9085f36b2e28569b04f9baca1413bb3e48e4e",
-            "quality_version": "stored_source_quality_v2",
-            "source_language": "",
-            "usable_complete_body": true,
-            "automated_check_is_not_completeness_certification": true
+            "flags": [
+              "no_usable_complete_body"
+            ],
+            "usable_complete_body": false
           },
           "f26369cc8ec367bde18e1345f1c6f7fd": {
             "flags": [],
@@ -14356,25 +14193,25 @@
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 2,
+        "full_text_sources": 1,
         "source_fingerprints": {
-          "55f90ec2bdb667f92170940dcd7fdec8": "619e34797bd8e5dc8ddad7dfc5d9085f36b2e28569b04f9baca1413bb3e48e4e",
+          "55f90ec2bdb667f92170940dcd7fdec8": null,
           "f26369cc8ec367bde18e1345f1c6f7fd": "619e34797bd8e5dc8ddad7dfc5d9085f36b2e28569b04f9baca1413bb3e48e4e"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 0,
+        "not_available_sources": 1,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
         "source_reading_complete": true,
-        "people_evidence": "no people outcome stated No human-side relation is described",
-        "ai_evidence": "no AI-side enabling or constraining signal is described No AI-side relation is described",
+        "people_evidence": "No human-side relation is described",
+        "ai_evidence": "No AI-side relation is described",
         "flags": []
       },
       "story_country_iso3s": [],
-      "evidence_summary": "The study highlights the limitations of generative AI in multi-turn conversations, emphasizing the need for human oversight.",
-      "reasoning": "The study highlights the limitations of generative AI in multi-turn conversations, emphasizing the need for human oversight.",
+      "evidence_summary": "A study on generative AI's susceptibility to conversational misinformed pressure and argument is published.",
+      "reasoning": "A study on generative AI's susceptibility to conversational misinformed pressure and argument is published.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -14389,7 +14226,7 @@
         "not_clear_yet": true
       },
       "distribution_signal": "broadly_shared",
-      "public_takeaway": "no people outcome stated No human-side relation is described",
+      "public_takeaway": "No human-side relation is described",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -14405,29 +14242,29 @@
     "policy_version": "source_representations_independent_axes_2026_09",
     "total": 132,
     "human": {
-      "gain": 14,
-      "loss": 1,
-      "mixed": 3,
-      "none": 58,
-      "unresolved": 56
-    },
-    "ai": {
-      "gain": 11,
+      "gain": 12,
       "loss": 1,
       "mixed": 2,
-      "none": 62,
-      "unresolved": 56
+      "none": 46,
+      "unresolved": 71
     },
-    "evidence_complete": 76,
+    "ai": {
+      "gain": 9,
+      "loss": 1,
+      "mixed": 1,
+      "none": 50,
+      "unresolved": 71
+    },
+    "evidence_complete": 61,
     "counting_rule": "Each axis partitions the same records. Mixed is one category. The two axes are not added together."
   },
   "direction_policy_version": "source_representations_independent_axes_2026_09",
   "classification_scope": {
     "unit": "development",
     "total": 132,
-    "complete_written_sources": 76,
-    "incomplete_written_sources": 56,
+    "complete_written_sources": 61,
+    "incomplete_written_sources": 71,
     "legacy_configuration_note": "Legacy single-label fields are retained for compatibility; independent axis categories are authoritative under the current policy."
   },
-  "content_sha256": "42b1de06ec18b64c70efaa784d32b326ac42a192700f6cd3673b1b6cd77af134"
+  "content_sha256": "25f72bb9b2dec45c7d36080084000e26265ce954861055343cf20ba7453a82f6"
 }

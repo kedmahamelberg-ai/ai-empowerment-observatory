@@ -1,6 +1,6 @@
 {
   "schema_version": "aieo_relationship_evidence_audit_v1",
-  "generated_at": "2026-09-08T07:18:00.157039Z",
+  "generated_at": "2026-09-08T09:33:16.326499Z",
   "release_id": "2026-W36",
   "period_start": "2026-08-31",
   "period_end": "2026-09-06",
@@ -17,24 +17,24 @@
   "summary": {
     "development_count": 132,
     "primary_outcome_counts": {
-      "benefit_shown": 12,
+      "benefit_shown": 14,
       "downside_shown": 1,
-      "benefit_and_downside": 2,
-      "no_clear_people_change": 46,
-      "too_little_evidence": 71
+      "benefit_and_downside": 3,
+      "no_clear_people_change": 58,
+      "too_little_evidence": 56
     },
     "uneven_effect_count": 1,
     "body_coverage_counts": {
-      "all_sources": 59,
-      "no_full_body": 71,
-      "some_sources": 2
+      "all_sources": 75,
+      "no_full_body": 56,
+      "some_sources": 1
     },
     "reported_body_coverage_counts": {
-      "complete_written_source": 61,
-      "incomplete_written_source": 71
+      "complete_written_source": 76,
+      "incomplete_written_source": 56
     },
     "audit_flag_counts": {
-      "insufficient_evidence": 71
+      "insufficient_evidence": 56
     },
     "plain_language_note": "The five primary outcome counts add up to the weekly total. An uneven effect is a separate detail that can overlap with any outcome."
   },
@@ -637,39 +637,39 @@
       "event_id": "38d9e439-8ce2-4560-8d2c-50a2d09e563b",
       "title": "ASU Professor Finds Term 'Artificial Intelligence' in 1588 Book",
       "date": "2026-09-03",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No human-side relation is described",
+          "ai_evidence": "No AI-side relation is described",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "GBR"
+      ],
       "sources": [
         {
           "article_id": "15c1f6a4e65d2a002296070f70a145f0",
@@ -683,47 +683,45 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "f43ef28e-4940-4f12-a103-dec4ccd6a947",
       "title": "Amazon vs. Microsoft: One Key Metric Reveals the Superior AI Cloud Stock",
       "date": "2026-09-03",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No human-side relation is described",
+          "ai_evidence": "No AI-side relation is described",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "ee8e2bc3473a4edac756c4e9bd38bc73",
@@ -737,9 +735,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "392286f7-815a-410d-9560-80a7e2f99012",
@@ -1121,40 +1117,40 @@
       "event_id": "64fa70e7-454a-4c16-8f89-068f25115a81",
       "title": "Artificial Intelligence in the Hands of the People: The Rongjiang Experiment",
       "date": "2026-09-04",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "Villagers gained new economic opportunities and organizational capacity through AI integration. Villagers gain access to AI-based tools for content creation, enabling them to promote local products and services effectively. Villagers gain access to new media tools and economic opportunities through AI. People gain access to practical AI skills that enhance their ability to use AI in local contexts. People gain access to new opportunities through AI in rural areas.",
+          "ai_evidence": "AI is used to enhance the capabilities of villagers, allowing them to create and distribute promotional material more efficiently. AI systems are extended and optimized for rural use, improving efficiency and accessibility. AI is expanded through practical training and application in local settings, enabling its use in cultural, economic, and governance contexts.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN",
         "GBR"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "CHN"
+      ],
       "sources": [
         {
           "article_id": "2fe9ae6a2fcf496b5758cb6412bd1680",
@@ -1169,9 +1165,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "99fb997a-527c-45ff-b9ea-fc17b06e1173",
@@ -2161,39 +2155,39 @@
       "event_id": "774fc675-1a43-4d20-8128-5f606d0d70b9",
       "title": "Broadcom vs. Nvidia: 1 Critical Metric Shows Which Artificial Intelligence (AI) Chipmaker Is the Better Buy After Earnings",
       "date": "2026-09-05",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No human-side relation is described in the article.",
+          "ai_evidence": "No AI-side relation is described in the article.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "536e7b176c0b4c98a4014c204f52dc85",
@@ -2207,47 +2201,45 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "bedfedab-eb0d-4f88-bb4c-7e75b2d10a56",
       "title": "Broadcom's Artificial Intelligence (AI) Chip Sales Surged 221% to $16.7 Billion Last Quarter: Is the Stock a Screaming Buy Right Now?",
       "date": "2026-09-04",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No human-side relation is described",
+          "ai_evidence": "No AI-side relation is described",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "39a1480ef4875029d9355a9d731c09b9",
@@ -2261,9 +2253,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "aaaa057a-4473-46a3-9ff6-66082481f5c7",
@@ -2930,40 +2920,40 @@
       "event_id": "2a2c1673-b9fc-4424-852c-6f246f5b1faa",
       "title": "FSB Chair warns of risks arising from frontier Artificial Intelligence (AI) models",
       "date": "2026-08-31",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No human-side relation is described in the evidence.",
+          "ai_evidence": "No AI-side relation is described in the evidence.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN",
         "GBR"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USD"
+      ],
       "sources": [
         {
           "article_id": "79d0126e2120b658fc17535c190858da",
@@ -2978,9 +2968,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "cdbb1d6b-1dec-4cfa-bad5-e9e669724acd",
@@ -3244,34 +3232,32 @@
       "event_id": "fce3a7c6-33bd-4451-baa4-9ef93df156db",
       "title": "Generative AI Banned for Younger Students",
       "date": "2026-09-03",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "The policy restricts access to generative AI for younger students, limiting their autonomy and opportunities for engagement with AI technology.",
+          "ai_evidence": "The AI system is not being extended or expanded, and there is no clear indication of it being restricted or reduced in this context.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "USA"
@@ -3290,9 +3276,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "2e775ad5-0983-4568-a9bc-d3a72dc003a8",
@@ -3352,34 +3336,32 @@
       "event_id": "8ca1d082-3d5a-45a9-bd74-b3b4567649f1",
       "title": "Got $1,000? 3 Stocks Building the Physical AI Era",
       "date": "2026-09-05",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No specific human benefit or loss is stated in the article.",
+          "ai_evidence": "No specific AI benefit or loss is stated in the article.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN"
@@ -3398,9 +3380,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "0f371306-78fa-41b0-a71a-3237a7b03b99",
@@ -3830,40 +3810,40 @@
       "event_id": "bd7c60d8-c9f6-4f1c-a37e-854c40fafb80",
       "title": "In New York, the use of artificial intelligence will be prohibited for all students until third grade.",
       "date": "2026-09-02",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "The ban restricts access to AI for students, limiting their ability to use AI tools in education.",
+          "ai_evidence": "The AI system is not directly restricted or expanded in the text, as the focus is on human access rather than AI capabilities.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used with other source evidence",
         "source_count": 2,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "some_sources"
       },
       "source_markets": [
         "CAN",
         "FRA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "b54ca62885e4974c858be0a996cf52b3",
@@ -3889,42 +3869,38 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "33018ed3-7996-4cca-a937-09b4f91a74ab",
       "title": "I’m a father of three who studies the impact of artificial intelligence: this is what parents need to know about AI",
       "date": "2026-09-06",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "benefit_and_downside",
+      "primary_outcome_label": "Both benefit and downside shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "The author and their children use AI to create a story, showing that people can extend their creative capacity through AI. AI systems are making basic skills redundant AI provides personalized education that enhances student learning and understanding.",
+          "ai_evidence": "AI is used to generate creative content, showing that the AI system is extending its operative reach. AI systems are becoming more capable and flawed AI is used to provide personalized education and support for students in various subjects.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN",
@@ -3947,9 +3923,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "dd9a2ad1-9b6d-41bf-95c9-3f48c924a9f5",
@@ -4165,39 +4139,39 @@
       "event_id": "52997965-d132-4493-b555-6119c7b73658",
       "title": "Masons, nurses, electricians… These professions are currently beyond the reach of artificial intelligence",
       "date": "2026-09-04",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No human-side relation is described in the evidence.",
+          "ai_evidence": "No AI-side relation is described in the evidence.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "CHE"
+      ],
       "sources": [
         {
           "article_id": "4b0f4735a23a7a5940a3ca49a20cddd8",
@@ -4211,9 +4185,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "b975add8-abad-452e-9aa5-320d321c4402",
@@ -4269,39 +4241,39 @@
       "event_id": "78c2f5af-e751-412a-9344-cc485fa2863b",
       "title": "Meta claims to have caught up with OpenAI and Anthropic with its new AI model",
       "date": "2026-09-04",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No human-side relation is described in the evidence.",
+          "ai_evidence": "No AI-side relation is described in the evidence.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "FRA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USD"
+      ],
       "sources": [
         {
           "article_id": "7333e430449257fdbf4a2562696f42d2",
@@ -4315,9 +4287,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "71a63729-a029-4530-babf-a6a31142d7c1",
@@ -4604,27 +4574,25 @@
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No people-side benefit or constraint is explicitly stated.",
-          "ai_evidence": "No AI-side benefit or constraint is explicitly stated.",
+          "people_evidence": "No human-side relation is described in the evidence.",
+          "ai_evidence": "No AI-side relation is described in the evidence.",
           "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article used with other source evidence",
+        "label": "Full article used for every source",
         "source_count": 3,
-        "full_text_sources": 2,
+        "full_text_sources": 3,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "some_sources"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN",
         "FRA"
       ],
-      "story_country_iso3s": [
-        "USA"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "d282334c846e30501ca31d9e59167059",
@@ -5093,39 +5061,39 @@
       "event_id": "fb3a9764-c7b4-4cfe-b262-59390f0a073d",
       "title": "Snickers Delivers Digital Treats for Hungry Artificial Intelligence",
       "date": "2026-09-04",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "People gain access to a new way to interact with AI through the Snickers Hungr.AI initiative, which is designed to help AI systems perform better by providing them with 'bytes' to 'satiate' their digital assistants.",
+          "ai_evidence": "The AI system is extended through the Snickers Hungr.AI initiative, which provides a new method for AI to receive data and improve its performance by engaging with users.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "GBR"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "5dab2f1100d5b574fa065374b64202dc",
@@ -5139,9 +5107,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "b959d80a-99ba-4618-8955-d78818aea10f",
@@ -5203,7 +5169,7 @@
       "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "full_text",
+        "content_basis": "multiple_sources",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
@@ -5212,19 +5178,19 @@
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described",
-          "ai_evidence": "No AI-side relation is described",
+          "people_evidence": "no people outcome stated No human-side relation is described",
+          "ai_evidence": "no AI-side enabling or constraining signal is described No AI-side relation is described",
           "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article used with other source evidence",
+        "label": "Full article used for every source",
         "source_count": 2,
-        "full_text_sources": 1,
+        "full_text_sources": 2,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "some_sources"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN",
@@ -6768,40 +6734,40 @@
       "event_id": "63bd4191-6fb9-4537-94cc-78c70eef8434",
       "title": "US to Press G20 on Light-Touch AI Regulation",
       "date": "2026-09-01",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No human-side relation is described",
+          "ai_evidence": "No AI-side relation is described",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN",
         "GBR"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "09726e832cbef59ce1a11d52fc7d72f5",
@@ -6816,42 +6782,38 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "95f21dd4-08db-414a-8056-6878e77489df",
       "title": "Understanding AI: A Practical Guide for Businesses",
       "date": "2026-09-04",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "No specific human benefit or loss is stated in the text. No human-side relation is described",
+          "ai_evidence": "No specific AI benefit or loss is stated in the text. No AI-side relation is described",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "GBR"
@@ -6870,9 +6832,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "d4ff674f-b8ed-4fb1-b37e-75f0bfcd1632",
