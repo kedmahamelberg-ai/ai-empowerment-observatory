@@ -15,6 +15,7 @@ from typing import Any
 
 from supabase import Client, create_client
 from public_directional_release import (release_corrections, build_directional_release, validate_directional_release, export_public_csv)
+from symbiosis_publication_reads import PublicationReader, PublicationReadError
 
 from symbiosis_common import (
     CLASSIFIER_VERSION,
@@ -124,31 +125,12 @@ def latest_rows(
     release_id: str,
     lens: str,
     ids: list[str],
+    reader: PublicationReader | None = None,
 ) -> dict[str, dict[str, Any]]:
-    if not ids:
-        return {}
-    column = "article_id" if lens == "coverage" else "event_id"
-    rows: list[dict[str, Any]] = []
-    for start in range(0, len(ids), 100):
-        response = (
-            client.table("symbiosis_classifications")
-            .select("*,symbiosis_classification_runs!inner(status,classifier_version)")
-            .eq("codebook_version", CODEBOOK_VERSION)
-            .eq("symbiosis_classification_runs.status", "success")
-            .eq("symbiosis_classification_runs.classifier_version", CLASSIFIER_VERSION)
-            .eq("release_id", release_id)
-            .eq("lens", lens)
-            .in_(column, ids[start:start + 100])
-            .execute()
-        )
-        rows.extend(getattr(response, "data", None) or [])
-    rows.sort(key=lambda row: str(row.get("created_at") or ""), reverse=True)
-    latest: dict[str, dict[str, Any]] = {}
-    for row in rows:
-        key = str(row.get(column) or "")
-        if key:
-            latest.setdefault(key, row)
-    return latest
+    return (reader or PublicationReader(client)).latest(
+        release_id=release_id, lens=lens, ids=ids,
+        codebook_version=CODEBOOK_VERSION, classifier_version=CLASSIFIER_VERSION,
+    )
 
 
 def full_text_sources_used(row: dict[str, Any] | None) -> int:
@@ -715,10 +697,7 @@ def main() -> int:
             client = create_client(required_env("SUPABASE_URL"), required_env("SUPABASE_SECRET_KEY"))
             # Preserve accepted corrections even when they were made under an
             # earlier model version. Publication corrections never become gold.
-            accepted = client.table("symbiosis_classifications").select("*").eq("release_id", release_id).eq("lens", "event").in_("review_status", ["accepted", "corrected", "insufficient_evidence"]).execute()
-            selected = {}
-            for row in sorted(accepted.data or [], key=lambda value: str(value.get("updated_at") or value.get("created_at") or ""), reverse=True):
-                selected.setdefault(str(row.get("event_id")), row)
+            selected = PublicationReader(client).reviewed_events(release_id=release_id, ids=event_ids)
             for row in original["evidence"]:
                 if row["event_id"] in selected:
                     row.update(final_payload_from_classification(selected[row["event_id"]]))
@@ -734,8 +713,9 @@ def main() -> int:
     if args.offline_corrections:
         raise PublishError("No exact correction manifest is available for offline publication")
     client: Client = create_client(required_env("SUPABASE_URL"), required_env("SUPABASE_SECRET_KEY"))
-    coverage_rows = latest_rows(client, release_id=release_id, lens="coverage", ids=article_ids)
-    event_rows = latest_rows(client, release_id=release_id, lens="event", ids=event_ids)
+    reader = PublicationReader(client)
+    coverage_rows = latest_rows(client, release_id=release_id, lens="coverage", ids=article_ids, reader=reader)
+    event_rows = latest_rows(client, release_id=release_id, lens="event", ids=event_ids, reader=reader)
     owner_gold = owner_gold_for_release(release_id)
     source_body_corrections = source_body_corrections_for_release(release_id)
     require_current_full_text_lineage(
@@ -863,7 +843,7 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         raise SystemExit(main())
-    except PublishError as exc:
+    except (PublishError, PublicationReadError) as exc:
         import sys
         print(f"Symbiosis publication failed: {exc}", file=sys.stderr)
         raise SystemExit(1)
