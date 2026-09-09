@@ -33,8 +33,12 @@ jobs:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       AIEO_AI_PROVIDER: ${{ vars.AIEO_AI_PROVIDER || 'openai' }}
       AIEO_AI_MAX_JOB_USD: ${{ vars.AIEO_AI_MAX_JOB_USD || '0.50' }}
-      AIEO_AI_LEDGER: ${{ runner.temp }}/ai-usage/${{ github.job }}.json
     steps:
+      - name: Set the runtime AI usage ledger
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/ai-usage"
+          echo "AIEO_AI_LEDGER=$RUNNER_TEMP/ai-usage/${GITHUB_JOB}.json" >> "$GITHUB_ENV"
       - name: Checkout repository
         uses: actions/checkout@v7
       - name: Validate historical publication inputs
