@@ -211,6 +211,8 @@ def main() -> None:
             cleaned.pop("public_content_sha256", None)
             cleaned["public_content_sha256"] = hashlib.sha256(json.dumps(cleaned,sort_keys=True,ensure_ascii=False,separators=(",",":")).encode()).hexdigest()
         target.write_text(json.dumps(cleaned, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    from adsense_connection import connect_site
+    connect_site(SITE)
     print("Built public Pages artifact at", SITE)
     if copied_release_files:
         print(
