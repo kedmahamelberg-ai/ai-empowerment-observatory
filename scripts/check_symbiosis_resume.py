@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import ai_runtime
 import os
 from pathlib import Path
 from typing import Any
@@ -63,9 +64,12 @@ def main() -> int:
         .eq("scope", "latest_release")
         .eq("target_release_id", release_id)
         .eq("classifier_version", CLASSIFIER_VERSION)
+        .eq("model_name", ai_runtime.identity()["model"] if ai_runtime.uses_openai() else "Qwen/Qwen3-4B-GGUF")
         .eq("codebook_version", CODEBOOK_VERSION)
         .in_("status", ["running", "failed"])
     )
+    if ai_runtime.uses_openai():
+        query = query.eq("model_revision", ai_runtime.identity()["revision"])
     if collection_run_id:
         query = query.eq("collection_run_id", collection_run_id)
     run = first_row(query.order("started_at", desc=True).limit(1).execute())

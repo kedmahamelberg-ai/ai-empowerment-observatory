@@ -29,6 +29,11 @@ jobs:
   classify:
     runs-on: ubuntu-latest
     timeout-minutes: 360
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      AIEO_AI_PROVIDER: ${{ vars.AIEO_AI_PROVIDER || 'openai' }}
+      AIEO_AI_MAX_JOB_USD: ${{ vars.AIEO_AI_MAX_JOB_USD || '0.50' }}
+      AIEO_AI_LEDGER: ${{ runner.temp }}/ai-usage/${{ github.job }}.json
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -43,11 +48,15 @@ jobs:
         run: |
           python -m pip install -r requirements.txt
           python -m pip install "huggingface_hub>=0.34,<2"
+      - name: Resolve scheduled AI model and check the API secret
+        run: python scripts/ai_runtime.py --preflight --export
       - name: Install llama.cpp build dependencies
+        if: env.AIEO_AI_PROVIDER == 'local'
         run: |
           sudo apt-get update
           sudo apt-get install -y cmake build-essential libcurl4-openssl-dev
       - name: Build llama.cpp server
+        if: env.AIEO_AI_PROVIDER == 'local'
         run: |
           git clone --depth 1 https://github.com/ggml-org/llama.cpp.git /tmp/llama.cpp
           cmake -S /tmp/llama.cpp -B /tmp/llama.cpp/build \
@@ -63,6 +72,17 @@ jobs:
             --scope history \
             --lens "${{ inputs.lens }}" \
             --limit "${{ inputs.batch_size }}"
+      - name: Report AI usage
+        if: always()
+        run: python scripts/ai_runtime.py --report
+      - name: Keep AI usage counts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ai-usage-${{ github.job }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/ai-usage/*.json
+          if-no-files-found: ignore
+          retention-days: 30
       - name: Build cumulative historical review workbench
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}

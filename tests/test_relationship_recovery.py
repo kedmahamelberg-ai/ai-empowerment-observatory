@@ -147,6 +147,7 @@ class RecoveryTests(unittest.TestCase):
             "symbiosis_run_id": "saved-run", "run_key": "saved-run-key", "status": "failed",
             "scope": "latest_release", "target_release_id": release, "collection_run_id": "collection",
             "classifier_version": common.CLASSIFIER_VERSION, "codebook_version": common.CODEBOOK_VERSION,
+            "model_name": classifier.QWEN_REPO, "model_revision": "fixture",
             "started_at": "2026-09-04T19:47:00Z",
         }]
         for number in range(1, count + 1):

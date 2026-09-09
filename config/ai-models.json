@@ -1,0 +1,9 @@
+{
+  "provider": "openai",
+  "switch_at": "2026-12-10T00:00:00Z",
+  "before": {"model": "gpt-5-nano", "reasoning_effort": "low"},
+  "after": {"model": "gpt-5.6-luna", "reasoning_effort": "low"},
+  "max_job_usd": 0.50,
+  "max_job_requests": 350,
+  "max_completion_tokens": 8192
+}

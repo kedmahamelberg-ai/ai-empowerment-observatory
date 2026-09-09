@@ -1,5 +1,5 @@
 name: Run bounded Stage 7C pass
-description: Install the local classifier and run one resumable Stage 7C pass.
+description: Install the configured classifier and run one resumable Stage 7C pass.
 
 inputs:
   time-budget-minutes:
@@ -15,6 +15,7 @@ runs:
   using: composite
   steps:
     - name: Cache Qwen model files
+      if: env.AIEO_AI_PROVIDER == 'local'
       uses: actions/cache@v6
       with:
         path: ~/.cache/huggingface/hub
@@ -25,13 +26,18 @@ runs:
         set -euo pipefail
         python -m pip install -r requirements.txt
         python -m pip install "huggingface_hub>=0.34,<2"
+    - name: Resolve scheduled model
+      shell: bash
+      run: python scripts/ai_runtime.py --preflight --export
     - name: Install llama.cpp build dependencies
+      if: env.AIEO_AI_PROVIDER == 'local'
       shell: bash
       run: |
         set -euo pipefail
         sudo apt-get update
         sudo apt-get install -y cmake build-essential libcurl4-openssl-dev
     - name: Build llama.cpp server
+      if: env.AIEO_AI_PROVIDER == 'local'
       shell: bash
       run: |
         set -euo pipefail

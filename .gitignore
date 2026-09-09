@@ -23,3 +23,6 @@ node_modules/
 # macOS folder metadata
 .DS_Store
 ._*
+
+# Local AI accounting contains no text and is retained as a CI artifact.
+.ai-usage/

@@ -68,18 +68,18 @@ def main():
         ('LINEBELOW',(0,1),(-1,-2),0.5,RULE), ('LINEABOVE',(0,-1),(-1,-1),1,TEAL)]))
     story += [t, Spacer(1, 7*mm), p('Each column counts every included development once. Percentages are rounded. Mixed findings occupy their own category. The two columns are not added together.', SMALL),
         p('Read the evidence before the headline number', H2),
-        p(f"The collection contains {cohort['counts']['collected_developments']} developments. {cohort['counts']['excluded_developments']} are excluded from these percentages because complete source evidence or a completed reading is unavailable. They remain in the downloadable audit inventory."),
+        p(f"The collection contains {cohort['counts']['collected_developments']} developments. {cohort['counts']['excluded_developments']} are excluded from these percentages because complete source evidence or a completed reading is unavailable. They remain in the online collection audit."),
         p('These figures describe source reporting, including attributed claims, anticipated benefits, risks and recommendations. They do not establish independently verified effects or how many people experienced them.'),
         PageBreak(), p('Follow the finding to the source', H1),
-        p('Each development has an individual human reading and an individual AI reading, with the source links in the online record and downloadable CSV. A source does not have to discuss both dimensions.'),
+        p('Each development has an individual human reading and an individual AI reading, with the source links in the online record. A source does not have to discuss both dimensions.'),
         p('For people', H2), p('Gains and losses concern ability, access, opportunity, control or welfare. A credible description of a risk or expected benefit is recorded as a source claim; it is not converted into proof that the effect occurred.'),
         p('For AI and its operators', H2), p('Gains and limitations concern capabilities, use, reach, resources and operating conditions. Investment or adoption can inform this side without automatically establishing a benefit for people.'),
         p('Mixed and missing mean different things', H2), p('A source can describe gains and losses together. No direction stated is a valid complete-source reading and stays in the denominator. Missing bodies and media summaries without complete transcripts are excluded.'),
         p('Scope and comparison', H2), p(f'{source_n} source pages were grouped into {n} developments. English, French and Chinese reporting is collected through five search markets. Those markets are a research sample, and source location does not establish where an event happened.'),
         p('Availability checks are automatic, not a certification of classification accuracy. Unavailable publishers can bias this sample. Earlier collection-volume totals are audit records and are not directly comparable with these complete-content findings.'),
-        p('Explore and download', H2),
+        p('Explore the source records', H2),
         Paragraph('<link href="https://observatory.hamelberg-ai.com/edu/" color="#087f85">Open the individual readings and sources</link>', BODY),
-        Paragraph('<link href="https://observatory.hamelberg-ai.com/data/analysis/current.csv" color="#087f85">Download the included readings</link> | <link href="https://observatory.hamelberg-ai.com/data/analysis/audit.csv" color="#087f85">Download the collection and exclusion audit</link>', BODY),
+        Paragraph('<link href="https://observatory.hamelberg-ai.com/edu/?scope=audit" color="#087f85">Explore the source records and exclusions</link>', BODY),
         p('A research initiative by Kedma Hamelberg.', SMALL)]
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     SimpleDocTemplate(str(REPORT_PATH), pagesize=A4, rightMargin=20*mm,leftMargin=20*mm, topMargin=20*mm,bottomMargin=27*mm,
