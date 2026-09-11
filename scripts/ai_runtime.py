@@ -32,6 +32,19 @@ class AIError(RuntimeError):
     """Safe error text, without response bodies or authorization headers."""
 
 
+class AIOutputIncomplete(AIError):
+    """A completed request did not yield an acceptable final answer."""
+
+    def __init__(self, message, *, finish_reason):
+        super().__init__(message)
+        self.finish_reason = str(finish_reason or "unknown")
+        self.diagnostics = [{
+            "error_type": type(self).__name__,
+            "finish_reason": self.finish_reason,
+            "retryable": True,
+        }]
+
+
 class AIBudgetExceeded(TimeoutError):
     """Leave remaining work resumable when the configured job cap is reached."""
 
@@ -203,9 +216,22 @@ def completion(messages, schema, *, name="aieo_reading", timeout=120):
             state["calls"][slot].update(audit)
         choice = (result.get("choices") or [{}])[0]
         if (choice.get("message") or {}).get("refusal"):
-            raise AIError("OpenAI declined this request; no classification or draft was accepted")
-        if choice.get("finish_reason") != "stop":
-            raise AIError("OpenAI answer was unfinished; no classification or draft was accepted")
+            with ledger() as state:
+                state["calls"][slot]["status"] = "refused"
+                state["calls"][slot]["finish_reason"] = "refusal"
+            raise AIOutputIncomplete(
+                "OpenAI declined this request; no classification or draft was accepted",
+                finish_reason="refusal",
+            )
+        finish_reason = str(choice.get("finish_reason") or "missing")
+        if finish_reason != "stop":
+            with ledger() as state:
+                state["calls"][slot]["status"] = "unfinished"
+                state["calls"][slot]["finish_reason"] = finish_reason
+            raise AIOutputIncomplete(
+                "OpenAI answer was unfinished; no classification or draft was accepted",
+                finish_reason=finish_reason,
+            )
         result["aieo_ai"] = audit
         return result
     raise AIError(last or "OpenAI request failed")

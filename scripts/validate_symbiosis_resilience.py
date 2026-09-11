@@ -139,6 +139,7 @@ def main() -> int:
         "classification_not_run",
         "content_basis_for_storage",
         "storage_content_basis",
+        "except (ModelOutputError, ai_runtime.AIOutputIncomplete) as exc:",
     )
     for marker in required_source:
         require(marker in source, f"Missing symbiosis resilience marker: {marker}")

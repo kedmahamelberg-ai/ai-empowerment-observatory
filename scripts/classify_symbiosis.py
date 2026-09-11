@@ -1537,10 +1537,14 @@ def main() -> int:
                 evidence = article_evidence(unit) if lens == "coverage" else event_evidence(unit)
                 try:
                     result = call_classifier(lens=lens, evidence=evidence, content_basis=unit["content_basis"])
-                except ModelOutputError as exc:
-                    # One bad response must not starve the rest of the release.
-                    # Leave this unit unsaved; the next pass retries only gaps.
-                    failed_units.append({"unit_key": unit["unit_key"], "attempts": exc.diagnostics})
+                except (ModelOutputError, ai_runtime.AIOutputIncomplete) as exc:
+                    # One incomplete or invalid model response must not starve
+                    # the rest of the release. Leave only this unit unsaved;
+                    # the next bounded pass retries the remaining gap.
+                    diagnostics = getattr(exc, "diagnostics", None) or [
+                        {"error_type": type(exc).__name__, "retryable": True}
+                    ]
+                    failed_units.append({"unit_key": unit["unit_key"], "attempts": diagnostics})
                     print(f"Deferred {unit['unit_key']}: {exc}", file=sys.stderr, flush=True)
                     continue
             else:
