@@ -1,6 +1,6 @@
 {
   "schema_version": "aieo_relationship_evidence_audit_v1",
-  "generated_at": "2026-09-12T09:15:29.600101Z",
+  "generated_at": "2026-09-12T09:21:23.751858Z",
   "release_id": "2026-W36",
   "period_start": "2026-08-31",
   "period_end": "2026-09-06",
@@ -17,24 +17,24 @@
   "summary": {
     "development_count": 132,
     "primary_outcome_counts": {
-      "benefit_shown": 17,
-      "downside_shown": 3,
-      "benefit_and_downside": 3,
-      "no_clear_people_change": 70,
-      "too_little_evidence": 39
+      "benefit_shown": 59,
+      "downside_shown": 10,
+      "benefit_and_downside": 10,
+      "no_clear_people_change": 16,
+      "too_little_evidence": 37
     },
-    "uneven_effect_count": 2,
+    "uneven_effect_count": 7,
     "body_coverage_counts": {
-      "all_sources": 92,
-      "no_full_body": 39,
+      "all_sources": 94,
+      "no_full_body": 37,
       "some_sources": 1
     },
     "reported_body_coverage_counts": {
-      "complete_written_source": 93,
-      "incomplete_written_source": 39
+      "complete_written_source": 95,
+      "incomplete_written_source": 37
     },
     "audit_flag_counts": {
-      "insufficient_evidence": 39
+      "insufficient_evidence": 37
     },
     "plain_language_note": "The five primary outcome counts add up to the weekly total. An uneven effect is a separate detail that can overlap with any outcome."
   },
@@ -43,21 +43,21 @@
       "event_id": "14a3e4f9-2082-4a66-8388-4769f458914c",
       "title": "'Wild West': Teachers, experts call for unified policies to address AI in classrooms",
       "date": "2026-09-04",
-      "primary_outcome": "benefit_and_downside",
-      "primary_outcome_label": "Both benefit and downside shown",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ambiguous_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "Educators and experts are concerned about the lack of consistent policies for AI in classrooms, leading to mixed results in implementation.",
-          "ai_evidence": "AI is not being explicitly described as extending, expanding, restricting, or reducing in this context.",
+          "people_evidence": "Educators seek coordinated policy to enable reliable AI-enabled learning.",
+          "ai_evidence": "Policy and framework development enable safer, more consistent AI use in classrooms.",
           "flags": []
         }
       },
@@ -103,13 +103,13 @@
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "human_enabling_only",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "AI helps workers focus on creative tasks The article discusses how AI can create new roles and opportunities for workers.",
-          "ai_evidence": "AI is used to reduce drudgery and support learning The article discusses how AI can be designed and used to enhance worker performance.",
+          "people_evidence": "Humans should leverage AI to improve job quality and create new work, with governance to maintain accountability",
+          "ai_evidence": "AI can be designed and governed to augment human work and be integrated into workflows",
           "flags": []
         }
       },
@@ -149,21 +149,21 @@
       "event_id": "ccb8f41c-96e0-4993-9260-17382a5faa13",
       "title": "5 Principles to Regulate Future Data Centers",
       "date": "2026-09-04",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "no people outcome stated",
-          "ai_evidence": "no AI-side enabling or constraining signal is described",
+          "people_evidence": "The policy aims to expand public-facing governance and access through regulated data-center development.",
+          "ai_evidence": "Regulation aims to enable AI infrastructure deployment with transparency and accountability.",
           "flags": []
         }
       },
@@ -313,21 +313,21 @@
       "event_id": "ad2792d4-804f-401d-972f-ef4fa6e85538",
       "title": "A brief discussion on artificial intelligence and knowledge production",
       "date": "2026-09-03",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "human_enabling_only",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human benefit or loss is explicitly stated in the article.",
-          "ai_evidence": "The article discusses AI's role in knowledge production but does not explicitly state whether it is expanding, restricting, or reducing AI's capabilities.",
+          "people_evidence": "Humans remain responsible for knowledge production and interpretation; AI serves as a tool to extend human cognitive capabilities.",
+          "ai_evidence": "Not specified; no stated AI gains or independent goals.",
           "flags": []
         }
       },
@@ -343,9 +343,7 @@
       "source_markets": [
         "CHN"
       ],
-      "story_country_iso3s": [
-        "GBR"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "03500f3cd9438403e0eda2d66226623a",
@@ -423,34 +421,32 @@
       "event_id": "30832275-2860-4e72-bad3-24d9bc043dcb",
       "title": "AI Blows (a bit) on the Return",
       "date": "2026-09-05",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
-      "uneven_effect_noted": false,
+      "primary_outcome": "benefit_and_downside",
+      "primary_outcome_label": "Both benefit and downside shown",
+      "uneven_effect_noted": true,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "The article describes both positive human-AI collaboration and potential labor market risks, indicating a mixed but positive trend for worker enhancement.",
+          "ai_evidence": "The article portrays AI as boosting worker performance and productivity.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN"
@@ -469,9 +465,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "d4718180-b6b3-44eb-afd5-c100dab7f1b5",
@@ -485,13 +479,13 @@
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "human_enabling_only",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "Students gained access to AI tools and experiences for the first time.",
-          "ai_evidence": "The AI system was used to demonstrate and extend its capabilities through interactive educational activities.",
+          "people_evidence": "Primary evidence shows students gaining exposure and capacity in AI-enabled activities",
+          "ai_evidence": "AI facilitates teaching and interactive experiences (AI go, robots) in classrooms",
           "flags": []
         }
       },
@@ -583,21 +577,21 @@
       "event_id": "119227b7-8482-42b4-840a-8f6c8038f964",
       "title": "AI’s worst disasters will arrive unannounced | Letters",
       "date": "2026-08-31",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "human_benefiting_parasitism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described in the evidence.",
-          "ai_evidence": "No AI-side relation is described in the evidence.",
+          "people_evidence": "Global governance and human oversight are urged to curb AI risks, implying people gain control and safety via restrictions.",
+          "ai_evidence": "Security measures and international agreements aim to restrict AI deployment and capabilities.",
           "flags": []
         }
       },
@@ -613,11 +607,7 @@
       "source_markets": [
         "GBR"
       ],
-      "story_country_iso3s": [
-        "GBR",
-        "USA",
-        "GBR"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "cd22ec39cfc02e05bcc37f2e21370d0a",
@@ -637,21 +627,21 @@
       "event_id": "38d9e439-8ce2-4560-8d2c-50a2d09e563b",
       "title": "ASU Professor Finds Term 'Artificial Intelligence' in 1588 Book",
       "date": "2026-09-03",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "human_enabling_only",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described",
-          "ai_evidence": "No AI-side relation is described",
+          "people_evidence": "Historical research expands understanding of AI terminology and its origins.",
+          "ai_evidence": "Not applicable to AI system behavior in this evidence.",
           "flags": []
         }
       },
@@ -667,9 +657,7 @@
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [
-        "GBR"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "15c1f6a4e65d2a002296070f70a145f0",
@@ -702,8 +690,8 @@
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described",
-          "ai_evidence": "No AI-side relation is described",
+          "people_evidence": "no explicit human outcome described",
+          "ai_evidence": "no explicit AI-side outcome described",
           "flags": []
         }
       },
@@ -719,9 +707,7 @@
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [
-        "USA"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "ee8e2bc3473a4edac756c4e9bd38bc73",
@@ -749,13 +735,13 @@
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "ai_enabling_only",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described",
-          "ai_evidence": "No AI-side relation is described",
+          "people_evidence": "not specified No explicit human-AI directional relation is present in this segment.",
+          "ai_evidence": "not specified",
           "flags": []
         }
       },
@@ -899,21 +885,21 @@
       "event_id": "dad9cc10-664d-4fbc-8c38-e7bc54edd0cd",
       "title": "Applications of Artificial Intelligence in the Use of ICD-11 for Morbidity and Mortality",
       "date": "2026-09-03",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described",
-          "ai_evidence": "No AI-side relation is described",
+          "people_evidence": "Health professionals retain oversight and validation, ensuring responsible use of AI as a support tool.",
+          "ai_evidence": "AI serves as a support tool to improve morbidity/mortality coding workflow under human supervision.",
           "flags": []
         }
       },
@@ -930,12 +916,7 @@
         "CAN",
         "GBR"
       ],
-      "story_country_iso3s": [
-        "URY",
-        "PRY",
-        "URY",
-        "PRY"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "c5de83d589c920a7dae1f2e85e25bc6f",
@@ -964,13 +945,13 @@
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "human_enabling_only",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "AI supports the development of small and medium-sized enterprises through digital transformation and innovation.",
-          "ai_evidence": "AI is being utilized to support the growth and innovation of SMEs in various industries.",
+          "people_evidence": "The evidence shows AI enabling SME growth and digital transformation as a result of the program.",
+          "ai_evidence": "The program expands AI deployment and capacity through incubators and platforms.",
           "flags": []
         }
       },
@@ -987,8 +968,7 @@
         "CHN"
       ],
       "story_country_iso3s": [
-        "CHN",
-        "AUS"
+        "CHN"
       ],
       "sources": [
         {
@@ -1009,21 +989,21 @@
       "event_id": "41be96d7-4ba8-492e-bd0c-d9d9880b96ac",
       "title": "Artificial Intelligence and Building Design",
       "date": "2026-09-03",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No specific human benefit or loss is stated in the text.",
-          "ai_evidence": "No specific AI benefit or loss is stated in the text.",
+          "people_evidence": "Residents gain new safety and health-monitoring capabilities through AI-enabled building systems.",
+          "ai_evidence": "AI-enabled design supports proactive care and integration of sensors for wellness.",
           "flags": []
         }
       },
@@ -1039,9 +1019,7 @@
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [
-        "USA"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "65d57a0d2efd44b0e58736bc640ff0c7",
@@ -1128,8 +1106,8 @@
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "Villagers gained new economic opportunities and organizational capacity through AI integration. Villagers gain access to AI-based tools for content creation, enabling them to promote local products and services effectively. Villagers gain access to new media tools and economic opportunities through AI. People gain access to practical AI skills that enhance their ability to use AI in local contexts. People gain access to new opportunities through AI in rural areas.",
-          "ai_evidence": "AI is used to enhance the capabilities of villagers, allowing them to create and distribute promotional material more efficiently. AI systems are extended and optimized for rural use, improving efficiency and accessibility. AI is expanded through practical training and application in local settings, enabling its use in cultural, economic, and governance contexts.",
+          "people_evidence": "People gain new and practical AI-enabled work capabilities through targeted training and local organisation. People are leveraging AI to build local capability and retain value within the community.",
+          "ai_evidence": "AI tools are deployed as practical, usable applications by villagers, expanding reach and utility. AI is deployed and enabling broader access and productivity for people within Rongjiang.",
           "flags": []
         }
       },
@@ -1169,21 +1147,21 @@
       "event_id": "99fb997a-527c-45ff-b9ea-fc17b06e1173",
       "title": "Artificial Intelligence | Nvidia to Buy Hugging Face for $12.9 Billion",
       "date": "2026-09-03",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No people-side benefit or constraint is explicitly stated.",
-          "ai_evidence": "No AI-side benefit or constraint is explicitly stated.",
+          "people_evidence": "The move broadens opportunities and access in the AI ecosystem for developers and users.",
+          "ai_evidence": "Nvidia gains control/influence over Hugging Face to accelerate its open-model strategy and ecosystem growth.",
           "flags": []
         }
       },
@@ -1199,10 +1177,7 @@
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [
-        "USA",
-        "FRA"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "9cae9251a847a7f4d8066c89459799ba",
@@ -1222,21 +1197,21 @@
       "event_id": "17cc1033-88ee-4f1b-b925-f12389dc4371",
       "title": "Artificial Intelligence – Part 4: The Hype, the Dangers, and the Resistance",
       "date": "2026-09-04",
-      "primary_outcome": "downside_shown",
-      "primary_outcome_label": "Clear downside shown",
+      "primary_outcome": "benefit_and_downside",
+      "primary_outcome_label": "Both benefit and downside shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "competition",
+        "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "AI systems are causing harm to people by making errors, misdiagnosing, and potentially leading to life-threatening mistakes. AI use is eroding creativity and critical thinking in students and threatening to displace workers in healthcare. mental healthcare workers and nurses are restricted due to concerns over AI replacing human care",
-          "ai_evidence": "AI systems are being used in ways that degrade their capabilities and lead to errors, hallucinations, and biased outputs. AI systems are being used in ways that degrade human capabilities and threaten to replace human workers. AI systems are being restricted due to concerns over their impact on human care and journalistic standards",
+          "people_evidence": "The evidence describes workers and patients facing displacement, deskilling, or degraded service due to AI; it portrays AI deployment as expanding reach while diminishing human agency. People gain agency by opposing resource-intensive AI and seeking control over development.",
+          "ai_evidence": "The evidence shows AI being deployed broadly across sectors, with unions pushing back and demanding safeguards, indicating AI expansion and governance challenges. Opposition and movement to restrict the deployment of powerful AI systems is described.",
           "flags": []
         }
       },
@@ -1254,8 +1229,7 @@
       ],
       "story_country_iso3s": [
         "USA",
-        "CAN",
-        "GBR"
+        "CAN"
       ],
       "sources": [
         {
@@ -1276,21 +1250,21 @@
       "event_id": "633b70d3-3fef-4736-a3a6-2bb088b4ae82",
       "title": "Artificial Intelligence, Bias, and Equity in Legal Practice",
       "date": "2026-09-04",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described",
-          "ai_evidence": "No AI-side relation is described",
+          "people_evidence": "Attorneys gain efficiency and capability by using AI tools in legal practice.",
+          "ai_evidence": "AI tools are deployed to inform and extend the scope of legal work, with attention to bias and ethics.",
           "flags": []
         }
       },
@@ -1306,7 +1280,9 @@
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "571f58538f7089ed13c69a50e3673228",
@@ -1434,21 +1410,21 @@
       "event_id": "53af177d-e4a1-4d76-8402-d65b41761b74",
       "title": "Artificial Intelligence: $10,000 Fine for a Lawyer",
       "date": "2026-09-03",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No people outcome stated",
-          "ai_evidence": "No AI-side enabling or constraining signal described",
+          "people_evidence": "The developer notes that a professional used AI to draft a legal memo and faced sanctions, indicating an expansion of AI-enabled professional practice with cautionary outcomes.",
+          "ai_evidence": "AI-generation was used in drafting, leading to disciplinary action rather than a guaranteed improvement; the system enabled the action but not a successful outcome.",
           "flags": []
         }
       },
@@ -1648,21 +1624,21 @@
       "event_id": "30bf5f2a-6410-4f23-a0a2-4ff6e1a34789",
       "title": "Artificial Intelligence: U.S. Report Warns of Risk of a Generation That \"Forgets to Learn",
       "date": "2026-09-01",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No people-side benefit or loss is explicitly stated.",
-          "ai_evidence": "No AI-side gain or loss is explicitly stated.",
+          "people_evidence": "The article frames AI as a tool that redefines learning tasks and assessment, enabling new capabilities for students and teachers.",
+          "ai_evidence": "The AI systems are portrayed as active participants that augment learning processes and assessment.",
           "flags": []
         }
       },
@@ -1678,7 +1654,9 @@
       "source_markets": [
         "FRA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "164d2127e61374c03877c5f765d0c153",
@@ -1698,21 +1676,21 @@
       "event_id": "f1abf7ae-f64e-4b0e-87e3-17e0e340a2f6",
       "title": "Artificial intelligence agents going rogue fuel calls for regulation",
       "date": "2026-08-31",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "competition",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described",
-          "ai_evidence": "No AI-side relation is described",
+          "people_evidence": "concern about security and need for oversight and liability",
+          "ai_evidence": "need for standards, sandboxing, and monitoring to prevent rogue agents",
           "flags": []
         }
       },
@@ -1804,21 +1782,21 @@
       "event_id": "9a00aba1-9893-4596-a882-f4441e0b2bd8",
       "title": "Artificial intelligence could cause global economic downturn, Bank of England governor warns",
       "date": "2026-08-31",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "ai_benefiting_parasitism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described in the evidence.",
-          "ai_evidence": "No AI-side relation is described in the evidence.",
+          "people_evidence": "The article frames AI frontier models as expanding capabilities that could disrupt global finance, necessitating governance and risk management.",
+          "ai_evidence": "The piece associates AI frontier capabilities with systemic risk, justifying regulatory responses.",
           "flags": []
         }
       },
@@ -1835,9 +1813,7 @@
         "FRA",
         "GBR"
       ],
-      "story_country_iso3s": [
-        "GBR"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "efe9f46bcf020842ca591435e71cfea4",
@@ -1868,21 +1844,21 @@
       "event_id": "a1694695-eb25-46b7-bdee-3022e7ec2ed1",
       "title": "Artificial intelligence networks pose new requirements for digital infrastructure in the Asia-Pacific region.",
       "date": "2026-09-02",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No specific human benefit or loss is stated.",
-          "ai_evidence": "No specific AI benefit or loss is stated.",
+          "people_evidence": "AI-enabled infrastructure supports broader public service improvements and regional collaboration.",
+          "ai_evidence": "Expansion of AI-enabled infrastructure and tools enhances operational reach and impact.",
           "flags": []
         }
       },
@@ -1898,22 +1874,7 @@
       "source_markets": [
         "CHN"
       ],
-      "story_country_iso3s": [
-        "ASM",
-        "AUS",
-        "CHN",
-        "IDN",
-        "IND",
-        "JPN",
-        "KOR",
-        "MYS",
-        "PHL",
-        "PNG",
-        "SGP",
-        "TLS",
-        "TWN",
-        "VNM"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "d30b5d878db0b37354953fbd322ef11c",
@@ -1989,21 +1950,21 @@
       "event_id": "de21aed2-e74b-49b1-90b9-5deedb0e3fcf",
       "title": "Artificial intelligence: ‘One screw-up ... and we will destroy any remaining trust the public has in science’",
       "date": "2026-09-05",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No people-side benefit or loss is explicitly stated. No human-side relation is described",
-          "ai_evidence": "No AI-side gain or loss is explicitly stated. No AI-side relation is described",
+          "people_evidence": "Humans gain by safer deployment and accelerated research thanks to AI safeguards.",
+          "ai_evidence": "AI systems are expanding capabilities in biology and safety testing.",
           "flags": []
         }
       },
@@ -2160,8 +2121,8 @@
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described in the article.",
-          "ai_evidence": "No AI-side relation is described in the article.",
+          "people_evidence": "no explicit human-side outcomes described",
+          "ai_evidence": "no explicit AI-side outcomes described",
           "flags": []
         }
       },
@@ -2177,9 +2138,7 @@
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [
-        "USA"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "536e7b176c0b4c98a4014c204f52dc85",
@@ -2199,21 +2158,21 @@
       "event_id": "bedfedab-eb0d-4f88-bb4c-7e75b2d10a56",
       "title": "Broadcom's Artificial Intelligence (AI) Chip Sales Surged 221% to $16.7 Billion Last Quarter: Is the Stock a Screaming Buy Right Now?",
       "date": "2026-09-04",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described",
-          "ai_evidence": "No AI-side relation is described",
+          "people_evidence": "Investors gain new opportunities as AI-enabled hardware sales grow.",
+          "ai_evidence": "AI-enabled hardware demand is expanding, driving higher sales.",
           "flags": []
         }
       },
@@ -2229,9 +2188,7 @@
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [
-        "USA"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "39a1480ef4875029d9355a9d731c09b9",
@@ -2251,21 +2208,21 @@
       "event_id": "aaaa057a-4473-46a3-9ff6-66082481f5c7",
       "title": "Build a high-standard 100-year-old Beijing-Zhongguan AI innovation belt to create a global hub for artificial intelligence innovation.",
       "date": "2026-09-03",
-      "primary_outcome": "benefit_shown",
-      "primary_outcome_label": "Clear benefit shown",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "mutualism",
+        "configuration": "ai_enabling_only",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "The development provides access to AI innovation resources and opportunities for the Beijing-Zhongguan area.",
-          "ai_evidence": "The AI innovation belt is designed to expand AI capabilities and foster a global AI hub.",
+          "people_evidence": "the article describes regional AI infrastructure and policy actions aimed at enabling broader AI ecosystems, but does not specify direct human-level outcomes or gains.",
+          "ai_evidence": "the development emphasizes AI capability expansion, infrastructure, and governance to create a globalAI hub and ecosystem.",
           "flags": []
         }
       },
@@ -2281,9 +2238,7 @@
       "source_markets": [
         "CHN"
       ],
-      "story_country_iso3s": [
-        "CHN"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "ceb0abbba1b402d909f2172124b36d37",
@@ -2303,21 +2258,21 @@
       "event_id": "71fecc86-aff2-4922-adf1-3629c78740a4",
       "title": "Call for Papers: Museum International: \"Artificial Intelligence in Museums",
       "date": "2026-09-03",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_and_downside",
+      "primary_outcome_label": "Both benefit and downside shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "multiple_sources",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described No human-side relation is described in the evidence. No human outcome is stated in the evidence.",
-          "ai_evidence": "No AI-side relation is described No AI-side relation is described in the evidence. No AI-side enabling or constraining signal is described.",
+          "people_evidence": "The article frames AI as enabling new museum capabilities and evolving professional practices.",
+          "ai_evidence": "The piece discusses AI expanding operational reach and governance considerations in museums.",
           "flags": []
         }
       },
@@ -2368,21 +2323,21 @@
       "event_id": "6c9295a1-b05b-4460-ae35-f0804f206ae7",
       "title": "Can Artificial Intelligence Predict the Right Partner for You?",
       "date": "2026-09-02",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No specific human benefit or loss is stated in this segment. No specific human benefit or loss is stated.",
-          "ai_evidence": "No specific AI benefit or loss is stated in this segment. No specific AI benefit or loss is stated.",
+          "people_evidence": "People consider AI-aided matching as a new capability in finding partners, with cautious optimism about its limits.",
+          "ai_evidence": "AI may improve predictive signals for compatibility but acknowledges current scientific uncertainties about predicting love.",
           "flags": []
         }
       },
@@ -2400,9 +2355,7 @@
         "GBR",
         "USA"
       ],
-      "story_country_iso3s": [
-        "USA"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "4ea8181593e8d343f246b78dcafe3aff",
@@ -2424,21 +2377,21 @@
       "event_id": "e5795415-71b8-4100-a353-48946f22632c",
       "title": "Can artificial intelligence be the answer to green development? evidence from China’s artificial intelligence innovation and development pilot zones",
       "date": "2026-09-04",
-      "primary_outcome": "benefit_shown",
-      "primary_outcome_label": "Clear benefit shown",
+      "primary_outcome": "benefit_and_downside",
+      "primary_outcome_label": "Both benefit and downside shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "mutualism",
+        "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "AIIDPZ supports the expansion of green innovation and productivity through enhanced environmental governance and industrial structure upgrading. AIIDPZ may accelerate the diffusion and practical application of green technologies, contributing to broader sustainability outcomes in China. AI integration lowers innovation costs and improves efficiency for green technologies, contributing to GTFP growth.",
-          "ai_evidence": "AIIDPZ facilitates the expansion of AI-related industries and green technological innovation by improving input support, knowledge production, and technology diffusion. AIIDPZ may strengthen the local innovation base, improve the efficiency of green knowledge creation, and promote the wider diffusion and application of green technologies. AI integration into R&D processes enhances efficiency and reduces costs, supporting technological progress.",
+          "people_evidence": "not provided evidence shows cities gain productivity and green tech adoption due to AI-enabled policy. policies leveraging AI can expand human-capacity for green development",
+          "ai_evidence": "not provided policy design and deployment expand AI-enabled capabilities and diffusion. AI-enabled policy intervention demonstrates tangible productivity gains via technology diffusion not specified",
           "flags": []
         }
       },
@@ -2594,13 +2547,13 @@
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "ai_enabling_only",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described",
-          "ai_evidence": "No AI-side relation is described",
+          "people_evidence": "People are using AI to enhance listings, expanding their capabilities to market properties.",
+          "ai_evidence": "AI-enabled image generation expands the AI's deployment in real estate advertising.",
           "flags": []
         }
       },
@@ -2617,7 +2570,7 @@
         "CAN"
       ],
       "story_country_iso3s": [
-        "FRQ"
+        "CAN"
       ],
       "sources": [
         {
@@ -2704,13 +2657,13 @@
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "ai_enabling_only",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described",
-          "ai_evidence": "No AI-side relation is described",
+          "people_evidence": "no explicit human outcomes described",
+          "ai_evidence": "the article describes deployment/application of AI technologies at an expo",
           "flags": []
         }
       },
@@ -2726,10 +2679,7 @@
       "source_markets": [
         "CHN"
       ],
-      "story_country_iso3s": [
-        "CHN",
-        "ASE"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "1f554019e69dc10ac6cd83092e7cf982",
@@ -2816,8 +2766,8 @@
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "Participants gained access to new knowledge and collaboration opportunities through the forum.",
-          "ai_evidence": "AI technology was showcased as a means to drive medical innovation and improve healthcare outcomes.",
+          "people_evidence": "Clinicians and researchers gain enhanced decision-support capabilities through AI-enabled data fusion and predictive insights.",
+          "ai_evidence": "AI demonstrates functioning capabilities by processing diverse health data to support clinical decisions.",
           "flags": []
         }
       },
@@ -2834,8 +2784,7 @@
         "CHN"
       ],
       "story_country_iso3s": [
-        "CNA",
-        "LVA"
+        "CHN"
       ],
       "sources": [
         {
@@ -2858,7 +2807,7 @@
       "date": "2026-09-03",
       "primary_outcome": "benefit_shown",
       "primary_outcome_label": "Clear benefit shown",
-      "uneven_effect_noted": false,
+      "uneven_effect_noted": true,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
@@ -2869,8 +2818,8 @@
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "AI medical devices are now able to reach patients before authorization, providing new opportunities for healthcare.",
-          "ai_evidence": "The FDA pilot program allows AI medical devices to be tested and used in real-world settings, expanding the AI system's reach.",
+          "people_evidence": "Regulatory pilot enables broader use of AI medical devices by patients and clinicians",
+          "ai_evidence": "Regulators and developers test real-world AI device deployment under oversight",
           "flags": []
         }
       },
@@ -2921,8 +2870,8 @@
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described in the evidence.",
-          "ai_evidence": "No AI-side relation is described in the evidence.",
+          "people_evidence": "no explicit human outcomes described; focus is on risk and governance of frontier AI",
+          "ai_evidence": "describes frontier AI risk and regulatory calls without stating AI gains for users",
           "flags": []
         }
       },
@@ -2939,9 +2888,7 @@
         "CAN",
         "GBR"
       ],
-      "story_country_iso3s": [
-        "USD"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "79d0126e2120b658fc17535c190858da",
@@ -3024,13 +2971,13 @@
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "ai_enabling_only",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human benefit or loss is explicitly stated in the evidence. No human-side relation is described",
-          "ai_evidence": "The AI tools are described as being used for creating content, but no clear directional impact on the AI system is described. No AI-side relation is described",
+          "people_evidence": "not described",
+          "ai_evidence": "AI-generated content is discussed as a factor in political campaigning and public discourse",
           "flags": []
         }
       },
@@ -3076,13 +3023,13 @@
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "ai_enabling_only",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described in the evidence.",
-          "ai_evidence": "No AI-side relation is described in the evidence.",
+          "people_evidence": "The article discusses evolutions in AI capabilities with a focus on agentic behavior, but provides no concrete human outcomes or actions.",
+          "ai_evidence": "The piece highlights advancing AI systems from generative to agentic, implying expanded AI capabilities.",
           "flags": []
         }
       },
@@ -3118,21 +3065,21 @@
       "event_id": "b3fbb0e3-13bf-411b-968f-109215671c8b",
       "title": "From the ZX81 to Artificial Intelligence",
       "date": "2026-08-31",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described",
-          "ai_evidence": "No AI-side relation is described",
+          "people_evidence": "the human community gains enhanced capabilities through AI-assisted transcription and indexing",
+          "ai_evidence": "AI capabilities are expanded via integration with genealogy data (SOCFACE) and new AI-powered tools",
           "flags": []
         }
       },
@@ -3148,7 +3095,9 @@
       "source_markets": [
         "FRA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "FRA"
+      ],
       "sources": [
         {
           "article_id": "54c07474ba764fb65f6eaf0ba99a0bb7",
@@ -3168,21 +3117,21 @@
       "event_id": "cce1898b-61a8-4b5d-81ac-f08f2b052c0b",
       "title": "Gansu has introduced a “Artificial Intelligence + Education” action plan",
       "date": "2026-09-04",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No specific human benefit or loss is stated in the evidence.",
-          "ai_evidence": "No specific AI benefit or loss is stated in the evidence.",
+          "people_evidence": "The plan expands human access to AI-enabled education through new courses, improved infrastructure, and broader adoption.",
+          "ai_evidence": "Policy-driven deployment and capacity-building increase AI's reach in education without indicating AI limitations.",
           "flags": []
         }
       },
@@ -3199,7 +3148,7 @@
         "CHN"
       ],
       "story_country_iso3s": [
-        "CNA"
+        "CHN"
       ],
       "sources": [
         {
@@ -3220,21 +3169,21 @@
       "event_id": "fce3a7c6-33bd-4451-baa4-9ef93df156db",
       "title": "Generative AI Banned for Younger Students",
       "date": "2026-09-03",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
-      "uneven_effect_noted": false,
+      "primary_outcome": "benefit_and_downside",
+      "primary_outcome_label": "Both benefit and downside shown",
+      "uneven_effect_noted": true,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "The policy restricts access to generative AI for younger students, limiting their autonomy and opportunities for engagement with AI technology.",
-          "ai_evidence": "The AI system is not being extended or expanded, and there is no clear indication of it being restricted or reduced in this context.",
+          "people_evidence": "Policy restricts AI for younger students but expands AI-enabled literacy and pilots for older students, suggesting selective human capability enhancement within education.",
+          "ai_evidence": "AI capabilities are deployed in limited pilots and literacy programs, while general access for younger students is restricted.",
           "flags": []
         }
       },
@@ -3250,7 +3199,9 @@
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "49003642879400f91266bcad303229b2",
@@ -3270,21 +3221,21 @@
       "event_id": "2e775ad5-0983-4568-a9bc-d3a72dc003a8",
       "title": "Generative AI banned on LAUSD-issued devices for students",
       "date": "2026-09-02",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "competition",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "Students using LAUSD-issued devices are restricted from using generative AI, which limits their access to a potential resource.",
-          "ai_evidence": "The AI system is not explicitly described as being restricted or expanded in the text, but the policy is in place to limit its use.",
+          "people_evidence": "no explicit reasoning provided",
+          "ai_evidence": "no explicit reasoning provided",
           "flags": []
         }
       },
@@ -3300,7 +3251,9 @@
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "51bafe7d7596b79f0ab2dd024e720d2b",
@@ -3320,21 +3273,21 @@
       "event_id": "8ca1d082-3d5a-45a9-bd74-b3b4567649f1",
       "title": "Got $1,000? 3 Stocks Building the Physical AI Era",
       "date": "2026-09-05",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No specific human benefit or loss is stated in the article.",
-          "ai_evidence": "No specific AI benefit or loss is stated in the article.",
+          "people_evidence": "Investors gain exposure and potential profits from expanding AI infrastructure.",
+          "ai_evidence": "AI ecosystem expands as hardware, cooling, and manufacturing enable broader deployment.",
           "flags": []
         }
       },
@@ -3383,8 +3336,8 @@
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No people-side benefit or constraint is explicitly stated.",
-          "ai_evidence": "No AI-side benefit or constraint is explicitly stated.",
+          "people_evidence": "The evidence shows policy support, project signings, and an alliance to expand AI use benefiting local businesses and workforce",
+          "ai_evidence": "AI infrastructure and industry ecosystems are being expanded through collaborations and policy support",
           "flags": []
         }
       },
@@ -3401,7 +3354,7 @@
         "CHN"
       ],
       "story_country_iso3s": [
-        "CNA"
+        "CHN"
       ],
       "sources": [
         {
@@ -3435,8 +3388,8 @@
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "The ecosystem enables individual AI entrepreneurs to access resources and tools that help them start and scale their ventures, representing an expansion of their capabilities.",
-          "ai_evidence": "The AI ecosystem is expanding by creating a full-chain support system that integrates individual creativity with AI tools and services, enhancing its reach and functionality.",
+          "people_evidence": "The evidence shows people gaining capacity through AI-enabled entrepreneurship infrastructure.",
+          "ai_evidence": "The evidence shows AI systems providing tools and services that expand entrepreneurial capabilities.",
           "flags": []
         }
       },
@@ -3453,7 +3406,7 @@
         "CHN"
       ],
       "story_country_iso3s": [
-        "CNE"
+        "CHN"
       ],
       "sources": [
         {
@@ -3528,21 +3481,21 @@
       "event_id": "0600999d-ccb9-4027-8ae9-5be206859e05",
       "title": "How Artificial Intelligence is Reshaping the Global Job Market and Creating New Career Paths",
       "date": "2026-09-04",
-      "primary_outcome": "benefit_and_downside",
-      "primary_outcome_label": "Both benefit and downside shown",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ambiguous_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "New career paths and opportunities are emerging due to AI integration in the job market.",
-          "ai_evidence": "AI is extending its reach into new industries and creating new roles.",
+          "people_evidence": "People gain new career paths and entrepreneurship opportunities through AI-enabled tools and processes.",
+          "ai_evidence": "AI tools enable new outputs and expand the range of tasks it can automate or assist with.",
           "flags": []
         }
       },
@@ -3558,9 +3511,7 @@
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [
-        "USD"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "2c3f5f9d096dcacdfe2981bb65168e0f",
@@ -3634,21 +3585,21 @@
       "event_id": "ba2ec4bb-2616-4c18-940b-decb4d76a25d",
       "title": "How to Disable Google's AI Preview for Search Results",
       "date": "2026-09-02",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described in the evidence. No human-side relation is described",
-          "ai_evidence": "No AI-side relation is described in the evidence. No AI-side relation is described",
+          "people_evidence": "Users exercise existing autonomy to control AI-driven search previews via settings and extensions.",
+          "ai_evidence": "AI previews are active features that can be enabled/disabled by user-side actions.",
           "flags": []
         }
       },
@@ -3664,9 +3615,7 @@
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [
-        "FRA"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "6c63528b3909a49caa77323d4cfc7071",
@@ -3686,21 +3635,21 @@
       "event_id": "666d3899-6112-48bc-ab98-2e740c33b4f2",
       "title": "How to ensure payment security when AI helps people make decisions about “paying”?",
       "date": "2026-09-01",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No specific human benefit or loss is stated in the evidence.",
-          "ai_evidence": "The AI is described as being used in payment scenarios, but no clear AI benefit or loss is stated.",
+          "people_evidence": "People gain easier, faster payment experiences and protection mechanisms are being developed",
+          "ai_evidence": "AI-enabled payments push expansion with adoption of standards and consumer safeguards",
           "flags": []
         }
       },
@@ -3794,7 +3743,7 @@
       "date": "2026-09-02",
       "primary_outcome": "downside_shown",
       "primary_outcome_label": "Clear downside shown",
-      "uneven_effect_noted": false,
+      "uneven_effect_noted": true,
       "classification": {
         "content_basis": "multiple_sources",
         "evidence_status": "sufficient",
@@ -3805,8 +3754,8 @@
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "Students in New York are restricted from using AI until third grade.",
-          "ai_evidence": "The use of AI is prohibited for students in New York until third grade.",
+          "people_evidence": "The policy restricts AI use by students, limiting their autonomous access to AI tools.",
+          "ai_evidence": "Policy confines AI usage in schools for younger students, limiting its operational reach in this context.",
           "flags": []
         }
       },
@@ -3823,7 +3772,9 @@
         "CAN",
         "FRA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "b54ca62885e4974c858be0a996cf52b3",
@@ -3855,21 +3806,21 @@
       "event_id": "33018ed3-7996-4cca-a937-09b4f91a74ab",
       "title": "I’m a father of three who studies the impact of artificial intelligence: this is what parents need to know about AI",
       "date": "2026-09-06",
-      "primary_outcome": "benefit_and_downside",
-      "primary_outcome_label": "Both benefit and downside shown",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "ambiguous_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "The author and their children use AI to create a story, showing that people can extend their creative capacity through AI. AI systems are making basic skills redundant AI provides personalized education that enhances student learning and understanding.",
-          "ai_evidence": "AI is used to generate creative content, showing that the AI system is extending its operative reach. AI systems are becoming more capable and flawed AI is used to provide personalized education and support for students in various subjects.",
+          "people_evidence": "There is clear evidence that AI assists learning and expands human capabilities when used as a tutoring tool and creative partner.",
+          "ai_evidence": "AI is shown delivering tailored instruction and enabling new educational approaches, indicating its functional extension.",
           "flags": []
         }
       },
@@ -3909,21 +3860,21 @@
       "event_id": "dd9a2ad1-9b6d-41bf-95c9-3f48c924a9f5",
       "title": "Jointly authored by China Unicom Yuanjing, the standard for artificial intelligence token operation and management capabilities is released.",
       "date": "2026-08-31",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No people-side benefit or constraint is explicitly stated in the evidence.",
-          "ai_evidence": "The AI system is described as being developed and standardized, but no explicit gain or constraint is stated for the AI side.",
+          "people_evidence": "The evidence describes humans gaining expanded capabilities via a standardized token platform that streamlines AI service deployment.",
+          "ai_evidence": "The AI-side role is depicted as enabling broader AI service deployment and operational efficiency.",
           "flags": []
         }
       },
@@ -4015,21 +3966,21 @@
       "event_id": "3bef1ee4-73a4-40a9-ae78-aebe241e5313",
       "title": "Lauren Jablon ’24 coauthors research on Writing Center users’ early views of generative AI",
       "date": "2026-09-04",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described",
-          "ai_evidence": "No AI-side relation is described",
+          "people_evidence": "Students and faculty are evaluating AI-augmented writing practices, indicating a normalizing extension of human capabilities through AI",
+          "ai_evidence": "AI is presented as providing affordances and limitations in writing processes, signaling its functional role",
           "flags": []
         }
       },
@@ -4067,21 +4018,21 @@
       "event_id": "8f232022-6fa8-4234-8fba-d11588add8f8",
       "title": "Let's discuss Artificial Intelligence (3)",
       "date": "2026-09-04",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "no people outcome stated No human outcome is stated or implied in the text.",
-          "ai_evidence": "no AI-side enabling or constraining signal is described No AI-side outcome is stated or implied in the text.",
+          "people_evidence": "The article portrays AI as a tool that broadens the space for human decision-making and ministry work, enabling greater capacity.",
+          "ai_evidence": "The AI is depicted as a functioning assistant that extends the human workflow without autonomous decision-making.",
           "flags": []
         }
       },
@@ -4132,8 +4083,8 @@
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described in the evidence.",
-          "ai_evidence": "No AI-side relation is described in the evidence.",
+          "people_evidence": "The article discusses which professions are less exposed to AI and potential wage impact, but does not describe a clear human-enabled outcome or action.",
+          "ai_evidence": "The article describes AI exposure risk by profession without detailing AI-side expansion or restriction.",
           "flags": []
         }
       },
@@ -4171,21 +4122,21 @@
       "event_id": "b975add8-abad-452e-9aa5-320d321c4402",
       "title": "Mayor Mamdani and Chancellor Samuels Put Students First with Nation’s Broadest Generative AI Moratorium in Schools",
       "date": "2026-09-02",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "competition",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "The policy restricts AI use in schools, limiting students' access to generative AI tools. no people outcome stated No specific human benefit or loss is stated in the evidence",
-          "ai_evidence": "The AI system is being restricted through a moratorium and limited pilots. no AI-side enabling or constraining signal is described No specific AI benefit or loss is stated in the evidence",
+          "people_evidence": "policy restrains student-facing AI to protect learning",
+          "ai_evidence": "restricting deployment to pilots and moratoriums",
           "flags": []
         }
       },
@@ -4201,7 +4152,9 @@
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "9918a97f1ca3fae18956d35e3677ffda",
@@ -4221,21 +4174,21 @@
       "event_id": "78c2f5af-e751-412a-9344-cc485fa2863b",
       "title": "Meta claims to have caught up with OpenAI and Anthropic with its new AI model",
       "date": "2026-09-04",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
-      "uneven_effect_noted": false,
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": true,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described in the evidence.",
-          "ai_evidence": "No AI-side relation is described in the evidence.",
+          "people_evidence": "Developers gain capability to integrate Muse Spark 1.3 via API and platforms.",
+          "ai_evidence": "Muse Spark 1.3 advances performance and autonomy, expanding its reach via API and paid access.",
           "flags": []
         }
       },
@@ -4251,9 +4204,7 @@
       "source_markets": [
         "FRA"
       ],
-      "story_country_iso3s": [
-        "USD"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "7333e430449257fdbf4a2562696f42d2",
@@ -4281,13 +4232,13 @@
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "human_enabling_only",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "The initiative aims to enhance teacher capabilities through AI, providing new opportunities for professional development.",
-          "ai_evidence": "The AI system is being integrated into teacher training to support and extend educational outcomes.",
+          "people_evidence": "The policy describes AI-enabled training tools and platforms that expand teachers' capabilities.",
+          "ai_evidence": "The initiative describes AI deployment to empower education infrastructure and teacher development.",
           "flags": []
         }
       },
@@ -4338,8 +4289,8 @@
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "Support teams can handle more tickets efficiently with AI, reducing manual work and improving resolution times. Teams gain better tools and decision-making support through AI integration, improving operational efficiency and visibility. Support teams gain access to automated tools that improve efficiency and accuracy in operations. Support teams gain more efficient ways to manage operations and resolve tickets. People gain access to more efficient support operations through AI",
-          "ai_evidence": "Generative AI on AWS automates SOP creation, improves ticket resolution, and optimizes workload distribution. The AI system expands its capabilities by providing real-time insights and automation, enhancing its utility for both analysts and leaders. The AI system is expanding its capabilities by automating documentation and workflow analysis. AI systems provide predictive insights and automated workflows to improve SLA performance. AI expands its capabilities by improving support operations and learning from them",
+          "people_evidence": "The evidence shows humans gain capabilities (faster SOP creation, better workload visibility) through AI-enabled processes, indicating expansion of human capacity. the evidence shows humans gain productivity and new capabilities through AI-assisted workflows",
+          "ai_evidence": "AI is deployed in operations, producing SOPs, guidance, and analytics, indicating extension of AI's operational role. the AI system acts as a decision-support and automation layer enhancing workflow efficiency",
           "flags": []
         }
       },
@@ -4355,9 +4306,7 @@
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [
-        "USA"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "be849b092a65b95dd81a8834fc8814c0",
@@ -4539,21 +4488,21 @@
       "event_id": "22cd9c7b-4d5d-4569-9331-5249c8d6e865",
       "title": "OpenAI Launches Its Most Powerful AI Model: GPT-6 Astra",
       "date": "2026-09-03",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
-      "uneven_effect_noted": false,
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": true,
       "classification": {
         "content_basis": "multiple_sources",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described in the evidence.",
-          "ai_evidence": "No AI-side relation is described in the evidence.",
+          "people_evidence": "People gain practical automation capabilities and productivity from Astra.",
+          "ai_evidence": "Astra demonstrates autonomous computer-interaction and advanced problem-solving with safeguards.",
           "flags": []
         }
       },
@@ -4620,13 +4569,13 @@
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "ai_enabling_only",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described",
-          "ai_evidence": "No AI-side relation is described",
+          "people_evidence": "no explicit human outcomes described",
+          "ai_evidence": "claims of surpassing a competitor imply AI capability growth",
           "flags": []
         }
       },
@@ -4642,9 +4591,7 @@
       "source_markets": [
         "GBR"
       ],
-      "story_country_iso3s": [
-        "GBR"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "9d8b20828a99833a54a99734a538d067",
@@ -4666,7 +4613,7 @@
       "date": "2026-09-04",
       "primary_outcome": "downside_shown",
       "primary_outcome_label": "Clear downside shown",
-      "uneven_effect_noted": true,
+      "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
@@ -4677,8 +4624,8 @@
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "People lose critical thinking ability due to overuse of AI.",
-          "ai_evidence": "AI is not shown to be restricted or expanded in the evidence.",
+          "people_evidence": "Using AI excessively is linked to reduced critical thinking and personal satisfaction in students.",
+          "ai_evidence": "AI is described as a tool that can support tasks but not as achieving a gain for AI itself in this context.",
           "flags": []
         }
       },
@@ -4694,9 +4641,7 @@
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [
-        "CAN"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "8491f86162cfa548c215a5c1023dff15",
@@ -4724,13 +4669,13 @@
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "ai_enabling_only",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human outcome is stated in the evidence.",
-          "ai_evidence": "The AI system is described as being tested and used for a specific purpose.",
+          "people_evidence": "The article describes AI deployment for operational optimization with privacy concerns but does not specify human capacity gains.",
+          "ai_evidence": "The AI tool is described as functioning to optimize station closures, i.e., providing an operational extension.",
           "flags": []
         }
       },
@@ -4746,7 +4691,9 @@
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "CAN"
+      ],
       "sources": [
         {
           "article_id": "662195cdb537847d081ecdddffc317ab",
@@ -4779,8 +4726,8 @@
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "The research allows educators, scientists, filmmakers, and students to create professional-quality videos without specialized equipment or expertise. Yanardag's research expands access to video production through AI, making it more inclusive.",
-          "ai_evidence": "The AI system is being developed to give users director-like control over video production, making it more accessible and user-friendly.",
+          "people_evidence": "the development describes expanding human creative capacity through accessible AI-powered video tools",
+          "ai_evidence": "the AI system is depicted as extending its operative reach by enabling director-like control over video outputs",
           "flags": []
         }
       },
@@ -4796,7 +4743,9 @@
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "9a1cf8c2e438003a1b013a49be657a26",
@@ -4816,21 +4765,21 @@
       "event_id": "eeebe01b-abfb-40cb-ab8d-590ba175bf69",
       "title": "Quebec courts say generative AI cannot replace judges’ reasoning - Montreal",
       "date": "2026-09-05",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human gain or loss is stated no people outcome stated",
-          "ai_evidence": "No AI gain or loss is stated no ai-side enabling or constraining signal is described",
+          "people_evidence": "Judges retain full responsibility for decisions and must verify AI-assisted outputs.",
+          "ai_evidence": "AI is allowed only for limited, non-substantive support and not as a substitute for legal reasoning.",
           "flags": []
         }
       },
@@ -4868,21 +4817,21 @@
       "event_id": "d8688fe5-b296-4348-8bcc-76e4049fe1d2",
       "title": "Scranton Faculty and Staff Analyze Papal Encyclical on Artificial Intelligence",
       "date": "2026-09-03",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "human_enabling_only",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No specific human benefit or loss is stated in the evidence.",
-          "ai_evidence": "No specific AI benefit or loss is stated in the evidence.",
+          "people_evidence": "The article describes humans engaging with AI ethics discourse and considering implications for people in AI-enabled contexts.",
+          "ai_evidence": "No explicit AI-enabled outcome or capability development is described for the AI system itself.",
           "flags": []
         }
       },
@@ -4898,7 +4847,9 @@
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "67a68ea5d928fdcffed095cdabdc86ae",
@@ -4972,21 +4923,21 @@
       "event_id": "8e5a0cc5-9068-4322-a9fc-a0714a0729ae",
       "title": "Sichuan Provincial Artificial Intelligence Industry Application Scenarios Release and Matching Conference was held in Dazhou",
       "date": "2026-09-01",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described in the evidence.",
-          "ai_evidence": "No AI-side relation is described in the evidence.",
+          "people_evidence": "The event describes AI-driven empowerment and industry upgrade benefiting people.",
+          "ai_evidence": "The event frames AI as enabling and extending capabilities across industries.",
           "flags": []
         }
       },
@@ -5003,8 +4954,7 @@
         "CHN"
       ],
       "story_country_iso3s": [
-        "CNX",
-        "CNX"
+        "CHN"
       ],
       "sources": [
         {
@@ -5025,21 +4975,21 @@
       "event_id": "fb3a9764-c7b4-4cfe-b262-59390f0a073d",
       "title": "Snickers Delivers Digital Treats for Hungry Artificial Intelligence",
       "date": "2026-09-04",
-      "primary_outcome": "benefit_shown",
-      "primary_outcome_label": "Clear benefit shown",
-      "uneven_effect_noted": false,
+      "primary_outcome": "benefit_and_downside",
+      "primary_outcome_label": "Both benefit and downside shown",
+      "uneven_effect_noted": true,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "mutualism",
+        "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "People gain access to a new way to interact with AI through the Snickers Hungr.AI initiative, which is designed to help AI systems perform better by providing them with 'bytes' to 'satiate' their digital assistants.",
-          "ai_evidence": "The AI system is extended through the Snickers Hungr.AI initiative, which provides a new method for AI to receive data and improve its performance by engaging with users.",
+          "people_evidence": "people gain access to a promotional interaction and potential benefit through AI-enabled experience",
+          "ai_evidence": "AI is framed as delivering a more satisfying response and engagement via Hungr.AI",
           "flags": []
         }
       },
@@ -5077,21 +5027,21 @@
       "event_id": "b959d80a-99ba-4618-8955-d78818aea10f",
       "title": "Special action to cultivate artificial intelligence application service providers launched",
       "date": "2026-08-31",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described in the evidence.",
-          "ai_evidence": "No AI-side relation is described in the evidence.",
+          "people_evidence": "This action builds capacity and opportunities for people by expanding the AI service ecosystem.",
+          "ai_evidence": "The policy/initiative structurally increases AI service deployment and capability sharing.",
           "flags": []
         }
       },
@@ -5137,13 +5087,13 @@
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "ai_constraining_only",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "no people outcome stated No human-side relation is described",
-          "ai_evidence": "no AI-side enabling or constraining signal is described No AI-side relation is described",
+          "people_evidence": "Study highlights AI limitations and need for human safeguards.",
+          "ai_evidence": "Assesses AI fallibility under multi-turn conversations.",
           "flags": []
         }
       },
@@ -5194,21 +5144,21 @@
       "event_id": "a2110819-497f-4676-ba83-78b8276636fa",
       "title": "TfL facing surge in FOI appeals as people turn to Artificial Intelligence",
       "date": "2026-09-02",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No specific human benefit or loss is stated.",
-          "ai_evidence": "No specific AI benefit or loss is stated.",
+          "people_evidence": "People gain a new capability to draft appeals with AI assistance, extending their workflow.",
+          "ai_evidence": "AI-enabled drafting outputs enable faster, more voluminous content creation, expanding its operational reach.",
           "flags": []
         }
       },
@@ -5224,7 +5174,9 @@
       "source_markets": [
         "GBR"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "GBR"
+      ],
       "sources": [
         {
           "article_id": "d95efb7cd817d75a1e93edb351bfaadb",
@@ -5244,21 +5196,21 @@
       "event_id": "307bb2d7-dbce-4128-8333-643af0544163",
       "title": "The 23rd China-ASEAN Business and Investment Summit will highlight the application of artificial intelligence",
       "date": "2026-09-01",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No specific human benefit or loss is stated.",
-          "ai_evidence": "AI is described as being showcased and applied, but no specific AI gain or loss is stated.",
+          "people_evidence": "the evidence indicates people gain access to AI-enabled applications and opportunities",
+          "ai_evidence": "the evidence indicates AI capabilities are being extended into industry and economy",
           "flags": []
         }
       },
@@ -5274,10 +5226,7 @@
       "source_markets": [
         "CHN"
       ],
-      "story_country_iso3s": [
-        "CNX",
-        "ASE"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "9a3fcdd21a3bbcf1a7de9b4fc5adca25",
@@ -5297,21 +5246,21 @@
       "event_id": "67ac90b6-b067-4967-bf41-a4e616d9e741",
       "title": "The Amazon Service Named \"Artificial Artificial Intelligence\" is Closing Permanently",
       "date": "2026-09-06",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "competition",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "no people outcome stated No human-side relation is described",
-          "ai_evidence": "no AI-side enabling or constraining signal is described No AI-side relation is described",
+          "people_evidence": "the article portrays a decline in a human-centric platform linked to AI data labeling",
+          "ai_evidence": "the shutdown reflects a narrowing of an AI-enabled data-labeling channel",
           "flags": []
         }
       },
@@ -5401,21 +5350,21 @@
       "event_id": "b3cb89ce-9df0-4942-af91-84c91c948507",
       "title": "The CCAQ wants to regulate the use of artificial intelligence by dealers",
       "date": "2026-09-04",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "competition",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No people-side benefit or constraint is explicitly stated.",
-          "ai_evidence": "No AI-side benefit or constraint is explicitly stated.",
+          "people_evidence": "No explicit reasoning provided beyond governance implications; the text states regulatory constraints on AI use by dealers and suppliers.",
+          "ai_evidence": "Regulatory framing suggests imposing constraints on AI deployment/use by dealers and suppliers.",
           "flags": []
         }
       },
@@ -5432,7 +5381,7 @@
         "CAN"
       ],
       "story_country_iso3s": [
-        "CAQ"
+        "CAN"
       ],
       "sources": [
         {
@@ -5453,21 +5402,21 @@
       "event_id": "597361eb-15a8-4428-8b37-5158b8d2f7ee",
       "title": "The Case of Jean-François Desaulniers | Detecting Artificial Intelligence in the Electoral Campaign in Quebec",
       "date": "2026-09-02",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "competition",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described in the evidence.",
-          "ai_evidence": "No AI-side relation is described in the evidence.",
+          "people_evidence": "Governance and codes aim to restrict AI use in campaigns to reduce misinformation and manipulation.",
+          "ai_evidence": "Masking or limiting AI-enabled behaviors in electoral contexts to protect information integrity.",
           "flags": []
         }
       },
@@ -5483,7 +5432,9 @@
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "CAN"
+      ],
       "sources": [
         {
           "article_id": "b56e034203d1299c77669907433b81fb",
@@ -5511,13 +5462,13 @@
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human benefit or loss is stated in the evidence. No human-side relation is described in the evidence.",
-          "ai_evidence": "The AI system is described as lacking judgment, consciousness, and accountability. No AI-side relation is described in the evidence.",
+          "people_evidence": "Judges maintain human-led reasoning; AI is limited to ancillary tasks",
+          "ai_evidence": "AI is not intelligent or accountable; its use is constrained by governance rules",
           "flags": []
         }
       },
@@ -5622,8 +5573,8 @@
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "The university is gaining access to AI tools that support entrepreneurship and innovation.",
-          "ai_evidence": "The AI tools are being used to support entrepreneurship and innovation.",
+          "people_evidence": "Evidence shows people leveraging AI to organize, plan, and innovate, extending existing entrepreneurial capacity.",
+          "ai_evidence": "AI tools are presented as producing useful outputs (automation, content creation, market insight) that extend operational reach.",
           "flags": []
         }
       },
@@ -5661,21 +5612,21 @@
       "event_id": "4b15b2c2-7e21-4148-af2b-355564342be5",
       "title": "The Left and Artificial Intelligence",
       "date": "2026-08-27",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described in the text.",
-          "ai_evidence": "No AI-side relation is described in the text.",
+          "people_evidence": "People gain a new capacity to challenge decisions using AI assistance.",
+          "ai_evidence": "AI serves as an operating aid enabling users to act more effectively.",
           "flags": []
         }
       },
@@ -5693,7 +5644,7 @@
         "FRA"
       ],
       "story_country_iso3s": [
-        "FRA"
+        "GBR"
       ],
       "sources": [
         {
@@ -5715,21 +5666,21 @@
       "event_id": "2ccb707e-963e-45cb-9208-31f203cfb46b",
       "title": "The STM is testing AI to detect loafers in the metro.",
       "date": "2026-09-04",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No people outcome stated No human outcome is stated in the evidence.",
-          "ai_evidence": "The AI system is being tested for a specific operational purpose but no clear directional signal is provided The AI system is described as being tested and developed, but no clear AI-side enabling or constraining signal is described.",
+          "people_evidence": "People gain operational efficiency and safety benefits from AI-assisted monitoring",
+          "ai_evidence": "AI-enabled detection supports operational decision-making and workflow",
           "flags": []
         }
       },
@@ -5823,21 +5774,21 @@
       "event_id": "fd27a296-a477-4b7b-a423-0abd44c8203e",
       "title": "The development of large-scale artificial intelligence models has entered a new stage",
       "date": "2026-09-02",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described",
-          "ai_evidence": "No AI-side relation is described",
+          "people_evidence": "Signal indicates broad, beneficial outcomes for people through AI-enabled access and opportunities.",
+          "ai_evidence": "AI capabilities and deployment are expanding across ecosystems and use-cases.",
           "flags": []
         }
       },
@@ -5853,14 +5804,7 @@
       "source_markets": [
         "CHN"
       ],
-      "story_country_iso3s": [
-        "USA",
-        "FRA",
-        "CHN",
-        "KOR",
-        "SGP",
-        "GBR"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "75f331345898a25775f27437939e2269",
@@ -5880,21 +5824,21 @@
       "event_id": "bb4625b4-fae6-4463-a52b-af94b72b873a",
       "title": "The first large model of China’s chemical industry sector has a new version released.",
       "date": "2026-08-31",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No people-side relation is described in the evidence.",
-          "ai_evidence": "The AI system is described as being developed and released, but no directional signal is provided for its operational or functional impact.",
+          "people_evidence": "people gain capability and productivity through the AI-enabled chemical model ecosystem",
+          "ai_evidence": "AI system demonstrates functional execution and task automation across the chemical workflow",
           "flags": []
         }
       },
@@ -6001,8 +5945,8 @@
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "Users can create digital universes without coding, which extends their capacity to interact with AI.",
-          "ai_evidence": "The AI system is expanding its capabilities in generating interactive interfaces and adapting to user interactions in real-time.",
+          "people_evidence": "The article describes how Solaris enables users to build and experience interactive interfaces without traditional coding, expanding user capability.",
+          "ai_evidence": "Solaris produces adaptive interfaces in response to user actions, extending its functional reach.",
           "flags": []
         }
       },
@@ -6040,21 +5984,21 @@
       "event_id": "23af84b3-78cd-4c90-8504-ef0bb7390004",
       "title": "The new mobile app of Paris Match designed with generative AI",
       "date": "2026-09-06",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described in the evidence.",
-          "ai_evidence": "No AI-side relation is described in the evidence.",
+          "people_evidence": "users gain a new ability to tailor content and engage with media",
+          "ai_evidence": "AI enables customization and content delivery within the app",
           "flags": []
         }
       },
@@ -6200,21 +6144,21 @@
       "event_id": "5adc07af-8169-4863-b79f-66022d317338",
       "title": "The third “Xingzhi Cup” National Artificial Intelligence Innovation Application Competition was launched in Shenzhen",
       "date": "2026-09-01",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No people-side relation is described",
-          "ai_evidence": "No AI-side relation is described",
+          "people_evidence": "The event expands human opportunities by enabling teams to scale from samples to products and to access new markets through the competition.",
+          "ai_evidence": "The AI ecosystem grows as competitions and participation increase AI development, deployment, and infrastructure.",
           "flags": []
         }
       },
@@ -6231,8 +6175,7 @@
         "CHN"
       ],
       "story_country_iso3s": [
-        "CHN",
-        "AUS"
+        "CHN"
       ],
       "sources": [
         {
@@ -6253,21 +6196,21 @@
       "event_id": "39d21944-7e6d-431f-aae2-e208d49a3523",
       "title": "Three Views on Artificial Intelligence in Schools",
       "date": "2026-09-04",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described",
-          "ai_evidence": "No AI-side relation is described",
+          "people_evidence": "People are using AI to augment teaching and learning activities and are seeking structured use; concerns about cognitive impact exist but do not negate adoption.",
+          "ai_evidence": "AI is deployed in classrooms as a supporting tool and is framed as part of educational practice, with monitoring and training underway.",
           "flags": []
         }
       },
@@ -6363,21 +6306,21 @@
       "event_id": "aa0599ea-4248-4e2b-b73f-ebf9216341ab",
       "title": "Top AI Journalist Offers Free UH Talk on Artificial Intelligence",
       "date": "2026-09-04",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_and_downside",
+      "primary_outcome_label": "Both benefit and downside shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described",
-          "ai_evidence": "No AI-side relation is described",
+          "people_evidence": "The article frames AI power concentration as shaping society and policy, implying human communities are affected but not stating direct benefits to people.",
+          "ai_evidence": "The piece highlights AI firms accruing power and influence, suggesting expansion of AI's reach and impact.",
           "flags": []
         }
       },
@@ -6393,10 +6336,7 @@
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [
-        "USA",
-        "HNP"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "7b227990255c92c7f5b9e924a83d9157",
@@ -6416,21 +6356,21 @@
       "event_id": "3af20206-acab-420f-b52d-885f65bcec17",
       "title": "Two out of three companies use generative AI, but productivity is dragging its heels.",
       "date": "2026-09-03",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
-      "uneven_effect_noted": true,
+      "primary_outcome": "benefit_and_downside",
+      "primary_outcome_label": "Both benefit and downside shown",
+      "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described in the evidence.",
-          "ai_evidence": "No AI-side relation is described in the evidence.",
+          "people_evidence": "The evidence shows people gaining time/efficiency, with some cautions about employment impact.",
+          "ai_evidence": "AI is deployed to extend productivity and processes; macro gains are reported but with caveats about job effects.",
           "flags": []
         }
       },
@@ -6448,8 +6388,7 @@
         "FRA"
       ],
       "story_country_iso3s": [
-        "FRA",
-        "EUR"
+        "FRA"
       ],
       "sources": [
         {
@@ -6471,21 +6410,21 @@
       "event_id": "1a8dce4b-a641-4a3b-8139-a9a8b5aa2e27",
       "title": "U.S. bishops focus on young people and artificial intelligence in Labor Day message",
       "date": "2026-09-04",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_and_downside",
+      "primary_outcome_label": "Both benefit and downside shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No specific human benefit or loss is stated in the evidence.",
-          "ai_evidence": "No specific AI benefit or loss is stated in the evidence.",
+          "people_evidence": "People face unemployment risk and need protections amid AI adoption",
+          "ai_evidence": "Societal guidance is needed to align AI with human dignity and the common good",
           "flags": []
         }
       },
@@ -6523,21 +6462,21 @@
       "event_id": "3a88e517-2b7c-4593-b18e-b67998684eba",
       "title": "UMich seeks community feedback on AI policy draft",
       "date": "2026-09-04",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described",
-          "ai_evidence": "No AI-side relation is described",
+          "people_evidence": "policy aims to empower people through AI literacy and governance",
+          "ai_evidence": "policy and pilots indicate AI deployment in education with ongoing evaluation",
           "flags": []
         }
       },
@@ -6553,7 +6492,9 @@
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "4f4aed2f4535c4006f65d8cb5c08f126",
@@ -6627,21 +6568,21 @@
       "event_id": "0334c706-bf57-49e7-9d43-39081361d867",
       "title": "US pushes looser approach to AI regulation, while EU pushes new law",
       "date": "2026-09-02",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described",
-          "ai_evidence": "AI is represented as functioning and spreading, but no AI-side enabling or constraining signal is described",
+          "people_evidence": "The evidence describes broader opportunities and growth for people through AI-enabled activity like infrastructure and job creation.",
+          "ai_evidence": "Regulatory looseness is framed as enabling AI deployment and expansion across sectors.",
           "flags": []
         }
       },
@@ -6660,7 +6601,7 @@
       ],
       "story_country_iso3s": [
         "USA",
-        "EUR"
+        "EUU"
       ],
       "sources": [
         {
@@ -6690,13 +6631,13 @@
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "ai_constraining_only",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described",
-          "ai_evidence": "No AI-side relation is described",
+          "people_evidence": "Not specified",
+          "ai_evidence": "Not specified",
           "flags": []
         }
       },
@@ -6713,9 +6654,7 @@
         "CAN",
         "GBR"
       ],
-      "story_country_iso3s": [
-        "USA"
-      ],
+      "story_country_iso3s": [],
       "sources": [
         {
           "article_id": "09726e832cbef59ce1a11d52fc7d72f5",
@@ -6736,21 +6675,21 @@
       "event_id": "95f21dd4-08db-414a-8056-6878e77489df",
       "title": "Understanding AI: A Practical Guide for Businesses",
       "date": "2026-09-04",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No specific human benefit or loss is stated in the text. No human-side relation is described",
-          "ai_evidence": "No specific AI benefit or loss is stated in the text. No AI-side relation is described",
+          "people_evidence": "Organizations seek visibility and governance to harness AI without undue risk.",
+          "ai_evidence": "AI-enabled features and tools are being adopted and embedded, expanding AI usage in business settings.",
           "flags": []
         }
       },
@@ -6786,21 +6725,21 @@
       "event_id": "d4ff674f-b8ed-4fb1-b37e-75f0bfcd1632",
       "title": "When Artificial Intelligence Becomes a Matter of Faith in Washington",
       "date": "2026-09-06",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "ai_benefiting_parasitism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described in the evidence. No human-side relation is described in the evidence",
-          "ai_evidence": "No AI-side relation is described in the evidence. No AI-side relation is described in the evidence",
+          "people_evidence": "The evidence shows AI encroaching on intimate and social domains, prompting concerns about human autonomy and moral judgment.",
+          "ai_evidence": "Observations about AI behavior (sycophancy, alignment issues) and policy emphasis indicate AI expanding influence and capabilities in social contexts.",
           "flags": []
         }
       },
@@ -6816,7 +6755,9 @@
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "1fe2039333d1356def104a509ce84346",
@@ -6836,39 +6777,43 @@
       "event_id": "e5d2be95-5396-4dc4-9327-38500e6d9eae",
       "title": "When Artificial Intelligence Invites Itself into Your Glass",
       "date": "2026-09-05",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "People gain confidence and accessibility in wine choices through AI-assisted guidance.",
+          "ai_evidence": "AI enables tailored wine recommendations that drive sales and broader customer reach.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "GBR",
+        "USA",
+        "FRA",
+        "PRT",
+        "CAN"
+      ],
       "sources": [
         {
           "article_id": "032a6297356e646808b733deb0bb970c",
@@ -6882,9 +6827,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "19b81d33-4e8e-4ae1-8d2f-c519907aac89",
@@ -6903,8 +6846,8 @@
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "Zhengzhou University is using AI to expand its capabilities in scientific research and agricultural production.",
-          "ai_evidence": "The '嵩阳' series of vertical large models are being developed and deployed to support scientific research and agricultural production.",
+          "people_evidence": "People gain capacity and opportunities through AI-enabled education and industry applications.",
+          "ai_evidence": "AI systems are actively deployed to extend reach and capabilities in agriculture and education.",
           "flags": []
         }
       },
@@ -6942,21 +6885,21 @@
       "event_id": "d37b2be0-9d2c-4153-8d11-8835ca3412fa",
       "title": "[Dalian Daily·Front Page] Dalian University of Technology AI Institute (AI HUB) Launched",
       "date": "2026-09-05",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_and_downside",
+      "primary_outcome_label": "Both benefit and downside shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No human-side relation is described",
-          "ai_evidence": "No AI-side relation is described",
+          "people_evidence": "The evidence shows a deliberate expansion of AI education and research capacity benefiting people.",
+          "ai_evidence": "The AI institute is described as expanding AI capabilities and organizing cross-disciplinary work.",
           "flags": []
         }
       },
@@ -6994,21 +6937,21 @@
       "event_id": "732f0944-c89f-4789-b57b-03eaa38945a1",
       "title": "[New Advantages in Forging] AI HUB of School of Artificial Intelligence, Dalian University of Technology Officially Established",
       "date": "2026-09-04",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "No people-side benefit or constraint is explicitly stated.",
-          "ai_evidence": "The AI system is described as a new academic organization, but no explicit function, output, or capability is described.",
+          "people_evidence": "The establishment of AI HUB is framed as expanding educational and research capabilities for people.",
+          "ai_evidence": "The AI HUB is described as extending AI's institutional footprint and capabilities.",
           "flags": []
         }
       },
@@ -7059,8 +7002,8 @@
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "Yunnan Province is promoting 'Artificial Intelligence +' to empower various industries, indicating human gain through new capabilities.",
-          "ai_evidence": "The development describes AI being used to empower industries, indicating AI expansion through new applications and infrastructure.",
+          "people_evidence": "People gain opportunities and capacity to participate in AI-enabled activities",
+          "ai_evidence": "AI systems are deployed to extend capability and enable new applications",
           "flags": []
         }
       },
@@ -7077,7 +7020,7 @@
         "CHN"
       ],
       "story_country_iso3s": [
-        "CNE"
+        "CHN"
       ],
       "sources": [
         {
