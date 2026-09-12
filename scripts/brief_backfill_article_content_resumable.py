@@ -42,6 +42,57 @@ TERMINAL_PRIOR_OUTCOMES = {
 
 ROOT = Path(__file__).resolve().parents[1]
 
+DB_RETRY_ATTEMPTS = 5
+TRANSIENT_DB_CODES = {
+    "408", "425", "429", "500", "502", "503", "504", "520", "522", "524",
+    "57014", "57P01", "57P02", "57P03", "53300", "PGRST003",
+}
+TRANSIENT_DB_MARKERS = (
+    "gateway timeout", "bad gateway", "service unavailable",
+    "temporarily unavailable", "too many requests", "timed out", "timeout",
+    "connection reset", "connection aborted", "connection refused",
+    "connection terminated", "server disconnected", "remote protocol error",
+    "pool timeout",
+)
+
+
+def database_error_code(exc):
+    code = getattr(exc, "code", None)
+    if not code and getattr(exc, "args", None):
+        payload = exc.args[0]
+        if isinstance(payload, dict):
+            code = payload.get("code")
+    return str(code or "").strip().upper()
+
+
+def is_transient_database_error(exc):
+    code = database_error_code(exc)
+    if code in TRANSIENT_DB_CODES or code.startswith("08"):
+        return True
+    text = str(exc or "").casefold()
+    return any(marker in text for marker in TRANSIENT_DB_MARKERS)
+
+
+def database_retry_delay(attempt):
+    return min(8.0, float(2 ** max(0, attempt - 1)))
+
+
+def execute_database(query_factory, label, attempts=DB_RETRY_ATTEMPTS):
+    """Execute a read with bounded retries for temporary PostgREST failures."""
+    for attempt in range(1, max(1, attempts) + 1):
+        try:
+            return query_factory().execute()
+        except Exception as exc:
+            if not is_transient_database_error(exc) or attempt >= attempts:
+                raise
+            delay = database_retry_delay(attempt)
+            print(
+                f"  DB RETRY {attempt}/{attempts - 1}: {label} after "
+                f"{type(exc).__name__}: {str(exc)[:180]}",
+                flush=True,
+            )
+            time.sleep(delay)
+
 
 class SourceDeadlineExceeded(BaseException):
     """Escape extraction helpers that intentionally swallow ordinary errors."""
@@ -73,10 +124,15 @@ def source_deadline(seconds):
         signal.setitimer(signal.ITIMER_REAL, 0)
         signal.signal(signal.SIGALRM, previous_handler)
 
-def paged_rows(client, table, columns, page_size=500):
+def paged_rows(client, table, columns, page_size=200):
     start = 0
     while True:
-        response = client.table(table).select(columns).range(start, start + page_size - 1).execute()
+        response = execute_database(
+            lambda start=start: client.table(table).select(columns).range(
+                start, start + page_size - 1
+            ),
+            f"read {table} page starting {start}",
+        )
         rows = response.data or []
         if not rows:
             break
@@ -112,13 +168,14 @@ def release_article_ids(release_id):
 
 def latest_collection_article_ids(client):
     runs = (
-        client.table("collection_runs")
-        .select("run_id,started_at,status")
-        .in_("status", ["success", "partial"])
-        .order("started_at", desc=True)
-        .limit(1)
-        .execute()
-        .data or []
+        execute_database(
+            lambda: client.table("collection_runs")
+            .select("run_id,started_at,status")
+            .in_("status", ["success", "partial"])
+            .order("started_at", desc=True)
+            .limit(1),
+            "read latest collection run",
+        ).data or []
     )
     if not runs:
         raise SystemExit("No successful or partial collection run was found")
@@ -130,15 +187,15 @@ def latest_collection_article_ids(client):
     }
     return found, run_id
 
-def paged_rows_for_run(client, run_id, page_size=500):
+def paged_rows_for_run(client, run_id, page_size=200):
     start = 0
     while True:
-        response = (
-            client.table("article_observations")
+        response = execute_database(
+            lambda start=start: client.table("article_observations")
             .select("article_id")
             .eq("run_id", run_id)
-            .range(start, start + page_size - 1)
-            .execute()
+            .range(start, start + page_size - 1),
+            f"read collection articles page starting {start}",
         )
         rows = response.data or []
         if not rows:
@@ -160,46 +217,68 @@ def target_scope(client, scope, release_id):
 
 def article_rows(client, target_ids):
     if target_ids is None:
-        yield from paged_rows(client, "articles", "*", page_size=200)
+        yield from paged_rows(client, "articles", "*", page_size=100)
         return
     ordered = sorted(target_ids)
-    for start in range(0, len(ordered), 150):
-        rows = (
-            client.table("articles")
+    for start in range(0, len(ordered), 50):
+        batch = ordered[start:start + 50]
+        response = execute_database(
+            lambda batch=batch: client.table("articles")
             .select("*")
-            .in_("article_id", ordered[start:start + 150])
-            .execute()
-            .data or []
+            .in_("article_id", batch),
+            f"read articles batch {start // 50 + 1}",
         )
-        yield from rows
+        yield from response.data or []
 
 from source_evidence_quality import assess_body
 
-def scoped_rows(client, table, columns, target_ids=None):
-    if target_ids is None:
-        yield from paged_rows(client, table, columns)
-        return
-    ids = sorted(target_ids)
-    for offset in range(0, len(ids), 100):
+def scoped_rows(
+    client, table, columns, target_ids=None, *, filters=None,
+    id_batch_size=40, page_size=200,
+):
+    filters = dict(filters or {})
+    ids = sorted(target_ids) if target_ids is not None else None
+    batches = [None] if ids is None else [
+        ids[offset:offset + id_batch_size]
+        for offset in range(0, len(ids), id_batch_size)
+    ]
+    for batch_index, batch in enumerate(batches, start=1):
         start = 0
         while True:
-            rows = (client.table(table).select(columns).in_("article_id", ids[offset:offset+100])
-                .order("article_id").range(start, start+499).execute().data or [])
+            def build_query():
+                query = client.table(table).select(columns)
+                if batch is not None:
+                    query = query.in_("article_id", batch)
+                for key, value in filters.items():
+                    query = query.eq(key, value)
+                return query.order("article_id").range(
+                    start, start + page_size - 1
+                )
+
+            response = execute_database(
+                build_query,
+                f"read {table} batch {batch_index}, page starting {start}",
+            )
+            rows = response.data or []
             yield from rows
-            if len(rows) < 500:
+            if len(rows) < page_size:
                 break
-            start += 500
+            start += page_size
 
 
 def load_state(client, target_ids=None, *, details=False):
     stored, invalid_stored = set(), set()
-    for row in scoped_rows(client, "brief_article_content_snapshots",
-            "article_id,is_current,body_text,text_sha256,content_basis,paywall_detected", target_ids):
+    for row in scoped_rows(
+            client, "brief_article_content_snapshots",
+            "article_id,is_current,body_text,text_sha256,content_basis,paywall_detected",
+            target_ids, filters={"is_current": True}, id_batch_size=20, page_size=50):
         if row.get("is_current"):
             (stored if assess_body(row)["usable_complete_body"] else invalid_stored).add(str(row.get("article_id") or ""))
     latest = {}
-    for row in scoped_rows(client, "brief_article_fetch_attempts",
-            "article_id,outcome,attempted_at,retrieval_method,workflow_run_id,metadata", target_ids):
+    for row in scoped_rows(
+            client, "brief_article_fetch_attempts",
+            "article_id,outcome,attempted_at,retrieval_method,workflow_run_id,metadata",
+            target_ids, id_batch_size=40, page_size=200):
         article_id = str(row.get("article_id") or "")
         if article_id and (article_id not in latest or str(row.get("attempted_at") or "") >= str(latest[article_id].get("attempted_at") or "")):
             latest[article_id] = row
@@ -250,6 +329,79 @@ def media_result():
         "outcome": "non_article_media",
         "metadata_note": "Video/player URL reserved for the later transcript/media pipeline.",
     }
+
+
+def current_snapshot_saved(client, article_id, result):
+    body_text = str(result.get("body_text") or "")
+    if not body_text:
+        return False
+    digest = base.sha256_text(body_text)
+    response = execute_database(
+        lambda: client.table("brief_article_content_snapshots")
+        .select("article_id,text_sha256,is_current")
+        .eq("article_id", article_id)
+        .eq("text_sha256", digest)
+        .eq("is_current", True)
+        .range(0, 0),
+        f"confirm current snapshot for {article_id}",
+    )
+    return bool(response.data)
+
+
+def attempt_saved(client, article_id, workflow_run_id):
+    if not workflow_run_id:
+        return False
+    response = execute_database(
+        lambda: client.table("brief_article_fetch_attempts")
+        .select("article_id,workflow_run_id")
+        .eq("article_id", article_id)
+        .eq("workflow_run_id", workflow_run_id)
+        .range(0, 0),
+        f"confirm attempt ledger for {article_id}",
+    )
+    return bool(response.data)
+
+
+def persist_database_write(action, verify, label, attempts=DB_RETRY_ATTEMPTS):
+    """Retry an idempotent write, verifying ambiguous timeout responses first."""
+    for attempt in range(1, max(1, attempts) + 1):
+        try:
+            action()
+            return
+        except Exception as exc:
+            if not is_transient_database_error(exc):
+                raise
+            if verify():
+                print(f"  DB write confirmed after timeout: {label}", flush=True)
+                return
+            if attempt >= attempts:
+                raise
+            delay = database_retry_delay(attempt)
+            print(
+                f"  DB RETRY {attempt}/{attempts - 1}: {label} after "
+                f"{type(exc).__name__}: {str(exc)[:180]}",
+                flush=True,
+            )
+            time.sleep(delay)
+
+
+def persist_snapshot(client, row, source_url, result):
+    article_id = str(row.get("article_id") or row.get("id") or "").strip()
+    persist_database_write(
+        lambda: base.store_snapshot(client, row, source_url, result),
+        lambda: current_snapshot_saved(client, article_id, result),
+        f"save article snapshot {article_id}",
+    )
+
+
+def persist_attempt(client, article_id, source_url, result, workflow_run_id):
+    persist_database_write(
+        lambda: base.insert_attempt(
+            client, article_id, source_url, result, workflow_run_id
+        ),
+        lambda: attempt_saved(client, article_id, workflow_run_id),
+        f"save attempt ledger {article_id}",
+    )
 
 def main():
     parser = argparse.ArgumentParser()
@@ -346,9 +498,11 @@ def main():
             try:
                 if outcome == "stored":
                     # Report stored only after the complete snapshot was persisted.
-                    base.store_snapshot(client, row, source_url, result)
+                    persist_snapshot(client, row, source_url, result)
                     stored.add(article_id)
-                base.insert_attempt(client, article_id, source_url, result, workflow_run_id)
+                persist_attempt(
+                    client, article_id, source_url, result, workflow_run_id
+                )
                 latest_outcome[article_id] = outcome
             except Exception as exc:
                 counts["db_error"] += 1

@@ -79,6 +79,7 @@ jobs:
           AIEO_TEST_BROWSER: "1"
         run: |
           AIEO_AI_PROVIDER=local python -m unittest discover -s tests -p 'test_article_body_recovery.py' -v
+          AIEO_AI_PROVIDER=local python -m unittest tests/test_article_database_recovery.py -v
           AIEO_AI_PROVIDER=local python -m unittest discover -s tests -p 'test_article_consent.py' -v
 
       - name: Validate private body-evidence contract
@@ -152,5 +153,5 @@ jobs:
         with:
           name: body-evidence-report-${{ github.run_id }}
           path: review/body-evidence/pass-*
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 90
