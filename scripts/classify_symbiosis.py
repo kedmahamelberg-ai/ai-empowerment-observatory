@@ -39,6 +39,7 @@ import requests
 import ai_runtime
 from huggingface_hub import HfApi
 from supabase import Client, create_client
+from classification_database_reads import execute_read as database_read, read_id_rows, read_rows
 
 from brief_content_common import MIN_FULL_BODY_EVIDENCE_UNITS, evidence_unit_count
 from source_evidence_quality import assess_body, evidence_chunks
@@ -185,36 +186,18 @@ def paged_table(
     page_size: int = 1000,
     apply: Any | None = None,
 ) -> list[dict[str, Any]]:
-    rows: list[dict[str, Any]] = []
-    start = 0
-    while True:
-        query = client.table(table).select(select)
-        if apply is not None:
-            query = apply(query)
-        response = query.range(start, start + page_size - 1).execute()
-        batch = getattr(response, "data", None) or []
-        rows.extend(batch)
-        if len(batch) < page_size:
-            break
-        start += page_size
-    return rows
+    return read_rows(client, table, select, apply=apply, page_size=min(page_size, 50))
 
 
 def load_translation_map(client: Client, article_ids: list[str]) -> dict[str, dict[str, Any]]:
-    rows: list[dict[str, Any]] = []
-    for start in range(0, len(article_ids), 150):
-        response = (
-            client.table("article_translations")
-            .select(
-                "article_id,source_language_iso2,translated_headline,"
-                "translation_profile,created_at"
-            )
-            .in_("translation_profile", list(SUPPORTED_TRANSLATION_PROFILES))
-            .in_("article_id", article_ids[start:start + 150])
-            .order("created_at", desc=True)
-            .execute()
-        )
-        rows.extend(getattr(response, "data", None) or [])
+    rows = read_id_rows(
+        client, "article_translations",
+        "article_id,source_language_iso2,translated_headline,translation_profile,created_at",
+        article_ids,
+        apply=lambda query: query.in_("translation_profile", list(SUPPORTED_TRANSLATION_PROFILES)),
+    )
+    # Preserve the earlier latest-first ordering before profile selection.
+    rows.sort(key=lambda row: str(row.get("created_at") or ""), reverse=True)
     return preferred_translation_rows(rows)
 
 
@@ -230,18 +213,13 @@ def compact_evidence_text(value: Any, max_chars: int = MAX_ARTICLE_EVIDENCE_CHAR
 
 
 def load_full_text_map(client: Client, article_ids: list[str]) -> dict[str, dict[str, Any]]:
-    """Load the best current legally collected article body for each source."""
-    rows: list[dict[str, Any]] = []
-    for start in range(0, len(article_ids), 150):
-        response = (
-            client.table("brief_article_content_snapshots")
-            .select("article_id,body_text,word_count,extraction_quality,retrieval_method,retrieved_at,text_sha256,content_basis,paywall_detected")
-            .eq("is_current", True)
-            .in_("article_id", article_ids[start:start + 150])
-            .execute()
-        )
-        rows.extend(getattr(response, "data", None) or [])
-
+    """Load all current legally collected bodies using bounded database reads."""
+    rows = read_id_rows(
+        client, "brief_article_content_snapshots",
+        "article_id,body_text,word_count,extraction_quality,retrieval_method,retrieved_at,text_sha256,content_basis,paywall_detected",
+        article_ids, apply=lambda query: query.eq("is_current", True),
+        batch_size=20, page_size=25,
+    )
     rows.sort(
         key=lambda row: (
             float(row.get("extraction_quality") or 0),
@@ -323,39 +301,29 @@ def load_observation_meta(client: Client, article_ids: list[str]) -> dict[str, d
     meta: dict[str, dict[str, Any]] = defaultdict(
         lambda: {"search_markets": set(), "search_languages": set(), "min_rank": 9999}
     )
-    for start in range(0, len(article_ids), 150):
-        response = (
-            client.table("article_observations")
-            .select("article_id,search_country_iso3,search_language,search_rank")
-            .in_("article_id", article_ids[start:start + 150])
-            .execute()
-        )
-        for row in getattr(response, "data", None) or []:
-            article_id = str(row["article_id"])
-            if row.get("search_country_iso3"):
-                meta[article_id]["search_markets"].add(str(row["search_country_iso3"]))
-            if row.get("search_language"):
-                meta[article_id]["search_languages"].add(str(row["search_language"]))
-            if row.get("search_rank") is not None:
-                meta[article_id]["min_rank"] = min(meta[article_id]["min_rank"], int(row["search_rank"]))
+    rows = read_id_rows(
+        client, "article_observations",
+        "article_id,search_country_iso3,search_language,search_rank", article_ids,
+    )
+    for row in rows:
+        article_id = str(row["article_id"])
+        if row.get("search_country_iso3"):
+            meta[article_id]["search_markets"].add(str(row["search_country_iso3"]))
+        if row.get("search_language"):
+            meta[article_id]["search_languages"].add(str(row["search_language"]))
+        if row.get("search_rank") is not None:
+            meta[article_id]["min_rank"] = min(meta[article_id]["min_rank"], int(row["search_rank"]))
     return meta
 
 
 def load_articles(client: Client, article_ids: list[str]) -> dict[str, dict[str, Any]]:
     if not article_ids:
         return {}
-    rows: list[dict[str, Any]] = []
-    for start in range(0, len(article_ids), 150):
-        response = (
-            client.table("articles")
-            .select(
-                "article_id,canonical_url,headline,publisher,published_at,displayed_date,"
-                "language,first_seen_at,last_seen_at,source_metadata"
-            )
-            .in_("article_id", article_ids[start:start + 150])
-            .execute()
-        )
-        rows.extend(getattr(response, "data", None) or [])
+    rows = read_id_rows(
+        client, "articles",
+        "article_id,canonical_url,headline,publisher,published_at,displayed_date,"
+        "language,first_seen_at,last_seen_at,source_metadata", article_ids,
+    )
     translations = load_translation_map(client, article_ids)
     observation_meta = load_observation_meta(client, article_ids)
     full_text_map = load_full_text_map(client, article_ids)
@@ -543,8 +511,8 @@ def successful_existing_unit_keys(
     current_by_key = {str(unit["unit_key"]): unit for _, unit in units}
     rows: list[dict[str, Any]] = []
     unit_keys = sorted(current_by_key)
-    for start in range(0, len(unit_keys), 100):
-        selected_keys = unit_keys[start:start + 100]
+    for start in range(0, len(unit_keys), 25):
+        selected_keys = unit_keys[start:start + 25]
         rows.extend(
             paged_table(
                 client,
@@ -671,7 +639,7 @@ def resume_or_start_run(
         query = query.is_("target_release_id", "null")
     if collection_run_id:
         query = query.eq("collection_run_id", collection_run_id)
-    response = query.order("started_at", desc=True).limit(1).execute()
+    response = database_read(lambda: (query.order("started_at", desc=True).limit(1).execute()), label='resume_or_start_run')
     rows = getattr(response, "data", None) or []
     if rows:
         row = rows[0]

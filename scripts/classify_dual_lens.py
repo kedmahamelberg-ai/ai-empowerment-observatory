@@ -44,6 +44,7 @@ import requests
 import ai_runtime
 from huggingface_hub import HfApi
 from supabase import Client, create_client
+from classification_database_reads import execute_read as database_read, read_id_rows, read_rows
 
 from brief_content_common import MIN_FULL_BODY_EVIDENCE_UNITS, evidence_unit_count
 from translation_policy import SUPPORTED_TRANSLATION_PROFILES, preferred_translation_rows
@@ -417,12 +418,12 @@ def write_pass_status(
 
 def latest_collection(client: Client) -> dict[str, Any]:
     response = (
-        client.table("collection_runs")
+        database_read(lambda: (client.table("collection_runs")
         .select("run_id,run_key,started_at,status")
         .in_("status", ["success", "partial"])
         .order("started_at", desc=True)
         .limit(1)
-        .execute()
+        .execute()), label='latest_collection')
     )
 
     return first_row(
@@ -433,11 +434,11 @@ def latest_collection(client: Client) -> dict[str, Any]:
 
 def assert_event_resolution_complete(client: Client) -> None:
     response = (
-        client.table("events")
+        database_read(lambda: (client.table("events")
         .select("event_id", count="exact")
         .eq("clustering_method", EVENT_METHOD)
         .eq("event_state", "pending_review")
-        .execute()
+        .execute()), label='assert_event_resolution_complete')
     )
 
     count = int(
@@ -457,23 +458,14 @@ def load_translations(
     client: Client,
     article_ids: list[str],
 ) -> dict[str, dict[str, Any]]:
-    rows: list[dict[str, Any]] = []
-
-    for start in range(0, len(article_ids), 150):
-        response = (
-            client.table("article_translations")
-            .select(
-                "article_id,source_language_iso2,translated_headline,"
-                "translation_profile,created_at"
-            )
-            .in_("translation_profile", list(SUPPORTED_TRANSLATION_PROFILES))
-            .in_("article_id", article_ids[start:start + 150])
-            .order("created_at", desc=True)
-            .execute()
-        )
-
-        rows.extend(getattr(response, "data", None) or [])
-
+    rows = read_id_rows(
+        client, "article_translations",
+        "article_id,source_language_iso2,translated_headline,translation_profile,created_at",
+        article_ids,
+        apply=lambda query: query.in_("translation_profile", list(SUPPORTED_TRANSLATION_PROFILES)),
+    )
+    # Preserve the earlier latest-first ordering before profile selection.
+    rows.sort(key=lambda row: str(row.get("created_at") or ""), reverse=True)
     return preferred_translation_rows(rows)
 
 
@@ -489,16 +481,12 @@ def compact_evidence_text(value: Any, max_chars: int = MAX_ARTICLE_EVIDENCE_CHAR
 
 
 def load_current_full_text(client: Client, article_ids: list[str]) -> dict[str, dict[str, Any]]:
-    rows: list[dict[str, Any]] = []
-    for start in range(0, len(article_ids), 150):
-        response = (
-            client.table("brief_article_content_snapshots")
-            .select("article_id,body_text,word_count,extraction_quality,retrieval_method,retrieved_at,text_sha256,content_basis,paywall_detected")
-            .eq("is_current", True)
-            .in_("article_id", article_ids[start:start + 150])
-            .execute()
-        )
-        rows.extend(getattr(response, "data", None) or [])
+    rows = read_id_rows(
+        client, "brief_article_content_snapshots",
+        "article_id,body_text,word_count,extraction_quality,retrieval_method,retrieved_at,text_sha256,content_basis,paywall_detected",
+        article_ids, apply=lambda query: query.eq("is_current", True),
+        batch_size=20, page_size=25,
+    )
     rows.sort(
         key=lambda row: (
             float(row.get("extraction_quality") or 0),
@@ -524,17 +512,11 @@ def load_current_articles(
     client: Client,
     run_id: str,
 ) -> tuple[list[dict[str, Any]], dict[str, dict[str, Any]]]:
-    obs_response = (
-        client.table("article_observations")
-        .select(
-            "article_id,search_rank,search_country_iso3,"
-            "search_language"
-        )
-        .eq("run_id", run_id)
-        .execute()
+    observations = read_id_rows(
+        client, "article_observations",
+        "article_id,search_rank,search_country_iso3,search_language",
+        [run_id], key="run_id",
     )
-
-    observations = getattr(obs_response, "data", None) or []
 
     if not observations:
         raise ClassificationError(
@@ -572,21 +554,11 @@ def load_current_articles(
             )
 
     ids = sorted(meta)
-    rows: list[dict[str, Any]] = []
-
-    for start in range(0, len(ids), 150):
-        response = (
-            client.table("articles")
-            .select(
-                "article_id,headline,publisher,canonical_url,"
-                "published_at,first_seen_at,last_seen_at,"
-                "source_metadata"
-            )
-            .in_("article_id", ids[start:start + 150])
-            .execute()
-        )
-
-        rows.extend(getattr(response, "data", None) or [])
+    rows = read_id_rows(
+        client, "articles",
+        "article_id,headline,publisher,canonical_url,published_at,first_seen_at,last_seen_at,source_metadata",
+        ids,
+    )
 
     translations = load_translations(client, ids)
     full_text_map = load_current_full_text(client, ids)
@@ -686,13 +658,13 @@ def load_active_current_events(
 
     for start in range(0, len(current_article_ids), 150):
         response = (
-            client.table("event_articles")
+            database_read(lambda: (client.table("event_articles")
             .select("event_id,article_id,is_canonical_source")
             .in_(
                 "article_id",
                 current_article_ids[start:start + 150],
             )
-            .execute()
+            .execute()), label='load_active_current_events')
         )
 
         links.extend(getattr(response, "data", None) or [])
@@ -713,7 +685,7 @@ def load_active_current_events(
 
     for start in range(0, len(event_ids), 100):
         response = (
-            client.table("events")
+            database_read(lambda: (client.table("events")
             .select(
                 "event_id,event_title,event_summary,event_date,"
                 "first_seen_at,last_seen_at,event_state,"
@@ -722,7 +694,7 @@ def load_active_current_events(
             .in_("event_id", event_ids[start:start + 100])
             .eq("event_state", "active")
             .eq("clustering_method", EVENT_METHOD)
-            .execute()
+            .execute()), label='load_active_current_events')
         )
 
         event_rows.extend(getattr(response, "data", None) or [])
@@ -771,14 +743,14 @@ def load_active_current_events(
 
 def load_codebook(client: Client) -> dict[str, Any]:
     response = (
-        client.table("codebook_versions")
+        database_read(lambda: (client.table("codebook_versions")
         .select(
             "codebook_version_id,version_name,prompt_text,hierarchy"
         )
         .eq("version_name", CODEBOOK_VERSION)
         .eq("is_active", True)
         .limit(1)
-        .execute()
+        .execute()), label='load_codebook')
     )
 
     return first_row(
@@ -879,7 +851,7 @@ def resume_or_start_classification_run(
     """Resume the newest interrupted run for this exact classifier lineage."""
 
     response = (
-        client.table("classification_runs")
+        database_read(lambda: (client.table("classification_runs")
         .select("classification_run_id,run_key,started_at,status,classified_count")
         .eq("collection_run_id", collection_run_id)
         .eq("codebook_version_id", codebook_version_id)
@@ -887,7 +859,7 @@ def resume_or_start_classification_run(
         .eq("classifier_version", CLASSIFIER_VERSION)
         .in_("status", ["running", "paused", "failed"])
         .order("started_at", desc=True)
-        .execute()
+        .execute()), label='resume_or_start_classification_run')
     )
     rows = getattr(response, "data", None) or []
 
@@ -1006,10 +978,10 @@ def load_saved_classifications(
         "confidence,reasoning,requires_review,review_reason,raw_output"
     )
     response = (
-        client.table("lens_classifications")
+        database_read(lambda: (client.table("lens_classifications")
         .select(fields)
         .eq("classification_run_id", classification_run_id)
-        .execute()
+        .execute()), label='load_saved_classifications')
     )
     rows = getattr(response, "data", None) or []
     classification_ids = [
@@ -1021,13 +993,13 @@ def load_saved_classifications(
     for offset in range(0, len(classification_ids), 100):
         batch = classification_ids[offset : offset + 100]
         dimension_response = (
-            client.table("lens_dimensions")
+            database_read(lambda: (client.table("lens_dimensions")
             .select(
                 "lens_classification_id,dimension,present,direction,degree,"
                 "confidence,reasoning"
             )
             .in_("lens_classification_id", batch)
-            .execute()
+            .execute()), label='load_saved_classifications')
         )
         for item in getattr(dimension_response, "data", None) or []:
             classification_id = str(item["lens_classification_id"])
@@ -2042,13 +2014,13 @@ def insert_classification(
         response = supabase_execute_with_retry(
             f"checking for an existing {lens} classification",
             lambda: (
-                client.table("lens_classifications")
+                database_read(lambda: (client.table("lens_classifications")
                 .select("lens_classification_id")
                 .eq("classification_run_id", classification_run_id)
                 .eq("lens", lens)
                 .eq(unit_field, unit_id)
                 .limit(2)
-                .execute()
+                .execute()), label='insert_classification')
             ),
         )
         rows = getattr(response, "data", None) or []
@@ -2099,10 +2071,10 @@ def insert_classification(
     existing_dimensions_response = supabase_execute_with_retry(
         f"checking dimensions for {lens} classification",
         lambda: (
-            client.table("lens_dimensions")
+            database_read(lambda: (client.table("lens_dimensions")
             .select("dimension")
             .eq("lens_classification_id", classification_id)
-            .execute()
+            .execute()), label='insert_classification')
         ),
     )
     existing_dimensions = {
@@ -2125,10 +2097,10 @@ def insert_classification(
             verify_response = supabase_execute_with_retry(
                 f"verifying dimensions for {lens} classification",
                 lambda: (
-                    client.table("lens_dimensions")
+                    database_read(lambda: (client.table("lens_dimensions")
                     .select("dimension")
                     .eq("lens_classification_id", classification_id)
-                    .execute()
+                    .execute()), label='insert_classification')
                 ),
             )
             verified = {

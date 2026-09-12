@@ -278,6 +278,8 @@ jobs:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       AIEO_AI_PROVIDER: ${{ vars.AIEO_AI_PROVIDER || 'openai' }}
       AIEO_AI_MAX_JOB_USD: ${{ vars.AIEO_AI_MAX_JOB_USD || '0.50' }}
+      # Extra room for unresolved outputs; dollar cap and model identity are unchanged.
+      AIEO_AI_MAX_COMPLETION_TOKENS: ${{ vars.AIEO_AI_MAX_COMPLETION_TOKENS || '16384' }}
     steps:
       - name: Set the runtime AI usage ledger
         shell: bash
