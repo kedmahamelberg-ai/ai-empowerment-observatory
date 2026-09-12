@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-12T09:15:34.117992Z",
+  "generated_at": "2026-09-12T09:21:28.440040Z",
   "system_status": "operational",
   "release_id": "2026-W36",
   "release_revision": 1,
@@ -12,16 +12,16 @@
   "source_of_truth": "/data/releases/current.json",
   "latest": {
     "release_id": "2026-W36",
-    "coverage_units": 94,
-    "event_units": 89,
-    "complete_content_cohort_sha256": "92aa2e63a5422560b37eb3272b570a194ae7605e857a66a2be776d9feb61d606",
+    "coverage_units": 96,
+    "event_units": 91,
+    "complete_content_cohort_sha256": "f7303a6245906ce93e7f0556d01a68038c1d759a07679d2b18c073a92d92bb43",
     "collection_inventory": {
       "collected_developments": 132,
       "collected_sources": 138,
-      "eligible_developments": 89,
-      "eligible_sources": 94,
-      "excluded_developments": 43,
-      "excluded_sources": 44
+      "eligible_developments": 91,
+      "eligible_sources": 96,
+      "excluded_developments": 41,
+      "excluded_sources": 42
     },
     "review_queue_count": 81,
     "relationship_status": "current_evidence_reading"
