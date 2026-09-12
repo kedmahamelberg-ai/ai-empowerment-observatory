@@ -1,7 +1,7 @@
 {
   "meta": {
     "version": "public_insights_v4_release_bound",
-    "generated_at": "2026-09-12T09:15:32.101947Z",
+    "generated_at": "2026-09-12T09:21:26.397184Z",
     "release_id": "2026-W36",
     "release_revision": 1,
     "classification_run_id": "3411d904-d3dd-4f2b-b2d7-b855d3332f97",
@@ -9,8 +9,8 @@
     "observation_start": "2026-08-31",
     "observation_end": "2026-09-06",
     "source_of_truth": "/data/analysis/current.json",
-    "coverage_units": 94,
-    "event_units": 89,
+    "coverage_units": 96,
+    "event_units": 91,
     "extra_coverage": 6,
     "first_time_event_records": 119,
     "follow_on_event_records": 0,
@@ -22,37 +22,37 @@
   "directional_summary": {
     "schema_version": "aieo_independent_directions_v2",
     "policy_version": "source_representations_independent_axes_2026_09",
-    "total": 89,
-    "evidence_complete": 89,
+    "total": 91,
+    "evidence_complete": 91,
     "human": {
-      "gain": 17,
-      "loss": 2,
-      "mixed": 3,
-      "none": 67,
+      "gain": 59,
+      "loss": 8,
+      "mixed": 10,
+      "none": 14,
       "unresolved": 0
     },
     "ai": {
-      "gain": 13,
-      "loss": 2,
-      "mixed": 2,
-      "none": 72,
+      "gain": 68,
+      "loss": 9,
+      "mixed": 6,
+      "none": 8,
       "unresolved": 0
     }
   },
   "complete_content": {
     "policy_version": "complete_content_2026_09_v1",
-    "content_sha256": "92aa2e63a5422560b37eb3272b570a194ae7605e857a66a2be776d9feb61d606",
+    "content_sha256": "f7303a6245906ce93e7f0556d01a68038c1d759a07679d2b18c073a92d92bb43",
     "counts": {
       "collected_developments": 132,
       "collected_sources": 138,
-      "eligible_developments": 89,
-      "eligible_sources": 94,
-      "excluded_developments": 43,
-      "excluded_sources": 44
+      "eligible_developments": 91,
+      "eligible_sources": 96,
+      "excluded_developments": 41,
+      "excluded_sources": 42
     },
     "denominator": {
       "unit": "distinct_development",
-      "value": 89
+      "value": 91
     }
   },
   "collection_inventory": {
@@ -1173,5 +1173,5 @@
       }
     }
   },
-  "source_relationship_sha256": "187efa3167b64b2ce64e4b8e6ddc126584369651aedd48a379465e5395fe543e"
+  "source_relationship_sha256": "f73259eabde5a83554f817afe573c597e1b40e6cd7879459e8e2133218c00910"
 }
