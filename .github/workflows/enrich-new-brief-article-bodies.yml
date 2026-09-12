@@ -77,6 +77,7 @@ jobs:
       - name: Check article recovery before writing any snapshots
         env:
           AIEO_TEST_BROWSER: "1"
+          AIEO_REQUIRE_EXTRACTION_TESTS: "1"
         run: |
           AIEO_AI_PROVIDER=local python -m unittest discover -s tests -p 'test_article_body_recovery.py' -v
           AIEO_AI_PROVIDER=local python -m unittest tests/test_article_database_recovery.py -v

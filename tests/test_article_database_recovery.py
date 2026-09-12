@@ -2,10 +2,28 @@
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
+import importlib.util
+import os
 import sys
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+
+# This suite exercises article extraction, not the lightweight classifier.
+# Keep it discoverable without optional packages, but mandatory in extraction CI.
+_EXTRACTION_MODULES = ("bs4", "trafilatura", "tldextract", "pypdf")
+_missing_extraction = [
+    name for name in _EXTRACTION_MODULES
+    if importlib.util.find_spec(name) is None
+]
+if _missing_extraction:
+    _reason = (
+        "Article database recovery tests require requirements-extraction.txt; "
+        "missing: " + ", ".join(_missing_extraction)
+    )
+    if os.environ.get("AIEO_REQUIRE_EXTRACTION_TESTS") == "1":
+        raise RuntimeError(_reason)
+    raise unittest.SkipTest(_reason)
 
 import brief_backfill_article_content as base
 import brief_backfill_article_content_resumable as runner

@@ -10,6 +10,7 @@ on:
       - "scripts/**"
       - "tests/**"
       - "requirements-relationship.txt"
+      - "requirements-extraction.txt"
       - "index.html"
       - "site.js"
       - "public-data.js"
@@ -130,3 +131,24 @@ jobs:
           python scripts/build_public_site.py
           python scripts/validate_public_site_artifact.py
           node --test tests/test_public_display.mjs tests/test_complete_content.mjs
+
+  extraction_tests:
+    name: Extraction dependency and database recovery tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      AIEO_AI_PROVIDER: local
+      AIEO_REQUIRE_EXTRACTION_TESTS: "1"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Install the full extraction dependency profile
+        run: python -m pip install -r requirements-extraction.txt
+      - name: Verify extraction imports are available
+        run: python -c "import bs4, trafilatura, tldextract, pypdf, supabase"
+      - name: Exercise real database recovery helpers without network calls
+        run: python -m unittest discover -s tests -p 'test_article_database_recovery.py' -v
+      - name: Exercise both dependency boundaries
+        run: python -m unittest discover -s tests -p 'test_dependency_profiles.py' -v
