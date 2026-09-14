@@ -6,7 +6,6 @@ on:
   push:
     branches: [main]
     paths:
-      - 'scripts/**'
       - 'assets/fonts/**'
       - 'index.html'
       - 'site.js'
@@ -19,7 +18,6 @@ on:
       - 'reports/reports.js'
       - 'methodology/**'
       - 'validation/corrections/**'
-      - '.github/workflows/publish-observatory-release.yml'
 
 permissions:
   contents: write

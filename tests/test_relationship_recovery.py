@@ -93,8 +93,22 @@ class Query:
         if self.operation == "insert":
             row = self.payload
             key = "symbiosis_classification_id" if self.name == "symbiosis_classifications" else "symbiosis_run_id"
-            row[key] = f"generated-{self.db.next_id}"
-            self.db.next_id += 1
+            # Production write recovery supplies a fixed UUID before the
+            # first attempt. Preserve it so this in-memory database exercises
+            # the same idempotent contract as PostgreSQL.
+            if not row.get(key):
+                row[key] = f"generated-{self.db.next_id}"
+                self.db.next_id += 1
+            if self.name == "symbiosis_classification_runs":
+                # Mirror the verified PostgreSQL defaults used by update_run.
+                row.setdefault("completed_at", None)
+                for field in (
+                    "coverage_unit_count", "event_unit_count",
+                    "complete_configuration_count", "partial_signal_count",
+                    "no_clear_signal_count", "insufficient_evidence_count",
+                    "review_required_count",
+                ):
+                    row.setdefault(field, 0)
             if self.name == "symbiosis_classifications":
                 # The actual production constraint behind the earlier failure.
                 assert row["content_basis"] in {"headline_only", "headline_and_snippet", "article_summary", "full_text", "multiple_sources"}
@@ -149,6 +163,14 @@ class RecoveryTests(unittest.TestCase):
             "classifier_version": common.CLASSIFIER_VERSION, "codebook_version": common.CODEBOOK_VERSION,
             "model_name": classifier.QWEN_REPO, "model_revision": "fixture",
             "started_at": "2026-09-04T19:47:00Z",
+            "completed_at": "2026-09-04T20:00:00Z",
+            "coverage_unit_count": count,
+            "event_unit_count": 0,
+            "complete_configuration_count": count,
+            "partial_signal_count": 0,
+            "no_clear_signal_count": 0,
+            "insufficient_evidence_count": 0,
+            "review_required_count": count,
         }]
         for number in range(1, count + 1):
             result = common.validate_model_payload(model_payload())
