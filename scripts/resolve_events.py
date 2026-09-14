@@ -30,6 +30,8 @@ never used as production candidate events.
 
 from __future__ import annotations
 
+from event_resolution_database import ResolverDatabase, resolver_collection
+
 import hashlib
 import json
 import math
@@ -219,19 +221,8 @@ def parse_source_metadata(value: Any) -> dict[str, Any]:
 
 
 def latest_collection(client: Client) -> dict[str, Any]:
-    response = (
-        client.table("collection_runs")
-        .select("run_id,run_key,started_at,completed_at,status")
-        .in_("status", ["success", "partial"])
-        .order("started_at", desc=True)
-        .limit(1)
-        .execute()
-    )
-
-    return first_row(
-        response,
-        "reading latest collection run",
-    )
+    # Keep retries on the collection saved by their original weekly workflow.
+    return resolver_collection(client, os.environ)
 
 
 def load_translations(
@@ -1315,6 +1306,9 @@ def main() -> int:
         required_env("SUPABASE_URL"),
         required_env("SUPABASE_SECRET_KEY"),
     )
+
+    # Bounded recovery covers all resolver reads and keyed writes.
+    client = ResolverDatabase(client)
 
     collection = latest_collection(client)
     articles = load_latest_articles(

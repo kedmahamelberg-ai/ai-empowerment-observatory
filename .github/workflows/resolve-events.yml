@@ -22,6 +22,8 @@ jobs:
         with:
           python-version: "3.12"
           cache: "pip"
+      - name: Check event-resolver database recovery
+        run: python -B -m unittest discover -s tests -p 'test_event_resolution_database.py' -v
       - name: Install resolver dependencies
         run: |
           python -m pip install -r requirements.txt
