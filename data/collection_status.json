@@ -1,14 +1,14 @@
 {
   "stage": "7A.2",
-  "last_attempt_at": "2026-09-07T04:39:41.800592Z",
-  "last_success_at": "2026-09-07T04:39:41.800592Z",
-  "run_key": "run_20260907T043912Z",
-  "run_id": "6a7ae196-1900-458b-a34c-00b9becc7408",
-  "run_date": "2026-09-07",
+  "last_attempt_at": "2026-09-14T04:55:00.617875Z",
+  "last_success_at": "2026-09-14T04:55:00.617875Z",
+  "run_key": "run_20260914T045436Z",
+  "run_id": "78266b3a-534e-40e2-a5e9-0c7a20b75378",
+  "run_date": "2026-09-14",
   "configured_searches": 6,
   "successful_searches": 6,
   "failed_searches": 0,
-  "latest_candidate_count": 148,
+  "latest_candidate_count": 142,
   "private_storage": "Supabase",
   "countries": [
     {
@@ -19,9 +19,9 @@
       "status": "success",
       "raw_result_count": 100,
       "normalized_candidate_count": 30,
-      "serpapi_search_id": "6a9e3ff1f8cc7819de2f4113",
+      "serpapi_search_id": "6aa77e0dae678cbdcf8e2254",
       "google_news_url": "https://news.google.com/search?q=%28%22artificial+intelligence%22+OR+%22generative+AI%22+OR+%22AI+policy%22+OR+%22AI+regulation%22+OR+%22AI+model%22%29+when%3A8d&hl=en&gl=US",
-      "raw_storage_path": "serpapi/google-news/2026/09/07/run_20260907T043912Z/usa-en.json"
+      "raw_storage_path": "serpapi/google-news/2026/09/14/run_20260914T045436Z/usa-en.json"
     },
     {
       "country": "China",
@@ -31,9 +31,9 @@
       "status": "success",
       "raw_result_count": 100,
       "normalized_candidate_count": 30,
-      "serpapi_search_id": "6a9e3ff6e3e1763da98266d3",
+      "serpapi_search_id": "6aa77e1102ab8c9f37478466",
       "google_news_url": "https://news.google.com/search?q=%28%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD+OR+%E7%94%9F%E6%88%90%E5%BC%8F%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD+OR+%E5%A4%A7%E6%A8%A1%E5%9E%8B+OR+%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%9B%91%E7%AE%A1+OR+%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%94%BF%E7%AD%96%29+when%3A8d&hl=zh-cn&gl=CN",
-      "raw_storage_path": "serpapi/google-news/2026/09/07/run_20260907T043912Z/chn-zh-cn.json"
+      "raw_storage_path": "serpapi/google-news/2026/09/14/run_20260914T045436Z/chn-zh-cn.json"
     },
     {
       "country": "United Kingdom",
@@ -43,9 +43,9 @@
       "status": "success",
       "raw_result_count": 100,
       "normalized_candidate_count": 30,
-      "serpapi_search_id": "6a9e3ffa5922f4c4e041620e",
+      "serpapi_search_id": "6aa77e145abea52aad736bdd",
       "google_news_url": "https://news.google.com/search?q=%28%22artificial+intelligence%22+OR+%22generative+AI%22+OR+%22AI+policy%22+OR+%22AI+regulation%22+OR+%22AI+model%22%29+when%3A8d&hl=en&gl=UK",
-      "raw_storage_path": "serpapi/google-news/2026/09/07/run_20260907T043912Z/gbr-en.json"
+      "raw_storage_path": "serpapi/google-news/2026/09/14/run_20260914T045436Z/gbr-en.json"
     },
     {
       "country": "France",
@@ -55,9 +55,9 @@
       "status": "success",
       "raw_result_count": 100,
       "normalized_candidate_count": 30,
-      "serpapi_search_id": "6a9e3ffc09a51aa9bb4075c8",
+      "serpapi_search_id": "6aa77e1723df780e3c9bca6a",
       "google_news_url": "https://news.google.com/search?q=%28%22intelligence+artificielle%22+OR+%22IA+g%C3%A9n%C3%A9rative%22+OR+%22r%C3%A9glementation+de+l%E2%80%99IA%22+OR+%22politique+de+l%E2%80%99IA%22+OR+%22mod%C3%A8le+d%E2%80%99IA%22%29+when%3A8d&hl=fr&gl=FR",
-      "raw_storage_path": "serpapi/google-news/2026/09/07/run_20260907T043912Z/fra-fr.json"
+      "raw_storage_path": "serpapi/google-news/2026/09/14/run_20260914T045436Z/fra-fr.json"
     },
     {
       "country": "Canada",
@@ -67,9 +67,9 @@
       "status": "success",
       "raw_result_count": 100,
       "normalized_candidate_count": 30,
-      "serpapi_search_id": "6a9e40003336174c69275180",
+      "serpapi_search_id": "6aa77e1af2593a684a316e0e",
       "google_news_url": "https://news.google.com/search?q=%28%22artificial+intelligence%22+OR+%22generative+AI%22+OR+%22AI+policy%22+OR+%22AI+regulation%22+OR+%22AI+model%22%29+when%3A8d&hl=en&gl=CA",
-      "raw_storage_path": "serpapi/google-news/2026/09/07/run_20260907T043912Z/can-en.json"
+      "raw_storage_path": "serpapi/google-news/2026/09/14/run_20260914T045436Z/can-en.json"
     },
     {
       "country": "Canada",
@@ -79,9 +79,9 @@
       "status": "success",
       "raw_result_count": 100,
       "normalized_candidate_count": 30,
-      "serpapi_search_id": "6a9e4005f6e926ec71669b5d",
+      "serpapi_search_id": "6aa77e1d89ec19c5e497574c",
       "google_news_url": "https://news.google.com/search?q=%28%22intelligence+artificielle%22+OR+%22IA+g%C3%A9n%C3%A9rative%22+OR+%22politique+de+l%E2%80%99IA%22+OR+%22r%C3%A9glementation+de+l%E2%80%99IA%22+OR+%22mod%C3%A8le+d%E2%80%99IA%22%29+when%3A8d&hl=fr&gl=CA",
-      "raw_storage_path": "serpapi/google-news/2026/09/07/run_20260907T043912Z/can-fr.json"
+      "raw_storage_path": "serpapi/google-news/2026/09/14/run_20260914T045436Z/can-fr.json"
     }
   ],
   "publication_state": "review only; no automated empowerment scores"
