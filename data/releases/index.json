@@ -1,17 +1,17 @@
 {
   "schema_version": "aieo_release_index_v3.0",
-  "updated_at": "2026-09-07T15:22:07.951676Z",
+  "updated_at": "2026-09-14T08:39:19.790270Z",
   "release_count": 4,
   "weekly_release_count": 4,
   "historical_snapshot_count": 1,
   "publication_snapshot_count": 5,
   "current_release_id": "2026-W36",
-  "current_revision": 1,
-  "data_current_through": "2026-09-07T07:49:23.941976+00:00",
+  "current_revision": 2,
+  "data_current_through": "2026-09-14T08:39:14.435998+00:00",
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-09-07T05:18:32.075763+00:00",
-    "registry_snapshot_id": "registry_0e6c021f733bf60f39f4",
+    "considered_through": "2026-09-14T07:31:32.803908+00:00",
+    "registry_snapshot_id": "registry_c90235f7e62fc19852e0",
     "all_prior_events_considered": true,
     "disclosure": "First-time means the canonical development was not present in an earlier standardized AIEO weekly release. Collection retries do not turn a current-week development into a recurring one."
   },
@@ -46,6 +46,12 @@
         "generated_at": "2026-08-31T19:25:33.183828Z",
         "path": "/data/releases/weekly/archive/2026-W33/revision-5.json",
         "content_sha256": "9b93dc3424011cfe5ef94936387a2df4c173c8099b70f8f5377214de4d56ba1b"
+      },
+      {
+        "revision": 6,
+        "generated_at": "2026-09-07T07:50:00.504098Z",
+        "path": "/data/releases/weekly/archive/2026-W33/revision-6.json",
+        "content_sha256": "3ce82a015e121f04a0255c7fa01033ea34146ed50fab187b892af00e243506ab"
       }
     ],
     "2026-W34": [
@@ -66,6 +72,12 @@
         "generated_at": "2026-08-31T19:25:33.859127Z",
         "path": "/data/releases/weekly/archive/2026-W34/revision-3.json",
         "content_sha256": "58a70a8d09a3719d36aa1a90a08fe03925017107849f562afea4c3b98b5ef498"
+      },
+      {
+        "revision": 4,
+        "generated_at": "2026-09-07T07:50:01.161379Z",
+        "path": "/data/releases/weekly/archive/2026-W34/revision-4.json",
+        "content_sha256": "bb4abba538a20cd0e9a7044040132a0357716d7689eedbcc0357ae69e235b274"
       }
     ],
     "2026-W35": [
@@ -92,6 +104,20 @@
         "generated_at": "2026-09-03T20:30:48.701389Z",
         "path": "/data/releases/weekly/archive/2026-W35/revision-4.json",
         "content_sha256": "2b1176924c47e1e860de718bb61d4fdb04d9831d5e230fd9153646e5e6b631eb"
+      },
+      {
+        "revision": 5,
+        "generated_at": "2026-09-07T07:50:01.765736Z",
+        "path": "/data/releases/weekly/archive/2026-W35/revision-5.json",
+        "content_sha256": "cb1f615d459ee87085847c2c291611b6527a3897e1d7ab5ccd9a9657aa49987e"
+      }
+    ],
+    "2026-W36": [
+      {
+        "revision": 1,
+        "generated_at": "2026-09-07T15:22:07.951676Z",
+        "path": "/data/releases/weekly/archive/2026-W36/revision-1.json",
+        "content_sha256": "badf075e19afbbded1aaccb369f089c3beae8a0207c0bd7070b4e76472b53198"
       }
     ]
   },
@@ -123,10 +149,10 @@
       "release_type": "weekly",
       "period_start": "2026-08-10",
       "period_end": "2026-08-16",
-      "generated_at": "2026-09-07T07:50:00.504098Z",
+      "generated_at": "2026-09-14T08:39:18.021407Z",
       "articles": 120,
       "event_records": 113,
-      "revision": 6,
+      "revision": 7,
       "new_event_records": 113,
       "first_time_event_records": 113,
       "recurring_event_records": 0,
@@ -147,10 +173,10 @@
       "release_type": "weekly",
       "period_start": "2026-08-17",
       "period_end": "2026-08-23",
-      "generated_at": "2026-09-07T07:50:01.161379Z",
+      "generated_at": "2026-09-14T08:39:18.620758Z",
       "articles": 131,
       "event_records": 123,
-      "revision": 4,
+      "revision": 5,
       "new_event_records": 123,
       "first_time_event_records": 122,
       "recurring_event_records": 0,
@@ -171,10 +197,10 @@
       "release_type": "weekly",
       "period_start": "2026-08-24",
       "period_end": "2026-08-30",
-      "generated_at": "2026-09-07T07:50:01.765736Z",
+      "generated_at": "2026-09-14T08:39:19.210670Z",
       "articles": 111,
       "event_records": 110,
-      "revision": 5,
+      "revision": 6,
       "new_event_records": 107,
       "first_time_event_records": 107,
       "recurring_event_records": 0,
@@ -195,10 +221,10 @@
       "release_type": "weekly",
       "period_start": "2026-08-31",
       "period_end": "2026-09-06",
-      "generated_at": "2026-09-07T15:22:07.951676Z",
+      "generated_at": "2026-09-14T08:39:19.790270Z",
       "articles": 138,
       "event_records": 132,
-      "revision": 1,
+      "revision": 2,
       "new_event_records": 119,
       "first_time_event_records": 119,
       "recurring_event_records": 1,
@@ -241,10 +267,10 @@
       "release_type": "weekly",
       "period_start": "2026-08-10",
       "period_end": "2026-08-16",
-      "generated_at": "2026-09-07T07:50:00.504098Z",
+      "generated_at": "2026-09-14T08:39:18.021407Z",
       "articles": 120,
       "event_records": 113,
-      "revision": 6,
+      "revision": 7,
       "new_event_records": 113,
       "first_time_event_records": 113,
       "recurring_event_records": 0,
@@ -269,10 +295,10 @@
       "release_type": "weekly",
       "period_start": "2026-08-17",
       "period_end": "2026-08-23",
-      "generated_at": "2026-09-07T07:50:01.161379Z",
+      "generated_at": "2026-09-14T08:39:18.620758Z",
       "articles": 131,
       "event_records": 123,
-      "revision": 4,
+      "revision": 5,
       "new_event_records": 123,
       "first_time_event_records": 122,
       "recurring_event_records": 0,
@@ -297,10 +323,10 @@
       "release_type": "weekly",
       "period_start": "2026-08-24",
       "period_end": "2026-08-30",
-      "generated_at": "2026-09-07T07:50:01.765736Z",
+      "generated_at": "2026-09-14T08:39:19.210670Z",
       "articles": 111,
       "event_records": 110,
-      "revision": 5,
+      "revision": 6,
       "new_event_records": 107,
       "first_time_event_records": 107,
       "recurring_event_records": 0,
@@ -325,10 +351,10 @@
       "release_type": "weekly",
       "period_start": "2026-08-31",
       "period_end": "2026-09-06",
-      "generated_at": "2026-09-07T15:22:07.951676Z",
+      "generated_at": "2026-09-14T08:39:19.790270Z",
       "articles": 138,
       "event_records": 132,
-      "revision": 1,
+      "revision": 2,
       "new_event_records": 119,
       "first_time_event_records": 119,
       "recurring_event_records": 1,
