@@ -1,0 +1,80 @@
+[
+  {
+    "@type": "Person",
+    "@id": "https://kedmahamelberg.com/#person",
+    "name": "Kedma Hamelberg",
+    "honorificSuffix": "PhD",
+    "url": "https://kedmahamelberg.com/",
+    "image": {
+      "@id": "https://kedmahamelberg.com/#portrait"
+    },
+    "jobTitle": "Applied AI researcher and builder",
+    "sameAs": [
+      "https://www.linkedin.com/in/kedma-hamelberg/",
+      "https://scholar.google.com/citations?user=M8TAlNwAAAAJ"
+    ],
+    "subjectOf": [
+      {
+        "@id": "https://observatory.hamelberg-ai.com/#website"
+      },
+      {
+        "@id": "https://brief.hamelberg-ai.com/#website"
+      }
+    ]
+  },
+  {
+    "@type": "ImageObject",
+    "@id": "https://kedmahamelberg.com/#portrait",
+    "contentUrl": "https://kedmahamelberg.com/assets/images/KedmaHamelberg1092-a.jpg",
+    "url": "https://kedmahamelberg.com/assets/images/KedmaHamelberg1092-a.jpg",
+    "caption": "Kedma Hamelberg, PhD, applied AI researcher and builder",
+    "about": {
+      "@id": "https://kedmahamelberg.com/#person"
+    }
+  },
+  {
+    "@type": "Organization",
+    "@id": "https://observatory.hamelberg-ai.com/#organization",
+    "name": "AI Empowerment Observatory",
+    "url": "https://observatory.hamelberg-ai.com/",
+    "founder": {
+      "@id": "https://kedmahamelberg.com/#person"
+    }
+  },
+  {
+    "@type": "Organization",
+    "@id": "https://brief.hamelberg-ai.com/#organization",
+    "name": "The Brief",
+    "url": "https://brief.hamelberg-ai.com/",
+    "parentOrganization": {
+      "@id": "https://observatory.hamelberg-ai.com/#organization"
+    },
+    "founder": {
+      "@id": "https://kedmahamelberg.com/#person"
+    }
+  },
+  {
+    "@type": "WebSite",
+    "@id": "https://observatory.hamelberg-ai.com/#website",
+    "url": "https://observatory.hamelberg-ai.com/",
+    "name": "AI Empowerment Observatory",
+    "publisher": {
+      "@id": "https://observatory.hamelberg-ai.com/#organization"
+    },
+    "creator": {
+      "@id": "https://kedmahamelberg.com/#person"
+    }
+  },
+  {
+    "@type": "WebSite",
+    "@id": "https://brief.hamelberg-ai.com/#website",
+    "url": "https://brief.hamelberg-ai.com/",
+    "name": "The Brief",
+    "publisher": {
+      "@id": "https://brief.hamelberg-ai.com/#organization"
+    },
+    "creator": {
+      "@id": "https://kedmahamelberg.com/#person"
+    }
+  }
+]

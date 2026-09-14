@@ -18,6 +18,7 @@ import hashlib
 from pathlib import Path
 from complete_content import build_cohort, brief_export, export_audit_csv
 from public_directional_release import export_public_csv
+from search_metadata import add_metadata
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "_site"
@@ -43,6 +44,7 @@ ROOT_FILES = [
 ]
 
 PUBLIC_DIRS = [
+    "about",
     "edu",
     "pro",
     "report",
@@ -173,6 +175,8 @@ def main() -> None:
         if not source.exists():
             raise FileNotFoundError(f"Required public directory is missing: {source}")
         shutil.copytree(source, SITE / name)
+
+    add_metadata(ROOT, SITE)
 
     for relative in REQUIRED_DATA_FILES:
         copy_required_file(ROOT / relative, SITE / relative)

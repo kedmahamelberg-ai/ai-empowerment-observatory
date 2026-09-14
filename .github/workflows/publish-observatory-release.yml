@@ -7,6 +7,10 @@ on:
     branches: [main]
     paths:
       - 'assets/fonts/**'
+      - 'about/**'
+      - 'config/search-identity.json'
+      - 'scripts/search_metadata.py'
+      - 'scripts/build_public_site.py'
       - 'index.html'
       - 'site.js'
       - 'public-data.js'
