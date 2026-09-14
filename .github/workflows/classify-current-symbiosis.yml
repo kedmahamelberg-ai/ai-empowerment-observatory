@@ -80,7 +80,9 @@ jobs:
           python-version: "3.12"
           cache: pip
       - name: Validate symbiosis resilience contract
-        run: python scripts/validate_symbiosis_resilience.py
+        run: |
+          python scripts/validate_symbiosis_resilience.py
+          python -B -m unittest discover -s tests -p 'test_symbiosis_database_writes.py' -v
       - name: Cache Qwen model files
         if: env.AIEO_AI_PROVIDER == 'local'
         uses: actions/cache@v6
@@ -185,7 +187,9 @@ jobs:
           python-version: "3.12"
           cache: pip
       - name: Validate symbiosis resilience contract
-        run: python scripts/validate_symbiosis_resilience.py
+        run: |
+          python scripts/validate_symbiosis_resilience.py
+          python -B -m unittest discover -s tests -p 'test_symbiosis_database_writes.py' -v
       - name: Cache Qwen model files
         if: env.AIEO_AI_PROVIDER == 'local'
         uses: actions/cache@v6
@@ -296,7 +300,9 @@ jobs:
           python-version: "3.12"
           cache: pip
       - name: Validate symbiosis resilience contract
-        run: python scripts/validate_symbiosis_resilience.py
+        run: |
+          python scripts/validate_symbiosis_resilience.py
+          python -B -m unittest discover -s tests -p 'test_symbiosis_database_writes.py' -v
       - name: Cache Qwen model files
         if: env.AIEO_AI_PROVIDER == 'local'
         uses: actions/cache@v6

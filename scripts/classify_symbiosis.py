@@ -40,6 +40,7 @@ import ai_runtime
 from huggingface_hub import HfApi
 from supabase import Client, create_client
 from classification_database_reads import execute_read as database_read, read_id_rows, read_rows
+from symbiosis_database_writes import insert_row as symbiosis_insert, update_run as symbiosis_update_run
 
 from brief_content_common import MIN_FULL_BODY_EVIDENCE_UNITS, evidence_unit_count
 from source_evidence_quality import assess_body, evidence_chunks
@@ -557,9 +558,7 @@ def start_run(
     now = utc_now()
     run_key = now.strftime("symbiosis_%Y%m%dT%H%M%SZ")
     response = (
-        client.table("symbiosis_classification_runs")
-        .insert(
-            {
+        symbiosis_insert(client, 'symbiosis_classification_runs', {
                 "run_key": run_key,
                 "scope": scope,
                 "target_release_id": target_release_id,
@@ -573,10 +572,7 @@ def start_run(
                 "model_name": ai_runtime.identity()["model"] if ai_runtime.uses_openai() else QWEN_REPO,
                 "model_revision": model_revision,
                 "notes": "Release-specific relationship classifications. The classifier uses stored full article bodies only; unavailable bodies receive a transparent non-model evidence state.",
-            }
-        )
-        .select("symbiosis_run_id")
-        .execute()
+            })
     )
     return str(first_row(response, "starting symbiosis run")["symbiosis_run_id"]), run_key
 
@@ -603,13 +599,13 @@ def finish_run(client: Client, run_id: str, *, status: str, rows: list[dict[str,
         "completed_at": iso_z(utc_now()),
         "status": status,
     }
-    client.table("symbiosis_classification_runs").update(payload).eq("symbiosis_run_id", run_id).execute()
+    symbiosis_update_run(client, run_id, payload)
 
 
 def checkpoint_run(client: Client, run_id: str, *, rows: list[dict[str, Any]]) -> None:
     """Persist a resumable checkpoint without marking the run complete."""
     payload = {**run_progress_payload(rows), "status": "running", "completed_at": None}
-    client.table("symbiosis_classification_runs").update(payload).eq("symbiosis_run_id", run_id).execute()
+    symbiosis_update_run(client, run_id, payload)
 
 
 def resume_or_start_run(
@@ -646,10 +642,7 @@ def resume_or_start_run(
         run_id = str(row["symbiosis_run_id"])
         run_key = str(row["run_key"])
         (
-            client.table("symbiosis_classification_runs")
-            .update({"status": "running", "completed_at": None})
-            .eq("symbiosis_run_id", run_id)
-            .execute()
+            symbiosis_update_run(client, run_id, {"status": "running", "completed_at": None})
         )
         print(f"Resuming durable symbiosis run {run_key}.", flush=True)
         return run_id, run_key, True
@@ -723,7 +716,7 @@ def carry_forward_saved_rows(client: Client, rows: list[dict[str, Any]], run_id:
             **(row.get("raw_output") or {}),
             "continued_from_classification_id": row["symbiosis_classification_id"],
         }
-        response = client.table("symbiosis_classifications").insert(payload).select("*").execute()
+        response = symbiosis_insert(client, 'symbiosis_classifications', payload)
         copied.append(first_row(response, "preserving a valid classification in a continuation"))
     return copied
 
@@ -1289,7 +1282,7 @@ def insert_result(
         "review_status": "pending",
         "updated_at": iso_z(utc_now()),
     }
-    response = client.table("symbiosis_classifications").insert(payload).select("*").execute()
+    response = symbiosis_insert(client, 'symbiosis_classifications', payload)
     return first_row(response, f"writing {lens} classification")
 
 
@@ -1434,10 +1427,7 @@ def main() -> int:
     saved_rows, stale_saved_keys = reusable_saved_rows(loaded_saved_rows, units)
     if stale_saved_keys:
         (
-            client.table("symbiosis_classification_runs")
-            .update({"status": "failed", "completed_at": iso_z(utc_now())})
-            .eq("symbiosis_run_id", run_id)
-            .execute()
+            symbiosis_update_run(client, run_id, {"status": "failed", "completed_at": iso_z(utc_now())})
         )
         if args.resume_only:
             raise SymbiosisClassificationError(
