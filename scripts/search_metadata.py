@@ -19,8 +19,9 @@ def add_metadata(root, site):
         page={'@type':'AboutPage' if relative=='about/index.html' else 'WebPage', '@id':canonical+'#webpage',
             'url':canonical,'name':title,'description':description,
             'isPartOf':{'@id':BASE+'/#website'},'publisher':{'@id':BASE+'/#organization'}}
-        image=BASE+'/favicon-96x96.png'
-        alt='AI Empowerment Observatory logo'
+        image=BASE+'/about/images/observatory-project.jpg'
+        alt='AI Empowerment Observatory, created and developed by Kedma Hamelberg'
+        page['primaryImageOfPage']={'@type':'ImageObject','contentUrl':image}
         if relative=='about/index.html':
             page['about']=[{'@id':BASE+'/#organization'},{'@id':'https://kedmahamelberg.com/#person'}]
             page['primaryImageOfPage']={'@id':'https://kedmahamelberg.com/#portrait'}
@@ -33,7 +34,7 @@ def add_metadata(root, site):
         if 'rel="canonical"' not in text:tags+=f'<link rel="canonical" href="{html.escape(canonical)}">'
         tags+='<script type="application/ld+json">'+json.dumps({'@context':'https://schema.org','@graph':identity+[page]},ensure_ascii=False).replace('<','\\u003c')+'</script>'
         path.write_text(text.replace('</head>',tags+'</head>',1))
-        locations.append((canonical,image if relative=='about/index.html' else None))
+        locations.append((canonical,image if relative in ('index.html','about/index.html') else None))
     xml='<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">'
     for url,image in locations:
         xml+='<url><loc>'+escape(url)+'</loc>'
