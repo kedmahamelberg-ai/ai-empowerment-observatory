@@ -1,0 +1,63 @@
+name: Notify Brief After Publication
+
+on:
+  workflow_call:
+    inputs:
+      release_id:
+        type: string
+        required: true
+      export_sha256:
+        type: string
+        required: true
+  workflow_dispatch:
+    inputs:
+      release_id:
+        description: Published release ID to verify (for example 2026-W38)
+        type: string
+        required: true
+      export_sha256:
+        description: public_content_sha256 from the deployed Brief export
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Wait for the exact published export
+        env:
+          EXPECTED_RELEASE_ID: ${{ inputs.release_id }}
+          EXPECTED_EXPORT_SHA256: ${{ inputs.export_sha256 }}
+        run: python scripts/notify_brief_publication.py --verify-live
+      - name: Check the dedicated GitHub App connection
+        env:
+          APP_CLIENT_ID: ${{ vars.BRIEF_HANDOFF_APP_CLIENT_ID }}
+          APP_PRIVATE_KEY: ${{ secrets.BRIEF_HANDOFF_APP_PRIVATE_KEY }}
+        run: |
+          if [ -z "$APP_CLIENT_ID" ] || [ -z "$APP_PRIVATE_KEY" ]; then
+            echo '::error::Configure the Brief handoff GitHub App. See docs/BRIEF-PUBLICATION-HANDOFF.md. Scheduled Brief checks remain active.'
+            exit 1
+          fi
+      - name: Issue a short-lived token for the Brief only
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.BRIEF_HANDOFF_APP_CLIENT_ID }}
+          private-key: ${{ secrets.BRIEF_HANDOFF_APP_PRIVATE_KEY }}
+          owner: kedmahamelberg-ai
+          repositories: aieo-brief
+          permission-actions: write
+      - name: Start Follow Observatory Editions
+        env:
+          BRIEF_HANDOFF_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: python scripts/notify_brief_publication.py --dispatch
