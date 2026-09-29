@@ -1,7 +1,7 @@
 {
   "meta": {
     "version": "public_insights_v4_release_bound",
-    "generated_at": "2026-09-28T07:45:41.401011Z",
+    "generated_at": "2026-09-29T10:13:37.873403Z",
     "release_id": "2026-W39",
     "release_revision": 1,
     "classification_run_id": "23a66fbe-c504-4e14-8d59-efdc426bae50",
@@ -9,8 +9,8 @@
     "observation_start": "2026-09-21",
     "observation_end": "2026-09-27",
     "source_of_truth": "/data/analysis/current.json",
-    "coverage_units": 83,
-    "event_units": 81,
+    "coverage_units": 84,
+    "event_units": 82,
     "extra_coverage": 8,
     "first_time_event_records": 141,
     "follow_on_event_records": 0,
@@ -22,17 +22,17 @@
   "directional_summary": {
     "schema_version": "aieo_independent_directions_v2",
     "policy_version": "source_representations_independent_axes_2026_09",
-    "total": 81,
-    "evidence_complete": 81,
+    "total": 82,
+    "evidence_complete": 82,
     "human": {
-      "gain": 44,
+      "gain": 45,
       "loss": 9,
       "mixed": 8,
       "none": 20,
       "unresolved": 0
     },
     "ai": {
-      "gain": 51,
+      "gain": 52,
       "loss": 7,
       "mixed": 13,
       "none": 10,
@@ -41,18 +41,18 @@
   },
   "complete_content": {
     "policy_version": "complete_content_2026_09_v1",
-    "content_sha256": "0714d2fe8dd7b4f89883f762371569015575f02e2a8769d70f756fa726de091b",
+    "content_sha256": "738330409764697966b44fd3bfd3d785b3d3ad4b175309e08f852570b94f4df4",
     "counts": {
       "collected_developments": 144,
       "collected_sources": 152,
-      "eligible_developments": 81,
-      "eligible_sources": 83,
-      "excluded_developments": 63,
-      "excluded_sources": 69
+      "eligible_developments": 82,
+      "eligible_sources": 84,
+      "excluded_developments": 62,
+      "excluded_sources": 68
     },
     "denominator": {
       "unit": "distinct_development",
-      "value": 81
+      "value": 82
     }
   },
   "collection_inventory": {
@@ -1203,5 +1203,5 @@
       }
     }
   },
-  "source_relationship_sha256": "de106faf46e2484198f04770a3a487c137da643fe86ebbf623ba553184f97a68"
+  "source_relationship_sha256": "d13feb2ee5f7de0bddfed87101150bfe5e3c8537f735278bff849bc89b79ce61"
 }
