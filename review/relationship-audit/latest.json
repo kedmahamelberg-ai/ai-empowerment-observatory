@@ -1,6 +1,6 @@
 {
   "schema_version": "aieo_relationship_evidence_audit_v1",
-  "generated_at": "2026-09-28T07:45:38.432078Z",
+  "generated_at": "2026-09-29T10:13:35.158317Z",
   "release_id": "2026-W39",
   "period_start": "2026-09-21",
   "period_end": "2026-09-27",
@@ -17,24 +17,24 @@
   "summary": {
     "development_count": 144,
     "primary_outcome_counts": {
-      "benefit_shown": 45,
+      "benefit_shown": 46,
       "downside_shown": 12,
       "benefit_and_downside": 8,
       "no_clear_people_change": 24,
-      "too_little_evidence": 55
+      "too_little_evidence": 54
     },
     "uneven_effect_count": 4,
     "body_coverage_counts": {
-      "all_sources": 87,
-      "no_full_body": 55,
+      "all_sources": 88,
+      "no_full_body": 54,
       "some_sources": 2
     },
     "reported_body_coverage_counts": {
-      "complete_written_source": 89,
-      "incomplete_written_source": 55
+      "complete_written_source": 90,
+      "incomplete_written_source": 54
     },
     "audit_flag_counts": {
-      "insufficient_evidence": 55
+      "insufficient_evidence": 54
     },
     "plain_language_note": "The five primary outcome counts add up to the weekly total. An uneven effect is a separate detail that can overlap with any outcome."
   },
@@ -2655,39 +2655,39 @@
       "event_id": "7a85b033-6869-4f5d-83eb-d5e89339bc09",
       "title": "Bell and Cohere Deploy Sovereign Cybersecurity AI Model in Canada",
       "date": "2026-09-24",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "Analysts gain efficiency and better actionable insights from the AI tool.",
+          "ai_evidence": "Deployment of a domain-specific model expands AI use in Bell Cyber’s operations.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "CAN"
+      ],
       "sources": [
         {
           "article_id": "778999632e7046973dd115ef3c3cd465",
@@ -2701,9 +2701,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "9f802aed-7040-4a86-9b34-bd865c87ede6",

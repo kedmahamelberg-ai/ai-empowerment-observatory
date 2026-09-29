@@ -2,10 +2,10 @@
   "schema_version": "aieo_symbiosis_public_v2.0",
   "release_id": "2026-W39",
   "release_type": "weekly_relationship_lens",
-  "revision": 2,
+  "revision": 3,
   "period_start": "2026-09-21",
   "period_end": "2026-09-27",
-  "generated_at": "2026-09-28T07:38:59.832422Z",
+  "generated_at": "2026-09-29T10:13:34.921392Z",
   "codebook_version": "aieo_news_symbiosis_v0.1",
   "source_release_sha256": "d4660792baa5a5db7197876aeed4e9e5b453744f438e9b78a693835b0ae8db33",
   "public_status": "current_evidence_reading",
@@ -60,7 +60,7 @@
     "display_basis": "current_evidence_reading_with_reviewed_corrections",
     "display_classified_units": 144,
     "display_configuration_counts": {
-      "mutualism": 36,
+      "mutualism": 37,
       "ai_benefiting_parasitism": 6,
       "human_benefiting_parasitism": 1,
       "competition": 3,
@@ -70,45 +70,45 @@
       "ai_constraining_only": 4,
       "no_clear_relational_signal": 7,
       "ambiguous_relational_signal": 17,
-      "insufficient_evidence": 55
+      "insufficient_evidence": 54
     },
-    "display_complete_configuration_count": 46,
+    "display_complete_configuration_count": 47,
     "display_partial_signal_count": 19,
     "display_no_clear_relational_signal_count": 7,
     "display_ambiguous_relational_signal_count": 17,
-    "display_insufficient_evidence_count": 55,
+    "display_insufficient_evidence_count": 54,
     "display_core_four_distribution": {
-      "mutualism": 0.782609,
-      "ai_benefiting_parasitism": 0.130435,
-      "human_benefiting_parasitism": 0.021739,
-      "competition": 0.065217
+      "mutualism": 0.787234,
+      "ai_benefiting_parasitism": 0.12766,
+      "human_benefiting_parasitism": 0.021277,
+      "competition": 0.06383
     },
     "denominator_note": "The weekly display reports the source evidence available for the current release. A development is kept separate when the available source evidence is not enough to show a clear people outcome.",
     "human_direction_counts": {
       "constraining": 12,
       "neutral": 24,
-      "enabling": 45,
+      "enabling": 46,
       "mixed": 8,
-      "unclear": 55
+      "unclear": 54
     },
     "ai_direction_counts": {
-      "enabling": 54,
+      "enabling": 55,
       "neutral": 13,
-      "unclear": 56,
+      "unclear": 55,
       "mixed": 13,
       "constraining": 8
     },
     "display_human_direction_counts": {
       "constraining": 12,
       "neutral": 24,
-      "enabling": 45,
+      "enabling": 46,
       "mixed": 8,
-      "unclear": 55
+      "unclear": 54
     },
     "display_ai_direction_counts": {
-      "enabling": 54,
+      "enabling": 55,
       "neutral": 13,
-      "unclear": 56,
+      "unclear": 55,
       "mixed": 13,
       "constraining": 8
     }
@@ -118,17 +118,17 @@
     "expected_units": 144,
     "classified_units": 144,
     "relationship_pattern_counts": {
-      "mutualism": 42,
+      "mutualism": 43,
       "ai_benefiting_parasitism": 7,
       "human_benefiting_parasitism": 0,
       "competition": 0
     },
     "people_signal_counts": {
-      "people_gaining": 53,
+      "people_gaining": 54,
       "people_losing_ground": 20,
       "mixed_picture": 8,
       "not_everyone_benefits": 4,
-      "not_clear_yet": 79
+      "not_clear_yet": 78
     },
     "availability": {
       "people_gaining": true,
@@ -140,11 +140,11 @@
     "explicit_multi_label_units": 144,
     "distribution_coded_units": 144,
     "body_coverage_counts": {
-      "complete_written_source": 89,
-      "incomplete_written_source": 55
+      "complete_written_source": 90,
+      "incomplete_written_source": 54
     },
     "not_clear_breakdown": {
-      "not_enough_evidence": 55,
+      "not_enough_evidence": 54,
       "no_directional_people_change": 24
     },
     "overlap_note": "A development may contain more than one signal, so these counts do not have to add up to the weekly total.",
@@ -192,19 +192,19 @@
       "ai_benefiting_parasitism": 7,
       "human_benefiting_parasitism": 3,
       "competition": 4,
-      "human_enabling_only": 5,
+      "human_enabling_only": 6,
       "human_constraining_only": 1,
       "ai_enabling_only": 11,
       "ai_constraining_only": 4,
       "no_clear_relational_signal": 7,
       "ambiguous_relational_signal": 9,
-      "insufficient_evidence": 59
+      "insufficient_evidence": 58
     },
     "display_complete_configuration_count": 56,
-    "display_partial_signal_count": 21,
+    "display_partial_signal_count": 22,
     "display_no_clear_relational_signal_count": 7,
     "display_ambiguous_relational_signal_count": 9,
-    "display_insufficient_evidence_count": 59,
+    "display_insufficient_evidence_count": 58,
     "display_core_four_distribution": {
       "ai_benefiting_parasitism": 0.125,
       "competition": 0.071429,
@@ -7563,21 +7563,28 @@
     {
       "axes": {
         "ai": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "Deployment of a domain-specific model expands AI use in Bell Cyber’s operations.",
+          "direction": "gain"
         },
         "human": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "Analysts gain efficiency and better actionable insights from the AI tool.",
+          "direction": "gain"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [],
+        "evidence_types": [
+          "source_representation"
+        ],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": false,
-        "unresolved_reason": "complete_written_source_unavailable"
+        "evidence_complete": true,
+        "unresolved_reason": ""
       },
-      "relationship_evidence": {},
+      "relationship_evidence": {
+        "mutualism": "AI deployment enhances analysts' ability to investigate threats faster, while analysts' domain expertise grounds and guides the AI's use.",
+        "competition": "",
+        "ai_benefiting_parasitism": "",
+        "human_benefiting_parasitism": ""
+      },
       "relationship_pattern_status": "assessed",
       "event_id": "7a85b033-6869-4f5d-83eb-d5e89339bc09",
       "event_title": "Bell and Cohere Deploy Sovereign Cybersecurity AI Model in Canada",
@@ -7595,62 +7602,66 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "insufficient_evidence",
-      "plain_label": "There is not enough source evidence to classify the relationship",
-      "human_experience_type": "unclear",
-      "ai_expressive_role": "unclear",
-      "human_direction": "unclear",
-      "ai_direction": "unclear",
-      "evidence_status": "insufficient",
-      "content_basis": "not_available",
+      "configuration": "mutualism",
+      "plain_label": "Both people and the AI side are represented as gaining",
+      "human_experience_type": "extension",
+      "ai_expressive_role": "ai_extension",
+      "human_direction": "enabling",
+      "ai_direction": "enabling",
+      "evidence_status": "sufficient",
+      "content_basis": "full_text",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "no_full_body",
+        "body_coverage": "all_sources",
         "source_quality": {
           "778999632e7046973dd115ef3c3cd465": {
-            "flags": [
-              "no_usable_complete_body"
-            ],
-            "usable_complete_body": false
+            "flags": [],
+            "scope": "written_page",
+            "characters": 3903,
+            "body_sha256": "371f43ec7b10037809c08a7209581e80285533fb6c01bae23da5503226b863ff",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "source_fingerprints": {
-          "778999632e7046973dd115ef3c3cd465": null
+          "778999632e7046973dd115ef3c3cd465": "371f43ec7b10037809c08a7209581e80285533fb6c01bae23da5503226b863ff"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 1,
+        "not_available_sources": 0,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": false,
-        "people_evidence": "",
-        "ai_evidence": "",
-        "flags": [
-          "incomplete_written_source"
-        ]
+        "source_reading_complete": true,
+        "people_evidence": "Analysts gain efficiency and better actionable insights from the AI tool.",
+        "ai_evidence": "Deployment of a domain-specific model expands AI use in Bell Cyber’s operations.",
+        "flags": []
       },
-      "story_country_iso3s": [],
-      "evidence_summary": "No full article body was available, so the source was not model-classified.",
-      "reasoning": "No full article body was available, so the source was not model-classified.",
+      "story_country_iso3s": [
+        "CAN"
+      ],
+      "evidence_summary": "Canada-hosted, sovereign cybersecurity AI model extends analysts’ capabilities and broadens AI deployment within Bell Cyber’s secure operations.",
+      "reasoning": "Canada-hosted, sovereign cybersecurity AI model extends analysts’ capabilities and broadens AI deployment within Bell Cyber’s secure operations.",
       "relationship_patterns": {
-        "mutualism": false,
+        "mutualism": true,
         "ai_benefiting_parasitism": false,
         "human_benefiting_parasitism": false,
         "competition": false
       },
       "public_signals": {
-        "people_gaining": false,
+        "people_gaining": true,
         "people_losing_ground": false,
         "mixed_picture": false,
         "not_everyone_benefits": false,
-        "not_clear_yet": true
+        "not_clear_yet": false
       },
-      "distribution_signal": "not_shown",
-      "public_takeaway": "",
+      "distribution_signal": "broadly_shared",
+      "public_takeaway": "Analysts gain efficiency and better actionable insights from the AI tool.",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -15717,29 +15728,29 @@
     "policy_version": "source_representations_independent_axes_2026_09",
     "total": 144,
     "human": {
-      "gain": 45,
+      "gain": 46,
       "loss": 12,
       "mixed": 8,
       "none": 24,
-      "unresolved": 55
+      "unresolved": 54
     },
     "ai": {
-      "gain": 54,
+      "gain": 55,
       "loss": 8,
       "mixed": 13,
       "none": 13,
-      "unresolved": 56
+      "unresolved": 55
     },
-    "evidence_complete": 89,
+    "evidence_complete": 90,
     "counting_rule": "Each axis partitions the same records. Mixed is one category. The two axes are not added together."
   },
   "direction_policy_version": "source_representations_independent_axes_2026_09",
   "classification_scope": {
     "unit": "development",
     "total": 144,
-    "complete_written_sources": 89,
-    "incomplete_written_sources": 55,
+    "complete_written_sources": 90,
+    "incomplete_written_sources": 54,
     "legacy_configuration_note": "Legacy single-label fields are retained for compatibility; independent axis categories are authoritative under the current policy."
   },
-  "content_sha256": "de106faf46e2484198f04770a3a487c137da643fe86ebbf623ba553184f97a68"
+  "content_sha256": "d13feb2ee5f7de0bddfed87101150bfe5e3c8537f735278bff849bc89b79ce61"
 }
