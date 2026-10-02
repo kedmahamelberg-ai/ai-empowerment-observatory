@@ -1,6 +1,6 @@
 {
   "schema_version": "aieo_relationship_evidence_audit_v1",
-  "generated_at": "2026-09-30T10:06:00.402002Z",
+  "generated_at": "2026-10-02T10:09:32.537658Z",
   "release_id": "2026-W39",
   "period_start": "2026-09-21",
   "period_end": "2026-09-27",
@@ -17,24 +17,24 @@
   "summary": {
     "development_count": 144,
     "primary_outcome_counts": {
-      "benefit_shown": 46,
+      "benefit_shown": 48,
       "downside_shown": 12,
       "benefit_and_downside": 8,
       "no_clear_people_change": 24,
-      "too_little_evidence": 54
+      "too_little_evidence": 52
     },
     "uneven_effect_count": 4,
     "body_coverage_counts": {
-      "all_sources": 88,
-      "no_full_body": 54,
+      "all_sources": 90,
+      "no_full_body": 52,
       "some_sources": 2
     },
     "reported_body_coverage_counts": {
-      "complete_written_source": 90,
-      "incomplete_written_source": 54
+      "complete_written_source": 92,
+      "incomplete_written_source": 52
     },
     "audit_flag_counts": {
-      "insufficient_evidence": 54
+      "insufficient_evidence": 52
     },
     "plain_language_note": "The five primary outcome counts add up to the weekly total. An uneven effect is a separate detail that can overlap with any outcome."
   },
@@ -3082,39 +3082,39 @@
       "event_id": "de08945b-6e68-4025-9384-276dc729cf1d",
       "title": "Dassault Aviation equips the Rafale with artificial intelligence.",
       "date": "2026-09-23",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "Pilots gain new support from AI-enhanced avionics, extending their existing capabilities.",
+          "ai_evidence": "AI systems are deployed to augment flight management and pilot support, expanding operational reach.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "FRA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "FRA"
+      ],
       "sources": [
         {
           "article_id": "8a263f4f1b076984f07c2cdd1403acf9",
@@ -3128,9 +3128,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "7a4621b8-5960-4690-bc22-22ae969f42b3",
@@ -5195,39 +5193,39 @@
       "event_id": "9559b794-2d01-4f2d-93d2-9df224116a7c",
       "title": "Oregon Is the Latest State to Move on Frontier AI Regulation",
       "date": "2026-09-25",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "Governance measures reduce risk while expanding usable frontier AI within state processes.",
+          "ai_evidence": "Regulatory safeguards and third-party reviews allow frontier AI to operate with oversight.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "e84298a86c74803201fb36fa819067ae",
@@ -5241,9 +5239,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "2e74b9f9-e5e9-4099-8964-a2e1722595c5",
