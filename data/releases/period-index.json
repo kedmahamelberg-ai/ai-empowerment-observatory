@@ -1,6 +1,6 @@
 {
   "schema_version": "aieo_period_index_v1.1",
-  "generated_at": "2026-09-28T07:39:13.450040Z",
+  "generated_at": "2026-10-02T10:08:59.088694Z",
   "current": {
     "monthly": "2026-09",
     "quarterly": "2026-Q3",
@@ -54,15 +54,15 @@
     {
       "period_id": "2026-09",
       "period_type": "monthly",
-      "status": "accumulating",
+      "status": "complete",
       "period_start": "2026-09-01",
       "period_end": "2026-09-30",
       "observed_week_start": "2026-08-31",
       "observed_week_end": "2026-09-27",
-      "generated_at": "2026-09-28T07:39:13.446851Z",
-      "revision": 4,
-      "revision_reason": "A newly completed weekly release was added to this period.",
-      "previous_revision_path": "/data/releases/monthly/archive/2026-09/revision-3.json",
+      "generated_at": "2026-10-02T10:08:59.085243Z",
+      "revision": 5,
+      "revision_reason": "Accepted reconciliation changed the period-level event or attention history.",
+      "previous_revision_path": "/data/releases/monthly/archive/2026-09/revision-4.json",
       "path": "/data/releases/monthly/2026-09.json",
       "articles": 569,
       "distinct_event_records": 538,
@@ -71,20 +71,20 @@
       "follow_on_developments": 0,
       "recurring_event_appearances": 2,
       "resurfaced_event_appearances": 0,
-      "content_sha256": "c5a9600519abfde3a552a67264adb1c5d3e96ece8fd4cf7a1979413cea36f1bd"
+      "content_sha256": "25c2cce477df1f9ee27dba57769d6511a5a14309eb7a35cc5d04d7368096ae2f"
     },
     {
       "period_id": "2026-Q3",
       "period_type": "quarterly",
-      "status": "accumulating",
+      "status": "complete",
       "period_start": "2026-07-01",
       "period_end": "2026-09-30",
       "observed_week_start": "2026-08-10",
       "observed_week_end": "2026-09-27",
-      "generated_at": "2026-09-28T07:39:13.450040Z",
-      "revision": 8,
-      "revision_reason": "A newly completed weekly release was added to this period.",
-      "previous_revision_path": "/data/releases/quarterly/archive/2026-Q3/revision-7.json",
+      "generated_at": "2026-10-02T10:08:59.088694Z",
+      "revision": 9,
+      "revision_reason": "Accepted reconciliation changed the period-level event or attention history.",
+      "previous_revision_path": "/data/releases/quarterly/archive/2026-Q3/revision-8.json",
       "path": "/data/releases/quarterly/2026-Q3.json",
       "articles": 930,
       "distinct_event_records": 883,
@@ -93,7 +93,7 @@
       "follow_on_developments": 1,
       "recurring_event_appearances": 2,
       "resurfaced_event_appearances": 0,
-      "content_sha256": "0dbff60a0f5f54350e76cfd731aad976b64362f65b9e417c32727f58ab413099"
+      "content_sha256": "14bf9ec9dfa7ab7da8da75b622429bb37fcde8adc08c6ac82c005c1c39db2467"
     }
   ],
   "composition_rule": {
@@ -101,5 +101,5 @@
     "attention": "Retain article volume, event appearances, rediscoveries and resurfacing.",
     "baseline": "Overlapping launch baselines are excluded from standardized period totals."
   },
-  "content_sha256": "4ce864b65d06bcf25bc96ae16497e442dc8088a67aa093213b2467c1081f9340"
+  "content_sha256": "5068c18571949e38b7f2c248c538221effbde6134f82e889fd325736c103e5c5"
 }

@@ -2,13 +2,13 @@
   "schema_version": "aieo_period_summary_v1.1",
   "period_id": "2026-09",
   "period_type": "monthly",
-  "status": "complete",
+  "status": "accumulating",
   "period_start": "2026-09-01",
   "period_end": "2026-09-30",
   "observed_week_start": "2026-08-31",
   "observed_week_end": "2026-09-27",
-  "generated_at": "2026-10-02T10:08:59.085243Z",
-  "revision": 5,
+  "generated_at": "2026-09-28T07:39:13.446851Z",
+  "revision": 4,
   "weekly_release_ids": [
     "2026-W36",
     "2026-W37",
@@ -88,7 +88,7 @@
   },
   "story": "AIEO observed 569 newly published AI-news articles. They represented 506 new developments and 2 appearances of developments already in memory.",
   "disclosure": "Distinct events are deduplicated across the full period by effective event ID. Recurring appearances remain in the Attention view and are not counted as new developments.",
-  "revision_reason": "Accepted reconciliation changed the period-level event or attention history.",
+  "revision_reason": "A newly completed weekly release was added to this period.",
   "revision_history": [
     {
       "revision": 2,
@@ -119,19 +119,8 @@
         "2026-W38": 2,
         "2026-W39": 1
       }
-    },
-    {
-      "revision": 5,
-      "changed_at": "2026-10-02T10:08:59.085243Z",
-      "reason": "Accepted reconciliation changed the period-level event or attention history.",
-      "weekly_revisions": {
-        "2026-W36": 4,
-        "2026-W37": 3,
-        "2026-W38": 2,
-        "2026-W39": 1
-      }
     }
   ],
-  "previous_revision_path": "/data/releases/monthly/archive/2026-09/revision-4.json",
-  "content_sha256": "25c2cce477df1f9ee27dba57769d6511a5a14309eb7a35cc5d04d7368096ae2f"
+  "previous_revision_path": "/data/releases/monthly/archive/2026-09/revision-3.json",
+  "content_sha256": "c5a9600519abfde3a552a67264adb1c5d3e96ece8fd4cf7a1979413cea36f1bd"
 }
