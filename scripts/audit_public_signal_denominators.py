@@ -14,6 +14,9 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from independent_axes import PEOPLE_OUTCOMES, validate_axes
+from public_directional_release import validate_directional_release
+
 
 ROOT = Path(__file__).resolve().parents[1]
 RELEASES = ROOT / "data" / "releases"
@@ -68,6 +71,12 @@ def symbiosis_for(release_id: str) -> dict[str, Any]:
 
 
 def primary_outcome(row: dict[str, Any]) -> str:
+    # Complete source text does not imply a resolved human direction. Use the
+    # same independent-axis contract as the publisher and public-data.js;
+    # evidence_status is only the fallback for historical, pre-axis records.
+    if "axes" in row:
+        axes = validate_axes(row["axes"])
+        return PEOPLE_OUTCOMES[axes["human"]["direction"]]
     signals = row.get("public_signals") if isinstance(row.get("public_signals"), dict) else {}
     gaining = bool(signals.get("people_gaining"))
     losing = bool(signals.get("people_losing_ground"))
@@ -102,7 +111,12 @@ def build_audit(release: dict[str, Any], symbiosis: dict[str, Any]) -> dict[str,
             f"SIGNAL AUDIT ERROR: {len(evidence)} evidence rows for a denominator of {expected}"
         )
 
-    outcomes = Counter(primary_outcome(row) for row in evidence)
+    try:
+        if symbiosis.get("directional_summary"):
+            validate_directional_release(release, symbiosis)
+        outcomes = Counter(primary_outcome(row) for row in evidence)
+    except ValueError as exc:
+        raise SystemExit(f"SIGNAL AUDIT ERROR: {exc}") from exc
     counts = {key: int(outcomes[key]) for key in OUTCOME_KEYS}
     if sum(counts.values()) != expected:
         raise SystemExit("SIGNAL AUDIT ERROR: mutually exclusive people outcomes do not sum to the denominator")
@@ -112,7 +126,9 @@ def build_audit(release: dict[str, Any], symbiosis: dict[str, Any]) -> dict[str,
     declared_no_change = int(declared.get("no_directional_people_change") or 0)
     if declared_insufficient != counts["too_little_evidence"] or declared_no_change != counts["no_clear_people_change"]:
         raise SystemExit(
-            "SIGNAL AUDIT ERROR: stored not-clear breakdown disagrees with evidence rows"
+            "SIGNAL AUDIT ERROR: stored not-clear breakdown disagrees with evidence rows: "
+            f"not_enough_evidence stored={declared_insufficient}, rows={counts['too_little_evidence']}; "
+            f"no_directional_people_change stored={declared_no_change}, rows={counts['no_clear_people_change']}"
         )
 
     # The public relationship cards use the explicit relationship_patterns on
