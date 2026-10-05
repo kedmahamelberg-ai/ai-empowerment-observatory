@@ -1,14 +1,14 @@
 {
   "schema_version": "aieo_period_summary_v1.1",
-  "period_id": "2026-Q3",
-  "period_type": "quarterly",
-  "status": "complete",
-  "period_start": "2026-07-01",
-  "period_end": "2026-09-30",
+  "period_id": "2026",
+  "period_type": "annual",
+  "status": "accumulating",
+  "period_start": "2026-01-01",
+  "period_end": "2026-12-31",
   "observed_week_start": "2026-08-10",
   "observed_week_end": "2026-09-27",
-  "generated_at": "2026-10-05T12:35:31.531607Z",
-  "revision": 10,
+  "generated_at": "2026-09-28T07:39:13.442131Z",
+  "revision": 8,
   "weekly_release_ids": [
     "2026-W33",
     "2026-W34",
@@ -19,13 +19,13 @@
     "2026-W39"
   ],
   "weekly_revisions": {
-    "2026-W33": 10,
-    "2026-W34": 8,
-    "2026-W35": 9,
-    "2026-W36": 5,
-    "2026-W37": 4,
-    "2026-W38": 3,
-    "2026-W39": 2
+    "2026-W33": 9,
+    "2026-W34": 7,
+    "2026-W35": 8,
+    "2026-W36": 4,
+    "2026-W37": 3,
+    "2026-W38": 2,
+    "2026-W39": 1
   },
   "reality": {
     "distinct_event_records": 883,
@@ -79,29 +79,29 @@
   },
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-10-05T06:30:10.228117+00:00",
+    "considered_through": "2026-09-28T06:06:19.524438+00:00",
     "scope": "All prior event records available to the included reconciliations."
   },
   "reconciliation": {
-    "current_through": "2026-10-05T11:45:09.348353+00:00",
+    "current_through": "2026-09-28T06:49:28.739765+00:00",
     "weekly_revisions_included": {
-      "2026-W33": 10,
-      "2026-W34": 8,
-      "2026-W35": 9,
-      "2026-W36": 5,
-      "2026-W37": 4,
-      "2026-W38": 3,
-      "2026-W39": 2
+      "2026-W33": 9,
+      "2026-W34": 7,
+      "2026-W35": 8,
+      "2026-W36": 4,
+      "2026-W37": 3,
+      "2026-W38": 2,
+      "2026-W39": 1
     },
     "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
   },
   "story": "AIEO observed 930 newly published AI-news articles. They represented 849 new developments and 2 appearances of developments already in memory.",
   "disclosure": "Distinct events are deduplicated across the full period by effective event ID. Recurring appearances remain in the Attention view and are not counted as new developments.",
-  "revision_reason": "An included weekly release was restated after longitudinal reconciliation.",
+  "revision_reason": "A newly completed weekly release was added to this period.",
   "revision_history": [
     {
       "revision": 2,
-      "changed_at": "2026-08-31T18:01:48.025522Z",
+      "changed_at": "2026-08-31T18:01:48.021387Z",
       "reason": "A newly completed weekly release was added to this period.",
       "weekly_revisions": {
         "2026-W33": 4,
@@ -111,7 +111,7 @@
     },
     {
       "revision": 3,
-      "changed_at": "2026-08-31T19:26:28.556255Z",
+      "changed_at": "2026-08-31T19:26:28.552298Z",
       "reason": "An included weekly release was restated after longitudinal reconciliation.",
       "weekly_revisions": {
         "2026-W33": 5,
@@ -121,7 +121,7 @@
     },
     {
       "revision": 4,
-      "changed_at": "2026-09-05T11:21:24.799214Z",
+      "changed_at": "2026-09-05T11:21:24.796058Z",
       "reason": "An included weekly release was restated after longitudinal reconciliation.",
       "weekly_revisions": {
         "2026-W33": 5,
@@ -131,7 +131,7 @@
     },
     {
       "revision": 5,
-      "changed_at": "2026-09-08T03:30:04.000270Z",
+      "changed_at": "2026-09-08T03:30:03.994902Z",
       "reason": "A newly completed weekly release was added to this period.",
       "weekly_revisions": {
         "2026-W33": 6,
@@ -142,7 +142,7 @@
     },
     {
       "revision": 6,
-      "changed_at": "2026-09-14T11:23:33.680923Z",
+      "changed_at": "2026-09-14T11:23:33.674083Z",
       "reason": "A newly completed weekly release was added to this period.",
       "weekly_revisions": {
         "2026-W33": 7,
@@ -154,7 +154,7 @@
     },
     {
       "revision": 7,
-      "changed_at": "2026-09-21T07:30:26.347121Z",
+      "changed_at": "2026-09-21T07:30:26.339534Z",
       "reason": "A newly completed weekly release was added to this period.",
       "weekly_revisions": {
         "2026-W33": 8,
@@ -167,7 +167,7 @@
     },
     {
       "revision": 8,
-      "changed_at": "2026-09-28T07:39:13.450040Z",
+      "changed_at": "2026-09-28T07:39:13.442131Z",
       "reason": "A newly completed weekly release was added to this period.",
       "weekly_revisions": {
         "2026-W33": 9,
@@ -178,36 +178,8 @@
         "2026-W38": 2,
         "2026-W39": 1
       }
-    },
-    {
-      "revision": 9,
-      "changed_at": "2026-10-02T10:08:59.088694Z",
-      "reason": "Accepted reconciliation changed the period-level event or attention history.",
-      "weekly_revisions": {
-        "2026-W33": 9,
-        "2026-W34": 7,
-        "2026-W35": 8,
-        "2026-W36": 4,
-        "2026-W37": 3,
-        "2026-W38": 2,
-        "2026-W39": 1
-      }
-    },
-    {
-      "revision": 10,
-      "changed_at": "2026-10-05T12:35:31.531607Z",
-      "reason": "An included weekly release was restated after longitudinal reconciliation.",
-      "weekly_revisions": {
-        "2026-W33": 10,
-        "2026-W34": 8,
-        "2026-W35": 9,
-        "2026-W36": 5,
-        "2026-W37": 4,
-        "2026-W38": 3,
-        "2026-W39": 2
-      }
     }
   ],
-  "previous_revision_path": "/data/releases/quarterly/archive/2026-Q3/revision-9.json",
-  "content_sha256": "e5edf5cb4f66cde81ab0e53d1cafecdf3fbf2d9478704c8fd38fb282b45a07f8"
+  "previous_revision_path": "/data/releases/annual/archive/2026/revision-7.json",
+  "content_sha256": "5db9356aaee01aa3d0974c0e01728d3988efc188bff88d61694ec9f0cd7f697c"
 }

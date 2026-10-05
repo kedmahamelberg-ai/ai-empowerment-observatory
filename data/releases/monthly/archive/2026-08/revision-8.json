@@ -7,17 +7,17 @@
   "period_end": "2026-08-31",
   "observed_week_start": "2026-08-10",
   "observed_week_end": "2026-08-30",
-  "generated_at": "2026-10-05T12:35:31.523340Z",
-  "revision": 9,
+  "generated_at": "2026-09-28T07:39:13.444426Z",
+  "revision": 8,
   "weekly_release_ids": [
     "2026-W33",
     "2026-W34",
     "2026-W35"
   ],
   "weekly_revisions": {
-    "2026-W33": 10,
-    "2026-W34": 8,
-    "2026-W35": 9
+    "2026-W33": 9,
+    "2026-W34": 7,
+    "2026-W35": 8
   },
   "reality": {
     "distinct_event_records": 346,
@@ -69,15 +69,15 @@
   },
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-10-05T06:30:10.228117+00:00",
+    "considered_through": "2026-09-28T06:06:19.524438+00:00",
     "scope": "All prior event records available to the included reconciliations."
   },
   "reconciliation": {
-    "current_through": "2026-10-05T11:45:09.348353+00:00",
+    "current_through": "2026-09-28T06:49:28.739765+00:00",
     "weekly_revisions_included": {
-      "2026-W33": 10,
-      "2026-W34": 8,
-      "2026-W35": 9
+      "2026-W33": 9,
+      "2026-W34": 7,
+      "2026-W35": 8
     },
     "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
   },
@@ -154,18 +154,8 @@
         "2026-W34": 7,
         "2026-W35": 8
       }
-    },
-    {
-      "revision": 9,
-      "changed_at": "2026-10-05T12:35:31.523340Z",
-      "reason": "An included weekly release was restated after longitudinal reconciliation.",
-      "weekly_revisions": {
-        "2026-W33": 10,
-        "2026-W34": 8,
-        "2026-W35": 9
-      }
     }
   ],
-  "previous_revision_path": "/data/releases/monthly/archive/2026-08/revision-8.json",
-  "content_sha256": "16ca79bde3393d4cc1a6ec06f68de7b7b7d1d924a0d41e0415843257fca39f09"
+  "previous_revision_path": "/data/releases/monthly/archive/2026-08/revision-7.json",
+  "content_sha256": "b8eaf0c9492ab4c79c87ee91d845d10632cce4dd27c9ced19d204132713e5529"
 }
