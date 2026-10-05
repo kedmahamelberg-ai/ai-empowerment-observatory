@@ -2,14 +2,14 @@
   "meta": {
     "series": "weekly_public_releases",
     "cumulative": false,
-    "generated_at": "2026-10-02T10:09:34.821250Z",
+    "generated_at": "2026-10-05T12:35:43.329372Z",
     "source": "/data/releases/index.json",
     "note": "Each point is one standardized weekly Observatory release. Counts are not cumulatively summed."
   },
   "points": [
     {
       "release_id": "2026-W33",
-      "revision": 9,
+      "revision": 10,
       "window_start": "2026-08-10",
       "window_end": "2026-08-16",
       "coverage_count": 120,
@@ -22,7 +22,7 @@
     },
     {
       "release_id": "2026-W34",
-      "revision": 7,
+      "revision": 8,
       "window_start": "2026-08-17",
       "window_end": "2026-08-23",
       "coverage_count": 131,
@@ -35,7 +35,7 @@
     },
     {
       "release_id": "2026-W35",
-      "revision": 8,
+      "revision": 9,
       "window_start": "2026-08-24",
       "window_end": "2026-08-30",
       "coverage_count": 111,
@@ -48,7 +48,7 @@
     },
     {
       "release_id": "2026-W36",
-      "revision": 4,
+      "revision": 5,
       "window_start": "2026-08-31",
       "window_end": "2026-09-06",
       "coverage_count": 138,
@@ -61,7 +61,7 @@
     },
     {
       "release_id": "2026-W37",
-      "revision": 3,
+      "revision": 4,
       "window_start": "2026-09-07",
       "window_end": "2026-09-13",
       "coverage_count": 132,
@@ -74,7 +74,7 @@
     },
     {
       "release_id": "2026-W38",
-      "revision": 2,
+      "revision": 3,
       "window_start": "2026-09-14",
       "window_end": "2026-09-20",
       "coverage_count": 148,
@@ -87,7 +87,7 @@
     },
     {
       "release_id": "2026-W39",
-      "revision": 1,
+      "revision": 2,
       "window_start": "2026-09-21",
       "window_end": "2026-09-27",
       "coverage_count": 152,
@@ -97,6 +97,19 @@
       "event_index": 11.6788,
       "amplification_gap": 7.9508,
       "coverage_event_ratio": 1.0556
+    },
+    {
+      "release_id": "2026-W40",
+      "revision": 1,
+      "window_start": "2026-09-28",
+      "window_end": "2026-10-04",
+      "coverage_count": 161,
+      "event_count": 151,
+      "extra_article_instances": 10,
+      "coverage_index": 25.098,
+      "event_index": 11.7117,
+      "amplification_gap": 13.3863,
+      "coverage_event_ratio": 1.0662
     }
   ]
 }
