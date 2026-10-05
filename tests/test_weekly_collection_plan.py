@@ -1,7 +1,8 @@
 import sys
 import unittest
 import yaml
-from datetime import date
+from datetime import date, datetime
+from unittest.mock import patch
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 from plan_weekly_collection import plan
@@ -16,6 +17,20 @@ class WeeklyCollectionPlan(unittest.TestCase):
     def test_year_boundary_and_sunday_do_not_make_partial_weeks(self):
         self.assertEqual(plan(date(2027,1,4))['release_id'],'2026-W53')
         self.assertEqual(plan(date(2026,9,6))['period_end'],'2026-08-30')
+
+    def test_after_midnight_schedule_selects_completed_week_while_utc_is_sunday(self):
+        # Cover summer time, winter time, both DST changes, and the ISO year.
+        for stamp, release_id in (
+            ('2026-10-11T22:17:00+00:00', '2026-W41'),
+            ('2026-11-01T23:17:00+00:00', '2026-W44'),
+            ('2026-03-29T22:17:00+00:00', '2026-W13'),
+            ('2026-10-25T23:17:00+00:00', '2026-W43'),
+            ('2027-01-03T23:17:00+00:00', '2026-W53'),
+        ):
+            with self.subTest(stamp=stamp), patch('release_common.datetime') as clock:
+                instant = datetime.fromisoformat(stamp)
+                clock.now.side_effect = lambda tz: instant.astimezone(tz)
+                self.assertEqual(plan()['release_id'], release_id)
 
     def test_publication_dates_keep_buffer_articles_outside_week(self):
         period=previous_complete_week(date(2026,9,7))
