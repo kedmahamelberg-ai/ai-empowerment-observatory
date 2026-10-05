@@ -33,7 +33,9 @@ The readings cover source claims, anticipated benefits, risks and recommendation
 
 ## What updates automatically
 
-The existing **Weekly Observatory Pipeline** runs each Monday at **00:17 UTC**, collecting and processing the previous completed week. It collects bodies before classification, groups the sources, publishes the new readings, rebuilds the report and deploys the site. Existing Supabase secrets and GitHub Pages settings are used. No database migration or new API key is required by this update.
+The **Weekly Observatory Pipeline** is scheduled each Monday at **00:17 Europe/Amsterdam**, just after Sunday ends. GitHub adjusts this local time for summer and winter time. The release calendar also uses Amsterdam time, so a run that starts while it is still Sunday in UTC selects the correct completed week. It collects bodies before classification, groups the sources, publishes the new readings, rebuilds the report and deploys the site. Existing Supabase secrets and GitHub Pages settings are used. No database migration or new API key is required by this update.
+
+This gives the pipeline an overnight window; it is not a guaranteed publication deadline. GitHub can delay scheduled starts, and the monthly, quarterly and annual history checks can take several hours. The 5 October 2026 run started over five hours after its old UTC schedule, then took about seven hours. Check Actions for the actual start and completion times. The signal audit uses independent human directions, including unresolved readings with complete source text; regression tests run before collection and on repository changes.
 
 - Human and AI directions are independent; simultaneous gains and losses remain mixed.
 - Long sources are read in overlapping segments covering every character. The middle is retained.
