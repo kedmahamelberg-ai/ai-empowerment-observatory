@@ -2,64 +2,64 @@
   "slug": "ai-empowerment-pulse-latest",
   "title": "AI Empowerment Pulse",
   "edition": "Weekly source readings",
-  "release_id": "2026-W39",
+  "release_id": "2026-W40",
   "release_revision": 1,
-  "period_start": "2026-09-21",
-  "period_end": "2026-09-27",
-  "observation_window": "21 September - 27 September 2026",
+  "period_start": "2026-09-28",
+  "period_end": "2026-10-04",
+  "observation_window": "28 September - 04 October 2026",
   "source_of_truth": "/data/analysis/current.json",
-  "source_release_sha256": "d4660792baa5a5db7197876aeed4e9e5b453744f438e9b78a693835b0ae8db33",
-  "source_relationship_sha256": "cd0742583f263cff04b42c572d0c342b4cdbfec0fcf0d69fb34981f1ec81833e",
+  "source_release_sha256": "8e1129da91e80d302dd4b21de56a860b948b9a824203a0a5c050f4fb8658780f",
+  "source_relationship_sha256": "caaf7e01a41c5e42fe6ad3888707470ca991ceaa30b29206d8224d9a5185dc86",
   "directional_summary": {
     "schema_version": "aieo_independent_directions_v2",
     "policy_version": "source_representations_independent_axes_2026_09",
-    "total": 84,
-    "evidence_complete": 84,
+    "total": 79,
+    "evidence_complete": 79,
     "human": {
-      "gain": 47,
-      "loss": 9,
-      "mixed": 8,
-      "none": 20,
+      "gain": 42,
+      "loss": 8,
+      "mixed": 10,
+      "none": 19,
       "unresolved": 0
     },
     "ai": {
-      "gain": 54,
-      "loss": 7,
-      "mixed": 13,
-      "none": 10,
+      "gain": 47,
+      "loss": 9,
+      "mixed": 10,
+      "none": 13,
       "unresolved": 0
     }
   },
   "file": "/reports/ai-empowerment-pulse-latest.pdf",
-  "coverage_units": 86,
-  "event_units": 84,
+  "coverage_units": 83,
+  "event_units": 79,
   "collection_inventory": {
-    "coverage_units": 152,
-    "event_units": 144,
-    "coverage_index": 19.6296,
-    "event_index": 11.6788,
-    "directional_amplification_gap": 7.9508,
+    "coverage_units": 161,
+    "event_units": 151,
+    "coverage_index": 25.098,
+    "event_index": 11.7117,
+    "directional_amplification_gap": 13.3863,
     "scope": "Legacy collection indices; not complete-content findings."
   },
-  "coverage_event_ratio": 1.0238095238095237,
+  "coverage_event_ratio": 1.0506329113924051,
   "complete_content": {
     "policy_version": "complete_content_2026_09_v1",
-    "content_sha256": "e510e58444f6bf7f295713dc81e04ea739f3032bf6d643e73a4d3d97538f6ce3",
+    "content_sha256": "4808f297530710192254254914b650ee6da06fec5b9aca5cbf9c2d520874b881",
     "counts": {
-      "collected_developments": 144,
-      "collected_sources": 152,
-      "eligible_developments": 84,
-      "eligible_sources": 86,
-      "excluded_developments": 60,
-      "excluded_sources": 66
+      "collected_developments": 151,
+      "collected_sources": 161,
+      "eligible_developments": 79,
+      "eligible_sources": 83,
+      "excluded_developments": 72,
+      "excluded_sources": 78
     },
     "denominator": {
       "unit": "distinct_development",
-      "value": 84
+      "value": 79
     }
   },
   "pages": 2,
   "schema_version": "aieo_public_brief_v2",
-  "pdf_sha256": "31c252437f5996adb66bb20672555846404ab98fd20e07293b3f4adae5965b66",
-  "generated_at": "2026-10-02T10:09:35.120992+00:00"
+  "pdf_sha256": "51e52a4d7f5dac41401dd294ba9d1ef635735e7338951cd95feb0e4dd41ce318",
+  "generated_at": "2026-10-05T12:35:56.979681+00:00"
 }
