@@ -2,10 +2,10 @@
   "schema_version": "aieo_symbiosis_public_v2.0",
   "release_id": "2026-W40",
   "release_type": "weekly_relationship_lens",
-  "revision": 2,
+  "revision": 3,
   "period_start": "2026-09-28",
   "period_end": "2026-10-04",
-  "generated_at": "2026-10-05T12:35:16.731935Z",
+  "generated_at": "2026-10-06T10:50:58.370744Z",
   "codebook_version": "aieo_news_symbiosis_v0.1",
   "source_release_sha256": "8e1129da91e80d302dd4b21de56a860b948b9a824203a0a5c050f4fb8658780f",
   "public_status": "current_evidence_reading",
@@ -60,7 +60,7 @@
     "display_basis": "current_evidence_reading_with_reviewed_corrections",
     "display_classified_units": 151,
     "display_configuration_counts": {
-      "mutualism": 37,
+      "mutualism": 38,
       "ai_benefiting_parasitism": 4,
       "human_benefiting_parasitism": 2,
       "competition": 2,
@@ -70,45 +70,45 @@
       "ai_constraining_only": 5,
       "no_clear_relational_signal": 7,
       "ambiguous_relational_signal": 15,
-      "insufficient_evidence": 69
+      "insufficient_evidence": 68
     },
-    "display_complete_configuration_count": 45,
+    "display_complete_configuration_count": 46,
     "display_partial_signal_count": 15,
     "display_no_clear_relational_signal_count": 7,
     "display_ambiguous_relational_signal_count": 15,
-    "display_insufficient_evidence_count": 69,
+    "display_insufficient_evidence_count": 68,
     "display_core_four_distribution": {
-      "mutualism": 0.822222,
-      "ai_benefiting_parasitism": 0.088889,
-      "human_benefiting_parasitism": 0.044444,
-      "competition": 0.044444
+      "mutualism": 0.826087,
+      "ai_benefiting_parasitism": 0.086957,
+      "human_benefiting_parasitism": 0.043478,
+      "competition": 0.043478
     },
     "denominator_note": "The weekly display reports the source evidence available for the current release. A development is kept separate when the available source evidence is not enough to show a clear people outcome.",
     "human_direction_counts": {
-      "enabling": 42,
+      "enabling": 43,
       "neutral": 20,
-      "unclear": 71,
+      "unclear": 70,
       "mixed": 10,
       "constraining": 8
     },
     "ai_direction_counts": {
-      "enabling": 49,
+      "enabling": 50,
       "mixed": 10,
-      "unclear": 69,
+      "unclear": 68,
       "neutral": 13,
       "constraining": 10
     },
     "display_human_direction_counts": {
-      "enabling": 42,
+      "enabling": 43,
       "neutral": 20,
-      "unclear": 71,
+      "unclear": 70,
       "mixed": 10,
       "constraining": 8
     },
     "display_ai_direction_counts": {
-      "enabling": 49,
+      "enabling": 50,
       "mixed": 10,
-      "unclear": 69,
+      "unclear": 68,
       "neutral": 13,
       "constraining": 10
     }
@@ -118,17 +118,17 @@
     "expected_units": 151,
     "classified_units": 151,
     "relationship_pattern_counts": {
-      "mutualism": 42,
+      "mutualism": 43,
       "ai_benefiting_parasitism": 5,
       "human_benefiting_parasitism": 3,
       "competition": 2
     },
     "people_signal_counts": {
-      "people_gaining": 52,
+      "people_gaining": 53,
       "people_losing_ground": 18,
       "mixed_picture": 10,
       "not_everyone_benefits": 6,
-      "not_clear_yet": 91
+      "not_clear_yet": 90
     },
     "availability": {
       "people_gaining": true,
@@ -140,11 +140,11 @@
     "explicit_multi_label_units": 151,
     "distribution_coded_units": 151,
     "body_coverage_counts": {
-      "complete_written_source": 82,
-      "incomplete_written_source": 69
+      "complete_written_source": 83,
+      "incomplete_written_source": 68
     },
     "not_clear_breakdown": {
-      "not_enough_evidence": 71,
+      "not_enough_evidence": 70,
       "no_directional_people_change": 20
     },
     "overlap_note": "A development may contain more than one signal, so these counts do not have to add up to the weekly total.",
@@ -188,7 +188,7 @@
     "display_basis": "current_evidence_reading_with_reviewed_corrections",
     "display_classified_units": 161,
     "display_configuration_counts": {
-      "mutualism": 42,
+      "mutualism": 44,
       "ai_benefiting_parasitism": 6,
       "human_benefiting_parasitism": 4,
       "competition": 6,
@@ -198,18 +198,18 @@
       "ai_constraining_only": 4,
       "no_clear_relational_signal": 2,
       "ambiguous_relational_signal": 14,
-      "insufficient_evidence": 75
+      "insufficient_evidence": 73
     },
-    "display_complete_configuration_count": 58,
+    "display_complete_configuration_count": 60,
     "display_partial_signal_count": 12,
     "display_no_clear_relational_signal_count": 2,
     "display_ambiguous_relational_signal_count": 14,
-    "display_insufficient_evidence_count": 75,
+    "display_insufficient_evidence_count": 73,
     "display_core_four_distribution": {
-      "ai_benefiting_parasitism": 0.103448,
-      "competition": 0.103448,
-      "human_benefiting_parasitism": 0.068966,
-      "mutualism": 0.724138
+      "ai_benefiting_parasitism": 0.1,
+      "competition": 0.1,
+      "human_benefiting_parasitism": 0.066667,
+      "mutualism": 0.733333
     },
     "denominator_note": "The weekly display reports the source evidence available for the current release. A development is kept separate when the available source evidence is not enough to show a clear people outcome."
   },
@@ -10870,21 +10870,28 @@
     {
       "axes": {
         "ai": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "AI agents query digital twins, generate scenarios, and initiate actions to support decision-making under defined authority.",
+          "direction": "gain"
         },
         "human": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "Humans provide objectives, constraints, and accountability while AI agents perform ongoing analysis and action within those confines.",
+          "direction": "gain"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [],
+        "evidence_types": [
+          "source_representation"
+        ],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": false,
-        "unresolved_reason": "complete_written_source_unavailable"
+        "evidence_complete": true,
+        "unresolved_reason": ""
       },
-      "relationship_evidence": {},
+      "relationship_evidence": {
+        "mutualism": "Humans set objectives and oversee AI-enabled decisions, while AI agents monitor environments, simulate scenarios, and autonomously execute actions within predefined boundaries.",
+        "competition": "",
+        "ai_benefiting_parasitism": "",
+        "human_benefiting_parasitism": ""
+      },
       "relationship_pattern_status": "assessed",
       "event_id": "bbe81baf-0731-4b4e-90d6-3d4c2ae01afa",
       "event_title": "How Generative AI 2.0 and Digital Twin Ecosystems Redefine Decision-Making",
@@ -10910,69 +10917,77 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "insufficient_evidence",
-      "plain_label": "There is not enough source evidence to classify the relationship",
-      "human_experience_type": "unclear",
-      "ai_expressive_role": "unclear",
-      "human_direction": "unclear",
-      "ai_direction": "unclear",
-      "evidence_status": "insufficient",
-      "content_basis": "not_available",
+      "configuration": "mutualism",
+      "plain_label": "Both people and the AI side are represented as gaining",
+      "human_experience_type": "extension",
+      "ai_expressive_role": "ai_extension",
+      "human_direction": "enabling",
+      "ai_direction": "enabling",
+      "evidence_status": "sufficient",
+      "content_basis": "multiple_sources",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 2,
-        "body_coverage": "no_full_body",
+        "body_coverage": "all_sources",
         "source_quality": {
           "7c64deff5f001885915af3987d698e8b": {
-            "flags": [
-              "no_usable_complete_body"
-            ],
-            "usable_complete_body": false
+            "flags": [],
+            "scope": "written_page",
+            "characters": 8394,
+            "body_sha256": "d4bcff4888b74fb7d009fbed90c2577ee93a2deaa3c911af80be2e86658996a6",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
           },
           "d9d885f8ea1569ba54853f3c284880c1": {
-            "flags": [
-              "no_usable_complete_body"
-            ],
-            "usable_complete_body": false
+            "flags": [],
+            "scope": "written_page",
+            "characters": 9896,
+            "body_sha256": "80c5ee15c3adb6898f0f86cc3a77f750566eb23259133e2946a99085302d9ebc",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 0,
+        "full_text_sources": 2,
         "source_fingerprints": {
-          "7c64deff5f001885915af3987d698e8b": null,
-          "d9d885f8ea1569ba54853f3c284880c1": null
+          "7c64deff5f001885915af3987d698e8b": "d4bcff4888b74fb7d009fbed90c2577ee93a2deaa3c911af80be2e86658996a6",
+          "d9d885f8ea1569ba54853f3c284880c1": "80c5ee15c3adb6898f0f86cc3a77f750566eb23259133e2946a99085302d9ebc"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 2,
+        "not_available_sources": 0,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": false,
-        "people_evidence": "",
-        "ai_evidence": "",
-        "flags": [
-          "incomplete_written_source"
-        ]
+        "source_reading_complete": true,
+        "people_evidence": "Humans provide objectives, constraints, and accountability while AI agents perform ongoing analysis and action within those confines.",
+        "ai_evidence": "AI agents query digital twins, generate scenarios, and initiate actions to support decision-making under defined authority.",
+        "flags": []
       },
-      "story_country_iso3s": [],
-      "evidence_summary": "No full article body was available, so the source was not model-classified.",
-      "reasoning": "No full article body was available, so the source was not model-classified.",
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "evidence_summary": "Generative AI 2.0 integrated with digital twins enables autonomous, governed decision execution that extends human decision-making capabilities.",
+      "reasoning": "Generative AI 2.0 integrated with digital twins enables autonomous, governed decision execution that extends human decision-making capabilities.",
       "relationship_patterns": {
-        "mutualism": false,
+        "mutualism": true,
         "ai_benefiting_parasitism": false,
         "human_benefiting_parasitism": false,
         "competition": false
       },
       "public_signals": {
-        "people_gaining": false,
+        "people_gaining": true,
         "people_losing_ground": false,
         "mixed_picture": false,
         "not_everyone_benefits": false,
-        "not_clear_yet": true
+        "not_clear_yet": false
       },
-      "distribution_signal": "not_shown",
-      "public_takeaway": "",
+      "distribution_signal": "broadly_shared",
+      "public_takeaway": "Humans provide objectives, constraints, and accountability while AI agents perform ongoing analysis and action within those confines.",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -16371,29 +16386,29 @@
     "policy_version": "source_representations_independent_axes_2026_09",
     "total": 151,
     "human": {
-      "gain": 42,
+      "gain": 43,
       "loss": 8,
       "mixed": 10,
       "none": 20,
-      "unresolved": 71
+      "unresolved": 70
     },
     "ai": {
-      "gain": 49,
+      "gain": 50,
       "loss": 10,
       "mixed": 10,
       "none": 13,
-      "unresolved": 69
+      "unresolved": 68
     },
-    "evidence_complete": 82,
+    "evidence_complete": 83,
     "counting_rule": "Each axis partitions the same records. Mixed is one category. The two axes are not added together."
   },
   "direction_policy_version": "source_representations_independent_axes_2026_09",
   "classification_scope": {
     "unit": "development",
     "total": 151,
-    "complete_written_sources": 82,
-    "incomplete_written_sources": 69,
+    "complete_written_sources": 83,
+    "incomplete_written_sources": 68,
     "legacy_configuration_note": "Legacy single-label fields are retained for compatibility; independent axis categories are authoritative under the current policy."
   },
-  "content_sha256": "caaf7e01a41c5e42fe6ad3888707470ca991ceaa30b29206d8224d9a5185dc86"
+  "content_sha256": "a7bae9958473cb1e941f36b9d1a4d53d9f077d9b20db98ef47b803f54e5cf612"
 }

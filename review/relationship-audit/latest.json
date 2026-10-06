@@ -1,6 +1,6 @@
 {
   "schema_version": "aieo_relationship_evidence_audit_v1",
-  "generated_at": "2026-10-05T14:57:32.010175Z",
+  "generated_at": "2026-10-06T10:50:58.612279Z",
   "release_id": "2026-W40",
   "period_start": "2026-09-28",
   "period_end": "2026-10-04",
@@ -17,24 +17,24 @@
   "summary": {
     "development_count": 151,
     "primary_outcome_counts": {
-      "benefit_shown": 42,
+      "benefit_shown": 43,
       "downside_shown": 8,
       "benefit_and_downside": 10,
       "no_clear_people_change": 22,
-      "too_little_evidence": 69
+      "too_little_evidence": 68
     },
     "uneven_effect_count": 6,
     "body_coverage_counts": {
-      "all_sources": 81,
-      "no_full_body": 69,
+      "all_sources": 82,
+      "no_full_body": 68,
       "some_sources": 1
     },
     "reported_body_coverage_counts": {
-      "complete_written_source": 82,
-      "incomplete_written_source": 69
+      "complete_written_source": 83,
+      "incomplete_written_source": 68
     },
     "audit_flag_counts": {
-      "insufficient_evidence": 69
+      "insufficient_evidence": 68
     },
     "plain_language_note": "The five primary outcome counts add up to the weekly total. An uneven effect is a separate detail that can overlap with any outcome."
   },
@@ -4123,39 +4123,39 @@
       "event_id": "bbe81baf-0731-4b4e-90d6-3d4c2ae01afa",
       "title": "How Generative AI 2.0 and Digital Twin Ecosystems Redefine Decision-Making",
       "date": "2026-10-01",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "multiple_sources",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "Humans provide objectives, constraints, and accountability while AI agents perform ongoing analysis and action within those confines.",
+          "ai_evidence": "AI agents query digital twins, generate scenarios, and initiate actions to support decision-making under defined authority.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 2,
-        "full_text_sources": 0,
+        "full_text_sources": 2,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "7c64deff5f001885915af3987d698e8b",
@@ -4180,9 +4180,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "d9fa2401-9cd8-40de-b0ba-43d031edaa0e",
