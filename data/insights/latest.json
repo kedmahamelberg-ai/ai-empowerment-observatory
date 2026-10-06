@@ -1,7 +1,7 @@
 {
   "meta": {
     "version": "public_insights_v4_release_bound",
-    "generated_at": "2026-10-05T14:57:34.415421Z",
+    "generated_at": "2026-10-06T10:51:01.007314Z",
     "release_id": "2026-W40",
     "release_revision": 1,
     "classification_run_id": "3494930f-0807-4b91-bc3a-71e8a02fef83",
@@ -9,8 +9,8 @@
     "observation_start": "2026-09-28",
     "observation_end": "2026-10-04",
     "source_of_truth": "/data/analysis/current.json",
-    "coverage_units": 83,
-    "event_units": 79,
+    "coverage_units": 85,
+    "event_units": 80,
     "extra_coverage": 10,
     "first_time_event_records": 145,
     "follow_on_event_records": 0,
@@ -22,17 +22,17 @@
   "directional_summary": {
     "schema_version": "aieo_independent_directions_v2",
     "policy_version": "source_representations_independent_axes_2026_09",
-    "total": 79,
-    "evidence_complete": 79,
+    "total": 80,
+    "evidence_complete": 80,
     "human": {
-      "gain": 42,
+      "gain": 43,
       "loss": 8,
       "mixed": 10,
       "none": 19,
       "unresolved": 0
     },
     "ai": {
-      "gain": 47,
+      "gain": 48,
       "loss": 9,
       "mixed": 10,
       "none": 13,
@@ -41,18 +41,18 @@
   },
   "complete_content": {
     "policy_version": "complete_content_2026_09_v1",
-    "content_sha256": "4808f297530710192254254914b650ee6da06fec5b9aca5cbf9c2d520874b881",
+    "content_sha256": "4d23ed2d08b2479e65f55c3b26eab70bbf0fc75882d2feadd9c08799f327fe75",
     "counts": {
       "collected_developments": 151,
       "collected_sources": 161,
-      "eligible_developments": 79,
-      "eligible_sources": 83,
-      "excluded_developments": 72,
-      "excluded_sources": 78
+      "eligible_developments": 80,
+      "eligible_sources": 85,
+      "excluded_developments": 71,
+      "excluded_sources": 76
     },
     "denominator": {
       "unit": "distinct_development",
-      "value": 79
+      "value": 80
     }
   },
   "collection_inventory": {
@@ -1208,5 +1208,5 @@
       }
     }
   },
-  "source_relationship_sha256": "caaf7e01a41c5e42fe6ad3888707470ca991ceaa30b29206d8224d9a5185dc86"
+  "source_relationship_sha256": "a7bae9958473cb1e941f36b9d1a4d53d9f077d9b20db98ef47b803f54e5cf612"
 }
