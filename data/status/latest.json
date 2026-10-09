@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-10-09T10:56:57.897918Z",
+  "generated_at": "2026-10-09T14:51:09.990408Z",
   "system_status": "operational",
   "release_id": "2026-W40",
-  "release_revision": 1,
+  "release_revision": 2,
   "period_start": "2026-09-28",
   "period_end": "2026-10-04",
   "release_status": "provisional_automated",
@@ -12,14 +12,14 @@
   "source_of_truth": "/data/releases/current.json",
   "latest": {
     "release_id": "2026-W40",
-    "coverage_units": 85,
-    "event_units": 80,
-    "complete_content_cohort_sha256": "4d23ed2d08b2479e65f55c3b26eab70bbf0fc75882d2feadd9c08799f327fe75",
+    "coverage_units": 84,
+    "event_units": 79,
+    "complete_content_cohort_sha256": "0413f15effc2f48ddf612d52fd1b70e4eb27c1078bf27876531f2cb3603ef697",
     "collection_inventory": {
-      "collected_developments": 151,
-      "collected_sources": 161,
-      "eligible_developments": 80,
-      "eligible_sources": 85,
+      "collected_developments": 150,
+      "collected_sources": 160,
+      "eligible_developments": 79,
+      "eligible_sources": 84,
       "excluded_developments": 71,
       "excluded_sources": 76
     },
