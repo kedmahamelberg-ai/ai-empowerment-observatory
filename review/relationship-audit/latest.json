@@ -1,6 +1,6 @@
 {
   "schema_version": "aieo_relationship_evidence_audit_v1",
-  "generated_at": "2026-10-09T10:56:53.257615Z",
+  "generated_at": "2026-10-09T14:51:04.653081Z",
   "release_id": "2026-W40",
   "period_start": "2026-09-28",
   "period_end": "2026-10-04",
@@ -10,27 +10,27 @@
     "event_complete": false,
     "coverage_complete": false,
     "event_reviewed": 0,
-    "event_total": 151,
+    "event_total": 150,
     "coverage_reviewed": 0,
-    "coverage_total": 161
+    "coverage_total": 160
   },
   "summary": {
-    "development_count": 151,
+    "development_count": 150,
     "primary_outcome_counts": {
       "benefit_shown": 43,
       "downside_shown": 8,
       "benefit_and_downside": 10,
-      "no_clear_people_change": 22,
+      "no_clear_people_change": 21,
       "too_little_evidence": 68
     },
     "uneven_effect_count": 6,
     "body_coverage_counts": {
-      "all_sources": 82,
+      "all_sources": 81,
       "no_full_body": 68,
       "some_sources": 1
     },
     "reported_body_coverage_counts": {
-      "complete_written_source": 83,
+      "complete_written_source": 82,
       "incomplete_written_source": 68
     },
     "audit_flag_counts": {
@@ -613,56 +613,6 @@
       "audit_flags": [
         "insufficient_evidence"
       ]
-    },
-    {
-      "event_id": "266d926b-dc56-4025-a3dd-62e75fcd8c56",
-      "title": "Artificial Intelligence",
-      "date": "2026-10-04",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
-      "uneven_effect_noted": false,
-      "classification": {
-        "content_basis": "full_text",
-        "evidence_status": "sufficient",
-        "reviewed": false,
-        "review_status": "pending",
-        "configuration": "no_clear_relational_signal",
-        "model_confidence": null,
-        "classification_audit": {
-          "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": true,
-          "people_evidence": "Not described",
-          "ai_evidence": "Not described",
-          "flags": []
-        }
-      },
-      "body_evidence": {
-        "label": "Full article used for every source",
-        "source_count": 1,
-        "full_text_sources": 1,
-        "summary_sources": 0,
-        "snippet_sources": 0,
-        "headline_only_sources": 0,
-        "body_coverage": "all_sources"
-      },
-      "source_markets": [
-        "USA"
-      ],
-      "story_country_iso3s": [],
-      "sources": [
-        {
-          "article_id": "0f4dcdb2761e19b5f219198f152169e8",
-          "publisher": "ABC News - Breaking News, Latest News and Videos",
-          "headline": "Artificial Intelligence",
-          "url": "https://abcnews.com/alerts/ArtificialIntelligence",
-          "published_date": "2026-10-04",
-          "source_language": "un",
-          "search_markets": [
-            "USA"
-          ]
-        }
-      ],
-      "audit_flags": []
     },
     {
       "event_id": "45a3df73-bb95-49be-924b-4742165c8aa5",
