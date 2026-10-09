@@ -1,18 +1,18 @@
 {
   "meta": {
     "version": "public_insights_v4_release_bound",
-    "generated_at": "2026-10-09T10:56:56.001402Z",
+    "generated_at": "2026-10-09T14:51:07.837273Z",
     "release_id": "2026-W40",
-    "release_revision": 1,
+    "release_revision": 2,
     "classification_run_id": "3494930f-0807-4b91-bc3a-71e8a02fef83",
     "collection_run_id": "702ad02c-c9ba-4160-b49e-adb10804c0c6",
     "observation_start": "2026-09-28",
     "observation_end": "2026-10-04",
     "source_of_truth": "/data/analysis/current.json",
-    "coverage_units": 85,
-    "event_units": 80,
+    "coverage_units": 84,
+    "event_units": 79,
     "extra_coverage": 10,
-    "first_time_event_records": 145,
+    "first_time_event_records": 144,
     "follow_on_event_records": 0,
     "recurring_event_records": 0,
     "source_method": "Publications and organisations are dynamically observed through the current discovery workflow; this is not a fixed journal whitelist.",
@@ -22,42 +22,42 @@
   "directional_summary": {
     "schema_version": "aieo_independent_directions_v2",
     "policy_version": "source_representations_independent_axes_2026_09",
-    "total": 80,
-    "evidence_complete": 80,
+    "total": 79,
+    "evidence_complete": 79,
     "human": {
       "gain": 43,
       "loss": 8,
       "mixed": 10,
-      "none": 19,
+      "none": 18,
       "unresolved": 0
     },
     "ai": {
       "gain": 48,
       "loss": 9,
       "mixed": 10,
-      "none": 13,
+      "none": 12,
       "unresolved": 0
     }
   },
   "complete_content": {
     "policy_version": "complete_content_2026_09_v1",
-    "content_sha256": "4d23ed2d08b2479e65f55c3b26eab70bbf0fc75882d2feadd9c08799f327fe75",
+    "content_sha256": "0413f15effc2f48ddf612d52fd1b70e4eb27c1078bf27876531f2cb3603ef697",
     "counts": {
-      "collected_developments": 151,
-      "collected_sources": 161,
-      "eligible_developments": 80,
-      "eligible_sources": 85,
+      "collected_developments": 150,
+      "collected_sources": 160,
+      "eligible_developments": 79,
+      "eligible_sources": 84,
       "excluded_developments": 71,
       "excluded_sources": 76
     },
     "denominator": {
       "unit": "distinct_development",
-      "value": 80
+      "value": 79
     }
   },
   "collection_inventory": {
-    "coverage_units": 161,
-    "event_units": 151,
+    "coverage_units": 160,
+    "event_units": 150,
     "scope": "Collection inventory; excluded from complete-content findings.",
     "legacy_distributions": {
       "discovery_markets": [
@@ -193,8 +193,8 @@
         {
           "country_iso3": "USA",
           "name": "United States",
-          "article_count": 28,
-          "unique_publishers": 26,
+          "article_count": 27,
+          "unique_publishers": 25,
           "languages": [
             "en"
           ],
@@ -216,7 +216,7 @@
               "article_count": 1
             },
             {
-              "publisher": "ABC News - Breaking News, Latest News and Videos",
+              "publisher": "Politico",
               "article_count": 1
             }
           ],
@@ -224,7 +224,7 @@
         }
       ],
       "sources": {
-        "unique_publishers": 113,
+        "unique_publishers": 112,
         "rows": [
           {
             "publisher": "新华网",
@@ -353,11 +353,6 @@
           },
           {
             "publisher": "24heures.ca",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "ABC News - Breaking News, Latest News and Videos",
             "article_count": 1,
             "unique_event_count": 1
           },
@@ -798,136 +793,136 @@
           {
             "label": "Other AI developments",
             "count": 41,
-            "share": 0.2547
+            "share": 0.2562
           },
           {
             "label": "Government & rules",
             "count": 26,
-            "share": 0.1615
+            "share": 0.1625
           },
           {
             "label": "Infrastructure & investment",
             "count": 17,
-            "share": 0.1056
+            "share": 0.1062
           },
           {
             "label": "Safety, security & misinformation",
             "count": 12,
-            "share": 0.0745
+            "share": 0.075
           },
           {
             "label": "AI products & model releases",
             "count": 10,
-            "share": 0.0621
+            "share": 0.0625
           },
           {
             "label": "Education & research",
             "count": 10,
-            "share": 0.0621
+            "share": 0.0625
           },
           {
             "label": "Government, rights & regulation",
             "count": 9,
-            "share": 0.0559
+            "share": 0.0563
           },
           {
             "label": "Privacy & security",
             "count": 8,
-            "share": 0.0497
+            "share": 0.05
           },
           {
             "label": "Healthcare",
             "count": 6,
-            "share": 0.0373
+            "share": 0.0375
           },
           {
             "label": "Creativity & intellectual property",
             "count": 5,
-            "share": 0.0311
+            "share": 0.0312
           },
           {
             "label": "Business & productivity",
             "count": 4,
-            "share": 0.0248
+            "share": 0.025
           },
           {
             "label": "Education & learning",
             "count": 4,
-            "share": 0.0248
+            "share": 0.025
           },
           {
             "label": "Work & jobs",
-            "count": 4,
-            "share": 0.0248
+            "count": 3,
+            "share": 0.0187
           },
           {
             "label": "Business, markets & investment",
             "count": 1,
-            "share": 0.0062
+            "share": 0.0063
           },
           {
             "label": "Health & medicine",
             "count": 1,
-            "share": 0.0062
+            "share": 0.0063
           },
           {
             "label": "Infrastructure, chips & energy",
             "count": 1,
-            "share": 0.0062
+            "share": 0.0063
           },
           {
             "label": "International affairs & defence",
             "count": 1,
-            "share": 0.0062
+            "share": 0.0063
           },
           {
             "label": "Work, jobs & skills",
             "count": 1,
-            "share": 0.0062
+            "share": 0.0063
           }
         ],
         "by_status": {
           "contracting": {
             "count": 3,
-            "share": 0.0186
+            "share": 0.0187
           },
           "expanding": {
             "count": 33,
-            "share": 0.205
+            "share": 0.2062
           },
           "mixed": {
             "count": 18,
-            "share": 0.1118
+            "share": 0.1125
           },
           "non_empowerment": {
-            "count": 31,
-            "share": 0.1925
+            "count": 30,
+            "share": 0.1875
           },
           "unclear": {
             "count": 76,
-            "share": 0.472
+            "share": 0.475
           }
         },
         "by_narrative": {
           "contested": {
             "count": 18,
-            "share": 0.1118
+            "share": 0.1125
           },
           "descriptive_neutral": {
-            "count": 20,
-            "share": 0.1242
+            "count": 19,
+            "share": 0.1187
           },
           "opportunity": {
             "count": 37,
-            "share": 0.2298
+            "share": 0.2313
           },
           "threat": {
             "count": 11,
-            "share": 0.0683
+            "share": 0.0688
           },
           "unclear": {
             "count": 75,
-            "share": 0.4658
+            "share": 0.4688
           }
         }
       },
@@ -936,277 +931,267 @@
           {
             "label": "Other AI developments",
             "count": 39,
-            "share": 0.2583
+            "share": 0.26
           },
           {
             "label": "Government & rules",
             "count": 25,
-            "share": 0.1656
+            "share": 0.1667
           },
           {
             "label": "Infrastructure & investment",
             "count": 15,
-            "share": 0.0993
+            "share": 0.1
           },
           {
             "label": "Education & research",
             "count": 10,
-            "share": 0.0662
+            "share": 0.0667
           },
           {
             "label": "AI products & model releases",
             "count": 9,
-            "share": 0.0596
+            "share": 0.06
           },
           {
             "label": "Government, rights & regulation",
             "count": 9,
-            "share": 0.0596
+            "share": 0.06
           },
           {
             "label": "Privacy & security",
             "count": 9,
-            "share": 0.0596
+            "share": 0.06
           },
           {
             "label": "Safety, security & misinformation",
             "count": 9,
-            "share": 0.0596
+            "share": 0.06
           },
           {
             "label": "Creativity & intellectual property",
             "count": 5,
-            "share": 0.0331
+            "share": 0.0333
           },
           {
             "label": "Healthcare",
             "count": 5,
-            "share": 0.0331
+            "share": 0.0333
           },
           {
             "label": "Education & learning",
             "count": 4,
-            "share": 0.0265
-          },
-          {
-            "label": "Work & jobs",
-            "count": 4,
-            "share": 0.0265
+            "share": 0.0267
           },
           {
             "label": "Business & productivity",
             "count": 3,
-            "share": 0.0199
+            "share": 0.02
+          },
+          {
+            "label": "Work & jobs",
+            "count": 3,
+            "share": 0.02
           },
           {
             "label": "Business, markets & investment",
             "count": 1,
-            "share": 0.0066
+            "share": 0.0067
           },
           {
             "label": "Health & medicine",
             "count": 1,
-            "share": 0.0066
+            "share": 0.0067
           },
           {
             "label": "Infrastructure, chips & energy",
             "count": 1,
-            "share": 0.0066
+            "share": 0.0067
           },
           {
             "label": "International affairs & defence",
             "count": 1,
-            "share": 0.0066
+            "share": 0.0067
           },
           {
             "label": "Work, jobs & skills",
             "count": 1,
-            "share": 0.0066
+            "share": 0.0067
           }
         ],
         "by_status": {
           "contracting": {
             "count": 4,
-            "share": 0.0265
+            "share": 0.0267
           },
           "expanding": {
             "count": 29,
-            "share": 0.1921
+            "share": 0.1933
           },
           "mixed": {
             "count": 18,
-            "share": 0.1192
+            "share": 0.12
           },
           "non_empowerment": {
-            "count": 97,
-            "share": 0.6424
+            "count": 96,
+            "share": 0.64
           },
           "unclear": {
             "count": 3,
-            "share": 0.0199
+            "share": 0.02
           }
         },
         "by_narrative": {
           "contested": {
             "count": 19,
-            "share": 0.1258
+            "share": 0.1267
           },
           "descriptive_neutral": {
-            "count": 19,
-            "share": 0.1258
+            "count": 18,
+            "share": 0.12
           },
           "opportunity": {
             "count": 34,
-            "share": 0.2252
+            "share": 0.2267
           },
           "threat": {
             "count": 10,
-            "share": 0.0662
+            "share": 0.0667
           },
           "unclear": {
             "count": 69,
-            "share": 0.457
+            "share": 0.46
           }
         }
       },
       "non_empowerment": {
         "coverage": {
-          "unit_count": 31,
+          "unit_count": 30,
           "themes": [
             {
               "label": "Government & rules",
               "count": 11,
-              "share": 0.3548
+              "share": 0.3667
             },
             {
               "label": "Infrastructure & investment",
               "count": 6,
-              "share": 0.1935
+              "share": 0.2
             },
             {
               "label": "Privacy & security",
               "count": 6,
-              "share": 0.1935
+              "share": 0.2
             },
             {
               "label": "Healthcare",
               "count": 2,
-              "share": 0.0645
+              "share": 0.0667
             },
             {
               "label": "Other AI developments",
               "count": 2,
-              "share": 0.0645
+              "share": 0.0667
             },
             {
               "label": "AI products & model releases",
               "count": 1,
-              "share": 0.0323
+              "share": 0.0333
             },
             {
               "label": "Creativity & intellectual property",
               "count": 1,
-              "share": 0.0323
+              "share": 0.0333
             },
             {
               "label": "Education & learning",
               "count": 1,
-              "share": 0.0323
-            },
-            {
-              "label": "Work & jobs",
-              "count": 1,
-              "share": 0.0323
+              "share": 0.0333
             }
           ]
         },
         "event": {
-          "unit_count": 97,
+          "unit_count": 96,
           "themes": [
             {
               "label": "Other AI developments",
               "count": 36,
-              "share": 0.3711
+              "share": 0.375
             },
             {
               "label": "Government & rules",
               "count": 10,
-              "share": 0.1031
+              "share": 0.1042
             },
             {
               "label": "Government, rights & regulation",
               "count": 9,
-              "share": 0.0928
+              "share": 0.0938
             },
             {
               "label": "Safety, security & misinformation",
               "count": 9,
-              "share": 0.0928
+              "share": 0.0938
             },
             {
               "label": "AI products & model releases",
               "count": 8,
-              "share": 0.0825
+              "share": 0.0833
             },
             {
               "label": "Infrastructure & investment",
               "count": 6,
-              "share": 0.0619
+              "share": 0.0625
             },
             {
               "label": "Privacy & security",
               "count": 6,
-              "share": 0.0619
+              "share": 0.0625
             },
             {
               "label": "Education & learning",
               "count": 4,
-              "share": 0.0412
+              "share": 0.0417
             },
             {
               "label": "Healthcare",
               "count": 2,
-              "share": 0.0206
+              "share": 0.0208
             },
             {
               "label": "Business, markets & investment",
               "count": 1,
-              "share": 0.0103
+              "share": 0.0104
             },
             {
               "label": "Creativity & intellectual property",
               "count": 1,
-              "share": 0.0103
+              "share": 0.0104
             },
             {
               "label": "Health & medicine",
               "count": 1,
-              "share": 0.0103
+              "share": 0.0104
             },
             {
               "label": "Infrastructure, chips & energy",
               "count": 1,
-              "share": 0.0103
+              "share": 0.0104
             },
             {
               "label": "International affairs & defence",
               "count": 1,
-              "share": 0.0103
-            },
-            {
-              "label": "Work & jobs",
-              "count": 1,
-              "share": 0.0103
+              "share": 0.0104
             },
             {
               "label": "Work, jobs & skills",
               "count": 1,
-              "share": 0.0103
+              "share": 0.0104
             }
           ]
         }
       }
     }
   },
-  "source_relationship_sha256": "a7bae9958473cb1e941f36b9d1a4d53d9f077d9b20db98ef47b803f54e5cf612"
+  "source_relationship_sha256": "d1263c5fab1bd348e793171ffbd55279f0423a945f7d4750c5abe1f6d0a43bdd"
 }
