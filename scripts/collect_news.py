@@ -32,7 +32,7 @@ REVIEW_DIR = DATA_DIR / "review"
 STATUS_PATH = DATA_DIR / "collection_status.json"
 
 SERPAPI_ENDPOINT = "https://serpapi.com/search"
-COLLECTOR_VERSION = "7A.4-retry-complete-market-gate"
+COLLECTOR_VERSION = "7A.5-article-url-gate"
 REQUEST_ATTEMPTS = 3
 RETRYABLE_HTTP_STATUS = {429, 500, 502, 503, 504}
 TRACKING_PARAMS = {
@@ -46,6 +46,28 @@ TRACKING_PARAMS = {
     "mc_cid",
     "mc_eid",
 }
+
+# Google News occasionally resolves a result to a publisher's topical feed,
+# alert page, or search page rather than to the reported item.  Those pages
+# aggregate several stories and cannot support an article-level observation or
+# classification.  Match URL *path components*, rather than title wording, so
+# that a legitimate article about (for example) an alert is not discarded.
+NON_ARTICLE_PATH_COMPONENTS = frozenset(
+    {
+        "alerts",
+        "author",
+        "authors",
+        "category",
+        "categories",
+        "search",
+        "section",
+        "sections",
+        "tag",
+        "tags",
+        "topic",
+        "topics",
+    }
+)
 
 
 class CollectionError(RuntimeError):
@@ -109,6 +131,24 @@ def canonicalize_url(value: Any) -> str:
     )
 
 
+def is_article_url(value: Any) -> bool:
+    """Reject known publisher collection URLs before article persistence.
+
+    This is intentionally a conservative discovery gate, not a claim that an
+    accepted URL has been fully retrieved.  Later body recovery remains the
+    authority for confirming that an accepted URL is a usable article.
+    """
+    try:
+        components = [
+            component.casefold()
+            for component in urlsplit(normalize_space(value)).path.split("/")
+            if component
+        ]
+    except ValueError:
+        return False
+    return not any(component in NON_ARTICLE_PATH_COMPONENTS for component in components)
+
+
 def source_name(item: dict[str, Any]) -> str:
     source = item.get("source")
     if isinstance(source, dict):
@@ -143,7 +183,7 @@ def normalize_item(
 ) -> dict[str, Any] | None:
     title = normalize_space(item.get("title"))
     link = canonicalize_url(item.get("link"))
-    if not title or not link:
+    if not title or not link or not is_article_url(link):
         return None
     return {
         "id": candidate_id(title, link),
