@@ -2,10 +2,10 @@
   "schema_version": "aieo_public_release_v3.0",
   "release_id": "2026-W40",
   "release_type": "weekly",
-  "revision": 2,
+  "revision": 1,
   "period_start": "2026-09-28",
   "period_end": "2026-10-04",
-  "generated_at": "2026-10-09T14:49:47.132211Z",
+  "generated_at": "2026-10-05T12:03:37.879097Z",
   "public_label": "Evidence-based pilot release",
   "lineage": {
     "collection_run_id": "702ad02c-c9ba-4160-b49e-adb10804c0c6",
@@ -51,12 +51,12 @@
   },
   "data_current_through": "2026-10-05T11:45:09.348353+00:00",
   "counts": {
-    "observed_article_records": 160,
-    "ai_relevant_articles": 160,
-    "represented_event_records": 150,
-    "ai_relevant_event_records": 150,
-    "new_event_records": 144,
-    "first_time_event_records": 144,
+    "observed_article_records": 161,
+    "ai_relevant_articles": 161,
+    "represented_event_records": 151,
+    "ai_relevant_event_records": 151,
+    "new_event_records": 145,
+    "first_time_event_records": 145,
     "follow_on_event_records": 0,
     "recurring_event_records": 0,
     "possible_historical_match_event_records": 6,
@@ -65,15 +65,15 @@
     "rediscovered_article_records": 3,
     "extra_coverage": 10,
     "extra_coverage_from_memberships": 10,
-    "singleton_event_records": 145,
+    "singleton_event_records": 146,
     "multi_source_event_records": 5,
     "possible_duplicate_event_records": 9,
-    "unique_publications": 112,
-    "unique_domains": 112
+    "unique_publications": 113,
+    "unique_domains": 113
   },
   "dynamics": {
-    "coverage_episode_count": 160,
-    "first_time_event_appearances": 144,
+    "coverage_episode_count": 161,
+    "first_time_event_appearances": 145,
     "follow_on_developments": 0,
     "recurring_event_appearances": 0,
     "possible_historical_matches": 6,
@@ -103,6 +103,7 @@
       "21267de5-65a5-45d9-8175-6f7ef00f99b6": "first_time",
       "219b976c-8362-4982-8f3f-93e9f11e57bf": "first_time",
       "252db3e4-33e8-49c5-9619-e2f57b532823": "first_time",
+      "266d926b-dc56-4025-a3dd-62e75fcd8c56": "first_time",
       "27b204e0-595a-46c5-bc06-112aa1988d0b": "first_time",
       "2c2e6e84-d384-44da-a2a9-3a7359f38fd7": "first_time",
       "2d48c7b2-a4cf-43e3-99f2-7721aa296eec": "first_time",
@@ -254,111 +255,111 @@
   },
   "lenses": {
     "coverage": {
-      "unit_count_total": 160,
-      "unit_count_ai_relevant": 160,
-      "unit_count_scored": 84,
+      "unit_count_total": 161,
+      "unit_count_ai_relevant": 161,
+      "unit_count_scored": 85,
       "unit_count_excluded_unclear": 76,
       "unit_count_not_ai_relevant": 0,
-      "empowerment_index": 25.3968,
+      "empowerment_index": 25.098,
       "status_distribution": {
-        "expanding": 0.20625,
-        "contracting": 0.01875,
-        "mixed": 0.1125,
-        "non_empowerment": 0.1875,
-        "unclear": 0.475
+        "expanding": 0.204969,
+        "contracting": 0.018634,
+        "mixed": 0.111801,
+        "non_empowerment": 0.192547,
+        "unclear": 0.47205
       },
       "narrative_distribution": {
-        "opportunity": 0.23125,
-        "threat": 0.06875,
-        "contested": 0.1125,
-        "descriptive_neutral": 0.11875,
-        "unclear": 0.46875
+        "opportunity": 0.229814,
+        "threat": 0.068323,
+        "contested": 0.111801,
+        "descriptive_neutral": 0.124224,
+        "unclear": 0.465839
       },
       "topic_distribution": {
-        "work_employment": 0.01875,
-        "business_productivity": 0.025,
+        "work_employment": 0.024845,
+        "business_productivity": 0.024845,
         "consumer_services": 0.0,
-        "creativity_ip": 0.03125,
-        "education_research": 0.0625,
-        "healthcare": 0.0375,
-        "government_regulation": 0.1625,
-        "privacy_security": 0.05,
-        "infrastructure_investment": 0.10625,
-        "other": 0.50625
+        "creativity_ip": 0.031056,
+        "education_research": 0.062112,
+        "healthcare": 0.037267,
+        "government_regulation": 0.161491,
+        "privacy_security": 0.049689,
+        "infrastructure_investment": 0.10559,
+        "other": 0.503106
       },
       "dimension_distribution": {
-        "operational": 0.1875,
-        "creative": 0.0375,
-        "agentic": 0.05625,
-        "normative": 0.2375
+        "operational": 0.186335,
+        "creative": 0.037267,
+        "agentic": 0.055901,
+        "normative": 0.236025
       },
       "review_required_count": 76,
       "audit_selected_count": 12
     },
     "event": {
-      "unit_count_total": 150,
-      "unit_count_ai_relevant": 150,
-      "unit_count_scored": 147,
+      "unit_count_total": 151,
+      "unit_count_ai_relevant": 151,
+      "unit_count_scored": 148,
       "unit_count_excluded_unclear": 3,
       "unit_count_not_ai_relevant": 0,
-      "empowerment_index": 11.7914,
+      "empowerment_index": 11.7117,
       "status_distribution": {
-        "expanding": 0.193333,
-        "contracting": 0.026667,
-        "mixed": 0.12,
-        "non_empowerment": 0.64,
-        "unclear": 0.02
+        "expanding": 0.192053,
+        "contracting": 0.02649,
+        "mixed": 0.119205,
+        "non_empowerment": 0.642384,
+        "unclear": 0.019868
       },
       "narrative_distribution": {
-        "opportunity": 0.226667,
-        "threat": 0.066667,
-        "contested": 0.126667,
-        "descriptive_neutral": 0.12,
-        "unclear": 0.46
+        "opportunity": 0.225166,
+        "threat": 0.066225,
+        "contested": 0.125828,
+        "descriptive_neutral": 0.125828,
+        "unclear": 0.456954
       },
       "topic_distribution": {
-        "work_employment": 0.02,
-        "business_productivity": 0.02,
+        "work_employment": 0.02649,
+        "business_productivity": 0.019868,
         "consumer_services": 0.0,
-        "creativity_ip": 0.033333,
-        "education_research": 0.066667,
-        "healthcare": 0.033333,
-        "government_regulation": 0.166667,
-        "privacy_security": 0.06,
-        "infrastructure_investment": 0.1,
-        "other": 0.5
+        "creativity_ip": 0.033113,
+        "education_research": 0.066225,
+        "healthcare": 0.033113,
+        "government_regulation": 0.165563,
+        "privacy_security": 0.059603,
+        "infrastructure_investment": 0.099338,
+        "other": 0.496689
       },
       "dimension_distribution": {
-        "operational": 0.18,
-        "creative": 0.04,
-        "agentic": 0.046667,
-        "normative": 0.253333
+        "operational": 0.178808,
+        "creative": 0.039735,
+        "agentic": 0.046358,
+        "normative": 0.251656
       },
       "review_required_count": 3,
       "audit_selected_count": 5
     }
   },
   "amplification": {
-    "directional_gap": 13.6054,
-    "coverage_event_ratio": 1.0667
+    "directional_gap": 13.3863,
+    "coverage_event_ratio": 1.0662
   },
   "resolution": {
     "decision_counts": {
       "auto_merge": 10,
       "existing_assignment": 3,
-      "new_event": 142,
+      "new_event": 143,
       "review": 5
     },
     "precision_first": true,
     "event_count_is_provisional": true,
     "conservative_distinct_event_range": {
-      "minimum": 141,
-      "maximum": 150
+      "minimum": 142,
+      "maximum": 151
     }
   },
   "sources": {
-    "unique_publications": 112,
-    "unique_domains": 112,
+    "unique_publications": 113,
+    "unique_domains": 113,
     "publications": [
       {
         "publisher": "新华网",
@@ -591,6 +592,15 @@
         "event_records": 1,
         "domains": [
           "24heures.ca"
+        ],
+        "stratum": "unclassified"
+      },
+      {
+        "publisher": "ABC News - Breaking News, Latest News and Videos",
+        "articles": 1,
+        "event_records": 1,
+        "domains": [
+          "abcnews.com"
         ],
         "stratum": "unclassified"
       },
@@ -1372,33 +1382,33 @@
     "strata": {
       "general_news": {
         "articles": 24,
-        "share": 0.15
+        "share": 0.149068
       },
       "primary_official": {
         "articles": 10,
-        "share": 0.0625
+        "share": 0.062112
       },
       "regional_local": {
         "articles": 1,
-        "share": 0.00625
+        "share": 0.006211
       },
       "research_policy": {
         "articles": 7,
-        "share": 0.04375
+        "share": 0.043478
       },
       "specialist": {
         "articles": 2,
-        "share": 0.0125
+        "share": 0.012422
       },
       "unclassified": {
-        "articles": 116,
-        "share": 0.725
+        "articles": 117,
+        "share": 0.726708
       }
     },
     "languages": {
       "en": 30,
       "fr": 60,
-      "un": 41,
+      "un": 42,
       "zh": 29
     },
     "discovery_markets": {
@@ -1406,9 +1416,9 @@
       "CHN": 29,
       "FRA": 30,
       "GBR": 28,
-      "USA": 27
+      "USA": 28
     },
-    "unclassified_source_share": 0.725,
+    "unclassified_source_share": 0.726708,
     "source_strata_version": "source_strata_v1_2026-08"
   },
   "reliability": {
@@ -1430,27 +1440,27 @@
         "specialist",
         "unclassified"
       ],
-      "unclassified_source_share": 0.725,
+      "unclassified_source_share": 0.726708,
       "newsletter_feed_coverage_claimed": false,
       "coverage_claim": "Observed discovery coverage; not a comprehensive census of AI news."
     },
     "event_diagnostics": {
-      "singleton_share": 0.966667,
-      "multi_source_share": 0.033333,
+      "singleton_share": 0.966887,
+      "multi_source_share": 0.033113,
       "possible_duplicate_records": 9,
       "same_event_recall_validated": false,
       "longitudinal_event_memory_active": true,
       "historical_pool_disclosed": true
     },
     "denominators": {
-      "coverage_total": 160,
-      "coverage_ai_relevant": 160,
-      "coverage_scored": 84,
+      "coverage_total": 161,
+      "coverage_ai_relevant": 161,
+      "coverage_scored": 85,
       "coverage_excluded_unclear": 76,
       "coverage_not_ai_relevant": 0,
-      "event_total": 150,
-      "event_ai_relevant": 150,
-      "event_scored": 147,
+      "event_total": 151,
+      "event_ai_relevant": 151,
+      "event_scored": 148,
       "event_excluded_unclear": 3,
       "event_not_ai_relevant": 0
     }
@@ -14339,6 +14349,99 @@
       }
     },
     {
+      "event_id": "266d926b-dc56-4025-a3dd-62e75fcd8c56",
+      "effective_event_id": "266d926b-dc56-4025-a3dd-62e75fcd8c56",
+      "story_family_id": null,
+      "registry_version": null,
+      "last_reconciled_at": null,
+      "event_title": "Artificial Intelligence",
+      "event_summary": "",
+      "event_date": "2026-10-04",
+      "first_seen_at": "2026-10-05T05:37:20.642516+00:00",
+      "last_seen_at": "2026-10-05T05:37:20.642516+00:00",
+      "first_seen_date": "2026-10-05",
+      "member_article_ids": [
+        "0f4dcdb2761e19b5f219198f152169e8"
+      ],
+      "member_article_count": 1,
+      "sources": [
+        {
+          "article_id": "0f4dcdb2761e19b5f219198f152169e8",
+          "publisher": "ABC News - Breaking News, Latest News and Videos",
+          "headline": "Artificial Intelligence",
+          "url": "https://abcnews.com/alerts/ArtificialIntelligence",
+          "published_date": "2026-10-04",
+          "source_language": "un"
+        }
+      ],
+      "cluster_confidence": null,
+      "possible_duplicate_record": false,
+      "possible_duplicate_reason": null,
+      "appearance_types": [
+        "same_event_new_coverage"
+      ],
+      "novelty_status": "first_time",
+      "new_in_period": true,
+      "first_time_in_period": true,
+      "recurring_in_period": false,
+      "follow_on_development": false,
+      "possible_historical_match": false,
+      "classification": {
+        "ai_relevant": true,
+        "empowerment_status": "non_empowerment",
+        "empowerment_degree": 0,
+        "unit_score": 0.0,
+        "narrative_frame": "descriptive_neutral",
+        "distribution_breadth": "unclear",
+        "dominant_dimension": null,
+        "dimensions": {
+          "agentic": {
+            "present": false,
+            "direction": null,
+            "degree": 0,
+            "confidence": 0.0,
+            "reasoning": "Dimension not stated in the written source."
+          },
+          "creative": {
+            "present": false,
+            "direction": null,
+            "degree": 0,
+            "confidence": 0.0,
+            "reasoning": "Dimension not stated in the written source."
+          },
+          "normative": {
+            "present": false,
+            "direction": null,
+            "degree": 0,
+            "confidence": 0.0,
+            "reasoning": "Dimension not stated in the written source."
+          },
+          "operational": {
+            "present": false,
+            "direction": null,
+            "degree": 0,
+            "confidence": 0.0,
+            "reasoning": "Dimension not stated in the written source."
+          }
+        },
+        "ai_authority_shift": "unclear",
+        "topic": "work_employment",
+        "geographic_scope": "multi_country",
+        "primary_country_iso3": "CAN",
+        "country_iso3s": [
+          "CAN",
+          "USA"
+        ],
+        "content_basis": "full_text",
+        "confidence_diagnostic": 0.5,
+        "reasoning": "",
+        "requires_review": false,
+        "review_reason": null,
+        "audit_selected": false,
+        "audit_reason": null
+      }
+    },
+    {
       "event_id": "439c2247-f402-4951-bbda-0e26a74783e3",
       "effective_event_id": "439c2247-f402-4951-bbda-0e26a74783e3",
       "story_family_id": null,
@@ -16031,6 +16134,89 @@
           "reasoning": "Full article body unavailable; model classification was not run.",
           "requires_review": true,
           "review_reason": "full article body unavailable; model classification not run",
+          "audit_selected": false,
+          "audit_reason": null
+        }
+      },
+      {
+        "article_id": "0f4dcdb2761e19b5f219198f152169e8",
+        "event_id": "266d926b-dc56-4025-a3dd-62e75fcd8c56",
+        "effective_event_id": "266d926b-dc56-4025-a3dd-62e75fcd8c56",
+        "story_family_id": null,
+        "appearance_type": "same_event_new_coverage",
+        "days_since_previous_coverage": null,
+        "published_date": "2026-10-04",
+        "published_at": "2026-10-04T20:09:16+00:00",
+        "first_seen_at": "2026-10-05T05:37:20.642516+00:00",
+        "last_seen_at": "2026-10-05T05:37:20.642516+00:00",
+        "headline_original": "Artificial Intelligence",
+        "headline_english": "Artificial Intelligence",
+        "publisher": "ABC News - Breaking News, Latest News and Videos",
+        "url": "https://abcnews.com/alerts/ArtificialIntelligence",
+        "source_language": "un",
+        "search_rank": 3,
+        "search_markets": [
+          "USA"
+        ],
+        "search_languages": [
+          "en"
+        ],
+        "source_stratum": "unclassified",
+        "snippet": "",
+        "translation_review_required": true,
+        "translation_review_reason": "English detection did not meet the reliable passthrough threshold; routed through multilingual normalization.; translation identical to non-English source",
+        "resolution_decision": "new_event",
+        "classification": {
+          "ai_relevant": true,
+          "empowerment_status": "non_empowerment",
+          "empowerment_degree": 0,
+          "unit_score": 0.0,
+          "narrative_frame": "descriptive_neutral",
+          "distribution_breadth": "unclear",
+          "dominant_dimension": null,
+          "dimensions": {
+            "agentic": {
+              "present": false,
+              "direction": null,
+              "degree": 0,
+              "confidence": 0.0,
+              "reasoning": "Dimension not stated in the written source."
+            },
+            "creative": {
+              "present": false,
+              "direction": null,
+              "degree": 0,
+              "confidence": 0.0,
+              "reasoning": "Dimension not stated in the written source."
+            },
+            "normative": {
+              "present": false,
+              "direction": null,
+              "degree": 0,
+              "confidence": 0.0,
+              "reasoning": "Dimension not stated in the written source."
+            },
+            "operational": {
+              "present": false,
+              "direction": null,
+              "degree": 0,
+              "confidence": 0.0,
+              "reasoning": "Dimension not stated in the written source."
+            }
+          },
+          "ai_authority_shift": "unclear",
+          "topic": "work_employment",
+          "geographic_scope": "multi_country",
+          "primary_country_iso3": "CAN",
+          "country_iso3s": [
+            "CAN",
+            "USA"
+          ],
+          "content_basis": "full_text",
+          "confidence_diagnostic": 0.5,
+          "reasoning": "",
+          "requires_review": false,
+          "review_reason": null,
           "audit_selected": false,
           "audit_reason": null
         }
@@ -29995,6 +30181,99 @@
         }
       },
       {
+        "event_id": "266d926b-dc56-4025-a3dd-62e75fcd8c56",
+        "effective_event_id": "266d926b-dc56-4025-a3dd-62e75fcd8c56",
+        "story_family_id": null,
+        "registry_version": null,
+        "last_reconciled_at": null,
+        "event_title": "Artificial Intelligence",
+        "event_summary": "",
+        "event_date": "2026-10-04",
+        "first_seen_at": "2026-10-05T05:37:20.642516+00:00",
+        "last_seen_at": "2026-10-05T05:37:20.642516+00:00",
+        "first_seen_date": "2026-10-05",
+        "member_article_ids": [
+          "0f4dcdb2761e19b5f219198f152169e8"
+        ],
+        "member_article_count": 1,
+        "sources": [
+          {
+            "article_id": "0f4dcdb2761e19b5f219198f152169e8",
+            "publisher": "ABC News - Breaking News, Latest News and Videos",
+            "headline": "Artificial Intelligence",
+            "url": "https://abcnews.com/alerts/ArtificialIntelligence",
+            "published_date": "2026-10-04",
+            "source_language": "un"
+          }
+        ],
+        "cluster_confidence": null,
+        "possible_duplicate_record": false,
+        "possible_duplicate_reason": null,
+        "appearance_types": [
+          "same_event_new_coverage"
+        ],
+        "novelty_status": "first_time",
+        "new_in_period": true,
+        "first_time_in_period": true,
+        "recurring_in_period": false,
+        "follow_on_development": false,
+        "possible_historical_match": false,
+        "classification": {
+          "ai_relevant": true,
+          "empowerment_status": "non_empowerment",
+          "empowerment_degree": 0,
+          "unit_score": 0.0,
+          "narrative_frame": "descriptive_neutral",
+          "distribution_breadth": "unclear",
+          "dominant_dimension": null,
+          "dimensions": {
+            "agentic": {
+              "present": false,
+              "direction": null,
+              "degree": 0,
+              "confidence": 0.0,
+              "reasoning": "Dimension not stated in the written source."
+            },
+            "creative": {
+              "present": false,
+              "direction": null,
+              "degree": 0,
+              "confidence": 0.0,
+              "reasoning": "Dimension not stated in the written source."
+            },
+            "normative": {
+              "present": false,
+              "direction": null,
+              "degree": 0,
+              "confidence": 0.0,
+              "reasoning": "Dimension not stated in the written source."
+            },
+            "operational": {
+              "present": false,
+              "direction": null,
+              "degree": 0,
+              "confidence": 0.0,
+              "reasoning": "Dimension not stated in the written source."
+            }
+          },
+          "ai_authority_shift": "unclear",
+          "topic": "work_employment",
+          "geographic_scope": "multi_country",
+          "primary_country_iso3": "CAN",
+          "country_iso3s": [
+            "CAN",
+            "USA"
+          ],
+          "content_basis": "full_text",
+          "confidence_diagnostic": 0.5,
+          "reasoning": "",
+          "requires_review": false,
+          "review_reason": null,
+          "audit_selected": false,
+          "audit_reason": null
+        }
+      },
+      {
         "event_id": "27b204e0-595a-46c5-bc06-112aa1988d0b",
         "effective_event_id": "27b204e0-595a-46c5-bc06-112aa1988d0b",
         "story_family_id": null,
@@ -41769,15 +42048,5 @@
       }
     ]
   },
-  "revision_reason": "Remove invalid ABC News topic-page record from the corrected weekly release.",
-  "revision_history": [
-    {
-      "revision": 2,
-      "changed_at": "2026-10-09T14:49:47.132211Z",
-      "reason": "Remove invalid ABC News topic-page record from the corrected weekly release.",
-      "previous_revision": 1
-    }
-  ],
-  "previous_revision_path": "/data/releases/weekly/archive/2026-W40/revision-1.json",
-  "content_sha256": "33457c6dad1e8fe9ce65ed1d9cfb5c0f7ee4fe1adaf54ecd137de6a4a5181a9f"
+  "content_sha256": "8e1129da91e80d302dd4b21de56a860b948b9a824203a0a5c050f4fb8658780f"
 }

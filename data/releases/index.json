@@ -1,12 +1,12 @@
 {
   "schema_version": "aieo_release_index_v3.0",
-  "updated_at": "2026-10-05T12:03:37.879097Z",
+  "updated_at": "2026-10-09T14:49:47.132211Z",
   "release_count": 8,
   "weekly_release_count": 8,
   "historical_snapshot_count": 1,
   "publication_snapshot_count": 9,
   "current_release_id": "2026-W40",
-  "current_revision": 1,
+  "current_revision": 2,
   "data_current_through": "2026-10-05T11:45:09.348353+00:00",
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
@@ -233,6 +233,14 @@
         "path": "/data/releases/weekly/archive/2026-W39/revision-1.json",
         "content_sha256": "d4660792baa5a5db7197876aeed4e9e5b453744f438e9b78a693835b0ae8db33"
       }
+    ],
+    "2026-W40": [
+      {
+        "revision": 1,
+        "generated_at": "2026-10-05T12:03:37.879097Z",
+        "path": "/data/releases/weekly/archive/2026-W40/revision-1.json",
+        "content_sha256": "8e1129da91e80d302dd4b21de56a860b948b9a824203a0a5c050f4fb8658780f"
+      }
     ]
   },
   "historical_snapshots": [
@@ -431,12 +439,12 @@
       "release_type": "weekly",
       "period_start": "2026-09-28",
       "period_end": "2026-10-04",
-      "generated_at": "2026-10-05T12:03:37.879097Z",
-      "articles": 161,
-      "event_records": 151,
-      "revision": 1,
-      "new_event_records": 145,
-      "first_time_event_records": 145,
+      "generated_at": "2026-10-09T14:49:47.132211Z",
+      "articles": 160,
+      "event_records": 150,
+      "revision": 2,
+      "new_event_records": 144,
+      "first_time_event_records": 144,
       "recurring_event_records": 0,
       "resurfaced_event_records": 0,
       "follow_on_event_records": 0,
@@ -444,9 +452,9 @@
       "unclassified_novelty_event_records": 0,
       "rediscovered_article_records": 3,
       "extra_coverage": 10,
-      "coverage_index": 25.098,
-      "event_index": 11.7117,
-      "amplification_gap": 13.3863,
+      "coverage_index": 25.3968,
+      "event_index": 11.7914,
+      "amplification_gap": 13.6054,
       "audit_status": "pending",
       "validation_status": "passed"
     }
@@ -673,12 +681,12 @@
       "release_type": "weekly",
       "period_start": "2026-09-28",
       "period_end": "2026-10-04",
-      "generated_at": "2026-10-05T12:03:37.879097Z",
-      "articles": 161,
-      "event_records": 151,
-      "revision": 1,
-      "new_event_records": 145,
-      "first_time_event_records": 145,
+      "generated_at": "2026-10-09T14:49:47.132211Z",
+      "articles": 160,
+      "event_records": 150,
+      "revision": 2,
+      "new_event_records": 144,
+      "first_time_event_records": 144,
       "recurring_event_records": 0,
       "resurfaced_event_records": 0,
       "follow_on_event_records": 0,
@@ -686,9 +694,9 @@
       "unclassified_novelty_event_records": 0,
       "rediscovered_article_records": 3,
       "extra_coverage": 10,
-      "coverage_index": 25.098,
-      "event_index": 11.7117,
-      "amplification_gap": 13.3863,
+      "coverage_index": 25.3968,
+      "event_index": 11.7914,
+      "amplification_gap": 13.6054,
       "audit_status": "pending",
       "validation_status": "passed",
       "series_kind": "weekly",
@@ -698,15 +706,15 @@
     }
   ],
   "cumulative_standardized_series": {
-    "distinct_articles": 1091,
-    "distinct_event_records": 1034,
+    "distinct_articles": 1090,
+    "distinct_event_records": 1033,
     "release_count": 8,
     "period_start": "2026-08-10",
     "period_end": "2026-10-04"
   },
   "cumulative_since_launch": {
-    "distinct_articles": 1091,
-    "distinct_event_records": 1034,
+    "distinct_articles": 1090,
+    "distinct_event_records": 1033,
     "release_count": 8,
     "period_start": "2026-08-10",
     "period_end": "2026-10-04",
@@ -715,8 +723,8 @@
   },
   "month_to_date": {
     "month": "2026-10",
-    "distinct_articles": 101,
-    "distinct_event_records": 98
+    "distinct_articles": 100,
+    "distinct_event_records": 97
   },
   "comparison_rule": {
     "weekly_series": "Connect only consecutive, non-overlapping Monday-Sunday releases.",
