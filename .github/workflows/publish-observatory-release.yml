@@ -6,6 +6,7 @@ on:
   push:
     branches: [main]
     paths:
+      - 'analytics.js'
       - 'assets/fonts/**'
       - 'about/**'
       - 'config/search-identity.json'
