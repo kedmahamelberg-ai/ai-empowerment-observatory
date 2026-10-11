@@ -2,7 +2,6 @@
   "use strict";
 
   const MEASUREMENT_ID = "G-QC9205V7V7";
-  const CONSENT_KEY = "aieo_analytics_consent_v1";
   const REPORT_PATH_PATTERN = /\/reports\/.*\.pdf(?:$|\?)/i;
 
   let analyticsLoaded = false;
@@ -97,86 +96,13 @@
     );
   }
 
-  function createConsentBanner() {
-    if (document.getElementById("aieo-consent")) return;
-
-    const banner = document.createElement("aside");
-    banner.id = "aieo-consent";
-    banner.className = "aieo-consent";
-    banner.setAttribute("role", "dialog");
-    banner.setAttribute("aria-live", "polite");
-    banner.setAttribute("aria-label", "Analytics preferences");
-
-    banner.innerHTML = `
-      <div class="aieo-consent__copy">
-        <strong>Help improve the Observatory</strong>
-        <p>
-          With your permission, we use Google Analytics to understand how the
-          Observatory is used — including page views and report downloads.
-          Analytics is off until you choose “Allow analytics”.
-        </p>
-      </div>
-      <div class="aieo-consent__actions">
-        <button type="button" class="aieo-consent__button aieo-consent__button--secondary" data-consent="deny">
-          No thanks
-        </button>
-        <button type="button" class="aieo-consent__button aieo-consent__button--primary" data-consent="allow">
-          Allow analytics
-        </button>
-      </div>
-    `;
-
-    document.body.appendChild(banner);
-
-    banner.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-consent]");
-      if (!button) return;
-
-      const choice = button.dataset.consent;
-      try {
-        localStorage.setItem(CONSENT_KEY, choice);
-      } catch {}
-
-      if (choice === "allow") {
-        loadGoogleAnalytics();
-      }
-
-      banner.remove();
-    });
-  }
-
-  function initializeConsent() {
-    let choice = null;
-
-    try {
-      choice = localStorage.getItem(CONSENT_KEY);
-    } catch {}
-
-    if (choice === "allow") {
-      loadGoogleAnalytics();
-      return;
-    }
-
-    if (choice === "deny") {
-      return;
-    }
-
-    createConsentBanner();
-  }
-
   window.AIEOAnalytics = {
-    trackEvent,
-    resetConsent() {
-      try {
-        localStorage.removeItem(CONSENT_KEY);
-      } catch {}
-      window.location.reload();
-    }
+    trackEvent
   };
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initializeConsent);
+    document.addEventListener("DOMContentLoaded", loadGoogleAnalytics);
   } else {
-    initializeConsent();
+    loadGoogleAnalytics();
   }
 })();
