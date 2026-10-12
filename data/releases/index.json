@@ -1,12 +1,12 @@
 {
   "schema_version": "aieo_release_index_v3.0",
-  "updated_at": "2026-10-12T02:32:15.841711Z",
-  "release_count": 8,
-  "weekly_release_count": 8,
+  "updated_at": "2026-10-12T02:46:12.147513Z",
+  "release_count": 9,
+  "weekly_release_count": 9,
   "historical_snapshot_count": 1,
-  "publication_snapshot_count": 9,
-  "current_release_id": "2026-W40",
-  "current_revision": 3,
+  "publication_snapshot_count": 10,
+  "current_release_id": "2026-W41",
+  "current_revision": 1,
   "data_current_through": "2026-10-12T02:32:08.00432+00:00",
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
@@ -505,6 +505,30 @@
       "amplification_gap": 13.6054,
       "audit_status": "pending",
       "validation_status": "passed"
+    },
+    {
+      "release_id": "2026-W41",
+      "release_type": "weekly",
+      "period_start": "2026-10-05",
+      "period_end": "2026-10-11",
+      "generated_at": "2026-10-12T02:46:12.147513Z",
+      "articles": 144,
+      "event_records": 134,
+      "revision": 1,
+      "new_event_records": 133,
+      "first_time_event_records": 133,
+      "recurring_event_records": 1,
+      "resurfaced_event_records": 0,
+      "follow_on_event_records": 0,
+      "possible_historical_match_event_records": 0,
+      "unclassified_novelty_event_records": 0,
+      "rediscovered_article_records": 5,
+      "extra_coverage": 10,
+      "coverage_index": 18.2927,
+      "event_index": 10.8586,
+      "amplification_gap": 7.4341,
+      "audit_status": "pending",
+      "validation_status": "passed"
     }
   ],
   "display_series": [
@@ -751,28 +775,56 @@
       "label": "Week ending 2026-10-04",
       "comparable_to_weekly_series": true,
       "connect_to_previous": true
+    },
+    {
+      "release_id": "2026-W41",
+      "release_type": "weekly",
+      "period_start": "2026-10-05",
+      "period_end": "2026-10-11",
+      "generated_at": "2026-10-12T02:46:12.147513Z",
+      "articles": 144,
+      "event_records": 134,
+      "revision": 1,
+      "new_event_records": 133,
+      "first_time_event_records": 133,
+      "recurring_event_records": 1,
+      "resurfaced_event_records": 0,
+      "follow_on_event_records": 0,
+      "possible_historical_match_event_records": 0,
+      "unclassified_novelty_event_records": 0,
+      "rediscovered_article_records": 5,
+      "extra_coverage": 10,
+      "coverage_index": 18.2927,
+      "event_index": 10.8586,
+      "amplification_gap": 7.4341,
+      "audit_status": "pending",
+      "validation_status": "passed",
+      "series_kind": "weekly",
+      "label": "Week ending 2026-10-11",
+      "comparable_to_weekly_series": true,
+      "connect_to_previous": true
     }
   ],
   "cumulative_standardized_series": {
-    "distinct_articles": 1090,
-    "distinct_event_records": 1033,
-    "release_count": 8,
+    "distinct_articles": 1233,
+    "distinct_event_records": 1166,
+    "release_count": 9,
     "period_start": "2026-08-10",
-    "period_end": "2026-10-04"
+    "period_end": "2026-10-11"
   },
   "cumulative_since_launch": {
-    "distinct_articles": 1090,
-    "distinct_event_records": 1033,
-    "release_count": 8,
+    "distinct_articles": 1233,
+    "distinct_event_records": 1166,
+    "release_count": 9,
     "period_start": "2026-08-10",
-    "period_end": "2026-10-04",
+    "period_end": "2026-10-11",
     "scope": "standardized_weekly_releases_only",
     "historical_snapshots_excluded": 1
   },
   "month_to_date": {
     "month": "2026-10",
-    "distinct_articles": 100,
-    "distinct_event_records": 97
+    "distinct_articles": 243,
+    "distinct_event_records": 230
   },
   "comparison_rule": {
     "weekly_series": "Connect only consecutive, non-overlapping Monday-Sunday releases.",
