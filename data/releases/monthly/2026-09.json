@@ -7,8 +7,8 @@
   "period_end": "2026-09-30",
   "observed_week_start": "2026-08-31",
   "observed_week_end": "2026-09-27",
-  "generated_at": "2026-10-05T12:35:31.526499Z",
-  "revision": 6,
+  "generated_at": "2026-10-12T03:07:10.011436Z",
+  "revision": 7,
   "weekly_release_ids": [
     "2026-W36",
     "2026-W37",
@@ -16,10 +16,10 @@
     "2026-W39"
   ],
   "weekly_revisions": {
-    "2026-W36": 5,
-    "2026-W37": 4,
-    "2026-W38": 3,
-    "2026-W39": 2
+    "2026-W36": 6,
+    "2026-W37": 5,
+    "2026-W38": 4,
+    "2026-W39": 3
   },
   "reality": {
     "distinct_event_records": 538,
@@ -73,16 +73,16 @@
   },
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-10-05T06:30:10.228117+00:00",
+    "considered_through": "2026-10-12T01:59:22.86691+00:00",
     "scope": "All prior event records available to the included reconciliations."
   },
   "reconciliation": {
-    "current_through": "2026-10-05T11:45:09.348353+00:00",
+    "current_through": "2026-10-12T02:32:08.00432+00:00",
     "weekly_revisions_included": {
-      "2026-W36": 5,
-      "2026-W37": 4,
-      "2026-W38": 3,
-      "2026-W39": 2
+      "2026-W36": 6,
+      "2026-W37": 5,
+      "2026-W38": 4,
+      "2026-W39": 3
     },
     "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
   },
@@ -141,8 +141,19 @@
         "2026-W38": 3,
         "2026-W39": 2
       }
+    },
+    {
+      "revision": 7,
+      "changed_at": "2026-10-12T03:07:10.011436Z",
+      "reason": "An included weekly release was restated after longitudinal reconciliation.",
+      "weekly_revisions": {
+        "2026-W36": 6,
+        "2026-W37": 5,
+        "2026-W38": 4,
+        "2026-W39": 3
+      }
     }
   ],
-  "previous_revision_path": "/data/releases/monthly/archive/2026-09/revision-5.json",
-  "content_sha256": "47964941472e8fb7d1b82b7fbbbba91bcea2781e25ae426f6dceb0c9749b5308"
+  "previous_revision_path": "/data/releases/monthly/archive/2026-09/revision-6.json",
+  "content_sha256": "5fc00a927da0b22db3fc2b886cc2303bd04c20e8bbbc62fa954313242bdf4ba2"
 }

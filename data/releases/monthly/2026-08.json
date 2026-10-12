@@ -7,17 +7,17 @@
   "period_end": "2026-08-31",
   "observed_week_start": "2026-08-10",
   "observed_week_end": "2026-08-30",
-  "generated_at": "2026-10-05T12:35:31.523340Z",
-  "revision": 9,
+  "generated_at": "2026-10-12T03:07:10.009245Z",
+  "revision": 10,
   "weekly_release_ids": [
     "2026-W33",
     "2026-W34",
     "2026-W35"
   ],
   "weekly_revisions": {
-    "2026-W33": 10,
-    "2026-W34": 8,
-    "2026-W35": 9
+    "2026-W33": 11,
+    "2026-W34": 9,
+    "2026-W35": 10
   },
   "reality": {
     "distinct_event_records": 346,
@@ -69,15 +69,15 @@
   },
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-10-05T06:30:10.228117+00:00",
+    "considered_through": "2026-10-12T01:59:22.86691+00:00",
     "scope": "All prior event records available to the included reconciliations."
   },
   "reconciliation": {
-    "current_through": "2026-10-05T11:45:09.348353+00:00",
+    "current_through": "2026-10-12T02:32:08.00432+00:00",
     "weekly_revisions_included": {
-      "2026-W33": 10,
-      "2026-W34": 8,
-      "2026-W35": 9
+      "2026-W33": 11,
+      "2026-W34": 9,
+      "2026-W35": 10
     },
     "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
   },
@@ -164,8 +164,18 @@
         "2026-W34": 8,
         "2026-W35": 9
       }
+    },
+    {
+      "revision": 10,
+      "changed_at": "2026-10-12T03:07:10.009245Z",
+      "reason": "An included weekly release was restated after longitudinal reconciliation.",
+      "weekly_revisions": {
+        "2026-W33": 11,
+        "2026-W34": 9,
+        "2026-W35": 10
+      }
     }
   ],
-  "previous_revision_path": "/data/releases/monthly/archive/2026-08/revision-8.json",
-  "content_sha256": "16ca79bde3393d4cc1a6ec06f68de7b7b7d1d924a0d41e0415843257fca39f09"
+  "previous_revision_path": "/data/releases/monthly/archive/2026-08/revision-9.json",
+  "content_sha256": "aafc401a0ec320d7434369336a691786289bd00026d77505967677c0a2e2e9ae"
 }

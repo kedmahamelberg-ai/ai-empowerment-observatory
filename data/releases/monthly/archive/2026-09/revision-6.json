@@ -1,0 +1,148 @@
+{
+  "schema_version": "aieo_period_summary_v1.1",
+  "period_id": "2026-09",
+  "period_type": "monthly",
+  "status": "complete",
+  "period_start": "2026-09-01",
+  "period_end": "2026-09-30",
+  "observed_week_start": "2026-08-31",
+  "observed_week_end": "2026-09-27",
+  "generated_at": "2026-10-05T12:35:31.526499Z",
+  "revision": 6,
+  "weekly_release_ids": [
+    "2026-W36",
+    "2026-W37",
+    "2026-W38",
+    "2026-W39"
+  ],
+  "weekly_revisions": {
+    "2026-W36": 5,
+    "2026-W37": 4,
+    "2026-W38": 3,
+    "2026-W39": 2
+  },
+  "reality": {
+    "distinct_event_records": 538,
+    "new_developments": 506,
+    "first_time_event_records": 506,
+    "follow_on_developments": 0,
+    "active_story_families": 0
+  },
+  "attention": {
+    "published_coverage_articles": 569,
+    "coverage_episode_count": 570,
+    "recurring_event_appearances": 2,
+    "resurfaced_event_appearances": 0,
+    "same_event_new_coverage_articles": 0,
+    "rediscovered_article_records": 14,
+    "unique_publications": 313,
+    "unique_domains": 292
+  },
+  "replication_delay": {
+    "observed_recurrence_count": 0,
+    "median_days": null,
+    "p75_days": null,
+    "p90_days": null
+  },
+  "article_rediscovery_delay": {
+    "observed_rediscovery_count": 14,
+    "median_days": 7.0,
+    "p75_days": 7.01,
+    "p90_days": 7.02
+  },
+  "distributions": {
+    "topics": {
+      "other": 255,
+      "government_regulation": 104,
+      "infrastructure_investment": 50,
+      "education_research": 42,
+      "work_employment": 18,
+      "healthcare": 18,
+      "privacy_security": 17,
+      "creativity_ip": 16,
+      "business_productivity": 12,
+      "consumer_services": 6
+    },
+    "empowerment_status": {
+      "non_empowerment": 361,
+      "expanding": 109,
+      "mixed": 39,
+      "unclear": 18,
+      "contracting": 11
+    }
+  },
+  "historical_pool": {
+    "starts_at": "2026-08-05T09:11:42.719519+00:00",
+    "considered_through": "2026-10-05T06:30:10.228117+00:00",
+    "scope": "All prior event records available to the included reconciliations."
+  },
+  "reconciliation": {
+    "current_through": "2026-10-05T11:45:09.348353+00:00",
+    "weekly_revisions_included": {
+      "2026-W36": 5,
+      "2026-W37": 4,
+      "2026-W38": 3,
+      "2026-W39": 2
+    },
+    "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
+  },
+  "story": "AIEO observed 569 newly published AI-news articles. They represented 506 new developments and 2 appearances of developments already in memory.",
+  "disclosure": "Distinct events are deduplicated across the full period by effective event ID. Recurring appearances remain in the Attention view and are not counted as new developments.",
+  "revision_reason": "An included weekly release was restated after longitudinal reconciliation.",
+  "revision_history": [
+    {
+      "revision": 2,
+      "changed_at": "2026-09-14T11:23:33.678325Z",
+      "reason": "A newly completed weekly release was added to this period.",
+      "weekly_revisions": {
+        "2026-W36": 2,
+        "2026-W37": 1
+      }
+    },
+    {
+      "revision": 3,
+      "changed_at": "2026-09-21T07:30:26.344217Z",
+      "reason": "A newly completed weekly release was added to this period.",
+      "weekly_revisions": {
+        "2026-W36": 3,
+        "2026-W37": 2,
+        "2026-W38": 1
+      }
+    },
+    {
+      "revision": 4,
+      "changed_at": "2026-09-28T07:39:13.446851Z",
+      "reason": "A newly completed weekly release was added to this period.",
+      "weekly_revisions": {
+        "2026-W36": 4,
+        "2026-W37": 3,
+        "2026-W38": 2,
+        "2026-W39": 1
+      }
+    },
+    {
+      "revision": 5,
+      "changed_at": "2026-10-02T10:08:59.085243Z",
+      "reason": "Accepted reconciliation changed the period-level event or attention history.",
+      "weekly_revisions": {
+        "2026-W36": 4,
+        "2026-W37": 3,
+        "2026-W38": 2,
+        "2026-W39": 1
+      }
+    },
+    {
+      "revision": 6,
+      "changed_at": "2026-10-05T12:35:31.526499Z",
+      "reason": "An included weekly release was restated after longitudinal reconciliation.",
+      "weekly_revisions": {
+        "2026-W36": 5,
+        "2026-W37": 4,
+        "2026-W38": 3,
+        "2026-W39": 2
+      }
+    }
+  ],
+  "previous_revision_path": "/data/releases/monthly/archive/2026-09/revision-5.json",
+  "content_sha256": "47964941472e8fb7d1b82b7fbbbba91bcea2781e25ae426f6dceb0c9749b5308"
+}
