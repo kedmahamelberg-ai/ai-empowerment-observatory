@@ -2,10 +2,10 @@
   "schema_version": "aieo_symbiosis_public_v2.0",
   "release_id": "2026-W41",
   "release_type": "weekly_relationship_lens",
-  "revision": 2,
+  "revision": 3,
   "period_start": "2026-10-05",
   "period_end": "2026-10-11",
-  "generated_at": "2026-10-12T03:06:54.713982Z",
+  "generated_at": "2026-10-13T11:07:47.657413Z",
   "codebook_version": "aieo_news_symbiosis_v0.1",
   "source_release_sha256": "4d6e51ace7961a8f627c6b993200457131bd402b9306696a0ef72a9bc4e0695f",
   "public_status": "current_evidence_reading",
@@ -60,56 +60,56 @@
     "display_basis": "current_evidence_reading_with_reviewed_corrections",
     "display_classified_units": 134,
     "display_configuration_counts": {
-      "mutualism": 28,
+      "mutualism": 29,
       "ai_benefiting_parasitism": 7,
-      "human_benefiting_parasitism": 4,
+      "human_benefiting_parasitism": 5,
       "competition": 2,
       "human_enabling_only": 3,
       "human_constraining_only": 0,
       "ai_enabling_only": 10,
       "ai_constraining_only": 1,
       "no_clear_relational_signal": 6,
-      "ambiguous_relational_signal": 17,
-      "insufficient_evidence": 56
+      "ambiguous_relational_signal": 18,
+      "insufficient_evidence": 53
     },
-    "display_complete_configuration_count": 41,
+    "display_complete_configuration_count": 43,
     "display_partial_signal_count": 14,
     "display_no_clear_relational_signal_count": 6,
-    "display_ambiguous_relational_signal_count": 17,
-    "display_insufficient_evidence_count": 56,
+    "display_ambiguous_relational_signal_count": 18,
+    "display_insufficient_evidence_count": 53,
     "display_core_four_distribution": {
-      "mutualism": 0.682927,
-      "ai_benefiting_parasitism": 0.170732,
-      "human_benefiting_parasitism": 0.097561,
-      "competition": 0.04878
+      "mutualism": 0.674419,
+      "ai_benefiting_parasitism": 0.162791,
+      "human_benefiting_parasitism": 0.116279,
+      "competition": 0.046512
     },
     "denominator_note": "The weekly display reports the source evidence available for the current release. A development is kept separate when the available source evidence is not enough to show a clear people outcome.",
     "human_direction_counts": {
-      "enabling": 42,
-      "unclear": 56,
+      "enabling": 45,
+      "unclear": 53,
       "constraining": 10,
       "mixed": 8,
       "neutral": 18
     },
     "ai_direction_counts": {
-      "enabling": 46,
-      "constraining": 8,
-      "unclear": 56,
-      "mixed": 15,
+      "enabling": 47,
+      "constraining": 9,
+      "unclear": 53,
+      "mixed": 16,
       "neutral": 9
     },
     "display_human_direction_counts": {
-      "enabling": 42,
-      "unclear": 56,
+      "enabling": 45,
+      "unclear": 53,
       "constraining": 10,
       "mixed": 8,
       "neutral": 18
     },
     "display_ai_direction_counts": {
-      "enabling": 46,
-      "constraining": 8,
-      "unclear": 56,
-      "mixed": 15,
+      "enabling": 47,
+      "constraining": 9,
+      "unclear": 53,
+      "mixed": 16,
       "neutral": 9
     }
   },
@@ -118,17 +118,17 @@
     "expected_units": 134,
     "classified_units": 134,
     "relationship_pattern_counts": {
-      "mutualism": 39,
+      "mutualism": 41,
       "ai_benefiting_parasitism": 6,
-      "human_benefiting_parasitism": 4,
+      "human_benefiting_parasitism": 5,
       "competition": 0
     },
     "people_signal_counts": {
-      "people_gaining": 50,
+      "people_gaining": 53,
       "people_losing_ground": 18,
       "mixed_picture": 8,
-      "not_everyone_benefits": 15,
-      "not_clear_yet": 74
+      "not_everyone_benefits": 16,
+      "not_clear_yet": 71
     },
     "availability": {
       "people_gaining": true,
@@ -140,11 +140,11 @@
     "explicit_multi_label_units": 134,
     "distribution_coded_units": 134,
     "body_coverage_counts": {
-      "complete_written_source": 78,
-      "incomplete_written_source": 56
+      "complete_written_source": 81,
+      "incomplete_written_source": 53
     },
     "not_clear_breakdown": {
-      "not_enough_evidence": 56,
+      "not_enough_evidence": 53,
       "no_directional_people_change": 18
     },
     "overlap_note": "A development may contain more than one signal, so these counts do not have to add up to the weekly total.",
@@ -188,9 +188,9 @@
     "display_basis": "current_evidence_reading_with_reviewed_corrections",
     "display_classified_units": 144,
     "display_configuration_counts": {
-      "mutualism": 45,
+      "mutualism": 46,
       "ai_benefiting_parasitism": 7,
-      "human_benefiting_parasitism": 2,
+      "human_benefiting_parasitism": 4,
       "competition": 5,
       "human_enabling_only": 3,
       "human_constraining_only": 0,
@@ -198,18 +198,18 @@
       "ai_constraining_only": 0,
       "no_clear_relational_signal": 2,
       "ambiguous_relational_signal": 10,
-      "insufficient_evidence": 60
+      "insufficient_evidence": 57
     },
-    "display_complete_configuration_count": 59,
+    "display_complete_configuration_count": 62,
     "display_partial_signal_count": 13,
     "display_no_clear_relational_signal_count": 2,
     "display_ambiguous_relational_signal_count": 10,
-    "display_insufficient_evidence_count": 60,
+    "display_insufficient_evidence_count": 57,
     "display_core_four_distribution": {
-      "ai_benefiting_parasitism": 0.118644,
-      "competition": 0.084746,
-      "human_benefiting_parasitism": 0.033898,
-      "mutualism": 0.762712
+      "ai_benefiting_parasitism": 0.112903,
+      "competition": 0.080645,
+      "human_benefiting_parasitism": 0.064516,
+      "mutualism": 0.741935
     },
     "denominator_note": "The weekly display reports the source evidence available for the current release. A development is kept separate when the available source evidence is not enough to show a clear people outcome."
   },
@@ -1510,21 +1510,28 @@
     {
       "axes": {
         "ai": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "AI-enabled care expands within regulated frameworks, with oversight to prevent biased or unsafe outputs.",
+          "direction": "gain"
         },
         "human": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "Clinicians gain capacity to supervise AI decisions under state rules.",
+          "direction": "gain"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [],
+        "evidence_types": [
+          "source_representation"
+        ],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": false,
-        "unresolved_reason": "complete_written_source_unavailable"
+        "evidence_complete": true,
+        "unresolved_reason": ""
       },
-      "relationship_evidence": {},
+      "relationship_evidence": {
+        "mutualism": "AI deployment in regulated health care grows while clinicians gain clearer oversight and decision-support safeguards.",
+        "competition": "",
+        "ai_benefiting_parasitism": "",
+        "human_benefiting_parasitism": ""
+      },
       "relationship_pattern_status": "assessed",
       "event_id": "1932273a-b1da-4f1f-9dd6-0c10aac86d62",
       "event_title": "State Health Care AI Regulation: California Mandates Oversight as Utah Tests Automation",
@@ -1542,62 +1549,66 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "insufficient_evidence",
-      "plain_label": "There is not enough source evidence to classify the relationship",
-      "human_experience_type": "unclear",
-      "ai_expressive_role": "unclear",
-      "human_direction": "unclear",
-      "ai_direction": "unclear",
-      "evidence_status": "insufficient",
-      "content_basis": "not_available",
+      "configuration": "mutualism",
+      "plain_label": "Both people and the AI side are represented as gaining",
+      "human_experience_type": "extension",
+      "ai_expressive_role": "ai_extension",
+      "human_direction": "enabling",
+      "ai_direction": "enabling",
+      "evidence_status": "sufficient",
+      "content_basis": "full_text",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "no_full_body",
+        "body_coverage": "all_sources",
         "source_quality": {
           "d805732e31b41d7b26e9d1357e1ab7b7": {
-            "flags": [
-              "no_usable_complete_body"
-            ],
-            "usable_complete_body": false
+            "flags": [],
+            "scope": "written_page",
+            "characters": 5793,
+            "body_sha256": "238ccf9055af14f58fa38bb75637269f9ec3f18b8084997a79e68ba6026e71b0",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "source_fingerprints": {
-          "d805732e31b41d7b26e9d1357e1ab7b7": null
+          "d805732e31b41d7b26e9d1357e1ab7b7": "238ccf9055af14f58fa38bb75637269f9ec3f18b8084997a79e68ba6026e71b0"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 1,
+        "not_available_sources": 0,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": false,
-        "people_evidence": "",
-        "ai_evidence": "",
-        "flags": [
-          "incomplete_written_source"
-        ]
+        "source_reading_complete": true,
+        "people_evidence": "Clinicians gain capacity to supervise AI decisions under state rules.",
+        "ai_evidence": "AI-enabled care expands within regulated frameworks, with oversight to prevent biased or unsafe outputs.",
+        "flags": []
       },
-      "story_country_iso3s": [],
-      "evidence_summary": "No full article body was available, so the source was not model-classified.",
-      "reasoning": "No full article body was available, so the source was not model-classified.",
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "evidence_summary": "Regulation and testing around health-care AI in California and Utah expand both clinician capabilities and AI deployment within guardrails.",
+      "reasoning": "Regulation and testing around health-care AI in California and Utah expand both clinician capabilities and AI deployment within guardrails.",
       "relationship_patterns": {
-        "mutualism": false,
+        "mutualism": true,
         "ai_benefiting_parasitism": false,
         "human_benefiting_parasitism": false,
         "competition": false
       },
       "public_signals": {
-        "people_gaining": false,
+        "people_gaining": true,
         "people_losing_ground": false,
         "mixed_picture": false,
         "not_everyone_benefits": false,
-        "not_clear_yet": true
+        "not_clear_yet": false
       },
-      "distribution_signal": "not_shown",
-      "public_takeaway": "",
+      "distribution_signal": "broadly_shared",
+      "public_takeaway": "Clinicians gain capacity to supervise AI decisions under state rules.",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -9222,21 +9233,28 @@
     {
       "axes": {
         "ai": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "Policy aims to constrain AI to protect safety, transparency, and accountability.",
+          "direction": "loss"
         },
         "human": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "Regulation is framed as enabling safe, inclusive participation by people in AI development and use.",
+          "direction": "gain"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [],
+        "evidence_types": [
+          "source_representation"
+        ],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": false,
-        "unresolved_reason": "complete_written_source_unavailable"
+        "evidence_complete": true,
+        "unresolved_reason": ""
       },
-      "relationship_evidence": {},
+      "relationship_evidence": {
+        "mutualism": "",
+        "competition": "",
+        "ai_benefiting_parasitism": "",
+        "human_benefiting_parasitism": "true"
+      },
       "relationship_pattern_status": "assessed",
       "event_id": "a84e7895-0ffa-428d-9294-e5053d2eaa95",
       "event_title": "Sen. Patty Murray hosts Transparency Coalition for AI policy talk, predicts federal action in 2027",
@@ -9254,62 +9272,66 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "insufficient_evidence",
-      "plain_label": "There is not enough source evidence to classify the relationship",
-      "human_experience_type": "unclear",
-      "ai_expressive_role": "unclear",
-      "human_direction": "unclear",
-      "ai_direction": "unclear",
-      "evidence_status": "insufficient",
-      "content_basis": "not_available",
+      "configuration": "human_benefiting_parasitism",
+      "plain_label": "People gain while the AI system is constrained",
+      "human_experience_type": "extension",
+      "ai_expressive_role": "ai_restriction",
+      "human_direction": "enabling",
+      "ai_direction": "constraining",
+      "evidence_status": "sufficient",
+      "content_basis": "full_text",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "no_full_body",
+        "body_coverage": "all_sources",
         "source_quality": {
           "bf580197f15977a615625a4a259f4e59": {
-            "flags": [
-              "no_usable_complete_body"
-            ],
-            "usable_complete_body": false
+            "flags": [],
+            "scope": "written_page",
+            "characters": 8189,
+            "body_sha256": "e152cd9eb7a674327a0a02608cfc6cf5dd19196588fe990010b97e0f3dec40b1",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "source_fingerprints": {
-          "bf580197f15977a615625a4a259f4e59": null
+          "bf580197f15977a615625a4a259f4e59": "e152cd9eb7a674327a0a02608cfc6cf5dd19196588fe990010b97e0f3dec40b1"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 1,
+        "not_available_sources": 0,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": false,
-        "people_evidence": "",
-        "ai_evidence": "",
-        "flags": [
-          "incomplete_written_source"
-        ]
+        "source_reading_complete": true,
+        "people_evidence": "Regulation is framed as enabling safe, inclusive participation by people in AI development and use.",
+        "ai_evidence": "Policy aims to constrain AI to protect safety, transparency, and accountability.",
+        "flags": []
       },
-      "story_country_iso3s": [],
-      "evidence_summary": "No full article body was available, so the source was not model-classified.",
-      "reasoning": "No full article body was available, so the source was not model-classified.",
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "evidence_summary": "Lawmakers push for federal AI action to expand human participation and safeguards while restricting AI risks.",
+      "reasoning": "Lawmakers push for federal AI action to expand human participation and safeguards while restricting AI risks.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
-        "human_benefiting_parasitism": false,
+        "human_benefiting_parasitism": true,
         "competition": false
       },
       "public_signals": {
-        "people_gaining": false,
+        "people_gaining": true,
         "people_losing_ground": false,
         "mixed_picture": false,
         "not_everyone_benefits": false,
-        "not_clear_yet": true
+        "not_clear_yet": false
       },
-      "distribution_signal": "not_shown",
-      "public_takeaway": "",
+      "distribution_signal": "broadly_shared",
+      "public_takeaway": "Regulation is framed as enabling safe, inclusive participation by people in AI development and use.",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -10830,21 +10852,28 @@
     {
       "axes": {
         "ai": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "AI systems expand their reach by leveraging rider data to generate adaptive training outputs.",
+          "direction": "mixed"
         },
         "human": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "People gain new coaching capabilities and personalized insights via AI-enabled tools.",
+          "direction": "gain"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [],
+        "evidence_types": [
+          "source_representation"
+        ],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": false,
-        "unresolved_reason": "complete_written_source_unavailable"
+        "evidence_complete": true,
+        "unresolved_reason": ""
       },
-      "relationship_evidence": {},
+      "relationship_evidence": {
+        "mutualism": "AI coaching outputs help riders improve while riders provide data that trains models.",
+        "competition": "",
+        "ai_benefiting_parasitism": "",
+        "human_benefiting_parasitism": ""
+      },
       "relationship_pattern_status": "assessed",
       "event_id": "bc53fb36-b050-4af6-9ee6-1fa1e704e5d5",
       "event_title": "How Artificial Intelligence Is Reshaping Mobile Gaming",
@@ -10862,62 +10891,64 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "insufficient_evidence",
-      "plain_label": "There is not enough source evidence to classify the relationship",
-      "human_experience_type": "unclear",
+      "configuration": "ambiguous_relational_signal",
+      "plain_label": "A relationship is suggested, but its direction is unclear",
+      "human_experience_type": "extension",
       "ai_expressive_role": "unclear",
-      "human_direction": "unclear",
-      "ai_direction": "unclear",
-      "evidence_status": "insufficient",
-      "content_basis": "not_available",
+      "human_direction": "enabling",
+      "ai_direction": "mixed",
+      "evidence_status": "sufficient",
+      "content_basis": "full_text",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "no_full_body",
+        "body_coverage": "all_sources",
         "source_quality": {
           "c2113fe8f0b1d3be9eda0326e9548ed8": {
-            "flags": [
-              "no_usable_complete_body"
-            ],
-            "usable_complete_body": false
+            "flags": [],
+            "scope": "written_page",
+            "characters": 10556,
+            "body_sha256": "330387d7218b79d1917be27f495c9e772d7f3c8fbc0bd3a8655ffa44781b0ea0",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "source_fingerprints": {
-          "c2113fe8f0b1d3be9eda0326e9548ed8": null
+          "c2113fe8f0b1d3be9eda0326e9548ed8": "330387d7218b79d1917be27f495c9e772d7f3c8fbc0bd3a8655ffa44781b0ea0"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 1,
+        "not_available_sources": 0,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": false,
-        "people_evidence": "",
-        "ai_evidence": "",
-        "flags": [
-          "incomplete_written_source"
-        ]
+        "source_reading_complete": true,
+        "people_evidence": "People gain new coaching capabilities and personalized insights via AI-enabled tools.",
+        "ai_evidence": "AI systems expand their reach by leveraging rider data to generate adaptive training outputs.",
+        "flags": []
       },
       "story_country_iso3s": [],
-      "evidence_summary": "No full article body was available, so the source was not model-classified.",
-      "reasoning": "No full article body was available, so the source was not model-classified.",
+      "evidence_summary": "AI-powered coaching tools expand people’s capabilities while AI systems grow through data-driven adaptation.",
+      "reasoning": "AI-powered coaching tools expand people’s capabilities while AI systems grow through data-driven adaptation.",
       "relationship_patterns": {
-        "mutualism": false,
+        "mutualism": true,
         "ai_benefiting_parasitism": false,
         "human_benefiting_parasitism": false,
         "competition": false
       },
       "public_signals": {
-        "people_gaining": false,
+        "people_gaining": true,
         "people_losing_ground": false,
         "mixed_picture": false,
-        "not_everyone_benefits": false,
-        "not_clear_yet": true
+        "not_everyone_benefits": true,
+        "not_clear_yet": false
       },
-      "distribution_signal": "not_shown",
-      "public_takeaway": "",
+      "distribution_signal": "unequal",
+      "public_takeaway": "People gain new coaching capabilities and personalized insights via AI-enabled tools.",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -14638,29 +14669,29 @@
     "policy_version": "source_representations_independent_axes_2026_09",
     "total": 134,
     "human": {
-      "gain": 42,
+      "gain": 45,
       "loss": 10,
       "mixed": 8,
       "none": 18,
-      "unresolved": 56
+      "unresolved": 53
     },
     "ai": {
-      "gain": 46,
-      "loss": 8,
-      "mixed": 15,
+      "gain": 47,
+      "loss": 9,
+      "mixed": 16,
       "none": 9,
-      "unresolved": 56
+      "unresolved": 53
     },
-    "evidence_complete": 78,
+    "evidence_complete": 81,
     "counting_rule": "Each axis partitions the same records. Mixed is one category. The two axes are not added together."
   },
   "direction_policy_version": "source_representations_independent_axes_2026_09",
   "classification_scope": {
     "unit": "development",
     "total": 134,
-    "complete_written_sources": 78,
-    "incomplete_written_sources": 56,
+    "complete_written_sources": 81,
+    "incomplete_written_sources": 53,
     "legacy_configuration_note": "Legacy single-label fields are retained for compatibility; independent axis categories are authoritative under the current policy."
   },
-  "content_sha256": "292f1272dc591815132b332419602b2c2ed95c919a4e1cc288172f15451377b7"
+  "content_sha256": "03089976a07c9b010a1023da1cd139f193e60a74613029f992aa0434c5e79a1d"
 }

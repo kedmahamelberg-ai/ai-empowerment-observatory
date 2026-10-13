@@ -1,6 +1,6 @@
 {
   "schema_version": "aieo_relationship_evidence_audit_v1",
-  "generated_at": "2026-10-12T03:12:51.331898Z",
+  "generated_at": "2026-10-13T11:07:47.902793Z",
   "release_id": "2026-W41",
   "period_start": "2026-10-05",
   "period_end": "2026-10-11",
@@ -17,24 +17,24 @@
   "summary": {
     "development_count": 134,
     "primary_outcome_counts": {
-      "benefit_shown": 42,
+      "benefit_shown": 45,
       "downside_shown": 10,
       "benefit_and_downside": 8,
       "no_clear_people_change": 18,
-      "too_little_evidence": 56
+      "too_little_evidence": 53
     },
-    "uneven_effect_count": 15,
+    "uneven_effect_count": 16,
     "body_coverage_counts": {
-      "all_sources": 75,
-      "no_full_body": 56,
+      "all_sources": 78,
+      "no_full_body": 53,
       "some_sources": 3
     },
     "reported_body_coverage_counts": {
-      "complete_written_source": 78,
-      "incomplete_written_source": 56
+      "complete_written_source": 81,
+      "incomplete_written_source": 53
     },
     "audit_flag_counts": {
-      "insufficient_evidence": 56
+      "insufficient_evidence": 53
     },
     "plain_language_note": "The five primary outcome counts add up to the weekly total. An uneven effect is a separate detail that can overlap with any outcome."
   },
@@ -3530,34 +3530,32 @@
       "event_id": "bc53fb36-b050-4af6-9ee6-1fa1e704e5d5",
       "title": "How Artificial Intelligence Is Reshaping Mobile Gaming",
       "date": "2026-10-09",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
-      "uneven_effect_noted": false,
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
+      "uneven_effect_noted": true,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "People gain new coaching capabilities and personalized insights via AI-enabled tools.",
+          "ai_evidence": "AI systems expand their reach by leveraging rider data to generate adaptive training outputs.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "CAN",
@@ -3578,9 +3576,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "fa46a094-063c-403e-97ef-f708789e338d",
@@ -5277,39 +5273,39 @@
       "event_id": "a84e7895-0ffa-428d-9294-e5053d2eaa95",
       "title": "Sen. Patty Murray hosts Transparency Coalition for AI policy talk, predicts federal action in 2027",
       "date": "2026-10-09",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "human_benefiting_parasitism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "Regulation is framed as enabling safe, inclusive participation by people in AI development and use.",
+          "ai_evidence": "Policy aims to constrain AI to protect safety, transparency, and accountability.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "bf580197f15977a615625a4a259f4e59",
@@ -5323,9 +5319,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "b953bf54-b1eb-4525-8a43-eb22c26e1a7b",
@@ -5594,39 +5588,39 @@
       "event_id": "1932273a-b1da-4f1f-9dd6-0c10aac86d62",
       "title": "State Health Care AI Regulation: California Mandates Oversight as Utah Tests Automation",
       "date": "2026-10-08",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "Clinicians gain capacity to supervise AI decisions under state rules.",
+          "ai_evidence": "AI-enabled care expands within regulated frameworks, with oversight to prevent biased or unsafe outputs.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "d805732e31b41d7b26e9d1357e1ab7b7",
@@ -5640,9 +5634,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "90eff080-23e2-44ba-b39d-a44954b493c2",
