@@ -164,6 +164,11 @@ jobs:
           if-no-files-found: ignore
           retention-days: 30
 
+      - name: Authorize this generated-data commit
+        if: ${{ env.DRY_RUN != 'true' }}
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit public reconciliation and revised releases
         if: ${{ env.DRY_RUN != 'true' }}
         shell: bash
@@ -178,3 +183,4 @@ jobs:
           fi
           git commit -m "Reconcile Observatory event history"
           git push origin HEAD:main
+

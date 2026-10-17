@@ -54,6 +54,10 @@ jobs:
           LLAMA_CPP_COMMIT: ${{ env.LLAMA_CPP_COMMIT }}
         run: python scripts/benchmark_chinese_translation.py
 
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit Chinese benchmark
         run: |
           git config user.name "github-actions[bot]"
@@ -65,3 +69,4 @@ jobs:
             git commit -m "data: generate Chinese translation benchmark"
 
           git push
+

@@ -28,8 +28,13 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
         run: python scripts/finalize_stage7c_residual.py
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit repaired Stage 7C outputs safely
         run: |
           bash scripts/commit_generated_files.sh \
             "data: finalize Stage 7C non-empowerment residual" \
             main review/classification/latest.json data/lenses/latest.json
+

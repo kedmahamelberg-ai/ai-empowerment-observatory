@@ -39,6 +39,10 @@ jobs:
           EVENT_MAX_DAY_GAP: "4"
         run: python scripts/cluster_events.py
 
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit provisional event review
         run: |
           git config user.name "github-actions[bot]"
@@ -46,3 +50,4 @@ jobs:
           git add review/events/latest.json
           git diff --cached --quiet || git commit -m "data: refresh provisional event clusters [$(date -u +%Y-%m-%d)]"
           git push
+

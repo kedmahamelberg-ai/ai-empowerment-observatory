@@ -195,6 +195,10 @@ jobs:
           set -euo pipefail
           python scripts/create_symbiosis_placeholder.py
 
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit generated release
         shell: bash
         run: |
@@ -218,3 +222,4 @@ jobs:
           )"
           git commit -m "Build Observatory weekly release ${release_id} r${revision}"
           git push origin HEAD:main
+

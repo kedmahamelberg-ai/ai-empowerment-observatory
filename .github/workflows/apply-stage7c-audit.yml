@@ -29,6 +29,10 @@ jobs:
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
         run: python scripts/apply_stage7c_audit.py
 
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit audited lens outputs
         run: |
           git config user.name "github-actions[bot]"
@@ -44,3 +48,4 @@ jobs:
             git commit -m "data: apply Stage 7C human governance audit"
 
           git push
+

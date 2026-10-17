@@ -51,8 +51,13 @@ jobs:
           LLAMA_SERVER_BIN: /tmp/llama.cpp/build/bin/llama-server
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: python scripts/resolve_events.py
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit resolved event outputs safely
         run: |
           bash scripts/commit_generated_files.sh \
             "data: resolve AI news into production events [$(date -u +%Y-%m-%d)]" \
             main review/events/assignments/latest.json data/events/latest.json
+

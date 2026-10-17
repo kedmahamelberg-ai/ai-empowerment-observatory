@@ -112,6 +112,11 @@ jobs:
           path: ${{ runner.temp }}/stage7c-status-*.json
           if-no-files-found: ignore
           retention-days: 14
+      - name: Authorize this generated-data commit
+        if: steps.stage7c.outputs.complete == 'true'
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit completed Stage 7C outputs safely
         if: steps.stage7c.outputs.complete == 'true'
         run: |
@@ -221,6 +226,11 @@ jobs:
           path: ${{ runner.temp }}/stage7c-status-*.json
           if-no-files-found: ignore
           retention-days: 14
+      - name: Authorize this generated-data commit
+        if: steps.stage7c.outputs.complete == 'true'
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit completed Stage 7C outputs safely
         if: steps.stage7c.outputs.complete == 'true'
         run: |
@@ -334,6 +344,11 @@ jobs:
           path: ${{ runner.temp }}/stage7c-status-*.json
           if-no-files-found: ignore
           retention-days: 14
+      - name: Authorize this generated-data commit
+        if: steps.stage7c.outputs.complete == 'true'
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit completed Stage 7C outputs safely
         if: steps.stage7c.outputs.complete == 'true'
         run: |
@@ -364,3 +379,4 @@ jobs:
           fi
           echo "::error::Stage 7C did not complete within three resumable passes. No downstream release was started."
           exit 1
+

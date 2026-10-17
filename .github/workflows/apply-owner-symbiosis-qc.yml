@@ -88,6 +88,11 @@ jobs:
       - name: Validate current relationship arithmetic
         if: ${{ inputs.dry_run == false && steps.release.outputs.is_current == 'true' }}
         run: python scripts/validate_public_relationship_consistency.py
+      - name: Authorize this generated-data commit
+        if: ${{ inputs.dry_run == false }}
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit only gold and relationship data
         if: ${{ inputs.dry_run == false }}
         shell: bash
@@ -128,3 +133,4 @@ jobs:
     needs: apply
     uses: ./.github/workflows/publish-observatory-release.yml
     secrets: inherit
+

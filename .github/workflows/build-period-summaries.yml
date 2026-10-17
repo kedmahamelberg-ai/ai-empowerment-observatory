@@ -45,6 +45,10 @@ jobs:
                   raise SystemExit(f"Invalid period path: {row}")
           print("Validated", len(data["summaries"]), "period summaries")
           PY
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit period summaries
         shell: bash
         run: |
@@ -58,3 +62,4 @@ jobs:
           fi
           git commit -m "Update Observatory period summaries"
           git push origin HEAD:main
+

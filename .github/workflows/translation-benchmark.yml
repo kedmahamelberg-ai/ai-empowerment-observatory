@@ -38,9 +38,14 @@ jobs:
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
         run: python scripts/benchmark_translation.py
 
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit benchmark sample safely
         run: |
           bash scripts/commit_generated_file.sh \
             review/translations/benchmark/latest.json \
             "data: generate blind translation benchmark" \
             main
+

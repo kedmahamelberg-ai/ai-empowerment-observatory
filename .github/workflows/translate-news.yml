@@ -44,7 +44,12 @@ jobs:
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
           LLAMA_SERVER_BIN: /tmp/llama.cpp/build/bin/llama-server
         run: python scripts/translate_headlines.py
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit translation review safely
         run: |
           bash scripts/commit_generated_file.sh review/translations/latest.json \
             "data: refresh validated English normalization [$(date -u +%Y-%m-%d)]" main
+

@@ -66,6 +66,10 @@ jobs:
           LLAMA_SERVER_BIN: /tmp/llama.cpp/build/bin/llama-server
         run: python scripts/benchmark_event_verifier.py
 
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit benchmark result
         run: |
           git config user.name "github-actions[bot]"
@@ -77,3 +81,4 @@ jobs:
             git commit -m "data: benchmark same-event verifiers"
 
           git push
+

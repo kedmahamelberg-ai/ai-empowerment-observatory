@@ -65,6 +65,10 @@ jobs:
         run: python scripts/build_relationship_audit.py
       - name: Reject missing or partial relationship results before commit
         run: python scripts/validate_public_relationship_consistency.py
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit complete relationship artifact
         shell: bash
         run: |
@@ -89,6 +93,10 @@ jobs:
         run: |
           python scripts/generate_public_insights.py
           python scripts/generate_public_brief.py
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit release-bound public derivatives
         shell: bash
         run: |
@@ -109,6 +117,10 @@ jobs:
         run: python scripts/validate_and_publish_release.py
       - name: Validate relationship arithmetic and people-side derivation
         run: python scripts/validate_public_relationship_consistency.py
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit release status
         shell: bash
         run: |
@@ -161,3 +173,4 @@ jobs:
       release_id: ${{ needs.validate-and-build.outputs.brief_release_id }}
       export_sha256: ${{ needs.validate-and-build.outputs.brief_export_sha256 }}
     secrets: inherit
+

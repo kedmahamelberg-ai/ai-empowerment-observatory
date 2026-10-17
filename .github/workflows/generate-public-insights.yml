@@ -27,6 +27,10 @@ jobs:
           python-version: "3.12"
       - name: Generate release-bound public insights and history
         run: python scripts/generate_public_insights.py
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit public insights and weekly history
         shell: bash
         run: |
@@ -40,3 +44,4 @@ jobs:
           fi
           git commit -m "Update release-bound public insights"
           git push origin HEAD:main
+

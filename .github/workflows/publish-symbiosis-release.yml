@@ -76,6 +76,10 @@ jobs:
       - name: Build public relationship audit index
         if: ${{ inputs.placeholder == false }}
         run: python scripts/build_relationship_audit.py
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit relationship artifact
         shell: bash
         run: |
@@ -94,3 +98,4 @@ jobs:
             "Publish AIEO relationship lens [$(date -u +%Y-%m-%d)]" \
             main \
             "${generated_files[@]}"
+

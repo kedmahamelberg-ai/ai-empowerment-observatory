@@ -130,6 +130,11 @@ jobs:
           )
           PY
 
+      - name: Authorize this generated-data commit
+        if: ${{ env.DRY_RUN != 'true' }}
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit repaired release metadata
         if: ${{ env.DRY_RUN != 'true' }}
         shell: bash
@@ -144,3 +149,4 @@ jobs:
           fi
           git commit -m "Repair Observatory release metadata"
           git push origin "HEAD:${GITHUB_REF_NAME}"
+

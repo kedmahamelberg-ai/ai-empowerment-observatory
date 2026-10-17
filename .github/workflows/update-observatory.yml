@@ -35,6 +35,10 @@ jobs:
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: python scripts/collect_news.py
 
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit current public review files
         run: |
           git config user.name "github-actions[bot]"
@@ -42,3 +46,4 @@ jobs:
           git add data/review/latest.json data/review/latest.csv data/collection_status.json
           git diff --cached --quiet || git commit -m "data: refresh public AI news review [$(date -u +%Y-%m-%d)]"
           git push origin HEAD:main
+

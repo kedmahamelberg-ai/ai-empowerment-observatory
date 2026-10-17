@@ -36,6 +36,10 @@ jobs:
         run: >-
           python scripts/restate_release_history.py --all
           --reason "Correct public novelty semantics: collection retries and rediscovery do not by themselves make a development recurring."
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit corrected releases and revision archive
         shell: bash
         run: |
@@ -95,3 +99,4 @@ jobs:
     needs: publish-relationship
     uses: ./.github/workflows/publish-observatory-release.yml
     secrets: inherit
+

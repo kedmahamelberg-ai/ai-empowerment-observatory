@@ -38,6 +38,10 @@ jobs:
           EVENT_MAX_DAY_GAP: "4"
         run: python scripts/generate_cluster_calibration.py
 
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit calibration sample
         run: |
           git config user.name "github-actions[bot]"
@@ -45,3 +49,4 @@ jobs:
           git add review/events/calibration/pairs.json
           git diff --cached --quiet || git commit -m "data: generate event-cluster calibration sample"
           git push
+

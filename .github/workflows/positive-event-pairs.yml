@@ -63,6 +63,10 @@ jobs:
           LLAMA_SERVER_BIN: /tmp/llama.cpp/build/bin/llama-server
         run: python scripts/generate_positive_event_pairs.py
 
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit positive-enrichment sample
         run: |
           git config user.name "github-actions[bot]"
@@ -76,3 +80,4 @@ jobs:
             git commit -m "data: add positive event-pair enrichment sample"
 
           git push
+

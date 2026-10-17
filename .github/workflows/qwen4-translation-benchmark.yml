@@ -71,6 +71,10 @@ jobs:
           LLAMA_CPP_COMMIT: ${{ env.LLAMA_CPP_COMMIT }}
         run: python scripts/benchmark_qwen4_translation.py
 
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit challenge benchmark
         run: |
           git config user.name "github-actions[bot]"
@@ -78,3 +82,4 @@ jobs:
           git add review/translations/challenge/latest.json
           git diff --cached --quiet || git commit -m "data: generate Qwen3-4B translation challenge"
           git push
+

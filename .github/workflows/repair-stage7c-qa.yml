@@ -29,6 +29,10 @@ jobs:
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
         run: python scripts/repair_stage7c_qa.py
 
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit repaired Stage 7C outputs
         run: |
           git config user.name "github-actions[bot]"
@@ -41,3 +45,4 @@ jobs:
             git commit -m "data: repair Stage 7C QA queue"
 
           git push
+

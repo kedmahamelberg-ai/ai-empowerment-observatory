@@ -31,6 +31,10 @@ jobs:
           STORY_COVERAGE_MAX_PAIRS_PER_STORY: "4"
         run: python scripts/generate_story_coverage_pairs.py
 
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit story-coverage sample
         run: |
           git config user.name "github-actions[bot]"
@@ -42,3 +46,4 @@ jobs:
             git commit -m "data: generate story-coverage event pairs"
 
           git push
+

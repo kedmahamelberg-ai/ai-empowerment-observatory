@@ -29,6 +29,10 @@ jobs:
         run: python -m pip install "reportlab>=4.4,<5"
       - name: Generate the release-bound public brief
         run: python scripts/generate_public_brief.py
+      - name: Authorize this generated-data commit
+        uses: ./.github/actions/authorize-publisher
+        with:
+          private-key: ${{ secrets.SCHEDULED_PUBLISHER_PRIVATE_KEY }}
       - name: Commit the report and metadata
         shell: bash
         run: |
@@ -42,3 +46,4 @@ jobs:
           fi
           git commit -m "Generate current AI Empowerment Pulse"
           git push origin HEAD:main
+
