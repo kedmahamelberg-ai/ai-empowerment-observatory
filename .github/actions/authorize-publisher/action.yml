@@ -1,0 +1,49 @@
+name: Authorize scheduled publisher
+description: Obtain a short-lived repository-scoped token for trusted generated-data commits.
+inputs:
+  private-key:
+    description: Private key for the owner-managed Kedma Scheduled Publisher app.
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Require a trusted main-branch workflow
+      shell: bash
+      run: |
+        set -euo pipefail
+        [[ "$GITHUB_REPOSITORY_OWNER" == "kedmahamelberg-ai" ]]
+        [[ "$GITHUB_REF" == "refs/heads/main" ]]
+        case "$GITHUB_EVENT_NAME" in
+          schedule|workflow_dispatch|workflow_run|push|repository_dispatch) ;;
+          *) echo "::error::Publishing credentials are not available to this event."; exit 1 ;;
+        esac
+    - name: Issue a short-lived token for this repository only
+      id: token
+      uses: actions/create-github-app-token@v3
+      with:
+        client-id: Iv23li7LZXJZYdmPd8uQ
+        private-key: ${{ inputs.private-key }}
+        permission-contents: write
+    - name: Authenticate generated-data pushes and prevent recursive builds
+      shell: bash
+      env:
+        PUBLISHER_TOKEN: ${{ steps.token.outputs.token }}
+      run: |
+        set -euo pipefail
+        auth="$(printf 'x-access-token:%s' "$PUBLISHER_TOKEN" | base64 -w0)"
+        echo "::add-mask::$auth"
+        git config --local --replace-all http.https://github.com/.extraheader ""
+        git config --local --add http.https://github.com/.extraheader "AUTHORIZATION: basic $auth"
+        # App pushes emit push events, unlike GITHUB_TOKEN pushes. Preserve the
+        # original workflow_call/workflow_run sequencing without recursive CI.
+        hooks="$RUNNER_TEMP/kedma-publisher-hooks"
+        mkdir -p "$hooks"
+        cat > "$hooks/prepare-commit-msg" <<'HOOK'
+        #!/usr/bin/env bash
+        set -euo pipefail
+        if ! grep -Fq '[skip ci]' "$1"; then
+          printf '\n\n[skip ci]\n' >> "$1"
+        fi
+        HOOK
+        chmod 700 "$hooks/prepare-commit-msg"
+        git config --local core.hooksPath "$hooks"
