@@ -23,9 +23,18 @@ on:
       - 'reports/reports.js'
       - 'methodology/**'
       - 'validation/corrections/**'
+      - 'data/releases/**'
+      - 'data/symbiosis/**'
+      - 'data/insights/**'
+      - 'data/history/**'
+      - 'data/reports/**'
+      - 'data/status/**'
+      - 'reports/ai-empowerment-pulse-latest.pdf'
+      - 'review/relationship-audit/**'
 
 permissions:
   contents: write
+  pull-requests: write
   pages: write
   id-token: write
 
@@ -38,6 +47,7 @@ jobs:
     outputs:
       brief_release_id: ${{ steps.brief-edition.outputs.release_id }}
       brief_export_sha256: ${{ steps.brief-edition.outputs.export_sha256 }}
+      generated_pr: ${{ steps.generated-pr.outputs.pull-request-number }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -65,7 +75,7 @@ jobs:
         run: python scripts/build_relationship_audit.py
       - name: Reject missing or partial relationship results before commit
         run: python scripts/validate_public_relationship_consistency.py
-      - name: Commit complete relationship artifact
+      - name: Stage complete relationship artifacts
         shell: bash
         run: |
           set -euo pipefail
@@ -79,51 +89,15 @@ jobs:
             echo "::error::No generated relationship JSON files were found."
             exit 1
           fi
-          bash scripts/commit_generated_files.sh \
-            "Publish saved relationship results [$(date -u +%Y-%m-%d)]" \
-            main \
-            "${generated_files[@]}"
-      - name: Refresh after relationship commit
-        run: git pull --ff-only origin main
+          git add -f "${generated_files[@]}"
       - name: Regenerate release-bound public derivatives
         run: |
           python scripts/generate_public_insights.py
           python scripts/generate_public_brief.py
-      - name: Commit release-bound public derivatives
-        shell: bash
-        run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/insights/latest.json data/history/releases.json \
-            data/reports/latest.json reports/ai-empowerment-pulse-latest.pdf
-          if ! git diff --cached --quiet; then
-            git commit -m "Refresh release-bound public derivatives"
-            git push origin HEAD:main
-          else
-            echo "Public derivatives are unchanged."
-          fi
-      - name: Refresh after derivative commit
-        run: git pull --ff-only origin main
       - name: Validate canonical release and every public derivative
         run: python scripts/validate_and_publish_release.py
       - name: Validate relationship arithmetic and people-side derivation
         run: python scripts/validate_public_relationship_consistency.py
-      - name: Commit release status
-        shell: bash
-        run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/status/latest.json
-          if ! git diff --cached --quiet; then
-            git commit -m "Publish Observatory release status"
-            git push origin HEAD:main
-          else
-            echo "Release status is unchanged."
-          fi
-      - name: Refresh after status commit
-        run: git pull --ff-only origin main
       - name: Build public site artifact once
         run: python scripts/build_public_site.py
       - name: Verify the exact Pages artifact before upload
@@ -135,12 +109,32 @@ jobs:
       - name: Record the exact Brief export being deployed
         id: brief-edition
         run: python scripts/notify_brief_publication.py --record-artifact _site/data/brief/current.json
+      - name: Propose validated Observatory publication
+        id: generated-pr
+        uses: peter-evans/create-pull-request@v8
+        with:
+          add-paths: |
+            data/symbiosis
+            review/relationship-audit
+            data/insights/latest.json
+            data/history/releases.json
+            data/reports/latest.json
+            reports/ai-empowerment-pulse-latest.pdf
+            data/status/latest.json
+          branch: automation/publish-observatory-release
+          branch-suffix: timestamp
+          sign-commits: true
+          commit-message: Publish validated Observatory release data
+          title: Publish validated Observatory release data
+          body: |
+            Automated release data passed the publication validation. Review before merging.
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
   deploy:
+    if: needs.validate-and-build.outputs.generated_pr == ''
     needs: validate-and-build
     runs-on: ubuntu-latest
     permissions:
