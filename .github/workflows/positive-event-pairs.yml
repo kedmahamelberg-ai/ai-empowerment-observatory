@@ -5,6 +5,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 
 jobs:
@@ -63,16 +64,17 @@ jobs:
           LLAMA_SERVER_BIN: /tmp/llama.cpp/build/bin/llama-server
         run: python scripts/generate_positive_event_pairs.py
 
-      - name: Commit positive-enrichment sample
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add review/events/positive-enrichment/latest.json
-          git add validation/event_pair_hard_negatives_v1.csv
-          git add validation/event_pair_story_coverage_v1.csv
-
-          git diff --cached --quiet || \
-            git commit -m "data: add positive event-pair enrichment sample"
-
-          git push
+      - name: Propose positive-enrichment sample
+        uses: peter-evans/create-pull-request@v8
+        with:
+          add-paths: |
+            review/events/positive-enrichment/latest.json
+            validation/event_pair_hard_negatives_v1.csv
+            validation/event_pair_story_coverage_v1.csv
+          branch: automation/positive-event-pairs
+          branch-suffix: timestamp
+          sign-commits: true
+          commit-message: Add positive event-pair enrichment sample
+          title: Add positive event-pair enrichment sample
+          body: |
+            Automated Observatory output. Review the generated files before merging.
