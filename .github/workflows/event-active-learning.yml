@@ -5,6 +5,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 
 jobs:
@@ -59,11 +60,15 @@ jobs:
           LLAMA_SERVER_BIN: /tmp/llama.cpp/build/bin/llama-server
         run: python scripts/generate_event_active_learning.py
 
-      - name: Commit active-learning sample
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add review/events/active-learning/latest.json
-          git diff --cached --quiet || \
-            git commit -m "data: generate event identity active-learning sample"
-          git push
+      - name: Propose active-learning sample
+        uses: peter-evans/create-pull-request@v8
+        with:
+          add-paths: |
+            review/events/active-learning/latest.json
+          branch: automation/event-active-learning
+          branch-suffix: timestamp
+          sign-commits: true
+          commit-message: Generate event identity active-learning sample
+          title: Generate event identity active-learning sample
+          body: |
+            Automated Observatory output. Review the generated files before merging.
