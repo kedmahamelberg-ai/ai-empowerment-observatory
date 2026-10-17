@@ -5,6 +5,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 
 jobs:
@@ -31,14 +32,15 @@ jobs:
           STORY_COVERAGE_MAX_PAIRS_PER_STORY: "4"
         run: python scripts/generate_story_coverage_pairs.py
 
-      - name: Commit story-coverage sample
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add review/events/story-coverage/latest.json
-
-          git diff --cached --quiet || \
-            git commit -m "data: generate story-coverage event pairs"
-
-          git push
+      - name: Propose story-coverage sample
+        uses: peter-evans/create-pull-request@v8
+        with:
+          add-paths: |
+            review/events/story-coverage/latest.json
+          branch: automation/story-coverage-pairs
+          branch-suffix: timestamp
+          sign-commits: true
+          commit-message: Generate story-coverage event pairs
+          title: Generate story-coverage event pairs
+          body: |
+            Automated Observatory output. Review the generated files before merging.
