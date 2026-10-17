@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: aieo-period-summaries-${{ github.ref }}
@@ -45,16 +46,20 @@ jobs:
                   raise SystemExit(f"Invalid period path: {row}")
           print("Validated", len(data["summaries"]), "period summaries")
           PY
-      - name: Commit period summaries
-        shell: bash
-        run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f data/releases/monthly data/releases/quarterly data/releases/annual data/releases/period-index.json
-          if git diff --cached --quiet; then
-            echo "No period-summary changes to commit."
-            exit 0
-          fi
-          git commit -m "Update Observatory period summaries"
-          git push origin HEAD:main
+      - name: Stage ignored release files
+        run: git add -f data/releases/monthly data/releases/quarterly data/releases/annual data/releases/period-index.json
+      - name: Propose period summaries
+        uses: peter-evans/create-pull-request@v8
+        with:
+          add-paths: |
+            data/releases/monthly
+            data/releases/quarterly
+            data/releases/annual
+            data/releases/period-index.json
+          branch: automation/build-period-summaries
+          branch-suffix: timestamp
+          sign-commits: true
+          commit-message: Update Observatory period summaries
+          title: Update Observatory period summaries
+          body: |
+            Automated Observatory output. Review the generated files before merging.
