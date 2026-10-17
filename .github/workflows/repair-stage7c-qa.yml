@@ -5,6 +5,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 
 jobs:
@@ -29,15 +30,16 @@ jobs:
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
         run: python scripts/repair_stage7c_qa.py
 
-      - name: Commit repaired Stage 7C outputs
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add review/classification/latest.json
-          git add data/lenses/latest.json
-
-          git diff --cached --quiet || \
-            git commit -m "data: repair Stage 7C QA queue"
-
-          git push
+      - name: Propose repaired stage 7c outputs
+        uses: peter-evans/create-pull-request@v8
+        with:
+          add-paths: |
+            review/classification/latest.json
+            data/lenses/latest.json
+          branch: automation/repair-stage7c-qa
+          branch-suffix: timestamp
+          sign-commits: true
+          commit-message: Repair Stage 7C QA queue
+          title: Repair Stage 7C QA queue
+          body: |
+            Automated Observatory output. Review the generated files before merging.
