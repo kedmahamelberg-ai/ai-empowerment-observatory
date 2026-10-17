@@ -50,6 +50,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: aieo-weekly-release-${{ github.ref }}
@@ -195,26 +196,18 @@ jobs:
           set -euo pipefail
           python scripts/create_symbiosis_placeholder.py
 
-      - name: Commit generated release
-        shell: bash
-        run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f data/releases data/symbiosis
-          if git diff --cached --quiet; then
-            echo "No generated release changes to commit."
-            exit 0
-          fi
-          release_id="$(python - <<'PY'
-          import json
-          print(json.load(open('data/releases/current.json'))['release_id'])
-          PY
-          )"
-          revision="$(python - <<'PY'
-          import json
-          print(json.load(open('data/releases/current.json')).get('revision', 1))
-          PY
-          )"
-          git commit -m "Build Observatory weekly release ${release_id} r${revision}"
-          git push origin HEAD:main
+      - name: Stage ignored release files
+        run: git add -f data/releases data/symbiosis
+      - name: Propose generated release
+        uses: peter-evans/create-pull-request@v8
+        with:
+          add-paths: |
+            data/releases
+            data/symbiosis
+          branch: automation/build-weekly-release
+          branch-suffix: timestamp
+          sign-commits: true
+          commit-message: Build Observatory weekly release
+          title: Build Observatory weekly release
+          body: |
+            Automated Observatory output. Review the generated files before merging.
