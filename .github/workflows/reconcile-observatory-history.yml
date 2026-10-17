@@ -26,6 +26,7 @@ on:
         type: boolean
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: aieo-history-reconciliation-${{ github.ref }}
@@ -164,17 +165,18 @@ jobs:
           if-no-files-found: ignore
           retention-days: 30
 
-      - name: Commit public reconciliation and revised releases
+      - name: Stage ignored release files
+        run: git add -f data/releases
+      - name: Propose public reconciliation and revised releases
         if: ${{ env.DRY_RUN != 'true' }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f data/releases
-          if git diff --cached --quiet; then
-            echo "No public reconciliation or release changes to commit."
-            exit 0
-          fi
-          git commit -m "Reconcile Observatory event history"
-          git push origin HEAD:main
+        uses: peter-evans/create-pull-request@v8
+        with:
+          add-paths: |
+            data/releases
+          branch: automation/reconcile-observatory-history
+          branch-suffix: timestamp
+          sign-commits: true
+          commit-message: Reconcile Observatory event history
+          title: Reconcile Observatory event history
+          body: |
+            Automated Observatory output. Review the generated files before merging.
