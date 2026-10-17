@@ -5,6 +5,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 
 jobs:
@@ -38,10 +39,15 @@ jobs:
           EVENT_MAX_DAY_GAP: "4"
         run: python scripts/generate_cluster_calibration.py
 
-      - name: Commit calibration sample
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add review/events/calibration/pairs.json
-          git diff --cached --quiet || git commit -m "data: generate event-cluster calibration sample"
-          git push
+      - name: Propose commit calibration sample
+        uses: peter-evans/create-pull-request@v8
+        with:
+          add-paths: |
+            review/events/calibration/pairs.json
+          branch: automation/cluster-calibration
+          branch-suffix: timestamp
+          sign-commits: true
+          commit-message: Generate event-cluster calibration sample
+          title: Generate event-cluster calibration sample
+          body: |
+            Automated Observatory output. Review the generated files before merging.
