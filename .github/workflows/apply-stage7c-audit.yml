@@ -5,6 +5,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 
 jobs:
@@ -29,18 +30,19 @@ jobs:
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
         run: python scripts/apply_stage7c_audit.py
 
-      - name: Commit audited lens outputs
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add validation/aieo-stage7c-classification-audit.csv
-          git add validation/stage7c-corrections-v1.json
-          git add review/classification/latest.json
-          git add data/lenses/latest.json
-          git add data/methodology/latest.json
-
-          git diff --cached --quiet || \
-            git commit -m "data: apply Stage 7C human governance audit"
-
-          git push
+      - name: Propose audited lens outputs
+        uses: peter-evans/create-pull-request@v8
+        with:
+          add-paths: |
+            validation/aieo-stage7c-classification-audit.csv
+            validation/stage7c-corrections-v1.json
+            review/classification/latest.json
+            data/lenses/latest.json
+            data/methodology/latest.json
+          branch: automation/apply-stage7c-audit
+          branch-suffix: timestamp
+          sign-commits: true
+          commit-message: Apply Stage 7C human governance audit
+          title: Apply Stage 7C human governance audit
+          body: |
+            Automated Observatory output. Review the generated files before merging.
