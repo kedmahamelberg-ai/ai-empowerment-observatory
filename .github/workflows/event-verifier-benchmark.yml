@@ -5,6 +5,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 
 jobs:
@@ -66,14 +67,15 @@ jobs:
           LLAMA_SERVER_BIN: /tmp/llama.cpp/build/bin/llama-server
         run: python scripts/benchmark_event_verifier.py
 
-      - name: Commit benchmark result
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add review/events/verifier-benchmark/latest.json
-
-          git diff --cached --quiet || \
-            git commit -m "data: benchmark same-event verifiers"
-
-          git push
+      - name: Propose benchmark result
+        uses: peter-evans/create-pull-request@v8
+        with:
+          add-paths: |
+            review/events/verifier-benchmark/latest.json
+          branch: automation/event-verifier-benchmark
+          branch-suffix: timestamp
+          sign-commits: true
+          commit-message: Benchmark same-event verifiers
+          title: Benchmark same-event verifiers
+          body: |
+            Automated Observatory output. Review the generated files before merging.
