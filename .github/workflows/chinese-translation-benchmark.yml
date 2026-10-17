@@ -5,6 +5,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 
 jobs:
@@ -54,14 +55,15 @@ jobs:
           LLAMA_CPP_COMMIT: ${{ env.LLAMA_CPP_COMMIT }}
         run: python scripts/benchmark_chinese_translation.py
 
-      - name: Commit Chinese benchmark
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add review/translations/chinese-benchmark/latest.json
-
-          git diff --cached --quiet || \
-            git commit -m "data: generate Chinese translation benchmark"
-
-          git push
+      - name: Propose chinese benchmark
+        uses: peter-evans/create-pull-request@v8
+        with:
+          add-paths: |
+            review/translations/chinese-benchmark/latest.json
+          branch: automation/chinese-translation-benchmark
+          branch-suffix: timestamp
+          sign-commits: true
+          commit-message: Generate Chinese translation benchmark
+          title: Generate Chinese translation benchmark
+          body: |
+            Automated Observatory output. Review the generated files before merging.
