@@ -1,17 +1,17 @@
 {
   "meta": {
-    "stage": "7C.6_validated_whole_sources",
+    "stage": "7C.5a_full_body_required",
     "provisional": true,
     "classification_run_id": "93d3e0bf-6e93-4f6a-b207-ca64b15028ff",
     "run_key": "dual_lens_20261019T012221Z",
-    "collection_run_key": "run_20261019T001530Z",
-    "codebook": "observatory_dual_lens_v1.1",
+    "confidence_calibrated": false,
+    "residual_normalized_count": 53,
+    "confidence_note": "Model self-confidence is excluded from index weighting and quality-review selection.",
     "method": {
       "coverage_lens": "one weight per observed AI-relevant article",
       "event_lens": "one weight per unique active AI event",
       "empowerment_index": "mean deterministic unit score x 100",
       "directional_amplification_gap": "Coverage Empowerment Index - Event Empowerment Index",
-      "country_rule": "primary event country only in pilot country aggregation; global/multi-country metadata is retained separately",
       "country_signal_min_n": 3
     }
   },
@@ -23,9 +23,9 @@
       "unit_count_total": 158,
       "unit_count_ai_relevant": 158,
       "unit_count_scored": 95,
-      "review_required_count": 69,
+      "review_required_count": 63,
       "empowerment_index": 27.3684,
-      "mean_confidence": 0.3807,
+      "mean_confidence": null,
       "status_distribution": {
         "expanding": 0.2532,
         "contracting": 0.0127,
@@ -60,16 +60,16 @@
       "country_iso3": null,
       "unit_count_total": 152,
       "unit_count_ai_relevant": 152,
-      "unit_count_scored": 93,
-      "review_required_count": 65,
-      "empowerment_index": 26.8817,
-      "mean_confidence": 0.3895,
+      "unit_count_scored": 146,
+      "review_required_count": 6,
+      "empowerment_index": 17.1233,
+      "mean_confidence": null,
       "status_distribution": {
         "expanding": 0.2566,
         "contracting": 0.0132,
         "mixed": 0.1645,
-        "non_empowerment": 0.1776,
-        "unclear": 0.3882
+        "non_empowerment": 0.5263,
+        "unclear": 0.0395
       },
       "narrative_distribution": {
         "opportunity": 0.3092,
@@ -96,8 +96,8 @@
       "scope": "global",
       "country_iso3": null,
       "coverage_index": 27.3684,
-      "event_index": 26.8817,
-      "directional_amplification_gap": 0.4867,
+      "event_index": 17.1233,
+      "directional_amplification_gap": 10.2451,
       "coverage_unit_count": 158,
       "event_unit_count": 152,
       "coverage_event_ratio": 1.0395,
@@ -130,7 +130,7 @@
         "unit_count_scored": 1,
         "review_required_count": 0,
         "empowerment_index": 100.0,
-        "mean_confidence": 0.75,
+        "mean_confidence": null,
         "status_distribution": {
           "expanding": 1.0,
           "contracting": 0.0,
@@ -168,7 +168,7 @@
         "unit_count_scored": 1,
         "review_required_count": 0,
         "empowerment_index": 100.0,
-        "mean_confidence": 0.75,
+        "mean_confidence": null,
         "status_distribution": {
           "expanding": 1.0,
           "contracting": 0.0,
@@ -234,7 +234,7 @@
         "unit_count_scored": 10,
         "review_required_count": 1,
         "empowerment_index": 46.6667,
-        "mean_confidence": 0.6545,
+        "mean_confidence": null,
         "status_distribution": {
           "expanding": 0.6364,
           "contracting": 0.0,
@@ -272,7 +272,7 @@
         "unit_count_scored": 10,
         "review_required_count": 1,
         "empowerment_index": 46.6667,
-        "mean_confidence": 0.6545,
+        "mean_confidence": null,
         "status_distribution": {
           "expanding": 0.6364,
           "contracting": 0.0,
@@ -338,7 +338,7 @@
         "unit_count_scored": 21,
         "review_required_count": 0,
         "empowerment_index": 38.0953,
-        "mean_confidence": 0.6405,
+        "mean_confidence": null,
         "status_distribution": {
           "expanding": 0.5238,
           "contracting": 0.0,
@@ -376,7 +376,7 @@
         "unit_count_scored": 21,
         "review_required_count": 0,
         "empowerment_index": 38.0953,
-        "mean_confidence": 0.6452,
+        "mean_confidence": null,
         "status_distribution": {
           "expanding": 0.5238,
           "contracting": 0.0,
@@ -442,7 +442,7 @@
         "unit_count_scored": 11,
         "review_required_count": 0,
         "empowerment_index": 6.0606,
-        "mean_confidence": 0.6045,
+        "mean_confidence": null,
         "status_distribution": {
           "expanding": 0.3636,
           "contracting": 0.1818,
@@ -480,7 +480,7 @@
         "unit_count_scored": 11,
         "review_required_count": 0,
         "empowerment_index": 6.0606,
-        "mean_confidence": 0.6045,
+        "mean_confidence": null,
         "status_distribution": {
           "expanding": 0.3636,
           "contracting": 0.1818,
@@ -544,9 +544,9 @@
         "unit_count_total": 7,
         "unit_count_ai_relevant": 7,
         "unit_count_scored": 7,
-        "review_required_count": 3,
+        "review_required_count": 0,
         "empowerment_index": 9.5238,
-        "mean_confidence": 0.5214,
+        "mean_confidence": null,
         "status_distribution": {
           "expanding": 0.1429,
           "contracting": 0.0,
@@ -582,9 +582,9 @@
         "unit_count_total": 7,
         "unit_count_ai_relevant": 7,
         "unit_count_scored": 7,
-        "review_required_count": 3,
+        "review_required_count": 0,
         "empowerment_index": 9.5238,
-        "mean_confidence": 0.5214,
+        "mean_confidence": null,
         "status_distribution": {
           "expanding": 0.1429,
           "contracting": 0.0,
@@ -650,7 +650,7 @@
         "unit_count_scored": 1,
         "review_required_count": 0,
         "empowerment_index": 0.0,
-        "mean_confidence": 0.6,
+        "mean_confidence": null,
         "status_distribution": {
           "expanding": 0.0,
           "contracting": 0.0,
@@ -688,7 +688,7 @@
         "unit_count_scored": 1,
         "review_required_count": 0,
         "empowerment_index": 0.0,
-        "mean_confidence": 0.6,
+        "mean_confidence": null,
         "status_distribution": {
           "expanding": 0.0,
           "contracting": 0.0,
@@ -754,7 +754,7 @@
         "unit_count_scored": 1,
         "review_required_count": 0,
         "empowerment_index": 0.0,
-        "mean_confidence": 0.55,
+        "mean_confidence": null,
         "status_distribution": {
           "expanding": 0.0,
           "contracting": 0.0,
@@ -792,7 +792,7 @@
         "unit_count_scored": 1,
         "review_required_count": 0,
         "empowerment_index": 0.0,
-        "mean_confidence": 0.55,
+        "mean_confidence": null,
         "status_distribution": {
           "expanding": 0.0,
           "contracting": 0.0,
@@ -858,7 +858,7 @@
         "unit_count_scored": 1,
         "review_required_count": 0,
         "empowerment_index": 0.0,
-        "mean_confidence": 0.6,
+        "mean_confidence": null,
         "status_distribution": {
           "expanding": 0.0,
           "contracting": 0.0,
@@ -896,7 +896,7 @@
         "unit_count_scored": 1,
         "review_required_count": 0,
         "empowerment_index": 0.0,
-        "mean_confidence": 0.6,
+        "mean_confidence": null,
         "status_distribution": {
           "expanding": 0.0,
           "contracting": 0.0,
@@ -962,7 +962,7 @@
         "unit_count_scored": 1,
         "review_required_count": 0,
         "empowerment_index": 0.0,
-        "mean_confidence": 0.75,
+        "mean_confidence": null,
         "status_distribution": {
           "expanding": 0.0,
           "contracting": 0.0,
@@ -1000,7 +1000,7 @@
         "unit_count_scored": 1,
         "review_required_count": 0,
         "empowerment_index": 0.0,
-        "mean_confidence": 0.75,
+        "mean_confidence": null,
         "status_distribution": {
           "expanding": 0.0,
           "contracting": 0.0,
@@ -1066,7 +1066,7 @@
         "unit_count_scored": 13,
         "review_required_count": 0,
         "empowerment_index": 20.5128,
-        "mean_confidence": 0.6154,
+        "mean_confidence": null,
         "status_distribution": {
           "expanding": 0.3077,
           "contracting": 0.0,
@@ -1104,7 +1104,7 @@
         "unit_count_scored": 12,
         "review_required_count": 0,
         "empowerment_index": 22.2222,
-        "mean_confidence": 0.6333,
+        "mean_confidence": null,
         "status_distribution": {
           "expanding": 0.3333,
           "contracting": 0.0,
