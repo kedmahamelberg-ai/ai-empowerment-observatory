@@ -2,14 +2,14 @@
   "meta": {
     "series": "weekly_public_releases",
     "cumulative": false,
-    "generated_at": "2026-10-16T08:36:13.996200Z",
+    "generated_at": "2026-10-19T02:05:54.429663Z",
     "source": "/data/releases/index.json",
     "note": "Each point is one standardized weekly Observatory release. Counts are not cumulatively summed."
   },
   "points": [
     {
       "release_id": "2026-W33",
-      "revision": 11,
+      "revision": 12,
       "window_start": "2026-08-10",
       "window_end": "2026-08-16",
       "coverage_count": 120,
@@ -22,7 +22,7 @@
     },
     {
       "release_id": "2026-W34",
-      "revision": 9,
+      "revision": 10,
       "window_start": "2026-08-17",
       "window_end": "2026-08-23",
       "coverage_count": 131,
@@ -35,7 +35,7 @@
     },
     {
       "release_id": "2026-W35",
-      "revision": 10,
+      "revision": 11,
       "window_start": "2026-08-24",
       "window_end": "2026-08-30",
       "coverage_count": 111,
@@ -48,7 +48,7 @@
     },
     {
       "release_id": "2026-W36",
-      "revision": 6,
+      "revision": 7,
       "window_start": "2026-08-31",
       "window_end": "2026-09-06",
       "coverage_count": 138,
@@ -61,7 +61,7 @@
     },
     {
       "release_id": "2026-W37",
-      "revision": 5,
+      "revision": 6,
       "window_start": "2026-09-07",
       "window_end": "2026-09-13",
       "coverage_count": 132,
@@ -74,7 +74,7 @@
     },
     {
       "release_id": "2026-W38",
-      "revision": 4,
+      "revision": 5,
       "window_start": "2026-09-14",
       "window_end": "2026-09-20",
       "coverage_count": 148,
@@ -87,7 +87,7 @@
     },
     {
       "release_id": "2026-W39",
-      "revision": 3,
+      "revision": 4,
       "window_start": "2026-09-21",
       "window_end": "2026-09-27",
       "coverage_count": 152,
@@ -100,7 +100,7 @@
     },
     {
       "release_id": "2026-W40",
-      "revision": 3,
+      "revision": 4,
       "window_start": "2026-09-28",
       "window_end": "2026-10-04",
       "coverage_count": 160,
@@ -113,7 +113,7 @@
     },
     {
       "release_id": "2026-W41",
-      "revision": 1,
+      "revision": 2,
       "window_start": "2026-10-05",
       "window_end": "2026-10-11",
       "coverage_count": 144,
@@ -123,6 +123,19 @@
       "event_index": 10.8586,
       "amplification_gap": 7.4341,
       "coverage_event_ratio": 1.0746
+    },
+    {
+      "release_id": "2026-W42",
+      "revision": 1,
+      "window_start": "2026-10-12",
+      "window_end": "2026-10-18",
+      "coverage_count": 154,
+      "event_count": 149,
+      "extra_article_instances": 5,
+      "coverage_index": 27.1739,
+      "event_index": 17.4825,
+      "amplification_gap": 9.6914,
+      "coverage_event_ratio": 1.0336
     }
   ]
 }
