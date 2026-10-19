@@ -7,17 +7,17 @@
   "period_end": "2026-08-31",
   "observed_week_start": "2026-08-10",
   "observed_week_end": "2026-08-30",
-  "generated_at": "2026-10-12T03:07:10.009245Z",
-  "revision": 10,
+  "generated_at": "2026-10-19T02:05:43.662002Z",
+  "revision": 11,
   "weekly_release_ids": [
     "2026-W33",
     "2026-W34",
     "2026-W35"
   ],
   "weekly_revisions": {
-    "2026-W33": 11,
-    "2026-W34": 9,
-    "2026-W35": 10
+    "2026-W33": 12,
+    "2026-W34": 10,
+    "2026-W35": 11
   },
   "reality": {
     "distinct_event_records": 346,
@@ -69,15 +69,15 @@
   },
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-10-12T01:59:22.86691+00:00",
+    "considered_through": "2026-10-19T00:57:37.966007+00:00",
     "scope": "All prior event records available to the included reconciliations."
   },
   "reconciliation": {
-    "current_through": "2026-10-12T02:32:08.00432+00:00",
+    "current_through": "2026-10-19T01:21:19.470732+00:00",
     "weekly_revisions_included": {
-      "2026-W33": 11,
-      "2026-W34": 9,
-      "2026-W35": 10
+      "2026-W33": 12,
+      "2026-W34": 10,
+      "2026-W35": 11
     },
     "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
   },
@@ -174,8 +174,18 @@
         "2026-W34": 9,
         "2026-W35": 10
       }
+    },
+    {
+      "revision": 11,
+      "changed_at": "2026-10-19T02:05:43.662002Z",
+      "reason": "An included weekly release was restated after longitudinal reconciliation.",
+      "weekly_revisions": {
+        "2026-W33": 12,
+        "2026-W34": 10,
+        "2026-W35": 11
+      }
     }
   ],
-  "previous_revision_path": "/data/releases/monthly/archive/2026-08/revision-9.json",
-  "content_sha256": "aafc401a0ec320d7434369336a691786289bd00026d77505967677c0a2e2e9ae"
+  "previous_revision_path": "/data/releases/monthly/archive/2026-08/revision-10.json",
+  "content_sha256": "6da7907cde5280a42d13d70e58cd43fe86c69317c4b953a963af92fbd9b19f81"
 }
