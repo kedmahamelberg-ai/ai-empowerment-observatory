@@ -2,10 +2,10 @@
   "schema_version": "aieo_symbiosis_public_v2.0",
   "release_id": "2026-W42",
   "release_type": "weekly_relationship_lens",
-  "revision": 2,
+  "revision": 3,
   "period_start": "2026-10-12",
   "period_end": "2026-10-18",
-  "generated_at": "2026-10-19T02:05:29.208919Z",
+  "generated_at": "2026-10-20T08:58:36.529931Z",
   "codebook_version": "aieo_news_symbiosis_v0.1",
   "source_release_sha256": "7af21f4ff59a31ece2d2d3fdbb3f43df7108fa1bd1e26df335f10f5ce2348f59",
   "public_status": "current_evidence_reading",
@@ -60,7 +60,7 @@
     "display_basis": "current_evidence_reading_with_reviewed_corrections",
     "display_classified_units": 149,
     "display_configuration_counts": {
-      "mutualism": 53,
+      "mutualism": 54,
       "ai_benefiting_parasitism": 5,
       "human_benefiting_parasitism": 2,
       "competition": 3,
@@ -69,47 +69,47 @@
       "ai_enabling_only": 3,
       "ai_constraining_only": 2,
       "no_clear_relational_signal": 8,
-      "ambiguous_relational_signal": 15,
-      "insufficient_evidence": 55
+      "ambiguous_relational_signal": 16,
+      "insufficient_evidence": 53
     },
-    "display_complete_configuration_count": 63,
+    "display_complete_configuration_count": 64,
     "display_partial_signal_count": 8,
     "display_no_clear_relational_signal_count": 8,
-    "display_ambiguous_relational_signal_count": 15,
-    "display_insufficient_evidence_count": 55,
+    "display_ambiguous_relational_signal_count": 16,
+    "display_insufficient_evidence_count": 53,
     "display_core_four_distribution": {
-      "mutualism": 0.84127,
-      "ai_benefiting_parasitism": 0.079365,
-      "human_benefiting_parasitism": 0.031746,
-      "competition": 0.047619
+      "mutualism": 0.84375,
+      "ai_benefiting_parasitism": 0.078125,
+      "human_benefiting_parasitism": 0.03125,
+      "competition": 0.046875
     },
     "denominator_note": "The weekly display reports the source evidence available for the current release. A development is kept separate when the available source evidence is not enough to show a clear people outcome.",
     "human_direction_counts": {
-      "enabling": 61,
+      "enabling": 63,
       "constraining": 8,
       "neutral": 13,
       "mixed": 12,
-      "unclear": 55
+      "unclear": 53
     },
     "ai_direction_counts": {
-      "enabling": 62,
+      "enabling": 63,
       "neutral": 12,
-      "mixed": 13,
-      "unclear": 55,
+      "mixed": 14,
+      "unclear": 53,
       "constraining": 7
     },
     "display_human_direction_counts": {
-      "enabling": 61,
+      "enabling": 63,
       "constraining": 8,
       "neutral": 13,
       "mixed": 12,
-      "unclear": 55
+      "unclear": 53
     },
     "display_ai_direction_counts": {
-      "enabling": 62,
+      "enabling": 63,
       "neutral": 12,
-      "mixed": 13,
-      "unclear": 55,
+      "mixed": 14,
+      "unclear": 53,
       "constraining": 7
     }
   },
@@ -118,17 +118,17 @@
     "expected_units": 149,
     "classified_units": 149,
     "relationship_pattern_counts": {
-      "mutualism": 62,
+      "mutualism": 64,
       "ai_benefiting_parasitism": 8,
       "human_benefiting_parasitism": 2,
       "competition": 1
     },
     "people_signal_counts": {
-      "people_gaining": 73,
+      "people_gaining": 75,
       "people_losing_ground": 20,
       "mixed_picture": 12,
       "not_everyone_benefits": 14,
-      "not_clear_yet": 68
+      "not_clear_yet": 66
     },
     "availability": {
       "people_gaining": true,
@@ -140,11 +140,11 @@
     "explicit_multi_label_units": 149,
     "distribution_coded_units": 149,
     "body_coverage_counts": {
-      "complete_written_source": 94,
-      "incomplete_written_source": 55
+      "complete_written_source": 96,
+      "incomplete_written_source": 53
     },
     "not_clear_breakdown": {
-      "not_enough_evidence": 55,
+      "not_enough_evidence": 53,
       "no_directional_people_change": 13
     },
     "overlap_note": "A development may contain more than one signal, so these counts do not have to add up to the weekly total.",
@@ -188,7 +188,7 @@
     "display_basis": "current_evidence_reading_with_reviewed_corrections",
     "display_classified_units": 154,
     "display_configuration_counts": {
-      "mutualism": 59,
+      "mutualism": 61,
       "ai_benefiting_parasitism": 4,
       "human_benefiting_parasitism": 3,
       "competition": 1,
@@ -198,18 +198,18 @@
       "ai_constraining_only": 2,
       "no_clear_relational_signal": 7,
       "ambiguous_relational_signal": 7,
-      "insufficient_evidence": 59
+      "insufficient_evidence": 57
     },
-    "display_complete_configuration_count": 67,
+    "display_complete_configuration_count": 69,
     "display_partial_signal_count": 14,
     "display_no_clear_relational_signal_count": 7,
     "display_ambiguous_relational_signal_count": 7,
-    "display_insufficient_evidence_count": 59,
+    "display_insufficient_evidence_count": 57,
     "display_core_four_distribution": {
-      "ai_benefiting_parasitism": 0.059701,
-      "competition": 0.014925,
-      "human_benefiting_parasitism": 0.044776,
-      "mutualism": 0.880597
+      "ai_benefiting_parasitism": 0.057971,
+      "competition": 0.014493,
+      "human_benefiting_parasitism": 0.043478,
+      "mutualism": 0.884058
     },
     "denominator_note": "The weekly display reports the source evidence available for the current release. A development is kept separate when the available source evidence is not enough to show a clear people outcome."
   },
@@ -2623,21 +2623,28 @@
     {
       "axes": {
         "ai": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "AI is described as deployed and producing real-world outputs and capabilities.",
+          "direction": "mixed"
         },
         "human": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "Applied AI is presented as enabling practical deployment and career benefits for people.",
+          "direction": "gain"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [],
+        "evidence_types": [
+          "source_representation"
+        ],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": false,
-        "unresolved_reason": "complete_written_source_unavailable"
+        "evidence_complete": true,
+        "unresolved_reason": ""
       },
-      "relationship_evidence": {},
+      "relationship_evidence": {
+        "mutualism": "Applied AI solves real problems for organizations while people gain skills, earnings, and employment opportunities.",
+        "competition": "",
+        "ai_benefiting_parasitism": "",
+        "human_benefiting_parasitism": ""
+      },
       "relationship_pattern_status": "assessed",
       "event_id": "295898d6-a235-4348-8852-422124689f04",
       "event_title": "How Can We Apply Artificial Intelligence?",
@@ -2655,62 +2662,66 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "insufficient_evidence",
-      "plain_label": "There is not enough source evidence to classify the relationship",
-      "human_experience_type": "unclear",
+      "configuration": "ambiguous_relational_signal",
+      "plain_label": "A relationship is suggested, but its direction is unclear",
+      "human_experience_type": "extension",
       "ai_expressive_role": "unclear",
-      "human_direction": "unclear",
-      "ai_direction": "unclear",
-      "evidence_status": "insufficient",
-      "content_basis": "not_available",
+      "human_direction": "enabling",
+      "ai_direction": "mixed",
+      "evidence_status": "sufficient",
+      "content_basis": "full_text",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "no_full_body",
+        "body_coverage": "all_sources",
         "source_quality": {
           "4a321eba1f95fe682a58287ff49a1244": {
-            "flags": [
-              "no_usable_complete_body"
-            ],
-            "usable_complete_body": false
+            "flags": [],
+            "scope": "written_page",
+            "characters": 17577,
+            "body_sha256": "9a7f20a8475d4ab2ac621e01cf0edab4118494c4018f17fa1eeb0ace0e04c412",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "source_fingerprints": {
-          "4a321eba1f95fe682a58287ff49a1244": null
+          "4a321eba1f95fe682a58287ff49a1244": "9a7f20a8475d4ab2ac621e01cf0edab4118494c4018f17fa1eeb0ace0e04c412"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 1,
+        "not_available_sources": 0,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": false,
-        "people_evidence": "",
-        "ai_evidence": "",
-        "flags": [
-          "incomplete_written_source"
-        ]
+        "source_reading_complete": true,
+        "people_evidence": "Applied AI is presented as enabling practical deployment and career benefits for people.",
+        "ai_evidence": "AI is described as deployed and producing real-world outputs and capabilities.",
+        "flags": []
       },
-      "story_country_iso3s": [],
-      "evidence_summary": "No full article body was available, so the source was not model-classified.",
-      "reasoning": "No full article body was available, so the source was not model-classified.",
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "evidence_summary": "Applied AI is being deployed to solve real-world problems, creating new opportunities for workers and expanding AI's reach.",
+      "reasoning": "Applied AI is being deployed to solve real-world problems, creating new opportunities for workers and expanding AI's reach.",
       "relationship_patterns": {
-        "mutualism": false,
+        "mutualism": true,
         "ai_benefiting_parasitism": false,
         "human_benefiting_parasitism": false,
         "competition": false
       },
       "public_signals": {
-        "people_gaining": false,
+        "people_gaining": true,
         "people_losing_ground": false,
         "mixed_picture": false,
         "not_everyone_benefits": false,
-        "not_clear_yet": true
+        "not_clear_yet": false
       },
-      "distribution_signal": "not_shown",
-      "public_takeaway": "",
+      "distribution_signal": "broadly_shared",
+      "public_takeaway": "Applied AI is presented as enabling practical deployment and career benefits for people.",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -3455,21 +3466,28 @@
     {
       "axes": {
         "ai": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "Percival broadens the informational yield from CT scans, enabling detection of unseen conditions and risk stratification.",
+          "direction": "gain"
         },
         "human": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "Clinicians gain enhanced diagnostic support and proactive care opportunities through AI-assisted imaging analysis.",
+          "direction": "gain"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [],
+        "evidence_types": [
+          "source_representation"
+        ],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": false,
-        "unresolved_reason": "complete_written_source_unavailable"
+        "evidence_complete": true,
+        "unresolved_reason": ""
       },
-      "relationship_evidence": {},
+      "relationship_evidence": {
+        "mutualism": "AI enhances clinical image analysis, enabling earlier detection and proactive care for patients.",
+        "competition": "",
+        "ai_benefiting_parasitism": "",
+        "human_benefiting_parasitism": ""
+      },
       "relationship_pattern_status": "assessed",
       "event_id": "39e9cf28-e8a8-41e2-a770-e3ecab699e7b",
       "event_title": "An AI model can detect hidden health issues in CT scans",
@@ -3487,62 +3505,66 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "insufficient_evidence",
-      "plain_label": "There is not enough source evidence to classify the relationship",
-      "human_experience_type": "unclear",
-      "ai_expressive_role": "unclear",
-      "human_direction": "unclear",
-      "ai_direction": "unclear",
-      "evidence_status": "insufficient",
-      "content_basis": "not_available",
+      "configuration": "mutualism",
+      "plain_label": "Both people and the AI side are represented as gaining",
+      "human_experience_type": "extension",
+      "ai_expressive_role": "ai_extension",
+      "human_direction": "enabling",
+      "ai_direction": "enabling",
+      "evidence_status": "sufficient",
+      "content_basis": "full_text",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "no_full_body",
+        "body_coverage": "all_sources",
         "source_quality": {
           "33ce347321cf9969d83d18423f99e854": {
-            "flags": [
-              "no_usable_complete_body"
-            ],
-            "usable_complete_body": false
+            "flags": [],
+            "scope": "written_page",
+            "characters": 4988,
+            "body_sha256": "f3ce0a05955813a5930ad37c79d3d3ad92ce51beec27956bdfea9f3c34ed41cf",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "source_fingerprints": {
-          "33ce347321cf9969d83d18423f99e854": null
+          "33ce347321cf9969d83d18423f99e854": "f3ce0a05955813a5930ad37c79d3d3ad92ce51beec27956bdfea9f3c34ed41cf"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 1,
+        "not_available_sources": 0,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": false,
-        "people_evidence": "",
-        "ai_evidence": "",
-        "flags": [
-          "incomplete_written_source"
-        ]
+        "source_reading_complete": true,
+        "people_evidence": "Clinicians gain enhanced diagnostic support and proactive care opportunities through AI-assisted imaging analysis.",
+        "ai_evidence": "Percival broadens the informational yield from CT scans, enabling detection of unseen conditions and risk stratification.",
+        "flags": []
       },
-      "story_country_iso3s": [],
-      "evidence_summary": "No full article body was available, so the source was not model-classified.",
-      "reasoning": "No full article body was available, so the source was not model-classified.",
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "evidence_summary": "AI-assisted CT analysis extends clinician capacity, enabling earlier detection and proactive care.",
+      "reasoning": "AI-assisted CT analysis extends clinician capacity, enabling earlier detection and proactive care.",
       "relationship_patterns": {
-        "mutualism": false,
+        "mutualism": true,
         "ai_benefiting_parasitism": false,
         "human_benefiting_parasitism": false,
         "competition": false
       },
       "public_signals": {
-        "people_gaining": false,
+        "people_gaining": true,
         "people_losing_ground": false,
         "mixed_picture": false,
         "not_everyone_benefits": false,
-        "not_clear_yet": true
+        "not_clear_yet": false
       },
-      "distribution_signal": "not_shown",
-      "public_takeaway": "",
+      "distribution_signal": "broadly_shared",
+      "public_takeaway": "Clinicians gain enhanced diagnostic support and proactive care opportunities through AI-assisted imaging analysis.",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -16249,29 +16271,29 @@
     "policy_version": "source_representations_independent_axes_2026_09",
     "total": 149,
     "human": {
-      "gain": 61,
+      "gain": 63,
       "loss": 8,
       "mixed": 12,
       "none": 13,
-      "unresolved": 55
+      "unresolved": 53
     },
     "ai": {
-      "gain": 62,
+      "gain": 63,
       "loss": 7,
-      "mixed": 13,
+      "mixed": 14,
       "none": 12,
-      "unresolved": 55
+      "unresolved": 53
     },
-    "evidence_complete": 94,
+    "evidence_complete": 96,
     "counting_rule": "Each axis partitions the same records. Mixed is one category. The two axes are not added together."
   },
   "direction_policy_version": "source_representations_independent_axes_2026_09",
   "classification_scope": {
     "unit": "development",
     "total": 149,
-    "complete_written_sources": 94,
-    "incomplete_written_sources": 55,
+    "complete_written_sources": 96,
+    "incomplete_written_sources": 53,
     "legacy_configuration_note": "Legacy single-label fields are retained for compatibility; independent axis categories are authoritative under the current policy."
   },
-  "content_sha256": "74ddbff384868bd7bfcbe2291a5834b5f1047b25bb2f9c5fe6b34d8cb5154414"
+  "content_sha256": "08f14cad3f194bf0bec88a497c2934c83f728887ed22ca66085979ae39c536af"
 }

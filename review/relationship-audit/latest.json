@@ -1,6 +1,6 @@
 {
   "schema_version": "aieo_relationship_evidence_audit_v1",
-  "generated_at": "2026-10-19T02:11:24.706350Z",
+  "generated_at": "2026-10-20T08:58:36.752986Z",
   "release_id": "2026-W42",
   "period_start": "2026-10-12",
   "period_end": "2026-10-18",
@@ -17,23 +17,23 @@
   "summary": {
     "development_count": 149,
     "primary_outcome_counts": {
-      "benefit_shown": 61,
+      "benefit_shown": 63,
       "downside_shown": 8,
       "benefit_and_downside": 12,
       "no_clear_people_change": 13,
-      "too_little_evidence": 55
+      "too_little_evidence": 53
     },
     "uneven_effect_count": 14,
     "body_coverage_counts": {
-      "all_sources": 94,
-      "no_full_body": 55
+      "all_sources": 96,
+      "no_full_body": 53
     },
     "reported_body_coverage_counts": {
-      "complete_written_source": 94,
-      "incomplete_written_source": 55
+      "complete_written_source": 96,
+      "incomplete_written_source": 53
     },
     "audit_flag_counts": {
-      "insufficient_evidence": 55
+      "insufficient_evidence": 53
     },
     "plain_language_note": "The five primary outcome counts add up to the weekly total. An uneven effect is a separate detail that can overlap with any outcome."
   },
@@ -818,39 +818,39 @@
       "event_id": "39e9cf28-e8a8-41e2-a770-e3ecab699e7b",
       "title": "An AI model can detect hidden health issues in CT scans",
       "date": "2026-10-16",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "Clinicians gain enhanced diagnostic support and proactive care opportunities through AI-assisted imaging analysis.",
+          "ai_evidence": "Percival broadens the informational yield from CT scans, enabling detection of unseen conditions and risk stratification.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "33ce347321cf9969d83d18423f99e854",
@@ -864,9 +864,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "f03fd9a0-968f-4c13-83bb-3ce94fcdfbf1",
@@ -4062,39 +4060,39 @@
       "event_id": "295898d6-a235-4348-8852-422124689f04",
       "title": "How Can We Apply Artificial Intelligence?",
       "date": "2026-10-15",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "benefit_shown",
+      "primary_outcome_label": "Clear benefit shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "Applied AI is presented as enabling practical deployment and career benefits for people.",
+          "ai_evidence": "AI is described as deployed and producing real-world outputs and capabilities.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "4a321eba1f95fe682a58287ff49a1244",
@@ -4108,9 +4106,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "fe4bc1eb-d8db-45bc-8859-5f4bc19994d0",
