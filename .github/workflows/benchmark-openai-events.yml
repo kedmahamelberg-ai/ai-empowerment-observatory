@@ -1,0 +1,42 @@
+name: Benchmark OpenAI Event Replacement
+on:
+  workflow_dispatch:
+  push:
+    branches: [codex/event-resolver-nano]
+permissions:
+  contents: read
+jobs:
+  benchmark:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[benchmark-events]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      AIEO_AI_PROVIDER: openai
+      AIEO_AI_MAX_JOB_USD: '0.50'
+      AIEO_AI_MAX_JOB_REQUESTS: '150'
+      AIEO_AI_MAX_COMPLETION_TOKENS: '2048'
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'requests>=2.32,<3'
+      - name: Offline policy and API contract checks
+        run: |
+          python -B -m unittest discover -s tests -p 'test_openai_event_verifier.py' -v
+          python -B -m unittest discover -s tests -p 'test_ai_runtime.py' -v
+      - name: Select model and verify key presence
+        run: python scripts/ai_runtime.py --preflight --export
+      - name: Evaluate public labelled pairs without database writes
+        run: python scripts/benchmark_openai_events.py --gate
+      - name: Report API usage
+        if: always()
+        run: python scripts/ai_runtime.py --report
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: openai-event-benchmark
+          path: .ai-usage/
+          include-hidden-files: true
+          if-no-files-found: ignore
