@@ -31,7 +31,8 @@ After deployment, compare a small sample of Nano outputs against the full source
 
 Event resolution keeps multilingual MiniLM candidate retrieval and replaces both
 ModernBERT pair scoring and the local Qwen verifier with one bounded OpenAI request
-per candidate event. The request classifies up to three source headlines. Only an
+per candidate event, plus an independent source-only check for proposed matches.
+The first request classifies up to three source headlines. Only an
 explicit same-event result with sufficient retrieval support and no competing
 candidate may merge automatically. Unclear or invalid outputs remain separate for
 review. API/auth/budget failures stop the run; they do not generate event labels.
@@ -73,3 +74,9 @@ an artifact audit, so it is not treated as owner-labelled training data.
 Older manual-only sample-generation and legacy benchmark workflows still depend
 on the unavailable checkpoint. They are not part of the weekly production path;
 use the new API benchmark to evaluate this replacement.
+
+The first Nano benchmark (26 October) returned 4 true matches, 1 false match and
+2 missed matches among the 75 development pairs, with 24 unclear and no invalid
+outputs. Its zero-false-match gate failed. The second-check revision retains the
+same labels and is evaluated on the same development set; improvement on this set
+is not independent validation.
