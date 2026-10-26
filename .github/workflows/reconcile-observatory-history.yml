@@ -135,7 +135,7 @@ jobs:
       - name: Report bounded API usage
         if: always()
         run: python scripts/ai_runtime.py --report
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: history-reconciliation-api-usage
