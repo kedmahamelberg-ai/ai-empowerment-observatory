@@ -31,9 +31,9 @@ class AIRuntime(unittest.TestCase):
 
     def test_cutover_at_exact_december_boundary_and_future_years(self):
         with patch.dict(os.environ, {}, clear=True):
-            self.assertEqual(ai.resolve_policy(datetime(2026,12,9,23,59,59,tzinfo=timezone.utc))['model'],'gpt-5-nano')
-            self.assertEqual(ai.resolve_policy(datetime(2026,12,10,tzinfo=timezone.utc))['model'],'gpt-5.6-luna')
-            self.assertEqual(ai.resolve_policy(datetime(2027,1,1,tzinfo=timezone.utc))['model'],'gpt-5.6-luna')
+            self.assertEqual(ai.resolve_policy(datetime(2026,12,9,22,59,59,tzinfo=timezone.utc))['model'],'gpt-5-nano')
+            self.assertEqual(ai.resolve_policy(datetime(2026,12,9,23,tzinfo=timezone.utc))['model'],'gpt-6-luna')
+            self.assertEqual(ai.resolve_policy(datetime(2027,1,1,tzinfo=timezone.utc))['model'],'gpt-6-luna')
 
     def test_key_missing_stops_before_network_or_ledger(self):
         with patch.dict(os.environ, {'OPENAI_API_KEY':''}), patch.object(ai.requests,'post') as post:
