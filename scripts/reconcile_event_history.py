@@ -1393,7 +1393,7 @@ def main() -> int:
                     "gap_days": top.gap_days,
                     "reason": result["reason"] or "model-proposed same-event match requires human acceptance",
                     "proposed_relationship": "same_event",
-                    "passed_strict_model_gate": model_same_passes_strict_gate,
+                    "passed_strict_model_gate": False,
                 }
                 if not args.dry_run:
                     upsert_relationship(
@@ -1408,7 +1408,7 @@ def main() -> int:
                         story_family_id=None,
                         evidence={
                             **evidence,
-                            "passed_strict_model_gate": model_same_passes_strict_gate,
+                            "passed_strict_model_gate": False,
                         },
                     )
                     (
