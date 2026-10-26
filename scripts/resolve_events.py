@@ -9,14 +9,13 @@ Event Lens:
 
 Decision policy:
     AUTO MERGE:
-      Qwen says same_event with high confidence AND
-      ModernBERT/date evidence is sufficiently strong AND
+      OpenAI identifies the same concrete event in source evidence AND
       event-representation similarity is credible AND
       no competing event is nearly as plausible.
 
     REVIEW:
-      meaningful positive signal, model disagreement, story-token evidence,
-      competing candidates, or Qwen uncertainty.
+      meaningful positive signal, story-token evidence,
+      competing candidates, or verifier uncertainty.
 
     NEW EVENT:
       no convincing event match.
@@ -31,29 +30,22 @@ never used as production candidate events.
 from __future__ import annotations
 
 from event_resolution_database import ResolverDatabase, resolver_collection
+import ai_runtime
+import openai_event_verifier as event_verifier
 
 import hashlib
 import json
-import math
 import os
-import re
-import subprocess
 import sys
-import time
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from statistics import mean
 from typing import Any
 
 import numpy as np
-import requests
-import torch
-import torch.nn.functional as F
 from huggingface_hub import HfApi
 from sentence_transformers import SentenceTransformer
 from supabase import Client, create_client
-from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 from translation_policy import SUPPORTED_TRANSLATION_PROFILES, preferred_translation_rows
 
@@ -62,46 +54,20 @@ ROOT = Path(__file__).resolve().parents[1]
 REVIEW_PATH = ROOT / "review" / "events" / "assignments" / "latest.json"
 PUBLIC_EVENTS_PATH = ROOT / "data" / "events" / "latest.json"
 
-RESOLVER_VERSION = "7B.4.1-structured-json-retry"
+RESOLVER_VERSION = "7B.5-openai-event-identity"
 METHOD_NAME = "article_to_event_v1"
 EMBEDDING_MODEL = (
     "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 )
-MODERNBERT_MODEL = "Juanillaberia/articles-pairs-event-detection"
-
-QWEN_REPO = "Qwen/Qwen3-4B-GGUF"
-QWEN_QUANT = "Q4_K_M"
-
-LLAMA_SERVER_BIN = os.environ.get(
-    "LLAMA_SERVER_BIN",
-    "/tmp/llama.cpp/build/bin/llama-server",
-)
-SERVER_URL = "http://127.0.0.1:8080/v1/chat/completions"
-HEALTH_URL = "http://127.0.0.1:8080/health"
-
 MAX_EVENT_GAP_DAYS = 7.0
 TOP_EVENT_CANDIDATES = 3
 MAX_EVENT_EVIDENCE = 3
 
-# Retrieval / verifier gating.
 MIN_EVENT_REP_SIMILARITY = 0.55
-QWEN_MIN_REP_SIMILARITY = 0.68
-QWEN_MIN_MODERNBERT = 0.30
-QWEN_STRONG_MODERNBERT = 0.60
-
-# Auto-merge is intentionally strict.
-AUTO_MERGE_QWEN_CONFIDENCE = 0.90
-AUTO_MERGE_MODERNBERT = 0.55
-AUTO_MERGE_REP_SIMILARITY = 0.70
-
-# Google News Full Coverage was empirically too broad to be ground truth.
-STORY_TOKEN_MODERNBERT_FLOOR = 0.35
-STORY_TOKEN_QWEN_CONFIDENCE = 0.88
 
 # Competing candidates this close trigger review instead of an auto-merge.
 COMPETING_SIMILARITY_MARGIN = 0.035
 
-DATE_DECAY_LAMBDA = 0.20
 
 
 class ResolverError(RuntimeError):
@@ -410,12 +376,13 @@ def register_model(
     task: str,
     language_scope: str,
     notes: str,
+    provider: str = "huggingface",
 ) -> str:
     response = (
         client.table("model_versions")
         .upsert(
             {
-                "provider": "huggingface",
+                "provider": provider,
                 "model_name": name,
                 "model_revision": revision,
                 "task": task,
@@ -508,398 +475,6 @@ def finish_resolution_run(
         )
         .eq("resolution_run_id", resolution_run_id)
         .execute()
-    )
-
-
-def start_llama_server() -> tuple[subprocess.Popen, Any]:
-    log_path = Path("/tmp/event-resolution-qwen.log")
-    handle = log_path.open("w", encoding="utf-8")
-
-    process = subprocess.Popen(
-        [
-            LLAMA_SERVER_BIN,
-            "-hf",
-            f"{QWEN_REPO}:{QWEN_QUANT}",
-            "--host",
-            "127.0.0.1",
-            "--port",
-            "8080",
-            "-c",
-            "4096",
-            "-np",
-            "1",
-            "--jinja",
-            "-ngl",
-            "0",
-        ],
-        stdout=handle,
-        stderr=subprocess.STDOUT,
-    )
-
-    deadline = time.time() + 480
-
-    while time.time() < deadline:
-        if process.poll() is not None:
-            handle.flush()
-
-            try:
-                print(
-                    log_path.read_text(
-                        encoding="utf-8"
-                    )[-10000:],
-                    file=sys.stderr,
-                )
-            except Exception:
-                pass
-
-            raise ResolverError(
-                "Qwen llama.cpp server exited during startup."
-            )
-
-        try:
-            response = requests.get(
-                HEALTH_URL,
-                timeout=3,
-            )
-
-            if response.ok:
-                return process, handle
-
-        except requests.RequestException:
-            pass
-
-        time.sleep(2)
-
-    raise ResolverError(
-        "Qwen llama.cpp server did not become healthy."
-    )
-
-
-def stop_llama_server(
-    process: subprocess.Popen | None,
-    handle: Any | None,
-) -> None:
-    if process is not None and process.poll() is None:
-        process.terminate()
-
-        try:
-            process.wait(timeout=20)
-        except subprocess.TimeoutExpired:
-            process.kill()
-            process.wait(timeout=10)
-
-    if handle is not None:
-        try:
-            handle.close()
-        except Exception:
-            pass
-
-
-def extract_json(text: str) -> dict[str, Any]:
-    """Extract one JSON object from model output without repairing semantics.
-
-    Structured-output mode should normally make the whole response valid JSON.
-    The fallback scanner only tolerates harmless wrappers such as markdown
-    fences or surrounding prose. It deliberately does not guess how to repair
-    malformed JSON, because a guessed repair could change an event decision.
-    """
-    cleaned = re.sub(
-        r"<think>.*?</think>",
-        "",
-        text,
-        flags=re.S,
-    ).strip()
-
-    cleaned = re.sub(
-        r"^```(?:json)?\s*",
-        "",
-        cleaned,
-        flags=re.I,
-    )
-    cleaned = re.sub(r"\s*```$", "", cleaned).strip()
-
-    try:
-        payload = json.loads(cleaned)
-        if isinstance(payload, dict):
-            return payload
-        raise ResolverError("Qwen returned JSON that was not an object.")
-    except json.JSONDecodeError as direct_error:
-        decoder = json.JSONDecoder()
-
-        # Scan for the first independently valid JSON object rather than using
-        # a greedy {.*} regex, which can accidentally join multiple objects.
-        for match in re.finditer(r"\{", cleaned):
-            try:
-                payload, _ = decoder.raw_decode(cleaned[match.start():])
-            except json.JSONDecodeError:
-                continue
-            if isinstance(payload, dict):
-                return payload
-
-        raise direct_error
-
-def qwen_verify_event(
-    *,
-    article: Article,
-    event: EventState,
-    evidence: list[EvidenceArticle],
-    rep_similarity: float,
-    modernbert_max: float,
-    story_token_match: bool,
-) -> dict[str, Any]:
-    evidence_text = []
-
-    for index, item in enumerate(evidence, start=1):
-        evidence_text.append(
-            f"""
-Evidence {index}
-Publisher: {item.publisher}
-Original: {item.original_headline}
-English: {item.english_headline}
-Date: {item.date.date().isoformat()}
-""".strip()
-        )
-
-    prompt = f"""
-/no_think
-
-You are assigning a NEW news article to an EXISTING real-world event.
-
-Question:
-Does the new article report the SAME SPECIFIC REAL-WORLD EVENT represented
-by the existing evidence?
-
-Allowed labels:
-- same_event
-- not_same_event
-- unclear
-
-same_event requires the same concrete occurrence, announcement, study result,
-decision, launch, incident, meeting, speech, policy action, etc.
-
-Same topic, technology, organization, law, country, trend, or debate is NOT
-enough.
-
-NEW ARTICLE
-Publisher: {article.publisher}
-Original headline: {article.original_headline}
-English normalization: {article.english_headline}
-Snippet: {article.snippet}
-Date: {article.date.date().isoformat()}
-
-EXISTING EVENT
-Event title: {event.event_title}
-Event date: {event.event_date}
-
-{chr(10).join(evidence_text)}
-
-Supporting retrieval signals are not ground truth:
-Event representation similarity: {rep_similarity:.4f}
-ModernBERT strongest pair score: {modernbert_max:.4f}
-Google News story-token match: {str(story_token_match).lower()}
-
-Return ONLY one valid JSON object with exactly these fields:
-{{
-  "relationship": "same_event | not_same_event | unclear",
-  "confidence": 0.00,
-  "reason": ""
-}}
-""".strip()
-
-    # llama.cpp supports OpenAI-compatible JSON-object mode. Use it first so a
-    # stray quote/newline in the free-text reason cannot invalidate the whole
-    # weekly run. The prompt-only mode remains as a compatibility fallback.
-    request_modes = [
-        {
-            "name": "json_object",
-            "extra": {"response_format": {"type": "json_object"}},
-            "temperature": 0.0,
-            "top_p": 1.0,
-        },
-        {
-            "name": "json_object_retry",
-            "extra": {"response_format": {"type": "json_object"}},
-            "temperature": 0.2,
-            "top_p": 0.9,
-        },
-        {
-            "name": "prompt_only_retry",
-            "extra": {},
-            "temperature": 0.2,
-            "top_p": 0.9,
-        },
-    ]
-
-    last_error: Exception | None = None
-
-    for attempt, mode in enumerate(request_modes, start=1):
-        try:
-            response = requests.post(
-                SERVER_URL,
-                json={
-                    "model": f"{QWEN_REPO}:{QWEN_QUANT}",
-                    "messages": [
-                        {
-                            "role": "system",
-                            "content": (
-                                "You are a conservative real-world news-event verifier. "
-                                "False merges are more harmful than false splits. "
-                                "Return one syntactically valid JSON object only."
-                            ),
-                        },
-                        {
-                            "role": "user",
-                            "content": prompt,
-                        },
-                    ],
-                    "temperature": mode["temperature"],
-                    "top_p": mode["top_p"],
-                    "max_tokens": 230,
-                    "stream": False,
-                    **mode["extra"],
-                },
-                timeout=180,
-            )
-            response.raise_for_status()
-
-            result = extract_json(
-                str(response.json()["choices"][0]["message"]["content"])
-            )
-
-            relationship = str(
-                result.get("relationship") or ""
-            ).strip()
-
-            if relationship not in {
-                "same_event",
-                "not_same_event",
-                "unclear",
-            }:
-                raise ResolverError(
-                    f"Unexpected Qwen relationship: {relationship}"
-                )
-
-            try:
-                confidence = float(result.get("confidence", 0.0))
-            except Exception:
-                confidence = 0.0
-
-            return {
-                "relationship": relationship,
-                "confidence": max(0.0, min(1.0, confidence)),
-                "reason": str(result.get("reason") or ""),
-                "structured_output_mode": mode["name"],
-            }
-
-        except requests.RequestException as exc:
-            # A real server/HTTP failure is not silently converted into a model
-            # judgement. Retry, then fail the stage if transport remains broken.
-            last_error = exc
-            print(
-                f"Warning: Qwen verifier request {attempt}/{len(request_modes)} "
-                f"failed in {mode['name']} mode: {exc}",
-                file=sys.stderr,
-            )
-
-        except (json.JSONDecodeError, KeyError, IndexError, TypeError, ResolverError) as exc:
-            # Malformed model output is recoverable. Retrying the same article is
-            # much safer than terminating a 100+ article weekly resolution run.
-            last_error = exc
-            print(
-                f"Warning: Qwen verifier output {attempt}/{len(request_modes)} "
-                f"was invalid in {mode['name']} mode: {exc}",
-                file=sys.stderr,
-            )
-
-        if attempt < len(request_modes):
-            time.sleep(1)
-
-    if isinstance(last_error, requests.RequestException):
-        raise ResolverError(
-            "Qwen verifier HTTP/server request failed after all retries."
-        ) from last_error
-
-    # Precision-first fallback: an unparsable model answer can never cause an
-    # automatic merge. Mark it unclear so meaningful non-LLM evidence enters
-    # human review, while weak evidence remains a separate event.
-    print(
-        "Warning: Qwen verifier returned malformed/invalid structured output "
-        "after all retries; using conservative 'unclear' fallback.",
-        file=sys.stderr,
-    )
-    return {
-        "relationship": "unclear",
-        "confidence": 0.0,
-        "reason": "verifier_output_invalid_after_retries",
-        "structured_output_mode": "fallback_unclear",
-    }
-
-def pair_score(
-    tokenizer,
-    model,
-    article: Article,
-    evidence: EvidenceArticle,
-) -> tuple[float, float]:
-    inputs = tokenizer(
-        text=article.english_headline,
-        text_pair=evidence.english_headline,
-        return_tensors="pt",
-        truncation=True,
-        max_length=128,
-    )
-
-    with torch.inference_mode():
-        logits = model(**inputs).logits
-        raw = float(
-            F.softmax(logits, dim=-1)[0][1].item()
-        )
-
-    gap = abs(
-        (article.date - evidence.date).total_seconds()
-    ) / 86400.0
-
-    adjusted = raw * math.exp(
-        -DATE_DECAY_LAMBDA * gap
-    )
-
-    return raw, adjusted
-
-
-def modernbert_event_scores(
-    tokenizer,
-    model,
-    article: Article,
-    event: EventState,
-) -> tuple[float, float, list[EvidenceArticle]]:
-    if not event.evidence:
-        return 0.0, 0.0, []
-
-    ranked = sorted(
-        event.evidence,
-        key=lambda evidence: float(
-            np.dot(
-                article.vector,
-                evidence.vector,
-            )
-        ),
-        reverse=True,
-    )[:MAX_EVENT_EVIDENCE]
-
-    adjusted_scores = []
-
-    for evidence in ranked:
-        _, adjusted = pair_score(
-            tokenizer,
-            model,
-            article,
-            evidence,
-        )
-        adjusted_scores.append(adjusted)
-
-    return (
-        max(adjusted_scores) if adjusted_scores else 0.0,
-        mean(adjusted_scores) if adjusted_scores else 0.0,
-        ranked,
     )
 
 
@@ -1005,7 +580,7 @@ def update_event_after_merge(
     *,
     event: EventState,
     article: Article,
-    confidence: float,
+    confidence: float | None,
 ) -> None:
     first_seen = min(
         event.first_seen_at,
@@ -1026,7 +601,7 @@ def update_event_after_merge(
             {
                 "first_seen_at": first_seen,
                 "last_seen_at": last_seen,
-                "cluster_confidence": round(confidence, 4),
+                "cluster_confidence": round(confidence, 4) if confidence is not None else None,
                 "requires_cluster_review": False,
                 "cluster_review_reason": None,
                 "event_state": "active",
@@ -1302,6 +877,10 @@ def event_evidence_json(
 
 
 def main() -> int:
+    if not ai_runtime.uses_openai():
+        raise ResolverError("Event resolution requires AIEO_AI_PROVIDER=openai")
+    ai_runtime.require_key()
+    verifier_identity = event_verifier.identity()
     client: Client = create_client(
         required_env("SUPABASE_URL"),
         required_env("SUPABASE_SECRET_KEY"),
@@ -1326,15 +905,6 @@ def main() -> int:
         HfApi().model_info(EMBEDDING_MODEL).sha
         or "unknown"
     )
-    modernbert_revision = (
-        HfApi().model_info(MODERNBERT_MODEL).sha
-        or "unknown"
-    )
-    qwen_revision = (
-        HfApi().model_info(QWEN_REPO).sha
-        or "unknown"
-    )
-
     embedding_model_version_id = register_model(
         client,
         name=EMBEDDING_MODEL,
@@ -1345,27 +915,16 @@ def main() -> int:
     )
 
     pair_model_version_id = register_model(
-        client,
-        name=MODERNBERT_MODEL,
-        revision=modernbert_revision,
-        task="event_pair_verification",
-        language_scope="english_normalized",
-        notes=(
-            "Task-specific news same-event classifier with "
-            "post-hoc publication-date adjustment."
-        ),
-    )
-
-    verifier_model_version_id = register_model(
-        client,
-        name=QWEN_REPO,
-        revision=qwen_revision,
-        task="event_cluster_verification",
+        client, provider="openai", name=verifier_identity["model"],
+        revision=verifier_identity["revision"], task="event_pair_verification",
         language_scope="original_plus_english",
-        notes=(
-            "Conservative article-to-event verifier. "
-            "Original and normalized-English evidence supplied together."
-        ),
+        notes="Structured same-event labels; no calibrated probability is claimed.",
+    )
+    verifier_model_version_id = register_model(
+        client, provider="openai", name=verifier_identity["model"],
+        revision=verifier_identity["revision"], task="event_cluster_verification",
+        language_scope="original_plus_english",
+        notes="One evidence-grounded API decision replaces ModernBERT and Qwen.",
     )
 
     resolution_run_id, run_key = start_resolution_run(
@@ -1399,21 +958,6 @@ def main() -> int:
             dtype=np.float32,
         )
 
-    tokenizer = AutoTokenizer.from_pretrained(
-        MODERNBERT_MODEL,
-        revision=modernbert_revision,
-    )
-
-    modern_model = (
-        AutoModelForSequenceClassification
-        .from_pretrained(
-            MODERNBERT_MODEL,
-            revision=modernbert_revision,
-        )
-    )
-
-    modern_model.eval()
-
     events = load_active_events(
         client,
         embedder,
@@ -1430,13 +974,7 @@ def main() -> int:
     review_items = []
     decision_items = []
 
-    process = None
-    llama_handle = None
-
     try:
-        # Start Qwen once. It is only called for plausible/ambiguous matches.
-        process, llama_handle = start_llama_server()
-
         for number, article in enumerate(
             articles,
             start=1,
@@ -1557,65 +1095,31 @@ def main() -> int:
                 ) < COMPETING_SIMILARITY_MARGIN
             )
 
-            modern_max, modern_mean, evidence = modernbert_event_scores(
-                tokenizer,
-                modern_model,
-                article,
-                top_event,
+            evidence = sorted(
+                top_event.evidence,
+                key=lambda ev: float(np.dot(article.vector, ev.vector)),
+                reverse=True,
+            )[:MAX_EVENT_EVIDENCE]
+            story_match = bool(article.story_token and article.story_token in top_event.story_tokens)
+            counts["verifier_calls"] += 1
+            verdict = event_verifier.verify(
+                {"headline_original": article.original_headline,
+                 "headline_english": article.english_headline,
+                 "publisher": article.publisher, "date": article.date.isoformat(),
+                 "snippet": article.snippet},
+                [{"evidence_id": ev.article_id,
+                  "headline_original": ev.original_headline,
+                  "headline_english": ev.english_headline,
+                  "publisher": ev.publisher, "date": ev.date.isoformat(),
+                  "day_gap": abs((article.date - ev.date).total_seconds()) / 86400.0}
+                 for ev in evidence],
+                event_title=top_event.event_title,
             )
-
-            story_match = bool(
-                article.story_token
-                and article.story_token in top_event.story_tokens
+            proposed_decision, review_reasons = event_verifier.assignment_policy(
+                verdict, similarity=top_similarity, competing=competing,
+                story_match=story_match,
             )
-
-            # Only invoke the expensive verifier when there is meaningful
-            # evidence of a potential match.
-            should_call_qwen = bool(
-                story_match
-                or modern_max >= QWEN_STRONG_MODERNBERT
-                or (
-                    top_similarity >= QWEN_MIN_REP_SIMILARITY
-                    and modern_max >= QWEN_MIN_MODERNBERT
-                )
-            )
-
-            qwen = {
-                "relationship": None,
-                "confidence": None,
-                "reason": "",
-            }
-
-            if should_call_qwen:
-                counts["verifier_calls"] += 1
-
-                qwen = qwen_verify_event(
-                    article=article,
-                    event=top_event,
-                    evidence=evidence,
-                    rep_similarity=top_similarity,
-                    modernbert_max=modern_max,
-                    story_token_match=story_match,
-                )
-
-            auto_merge = False
-
-            if qwen["relationship"] == "same_event":
-                if (
-                    not competing
-                    and top_similarity >= AUTO_MERGE_REP_SIMILARITY
-                    and modern_max >= AUTO_MERGE_MODERNBERT
-                    and float(qwen["confidence"]) >= AUTO_MERGE_QWEN_CONFIDENCE
-                ):
-                    auto_merge = True
-
-                elif (
-                    not competing
-                    and story_match
-                    and modern_max >= STORY_TOKEN_MODERNBERT_FLOOR
-                    and float(qwen["confidence"]) >= STORY_TOKEN_QWEN_CONFIDENCE
-                ):
-                    auto_merge = True
+            auto_merge = proposed_decision == "auto_merge"
 
             if auto_merge:
                 link_article_to_event(
@@ -1630,7 +1134,7 @@ def main() -> int:
                     client,
                     event=top_event,
                     article=article,
-                    confidence=float(qwen["confidence"]),
+                    confidence=None,
                 )
 
                 top_event.evidence.append(
@@ -1654,48 +1158,6 @@ def main() -> int:
                 review_reason = None
 
             else:
-                review_reasons = []
-
-                # REVIEW is reserved for genuinely plausible event matches.
-                # Retrieval similarity and competing candidates alone are not
-                # evidence that two AI-related articles report the same event.
-
-                if qwen["relationship"] == "same_event":
-                    review_reasons.append(
-                        "Qwen identifies a possible same event, but auto-merge thresholds are not met"
-                    )
-
-                    if competing:
-                        review_reasons.append(
-                            "more than one event remains plausible"
-                        )
-
-                elif qwen["relationship"] == "unclear":
-                    if (
-                        story_match
-                        or top_similarity >= 0.72
-                        or modern_max >= 0.55
-                    ):
-                        review_reasons.append(
-                            "Qwen is unclear despite meaningful candidate-event evidence"
-                        )
-
-                elif qwen["relationship"] == "not_same_event":
-                    if (
-                        story_match
-                        and modern_max >= 0.60
-                    ) or (
-                        top_similarity >= 0.82
-                        and modern_max >= 0.70
-                    ):
-                        review_reasons.append(
-                            "exceptionally strong non-LLM evidence conflicts with Qwen not-same decision"
-                        )
-
-                # If Qwen was never called, retrieval similarity/competition
-                # alone never creates human review. The article remains a
-                # separate event.
-
                 needs_review = bool(review_reasons)
 
                 if needs_review:
@@ -1787,15 +1249,11 @@ def main() -> int:
                         if second_similarity is not None
                         else None
                     ),
-                    "modernbert_max_probability": round(modern_max, 4),
-                    "modernbert_mean_probability": round(modern_mean, 4),
-                    "qwen_relationship": qwen["relationship"],
-                    "qwen_confidence": (
-                        round(float(qwen["confidence"]), 4)
-                        if qwen["confidence"] is not None
-                        else None
-                    ),
-                    "qwen_reason": qwen["reason"],
+                    "modernbert_max_probability": None,
+                    "modernbert_mean_probability": None,
+                    "qwen_relationship": None,
+                    "qwen_confidence": None,
+                    "qwen_reason": None,
                     "temporal_gap_days": round(
                         min(
                             abs(
@@ -1812,6 +1270,7 @@ def main() -> int:
                     "requires_review": requires_review,
                     "review_reason": review_reason,
                     "evidence": {
+                        "verifier": verdict,
                         "candidate_event_title": top_event.event_title,
                         "candidate_event_date": top_event.event_date,
                         "candidate_evidence": event_evidence_json(
@@ -1846,21 +1305,18 @@ def main() -> int:
                     ),
                 },
                 "signals": {
+                    "verifier": verdict,
                     "event_similarity": round(top_similarity, 4),
                     "second_event_similarity": (
                         round(second_similarity, 4)
                         if second_similarity is not None
                         else None
                     ),
-                    "modernbert_max": round(modern_max, 4),
-                    "modernbert_mean": round(modern_mean, 4),
-                    "qwen_relationship": qwen["relationship"],
-                    "qwen_confidence": (
-                        round(float(qwen["confidence"]), 4)
-                        if qwen["confidence"] is not None
-                        else None
-                    ),
-                    "qwen_reason": qwen["reason"],
+                    "modernbert_max": None,
+                    "modernbert_mean": None,
+                    "qwen_relationship": None,
+                    "qwen_confidence": None,
+                    "qwen_reason": None,
                     "story_token_match": story_match,
                     "competing_candidate": competing,
                 },
@@ -1912,7 +1368,8 @@ def main() -> int:
 
         review_payload = {
             "meta": {
-                "stage": "7B.3",
+                "stage": RESOLVER_VERSION,
+                "verifier": verifier_identity,
                 "status": "production event assignment pilot",
                 "collection_run_key": collection["run_key"],
                 "resolution_run_id": resolution_run_id,
@@ -2027,7 +1484,8 @@ def main() -> int:
             json.dumps(
                 {
                     "meta": {
-                        "stage": "7B.3",
+                        "stage": RESOLVER_VERSION,
+                "verifier": verifier_identity,
                         "resolution_run_key": run_key,
                         "article_count": len(articles),
                         "active_event_count": active_event_count,
@@ -2074,11 +1532,6 @@ def main() -> int:
         )
         raise
 
-    finally:
-        stop_llama_server(
-            process,
-            llama_handle,
-        )
 
 
 if __name__ == "__main__":

@@ -11,6 +11,12 @@ jobs:
   resolve:
     runs-on: ubuntu-latest
     timeout-minutes: 240
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      AIEO_AI_PROVIDER: openai
+      AIEO_AI_MAX_JOB_USD: ${{ vars.AIEO_AI_MAX_JOB_USD || '0.50' }}
+      AIEO_AI_MAX_JOB_REQUESTS: ${{ vars.AIEO_AI_MAX_JOB_REQUESTS || '350' }}
+      AIEO_AI_MAX_COMPLETION_TOKENS: '2048'
     steps:
       - name: Checkout latest main
         uses: actions/checkout@v7
@@ -25,30 +31,17 @@ jobs:
       - name: Check event-resolver database recovery
         run: python -B -m unittest discover -s tests -p 'test_event_resolution_database.py' -v
       - name: Install resolver dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Verify scheduled API model and key
+        run: python scripts/ai_runtime.py --preflight --export
+      - name: Check API verifier and model cutover
         run: |
-          python -m pip install -r requirements.txt
-          python -m pip install "transformers[torch]==5.14.1"
-      - name: Verify ModernBERT tokenizer
-        run: |
-          python - <<'PY'
-          from transformers import AutoTokenizer
-          tokenizer = AutoTokenizer.from_pretrained("Juanillaberia/articles-pairs-event-detection")
-          print("Tokenizer:", tokenizer.__class__.__name__)
-          PY
-      - name: Install llama.cpp build dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y cmake build-essential libcurl4-openssl-dev
-      - name: Build llama.cpp server
-        run: |
-          git clone --depth 1 https://github.com/ggml-org/llama.cpp.git /tmp/llama.cpp
-          cmake -S /tmp/llama.cpp -B /tmp/llama.cpp/build -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=OFF
-          cmake --build /tmp/llama.cpp/build --target llama-server -j2
+          python -B -m unittest discover -s tests -p 'test_openai_event_verifier.py' -v
+          python -B -m unittest discover -s tests -p 'test_ai_runtime.py' -v
       - name: Resolve articles into events
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
-          LLAMA_SERVER_BIN: /tmp/llama.cpp/build/bin/llama-server
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: python scripts/resolve_events.py
       - name: Authorize this generated-data commit
@@ -61,3 +54,14 @@ jobs:
             "data: resolve AI news into production events [$(date -u +%Y-%m-%d)]" \
             main review/events/assignments/latest.json data/events/latest.json
 
+      - name: Report bounded API usage
+        if: always()
+        run: python scripts/ai_runtime.py --report
+      - name: Retain API usage and decisions
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: event-resolver-api-usage
+          path: .ai-usage/
+          include-hidden-files: true
+          if-no-files-found: ignore
