@@ -10,8 +10,8 @@ It adds long-term memory without making automatic merging permissive:
 * uncertain long-gap matches remain separate and enter the review ledger;
 * every article/event appearance is recorded for replication-delay analysis.
 
-Only very strong, non-competing ``same_event`` decisions are applied
-automatically. Applied changes are appended to ``event_revisions``.
+Accepted human decisions control historical merges and follow-on links.
+Model decisions remain proposals. Applied changes enter ``event_revisions``.
 """
 
 from __future__ import annotations
@@ -31,27 +31,18 @@ from typing import Any, Iterable
 from urllib.parse import urlparse
 
 import numpy as np
-import requests
-import torch
-import torch.nn.functional as F
+import ai_runtime
+import openai_event_verifier as event_verifier
 from huggingface_hub import HfApi
 from sentence_transformers import SentenceTransformer
 from supabase import Client, create_client
-from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
-# Reuse the exact models and llama.cpp server used by the production resolver.
+# Reuse candidate retrieval and the bounded API policy of the production resolver.
 from resolve_events import (  # type: ignore
     EMBEDDING_MODEL,
     METHOD_NAME,
-    MODERNBERT_MODEL,
-    QWEN_QUANT,
-    QWEN_REPO,
-    SERVER_URL,
-    extract_json,
     iso_z,
     parse_source_metadata,
-    start_llama_server,
-    stop_llama_server,
     utc_now,
 )
 from translation_policy import SUPPORTED_TRANSLATION_PROFILES, preferred_translation_rows
@@ -60,7 +51,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_OUTPUT = ROOT / "data" / "releases" / "reconciliation" / "latest.json"
 PRIVATE_REVIEW = ROOT / "review" / "events" / "longitudinal" / "latest.json"
 
-RECONCILER_VERSION = "longitudinal_v1.3.1-structured-json-retry"
+RECONCILER_VERSION = "longitudinal_v1.4-openai-human-gated"
 MANUAL_DECISIONS_PATH = ROOT / "review" / "events" / "longitudinal" / "manual-decisions.json"
 RECENT_TRACK_DAYS = float(os.environ.get("AIEO_RECENT_TRACK_DAYS", "21"))
 RESURFACE_DAYS = float(os.environ.get("AIEO_RESURFACE_DAYS", "28"))
@@ -69,27 +60,11 @@ MAX_EVIDENCE = int(os.environ.get("AIEO_LONGITUDINAL_MAX_EVIDENCE", "4"))
 
 RECENT_MIN_SIMILARITY = float(os.environ.get("AIEO_RECENT_MIN_SIMILARITY", "0.60"))
 HISTORICAL_MIN_SIMILARITY = float(os.environ.get("AIEO_HISTORICAL_MIN_SIMILARITY", "0.70"))
-QWEN_CALL_SIMILARITY = float(os.environ.get("AIEO_LONGITUDINAL_QWEN_SIMILARITY", "0.67"))
-QWEN_CALL_PAIR = float(os.environ.get("AIEO_LONGITUDINAL_QWEN_PAIR", "0.42"))
-AUTO_MERGE_QWEN = float(os.environ.get("AIEO_LONGITUDINAL_QWEN_CONF", "0.95"))
-AUTO_MERGE_SIMILARITY = float(os.environ.get("AIEO_LONGITUDINAL_MERGE_SIM", "0.72"))
-AUTO_MERGE_PAIR = float(os.environ.get("AIEO_LONGITUDINAL_MERGE_PAIR", "0.55"))
-TOKEN_MERGE_PAIR = float(os.environ.get("AIEO_LONGITUDINAL_TOKEN_PAIR", "0.45"))
-FOLLOW_ON_QWEN = float(os.environ.get("AIEO_FOLLOW_ON_QWEN_CONF", "0.86"))
-# Follow-on links remain human-gated during the pilot. Model output can propose
-# a relationship, but cannot create a story family unless this is explicitly
-# enabled or an accepted manual decision exists.
-AUTO_LINK_MODEL_FOLLOW_ON = str(
-    os.environ.get("AIEO_AUTO_LINK_MODEL_FOLLOW_ON", "false")
-).strip().casefold() in {"1", "true", "yes", "on"}
-
-# During the pilot, even strict model-proposed same-event merges remain
-# proposals unless a versioned human decision accepts the pair. This prevents
-# semantically similar commentary, opinion or generic AI headlines from being
-# collapsed into one real-world event merely because they share a date/topic.
-AUTO_APPLY_MODEL_SAME_EVENT = str(
-    os.environ.get("AIEO_AUTO_APPLY_MODEL_SAME_EVENT", "false")
-).strip().casefold() in {"1", "true", "yes", "on"}
+VERIFY_SIMILARITY = float(os.environ.get("AIEO_LONGITUDINAL_VERIFY_SIMILARITY", "0.67"))
+# A new API model has no calibrated probability thresholds. Preserve the pilot's
+# human-only authority over merges and follow-on links.
+AUTO_LINK_MODEL_FOLLOW_ON = False
+AUTO_APPLY_MODEL_SAME_EVENT = False
 COMPETING_MARGIN = float(os.environ.get("AIEO_LONGITUDINAL_COMPETING_MARGIN", "0.03"))
 
 
@@ -550,33 +525,6 @@ def load_memories(
     return memories
 
 
-def raw_pair_score(tokenizer, model, left: str, right: str) -> float:
-    inputs = tokenizer(text=left, text_pair=right, return_tensors="pt", truncation=True, max_length=160)
-    with torch.inference_mode():
-        logits = model(**inputs).logits
-        return float(F.softmax(logits, dim=-1)[0][1].item())
-
-
-def pair_scores(
-    tokenizer,
-    model,
-    candidate: EventMemory,
-    target: EventMemory,
-) -> tuple[float, float, list[ArticleEvidence]]:
-    candidate_text = " | ".join(item.english_headline for item in candidate.evidence[:MAX_EVIDENCE])
-    ranked = sorted(
-        target.evidence,
-        key=lambda item: float(np.dot(candidate.representation, item.vector)),
-        reverse=True,
-    )[:MAX_EVIDENCE]
-    scores = [raw_pair_score(tokenizer, model, candidate_text, item.english_headline) for item in ranked]
-    return (
-        max(scores) if scores else 0.0,
-        sum(scores) / len(scores) if scores else 0.0,
-        ranked,
-    )
-
-
 def retrieve(candidate: EventMemory, pool: dict[str, EventMemory]) -> list[Candidate]:
     result: list[Candidate] = []
     for target in pool.values():
@@ -595,189 +543,18 @@ def retrieve(candidate: EventMemory, pool: dict[str, EventMemory]) -> list[Candi
     return result[:TOP_CANDIDATES]
 
 
-def verify_relationship(
-    *,
-    candidate: EventMemory,
-    target: EventMemory,
-    target_evidence: list[ArticleEvidence],
-    similarity: float,
-    pair_max: float,
-    pair_mean: float,
-    token_match: bool,
-    gap_days: float,
-) -> dict[str, Any]:
-    new_evidence = "\n".join(
-        f"- {item.publisher}: {item.english_headline} ({item.date.date().isoformat()})"
-        for item in candidate.evidence[:MAX_EVIDENCE]
-    )
-    old_evidence = "\n".join(
-        f"- {item.publisher}: {item.english_headline} ({item.date.date().isoformat()})"
-        for item in target_evidence
-    )
-    prompt = f"""
-/no_think
-
-Compare a newly resolved news event with an earlier event in a longitudinal
-registry. Time distance must not make repeated reporting look new, but a shared
-actor or topic is not enough to merge events.
-
-Choose exactly one:
-- same_event: the same concrete occurrence, announcement, decision, launch,
-  incident, study result, meeting or policy action is being reported again. A
-  later article that adds detail, reaction, criticism, confirmation, a video
-  treatment, or a different headline is still the same event unless a new actor
-  performs a new dated action.
-- follow_on_development: a genuinely new, separately datable occurrence that
-  implements, changes, reverses, legally responds to, or materially advances the
-  earlier event. It requires a new action or outcome, not merely another article.
-- same_topic_only: related subject or actor, but not the same occurrence and not
-  a concrete follow-on development. Commentary, explainers, television episodes,
-  and consecutive parts of an editorial series belong here unless they report a
-  new real-world action.
-- unclear: the available evidence does not support a safe decision.
-
-Decision checks:
-1. Ask whether both headlines could truthfully be citations for one underlying
-   occurrence. If yes, choose same_event.
-2. Do not use publication date, semantic similarity, or shared actors as proof of
-   a follow-on. Identify the new actor action/outcome explicitly.
-3. "More detail", "backlash", "criticism", "confirmation", or a new publisher
-   does not by itself create a follow-on development.
-
-NEW EVENT
-Title: {candidate.event_title}
-Event date: {candidate.event_date}
-{new_evidence}
-
-EARLIER EVENT
-Title: {target.event_title}
-Event date: {target.event_date}
-{old_evidence}
-
-Diagnostic signals only:
-- days between coverage episodes: {gap_days:.1f}
-- representation similarity: {similarity:.4f}
-- strongest pair score: {pair_max:.4f}
-- mean pair score: {pair_mean:.4f}
-- Google News story-token overlap: {str(token_match).lower()}
-
-Return ONLY JSON:
-{{
-  "relationship": "same_event | follow_on_development | same_topic_only | unclear",
-  "confidence": 0.00,
-  "reason": ""
-}}
-""".strip()
-    request_modes = [
-        {
-            "name": "json_object",
-            "extra": {"response_format": {"type": "json_object"}},
-            "temperature": 0.0,
-            "top_p": 1.0,
-        },
-        {
-            "name": "json_object_retry",
-            "extra": {"response_format": {"type": "json_object"}},
-            "temperature": 0.2,
-            "top_p": 0.9,
-        },
-        {
-            "name": "prompt_only_retry",
-            "extra": {},
-            "temperature": 0.2,
-            "top_p": 0.9,
-        },
-    ]
-    last_error: Exception | None = None
-
-    for attempt, mode in enumerate(request_modes, start=1):
-        try:
-            response = requests.post(
-                SERVER_URL,
-                json={
-                    "model": f"{QWEN_REPO}:{QWEN_QUANT}",
-                    "messages": [
-                        {
-                            "role": "system",
-                            "content": (
-                                "You are a conservative longitudinal news-event verifier. "
-                                "False merges are more harmful than false splits. "
-                                "Return one syntactically valid JSON object only."
-                            ),
-                        },
-                        {"role": "user", "content": prompt},
-                    ],
-                    "temperature": mode["temperature"],
-                    "top_p": mode["top_p"],
-                    "max_tokens": 280,
-                    "stream": False,
-                    **mode["extra"],
-                },
-                timeout=180,
-            )
-            response.raise_for_status()
-            payload = extract_json(
-                str(response.json()["choices"][0]["message"]["content"])
-            )
-            relationship = clean_text(payload.get("relationship"))
-            allowed = {
-                "same_event",
-                "follow_on_development",
-                "same_topic_only",
-                "unclear",
-            }
-            if relationship not in allowed:
-                raise ReconciliationError(
-                    f"Unexpected relationship: {relationship}"
-                )
-            try:
-                confidence = max(
-                    0.0,
-                    min(1.0, float(payload.get("confidence", 0.0))),
-                )
-            except (TypeError, ValueError):
-                confidence = 0.0
-            return {
-                "relationship": relationship,
-                "confidence": confidence,
-                "reason": clean_text(payload.get("reason")),
-                "structured_output_mode": mode["name"],
-            }
-
-        except requests.RequestException as exc:
-            last_error = exc
-            print(
-                f"Warning: longitudinal Qwen request {attempt}/{len(request_modes)} "
-                f"failed in {mode['name']} mode: {exc}",
-                file=sys.stderr,
-            )
-        except (json.JSONDecodeError, KeyError, IndexError, TypeError, ReconciliationError) as exc:
-            last_error = exc
-            print(
-                f"Warning: longitudinal Qwen output {attempt}/{len(request_modes)} "
-                f"was invalid in {mode['name']} mode: {exc}",
-                file=sys.stderr,
-            )
-
-        if attempt < len(request_modes):
-            time.sleep(1)
-
-    if isinstance(last_error, requests.RequestException):
-        raise ReconciliationError(
-            "Longitudinal Qwen HTTP/server request failed after all retries."
-        ) from last_error
-
-    print(
-        "Warning: longitudinal Qwen output remained invalid after retries; "
-        "using conservative 'unclear' fallback.",
-        file=sys.stderr,
-    )
-    return {
-        "relationship": "unclear",
-        "confidence": 0.0,
-        "reason": "verifier_output_invalid_after_retries",
-        "structured_output_mode": "fallback_unclear",
-    }
+def verify_relationship(*, candidate, target, target_evidence, gap_days):
+    def source(item):
+        return {"article_id": item.article_id, "headline_original": item.original_headline,
+                "headline_english": item.english_headline, "publisher": item.publisher,
+                "date": item.date.isoformat()}
+    return event_verifier.verify_longitudinal({
+        "new_event": {"title": candidate.event_title, "date": candidate.event_date,
+                      "sources": [source(item) for item in candidate.evidence[:MAX_EVIDENCE]]},
+        "earlier_event": {"title": target.event_title, "date": target.event_date,
+                          "sources": [source(item) for item in target_evidence]},
+        "coverage_gap_days": gap_days,
+    })
 
 
 def upsert_relationship(
@@ -1357,6 +1134,10 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
+    if not ai_runtime.uses_openai():
+        raise ReconciliationError("History reconciliation requires OpenAI")
+    ai_runtime.require_key()
+    verifier_identity = event_verifier.identity()
     client: Client = create_client(
         required_env("SUPABASE_URL"),
         str(os.environ.get("SUPABASE_SECRET_KEY") or os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or "").strip(),
@@ -1401,21 +1182,12 @@ def main() -> int:
     merged_articles: dict[str, dict[str, Any]] = {}
     follow_on_events: dict[str, dict[str, Any]] = {}
     possible_matches: dict[str, dict[str, Any]] = {}
-    process = None
-    handle = None
     snapshot_id: str | None = None
 
     try:
         embedding_revision = HfApi().model_info(EMBEDDING_MODEL).sha or "unknown"
-        pair_revision = HfApi().model_info(MODERNBERT_MODEL).sha or "unknown"
-        verifier_revision = HfApi().model_info(QWEN_REPO).sha or "unknown"
+        verifier_revision = verifier_identity["revision"]
         embedder = SentenceTransformer(EMBEDDING_MODEL, revision=embedding_revision)
-        tokenizer = AutoTokenizer.from_pretrained(MODERNBERT_MODEL, revision=pair_revision)
-        pair_model = AutoModelForSequenceClassification.from_pretrained(
-            MODERNBERT_MODEL, revision=pair_revision
-        )
-        pair_model.eval()
-        process, handle = start_llama_server()
 
         event_rows = load_event_rows(client)
         memories = load_memories(client, embedder, event_rows)
@@ -1478,17 +1250,15 @@ def main() -> int:
                 and not top.token_match
                 and (top.similarity - second.similarity) < COMPETING_MARGIN
             )
-            pair_max, pair_mean, evidence_articles = pair_scores(
-                tokenizer, pair_model, candidate, top.event
-            )
-            should_verify = bool(
-                top.token_match
-                or top.similarity >= QWEN_CALL_SIMILARITY
-                or pair_max >= QWEN_CALL_PAIR
-            )
+            evidence_articles = sorted(
+                top.event.evidence,
+                key=lambda item: float(np.dot(candidate.representation, item.vector)),
+                reverse=True,
+            )[:MAX_EVIDENCE]
+            should_verify = top.token_match or top.similarity >= VERIFY_SIMILARITY
             result = {
                 "relationship": "unclear",
-                "confidence": 0.0,
+                "confidence": None,
                 "reason": "verification gate not reached",
             }
             decision_source = "model"
@@ -1505,10 +1275,6 @@ def main() -> int:
                     candidate=candidate,
                     target=top.event,
                     target_evidence=evidence_articles,
-                    similarity=top.similarity,
-                    pair_max=pair_max,
-                    pair_mean=pair_mean,
-                    token_match=top.token_match,
                     gap_days=top.gap_days,
                 )
 
@@ -1519,12 +1285,13 @@ def main() -> int:
                 "gap_days": round(top.gap_days, 3),
                 "similarity": round(top.similarity, 4),
                 "second_similarity": round(second.similarity, 4) if second else None,
-                "pair_max": round(pair_max, 4),
-                "pair_mean": round(pair_mean, 4),
+                "pair_max": None,
+                "pair_mean": None,
                 "story_token_match": top.token_match,
                 "competing_candidate": competing,
-                "qwen_relationship": result["relationship"],
-                "qwen_confidence": round(float(result["confidence"]), 4),
+                "qwen_relationship": None,
+                "verifier": result,
+                "qwen_confidence": None,
                 "reason": result["reason"],
                 "decision_source": decision_source,
                 "manual_decision_id": (
@@ -1535,7 +1302,7 @@ def main() -> int:
                 "reconciler_version": RECONCILER_VERSION,
                 "model_revisions": {
                     "embedding": embedding_revision,
-                    "pair": pair_revision,
+                    "pair": None,
                     "verifier": verifier_revision,
                 },
             }
@@ -1543,33 +1310,12 @@ def main() -> int:
                 manual_override is not None
                 and result["relationship"] == "same_event"
             )
-            model_same_passes_strict_gate = bool(
-                result["relationship"] == "same_event"
-                and float(result["confidence"]) >= AUTO_MERGE_QWEN
-                and not competing
-                and top.similarity >= AUTO_MERGE_SIMILARITY
-                and (
-                    pair_max >= AUTO_MERGE_PAIR
-                    or (top.token_match and pair_max >= TOKEN_MERGE_PAIR)
-                )
-            )
-            strict_same = bool(
-                manual_same
-                or (AUTO_APPLY_MODEL_SAME_EVENT and model_same_passes_strict_gate)
-            )
+            strict_same = manual_same
             manual_follow_on = bool(
                 manual_override is not None
                 and result["relationship"] == "follow_on_development"
             )
-            strict_follow_on = bool(
-                manual_follow_on
-                or (
-                    AUTO_LINK_MODEL_FOLLOW_ON
-                    and result["relationship"] == "follow_on_development"
-                    and float(result["confidence"]) >= FOLLOW_ON_QWEN
-                    and not competing
-                )
-            )
+            strict_follow_on = manual_follow_on
 
             action = "kept_separate"
             if strict_same:
@@ -1589,7 +1335,7 @@ def main() -> int:
                         candidate=merge_from,
                         target=merge_into,
                         reconciliation_run_id=run_id,
-                        confidence=float(result["confidence"]),
+                        confidence=result["confidence"],
                         evidence=evidence,
                     )
                     # Update the in-memory registry immediately so later
@@ -1625,7 +1371,7 @@ def main() -> int:
                             "candidate_event_id": merge_from.event_id,
                             "effective_event_id": merge_into.event_id,
                             "track": top.track,
-                            "confidence": float(result["confidence"]),
+                            "confidence": result["confidence"],
                             "gap_days": top.gap_days,
                             "reason": result["reason"],
                         }
@@ -1643,7 +1389,7 @@ def main() -> int:
                 possible_matches[candidate.event_id] = {
                     "candidate_event_id": top.event.event_id,
                     "track": top.track,
-                    "confidence": float(result["confidence"]),
+                    "confidence": result["confidence"],
                     "gap_days": top.gap_days,
                     "reason": result["reason"] or "model-proposed same-event match requires human acceptance",
                     "proposed_relationship": "same_event",
@@ -1655,7 +1401,7 @@ def main() -> int:
                         from_event_id=candidate.event_id,
                         to_event_id=top.event.event_id,
                         relationship_type="possible_same_event",
-                        confidence=float(result["confidence"]),
+                        confidence=result["confidence"],
                         status="proposed",
                         resolution_run_id=candidate.resolution_run_id,
                         reconciliation_run_id=run_id,
@@ -1685,14 +1431,14 @@ def main() -> int:
                         candidate=candidate,
                         target=top.event,
                         reconciliation_run_id=run_id,
-                        confidence=float(result["confidence"]),
+                        confidence=result["confidence"],
                         evidence=evidence,
                     )
                     follow_on_events[candidate.event_id] = {
                         "anchor_event_id": top.event.event_id,
                         "story_family_id": story_id,
                         "track": top.track,
-                        "confidence": float(result["confidence"]),
+                        "confidence": result["confidence"],
                         "gap_days": top.gap_days,
                         "reason": result["reason"],
                     }
@@ -1704,7 +1450,7 @@ def main() -> int:
                 possible_matches[candidate.event_id] = {
                     "candidate_event_id": top.event.event_id,
                     "track": top.track,
-                    "confidence": float(result["confidence"]),
+                    "confidence": result["confidence"],
                     "gap_days": top.gap_days,
                     "reason": result["reason"] or "possible follow-on requires human acceptance",
                     "proposed_relationship": "follow_on_development",
@@ -1715,7 +1461,7 @@ def main() -> int:
                         from_event_id=candidate.event_id,
                         to_event_id=top.event.event_id,
                         relationship_type="follow_on_development",
-                        confidence=float(result["confidence"]),
+                        confidence=result["confidence"],
                         status="proposed",
                         resolution_run_id=candidate.resolution_run_id,
                         reconciliation_run_id=run_id,
@@ -1743,13 +1489,13 @@ def main() -> int:
                     else "same_topic_only"
                 )
                 counts["same_topic"] += 1
-                if not args.dry_run and float(result["confidence"]) >= 0.90:
+                if not args.dry_run and manual_override is not None:
                     upsert_relationship(
                         client,
                         from_event_id=candidate.event_id,
                         to_event_id=top.event.event_id,
                         relationship_type="same_topic_only",
-                        confidence=float(result["confidence"]),
+                        confidence=result["confidence"],
                         status="accepted",
                         resolution_run_id=candidate.resolution_run_id,
                         reconciliation_run_id=run_id,
@@ -1762,7 +1508,7 @@ def main() -> int:
                 possible_matches[candidate.event_id] = {
                     "candidate_event_id": top.event.event_id,
                     "track": top.track,
-                    "confidence": float(result["confidence"]),
+                    "confidence": result["confidence"],
                     "gap_days": top.gap_days,
                     "reason": result["reason"] or "longitudinal match remains uncertain",
                 }
@@ -1772,7 +1518,7 @@ def main() -> int:
                         from_event_id=candidate.event_id,
                         to_event_id=top.event.event_id,
                         relationship_type="possible_same_event",
-                        confidence=float(result["confidence"]),
+                        confidence=result["confidence"],
                         status="proposed",
                         resolution_run_id=candidate.resolution_run_id,
                         reconciliation_run_id=run_id,
@@ -1848,8 +1594,8 @@ def main() -> int:
                 "manual_decisions": manual_decision_meta,
                 "models": {
                     "embedding": {"name": EMBEDDING_MODEL, "revision": embedding_revision},
-                    "pair": {"name": MODERNBERT_MODEL, "revision": pair_revision},
-                    "verifier": {"name": QWEN_REPO, "revision": verifier_revision},
+                    "pair": None,
+                    "verifier": verifier_identity,
                 },
             },
         )
@@ -1883,8 +1629,6 @@ def main() -> int:
         except Exception:
             pass
         raise
-    finally:
-        stop_llama_server(process, handle)
 
 
 if __name__ == "__main__":
