@@ -102,6 +102,12 @@ class EventVerifierTests(unittest.TestCase):
         self.assertEqual(result["audit"]["cost_usd"], 0.002)
         self.assertEqual(cached["identity_checks"], result["identity_checks"])
         self.assertEqual(request.call_count, 2)
+        confirmation = request.call_args_list[1].args[0]
+        source_pair = json.loads(confirmation[1]["content"])["pairs"][0]
+        self.assertEqual(source_pair["source_a"], self.article)
+        self.assertEqual(source_pair["source_b"], self.evidence[0])
+        self.assertNotIn("relationship", source_pair)
+        self.assertNotIn("reason", source_pair)
 
     def test_second_check_rejects_missing_evidence_or_string_boolean(self):
         for checks in ([], [{"evidence_id": "b", "supported": "true", "shared_occurrence": "launch", "reason": "same"}]):
