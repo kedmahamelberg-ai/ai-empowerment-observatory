@@ -7,11 +7,11 @@
       "revision": "gpt-5-nano:low:aieo-openai-json-v1:english-event-verifier-v3-explicit-pairs",
       "reasoning_effort": "low"
     },
-    "resolution_run_key": "resolve_20261026T095618Z",
-    "article_count": 156,
-    "active_event_count": 1635,
+    "resolution_run_key": "resolve_20261026T105609Z",
+    "article_count": 157,
+    "active_event_count": 1636,
     "pending_review_count": 0,
-    "coverage_to_event_ratio": 0.095,
+    "coverage_to_event_ratio": 0.096,
     "warning": "Only active resolved events are included. Pending-review events are excluded from the Event Lens."
   },
   "events": [
@@ -2475,6 +2475,27 @@
           "publisher": "人民日报",
           "url": "https://paper.people.com.cn/rmrbhwb/pc/content/202610/21/content_30186932.html",
           "published_at": "2026-10-21T00:42:41+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "7e857977-e74a-45ed-a3a4-57144de6aa1a",
+      "event_title": "Bots behaving badly, the latest on AI regulation and investigating Kevin’s sloppelganger : Machine Gods",
+      "event_summary": null,
+      "event_date": "2026-10-21",
+      "first_seen_at": "2026-10-26T10:37:59.685571+00:00",
+      "last_seen_at": "2026-10-26T10:37:59.685571+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "c987ce2e9bd9746329e40193f226db12",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "Bots behaving badly, the latest on AI regulation and investigating Kevin’s sloppelganger : Machine Gods",
+          "publisher": "NPR",
+          "url": "https://www.npr.org/2026/10/21/nx-s1-6009860/bots-behaving-badly-the-latest-on-ai-regulation-and-investigating-kevins-sloppelganger",
+          "published_at": "2026-10-21T11:00:00+00:00"
         }
       ]
     },
