@@ -30,23 +30,31 @@ class EventVerifierTests(unittest.TestCase):
         return {"choices": [{"message": {"content": json.dumps({"pairs": pairs or [self.pair]})}}],
                 "aieo_ai": {"returned_model": "nano-snapshot", "cost_usd": 0.001}}
 
+    def scripted_reply(self, *args, **kwargs):
+        if kwargs.get("name") == "event_identity_check":
+            return {"choices": [{"message": {"content": json.dumps({"checks": [{
+                "evidence_id": "b", "supported": True,
+                "shared_occurrence": "Company releases model A", "reason": "Both identify this launch"
+            }]})}}], "aieo_ai": {"returned_model": "nano-snapshot", "cost_usd": 0.001}}
+        return self.response()
+
     def test_cache_reuses_identical_evidence_but_not_changed_text(self):
-        with patch.object(ai_runtime, "completion", return_value=self.response()) as request:
+        with patch.object(ai_runtime, "completion", side_effect=self.scripted_reply) as request:
             a = verifier.verify(self.article, self.evidence)
             b = verifier.verify(self.article, self.evidence)
-            self.assertEqual(request.call_count, 1)
+            self.assertEqual(request.call_count, 2)
             self.assertFalse(a["cache_hit"])
             self.assertTrue(b["cache_hit"])
             verifier.verify({"headline_english": "Different launch"}, self.evidence)
-            self.assertEqual(request.call_count, 2)
+            self.assertEqual(request.call_count, 4)
 
     def test_cache_is_separated_by_model(self):
-        with patch.object(ai_runtime, "completion", return_value=self.response()) as request:
+        with patch.object(ai_runtime, "completion", side_effect=self.scripted_reply) as request:
             verifier.verify(self.article, self.evidence)
             with patch.dict(os.environ, {"AIEO_AI_MODEL": "gpt-6-luna"}):
                 ai_runtime.selected_policy.cache_clear()
                 verifier.verify(self.article, self.evidence)
-            self.assertEqual(request.call_count, 2)
+            self.assertEqual(request.call_count, 4)
 
     def test_missing_duplicate_and_unknown_evidence_fail_closed(self):
         for pairs in ([], [self.pair, self.pair], [{**self.pair, "evidence_id": "invented"}]):
@@ -78,6 +86,30 @@ class EventVerifierTests(unittest.TestCase):
             ("unclear", .6, False, "review"),
         ):
             self.assertEqual(verifier.assignment_policy({"relationship": label}, similarity=similarity, competing=competing)[0], expected)
+
+    def test_second_check_vetoes_a_merge_and_records_total_cost(self):
+        def reply(*args, **kwargs):
+            response = self.scripted_reply(*args, **kwargs)
+            if kwargs.get("name") == "event_identity_check":
+                payload = json.loads(response["choices"][0]["message"]["content"])
+                payload["checks"][0].update(supported=False, shared_occurrence="", reason="Shared subject, no identified action")
+                response["choices"][0]["message"]["content"] = json.dumps(payload)
+            return response
+        with patch.object(ai_runtime, "completion", side_effect=reply) as request:
+            result = verifier.verify(self.article, self.evidence)
+            cached = verifier.verify(self.article, self.evidence)
+        self.assertEqual(result["relationship"], "unclear")
+        self.assertEqual(result["audit"]["cost_usd"], 0.002)
+        self.assertEqual(cached["identity_checks"], result["identity_checks"])
+        self.assertEqual(request.call_count, 2)
+
+    def test_second_check_rejects_missing_evidence_or_string_boolean(self):
+        for checks in ([], [{"evidence_id": "b", "supported": "true", "shared_occurrence": "launch", "reason": "same"}]):
+            response = {"choices": [{"message": {"content": json.dumps({"checks": checks})}}], "aieo_ai": {}}
+            with patch.object(ai_runtime, "completion", side_effect=[self.response(), response]):
+                result = verifier.verify(self.article, self.evidence)
+            self.assertEqual(result["relationship"], "unclear")
+            self.assertIn("error", result)
 
     def test_history_model_returns_proposal_without_confidence(self):
         response = {"choices": [{"message": {"content": json.dumps({
