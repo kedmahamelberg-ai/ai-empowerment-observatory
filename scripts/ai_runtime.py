@@ -23,9 +23,10 @@ import requests
 ROOT = Path(__file__).resolve().parents[1]
 VERSION = "aieo-openai-json-v1"
 ENDPOINT = "https://api.openai.com/v1/chat/completions"
-# USD / million tokens, verified 2026-09-08. Cached input is charged at the
+# USD / million tokens, verified 2026-10-26. Cached input is charged at the
 # uncached rate here; Luna includes its documented possible cache-write premium.
-RATES = {"gpt-5-nano": (0.05, 0.40), "gpt-5.6-luna": (0.25, 1.20)}
+RATES = {"gpt-5-nano": (0.05, 0.40), "gpt-5.6-luna": (0.25, 1.20),
+         "gpt-6-luna": (0.125, 0.50)}
 
 
 class AIError(RuntimeError):
@@ -61,6 +62,9 @@ def resolve_policy(now=None, config=None):
         raise ValueError("AIEO_AI_PROVIDER must be openai or local")
     policy["provider"] = provider
     policy["model"] = os.environ.get("AIEO_AI_MODEL") or policy["model"]
+    # A stale repository/process override must not defeat the retirement switch.
+    if instant >= cutoff and policy["model"] == "gpt-5-nano":
+        policy.update(config["after"])
     if policy["model"] not in RATES:
         raise ValueError("Only the approved Nano and Luna model IDs are supported")
     for key, env in (("max_job_usd", "AIEO_AI_MAX_JOB_USD"),
