@@ -79,6 +79,24 @@ class EventVerifierTests(unittest.TestCase):
         ):
             self.assertEqual(verifier.assignment_policy({"relationship": label}, similarity=similarity, competing=competing)[0], expected)
 
+    def test_history_model_returns_proposal_without_confidence(self):
+        response = {"choices": [{"message": {"content": json.dumps({
+            "relationship": "follow_on_development", "reason": "A new dated lawsuit follows the policy"
+        })}}], "aieo_ai": {"returned_model": "nano"}}
+        with patch.object(ai_runtime, "completion", return_value=response) as request:
+            result = verifier.verify_longitudinal({"new_event": "lawsuit", "earlier_event": "policy"})
+        self.assertEqual(result["relationship"], "follow_on_development")
+        self.assertIsNone(result["confidence"])
+        self.assertNotIn("confidence", request.call_args.args[1]["properties"])
+
+    def test_history_invalid_output_cannot_be_accepted_and_outages_propagate(self):
+        response = {"choices": [{"message": {"content": '{"relationship":"same_event","reason":"x","confidence":1}'}}]}
+        with patch.object(ai_runtime, "completion", return_value=response):
+            self.assertEqual(verifier.verify_longitudinal({})["relationship"], "unclear")
+        with patch.object(ai_runtime, "completion", side_effect=ai_runtime.AIBudgetExceeded("cap")):
+            with self.assertRaises(ai_runtime.AIBudgetExceeded):
+                verifier.verify_longitudinal({})
+
     def test_retirement_overrides_a_stale_nano_pin(self):
         policy = ai_runtime.resolve_policy(datetime(2026, 12, 9, 23, tzinfo=timezone.utc))
         self.assertEqual(policy["model"], "gpt-6-luna")
