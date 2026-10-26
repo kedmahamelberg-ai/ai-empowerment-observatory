@@ -7,17 +7,17 @@
   "period_end": "2026-08-31",
   "observed_week_start": "2026-08-10",
   "observed_week_end": "2026-08-30",
-  "generated_at": "2026-10-19T02:05:43.662002Z",
-  "revision": 11,
+  "generated_at": "2026-10-26T11:54:43.531079Z",
+  "revision": 12,
   "weekly_release_ids": [
     "2026-W33",
     "2026-W34",
     "2026-W35"
   ],
   "weekly_revisions": {
-    "2026-W33": 12,
-    "2026-W34": 10,
-    "2026-W35": 11
+    "2026-W33": 13,
+    "2026-W34": 11,
+    "2026-W35": 12
   },
   "reality": {
     "distinct_event_records": 346,
@@ -69,15 +69,15 @@
   },
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-10-19T00:57:37.966007+00:00",
+    "considered_through": "2026-10-26T10:58:56.920389+00:00",
     "scope": "All prior event records available to the included reconciliations."
   },
   "reconciliation": {
-    "current_through": "2026-10-19T01:21:19.470732+00:00",
+    "current_through": "2026-10-26T11:13:03.539152+00:00",
     "weekly_revisions_included": {
-      "2026-W33": 12,
-      "2026-W34": 10,
-      "2026-W35": 11
+      "2026-W33": 13,
+      "2026-W34": 11,
+      "2026-W35": 12
     },
     "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
   },
@@ -184,8 +184,18 @@
         "2026-W34": 10,
         "2026-W35": 11
       }
+    },
+    {
+      "revision": 12,
+      "changed_at": "2026-10-26T11:54:43.531079Z",
+      "reason": "An included weekly release was restated after longitudinal reconciliation.",
+      "weekly_revisions": {
+        "2026-W33": 13,
+        "2026-W34": 11,
+        "2026-W35": 12
+      }
     }
   ],
-  "previous_revision_path": "/data/releases/monthly/archive/2026-08/revision-10.json",
-  "content_sha256": "6da7907cde5280a42d13d70e58cd43fe86c69317c4b953a963af92fbd9b19f81"
+  "previous_revision_path": "/data/releases/monthly/archive/2026-08/revision-11.json",
+  "content_sha256": "fa3b7db6f8bdbacd011335b15032d307424afdaffc3d6a12b0e6e66eeba96548"
 }

@@ -1,6 +1,6 @@
 {
   "schema_version": "aieo_period_index_v1.1",
-  "generated_at": "2026-10-19T02:05:43.672625Z",
+  "generated_at": "2026-10-26T11:54:43.540489Z",
   "current": {
     "monthly": "2026-10",
     "quarterly": "2026-Q4",
@@ -14,20 +14,20 @@
       "period_start": "2026-01-01",
       "period_end": "2026-12-31",
       "observed_week_start": "2026-08-10",
-      "observed_week_end": "2026-10-18",
-      "generated_at": "2026-10-19T02:05:43.659460Z",
-      "revision": 11,
+      "observed_week_end": "2026-10-25",
+      "generated_at": "2026-10-26T11:54:43.528937Z",
+      "revision": 12,
       "revision_reason": "A newly completed weekly release was added to this period.",
-      "previous_revision_path": "/data/releases/annual/archive/2026/revision-10.json",
+      "previous_revision_path": "/data/releases/annual/archive/2026/revision-11.json",
       "path": "/data/releases/annual/2026.json",
-      "articles": 1386,
-      "distinct_event_records": 1314,
-      "new_developments": 1274,
-      "first_time_event_records": 1273,
+      "articles": 1525,
+      "distinct_event_records": 1450,
+      "new_developments": 1410,
+      "first_time_event_records": 1409,
       "follow_on_developments": 1,
-      "recurring_event_appearances": 4,
+      "recurring_event_appearances": 7,
       "resurfaced_event_appearances": 0,
-      "content_sha256": "8e944bd8ff165bb2995cc7202d9680ccb12f21f8f3bc6ec32550e76ef292b8c8"
+      "content_sha256": "c5b847986125e9e10bf92d508e437dd210af9a12b4ccdd3077834074b41e562c"
     },
     {
       "period_id": "2026-08",
@@ -37,10 +37,10 @@
       "period_end": "2026-08-31",
       "observed_week_start": "2026-08-10",
       "observed_week_end": "2026-08-30",
-      "generated_at": "2026-10-19T02:05:43.662002Z",
-      "revision": 11,
+      "generated_at": "2026-10-26T11:54:43.531079Z",
+      "revision": 12,
       "revision_reason": "An included weekly release was restated after longitudinal reconciliation.",
-      "previous_revision_path": "/data/releases/monthly/archive/2026-08/revision-10.json",
+      "previous_revision_path": "/data/releases/monthly/archive/2026-08/revision-11.json",
       "path": "/data/releases/monthly/2026-08.json",
       "articles": 362,
       "distinct_event_records": 346,
@@ -49,7 +49,7 @@
       "follow_on_developments": 1,
       "recurring_event_appearances": 0,
       "resurfaced_event_appearances": 0,
-      "content_sha256": "6da7907cde5280a42d13d70e58cd43fe86c69317c4b953a963af92fbd9b19f81"
+      "content_sha256": "fa3b7db6f8bdbacd011335b15032d307424afdaffc3d6a12b0e6e66eeba96548"
     },
     {
       "period_id": "2026-09",
@@ -59,10 +59,10 @@
       "period_end": "2026-09-30",
       "observed_week_start": "2026-08-31",
       "observed_week_end": "2026-09-27",
-      "generated_at": "2026-10-19T02:05:43.664641Z",
-      "revision": 8,
+      "generated_at": "2026-10-26T11:54:43.533284Z",
+      "revision": 9,
       "revision_reason": "An included weekly release was restated after longitudinal reconciliation.",
-      "previous_revision_path": "/data/releases/monthly/archive/2026-09/revision-7.json",
+      "previous_revision_path": "/data/releases/monthly/archive/2026-09/revision-8.json",
       "path": "/data/releases/monthly/2026-09.json",
       "articles": 569,
       "distinct_event_records": 538,
@@ -71,7 +71,7 @@
       "follow_on_developments": 0,
       "recurring_event_appearances": 2,
       "resurfaced_event_appearances": 0,
-      "content_sha256": "e5a75ec291994350da9af01263fb26938b74395bdcfdba0a2f098a80a13f74a8"
+      "content_sha256": "bc5a26291b4cf5cb277cb006324b63f8dbafb3105cb0aba297e88293f07bda2c"
     },
     {
       "period_id": "2026-10",
@@ -80,20 +80,20 @@
       "period_start": "2026-10-01",
       "period_end": "2026-10-31",
       "observed_week_start": "2026-09-28",
-      "observed_week_end": "2026-10-18",
-      "generated_at": "2026-10-19T02:05:43.666969Z",
-      "revision": 3,
+      "observed_week_end": "2026-10-25",
+      "generated_at": "2026-10-26T11:54:43.535440Z",
+      "revision": 4,
       "revision_reason": "A newly completed weekly release was added to this period.",
-      "previous_revision_path": "/data/releases/monthly/archive/2026-10/revision-2.json",
+      "previous_revision_path": "/data/releases/monthly/archive/2026-10/revision-3.json",
       "path": "/data/releases/monthly/2026-10.json",
-      "articles": 456,
-      "distinct_event_records": 431,
-      "new_developments": 425,
-      "first_time_event_records": 425,
+      "articles": 597,
+      "distinct_event_records": 569,
+      "new_developments": 561,
+      "first_time_event_records": 561,
       "follow_on_developments": 0,
-      "recurring_event_appearances": 2,
+      "recurring_event_appearances": 5,
       "resurfaced_event_appearances": 0,
-      "content_sha256": "631dc993809c27239385e9212a79be8f48f4a645957d2e884442dbaefb841778"
+      "content_sha256": "43db3c45f6d9761cdad14d327ce4b94a927d864d6c55e9b23427f5640fbe575d"
     },
     {
       "period_id": "2026-Q3",
@@ -103,10 +103,10 @@
       "period_end": "2026-09-30",
       "observed_week_start": "2026-08-10",
       "observed_week_end": "2026-09-27",
-      "generated_at": "2026-10-19T02:05:43.670242Z",
-      "revision": 12,
+      "generated_at": "2026-10-26T11:54:43.538181Z",
+      "revision": 13,
       "revision_reason": "An included weekly release was restated after longitudinal reconciliation.",
-      "previous_revision_path": "/data/releases/quarterly/archive/2026-Q3/revision-11.json",
+      "previous_revision_path": "/data/releases/quarterly/archive/2026-Q3/revision-12.json",
       "path": "/data/releases/quarterly/2026-Q3.json",
       "articles": 930,
       "distinct_event_records": 883,
@@ -115,7 +115,7 @@
       "follow_on_developments": 1,
       "recurring_event_appearances": 2,
       "resurfaced_event_appearances": 0,
-      "content_sha256": "83d217305631af8b6f35e4eb095dbd7fa98dfce9349649929c7be3d9075409f4"
+      "content_sha256": "6f32b4cdc084c59f7017d6301f5328b350418c1d2d40cba810337fdd1a54c670"
     },
     {
       "period_id": "2026-Q4",
@@ -124,20 +124,20 @@
       "period_start": "2026-10-01",
       "period_end": "2026-12-31",
       "observed_week_start": "2026-09-28",
-      "observed_week_end": "2026-10-18",
-      "generated_at": "2026-10-19T02:05:43.672625Z",
-      "revision": 3,
+      "observed_week_end": "2026-10-25",
+      "generated_at": "2026-10-26T11:54:43.540489Z",
+      "revision": 4,
       "revision_reason": "A newly completed weekly release was added to this period.",
-      "previous_revision_path": "/data/releases/quarterly/archive/2026-Q4/revision-2.json",
+      "previous_revision_path": "/data/releases/quarterly/archive/2026-Q4/revision-3.json",
       "path": "/data/releases/quarterly/2026-Q4.json",
-      "articles": 456,
-      "distinct_event_records": 431,
-      "new_developments": 425,
-      "first_time_event_records": 425,
+      "articles": 597,
+      "distinct_event_records": 569,
+      "new_developments": 561,
+      "first_time_event_records": 561,
       "follow_on_developments": 0,
-      "recurring_event_appearances": 2,
+      "recurring_event_appearances": 5,
       "resurfaced_event_appearances": 0,
-      "content_sha256": "3859b8220e8ca1b0201e1da1b594740bed70b812ad5341da393dd2dddc639be1"
+      "content_sha256": "bcf0c705e74e38b972287e318eed984373ef79b14299b90fd8d8441007791a87"
     }
   ],
   "composition_rule": {
@@ -145,5 +145,5 @@
     "attention": "Retain article volume, event appearances, rediscoveries and resurfacing.",
     "baseline": "Overlapping launch baselines are excluded from standardized period totals."
   },
-  "content_sha256": "1ed5903d9224a3495a2f21de822dfa630062421a1539f1c62ffb26b76f99577d"
+  "content_sha256": "346a64165a6b6d0b8e03476d9fa4de05eda795408e6d895d6a05ac109e778a27"
 }
