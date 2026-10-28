@@ -2,10 +2,10 @@
   "schema_version": "aieo_symbiosis_public_v2.0",
   "release_id": "2026-W43",
   "release_type": "weekly_relationship_lens",
-  "revision": 2,
+  "revision": 3,
   "period_start": "2026-10-19",
   "period_end": "2026-10-25",
-  "generated_at": "2026-10-26T11:54:28.438421Z",
+  "generated_at": "2026-10-28T20:42:49.790396Z",
   "codebook_version": "aieo_news_symbiosis_v0.1",
   "source_release_sha256": "e46977f293d20aedb3fc2eafba728b0ffa44f161164debb31eee959fb1bd9406",
   "public_status": "current_evidence_reading",
@@ -61,7 +61,7 @@
     "display_classified_units": 139,
     "display_configuration_counts": {
       "mutualism": 36,
-      "ai_benefiting_parasitism": 11,
+      "ai_benefiting_parasitism": 12,
       "human_benefiting_parasitism": 1,
       "competition": 2,
       "human_enabling_only": 6,
@@ -70,45 +70,45 @@
       "ai_constraining_only": 1,
       "no_clear_relational_signal": 5,
       "ambiguous_relational_signal": 13,
-      "insufficient_evidence": 60
+      "insufficient_evidence": 59
     },
-    "display_complete_configuration_count": 50,
+    "display_complete_configuration_count": 51,
     "display_partial_signal_count": 11,
     "display_no_clear_relational_signal_count": 5,
     "display_ambiguous_relational_signal_count": 13,
-    "display_insufficient_evidence_count": 60,
+    "display_insufficient_evidence_count": 59,
     "display_core_four_distribution": {
-      "mutualism": 0.72,
-      "ai_benefiting_parasitism": 0.22,
-      "human_benefiting_parasitism": 0.02,
-      "competition": 0.04
+      "mutualism": 0.705882,
+      "ai_benefiting_parasitism": 0.235294,
+      "human_benefiting_parasitism": 0.019608,
+      "competition": 0.039216
     },
     "denominator_note": "The weekly display reports the source evidence available for the current release. A development is kept separate when the available source evidence is not enough to show a clear people outcome.",
     "human_direction_counts": {
       "enabling": 50,
-      "unclear": 60,
-      "constraining": 13,
+      "unclear": 59,
+      "constraining": 14,
       "neutral": 10,
       "mixed": 6
     },
     "ai_direction_counts": {
-      "enabling": 53,
+      "enabling": 54,
       "neutral": 11,
-      "unclear": 60,
+      "unclear": 59,
       "mixed": 11,
       "constraining": 4
     },
     "display_human_direction_counts": {
       "enabling": 50,
-      "unclear": 60,
-      "constraining": 13,
+      "unclear": 59,
+      "constraining": 14,
       "neutral": 10,
       "mixed": 6
     },
     "display_ai_direction_counts": {
-      "enabling": 53,
+      "enabling": 54,
       "neutral": 11,
-      "unclear": 60,
+      "unclear": 59,
       "mixed": 11,
       "constraining": 4
     }
@@ -119,16 +119,16 @@
     "classified_units": 139,
     "relationship_pattern_counts": {
       "mutualism": 46,
-      "ai_benefiting_parasitism": 13,
+      "ai_benefiting_parasitism": 14,
       "human_benefiting_parasitism": 3,
       "competition": 1
     },
     "people_signal_counts": {
       "people_gaining": 56,
-      "people_losing_ground": 19,
+      "people_losing_ground": 20,
       "mixed_picture": 6,
-      "not_everyone_benefits": 12,
-      "not_clear_yet": 70
+      "not_everyone_benefits": 13,
+      "not_clear_yet": 69
     },
     "availability": {
       "people_gaining": true,
@@ -140,11 +140,11 @@
     "explicit_multi_label_units": 139,
     "distribution_coded_units": 139,
     "body_coverage_counts": {
-      "complete_written_source": 79,
-      "incomplete_written_source": 60
+      "complete_written_source": 80,
+      "incomplete_written_source": 59
     },
     "not_clear_breakdown": {
-      "not_enough_evidence": 60,
+      "not_enough_evidence": 59,
       "no_directional_people_change": 10
     },
     "overlap_note": "A development may contain more than one signal, so these counts do not have to add up to the weekly total.",
@@ -189,7 +189,7 @@
     "display_classified_units": 141,
     "display_configuration_counts": {
       "mutualism": 40,
-      "ai_benefiting_parasitism": 11,
+      "ai_benefiting_parasitism": 12,
       "human_benefiting_parasitism": 2,
       "competition": 4,
       "human_enabling_only": 2,
@@ -198,18 +198,18 @@
       "ai_constraining_only": 1,
       "no_clear_relational_signal": 7,
       "ambiguous_relational_signal": 9,
-      "insufficient_evidence": 62
+      "insufficient_evidence": 61
     },
-    "display_complete_configuration_count": 57,
+    "display_complete_configuration_count": 58,
     "display_partial_signal_count": 6,
     "display_no_clear_relational_signal_count": 7,
     "display_ambiguous_relational_signal_count": 9,
-    "display_insufficient_evidence_count": 62,
+    "display_insufficient_evidence_count": 61,
     "display_core_four_distribution": {
-      "ai_benefiting_parasitism": 0.192982,
-      "competition": 0.070175,
-      "human_benefiting_parasitism": 0.035088,
-      "mutualism": 0.701754
+      "ai_benefiting_parasitism": 0.206897,
+      "competition": 0.068966,
+      "human_benefiting_parasitism": 0.034483,
+      "mutualism": 0.689655
     },
     "denominator_note": "The weekly display reports the source evidence available for the current release. A development is kept separate when the available source evidence is not enough to show a clear people outcome."
   },
@@ -8679,21 +8679,28 @@
     {
       "axes": {
         "ai": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "AI is expanding its role in the workplace, taking over tasks and potentially displacing junior workers.",
+          "direction": "gain"
         },
         "human": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "The evidence shows a decline in youth employment in AI-exposed roles, signaling constraint on humans.",
+          "direction": "loss"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [],
+        "evidence_types": [
+          "source_representation"
+        ],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": false,
-        "unresolved_reason": "complete_written_source_unavailable"
+        "evidence_complete": true,
+        "unresolved_reason": ""
       },
-      "relationship_evidence": {},
+      "relationship_evidence": {
+        "mutualism": "",
+        "competition": "",
+        "ai_benefiting_parasitism": "AI usage correlates with reduced hiring of young workers in exposed occupations",
+        "human_benefiting_parasitism": ""
+      },
       "relationship_pattern_status": "assessed",
       "event_id": "92f03a2f-62f5-4e04-87d9-7abe1b888061",
       "event_title": "Artificial Intelligence: How to Protect Jobs for Young People?",
@@ -8711,62 +8718,66 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "insufficient_evidence",
-      "plain_label": "There is not enough source evidence to classify the relationship",
-      "human_experience_type": "unclear",
-      "ai_expressive_role": "unclear",
-      "human_direction": "unclear",
-      "ai_direction": "unclear",
-      "evidence_status": "insufficient",
-      "content_basis": "not_available",
+      "configuration": "ai_benefiting_parasitism",
+      "plain_label": "The AI or operator side gains while people are constrained",
+      "human_experience_type": "restriction",
+      "ai_expressive_role": "ai_extension",
+      "human_direction": "constraining",
+      "ai_direction": "enabling",
+      "evidence_status": "sufficient",
+      "content_basis": "full_text",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "no_full_body",
+        "body_coverage": "all_sources",
         "source_quality": {
           "44b7217932ae6f37837183acc08eae33": {
-            "flags": [
-              "no_usable_complete_body"
-            ],
-            "usable_complete_body": false
+            "flags": [],
+            "scope": "written_page",
+            "characters": 6514,
+            "body_sha256": "ea11068ec56b2004dc4298467a96133e40d7db29f3dc393567ab4c579ad4e33c",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "source_fingerprints": {
-          "44b7217932ae6f37837183acc08eae33": null
+          "44b7217932ae6f37837183acc08eae33": "ea11068ec56b2004dc4298467a96133e40d7db29f3dc393567ab4c579ad4e33c"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 1,
+        "not_available_sources": 0,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": false,
-        "people_evidence": "",
-        "ai_evidence": "",
-        "flags": [
-          "incomplete_written_source"
-        ]
+        "source_reading_complete": true,
+        "people_evidence": "The evidence shows a decline in youth employment in AI-exposed roles, signaling constraint on humans.",
+        "ai_evidence": "AI is expanding its role in the workplace, taking over tasks and potentially displacing junior workers.",
+        "flags": []
       },
-      "story_country_iso3s": [],
-      "evidence_summary": "No full article body was available, so the source was not model-classified.",
-      "reasoning": "No full article body was available, so the source was not model-classified.",
+      "story_country_iso3s": [
+        "FRA"
+      ],
+      "evidence_summary": "Young people face reduced job opportunities in AI-exposed roles as AI tools expand in the workplace; the AI system extends its reach while human opportunities shrink.",
+      "reasoning": "Young people face reduced job opportunities in AI-exposed roles as AI tools expand in the workplace; the AI system extends its reach while human opportunities shrink.",
       "relationship_patterns": {
         "mutualism": false,
-        "ai_benefiting_parasitism": false,
+        "ai_benefiting_parasitism": true,
         "human_benefiting_parasitism": false,
         "competition": false
       },
       "public_signals": {
         "people_gaining": false,
-        "people_losing_ground": false,
+        "people_losing_ground": true,
         "mixed_picture": false,
-        "not_everyone_benefits": false,
-        "not_clear_yet": true
+        "not_everyone_benefits": true,
+        "not_clear_yet": false
       },
-      "distribution_signal": "not_shown",
-      "public_takeaway": "",
+      "distribution_signal": "unequal",
+      "public_takeaway": "The evidence shows a decline in youth employment in AI-exposed roles, signaling constraint on humans.",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -15013,28 +15024,28 @@
     "total": 139,
     "human": {
       "gain": 50,
-      "loss": 13,
+      "loss": 14,
       "mixed": 6,
       "none": 10,
-      "unresolved": 60
+      "unresolved": 59
     },
     "ai": {
-      "gain": 53,
+      "gain": 54,
       "loss": 4,
       "mixed": 11,
       "none": 11,
-      "unresolved": 60
+      "unresolved": 59
     },
-    "evidence_complete": 79,
+    "evidence_complete": 80,
     "counting_rule": "Each axis partitions the same records. Mixed is one category. The two axes are not added together."
   },
   "direction_policy_version": "source_representations_independent_axes_2026_09",
   "classification_scope": {
     "unit": "development",
     "total": 139,
-    "complete_written_sources": 79,
-    "incomplete_written_sources": 60,
+    "complete_written_sources": 80,
+    "incomplete_written_sources": 59,
     "legacy_configuration_note": "Legacy single-label fields are retained for compatibility; independent axis categories are authoritative under the current policy."
   },
-  "content_sha256": "9f836c7c65694599d66291350bb1dd4eb5789cba05ba92b529c81432705b1c08"
+  "content_sha256": "48fba3796db403433da4c5c7c4d5bdc7923064fe6bfe6ada107ab9fc03a418c3"
 }

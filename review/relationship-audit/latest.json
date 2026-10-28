@@ -1,6 +1,6 @@
 {
   "schema_version": "aieo_relationship_evidence_audit_v1",
-  "generated_at": "2026-10-27T09:25:01.250975Z",
+  "generated_at": "2026-10-28T20:42:50.033886Z",
   "release_id": "2026-W43",
   "period_start": "2026-10-19",
   "period_end": "2026-10-25",
@@ -18,23 +18,23 @@
     "development_count": 139,
     "primary_outcome_counts": {
       "benefit_shown": 50,
-      "downside_shown": 13,
+      "downside_shown": 14,
       "benefit_and_downside": 6,
       "no_clear_people_change": 10,
-      "too_little_evidence": 60
+      "too_little_evidence": 59
     },
-    "uneven_effect_count": 12,
+    "uneven_effect_count": 13,
     "body_coverage_counts": {
-      "all_sources": 77,
-      "no_full_body": 60,
+      "all_sources": 78,
+      "no_full_body": 59,
       "some_sources": 2
     },
     "reported_body_coverage_counts": {
-      "complete_written_source": 79,
-      "incomplete_written_source": 60
+      "complete_written_source": 80,
+      "incomplete_written_source": 59
     },
     "audit_flag_counts": {
-      "insufficient_evidence": 60
+      "insufficient_evidence": 59
     },
     "plain_language_note": "The five primary outcome counts add up to the weekly total. An uneven effect is a separate detail that can overlap with any outcome."
   },
@@ -1639,39 +1639,39 @@
       "event_id": "92f03a2f-62f5-4e04-87d9-7abe1b888061",
       "title": "Artificial Intelligence: How to Protect Jobs for Young People?",
       "date": "2026-10-20",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
-      "uneven_effect_noted": false,
+      "primary_outcome": "downside_shown",
+      "primary_outcome_label": "Clear downside shown",
+      "uneven_effect_noted": true,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "ai_benefiting_parasitism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "The evidence shows a decline in youth employment in AI-exposed roles, signaling constraint on humans.",
+          "ai_evidence": "AI is expanding its role in the workplace, taking over tasks and potentially displacing junior workers.",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "FRA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "FRA"
+      ],
       "sources": [
         {
           "article_id": "44b7217932ae6f37837183acc08eae33",
@@ -1685,9 +1685,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "0ab346fd-e7eb-49c6-9193-7ce6f5e05f64",
