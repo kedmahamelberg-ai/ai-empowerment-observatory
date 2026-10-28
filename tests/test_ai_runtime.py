@@ -83,6 +83,43 @@ class AIRuntime(unittest.TestCase):
             ai.completion(self.messages,self.schema)
             self.assertEqual(post.call_count,2)
 
+    def test_rate_limit_respects_server_wait_without_logging_response(self):
+        limited=self.response(429,error={'code':'rate_limit_exceeded','message':'private diagnostic'})
+        limited.headers['Retry-After']='45'
+        with patch.object(ai.requests,'post',side_effect=[limited,self.response()]) as post, patch.object(ai.time,'sleep') as sleep:
+            ai.completion(self.messages,self.schema)
+        self.assertEqual(post.call_count,2)
+        sleep.assert_called_once_with(45)
+
+    def test_long_server_wait_defers_without_retrying_early(self):
+        limited=self.response(429,error={'code':'rate_limit_exceeded'})
+        limited.headers['Retry-After']='121'
+        with patch.object(ai.requests,'post',return_value=limited) as post, patch.object(ai.time,'sleep') as sleep:
+            with self.assertRaisesRegex(ai.AIError,'retry later'):
+                ai.completion(self.messages,self.schema)
+        self.assertEqual(post.call_count,1)
+        sleep.assert_not_called()
+
+    def test_quota_message_is_actionable_and_safe(self):
+        with patch.object(ai.requests,'post',return_value=self.response(429,error={'code':'insufficient_quota','message':'private diagnostic'})):
+            with self.assertRaisesRegex(ai.AIError,'billing and usage limits') as error:
+                ai.completion(self.messages,self.schema)
+        self.assertNotIn('private diagnostic',str(error.exception))
+
+    def test_rate_limit_backoff_grows_without_server_hint(self):
+        with patch.object(ai.random,'uniform',return_value=0):
+            self.assertEqual(ai.retry_delay(self.response(429),0),15)
+            self.assertEqual(ai.retry_delay(self.response(429),1),30)
+
+    def test_repeated_429_stops_after_three_attempts_with_clear_message(self):
+        limited=self.response(429,error={'code':'rate_limit_exceeded','message':'private diagnostic'})
+        with patch.object(ai.requests,'post',return_value=limited) as post, patch.object(ai.time,'sleep') as sleep, patch.object(ai.random,'uniform',return_value=0):
+            with self.assertRaisesRegex(ai.AIError,'saved work can be resumed') as error:
+                ai.completion(self.messages,self.schema)
+        self.assertEqual(post.call_count,3)
+        self.assertEqual([call.args[0] for call in sleep.call_args_list],[15,30])
+        self.assertNotIn('private diagnostic',str(error.exception))
+
     def test_unfinished_and_refused_answers_are_not_accepted(self):
         for choice in ({'finish_reason':'length','message':{'content':'{"answer":'}},
                        {'finish_reason':'stop','message':{'refusal':'refused'}}):
