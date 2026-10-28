@@ -13,9 +13,11 @@ import hashlib
 import json
 import math
 import os
+import random
 import time
 from contextlib import contextmanager
 from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 import requests
@@ -143,6 +145,27 @@ def ledger():
         os.replace(temp, path)
 
 
+def retry_delay(response, attempt):
+    """Respect Retry-After; never shorten a provider's requested wait."""
+    fallback = (15 * (2 ** attempt)) + random.uniform(0, 2)
+    raw = response.headers.get("Retry-After")
+    if raw is None:
+        return fallback
+    try:
+        seconds = float(raw)
+    except (TypeError, ValueError):
+        try:
+            when = parsedate_to_datetime(raw)
+            if when.tzinfo is None:
+                return fallback
+            seconds = (when - datetime.now(timezone.utc)).total_seconds()
+        except (TypeError, ValueError, OverflowError):
+            return fallback
+    if not math.isfinite(seconds) or seconds < 0:
+        return fallback
+    return max(1, seconds)
+
+
 def completion(messages, schema, *, name="aieo_reading", timeout=120):
     require_key()
     p = selected_policy()
@@ -187,7 +210,12 @@ def completion(messages, schema, *, name="aieo_reading", timeout=120):
             except (ValueError, AttributeError):
                 pass
             transient = response.status_code in {429, 500, 502, 503, 504} and code != "insufficient_quota"
-            safe_error = f"OpenAI HTTP {response.status_code}. Check API access, quota and the configured model."
+            if response.status_code == 429 and code == "insufficient_quota":
+                safe_error = "OpenAI API quota or billing limit reached. Check API billing and usage limits before retrying."
+            elif response.status_code == 429:
+                safe_error = "OpenAI HTTP 429 after retries. Check API rate limits and quota; saved work can be resumed."
+            else:
+                safe_error = f"OpenAI HTTP {response.status_code}. Check API access and the configured model."
             with ledger() as state:
                 state["calls"][slot]["status"] = f"http_{response.status_code}"
                 # A 4xx response did not generate an answer; 5xx is uncertain.
@@ -196,10 +224,9 @@ def completion(messages, schema, *, name="aieo_reading", timeout=120):
                 if not transient:
                     state["fatal_error"] = safe_error
             if transient and attempt < 2:
-                try:
-                    delay = min(15, max(1, float(response.headers.get("Retry-After", 2 ** (attempt + 1)))))
-                except ValueError:
-                    delay = 2 ** (attempt + 1)
+                delay = retry_delay(response, attempt)
+                if delay > 120:
+                    raise AIError(safe_error + " The requested retry delay exceeds the two-minute limit; retry later.")
                 time.sleep(delay)
                 last = safe_error
                 continue
