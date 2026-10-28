@@ -1,7 +1,7 @@
 {
   "meta": {
     "version": "public_insights_v4_release_bound",
-    "generated_at": "2026-10-27T09:25:05.420504Z",
+    "generated_at": "2026-10-28T20:42:55.551560Z",
     "release_id": "2026-W43",
     "release_revision": 1,
     "classification_run_id": "63977380-099f-4b90-ad54-0ef5069264df",
@@ -9,8 +9,8 @@
     "observation_start": "2026-10-19",
     "observation_end": "2026-10-25",
     "source_of_truth": "/data/analysis/current.json",
-    "coverage_units": 75,
-    "event_units": 75,
+    "coverage_units": 76,
+    "event_units": 76,
     "extra_coverage": 2,
     "first_time_event_records": 136,
     "follow_on_event_records": 0,
@@ -22,17 +22,17 @@
   "directional_summary": {
     "schema_version": "aieo_independent_directions_v2",
     "policy_version": "source_representations_independent_axes_2026_09",
-    "total": 75,
-    "evidence_complete": 75,
+    "total": 76,
+    "evidence_complete": 76,
     "human": {
       "gain": 48,
-      "loss": 11,
+      "loss": 12,
       "mixed": 6,
       "none": 10,
       "unresolved": 0
     },
     "ai": {
-      "gain": 49,
+      "gain": 50,
       "loss": 4,
       "mixed": 11,
       "none": 11,
@@ -41,18 +41,18 @@
   },
   "complete_content": {
     "policy_version": "complete_content_2026_09_v1",
-    "content_sha256": "31a425c026f0694b12cfffdac36503d980791290dbb8d83dca8a28fb94f2b55c",
+    "content_sha256": "753afa8640788173af626d544d91347afb466a4e884a708abc500360a97e1409",
     "counts": {
       "collected_developments": 139,
       "collected_sources": 141,
-      "eligible_developments": 75,
-      "eligible_sources": 75,
-      "excluded_developments": 64,
-      "excluded_sources": 66
+      "eligible_developments": 76,
+      "eligible_sources": 76,
+      "excluded_developments": 63,
+      "excluded_sources": 65
     },
     "denominator": {
       "unit": "distinct_development",
-      "value": 75
+      "value": 76
     }
   },
   "collection_inventory": {
@@ -1243,5 +1243,5 @@
       }
     }
   },
-  "source_relationship_sha256": "9f836c7c65694599d66291350bb1dd4eb5789cba05ba92b529c81432705b1c08"
+  "source_relationship_sha256": "48fba3796db403433da4c5c7c4d5bdc7923064fe6bfe6ada107ab9fc03a418c3"
 }
