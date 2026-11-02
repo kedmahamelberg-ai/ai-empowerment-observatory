@@ -1,6 +1,10 @@
 name: Reconcile Observatory History
 
 on:
+  schedule:
+    # Deep monthly/quarterly/annual review after the weekly publication window.
+    - cron: '17 3 3 * *'
+      timezone: Europe/Amsterdam
   workflow_call:
     inputs:
       mode:
@@ -40,12 +44,12 @@ jobs:
       SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
       HF_TOKEN: ${{ secrets.HF_TOKEN }}
-      MODE: ${{ inputs.mode }}
-      DRY_RUN: ${{ inputs.dry_run }}
+      MODE: ${{ inputs.mode || 'auto' }}
+      DRY_RUN: ${{ inputs.dry_run || false }}
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       AIEO_AI_PROVIDER: openai
       AIEO_AI_MAX_JOB_USD: ${{ vars.AIEO_AI_MAX_JOB_USD || '0.50' }}
-      AIEO_AI_MAX_JOB_REQUESTS: ${{ vars.AIEO_AI_MAX_JOB_REQUESTS || '350' }}
+      AIEO_AI_MAX_JOB_REQUESTS: ${{ vars.AIEO_AI_MAX_JOB_REQUESTS || '2500' }}
       AIEO_AI_MAX_COMPLETION_TOKENS: '2048'
       # Pilot governance: models propose; accepted decisions change history.
       AIEO_AUTO_APPLY_MODEL_SAME_EVENT: "false"
