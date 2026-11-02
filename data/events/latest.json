@@ -7,14 +7,245 @@
       "revision": "gpt-5-nano:low:aieo-openai-json-v1:english-event-verifier-v3-explicit-pairs",
       "reasoning_effort": "low"
     },
-    "resolution_run_key": "resolve_20261102T003627Z",
-    "article_count": 159,
-    "active_event_count": 1785,
+    "resolution_run_key": "resolve_20261102T014841Z",
+    "article_count": 161,
+    "active_event_count": 1813,
     "pending_review_count": 0,
     "coverage_to_event_ratio": 0.089,
     "warning": "Only active resolved events are included. Pending-review events are excluded from the Event Lens."
   },
   "events": [
+    {
+      "event_id": "2b9164bc-6861-4582-87b6-ffe74ed10d85",
+      "event_title": "New Cloud: Will the AI Bubble Pop? Small Companies Increase Concerns",
+      "event_summary": null,
+      "event_date": "2026-11-02",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "f1233fdc26fb405f87d162d3c87d311a",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "新云端：人工智能泡沫将爆破？一群小公司正加剧担忧",
+          "publisher": "BBC",
+          "url": "https://www.bbc.com/zhongwen/articles/c5djvk2dm33xo/simp",
+          "published_at": "2026-11-02T00:21:47+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "2d208cfe-fba2-42bb-9f28-4ff4f386d1dd",
+      "event_title": "Does insurance pay for \"mischief\" caused by artificial intelligence?",
+      "event_summary": null,
+      "event_date": "2026-11-02",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "5ef15563bd528f7664eae7eed2f28b58",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "人工智能“闯祸”，保险赔吗",
+          "publisher": "中国新闻网",
+          "url": "https://www.chinanews.com.cn/cj/2026/11-02/10724550.shtml",
+          "published_at": "2026-11-02T00:44:18+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "30838b67-8e26-406c-9590-60386081f74d",
+      "event_title": "Defense Meeting for the 2025-2026 Academic Year Advanced Class Collective Selection of the School of Artificial Intelligence and Computer Science",
+      "event_summary": null,
+      "event_date": "2026-11-02",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "760df0b3a4766e09eee6f8dd4fb20599",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "人工智能与计算机学院2025-2026学年先进班集体评选答辩会举办",
+          "publisher": "江南大学新闻网",
+          "url": "https://news.jiangnan.edu.cn/info/1065/111106.htm",
+          "published_at": "2026-11-02T01:04:44+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "337ae377-7eb4-4067-bf2a-ccfb8d9dd889",
+      "event_title": "🚨💻 Concerns over AI spending lead to a sharp sell-off in tech stocks",
+      "event_summary": null,
+      "event_date": "2026-11-02",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "59d26600df22c2b08fdcfc5f2d674f24",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "🚨💻 对人工智能支出的担忧引发科技股大幅抛售",
+          "publisher": "Moomoo",
+          "url": "https://www.moomoo.com/hans/community/feed/ai-spending-fears-trigger-sharp-technology-sell-off-117544141062150",
+          "published_at": "2026-11-02T01:00:54+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "520b52cd-cdab-4d75-8798-37774f239b5a",
+      "event_title": "Zhong Junhao, Secretary-General of the Shanghai Artificial Intelligence Industry Association: AI glasses cannot “unrestrainedly record” data; having all data under corporate control has crossed the privacy boundary.",
+      "event_summary": null,
+      "event_date": "2026-11-02",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "94633abf0caa10765d46bf807c430e87",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "上海人工智能行业协会秘书长钟俊浩：AI眼镜不能“无节制记录” 数据全部交由企业掌控已越隐私红线",
+          "publisher": "东方财富",
+          "url": "https://finance.eastmoney.com/a/202611023917869356.html",
+          "published_at": "2026-11-02T01:01:18+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "6c51df11-e2f6-40ef-a034-d01588328a79",
+      "event_title": "The AI and Computer Science College 2026 “AI Paves the Way, Youth Towards the Future” Welcome Party and “1024 Programmer Festival” Smart Night concluded successfully",
+      "event_summary": null,
+      "event_date": "2026-11-02",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "dd62cdf373667619abb005f06ce1ff59",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "人工智能与计算机学院2026年“AI启新篇，青春向未来”迎新晚会暨“1024程序员节”智能之夜圆满落幕",
+          "publisher": "江南大学新闻网",
+          "url": "https://news.jiangnan.edu.cn/info/1065/111107.htm",
+          "published_at": "2026-11-02T01:09:38+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "a920a7f9-b70c-46e7-b6b1-f86dc81abc70",
+      "event_title": "Are AI-generated travel tips reliable? Journalists have tested them themselves",
+      "event_summary": null,
+      "event_date": "2026-11-02",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "1ee05f1fcf6cbfed2b78c11708a346d7",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "AI生成的旅游攻略，究竟靠谱吗？记者实测",
+          "publisher": "21财经",
+          "url": "https://www.21jingji.com/article/20261102/herald/8f7e19268a124f89df143d8eaf002d85.html",
+          "published_at": "2026-11-02T01:02:00+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "b2b47456-2b5c-4fb0-bb00-c504aaba0292",
+      "event_title": "237 research achievements were released collectively. This event \"links\" the innovation chain of the AI industry.",
+      "event_summary": null,
+      "event_date": "2026-11-02",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "f85f354a3b4413b71e97f85caff0160d",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "237项成果集中发布，这场活动“串”起AI 产业创新链",
+          "publisher": "山东省工业和信息化厅",
+          "url": "http://gxt.shandong.gov.cn/art/2026/11/2/art_15171_10371356.html",
+          "published_at": "2026-11-02T01:16:17+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "cfca3f7b-a6f6-4b0f-b5bf-150844962d96",
+      "event_title": "Finance Focus | Token Makes Its Debut on “Double 11” Shelves and Enters the General Consumer Market",
+      "event_summary": null,
+      "event_date": "2026-11-02",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "4c16344c985a3b5257e73ee4aae61be5",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "财经聚焦丨首次摆上“双十一”货架 Token走进大众消费",
+          "publisher": "新华网客户端",
+          "url": "https://app.xinhuanet.com/news/article.html?articleId=20261101bb39f666e6044c8b9174182447231008",
+          "published_at": "2026-11-02T01:30:46+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "d09f6120-07b0-4b52-924e-34d4f89f2ad0",
+      "event_title": "What is the Chinese large model quietly changing behind a 1400-fold surge in Tokens?",
+      "event_summary": null,
+      "event_date": "2026-11-02",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "68d7119c4d7ab771a0d2cd0220e7731c",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "激增1400倍的Token背后，中国大模型正在悄悄改变什么？",
+          "publisher": "凤凰网",
+          "url": "https://news.ifeng.com/c/8xiaIlL1ZYJ",
+          "published_at": "2026-11-02T00:29:57+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "f6352cbc-3745-4bd5-be29-b0c47d38489a",
+      "event_title": "Xijiao Lipu University goes to the School of Artificial Intelligence and Computer Science for enrollment promotion activities",
+      "event_summary": null,
+      "event_date": "2026-11-02",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "102d1f614fe297e8e717935c8c82502a",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "西交利物浦大学赴人工智能与计算机学院开展招生宣讲",
+          "publisher": "江南大学新闻网",
+          "url": "https://news.jiangnan.edu.cn/info/1065/111105.htm",
+          "published_at": "2026-11-02T01:04:45+00:00"
+        }
+      ]
+    },
     {
       "event_id": "02ea56e9-f88f-42e1-9db4-8c1699732451",
       "event_title": "Leading the development of artificial intelligence in the Asia-Pacific region through open cooperation and collaboration, and promoting regional digital and intelligent transformation – The 92nd China Reform International Forum held a plenary session",
@@ -33,6 +264,27 @@
           "publisher": "中国改革论坛",
           "url": "http://www.chinareform.org.cn/2026/1101/16700779.shtml",
           "published_at": "2026-11-01T06:29:00+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "03c19c5b-ebc2-49d1-b4ad-020e753d6fba",
+      "event_title": "Cash flow challenges in the era of artificial intelligence: Why Wall Street is becoming more cautious about tech stocks",
+      "event_summary": null,
+      "event_date": "2026-11-01",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "b3b2f0e95002a7936809fe73cd6032e9",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "人工智能时代的现金流考验：为何华尔街对科技股愈发审慎",
+          "publisher": "Moomoo",
+          "url": "https://www.moomoo.com/hans/community/feed/the-ai-cash-flow-reckoning-why-wall-street-is-becomingmore-117543580336134",
+          "published_at": "2026-11-01T07:00:00+00:00"
         }
       ]
     },
@@ -138,6 +390,27 @@
           "publisher": "每日经济新闻",
           "url": "https://www.nbd.com.cn/articles/2026-11-01/4633593.html",
           "published_at": "2026-11-01T14:49:00+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "50a85319-b6d1-4605-8925-db04b534f675",
+      "event_title": "How to Run an AI Model Locally—And Why You Might Want To",
+      "event_summary": null,
+      "event_date": "2026-11-01",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "c595cf787be01a2bcbe9ba572a4f07de",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "How to Run an AI Model Locally—And Why You Might Want To",
+          "publisher": "Decrypt",
+          "url": "https://decrypt.co/382295/how-to-run-ai-model-locally-why-you-might-want",
+          "published_at": "2026-11-01T14:01:02+00:00"
         }
       ]
     },
@@ -273,10 +546,19 @@
       "event_summary": null,
       "event_date": "2026-11-01",
       "first_seen_at": "2026-11-02T00:21:20.158507+00:00",
-      "last_seen_at": "2026-11-02T00:21:20.158507+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
       "cluster_confidence": null,
-      "article_count": 1,
+      "article_count": 2,
       "sources": [
+        {
+          "article_id": "be67366ade3ad822c8981630f7d99a0b",
+          "canonical": false,
+          "similarity_score": 1.0,
+          "headline": "最新报告显示我国人工智能推理数据量首超训练数据量",
+          "publisher": "中国网新闻中心",
+          "url": "http://news.china.com.cn/2026-11/02/content_118757547.shtml",
+          "published_at": "2026-11-01T23:44:00+00:00"
+        },
         {
           "article_id": "d126469ffd86677e5b317313d3537d75",
           "canonical": true,
@@ -306,6 +588,27 @@
           "publisher": "The Globe and Mail",
           "url": "https://www.theglobeandmail.com/investing/markets/markets-news/motley/8580406/one-of-the-fastest-growing-segments-of-the-crypto-market-involves-artificial-intelligence-here-s-the-1-cryptocurrency-i-m-buying-now",
           "published_at": "2026-11-01T14:01:38+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "a1e2b2b0-2a69-44e9-812b-f9c03426461e",
+      "event_title": "The AI “Xiaolian” for couplet creation was launched in Chengdu",
+      "event_summary": null,
+      "event_date": "2026-11-01",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "aaefbd93c9f2cd5a1d0695952bf4eb04",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "楹联创作AI“小联”在成都发布",
+          "publisher": "中国新闻网",
+          "url": "http://www.sc.chinanews.com.cn/kjws/2026-11-01/251534.html",
+          "published_at": "2026-11-01T11:09:00+00:00"
         }
       ]
     },
@@ -369,6 +672,27 @@
           "publisher": "Marquette Today",
           "url": "https://today.marquette.edu/calendar/artificial-intelligence-in-a-jesuit-university-a-student-conversation",
           "published_at": "2026-11-01T00:26:39+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "bd35acfb-ce9d-4a56-96fc-9e0e61ba749d",
+      "event_title": "Focusing on “The Common Vision and Actions for the Development of Artificial Intelligence in the Asia-Pacific Region”, the 92nd China Reform International Forum held a high-level dialogue.",
+      "event_summary": null,
+      "event_date": "2026-11-01",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "3754c1bb1d057ac9c9ec686c7f4c3f7a",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "聚焦“亚太人工智能发展的共同愿景与共同行动” 第92次中国改革国际论坛举行高端对话",
+          "publisher": "中国改革论坛",
+          "url": "http://www.chinareform.org.cn/2026/1101/16700780.shtml",
+          "published_at": "2026-11-01T13:40:00+00:00"
         }
       ]
     },
@@ -664,6 +988,27 @@
       ]
     },
     {
+      "event_id": "c871cafc-aaec-4135-be78-467304176c01",
+      "event_title": "Mining in the Age of Artificial Intelligence – Rouyn-Noranda and Abitibi-West",
+      "event_summary": null,
+      "event_date": "2026-10-31",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "49550996c5a9d873fc818433d2eabcb4",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "Les mines à l’heure de l’intelligence artificielle – Rouyn-Noranda et Abitibi-Ouest",
+          "publisher": "journallecitoyen.com",
+          "url": "https://journallecitoyen.com/articles/art-12966",
+          "published_at": "2026-10-31T20:22:18+00:00"
+        }
+      ]
+    },
+    {
       "event_id": "dc0daa8d-2ed7-460a-8bdd-89df1f06af7a",
       "event_title": "AI, the New Face of Fear of the Unknown",
       "event_summary": null,
@@ -786,6 +1131,27 @@
           "publisher": "Fédération Française de la Randonnée Pédestre",
           "url": "https://www.ffrandonnee.fr/s-informer/actualites/ia-generative-quel-impact-environnemental-reel-et-comment-l-encadrer",
           "published_at": "2026-10-30T07:00:00+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "1822aa22-554b-49e9-a322-04c06a1bfb3c",
+      "event_title": "Confronting What Lurks in the Shadows: AI Regulation and Governance",
+      "event_summary": null,
+      "event_date": "2026-10-30",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "6af1c81e5710b73a46792cab9055afe6",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "Confronting What Lurks in the Shadows: AI Regulation and Governance",
+          "publisher": "Infosecurity Magazine",
+          "url": "https://www.infosecurity-magazine.com/opinions/shadows-ai-regulation-governance",
+          "published_at": "2026-10-30T13:15:00+00:00"
         }
       ]
     },
@@ -1147,6 +1513,27 @@
       ]
     },
     {
+      "event_id": "9e89bd18-0ced-4084-ba8a-2e8e2a5884c5",
+      "event_title": "Network modeling of science teachers’ perceptions of artificial intelligence integration in science curriculum development",
+      "event_summary": null,
+      "event_date": "2026-10-30",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "4e6ccb645fca55f1771e92db7c7747bb",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "Network modeling of science teachers’ perceptions of artificial intelligence integration in science curriculum development",
+          "publisher": "Nature",
+          "url": "https://www.nature.com/articles/s41598-026-75785-6",
+          "published_at": "2026-10-30T00:56:59+00:00"
+        }
+      ]
+    },
+    {
       "event_id": "9ef964df-d8b8-4964-88a4-7e8410738428",
       "event_title": "How FDA Generative AI Device Oversight May Impact Providers",
       "event_summary": null,
@@ -1164,6 +1551,27 @@
           "publisher": "Modern Healthcare News",
           "url": "https://www.modernhealthcare.com/medical-devices/mh-fda-generative-ai-device-providers",
           "published_at": "2026-10-30T10:00:00+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "a0022a69-6ec2-4474-b060-6d6fdf06b5bc",
+      "event_title": "Phoenix AI meets AI for the service of defense",
+      "event_summary": null,
+      "event_date": "2026-10-30",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "90e6eb859b0533f3aca65b900397c235",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "Phoenix AI met l’intelligence artificielle au service de la défense",
+          "publisher": "Lien Multimédia",
+          "url": "https://lienmultimedia.com/spip.php?article115101=",
+          "published_at": "2026-10-30T01:00:00+00:00"
         }
       ]
     },
@@ -1488,9 +1896,9 @@
       "event_summary": null,
       "event_date": "2026-10-30",
       "first_seen_at": "2026-11-02T00:21:20.158507+00:00",
-      "last_seen_at": "2026-11-02T00:21:20.158507+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
       "cluster_confidence": null,
-      "article_count": 1,
+      "article_count": 2,
       "sources": [
         {
           "article_id": "d70b5ef344251c2b8625dc47d462427f",
@@ -1500,6 +1908,15 @@
           "publisher": "Hungarian Conservative",
           "url": "https://www.hungarianconservative.com/articles/current/netherlands-primary-schools-generative-ai-restrictions",
           "published_at": "2026-10-30T17:07:19+00:00"
+        },
+        {
+          "article_id": "f625068f290c8ac0806724cb78d07ef9",
+          "canonical": false,
+          "similarity_score": 0.7778,
+          "headline": "Dutch MPs want to ban primary school children from using generative AI",
+          "publisher": "NL Times",
+          "url": "https://nltimes.nl/2026/10/29/dutch-mps-want-ban-primary-school-children-using-generative-ai",
+          "published_at": "2026-10-29T16:15:00+00:00"
         }
       ]
     },
@@ -1602,9 +2019,9 @@
       "event_summary": null,
       "event_date": "2026-10-29",
       "first_seen_at": "2026-11-02T00:21:20.158507+00:00",
-      "last_seen_at": "2026-11-02T00:21:20.158507+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
       "cluster_confidence": null,
-      "article_count": 1,
+      "article_count": 3,
       "sources": [
         {
           "article_id": "67aee008c6acb5ee044cff7eb6942e7f",
@@ -1614,6 +2031,45 @@
           "publisher": "Euronews.com",
           "url": "https://fr.euronews.com/2026/10/29/mistral-met-en-ligne-son-modele-dia-donnant-aux-societes-plus-de-controle-sur-leur-cyberse",
           "published_at": "2026-10-29T14:46:58+00:00"
+        },
+        {
+          "article_id": "8f01cca353e306a7bdaed780b00607ac",
+          "canonical": false,
+          "similarity_score": 0.8365,
+          "headline": "Mistral releases latest AI model for download, giving companies more control over their cybersecurity",
+          "publisher": "Euronews.com",
+          "url": "https://www.euronews.com/2026/10/29/mistral-releases-latest-ai-model-for-download-giving-companies-more-control-over-their-cyb",
+          "published_at": "2026-10-29T14:45:06+00:00"
+        },
+        {
+          "article_id": "e6cd900328bbce044782790316c84509",
+          "canonical": false,
+          "similarity_score": 0.7308,
+          "headline": "Mistral open-sources AI model despite warning it could aid cyberattacks",
+          "publisher": "CSO Online",
+          "url": "https://www.csoonline.com/article/4242648/mistral-releases-large-4-weights-despite-warning-of-cyberattack-uplift.html",
+          "published_at": "2026-10-30T11:05:57+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "0b0af922-5853-4e23-8ce5-fa56bd8128a5",
+      "event_title": "Artificial Intelligence | New York State restricts the use of conversational agents by minors",
+      "event_summary": null,
+      "event_date": "2026-10-29",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "2dcc3c7cf6ba143d3236af6fac4ffa6d",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "Intelligence artificielle | L’État de New York restreint l’utilisation d’agents conversationnels par les mineurs",
+          "publisher": "La Presse",
+          "url": "https://www.lapresse.ca/affaires/techno/2026-10-28/intelligence-artificielle/l-etat-de-new-york-restreint-l-utilisation-d-agents-conversationnels-par-les-mineurs.php",
+          "published_at": "2026-10-29T00:26:32+00:00"
         }
       ]
     },
@@ -1870,6 +2326,27 @@
       ]
     },
     {
+      "event_id": "51816121-76cc-4c4d-b662-e4faa887d435",
+      "event_title": "Queering Wiki 2026 in Montreal: Preserving LGBTQ+ Memory in the Age of Artificial Intelligence",
+      "event_summary": null,
+      "event_date": "2026-10-29",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "00b217cb79f33e1ab3512bcbf56491d6",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "Queering Wiki 2026 à Montréal : préserver la mémoire LGBTQ+ à l’heure de l’intelligence artificielle",
+          "publisher": "Fugues magazine",
+          "url": "https://www.fugues.com/2026/10/29/queering-wiki-2026-a-montreal-preserver-la-memoire-lgbtq-a-lheure-de-lintelligence-artificielle",
+          "published_at": "2026-10-29T21:36:55+00:00"
+        }
+      ]
+    },
+    {
       "event_id": "5e16799b-e2a8-4b50-83cc-1f0c9e7b4942",
       "event_title": "OpenAI CEO Sam Altman claims AI singularity has arrived: 'Awesome for the world'",
       "event_summary": null,
@@ -1996,6 +2473,27 @@
       ]
     },
     {
+      "event_id": "86eb4b14-8f29-4804-9b11-fe8b353ae251",
+      "event_title": "Artificial Intelligence: Reasoning, Algorithms, Automation",
+      "event_summary": null,
+      "event_date": "2026-10-29",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "846dd46d40d548490939c47b2133424e",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "Artificial intelligence - Reasoning, Algorithms, Automation",
+          "publisher": "Britannica",
+          "url": "https://www.britannica.com/technology/artificial-intelligence/Reasoning",
+          "published_at": "2026-10-29T05:00:00+00:00"
+        }
+      ]
+    },
+    {
       "event_id": "8841e19d-925f-4bfe-835a-2aef422328c6",
       "event_title": "Human-Centred AI and Social Benefits: Artificial Intelligence in the Service of People",
       "event_summary": null,
@@ -2085,10 +2583,19 @@
       "event_summary": null,
       "event_date": "2026-10-29",
       "first_seen_at": "2026-11-02T00:21:20.158507+00:00",
-      "last_seen_at": "2026-11-02T00:21:20.158507+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
       "cluster_confidence": null,
-      "article_count": 3,
+      "article_count": 4,
       "sources": [
+        {
+          "article_id": "07e28329e5cf53f1db59d027a2325beb",
+          "canonical": false,
+          "similarity_score": 0.773,
+          "headline": "IA: le Canada entre au capital de Cohere pour 1,6 milliard $",
+          "publisher": "TVA Nouvelles",
+          "url": "https://www.tvanouvelles.ca/2026/10/29/ia-le-canada-entre-au-capital-de-cohere-pour-16-milliard",
+          "published_at": "2026-10-29T17:09:09+00:00"
+        },
         {
           "article_id": "1839628f645a5aff726fcb7c15d82d31",
           "canonical": false,
@@ -2187,9 +2694,9 @@
       "event_summary": null,
       "event_date": "2026-10-29",
       "first_seen_at": "2026-11-02T00:21:20.158507+00:00",
-      "last_seen_at": "2026-11-02T00:21:20.158507+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
       "cluster_confidence": null,
-      "article_count": 1,
+      "article_count": 2,
       "sources": [
         {
           "article_id": "0191a92f1a87e108b6c5b8c7ae8cc3b0",
@@ -2199,6 +2706,15 @@
           "publisher": "Radio-Canada",
           "url": "https://ici.radio-canada.ca/rdi/isabelle-richer/site/videos/10796639/intelligence-artificielle-est-partout-meme-en-cour-mais-tribunaux-quebec-ont-adopte-directives-",
           "published_at": "2026-10-29T13:23:08+00:00"
+        },
+        {
+          "article_id": "1d9f804cc3d7777e4eab987beff47422",
+          "canonical": false,
+          "similarity_score": 1.0,
+          "headline": "L’intelligence artificielle est partout, même en cour… mais les tribunaux du Québec ont adopté des directives.",
+          "publisher": "Radio-Canada",
+          "url": "https://ici.radio-canada.ca/info/videos/1-10796639/intelligence-artificielle-est-partout-meme-en-cour-mais-tribunaux-quebec-ont-adopte-directives?liste=28-23005",
+          "published_at": "2026-10-29T17:29:39+00:00"
         }
       ]
     },
@@ -2283,6 +2799,27 @@
           "publisher": "InfoMigrants",
           "url": "https://www.infomigrants.net/en/post/74451/uk-home-office-is-under-scrutiny-for-using-artificial-intelligence-in-asylum-cases",
           "published_at": "2026-10-29T13:36:41+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "e4b9ff8d-fb1b-44f9-9c5a-d3ef7c17b666",
+      "event_title": "Artificial Intelligence: What Should We Fear Most? | Interview with Thibault Prévost, Author | TVA News | QUB Info",
+      "event_summary": null,
+      "event_date": "2026-10-29",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "63053ca27884cfaa87b26a37a08e819b",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "Intelligence artificielle: que doit-on craindre le plus? | Entrevue avec Thibault Prévost, auteur | TVA Nouvelles | QUB info",
+          "publisher": "QUB radio",
+          "url": "https://www.qub.ca/video/intelligence-artificielle-que-doit-on-craindre-le-plus-entrevue-avec-thibault-prevost-auteur-1403263780",
+          "published_at": "2026-10-29T18:02:10+00:00"
         }
       ]
     },
@@ -2812,6 +3349,27 @@
       ]
     },
     {
+      "event_id": "6108b3b3-2254-4beb-bda7-7e2b2743923c",
+      "event_title": "The challenges of artificial intelligence in education shaped UNESCO’s participation in the 14th País Digital Summit",
+      "event_summary": null,
+      "event_date": "2026-10-27",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "79a5f520979ad9d5ee831b4f6b8f08ac",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "The challenges of artificial intelligence in education shaped UNESCO’s participation in the 14th País Digital Summit",
+          "publisher": "UNESCO",
+          "url": "https://www.unesco.org/en/articles/challenges-artificial-intelligence-education-shaped-unescos-participation-14th-pais-digital-summit",
+          "published_at": "2026-10-27T15:16:56+00:00"
+        }
+      ]
+    },
+    {
       "event_id": "74ef42ca-f21d-4322-90b8-9103947b1eb6",
       "event_title": "Cohere detects Alibaba AI model attempting to upload file to Beijing server",
       "event_summary": null,
@@ -2829,6 +3387,27 @@
           "publisher": "The Globe and Mail",
           "url": "https://www.theglobeandmail.com/business/economy/article-cohere-alibaba-qwen-ai-model-beijing-server",
           "published_at": "2026-10-27T20:59:40+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "97ab4dd5-573a-48a3-a2ea-d1d35947a89c",
+      "event_title": "Using AI to Speed Up MRI Scans in NHS Highland",
+      "event_summary": null,
+      "event_date": "2026-10-27",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "06c528cceb286d86ab00ad99d7d23da0",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "Using Artificial Intelligence to speed up MRI scans in NHS Highland",
+          "publisher": "NHS Highland",
+          "url": "https://www.nhshighland.scot.nhs.uk/about/nhs-highland-charity/how-we-make-a-difference/using-artificial-intelligence-to-speed-up-mri-scans-in-nhs-highland",
+          "published_at": "2026-10-27T07:00:00+00:00"
         }
       ]
     },
@@ -2913,6 +3492,27 @@
           "publisher": "La Presse",
           "url": "https://www.lapresse.ca/affaires/techno/2026-10-27/intelligence-artificielle/les-agents-d-ia-devraient-ils-etre-interdits-aux-ados.php",
           "published_at": "2026-10-27T23:45:00+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "e011d856-0044-4085-98bc-588f61bd6601",
+      "event_title": "We have trouble with our artificial intelligence!\" reports Marwah Rizquy",
+      "event_summary": null,
+      "event_date": "2026-10-27",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "66e498b1811eb27e6d7baba2155d8a28",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "«On a de la misère avec notre intelligence artificielle!», rapporte Marwah Rizquy",
+          "publisher": "QUB radio",
+          "url": "https://www.qub.ca/video/benoit-dutrizac-renc-rizqy-dutrizac-20261027-10-46-26-841-1145419696",
+          "published_at": "2026-10-27T15:21:24+00:00"
         }
       ]
     },
@@ -3006,6 +3606,27 @@
           "publisher": "BFM",
           "url": "https://www.bfmtv.com/economie/international/l-entreprise-devient-un-acteur-majeur-de-l-ia-space-x-emprunte-40-milliards-pour-financer-l-achat-de-puces-pour-intelligence-artificielle_AD-202610260088.html",
           "published_at": "2026-10-26T05:38:49+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "0548bbf0-6667-4267-899d-c4ff37e1a257",
+      "event_title": "Meta to raise $35 billion in shares to fund its artificial intelligence",
+      "event_summary": null,
+      "event_date": "2026-10-26",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "e9e8b2fe6d497b9b18abc0ec61fa95e6",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "Meta va lever 35 milliards de dollars en actions pour financer son intelligence artificielle",
+          "publisher": "La Presse",
+          "url": "https://www.lapresse.ca/affaires/techno/2026-10-26/meta-va-lever-35-milliards-de-dollars-en-actions-pour-financer-son-intelligence-artificielle.php",
+          "published_at": "2026-10-26T12:56:41+00:00"
         }
       ]
     },
@@ -3351,6 +3972,27 @@
           "publisher": "Welcome to the United Nations",
           "url": "https://www.un.org/independent-international-scientific-panel-ai/zh/preliminary-report",
           "published_at": "2026-10-26T01:44:06+00:00"
+        }
+      ]
+    },
+    {
+      "event_id": "b379fdf3-2f7e-43fe-88af-46e2ed19b845",
+      "event_title": "UNESCO supports ethical use of artificial intelligence in Mongolian journalism",
+      "event_summary": null,
+      "event_date": "2026-10-26",
+      "first_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "last_seen_at": "2026-11-02T01:31:22.488218+00:00",
+      "cluster_confidence": null,
+      "article_count": 1,
+      "sources": [
+        {
+          "article_id": "27a3d90a5694c0d91c0da194abfd522c",
+          "canonical": true,
+          "similarity_score": 1.0,
+          "headline": "UNESCO supports the ethical use of artificial intelligence in Mongolian journalism",
+          "publisher": "UNESCO",
+          "url": "https://www.unesco.org/en/articles/unesco-supports-ethical-use-artificial-intelligence-mongolian-journalism",
+          "published_at": "2026-10-26T18:10:56+00:00"
         }
       ]
     },
@@ -18527,7 +19169,7 @@
           "headline": "Call for papers: Advancing research on the Ethics of Artificial Intelligence",
           "publisher": "UNESCO",
           "url": "https://www.unesco.org/en/articles/call-papers-advancing-research-ethics-artificial-intelligence",
-          "published_at": "2026-10-20T07:00:00+00:00"
+          "published_at": "2026-10-30T07:00:00+00:00"
         }
       ]
     },
