@@ -76,7 +76,8 @@ jobs:
     needs: resolve-events
     uses: ./.github/workflows/reconcile-observatory-history.yml
     with:
-      mode: auto
+      # Keep the weekly publication bounded. Deep calendar scans run separately.
+      mode: weekly
       dry_run: false
     secrets: inherit
 
