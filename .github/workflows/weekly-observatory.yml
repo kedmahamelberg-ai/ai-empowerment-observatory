@@ -7,6 +7,11 @@ on:
     - cron: "17 0 * * 1"
       timezone: "Europe/Amsterdam"
   workflow_dispatch:
+    inputs:
+      force:
+        description: Rebuild the completed week even when it is already current
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -24,6 +29,7 @@ jobs:
       release_id: ${{ steps.week.outputs.release_id }}
       period_start: ${{ steps.week.outputs.period_start }}
       period_end: ${{ steps.week.outputs.period_end }}
+      needs_collection: ${{ steps.week.outputs.needs_collection }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -35,10 +41,16 @@ jobs:
           AIEO_AI_PROVIDER=local python -m unittest discover -s tests -v
       - name: Pin the completed week and verify all five markets
         id: week
-        run: python scripts/plan_weekly_collection.py
+        env:
+          FORCE_WEEKLY_REBUILD: ${{ inputs.force || false }}
+        run: |
+          args=()
+          if [[ "$FORCE_WEEKLY_REBUILD" == 'true' ]]; then args+=(--force); fi
+          python scripts/plan_weekly_collection.py "${args[@]}"
 
   collect:
     needs: plan
+    if: needs.plan.outputs.needs_collection == 'true'
     uses: ./.github/workflows/update-observatory.yml
     secrets: inherit
 

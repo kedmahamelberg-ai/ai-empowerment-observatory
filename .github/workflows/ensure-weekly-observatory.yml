@@ -1,0 +1,33 @@
+name: Ensure Weekly Observatory Collection
+
+on:
+  schedule:
+    # The main weekly pipeline starts Monday 00:17 Amsterdam time.
+    # Check again at 01:17 and 02:17 if GitHub drops its scheduled event.
+    - cron: '17 1,2 * * 1'
+      timezone: Europe/Amsterdam
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: aieo-weekly-watchdog
+  cancel-in-progress: false
+
+jobs:
+  ensure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Start collection only when the week is missing and no weekly run is active
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/ensure_weekly_pipeline.py
