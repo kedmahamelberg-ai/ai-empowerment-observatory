@@ -149,6 +149,21 @@ def is_article_url(value: Any) -> bool:
     return not any(component in NON_ARTICLE_PATH_COMPONENTS for component in components)
 
 
+def older_publisher_url_year(link: str, iso_date: Any) -> bool:
+    """Reject a discovery date newer than an explicit publisher URL year."""
+    year = normalize_space(iso_date)[:4]
+    if not re.fullmatch(r"20\d{2}", year):
+        return False
+    try:
+        components = [part for part in urlsplit(link).path.split("/") if part]
+    except ValueError:
+        return False
+    for component in components[:4]:
+        if re.fullmatch(r"20\d{2}", component):
+            return int(component) < int(year)
+    return False
+
+
 def source_name(item: dict[str, Any]) -> str:
     source = item.get("source")
     if isinstance(source, dict):
@@ -184,6 +199,8 @@ def normalize_item(
     title = normalize_space(item.get("title"))
     link = canonicalize_url(item.get("link"))
     if not title or not link or not is_article_url(link):
+        return None
+    if older_publisher_url_year(link, item.get("iso_date")):
         return None
     return {
         "id": candidate_id(title, link),
