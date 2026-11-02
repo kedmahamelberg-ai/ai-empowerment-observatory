@@ -24,19 +24,31 @@ def plan(as_of=None):
             'period_end': str(period.end), 'markets': 5, 'searches': len(countries)}
 
 
+def needs_collection(target_release_id, current_release_id, force=False):
+    return force or target_release_id != current_release_id
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--as-of', type=date.fromisoformat)
-    result = plan(parser.parse_args().as_of)
+    parser.add_argument('--force', action='store_true')
+    args = parser.parse_args()
+    result = plan(args.as_of)
+    current_path = ROOT / 'data/releases/current.json'
+    current_id = json.loads(current_path.read_text()).get('release_id', '') if current_path.exists() else ''
+    result['needs_collection'] = needs_collection(result['release_id'], current_id, args.force)
     print(json.dumps(result, indent=2))
     if os.environ.get('GITHUB_OUTPUT'):
         with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
             for key in ('release_id', 'period_start', 'period_end'):
                 output.write(f'{key}={result[key]}\n')
+            output.write(f"needs_collection={str(result['needs_collection']).lower()}\n")
     if os.environ.get('GITHUB_STEP_SUMMARY'):
         with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as output:
             output.write(f"## Weekly collection\n\n**{result['release_id']}**, {result['period_start']} to {result['period_end']}. "
                          'Five markets, six language searches. The public release uses publication dates within this completed week.\n')
+            if not result['needs_collection']:
+                output.write('The completed week is already current; duplicate collection was skipped.\n')
 
 
 if __name__ == '__main__':
