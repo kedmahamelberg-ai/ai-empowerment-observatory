@@ -2,14 +2,14 @@
   "meta": {
     "stage": "7A.2",
     "status": "unclassified review candidates",
-    "run_key": "run_20261102T002120Z",
-    "run_id": "96c42ab6-675a-438f-abd1-c9498adbdc91",
-    "collected_at": "2026-11-02T00:21:20.158507Z",
+    "run_key": "run_20261102T013122Z",
+    "run_id": "3b343527-c994-4e17-93a4-6500887b05d7",
+    "collected_at": "2026-11-02T01:31:22.488218Z",
     "run_date": "2026-11-02",
     "successful_searches": 6,
     "configured_searches": 6,
     "candidate_count_before_global_deduplication": 180,
-    "candidate_count_after_global_deduplication": 159,
+    "candidate_count_after_global_deduplication": 161,
     "private_history": "Supabase PostgreSQL + private raw-news bucket",
     "warning": "These are discovery results, not validated AI-empowerment events. Search market does not establish event country."
   },
@@ -22,9 +22,9 @@
       "status": "success",
       "raw_result_count": 100,
       "normalized_candidate_count": 30,
-      "serpapi_search_id": "6ae7d7819bc9c9948b070c29",
+      "serpapi_search_id": "6ae7e7ebbbd3496cf151fcb4",
       "google_news_url": "https://news.google.com/search?q=%28%22artificial+intelligence%22+OR+%22generative+AI%22+OR+%22AI+policy%22+OR+%22AI+regulation%22+OR+%22AI+model%22%29+when%3A8d&hl=en&gl=US",
-      "raw_storage_path": "serpapi/google-news/2026/11/02/run_20261102T002120Z/usa-en.json"
+      "raw_storage_path": "serpapi/google-news/2026/11/02/run_20261102T013122Z/usa-en.json"
     },
     {
       "country": "China",
@@ -32,11 +32,11 @@
       "language": "zh-cn",
       "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d",
       "status": "success",
-      "raw_result_count": 50,
+      "raw_result_count": 52,
       "normalized_candidate_count": 30,
-      "serpapi_search_id": "6ae7d7875ae0615c3e0e47c2",
+      "serpapi_search_id": "6ae7e7f016c0e27ac7c05c7a",
       "google_news_url": "https://news.google.com/search?q=%28%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD+OR+%E7%94%9F%E6%88%90%E5%BC%8F%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD+OR+%E5%A4%A7%E6%A8%A1%E5%9E%8B+OR+%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%9B%91%E7%AE%A1+OR+%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%94%BF%E7%AD%96%29+when%3A8d&hl=zh-cn&gl=CN",
-      "raw_storage_path": "serpapi/google-news/2026/11/02/run_20261102T002120Z/chn-zh-cn.json"
+      "raw_storage_path": "serpapi/google-news/2026/11/02/run_20261102T013122Z/chn-zh-cn.json"
     },
     {
       "country": "United Kingdom",
@@ -46,9 +46,9 @@
       "status": "success",
       "raw_result_count": 100,
       "normalized_candidate_count": 30,
-      "serpapi_search_id": "6ae7d789dea400b601640880",
+      "serpapi_search_id": "6ae7e7f25e878bdd17a26c75",
       "google_news_url": "https://news.google.com/search?q=%28%22artificial+intelligence%22+OR+%22generative+AI%22+OR+%22AI+policy%22+OR+%22AI+regulation%22+OR+%22AI+model%22%29+when%3A8d&hl=en&gl=UK",
-      "raw_storage_path": "serpapi/google-news/2026/11/02/run_20261102T002120Z/gbr-en.json"
+      "raw_storage_path": "serpapi/google-news/2026/11/02/run_20261102T013122Z/gbr-en.json"
     },
     {
       "country": "France",
@@ -58,9 +58,9 @@
       "status": "success",
       "raw_result_count": 100,
       "normalized_candidate_count": 30,
-      "serpapi_search_id": "6ae7d78ea20802b3d10584f7",
+      "serpapi_search_id": "6ae7e7f76f082b75a6fe2c0e",
       "google_news_url": "https://news.google.com/search?q=%28%22intelligence+artificielle%22+OR+%22IA+g%C3%A9n%C3%A9rative%22+OR+%22r%C3%A9glementation+de+l%E2%80%99IA%22+OR+%22politique+de+l%E2%80%99IA%22+OR+%22mod%C3%A8le+d%E2%80%99IA%22%29+when%3A8d&hl=fr&gl=FR",
-      "raw_storage_path": "serpapi/google-news/2026/11/02/run_20261102T002120Z/fra-fr.json"
+      "raw_storage_path": "serpapi/google-news/2026/11/02/run_20261102T013122Z/fra-fr.json"
     },
     {
       "country": "Canada",
@@ -70,9 +70,9 @@
       "status": "success",
       "raw_result_count": 100,
       "normalized_candidate_count": 30,
-      "serpapi_search_id": "6ae7d7965fa7b73ac8cb609b",
+      "serpapi_search_id": "6ae7e7fa0c3a086d5dc54590",
       "google_news_url": "https://news.google.com/search?q=%28%22artificial+intelligence%22+OR+%22generative+AI%22+OR+%22AI+policy%22+OR+%22AI+regulation%22+OR+%22AI+model%22%29+when%3A8d&hl=en&gl=CA",
-      "raw_storage_path": "serpapi/google-news/2026/11/02/run_20261102T002120Z/can-en.json"
+      "raw_storage_path": "serpapi/google-news/2026/11/02/run_20261102T013122Z/can-en.json"
     },
     {
       "country": "Canada",
@@ -82,403 +82,25 @@
       "status": "success",
       "raw_result_count": 100,
       "normalized_candidate_count": 30,
-      "serpapi_search_id": "6ae7d7a0bbd3498573ccb3bf",
+      "serpapi_search_id": "6ae7e7fc6bb535cd0f1c47d9",
       "google_news_url": "https://news.google.com/search?q=%28%22intelligence+artificielle%22+OR+%22IA+g%C3%A9n%C3%A9rative%22+OR+%22politique+de+l%E2%80%99IA%22+OR+%22r%C3%A9glementation+de+l%E2%80%99IA%22+OR+%22mod%C3%A8le+d%E2%80%99IA%22%29+when%3A8d&hl=fr&gl=CA",
-      "raw_storage_path": "serpapi/google-news/2026/11/02/run_20261102T002120Z/can-fr.json"
+      "raw_storage_path": "serpapi/google-news/2026/11/02/run_20261102T013122Z/can-fr.json"
     }
   ],
   "errors": [],
   "candidates": [
     {
-      "id": "b7f7e10118461ffd12ce",
-      "title": "WEF：2026年金融服务业人工智能行动指南",
-      "link": "http://www.199it.com/archives/1846482.html",
-      "publisher": "199IT",
-      "iso_date": "2026-11-01T21:30:19Z",
-      "displayed_date": "11/01/2026, 09:30 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iI0NnNTZTMk4xWDFwRU9FOURTa3hvVFJDTEFoaTlBU2dCTWdB",
+      "id": "c2195147c571c2c8307e",
+      "title": "财经聚焦丨首次摆上“双十一”货架 Token走进大众消费",
+      "link": "https://app.xinhuanet.com/news/article.html?articleId=20261101bb39f666e6044c8b9174182447231008",
+      "publisher": "新华网客户端",
+      "iso_date": "2026-11-02T01:30:46Z",
+      "displayed_date": "11/02/2026, 01:30 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNXJVVU01U2w4MlZIVkxPWEpIVFJDMEFSalFCU2dLTWdZQmdKSUd0UWM",
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "China",
-          "iso2": "CN",
-          "iso3": "CHN",
-          "language": "zh-cn",
-          "rank": 30,
-          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
-        }
-      ]
-    },
-    {
-      "id": "a51d805de9eb7406eabe",
-      "title": "“发展新质生产力 强劲增量看AI”论坛将在乌镇举行",
-      "link": "https://politics.gmw.cn/2026-11/02/content_39079846.htm",
-      "publisher": "光明网",
-      "iso_date": "2026-11-01T21:29:44Z",
-      "displayed_date": "11/01/2026, 09:29 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNUNkRFEzYkUxT1pWaGlMV2x4VFJDb0FSaXJBaWdCTWdhVlFwSnNxUWM",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "China",
-          "iso2": "CN",
-          "iso3": "CHN",
-          "language": "zh-cn",
-          "rank": 21,
-          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
-        }
-      ]
-    },
-    {
-      "id": "58e028deeb5982453cd5",
-      "title": "人工智能技术创新与治理论坛将在乌镇举行",
-      "link": "https://politics.gmw.cn/2026-11/02/content_39079801.htm",
-      "publisher": "光明网",
-      "iso_date": "2026-11-01T20:46:48Z",
-      "displayed_date": "11/01/2026, 08:46 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNVlTbVZOTjBsMk1EbDJTM05tVFJDbUFSaXdBaWdCTWdZSlFwb29uUWs",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "China",
-          "iso2": "CN",
-          "iso3": "CHN",
-          "language": "zh-cn",
-          "rank": 14,
-          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
-        }
-      ]
-    },
-    {
-      "id": "35b45ac30ecb3ee916c1",
-      "title": "Chambly : comment intégrer l’intelligence artificielle à la maison",
-      "link": "https://www.journaldechambly.com/culture/chambly-comment-integrer-lintelligence-artificielle-a-la-maison",
-      "publisher": "Le Journal de Chambly",
-      "iso_date": "2026-11-01T19:30:00Z",
-      "displayed_date": "11/01/2026, 07:30 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNU1iVWxZUWxsUVJEVTBjR05NVFJERUF4aW1CU2dLTWdhQk9aTERIZ2M",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "Canada",
-          "iso2": "CA",
-          "iso3": "CAN",
-          "language": "fr",
-          "rank": 9,
-          "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
-        }
-      ]
-    },
-    {
-      "id": "37e157ef7773e5caed3f",
-      "title": "大国工匠授课解锁“人工智能+”技能包",
-      "link": "https://finance.sina.com.cn/jjxw/2026-11-02/doc-inixhnmq3241847.shtml",
-      "publisher": "新浪财经",
-      "iso_date": "2026-11-01T19:25:13Z",
-      "displayed_date": "11/01/2026, 07:25 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iJ0NnNWZkMlI2YUhNM1NYRk5lbkpvVFJEaEFSaVFBeWdLTWdNQmtBQQ",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "China",
-          "iso2": "CN",
-          "iso3": "CHN",
-          "language": "zh-cn",
-          "rank": 20,
-          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
-        }
-      ]
-    },
-    {
-      "id": "1fe146f33298683e171e",
-      "title": "Artificial Intelligence Versus Human Interpretation in Diagnostic Radiology: A Systematic Review of Diagnostic Accuracy and Operational Efficiency",
-      "link": "https://www.cureus.com/articles/543554-artificial-intelligence-versus-human-interpretation-in-diagnostic-radiology-a-systematic-review-of-diagnostic-accuracy-and-operational-efficiency",
-      "publisher": "Cureus",
-      "iso_date": "2026-11-01T18:19:58Z",
-      "displayed_date": "11/01/2026, 06:19 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNW9hRXBqU1hkVkxXUjNZWEJEVFJEWkJCai1BeWdLTWdZQklvNEhtUWc",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "United Kingdom",
-          "iso2": "GB",
-          "iso3": "GBR",
-          "language": "en",
-          "rank": 23,
-          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
-        }
-      ]
-    },
-    {
-      "id": "949915aa115e5e4fb0f1",
-      "title": "多只QDII基金近一年净值涨逾30% 机构：AI板块短期调整不改长期景气",
-      "link": "https://m.10jqka.com.cn/20261102/c681330302.shtml",
-      "publisher": "同花顺",
-      "iso_date": "2026-11-01T18:00:00Z",
-      "displayed_date": "11/01/2026, 06:00 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iI0NnNTRORzF3VkRVd1RFcDNNMVozVFJDcUFSaW9BaWdCTWdB",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "China",
-          "iso2": "CN",
-          "iso3": "CHN",
-          "language": "zh-cn",
-          "rank": 25,
-          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
-        }
-      ]
-    },
-    {
-      "id": "b15d588603f8d9e69994",
-      "title": "DeepSeek重构Agent！AI应用加速落地 多股业绩倍增可期(名单)",
-      "link": "https://wap.eastmoney.com/a/202611023917809641.html",
-      "publisher": "东方财富",
-      "iso_date": "2026-11-01T16:39:48Z",
-      "displayed_date": "11/01/2026, 04:39 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNVlhbHB0Ym1OM2MwcGZZbE5qVFJENkFSaktBU2dCTWdhSkFaU3FqQXM",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "China",
-          "iso2": "CN",
-          "iso3": "CHN",
-          "language": "zh-cn",
-          "rank": 29,
-          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
-        }
-      ]
-    },
-    {
-      "id": "7fd65f98dced18879dbc",
-      "title": "La question du jour. Présidentielle : craignez-vous l’influence de l’intelligence artificielle à l’approche du scrutin ?",
-      "link": "https://www.ouest-france.fr/elections/presidentielle/la-question-du-jour-presidentielle-craignez-vous-linfluence-de-lintelligence-artificielle-a-lapproche-du-scrutin-601d230a-d5ff-11f1-84f3-5611f158a658",
-      "publisher": "Ouest-France",
-      "iso_date": "2026-11-01T16:31:03Z",
-      "displayed_date": "11/01/2026, 04:31 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNTNNRmRpWDBGWlNEaHBWM1J0VFJDZkF4ampCU2dLTWdZWmM0Q3VOUUk",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "France",
-          "iso2": "FR",
-          "iso3": "FRA",
-          "language": "fr",
-          "rank": 28,
-          "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"réglementation de l’IA\" OR \"politique de l’IA\" OR \"modèle d’IA\") when:8d"
-        }
-      ]
-    },
-    {
-      "id": "ab17db19e37ba6dc7ead",
-      "title": "推动技术走向产业现场，第一届中国工业视觉人工智能大会在沪举办",
-      "link": "https://www.jfdaily.com/news/detail?id=1205231",
-      "publisher": "上观新闻",
-      "iso_date": "2026-11-01T15:16:00Z",
-      "displayed_date": "11/01/2026, 03:16 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNHljM05OV2xnMlkwOXBjVlJIVFJDNEFSaVNBaWdCTWdZQmNZakVzQVU",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "China",
-          "iso2": "CN",
-          "iso3": "CHN",
-          "language": "zh-cn",
-          "rank": 10,
-          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
-        }
-      ]
-    },
-    {
-      "id": "6ae44444a188c8772577",
-      "title": "AI进入真实业务层：换道容易拆墙难，当IT方案没人用，主导权该还给谁？",
-      "link": "https://www.nbd.com.cn/articles/2026-11-01/4633593.html",
-      "publisher": "每日经济新闻",
-      "iso_date": "2026-11-01T14:49:00Z",
-      "displayed_date": "11/01/2026, 02:49 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iL0NnNVZha041UnpWWWNtaG1SSGhOVFJEZkF4aUFCU2dLTWdrQm9JaWh2S1JhRndF",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "China",
-          "iso2": "CN",
-          "iso3": "CHN",
-          "language": "zh-cn",
-          "rank": 24,
-          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
-        }
-      ]
-    },
-    {
-      "id": "2df83da60be3cceef5c0",
-      "title": "One of the Fastest-Growing Segments of the Crypto Market Involves Artificial Intelligence. Here's the 1 Cryptocurrency I'm Buying Now.",
-      "link": "https://www.theglobeandmail.com/investing/markets/markets-news/motley/8580406/one-of-the-fastest-growing-segments-of-the-crypto-market-involves-artificial-intelligence-here-s-the-1-cryptocurrency-i-m-buying-now",
-      "publisher": "The Globe and Mail",
-      "iso_date": "2026-11-01T14:01:38Z",
-      "displayed_date": "11/01/2026, 02:01 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iI0NnNTJVVTlZYlhsMlZucFZTRTVFVFJDMEF4akFCU2dLTWdB",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "Canada",
-          "iso2": "CA",
-          "iso3": "CAN",
-          "language": "en",
-          "rank": 19,
-          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
-        }
-      ]
-    },
-    {
-      "id": "fe2acc94d74922ed7277",
-      "title": "Google runs AI model on satellite chip, advancing orbital data center ambitions",
-      "link": "https://spacenews.com/google-runs-ai-model-on-satellite-chip-advancing-orbital-data-center-ambitions",
-      "publisher": "SpaceNews",
-      "iso_date": "2026-11-01T13:26:25Z",
-      "displayed_date": "11/01/2026, 01:26 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iL0NnNWZlbmhWVG1ZemRFcDNSbmMxVFJDUUF4ai1CU2dLTWdrQlFKQ0NIaWs3TEFJ",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "United States",
-          "iso2": "US",
-          "iso3": "USA",
-          "language": "en",
-          "rank": 22,
-          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
-        }
-      ]
-    },
-    {
-      "id": "d3d12f04665738e19df3",
-      "title": "硬核科技上新！首届中国工业视觉人工智能大会在普陀举办，七项成果集中发布",
-      "link": "https://finance.sina.com.cn/wm/2026-11-01/doc-inixfvpw3530430.shtml",
-      "publisher": "新浪财经",
-      "iso_date": "2026-11-01T13:05:30Z",
-      "displayed_date": "11/01/2026, 01:05 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNUxjVGRFU2psalZXRnRVbFl0VFJDV0FSalJBaWdCTWdZQkVvb1RqUXM",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "China",
-          "iso2": "CN",
-          "iso3": "CHN",
-          "language": "zh-cn",
-          "rank": 16,
-          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
-        }
-      ]
-    },
-    {
-      "id": "a4ebaef42640438e1de3",
-      "title": "讨好AI？人类主体性不容让渡",
-      "link": "https://finance.sina.com.cn/roll/2026-11-01/doc-inixfvpr2857456.shtml",
-      "publisher": "新浪财经",
-      "iso_date": "2026-11-01T12:33:52Z",
-      "displayed_date": "11/01/2026, 12:33 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNVlUR1ZOVGpod1VtZ3lZV04wVFJDcUJCaXFCQ2dLTWdhZGc1SnJ0UVk",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -495,17 +117,17 @@
       ]
     },
     {
-      "id": "88a6e17b8f6f582c494f",
-      "title": "AI时代人不可替代的价值在哪里？南方科技大学工学院教授马兆远做客珠海大讲堂",
-      "link": "https://pub-zhtb.hizh.cn/a/202611/01/AP6ae730a2e4b0203a518dee06.html",
-      "publisher": "珠海网",
-      "iso_date": "2026-11-01T12:29:00Z",
-      "displayed_date": "11/01/2026, 12:29 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iMkNnNTNVMVZPT0hKVFJXVmpiMEZ0VFJDOUFSaUxBaWdCTWd1QklvUVRsV3BVbHdnNGV3",
+      "id": "7cf6b70dbb19a4dd4283",
+      "title": "237项成果集中发布，这场活动“串”起AI 产业创新链",
+      "link": "http://gxt.shandong.gov.cn/art/2026/11/2/art_15171_10371356.html",
+      "publisher": "山东省工业和信息化厅",
+      "iso_date": "2026-11-02T01:16:17Z",
+      "displayed_date": "11/02/2026, 01:16 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNTBjVk5CTUdWUmQzSnhjRGszVFJDb0FSaXJBaWdCTWdhaFpJck5KUWc",
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -516,185 +138,23 @@
           "iso2": "CN",
           "iso3": "CHN",
           "language": "zh-cn",
-          "rank": 22,
+          "rank": 10,
           "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
         }
       ]
     },
     {
-      "id": "d80322f2dd388346a043",
-      "title": "最新报告显示我国人工智能推理数据量首超训练数据量",
-      "link": "https://cn.chinadaily.com.cn/a/202611/01/WS6ae7299fe4b09a165c792cb4.html",
-      "publisher": "中国日报网",
-      "iso_date": "2026-11-01T11:43:23Z",
-      "displayed_date": "11/01/2026, 11:43 AM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNDRRbFI0ZERSUlZHeDBTVk5aVFJDaEFSaTVBaWdCTWdZQlk0QkhxZ1E",
+      "id": "0f793272d438ec359678",
+      "title": "人工智能与计算机学院2026年“AI启新篇，青春向未来”迎新晚会暨“1024程序员节”智能之夜圆满落幕",
+      "link": "https://news.jiangnan.edu.cn/info/1065/111107.htm",
+      "publisher": "江南大学新闻网",
+      "iso_date": "2026-11-02T01:09:38Z",
+      "displayed_date": "11/02/2026, 01:09 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNWpSREJHUVRKS1NFMHRjMnhyVFJDYkFSakVBaWdCTWdhTndvaHFQUVU",
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "China",
-          "iso2": "CN",
-          "iso3": "CHN",
-          "language": "zh-cn",
-          "rank": 6,
-          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
-        }
-      ]
-    },
-    {
-      "id": "5a247cc884fd97778a60",
-      "title": "面对飞速发展的人工智能，企业面临的最大风险有哪些？",
-      "link": "https://es.weforum.org/stories/emerging-technologies/biggest-ai-risks-facing-businesses",
-      "publisher": "World Economic Forum",
-      "iso_date": "2026-11-01T11:01:58Z",
-      "displayed_date": "11/01/2026, 11:01 AM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNTFkVmxJT1ZGaWQweFhTMWhuVFJDM0FSaVRBaWdCTWdaUlVJb1pLQWc",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "China",
-          "iso2": "CN",
-          "iso3": "CHN",
-          "language": "zh-cn",
-          "rank": 3,
-          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
-        }
-      ]
-    },
-    {
-      "id": "dea70ca7e9c35bc6d5e4",
-      "title": "专访沃尔夫数学奖得主多贝西：AI不会取代数学家",
-      "link": "https://news.sciencenet.cn/htmlnews/2026/11/574018.shtm",
-      "publisher": "科学网—新闻",
-      "iso_date": "2026-11-01T11:01:21Z",
-      "displayed_date": "11/01/2026, 11:01 AM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNTFhbFoxUmkxRmFDMWhaazV3VFJERUF4aW5CU2dLTWdhcE5Zek5uUWs",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "China",
-          "iso2": "CN",
-          "iso3": "CHN",
-          "language": "zh-cn",
-          "rank": 15,
-          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
-        }
-      ]
-    },
-    {
-      "id": "7cd6ae07c64ce72392bd",
-      "title": "医生和AI说的不一样，该听谁的？",
-      "link": "https://pub-zhtb.hizh.cn/a/202611/01/AP6ae6e310e4b0203a518dea9c.html",
-      "publisher": "珠海网",
-      "iso_date": "2026-11-01T06:58:00Z",
-      "displayed_date": "11/01/2026, 06:58 AM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iL0NnNURaRXRhU0VzM1VFTlhSVEpaVFJDckFoaW9BU2dCTWdrQklJakZsYW9yRUFF",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "China",
-          "iso2": "CN",
-          "iso3": "CHN",
-          "language": "zh-cn",
-          "rank": 28,
-          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
-        }
-      ]
-    },
-    {
-      "id": "f6800c2a1f09c6749cb2",
-      "title": "以开放合作引领亚太区域人工智能发展，推动区域数智转型——第92次中国改革国际论坛举行全体大会",
-      "link": "http://www.chinareform.org.cn/2026/1101/16700779.shtml",
-      "publisher": "中国改革论坛",
-      "iso_date": "2026-11-01T06:29:00Z",
-      "displayed_date": "11/01/2026, 06:29 AM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNTFRMkZtZEc1VWFIVklXSEZDVFJDM0FSaVRBaWdCTWdZQmtJcUtQUVk",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "China",
-          "iso2": "CN",
-          "iso3": "CHN",
-          "language": "zh-cn",
-          "rank": 11,
-          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
-        }
-      ]
-    },
-    {
-      "id": "f3e0160816c1c95f551b",
-      "title": "AI赋能千行百业一线观察丨“AI+消费”的N种可能",
-      "link": "https://www.news.cn/fortune/20261101/251ff8f5316d41709a5f773b6efb7f57/c.html",
-      "publisher": "新华网",
-      "iso_date": "2026-11-01T04:58:33Z",
-      "displayed_date": "11/01/2026, 04:58 AM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNWliQzFFU2w4elZEUmpSSGRoVFJDckFSaW5BaWdCTWdhWlpwQUxKZ2M",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "China",
-          "iso2": "CN",
-          "iso3": "CHN",
-          "language": "zh-cn",
-          "rank": 17,
-          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
-        }
-      ]
-    },
-    {
-      "id": "780d559584733796c783",
-      "title": "中国人民大学新闻网- [中国日报]上合AI中心、人大高瓴人工智能学院发布《中国人工智能国际应用与治理合作白皮书》，携手全球南方共答\"时代之问\"",
-      "link": "https://news.ruc.edu.cn/2116709881117646850.html",
-      "publisher": "人大新闻网",
-      "iso_date": "2026-11-01T03:45:40Z",
-      "displayed_date": "11/01/2026, 03:45 AM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNU9NamwwYnpoWmNXUXhVSEYwVFJDNEFSaVRBaWdCTWdZSmNaSnRyUVk",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -711,44 +171,17 @@
       ]
     },
     {
-      "id": "2b88d1a3702a42e54ea3",
-      "title": "双十一AI暗战：电商想提升交易 消费者要全网比价",
-      "link": "https://www.cls.cn/detail/2521706",
-      "publisher": "财联社",
-      "iso_date": "2026-11-01T03:13:00Z",
-      "displayed_date": "11/01/2026, 03:13 AM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNXdTbGg1VkRkRWFEUk9aMGcwVFJDUUF4allCQ2dLTWdZQmtJZ1B1UVk",
+      "id": "44de496900c07b1aa1eb",
+      "title": "西交利物浦大学赴人工智能与计算机学院开展招生宣讲",
+      "link": "https://news.jiangnan.edu.cn/info/1065/111105.htm",
+      "publisher": "江南大学新闻网",
+      "iso_date": "2026-11-02T01:04:45Z",
+      "displayed_date": "11/02/2026, 01:04 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iL0NnNW9SMHRXT1RkRGRWbEhla0ZXVFJEQkFSaUZBaWdCTWdrQm9JaU9zZWU0RXdF",
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "China",
-          "iso2": "CN",
-          "iso3": "CHN",
-          "language": "zh-cn",
-          "rank": 12,
-          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
-        }
-      ]
-    },
-    {
-      "id": "5820a65f42d18903edc6",
-      "title": "新华视点丨AI赋能电力 如何更好守住万家灯火",
-      "link": "https://www.news.cn/fortune/20261101/b893ce7dacdc47a79a2a6ad5660bc04a/c.html",
-      "publisher": "新华网",
-      "iso_date": "2026-11-01T02:49:39Z",
-      "displayed_date": "11/01/2026, 02:49 AM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iJ0NnNUpZMHhqZFVWNlluUkRNRVZxVFJDaEFSaTVBaWdCTWdNQlVCUQ",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -765,44 +198,233 @@
       ]
     },
     {
-      "id": "12781c86181674c0310d",
-      "title": "Artificial intelligence in a Jesuit University: A student conversation",
-      "link": "https://today.marquette.edu/calendar/artificial-intelligence-in-a-jesuit-university-a-student-conversation",
-      "publisher": "Marquette Today",
-      "iso_date": "2026-11-01T00:26:39Z",
-      "displayed_date": "11/01/2026, 12:26 AM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNTRhVWRzTVd4SU4wbHJUVkpVVFJERUF4aW1CU2dLTWdhVk01cEpIUWs",
+      "id": "0525b5c2647be8a8e8dd",
+      "title": "人工智能与计算机学院2025-2026学年先进班集体评选答辩会举办",
+      "link": "https://news.jiangnan.edu.cn/info/1065/111106.htm",
+      "publisher": "江南大学新闻网",
+      "iso_date": "2026-11-02T01:04:44Z",
+      "displayed_date": "11/02/2026, 01:04 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iL0NnNUlOVmhRYkhRMFN6UlNhblZGVFJDb0FSaXJBaWdCTWdrQmtJeEdQV1ZyTFFJ",
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
       "notes": "",
       "matched_searches": [
         {
-          "country": "United States",
-          "iso2": "US",
-          "iso3": "USA",
-          "language": "en",
-          "rank": 17,
-          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
+          "country": "China",
+          "iso2": "CN",
+          "iso3": "CHN",
+          "language": "zh-cn",
+          "rank": 16,
+          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
         }
       ]
     },
     {
-      "id": "e5dd2e90ad280f74e8f0",
-      "title": "Opinion: U of T’s staff AI policy needs an update",
-      "link": "https://thevarsity.ca/2026/10/31/opinion-u-of-ts-staff-ai-policy-needs-an-update",
-      "publisher": "Varsity",
-      "iso_date": "2026-10-31T23:35:46Z",
-      "displayed_date": "10/31/2026, 11:35 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNWpjR2xxTW1VMVkwSnJSVFJZVFJERUF4aW1CU2dLTWdhSkE0S21VUU0",
+      "id": "857aca6541f9b8a82d61",
+      "title": "AI生成的旅游攻略，究竟靠谱吗？记者实测",
+      "link": "https://www.21jingji.com/article/20261102/herald/8f7e19268a124f89df143d8eaf002d85.html",
+      "publisher": "21财经",
+      "iso_date": "2026-11-02T01:02:00Z",
+      "displayed_date": "11/02/2026, 01:02 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNURORkJpUlRWSWVYQkZhbXRMVFJDaUFSaTRBaWdCTWdhQllvSVNyUVU",
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "China",
+          "iso2": "CN",
+          "iso3": "CHN",
+          "language": "zh-cn",
+          "rank": 22,
+          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
+        }
+      ]
+    },
+    {
+      "id": "91a672d50921a08caa13",
+      "title": "上海人工智能行业协会秘书长钟俊浩：AI眼镜不能“无节制记录” 数据全部交由企业掌控已越隐私红线",
+      "link": "https://finance.eastmoney.com/a/202611023917869356.html",
+      "publisher": "东方财富",
+      "iso_date": "2026-11-02T01:01:18Z",
+      "displayed_date": "11/02/2026, 01:01 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNTFabWxKVFZFNVZtRk9TbGhVVFJDM0FSaVRBaWdCTWdZcFpaYk9xUWc",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "China",
+          "iso2": "CN",
+          "iso3": "CHN",
+          "language": "zh-cn",
+          "rank": 12,
+          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
+        }
+      ]
+    },
+    {
+      "id": "94c673e2aaff70dde32b",
+      "title": "🚨💻 对人工智能支出的担忧引发科技股大幅抛售",
+      "link": "https://www.moomoo.com/hans/community/feed/ai-spending-fears-trigger-sharp-technology-sell-off-117544141062150",
+      "publisher": "Moomoo",
+      "iso_date": "2026-11-02T01:00:54Z",
+      "displayed_date": "11/02/2026, 01:00 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNTNWM2xVV1ZsSlpVeHlURjl2VFJEZ0FSamdBU2dCTWdZVlVZN3RzQVk",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "China",
+          "iso2": "CN",
+          "iso3": "CHN",
+          "language": "zh-cn",
+          "rank": 29,
+          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
+        }
+      ]
+    },
+    {
+      "id": "cd438af312d78c862648",
+      "title": "人工智能“闯祸”，保险赔吗",
+      "link": "https://www.chinanews.com.cn/cj/2026/11-02/10724550.shtml",
+      "publisher": "中国新闻网",
+      "iso_date": "2026-11-02T00:44:18Z",
+      "displayed_date": "11/02/2026, 12:44 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNWpRMlpDUTBKYWMyOTRRVVpWVFJEakFSampBU2dLTWdhbGxKU3ROUWM",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "China",
+          "iso2": "CN",
+          "iso3": "CHN",
+          "language": "zh-cn",
+          "rank": 20,
+          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
+        }
+      ]
+    },
+    {
+      "id": "266aa4814ea9f94fb7c9",
+      "title": "激增1400倍的Token背后，中国大模型正在悄悄改变什么？",
+      "link": "https://news.ifeng.com/c/8xiaIlL1ZYJ",
+      "publisher": "凤凰网",
+      "iso_date": "2026-11-02T00:29:57Z",
+      "displayed_date": "11/02/2026, 12:29 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNXlkVWwwTTNCdmFYY3RZbUl0VFJDM0FSaVRBaWdCTWdZQkFKckRnQW8",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "China",
+          "iso2": "CN",
+          "iso3": "CHN",
+          "language": "zh-cn",
+          "rank": 30,
+          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
+        }
+      ]
+    },
+    {
+      "id": "f295e4cef2a1c7009ae0",
+      "title": "新云端：人工智能泡沫将爆破？一群小公司正加剧担忧",
+      "link": "https://www.bbc.com/zhongwen/articles/c5djvk2dm33xo/simp",
+      "publisher": "BBC",
+      "iso_date": "2026-11-02T00:21:47Z",
+      "displayed_date": "11/02/2026, 12:21 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iNkNnNVlhSFZRYlRCc1NXaE9aMlJGVFJDZkF4ampCU2dLTWc0QkFvZ29uU1RCMFBqVXlONlRJQQ",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "China",
+          "iso2": "CN",
+          "iso3": "CHN",
+          "language": "zh-cn",
+          "rank": 4,
+          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
+        }
+      ]
+    },
+    {
+      "id": "d700e8aabee2ea8fc68d",
+      "title": "最新报告显示我国人工智能推理数据量首超训练数据量",
+      "link": "http://news.china.com.cn/2026-11/02/content_118757547.shtml",
+      "publisher": "中国网新闻中心",
+      "iso_date": "2026-11-01T23:44:00Z",
+      "displayed_date": "11/01/2026, 11:44 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNUhhRGxhUTJWYU1YaHZWbWsxVFJDTkF4aUZCaWdLTWdZQlk0QkhLZ1U",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "China",
+          "iso2": "CN",
+          "iso3": "CHN",
+          "language": "zh-cn",
+          "rank": 11,
+          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
+        }
+      ]
+    },
+    {
+      "id": "35b45ac30ecb3ee916c1",
+      "title": "Chambly : comment intégrer l’intelligence artificielle à la maison",
+      "link": "https://www.journaldechambly.com/culture/chambly-comment-integrer-lintelligence-artificielle-a-la-maison",
+      "publisher": "Le Journal de Chambly",
+      "iso_date": "2026-11-01T19:30:00Z",
+      "displayed_date": "11/01/2026, 07:30 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNU1iVWxZUWxsUVJEVTBjR05NVFJERUF4aW1CU2dLTWdhQk9aTERIZ2M",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -812,24 +434,51 @@
           "country": "Canada",
           "iso2": "CA",
           "iso3": "CAN",
+          "language": "fr",
+          "rank": 6,
+          "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
+        }
+      ]
+    },
+    {
+      "id": "1fe146f33298683e171e",
+      "title": "Artificial Intelligence Versus Human Interpretation in Diagnostic Radiology: A Systematic Review of Diagnostic Accuracy and Operational Efficiency",
+      "link": "https://www.cureus.com/articles/543554-artificial-intelligence-versus-human-interpretation-in-diagnostic-radiology-a-systematic-review-of-diagnostic-accuracy-and-operational-efficiency",
+      "publisher": "Cureus",
+      "iso_date": "2026-11-01T18:19:58Z",
+      "displayed_date": "11/01/2026, 06:19 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNW9hRXBqU1hkVkxXUjNZWEJEVFJEWkJCai1BeWdLTWdZQklvNEhtUWc",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "United Kingdom",
+          "iso2": "GB",
+          "iso3": "GBR",
           "language": "en",
-          "rank": 9,
+          "rank": 21,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
     },
     {
-      "id": "bced048951acd2f6bf12",
-      "title": "L’intelligence artificielle nous oblige-t-elle à repenser notre animalité",
-      "link": "https://legrandcontinent.eu/fr/dimanches/lintelligence-artificielle-nous-oblige-t-elle-a-repenser-notre-animalite",
-      "publisher": "Le Grand Continent",
-      "iso_date": "2026-10-31T17:25:49Z",
-      "displayed_date": "10/31/2026, 05:25 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNDNYMnh1Y2s5eldGQklPV1ZRVFJEYkF4aUZCU2dLTWdhaFZKQ3RwUWM",
+      "id": "7fd65f98dced18879dbc",
+      "title": "La question du jour. Présidentielle : craignez-vous l’influence de l’intelligence artificielle à l’approche du scrutin ?",
+      "link": "https://www.ouest-france.fr/elections/presidentielle/la-question-du-jour-presidentielle-craignez-vous-linfluence-de-lintelligence-artificielle-a-lapproche-du-scrutin-601d230a-d5ff-11f1-84f3-5611f158a658",
+      "publisher": "Ouest-France",
+      "iso_date": "2026-11-01T16:31:03Z",
+      "displayed_date": "11/01/2026, 04:31 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNTNNRmRpWDBGWlNEaHBWM1J0VFJDZkF4ampCU2dLTWdZWmM0Q3VOUUk",
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -846,17 +495,395 @@
       ]
     },
     {
-      "id": "7d4a9cf1dfe56fdf8ae1",
-      "title": "Les détecteurs d’intelligence artificielle, une solution séduisante mais imparfaite",
-      "link": "https://www.mediapart.fr/journal/culture-et-idees/311026/les-detecteurs-d-intelligence-artificielle-une-solution-seduisante-mais-imparfaite",
-      "publisher": "Mediapart",
-      "iso_date": "2026-10-31T14:19:03Z",
-      "displayed_date": "10/31/2026, 02:19 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iL0NnNTRPVGh2VURZMk4zQmtXR3hxVFJERUF4aW1CU2dLTWdrQk1Jb294dVRBeGdJ",
+      "id": "2df83da60be3cceef5c0",
+      "title": "One of the Fastest-Growing Segments of the Crypto Market Involves Artificial Intelligence. Here's the 1 Cryptocurrency I'm Buying Now.",
+      "link": "https://www.theglobeandmail.com/investing/markets/markets-news/motley/8580406/one-of-the-fastest-growing-segments-of-the-crypto-market-involves-artificial-intelligence-here-s-the-1-cryptocurrency-i-m-buying-now",
+      "publisher": "The Globe and Mail",
+      "iso_date": "2026-11-01T14:01:38Z",
+      "displayed_date": "11/01/2026, 02:01 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iI0NnNTJVVTlZYlhsMlZucFZTRTVFVFJDMEF4akFCU2dLTWdB",
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "Canada",
+          "iso2": "CA",
+          "iso3": "CAN",
+          "language": "en",
+          "rank": 19,
+          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
+        }
+      ]
+    },
+    {
+      "id": "939fcabe1186d000dafb",
+      "title": "How to Run an AI Model Locally—And Why You Might Want To",
+      "link": "https://decrypt.co/382295/how-to-run-ai-model-locally-why-you-might-want",
+      "publisher": "Decrypt",
+      "iso_date": "2026-11-01T14:01:02Z",
+      "displayed_date": "11/01/2026, 02:01 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNTZOR1JNUmsxUGNEaHRWekJZVFJDZkF4ampCU2dLTWdZUlFZYlJxQVU",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "United Kingdom",
+          "iso2": "GB",
+          "iso3": "GBR",
+          "language": "en",
+          "rank": 20,
+          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
+        }
+      ]
+    },
+    {
+      "id": "1d784edad3bea216179a",
+      "title": "聚焦“亚太人工智能发展的共同愿景与共同行动” 第92次中国改革国际论坛举行高端对话",
+      "link": "http://www.chinareform.org.cn/2026/1101/16700780.shtml",
+      "publisher": "中国改革论坛",
+      "iso_date": "2026-11-01T13:40:00Z",
+      "displayed_date": "11/01/2026, 01:40 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNUhVMmt0Wmt4VU9VWk5NRWRhVFJDM0FSaVRBaWdCTWdZQkVZcWxrZ3c",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "China",
+          "iso2": "CN",
+          "iso3": "CHN",
+          "language": "zh-cn",
+          "rank": 13,
+          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
+        }
+      ]
+    },
+    {
+      "id": "fe2acc94d74922ed7277",
+      "title": "Google runs AI model on satellite chip, advancing orbital data center ambitions",
+      "link": "https://spacenews.com/google-runs-ai-model-on-satellite-chip-advancing-orbital-data-center-ambitions",
+      "publisher": "SpaceNews",
+      "iso_date": "2026-11-01T13:26:25Z",
+      "displayed_date": "11/01/2026, 01:26 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iL0NnNWZlbmhWVG1ZemRFcDNSbmMxVFJDUUF4ai1CU2dLTWdrQlFKQ0NIaWs3TEFJ",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "United States",
+          "iso2": "US",
+          "iso3": "USA",
+          "language": "en",
+          "rank": 24,
+          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
+        }
+      ]
+    },
+    {
+      "id": "88a6e17b8f6f582c494f",
+      "title": "AI时代人不可替代的价值在哪里？南方科技大学工学院教授马兆远做客珠海大讲堂",
+      "link": "https://pub-zhtb.hizh.cn/a/202611/01/AP6ae730a2e4b0203a518dee06.html",
+      "publisher": "珠海网",
+      "iso_date": "2026-11-01T12:29:00Z",
+      "displayed_date": "11/01/2026, 12:29 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iMkNnNTNVMVZPT0hKVFJXVmpiMEZ0VFJDOUFSaUxBaWdCTWd1QklvUVRsV3BVbHdnNGV3",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "China",
+          "iso2": "CN",
+          "iso3": "CHN",
+          "language": "zh-cn",
+          "rank": 24,
+          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
+        }
+      ]
+    },
+    {
+      "id": "3aaad5766a98c711c5cd",
+      "title": "楹联创作AI“小联”在成都发布",
+      "link": "http://www.sc.chinanews.com.cn/kjws/2026-11-01/251534.html",
+      "publisher": "中国新闻网",
+      "iso_date": "2026-11-01T11:09:00Z",
+      "displayed_date": "11/01/2026, 11:09 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNXFZbTVJVlRGcU1WVmthRU40VFJDc0FSaWxBaWdCTWdZVmRwZ0tLZ2c",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "China",
+          "iso2": "CN",
+          "iso3": "CHN",
+          "language": "zh-cn",
+          "rank": 27,
+          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
+        }
+      ]
+    },
+    {
+      "id": "5a247cc884fd97778a60",
+      "title": "面对飞速发展的人工智能，企业面临的最大风险有哪些？",
+      "link": "https://es.weforum.org/stories/emerging-technologies/biggest-ai-risks-facing-businesses",
+      "publisher": "World Economic Forum",
+      "iso_date": "2026-11-01T11:01:58Z",
+      "displayed_date": "11/01/2026, 11:01 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNTFkVmxJT1ZGaWQweFhTMWhuVFJDM0FSaVRBaWdCTWdaUlVJb1pLQWc",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "China",
+          "iso2": "CN",
+          "iso3": "CHN",
+          "language": "zh-cn",
+          "rank": 2,
+          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
+        }
+      ]
+    },
+    {
+      "id": "dea70ca7e9c35bc6d5e4",
+      "title": "专访沃尔夫数学奖得主多贝西：AI不会取代数学家",
+      "link": "https://news.sciencenet.cn/htmlnews/2026/11/574018.shtm",
+      "publisher": "科学网—新闻",
+      "iso_date": "2026-11-01T11:01:21Z",
+      "displayed_date": "11/01/2026, 11:01 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNTFhbFoxUmkxRmFDMWhaazV3VFJERUF4aW5CU2dLTWdhcE5Zek5uUWs",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "China",
+          "iso2": "CN",
+          "iso3": "CHN",
+          "language": "zh-cn",
+          "rank": 21,
+          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
+        }
+      ]
+    },
+    {
+      "id": "6f1256790c2ca54078b5",
+      "title": "人工智能时代的现金流考验：为何华尔街对科技股愈发审慎",
+      "link": "https://www.moomoo.com/hans/community/feed/the-ai-cash-flow-reckoning-why-wall-street-is-becomingmore-117543580336134",
+      "publisher": "Moomoo",
+      "iso_date": "2026-11-01T07:00:00Z",
+      "displayed_date": "11/01/2026, 07:00 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iJkNnNWFaMDFmTm1oQlYyTmxXVFZIVFJDUUF4aGhLQUV5QXdrMkRn",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "China",
+          "iso2": "CN",
+          "iso3": "CHN",
+          "language": "zh-cn",
+          "rank": 23,
+          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
+        }
+      ]
+    },
+    {
+      "id": "f3e0160816c1c95f551b",
+      "title": "AI赋能千行百业一线观察丨“AI+消费”的N种可能",
+      "link": "https://www.news.cn/fortune/20261101/251ff8f5316d41709a5f773b6efb7f57/c.html",
+      "publisher": "新华网",
+      "iso_date": "2026-11-01T04:58:33Z",
+      "displayed_date": "11/01/2026, 04:58 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNWliQzFFU2w4elZEUmpSSGRoVFJDckFSaW5BaWdCTWdhWlpwQUxKZ2M",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "China",
+          "iso2": "CN",
+          "iso3": "CHN",
+          "language": "zh-cn",
+          "rank": 14,
+          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
+        }
+      ]
+    },
+    {
+      "id": "5820a65f42d18903edc6",
+      "title": "新华视点丨AI赋能电力 如何更好守住万家灯火",
+      "link": "https://www.news.cn/fortune/20261101/b893ce7dacdc47a79a2a6ad5660bc04a/c.html",
+      "publisher": "新华网",
+      "iso_date": "2026-11-01T02:49:39Z",
+      "displayed_date": "11/01/2026, 02:49 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iJ0NnNUpZMHhqZFVWNlluUkRNRVZxVFJDaEFSaTVBaWdCTWdNQlVCUQ",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "China",
+          "iso2": "CN",
+          "iso3": "CHN",
+          "language": "zh-cn",
+          "rank": 18,
+          "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
+        }
+      ]
+    },
+    {
+      "id": "12781c86181674c0310d",
+      "title": "Artificial intelligence in a Jesuit University: A student conversation",
+      "link": "https://today.marquette.edu/calendar/artificial-intelligence-in-a-jesuit-university-a-student-conversation",
+      "publisher": "Marquette Today",
+      "iso_date": "2026-11-01T00:26:39Z",
+      "displayed_date": "11/01/2026, 12:26 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNTRhVWRzTVd4SU4wbHJUVkpVVFJERUF4aW1CU2dLTWdhVk01cEpIUWs",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "United States",
+          "iso2": "US",
+          "iso3": "USA",
+          "language": "en",
+          "rank": 18,
+          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
+        }
+      ]
+    },
+    {
+      "id": "e5dd2e90ad280f74e8f0",
+      "title": "Opinion: U of T’s staff AI policy needs an update",
+      "link": "https://thevarsity.ca/2026/10/31/opinion-u-of-ts-staff-ai-policy-needs-an-update",
+      "publisher": "Varsity",
+      "iso_date": "2026-10-31T23:35:46Z",
+      "displayed_date": "10/31/2026, 11:35 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNWpjR2xxTW1VMVkwSnJSVFJZVFJERUF4aW1CU2dLTWdhSkE0S21VUU0",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "Canada",
+          "iso2": "CA",
+          "iso3": "CAN",
+          "language": "en",
+          "rank": 9,
+          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
+        }
+      ]
+    },
+    {
+      "id": "e57ea54a95d7b0c07462",
+      "title": "Les mines à l’heure de l’intelligence artificielle – Rouyn-Noranda et Abitibi-Ouest",
+      "link": "https://journallecitoyen.com/articles/art-12966",
+      "publisher": "journallecitoyen.com",
+      "iso_date": "2026-10-31T20:22:18Z",
+      "displayed_date": "10/31/2026, 08:22 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNDJhVU5ETkhkS05tUTNNR05DVFJDM0FSaVRBaWdCTWdZeFFaRFVvQWc",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "Canada",
+          "iso2": "CA",
+          "iso3": "CAN",
+          "language": "fr",
+          "rank": 23,
+          "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
+        }
+      ]
+    },
+    {
+      "id": "bced048951acd2f6bf12",
+      "title": "L’intelligence artificielle nous oblige-t-elle à repenser notre animalité",
+      "link": "https://legrandcontinent.eu/fr/dimanches/lintelligence-artificielle-nous-oblige-t-elle-a-repenser-notre-animalite",
+      "publisher": "Le Grand Continent",
+      "iso_date": "2026-10-31T17:25:49Z",
+      "displayed_date": "10/31/2026, 05:25 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNDNYMnh1Y2s5eldGQklPV1ZRVFJEYkF4aUZCU2dLTWdhaFZKQ3RwUWM",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -867,7 +894,34 @@
           "iso2": "FR",
           "iso3": "FRA",
           "language": "fr",
-          "rank": 13,
+          "rank": 28,
+          "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"réglementation de l’IA\" OR \"politique de l’IA\" OR \"modèle d’IA\") when:8d"
+        }
+      ]
+    },
+    {
+      "id": "7d4a9cf1dfe56fdf8ae1",
+      "title": "Les détecteurs d’intelligence artificielle, une solution séduisante mais imparfaite",
+      "link": "https://www.mediapart.fr/journal/culture-et-idees/311026/les-detecteurs-d-intelligence-artificielle-une-solution-seduisante-mais-imparfaite",
+      "publisher": "Mediapart",
+      "iso_date": "2026-10-31T14:19:03Z",
+      "displayed_date": "10/31/2026, 02:19 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iL0NnNTRPVGh2VURZMk4zQmtXR3hxVFJERUF4aW1CU2dLTWdrQk1Jb294dVRBeGdJ",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "France",
+          "iso2": "FR",
+          "iso3": "FRA",
+          "language": "fr",
+          "rank": 15,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"réglementation de l’IA\" OR \"politique de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
@@ -883,7 +937,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -894,7 +948,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "en",
-          "rank": 16,
+          "rank": 20,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -910,7 +964,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -921,7 +975,7 @@
           "iso2": "US",
           "iso3": "USA",
           "language": "en",
-          "rank": 25,
+          "rank": 27,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -937,7 +991,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -964,7 +1018,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -975,7 +1029,7 @@
           "iso2": "CN",
           "iso3": "CHN",
           "language": "zh-cn",
-          "rank": 2,
+          "rank": 3,
           "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
         }
       ]
@@ -991,7 +1045,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1002,7 +1056,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "fr",
-          "rank": 15,
+          "rank": 14,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
@@ -1018,20 +1072,12 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
       "notes": "",
       "matched_searches": [
-        {
-          "country": "United Kingdom",
-          "iso2": "GB",
-          "iso3": "GBR",
-          "language": "en",
-          "rank": 22,
-          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
-        },
         {
           "country": "Canada",
           "iso2": "CA",
@@ -1053,7 +1099,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1064,7 +1110,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "fr",
-          "rank": 19,
+          "rank": 18,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
@@ -1080,7 +1126,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1091,7 +1137,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "fr",
-          "rank": 25,
+          "rank": 22,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
@@ -1107,7 +1153,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1118,7 +1164,7 @@
           "iso2": "US",
           "iso3": "USA",
           "language": "en",
-          "rank": 19,
+          "rank": 20,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -1134,7 +1180,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1153,7 +1199,7 @@
           "iso2": "GB",
           "iso3": "GBR",
           "language": "en",
-          "rank": 19,
+          "rank": 15,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         },
         {
@@ -1177,7 +1223,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1188,7 +1234,7 @@
           "iso2": "US",
           "iso3": "USA",
           "language": "en",
-          "rank": 24,
+          "rank": 26,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -1204,7 +1250,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1215,7 +1261,7 @@
           "iso2": "US",
           "iso3": "USA",
           "language": "en",
-          "rank": 8,
+          "rank": 7,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -1231,7 +1277,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1242,7 +1288,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "fr",
-          "rank": 3,
+          "rank": 2,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
@@ -1258,7 +1304,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1285,7 +1331,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1312,7 +1358,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1323,7 +1369,7 @@
           "iso2": "US",
           "iso3": "USA",
           "language": "en",
-          "rank": 20,
+          "rank": 21,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -1339,7 +1385,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1350,7 +1396,7 @@
           "iso2": "CN",
           "iso3": "CHN",
           "language": "zh-cn",
-          "rank": 13,
+          "rank": 17,
           "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
         }
       ]
@@ -1366,26 +1412,18 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
       "notes": "",
       "matched_searches": [
         {
-          "country": "United Kingdom",
-          "iso2": "GB",
-          "iso3": "GBR",
-          "language": "en",
-          "rank": 12,
-          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
-        },
-        {
           "country": "Canada",
           "iso2": "CA",
           "iso3": "CAN",
           "language": "en",
-          "rank": 28,
+          "rank": 27,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -1401,7 +1439,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1420,7 +1458,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "fr",
-          "rank": 27,
+          "rank": 25,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
@@ -1436,7 +1474,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1463,7 +1501,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1474,7 +1512,7 @@
           "iso2": "GB",
           "iso3": "GBR",
           "language": "en",
-          "rank": 26,
+          "rank": 23,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -1490,7 +1528,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1501,35 +1539,8 @@
           "iso2": "FR",
           "iso3": "FRA",
           "language": "fr",
-          "rank": 15,
+          "rank": 14,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"réglementation de l’IA\" OR \"politique de l’IA\" OR \"modèle d’IA\") when:8d"
-        }
-      ]
-    },
-    {
-      "id": "b78636a173da39070e9a",
-      "title": "Congressional oversight committee questions Delaware's work on Artificial Intelligence Companies",
-      "link": "https://www.delawarepublic.org/politics-government/2026-10-30/congressional-oversight-committee-questions-delawares-work-on-artificial-intelligence-companies",
-      "publisher": "Delaware Public Media",
-      "iso_date": "2026-10-30T16:04:00Z",
-      "displayed_date": "10/30/2026, 04:04 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iJ0NnNDRkamQ1UTE5Rk4yVktVMGxYVFJEWUF4aUtCU2dLTWdNQkFBRQ",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "United States",
-          "iso2": "US",
-          "iso3": "USA",
-          "language": "en",
-          "rank": 28,
-          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
     },
@@ -1544,7 +1555,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1563,7 +1574,7 @@
           "iso2": "GB",
           "iso3": "GBR",
           "language": "en",
-          "rank": 21,
+          "rank": 16,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         },
         {
@@ -1587,7 +1598,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1622,18 +1633,26 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
       "notes": "",
       "matched_searches": [
         {
+          "country": "United Kingdom",
+          "iso2": "GB",
+          "iso3": "GBR",
+          "language": "en",
+          "rank": 29,
+          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
+        },
+        {
           "country": "Canada",
           "iso2": "CA",
           "iso3": "CAN",
           "language": "en",
-          "rank": 20,
+          "rank": 21,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -1649,7 +1668,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1676,7 +1695,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1703,7 +1722,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1730,7 +1749,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1741,7 +1760,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "fr",
-          "rank": 26,
+          "rank": 24,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
@@ -1757,7 +1776,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1768,7 +1787,34 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "en",
-          "rank": 29,
+          "rank": 28,
+          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
+        }
+      ]
+    },
+    {
+      "id": "fae2b19201fc0b8548eb",
+      "title": "Confronting What Lurks in the Shadows: AI Regulation and Governance",
+      "link": "https://www.infosecurity-magazine.com/opinions/shadows-ai-regulation-governance",
+      "publisher": "Infosecurity Magazine",
+      "iso_date": "2026-10-30T13:15:00Z",
+      "displayed_date": "10/30/2026, 01:15 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNVpablJ4V0VwUWRERkRPVTVhVFJEZEFoaU1CQ2dLTWdZWllvNk90UVk",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "United Kingdom",
+          "iso2": "GB",
+          "iso3": "GBR",
+          "language": "en",
+          "rank": 30,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -1784,7 +1830,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1795,8 +1841,35 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "fr",
-          "rank": 12,
+          "rank": 5,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
+        }
+      ]
+    },
+    {
+      "id": "4069042f733d41f0571a",
+      "title": "Mistral open-sources AI model despite warning it could aid cyberattacks",
+      "link": "https://www.csoonline.com/article/4242648/mistral-releases-large-4-weights-despite-warning-of-cyberattack-uplift.html",
+      "publisher": "CSO Online",
+      "iso_date": "2026-10-30T11:05:57Z",
+      "displayed_date": "10/30/2026, 11:05 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNXVUV2wwWlVnMU0wMDNXamxqVFJERUF4aW1CU2dLTWdZWkJZeUp5UVE",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "United Kingdom",
+          "iso2": "GB",
+          "iso3": "GBR",
+          "language": "en",
+          "rank": 27,
+          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
     },
@@ -1811,7 +1884,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1838,7 +1911,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1849,7 +1922,7 @@
           "iso2": "US",
           "iso3": "USA",
           "language": "en",
-          "rank": 21,
+          "rank": 22,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -1865,7 +1938,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1876,7 +1949,7 @@
           "iso2": "GB",
           "iso3": "GBR",
           "language": "en",
-          "rank": 11,
+          "rank": 18,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         },
         {
@@ -1884,7 +1957,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "en",
-          "rank": 6,
+          "rank": 16,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -1900,7 +1973,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1911,7 +1984,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "en",
-          "rank": 4,
+          "rank": 5,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -1927,7 +2000,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1938,7 +2011,7 @@
           "iso2": "GB",
           "iso3": "GBR",
           "language": "en",
-          "rank": 15,
+          "rank": 12,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -1954,7 +2027,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -1971,60 +2044,6 @@
       ]
     },
     {
-      "id": "726d4e4751d968824587",
-      "title": "How FDA generative AI device oversight may impact providers",
-      "link": "https://www.modernhealthcare.com/medical-devices/mh-fda-generative-ai-device-providers",
-      "publisher": "Modern Healthcare News",
-      "iso_date": "2026-10-30T10:00:00Z",
-      "displayed_date": "10/30/2026, 10:00 AM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNHhaSHBoYjBkalYwRlNSbTlsVFJDZkF4ampCU2dLTWdZaEpJcU5uUVU",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "United States",
-          "iso2": "US",
-          "iso3": "USA",
-          "language": "en",
-          "rank": 30,
-          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
-        }
-      ]
-    },
-    {
-      "id": "1695d51af590895f8ceb",
-      "title": "Demand is real, and it compounds",
-      "link": "https://www.macquarie.com/au/en/about/company/macquarie-asset-management/institutional/insights/pathways/from-prompts-to-power-generative-ai-and-implications-for-data-centre-demand.html",
-      "publisher": "Macquarie",
-      "iso_date": "2026-10-30T09:00:52Z",
-      "displayed_date": "10/30/2026, 09:00 AM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iL0NnNDNVVFJEVjE5SVFWVjVTazEwVFJESkFSajdBU2dCTWdrQlVJWUNMYVJMMkFB",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "United Kingdom",
-          "iso2": "GB",
-          "iso3": "GBR",
-          "language": "en",
-          "rank": 20,
-          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
-        }
-      ]
-    },
-    {
       "id": "2a6b3810229802913eab",
       "title": "Artificial Intelligence is a Horror Story",
       "link": "https://lithub.com/artificial-intelligence-is-a-horror-story",
@@ -2035,7 +2054,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2078,7 +2097,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2089,7 +2108,7 @@
           "iso2": "FR",
           "iso3": "FRA",
           "language": "fr",
-          "rank": 14,
+          "rank": 13,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"réglementation de l’IA\" OR \"politique de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
@@ -2105,7 +2124,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2116,7 +2135,7 @@
           "iso2": "GB",
           "iso3": "GBR",
           "language": "en",
-          "rank": 13,
+          "rank": 11,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -2132,7 +2151,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2159,7 +2178,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2170,7 +2189,7 @@
           "iso2": "CN",
           "iso3": "CHN",
           "language": "zh-cn",
-          "rank": 27,
+          "rank": 28,
           "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
         }
       ]
@@ -2186,7 +2205,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2197,7 +2216,7 @@
           "iso2": "CN",
           "iso3": "CHN",
           "language": "zh-cn",
-          "rank": 23,
+          "rank": 25,
           "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
         }
       ]
@@ -2213,7 +2232,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2240,7 +2259,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2267,7 +2286,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2284,17 +2303,60 @@
       ]
     },
     {
-      "id": "73364e63c48276ebe092",
-      "title": "Amazon accélère dans l’informatique à distance, mais la facture de l’IA s’alourdit",
-      "link": "https://www.ledevoir.com/economie/techno/1020941/amazon-accelere-informatique-distance-mais-facture-ia-alourdit",
-      "publisher": "Le Devoir",
-      "iso_date": "2026-10-29T22:43:00Z",
-      "displayed_date": "10/29/2026, 10:43 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNDNWV1JGTTNCM1JHUllOVUkxVFJDM0FSaVRBaWdCTWdZbGNJenZMQWM",
+      "id": "70f393a02b3bb5b1e418",
+      "title": "Call for papers: Advancing research on the Ethics of Artificial Intelligence",
+      "link": "https://www.unesco.org/en/articles/call-papers-advancing-research-ethics-artificial-intelligence",
+      "publisher": "UNESCO",
+      "iso_date": "2026-10-30T07:00:00Z",
+      "displayed_date": "10/30/2026, 07:00 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNDBZVEJwWWt0dGNHUmtWV1YyVFJDWEF4amlCQ2dLTWdZQlFJeldKQWs",
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "United States",
+          "iso2": "US",
+          "iso3": "USA",
+          "language": "en",
+          "rank": 17,
+          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
+        },
+        {
+          "country": "United Kingdom",
+          "iso2": "GB",
+          "iso3": "GBR",
+          "language": "en",
+          "rank": 17,
+          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
+        },
+        {
+          "country": "Canada",
+          "iso2": "CA",
+          "iso3": "CAN",
+          "language": "en",
+          "rank": 1,
+          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
+        }
+      ]
+    },
+    {
+      "id": "e4d5431ff719a9e759a5",
+      "title": "Phoenix AI met l’intelligence artificielle au service de la défense",
+      "link": "https://lienmultimedia.com/spip.php?article115101=",
+      "publisher": "Lien Multimédia",
+      "iso_date": "2026-10-30T01:00:00Z",
+      "displayed_date": "10/30/2026, 01:00 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNUZRamgyZVVaQ0xVRndRbk5QVFJDb0FSaXNBaWdCTWdZaEpvenNtUWs",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2305,7 +2367,61 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "fr",
-          "rank": 13,
+          "rank": 20,
+          "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
+        }
+      ]
+    },
+    {
+      "id": "bb62c5a7f027bb3d9999",
+      "title": "Network modeling of science teachers’ perceptions of artificial intelligence integration in science curriculum development",
+      "link": "https://www.nature.com/articles/s41598-026-75785-6",
+      "publisher": "Nature",
+      "iso_date": "2026-10-30T00:56:59Z",
+      "displayed_date": "10/30/2026, 12:56 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iL0NnNVdlVGhPVEZwa1MzVkxiREEwVFJERUFSaUJBaWdCTWdtZEVZZ1BGV2RjY2dF",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "United States",
+          "iso2": "US",
+          "iso3": "USA",
+          "language": "en",
+          "rank": 23,
+          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
+        }
+      ]
+    },
+    {
+      "id": "73364e63c48276ebe092",
+      "title": "Amazon accélère dans l’informatique à distance, mais la facture de l’IA s’alourdit",
+      "link": "https://www.ledevoir.com/economie/techno/1020941/amazon-accelere-informatique-distance-mais-facture-ia-alourdit",
+      "publisher": "Le Devoir",
+      "iso_date": "2026-10-29T22:43:00Z",
+      "displayed_date": "10/29/2026, 10:43 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNDNWV1JGTTNCM1JHUllOVUkxVFJDM0FSaVRBaWdCTWdZbGNJenZMQWM",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "Canada",
+          "iso2": "CA",
+          "iso3": "CAN",
+          "language": "fr",
+          "rank": 11,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
@@ -2321,7 +2437,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2348,7 +2464,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2375,7 +2491,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2392,6 +2508,33 @@
       ]
     },
     {
+      "id": "32004d1396de23a3ca60",
+      "title": "Queering Wiki 2026 à Montréal : préserver la mémoire LGBTQ+ à l’heure de l’intelligence artificielle",
+      "link": "https://www.fugues.com/2026/10/29/queering-wiki-2026-a-montreal-preserver-la-memoire-lgbtq-a-lheure-de-lintelligence-artificielle",
+      "publisher": "Fugues magazine",
+      "iso_date": "2026-10-29T21:36:55Z",
+      "displayed_date": "10/29/2026, 09:36 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iL0NnNDVjR0ZWVUV0d2RYQkViSFJmVFJERUF4aW1CU2dLTWdrQllKQW9NT2VLY2dF",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "Canada",
+          "iso2": "CA",
+          "iso3": "CAN",
+          "language": "fr",
+          "rank": 28,
+          "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
+        }
+      ]
+    },
+    {
       "id": "3c9df6d2f2197d854ec3",
       "title": "2 Stocks That Could Quietly Become Big Winners in the Artificial Intelligence (AI) Revolution",
       "link": "https://www.theglobeandmail.com/investing/markets/stocks/DXCM-Q/pressreleases/8540533/2-stocks-that-could-quietly-become-big-winners-in-the-artificial-intelligence-ai-revolution",
@@ -2402,7 +2545,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2413,7 +2556,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "en",
-          "rank": 21,
+          "rank": 22,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -2429,7 +2572,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2440,7 +2583,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "en",
-          "rank": 2,
+          "rank": 3,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -2456,7 +2599,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2467,7 +2610,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "fr",
-          "rank": 20,
+          "rank": 7,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
@@ -2483,7 +2626,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2510,7 +2653,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2521,7 +2664,7 @@
           "iso2": "US",
           "iso3": "USA",
           "language": "en",
-          "rank": 18,
+          "rank": 19,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -2537,7 +2680,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2548,7 +2691,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "fr",
-          "rank": 22,
+          "rank": 8,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
@@ -2564,7 +2707,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2575,7 +2718,7 @@
           "iso2": "US",
           "iso3": "USA",
           "language": "en",
-          "rank": 23,
+          "rank": 25,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -2591,7 +2734,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2608,6 +2751,33 @@
       ]
     },
     {
+      "id": "2b83bca364875a5cdde9",
+      "title": "Intelligence artificielle: que doit-on craindre le plus? | Entrevue avec Thibault Prévost, auteur | TVA Nouvelles | QUB info",
+      "link": "https://www.qub.ca/video/intelligence-artificielle-que-doit-on-craindre-le-plus-entrevue-avec-thibault-prevost-auteur-1403263780",
+      "publisher": "QUB radio",
+      "iso_date": "2026-10-29T18:02:10Z",
+      "displayed_date": "10/29/2026, 06:02 PM, +0000 UTC",
+      "thumbnail": null,
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "Canada",
+          "iso2": "CA",
+          "iso3": "CAN",
+          "language": "fr",
+          "rank": 9,
+          "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
+        }
+      ]
+    },
+    {
       "id": "13c58b60d40703cd5d13",
       "title": "SPPA Professional Workshop Series: Practical approaches to AI policy",
       "link": "https://carleton.ca/sppa/event/sppa-professional-workshop-seriespractical-approaches-to-ai-policy",
@@ -2618,7 +2788,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2645,7 +2815,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2656,7 +2826,34 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "fr",
-          "rank": 23,
+          "rank": 16,
+          "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
+        }
+      ]
+    },
+    {
+      "id": "a6d3bb2e7ec2336be70a",
+      "title": "L’intelligence artificielle est partout, même en cour… mais les tribunaux du Québec ont adopté des directives.",
+      "link": "https://ici.radio-canada.ca/info/videos/1-10796639/intelligence-artificielle-est-partout-meme-en-cour-mais-tribunaux-quebec-ont-adopte-directives?liste=28-23005",
+      "publisher": "Radio-Canada",
+      "iso_date": "2026-10-29T17:29:39Z",
+      "displayed_date": "10/29/2026, 05:29 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iL0NnNWlURVJ3YlZseFVrcGlSWEpEVFJEb0FoaUFCU2dLTWdtSlFJUUgyaUltaGdJ",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "Canada",
+          "iso2": "CA",
+          "iso3": "CAN",
+          "language": "fr",
+          "rank": 12,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
@@ -2672,7 +2869,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2683,7 +2880,7 @@
           "iso2": "US",
           "iso3": "USA",
           "language": "en",
-          "rank": 9,
+          "rank": 8,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -2699,7 +2896,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2718,7 +2915,34 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "fr",
-          "rank": 28,
+          "rank": 27,
+          "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
+        }
+      ]
+    },
+    {
+      "id": "4a81200aeb97c856f055",
+      "title": "IA: le Canada entre au capital de Cohere pour 1,6 milliard $",
+      "link": "https://www.tvanouvelles.ca/2026/10/29/ia-le-canada-entre-au-capital-de-cohere-pour-16-milliard",
+      "publisher": "TVA Nouvelles",
+      "iso_date": "2026-10-29T17:09:09Z",
+      "displayed_date": "10/29/2026, 05:09 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iMkNnNVNXVmx0TmtaeWJGRTBTamREVFJEaEFSaVFBeWdLTWd1Qk1waGpKU25nenptUnVR",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "Canada",
+          "iso2": "CA",
+          "iso3": "CAN",
+          "language": "fr",
+          "rank": 21,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
@@ -2734,7 +2958,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2745,34 +2969,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "fr",
-          "rank": 18,
-          "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
-        }
-      ]
-    },
-    {
-      "id": "6de53ed1e5229e5ec0aa",
-      "title": "Intelligence artificielle | Ottawa investit jusqu’à 1,6 milliard dans Cohere",
-      "link": "https://www.lapresse.ca/affaires/entreprises/2026-10-29/intelligence-artificielle/ottawa-investit-jusqu-a-1-6-milliard-dans-cohere.php",
-      "publisher": "La Presse",
-      "iso_date": "2026-10-29T16:58:19Z",
-      "displayed_date": "10/29/2026, 04:58 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iL0NnNTBRazU2TlRoZmVtOXFMWEpQVFJERUF4aW1CU2dLTWdrQk1JcklzS2FCY3dF",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "Canada",
-          "iso2": "CA",
-          "iso3": "CAN",
-          "language": "fr",
-          "rank": 14,
+          "rank": 17,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
@@ -2788,7 +2985,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2815,7 +3012,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2826,7 +3023,7 @@
           "iso2": "GB",
           "iso3": "GBR",
           "language": "en",
-          "rank": 7,
+          "rank": 5,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -2842,7 +3039,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2853,7 +3050,7 @@
           "iso2": "GB",
           "iso3": "GBR",
           "language": "en",
-          "rank": 24,
+          "rank": 22,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -2869,7 +3066,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2896,7 +3093,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2907,7 +3104,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "fr",
-          "rank": 6,
+          "rank": 4,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
@@ -2923,7 +3120,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2934,7 +3131,34 @@
           "iso2": "GB",
           "iso3": "GBR",
           "language": "en",
-          "rank": 8,
+          "rank": 6,
+          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
+        }
+      ]
+    },
+    {
+      "id": "92c1446ddc1fe15d62be",
+      "title": "Dutch MPs want to ban primary school children from using generative AI",
+      "link": "https://nltimes.nl/2026/10/29/dutch-mps-want-ban-primary-school-children-using-generative-ai",
+      "publisher": "NL Times",
+      "iso_date": "2026-10-29T16:15:00Z",
+      "displayed_date": "10/29/2026, 04:15 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNWpUbHBrZVVGcWEzaFdVR2h4VFJEc0FSaXNBeWdLTWdZZFZZeXJLUVk",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "United Kingdom",
+          "iso2": "GB",
+          "iso3": "GBR",
+          "language": "en",
+          "rank": 25,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -2950,7 +3174,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2977,7 +3201,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -2994,17 +3218,17 @@
       ]
     },
     {
-      "id": "2bd62a47ce987a4c32d9",
-      "title": "Lab combines artificial intelligence and robotics to automate tasks",
-      "link": "https://www.iom3.org/resource/laboratory-combines-ai-and-robotics-to-automate-tasks.html",
-      "publisher": "IOM3",
-      "iso_date": "2026-10-29T14:44:04Z",
-      "displayed_date": "10/29/2026, 02:44 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iL0NnNW1jMFpxY0V4aFdHc3dNRFYyVFJDM0FSaVRBaWdCTWdrQklJNkduU2R6c1FF",
+      "id": "0d29e61a773408309d38",
+      "title": "Mistral releases latest AI model for download, giving companies more control over their cybersecurity",
+      "link": "https://www.euronews.com/2026/10/29/mistral-releases-latest-ai-model-for-download-giving-companies-more-control-over-their-cyb",
+      "publisher": "Euronews.com",
+      "iso_date": "2026-10-29T14:45:06Z",
+      "displayed_date": "10/29/2026, 02:45 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNDBiRE13U2xNNFFqWllabEpFVFJDZkF4ampCU2dLTWdhVmRwSm9MZ2M",
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3015,7 +3239,7 @@
           "iso2": "GB",
           "iso3": "GBR",
           "language": "en",
-          "rank": 16,
+          "rank": 26,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -3031,7 +3255,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3048,60 +3272,6 @@
       ]
     },
     {
-      "id": "c626cbc358b2c6fbe93f",
-      "title": "UK Home Office is under scrutiny for using Artificial Intelligence in asylum cases",
-      "link": "https://www.infomigrants.net/en/post/74451/uk-home-office-is-under-scrutiny-for-using-artificial-intelligence-in-asylum-cases",
-      "publisher": "InfoMigrants",
-      "iso_date": "2026-10-29T13:36:41Z",
-      "displayed_date": "10/29/2026, 01:36 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNVNXWEJHUzI1VVlrZE5UblIxVFJDb0FSaXNBaWdCTWdZdFU1U1BxUWM",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "United Kingdom",
-          "iso2": "GB",
-          "iso3": "GBR",
-          "language": "en",
-          "rank": 5,
-          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
-        }
-      ]
-    },
-    {
-      "id": "8ccdfb6ff1c3232e54bc",
-      "title": "L’intelligence artificielle est partout, même en cour… mais les tribunaux du Québec ont adopté des directives.",
-      "link": "https://ici.radio-canada.ca/rdi/isabelle-richer/site/videos/10796639/intelligence-artificielle-est-partout-meme-en-cour-mais-tribunaux-quebec-ont-adopte-directives-",
-      "publisher": "Radio-Canada",
-      "iso_date": "2026-10-29T13:23:08Z",
-      "displayed_date": "10/29/2026, 01:23 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iL0NnNWlURVJ3YlZseFVrcGlSWEpEVFJEb0FoaUFCU2dLTWdtSlFJUUgyaUltaGdJ",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "Canada",
-          "iso2": "CA",
-          "iso3": "CAN",
-          "language": "fr",
-          "rank": 21,
-          "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
-        }
-      ]
-    },
-    {
       "id": "aa2a478d1dfb78650293",
       "title": "Artificial Intelligence and the Security Sector: Governance Risk or Reform Opportunity?",
       "link": "https://www.arab-reform.net/publication/artificial-intelligence-and-the-security-sector-governance-risk-or-reform-opportunity",
@@ -3112,26 +3282,18 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
       "notes": "",
       "matched_searches": [
         {
-          "country": "United Kingdom",
-          "iso2": "GB",
-          "iso3": "GBR",
-          "language": "en",
-          "rank": 17,
-          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
-        },
-        {
           "country": "Canada",
           "iso2": "CA",
           "iso3": "CAN",
           "language": "en",
-          "rank": 5,
+          "rank": 6,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -3147,7 +3309,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3164,60 +3326,6 @@
       ]
     },
     {
-      "id": "d83e0af350d5fde76bea",
-      "title": "Tendam appoints former Orange executive Mónica Sala to lead its artificial intelligence strategy",
-      "link": "https://uk.fashionnetwork.com/news/Tendam-appoints-former-orange-executive-monica-sala-to-lead-its-artificial-intelligence-strategy,1880214.html",
-      "publisher": "FashionNetwork France",
-      "iso_date": "2026-10-29T10:54:15Z",
-      "displayed_date": "10/29/2026, 10:54 AM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNVRVRGRqV1VsRFREZ3ROMjB0VFJDMkFSaVVBaWdCTWdZUk1KeEpIUW8",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "United Kingdom",
-          "iso2": "GB",
-          "iso3": "GBR",
-          "language": "en",
-          "rank": 14,
-          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
-        }
-      ]
-    },
-    {
-      "id": "8daebfb1443a766ccf6d",
-      "title": "HTN Now panel deep dive into artificial intelligence for NHS trusts",
-      "link": "https://htn.co.uk/2026/10/29/htn-now-panel-deep-dive-into-artificial-intelligence-for-nhs-trusts",
-      "publisher": "HTN Health Tech News",
-      "iso_date": "2026-10-29T07:54:49Z",
-      "displayed_date": "10/29/2026, 07:54 AM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iL0NnNUROREJKTWpSMmVrWnRjV1o2VFJEZ0F4al9CQ2dLTWdtUllveXZ4U1JGU1FJ",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "United Kingdom",
-          "iso2": "GB",
-          "iso3": "GBR",
-          "language": "en",
-          "rank": 6,
-          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
-        }
-      ]
-    },
-    {
       "id": "7c5df05503e462a709d1",
       "title": "Mois de la littératie financière - S'intéresser à ses finances à l'ère de l'intelligence artificielle et des finfluenceurs",
       "link": "https://www.lesaffaires.com/communique-de-presse/mois-de-la-litteratie-financiere-sinteresser-a-ses-finances-a-lere-de-lintelligence-artificielle-et-des-finfluenceurs",
@@ -3228,7 +3336,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3239,7 +3347,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "fr",
-          "rank": 24,
+          "rank": 19,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
@@ -3255,7 +3363,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3282,7 +3390,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3309,7 +3417,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3326,6 +3434,33 @@
       ]
     },
     {
+      "id": "690e4037de887a5e6fd1",
+      "title": "Artificial intelligence - Reasoning, Algorithms, Automation",
+      "link": "https://www.britannica.com/technology/artificial-intelligence/Reasoning",
+      "publisher": "Britannica",
+      "iso_date": "2026-10-29T05:00:00Z",
+      "displayed_date": "10/29/2026, 05:00 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iL0NnNVdZa2hpWW1RNGRWcFBSVEJGVFJDcUJCaXFCQ2dLTWdrQlFvejBsR25na0FF",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "United Kingdom",
+          "iso2": "GB",
+          "iso3": "GBR",
+          "language": "en",
+          "rank": 14,
+          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
+        }
+      ]
+    },
+    {
       "id": "49c7eab6f35ff208c980",
       "title": "OpenAI CEO Sam Altman claims AI singularity has arrived: 'Awesome for the world'",
       "link": "https://abc7news.com/post/openai-ceo-sam-altman-claims-artificial-intelligence-singularity-has-arrived/19588207?userab=kfsn_content_recs-582%2Avariant_a_control_kfsn-2512%2Ckabc_content_recs-577%2Avariant_c_trending-2482%2Cwls_content_recs-584%2Avariant_a_control_wls-2516%2Cwtvd_content_recs-585%2Avariant_a_control_wtvd-2518%2Cktrk_content_recs-587%2Avariant_a_control_ktrk-2522%2Cwpvi_content_recs-586%2Avariant_b_trending_wpvi-2521%2Cabcn_article_nfy_v2-691%2Acontrol-3727%2Cotv_web_content_rec-539%2Avariant_c_trending-2268%2Cotv_web_topic-580%2Avariant_b_topic_redesign-2509%2Cfollow_abcnews_otv_on_google-654%2Avariant_b_share_drop_down-3495%2Cotv_search_page_design_unification-546%2Avariant_b_search_redesign-2300%2Cotv_web_live-581%2Avariant_b_live_redesign-2511%2Cfollow_otv_on_google-683%2Avariant_b_share_drop_down-3661%2Cabcn_popular_reads_exp_followup-648%2Avariant_c_autotagswpopularity-3458%2Cotv_mobile_web_content_recs-639%2Avariant_a_control-3429%2Ckgo_content_recs-583%2Avariant_b_trending_kgo-2515%2Cabcn_verts_midterms-671%2Avariant_a_control-3586%2Cotvlink_abcnnav-576%2Avariant_b_local-2479",
@@ -3336,7 +3471,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3353,33 +3488,6 @@
       ]
     },
     {
-      "id": "8e8309e432e943fb70cc",
-      "title": "Switzerland advances sector-specific AI regulation and voluntary codes of conduct",
-      "link": "https://ieu-monitoring.com/editorial/switzerland-advances-sector-specific-ai-regulation-and-voluntary-codes-of-conduct/1253384",
-      "publisher": "INSIGHT EU MONITORING",
-      "iso_date": "2026-10-29T02:50:57Z",
-      "displayed_date": "10/29/2026, 02:50 AM, +0000 UTC",
-      "thumbnail": null,
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "United Kingdom",
-          "iso2": "GB",
-          "iso3": "GBR",
-          "language": "en",
-          "rank": 29,
-          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
-        }
-      ]
-    },
-    {
       "id": "cc8f9b3a7c1781ab7082",
       "title": "Pakistan’s Artificial Intelligence Warfare",
       "link": "https://thediplomat.com/2026/10/pakistans-artificial-intelligence-warfare",
@@ -3390,7 +3498,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3409,8 +3517,35 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "en",
-          "rank": 27,
+          "rank": 29,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
+        }
+      ]
+    },
+    {
+      "id": "dfdd1a7346f10e8983e8",
+      "title": "Intelligence artificielle | L’État de New York restreint l’utilisation d’agents conversationnels par les mineurs",
+      "link": "https://www.lapresse.ca/affaires/techno/2026-10-28/intelligence-artificielle/l-etat-de-new-york-restreint-l-utilisation-d-agents-conversationnels-par-les-mineurs.php",
+      "publisher": "La Presse",
+      "iso_date": "2026-10-29T00:26:32Z",
+      "displayed_date": "10/29/2026, 12:26 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNXFXblpPVFcxTVgxSmlVbTAwVFJERUF4aW1CU2dLTWdZaFE1THJLUWM",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "Canada",
+          "iso2": "CA",
+          "iso3": "CAN",
+          "language": "fr",
+          "rank": 10,
+          "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
     },
@@ -3425,7 +3560,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3452,7 +3587,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3463,7 +3598,7 @@
           "iso2": "US",
           "iso3": "USA",
           "language": "en",
-          "rank": 26,
+          "rank": 28,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         },
         {
@@ -3473,33 +3608,6 @@
           "language": "en",
           "rank": 7,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
-        }
-      ]
-    },
-    {
-      "id": "0976b71d5fd1310f6151",
-      "title": "L'État de New York resserre l’accès à l’intelligence artificielle des mineurs",
-      "link": "https://www.tvanouvelles.ca/2026/10/28/letat-de-new-york-resserre-lacces-a-lintelligence-artificielle-des-mineurs",
-      "publisher": "TVA Nouvelles",
-      "iso_date": "2026-10-28T21:29:00Z",
-      "displayed_date": "10/28/2026, 09:29 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iL0NnNVRkbVZ5YzI5V05YYzJiVzFzVFJERUF4aW1CU2dLTWdrTmdwS251aVpGQ3dJ",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "Canada",
-          "iso2": "CA",
-          "iso3": "CAN",
-          "language": "fr",
-          "rank": 7,
-          "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
     },
@@ -3514,7 +3622,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3541,7 +3649,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3552,43 +3660,8 @@
           "iso2": "US",
           "iso3": "USA",
           "language": "en",
-          "rank": 7,
+          "rank": 9,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
-        },
-        {
-          "country": "Canada",
-          "iso2": "CA",
-          "iso3": "CAN",
-          "language": "en",
-          "rank": 22,
-          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
-        }
-      ]
-    },
-    {
-      "id": "7e8789f2be3e6a5cef76",
-      "title": "L’intelligence collective face à l’intelligence artificielle",
-      "link": "https://ftq.qc.ca/lintelligence-collective-face-a-lintelligence-artificielle",
-      "publisher": "Fédération des travailleurs et travailleuses du Québec (FTQ)",
-      "iso_date": "2026-10-28T18:47:16Z",
-      "displayed_date": "10/28/2026, 06:47 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iL0NnNU1NVUV5VUZaT05XNDFZbFZuVFJDR0F4alFCU2dLTWdrQmdJNnROT2JBN2dF",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "Canada",
-          "iso2": "CA",
-          "iso3": "CAN",
-          "language": "fr",
-          "rank": 1,
-          "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
     },
@@ -3603,7 +3676,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3630,7 +3703,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3641,7 +3714,7 @@
           "iso2": "US",
           "iso3": "USA",
           "language": "en",
-          "rank": 27,
+          "rank": 29,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -3657,7 +3730,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3684,7 +3757,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3701,33 +3774,6 @@
       ]
     },
     {
-      "id": "008cd3b9f4aac5e27e20",
-      "title": "Magasinage des Fêtes | L’intelligence artificielle sous le sapin",
-      "link": "https://www.lapresse.ca/affaires/2026-10-28/magasinage-des-fetes/l-intelligence-artificielle-sous-le-sapin.php",
-      "publisher": "La Presse",
-      "iso_date": "2026-10-28T10:00:00Z",
-      "displayed_date": "10/28/2026, 10:00 AM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNVJWVmRsU0hKaFZGWTVORjlHVFJERUF4aW1CU2dLTWdZQk5wSUNId2c",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "Canada",
-          "iso2": "CA",
-          "iso3": "CAN",
-          "language": "fr",
-          "rank": 4,
-          "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
-        }
-      ]
-    },
-    {
       "id": "5fc71bb21237152aae9c",
       "title": "IA générative : quel impact environnemental réel et comment l’encadrer ?",
       "link": "https://infos.ademe.fr/societe-politiques-publiques/2026/ia-generative-quel-impact-environnemental-reel-et-comment-lencadrer",
@@ -3738,7 +3784,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3755,33 +3801,6 @@
       ]
     },
     {
-      "id": "0571931b74198be3c509",
-      "title": "L’IA, l’audiovisuel et le réel",
-      "link": "https://www.ledevoir.com/culture/ecrans/1020044/ia-audiovisuel-reel",
-      "publisher": "Le Devoir",
-      "iso_date": "2026-10-28T04:00:00Z",
-      "displayed_date": "10/28/2026, 04:00 AM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNVpOVTlaZVRaaGNqbFNjWEEyVFJERUF4aW1CU2dLTWdhNU1vWVRvUWc",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "Canada",
-          "iso2": "CA",
-          "iso3": "CAN",
-          "language": "fr",
-          "rank": 11,
-          "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
-        }
-      ]
-    },
-    {
       "id": "c62e554ace2cd0c1c800",
       "title": "Intelligence artificielle : comment les géants de la tech resserrent leur emprise sur l’économie",
       "link": "https://www.alternatives-economiques.fr/intelligence-artificielle-comment-les-geants-de-la-tech-resserrent-leur-emprise-sur-l-economie_28",
@@ -3792,7 +3811,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3819,7 +3838,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3830,7 +3849,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "fr",
-          "rank": 16,
+          "rank": 13,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
@@ -3846,7 +3865,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3857,7 +3876,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "fr",
-          "rank": 10,
+          "rank": 3,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
@@ -3873,7 +3892,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3884,7 +3903,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "en",
-          "rank": 1,
+          "rank": 2,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -3900,7 +3919,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3927,7 +3946,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3944,6 +3963,33 @@
       ]
     },
     {
+      "id": "ff7498298ca892f93577",
+      "title": "«On a de la misère avec notre intelligence artificielle!», rapporte Marwah Rizquy",
+      "link": "https://www.qub.ca/video/benoit-dutrizac-renc-rizqy-dutrizac-20261027-10-46-26-841-1145419696",
+      "publisher": "QUB radio",
+      "iso_date": "2026-10-27T15:21:24Z",
+      "displayed_date": "10/27/2026, 03:21 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNTJRMGh1VDBKVFJtRXdTV3d6VFJDZkF4ampCU2dLTWdhSklaVEZuZ2s",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "Canada",
+          "iso2": "CA",
+          "iso3": "CAN",
+          "language": "fr",
+          "rank": 26,
+          "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
+        }
+      ]
+    },
+    {
       "id": "9668c8c2ff2db3495c46",
       "title": "Interview | Cyberattaques, Intelligence Artificielle, souveraineté… le Général Erwan Rolland fait le bilan du CND 1 an sur l’antenne de Skyrock PLM",
       "link": "https://www.defense.gouv.fr/cnd/actualites/interview-cyberattaques-intelligence-artificielle-souverainete-general-erwan-rolland-fait-bilan-du",
@@ -3954,7 +4000,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3971,6 +4017,33 @@
       ]
     },
     {
+      "id": "50848cdd5c06bbb3ce09",
+      "title": "The challenges of artificial intelligence in education shaped UNESCO’s participation in the 14th País Digital Summit",
+      "link": "https://www.unesco.org/en/articles/challenges-artificial-intelligence-education-shaped-unescos-participation-14th-pais-digital-summit",
+      "publisher": "UNESCO",
+      "iso_date": "2026-10-27T15:16:56Z",
+      "displayed_date": "10/27/2026, 03:16 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNUtSbmhzYzA4elkxTndSRzV2VFJES0F4amlCQ2dLTWdZQmtJcktPQVU",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "United Kingdom",
+          "iso2": "GB",
+          "iso3": "GBR",
+          "language": "en",
+          "rank": 7,
+          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
+        }
+      ]
+    },
+    {
       "id": "c2eac1e8fade0d8c6776",
       "title": "AI regulation push gains steam ahead of midterms",
       "link": "https://www.cfodive.com/news/ai-regulation-push-gains-steam-ahead-midterms/872834",
@@ -3981,7 +4054,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -3993,14 +4066,6 @@
           "iso3": "USA",
           "language": "en",
           "rank": 2,
-          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
-        },
-        {
-          "country": "United Kingdom",
-          "iso2": "GB",
-          "iso3": "GBR",
-          "language": "en",
-          "rank": 25,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         },
         {
@@ -4024,7 +4089,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -4041,60 +4106,6 @@
       ]
     },
     {
-      "id": "11151ffaeb170dfd7f4e",
-      "title": "Penser l’enseignement de la littérature avec l’intelligence artificielle",
-      "link": "https://actualites.uqam.ca/2026/penser-la-creation-litteraire-avec-lintelligence-artificielle",
-      "publisher": "UQAM",
-      "iso_date": "2026-10-27T13:01:06Z",
-      "displayed_date": "10/27/2026, 01:01 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iJ0NnNXpTRlJIVGpWT1NXMWtNVGt4VFJERUF4aW1CU2dLTWdNRkVBNA",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "Canada",
-          "iso2": "CA",
-          "iso3": "CAN",
-          "language": "fr",
-          "rank": 5,
-          "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
-        }
-      ]
-    },
-    {
-      "id": "8d445e2f54d5e45ea5cf",
-      "title": "Capita ‘comprehensively failed’ on Civil Service pension artificial intelligence promise",
-      "link": "https://www.computerweekly.com/news/366652777/Capita-comprehensively-failed-on-Civil-Service-pension-artificial-intelligence-promise",
-      "publisher": "Computer Weekly",
-      "iso_date": "2026-10-27T10:05:46Z",
-      "displayed_date": "10/27/2026, 10:05 AM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iJkNnNTRjM0ZsTmpoNFgyMUZkMDVGVFJCOUdQY0NLQW95QXdGQUJB",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "United Kingdom",
-          "iso2": "GB",
-          "iso3": "GBR",
-          "language": "en",
-          "rank": 30,
-          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
-        }
-      ]
-    },
-    {
       "id": "6b170fd1faf5c33fcebc",
       "title": "Pourquoi une banque centrale devrait-elle s’intéresser à l’intelligence artificielle ? L’exemple de la Banque de France",
       "link": "https://www.banque-france.fr/fr/publications-et-statistiques/publications/pourquoi-une-banque-centrale-devrait-elle-sinteresser-lintelligence-artificielle-lexemple-de-la",
@@ -4105,7 +4116,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -4132,7 +4143,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -4159,7 +4170,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -4170,8 +4181,35 @@
           "iso2": "CN",
           "iso3": "CHN",
           "language": "zh-cn",
-          "rank": 18,
+          "rank": 15,
           "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
+        }
+      ]
+    },
+    {
+      "id": "531961fc037d6d87de10",
+      "title": "Using Artificial Intelligence to speed up MRI scans in NHS Highland",
+      "link": "https://www.nhshighland.scot.nhs.uk/about/nhs-highland-charity/how-we-make-a-difference/using-artificial-intelligence-to-speed-up-mri-scans-in-nhs-highland",
+      "publisher": "NHS Highland",
+      "iso_date": "2026-10-27T07:00:00Z",
+      "displayed_date": "10/27/2026, 07:00 AM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNXRiRzV0TlZKbk1WbEJRVVpwVFJEeUF4aWNCQ2dLTWdZTk1vcU5wUVE",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "United Kingdom",
+          "iso2": "GB",
+          "iso3": "GBR",
+          "language": "en",
+          "rank": 8,
+          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
     },
@@ -4186,7 +4224,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -4197,7 +4235,7 @@
           "iso2": "GB",
           "iso3": "GBR",
           "language": "en",
-          "rank": 27,
+          "rank": 24,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -4213,7 +4251,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -4224,7 +4262,7 @@
           "iso2": "CN",
           "iso3": "CHN",
           "language": "zh-cn",
-          "rank": 4,
+          "rank": 5,
           "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
         }
       ]
@@ -4240,7 +4278,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -4251,8 +4289,35 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "fr",
-          "rank": 2,
+          "rank": 1,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
+        }
+      ]
+    },
+    {
+      "id": "85746d909d252d638b17",
+      "title": "UNESCO supports the ethical use of artificial intelligence in Mongolian journalism",
+      "link": "https://www.unesco.org/en/articles/unesco-supports-ethical-use-artificial-intelligence-mongolian-journalism",
+      "publisher": "UNESCO",
+      "iso_date": "2026-10-26T18:10:56Z",
+      "displayed_date": "10/26/2026, 06:10 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNHdRbWhoVG14S1dWRnRWMkpGVFJDUUF4ai1CU2dLTWdZQmdJUUtNUVU",
+      "result_type": null,
+      "story_token": null,
+      "snippet": null,
+      "collected_at": "2026-11-02T01:31:22.488218Z",
+      "review_status": "unreviewed",
+      "ai_relevance": null,
+      "event_country": null,
+      "notes": "",
+      "matched_searches": [
+        {
+          "country": "United Kingdom",
+          "iso2": "GB",
+          "iso3": "GBR",
+          "language": "en",
+          "rank": 19,
+          "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
     },
@@ -4267,7 +4332,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -4286,23 +4351,23 @@
           "iso2": "GB",
           "iso3": "GBR",
           "language": "en",
-          "rank": 18,
+          "rank": 13,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
     },
     {
-      "id": "fcf0cf447fe86609f104",
-      "title": "Intelligence artificielle | Anthropic rend public son dossier d’entrée en Bourse",
-      "link": "https://www.lapresse.ca/affaires/techno/2026-10-26/intelligence-artificielle/anthropic-rend-public-son-dossier-d-entree-en-bourse.php",
+      "id": "a01b483a1baa85641174",
+      "title": "Meta va lever 35 milliards de dollars en actions pour financer son intelligence artificielle",
+      "link": "https://www.lapresse.ca/affaires/techno/2026-10-26/meta-va-lever-35-milliards-de-dollars-en-actions-pour-financer-son-intelligence-artificielle.php",
       "publisher": "La Presse",
-      "iso_date": "2026-10-26T14:36:56Z",
-      "displayed_date": "10/26/2026, 02:36 PM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNDVTRmRsY1VwVlpEYzFkMUpZVFJERUF4aW1CU2dLTWdhTlFwNHVvUW8",
+      "iso_date": "2026-10-26T12:56:41Z",
+      "displayed_date": "10/26/2026, 12:56 PM, +0000 UTC",
+      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNTBabDgzVVRKdlJGZFlkRGg0VFJERUF4aW1CU2dLTWdZRmdJYW9yQWM",
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -4313,7 +4378,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "fr",
-          "rank": 17,
+          "rank": 15,
           "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
@@ -4329,7 +4394,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -4356,7 +4421,7 @@
           "iso2": "CA",
           "iso3": "CAN",
           "language": "en",
-          "rank": 3,
+          "rank": 4,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -4372,7 +4437,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -4383,7 +4448,7 @@
           "iso2": "US",
           "iso3": "USA",
           "language": "en",
-          "rank": 29,
+          "rank": 30,
           "query": "(\"artificial intelligence\" OR \"generative AI\" OR \"AI policy\" OR \"AI regulation\" OR \"AI model\") when:8d"
         }
       ]
@@ -4399,7 +4464,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -4426,7 +4491,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -4453,7 +4518,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -4464,7 +4529,7 @@
           "iso2": "CN",
           "iso3": "CHN",
           "language": "zh-cn",
-          "rank": 5,
+          "rank": 6,
           "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
         }
       ]
@@ -4480,7 +4545,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -4507,7 +4572,7 @@
       "result_type": null,
       "story_token": null,
       "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
+      "collected_at": "2026-11-02T01:31:22.488218Z",
       "review_status": "unreviewed",
       "ai_relevance": null,
       "event_country": null,
@@ -4520,33 +4585,6 @@
           "language": "zh-cn",
           "rank": 1,
           "query": "(人工智能 OR 生成式人工智能 OR 大模型 OR 人工智能监管 OR 人工智能政策) when:8d"
-        }
-      ]
-    },
-    {
-      "id": "24c91abae72a4acbbeaa",
-      "title": "Est-ce que les ados sont capables de reconnaître une intelligence artificielle?",
-      "link": "https://ici.radio-canada.ca/jeunesse/parents/accueil-parents/document/segments/chronique/2512955/experience-ia-intelligence-artificielle-detectee",
-      "publisher": "Radio-Canada",
-      "iso_date": "2026-10-25T07:00:00Z",
-      "displayed_date": "10/25/2026, 07:00 AM, +0000 UTC",
-      "thumbnail": "https://news.google.com/api/attachments/CC8iK0NnNVhiMDV4Y1hoQkxVNXpaMWd6VFJEb0FoaUFCU2dLTWdZeFU0eVFJUWc",
-      "result_type": null,
-      "story_token": null,
-      "snippet": null,
-      "collected_at": "2026-11-02T00:21:20.158507Z",
-      "review_status": "unreviewed",
-      "ai_relevance": null,
-      "event_country": null,
-      "notes": "",
-      "matched_searches": [
-        {
-          "country": "Canada",
-          "iso2": "CA",
-          "iso3": "CAN",
-          "language": "fr",
-          "rank": 8,
-          "query": "(\"intelligence artificielle\" OR \"IA générative\" OR \"politique de l’IA\" OR \"réglementation de l’IA\" OR \"modèle d’IA\") when:8d"
         }
       ]
     }
