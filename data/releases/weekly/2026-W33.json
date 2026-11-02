@@ -2,10 +2,10 @@
   "schema_version": "aieo_public_release_v3.0",
   "release_id": "2026-W33",
   "release_type": "weekly",
-  "revision": 13,
+  "revision": 14,
   "period_start": "2026-08-10",
   "period_end": "2026-08-16",
-  "generated_at": "2026-10-26T11:13:06.573228Z",
+  "generated_at": "2026-11-02T02:13:10.778605Z",
   "public_label": "Evidence-based pilot release",
   "lineage": {
     "collection_run_id": "8383ed52-fea7-45d0-8a60-ff42c0181d8a",
@@ -1183,7 +1183,7 @@
       "longitudinal_event_memory_active": true,
       "historical_pool_disclosed": true,
       "longitudinal_reconciliation_status": "success",
-      "registry_snapshot_id": "registry_2a75a5df6d4e882a1cf1"
+      "registry_snapshot_id": "registry_ae7f1cd792a77a5c2ba0"
     },
     "denominators": {
       "coverage_total": 121,
@@ -2581,7 +2581,7 @@
         "c40af09c-c79d-4e0c-8d3b-c1fdbad382b4"
       ],
       "story_family_id": null,
-      "registry_version": "event_registry_v1",
+      "registry_version": null,
       "appearance_types": [
         "first_event_coverage"
       ],
@@ -4145,7 +4145,7 @@
         "f26d0703-efe8-4da0-b8e8-80ae0ed51a01"
       ],
       "story_family_id": null,
-      "registry_version": "event_registry_v1",
+      "registry_version": null,
       "appearance_types": [
         "first_event_coverage"
       ],
@@ -8128,7 +8128,7 @@
         "25a0c3cb-4863-4f23-86ed-895752b5883b"
       ],
       "story_family_id": null,
-      "registry_version": "event_registry_v1",
+      "registry_version": null,
       "appearance_types": [
         "first_event_coverage"
       ],
@@ -8607,7 +8607,7 @@
         "63122005-17c5-4f18-8577-7dff2f8e9e13"
       ],
       "story_family_id": null,
-      "registry_version": "event_registry_v1",
+      "registry_version": null,
       "appearance_types": [
         "first_event_coverage"
       ],
@@ -9251,7 +9251,7 @@
         "864b9693-af69-4d12-bbdc-62e0d3266a0c"
       ],
       "story_family_id": null,
-      "registry_version": "event_registry_v1",
+      "registry_version": null,
       "appearance_types": [
         "first_event_coverage"
       ],
@@ -11506,7 +11506,7 @@
       ],
       "cluster_confidence": null,
       "possible_duplicate_record": true,
-      "possible_duplicate_reason": "Qwen identifies a possible same event, but auto-merge thresholds are not met; more than one event remains plausible",
+      "possible_duplicate_reason": "possible longitudinal follow-on development",
       "classification": {
         "ai_relevant": true,
         "empowerment_status": "non_empowerment",
@@ -22886,7 +22886,7 @@
           "c40af09c-c79d-4e0c-8d3b-c1fdbad382b4"
         ],
         "story_family_id": null,
-        "registry_version": "event_registry_v1",
+        "registry_version": null,
         "appearance_types": [
           "first_event_coverage"
         ],
@@ -24542,7 +24542,7 @@
           "f26d0703-efe8-4da0-b8e8-80ae0ed51a01"
         ],
         "story_family_id": null,
-        "registry_version": "event_registry_v1",
+        "registry_version": null,
         "appearance_types": [
           "first_event_coverage"
         ],
@@ -28525,7 +28525,7 @@
           "25a0c3cb-4863-4f23-86ed-895752b5883b"
         ],
         "story_family_id": null,
-        "registry_version": "event_registry_v1",
+        "registry_version": null,
         "appearance_types": [
           "first_event_coverage"
         ],
@@ -29004,7 +29004,7 @@
           "63122005-17c5-4f18-8577-7dff2f8e9e13"
         ],
         "story_family_id": null,
-        "registry_version": "event_registry_v1",
+        "registry_version": null,
         "appearance_types": [
           "first_event_coverage"
         ],
@@ -29648,7 +29648,7 @@
           "864b9693-af69-4d12-bbdc-62e0d3266a0c"
         ],
         "story_family_id": null,
-        "registry_version": "event_registry_v1",
+        "registry_version": null,
         "appearance_types": [
           "first_event_coverage"
         ],
@@ -31903,7 +31903,7 @@
         ],
         "cluster_confidence": null,
         "possible_duplicate_record": true,
-        "possible_duplicate_reason": "Qwen identifies a possible same event, but auto-merge thresholds are not met; more than one event remains plausible",
+        "possible_duplicate_reason": "possible longitudinal follow-on development",
         "classification": {
           "ai_relevant": true,
           "empowerment_status": "non_empowerment",
@@ -32064,7 +32064,7 @@
       }
     ]
   },
-  "content_sha256": "f0d439c1e7c04e158f7394b61639443828f2c8e4d13cc50ec8bde521ce406ced",
+  "content_sha256": "926c95d264cdccb9fe959d8a678622628f37d4675a9ad8596067733c9cf2944a",
   "dynamics": {
     "coverage_episode_count": 120,
     "first_time_event_appearances": 114,
@@ -32219,20 +32219,20 @@
   },
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-10-26T10:58:56.920389+00:00",
-    "registry_snapshot_id": "registry_2a75a5df6d4e882a1cf1",
+    "considered_through": "2026-11-02T01:54:41.761056+00:00",
+    "registry_snapshot_id": "registry_ae7f1cd792a77a5c2ba0",
     "all_prior_events_considered": true,
     "disclosure": "First-time means the canonical development was not present in an earlier standardized AIEO weekly release. Collection retries do not turn a current-week development into a recurring one."
   },
-  "data_current_through": "2026-10-26T11:13:03.539152+00:00",
+  "data_current_through": "2026-11-02T02:13:07.609907+00:00",
   "reconciliation": {
-    "run_id": "ab0eddd1-3169-4aac-826d-9a48ec023745",
-    "run_key": "reconcile_20261026T110932Z",
+    "run_id": "099bbe6a-ecbc-4a1d-adfc-2427b759f7ef",
+    "run_key": "reconcile_20261102T020957Z",
     "mode": "weekly",
-    "completed_at": "2026-10-26T11:13:03.539152+00:00",
+    "completed_at": "2026-11-02T02:13:07.609907+00:00",
     "status": "success"
   },
-  "restated_at": "2026-10-26T11:13:06.573228Z",
+  "restated_at": "2026-11-02T02:13:10.778605Z",
   "revision_reason": "Longitudinal reconciliation changed new-versus-recurring assignments.",
   "revision_history": [
     {
@@ -33064,8 +33064,81 @@
         }
       },
       "reconciliation_run_id": "ab0eddd1-3169-4aac-826d-9a48ec023745"
+    },
+    {
+      "revision": 14,
+      "changed_at": "2026-11-02T02:13:10.778605Z",
+      "reason": "Longitudinal reconciliation changed new-versus-recurring assignments.",
+      "change_summary": {
+        "coverage_articles_reassigned": 0,
+        "event_records_before": 113,
+        "event_records_after": 113,
+        "event_record_change": 0,
+        "new_event_records_before": 113,
+        "new_event_records_after": 113,
+        "recurring_event_records_before": 0,
+        "recurring_event_records_after": 0,
+        "follow_on_event_records_after": 0,
+        "possible_historical_match_records_after": 0,
+        "merged_event_ids": [],
+        "effective_event_ids_added": [],
+        "follow_on_event_records_before": 0,
+        "possible_historical_match_records_before": 0,
+        "rediscovered_article_records_before": 10,
+        "rediscovered_article_records_after": 10,
+        "replication_lag_count_before": 0,
+        "replication_lag_count_after": 0,
+        "definitions_changed": false,
+        "reliability_denominators_changed": false,
+        "event_diagnostics_changed": true,
+        "reliability_denominators_before": {
+          "coverage_total": 121,
+          "coverage_ai_relevant": 120,
+          "coverage_scored": 73,
+          "coverage_excluded_unclear": 47,
+          "coverage_not_ai_relevant": 1,
+          "event_total": 114,
+          "event_ai_relevant": 113,
+          "event_scored": 66,
+          "event_excluded_unclear": 47,
+          "event_not_ai_relevant": 1
+        },
+        "reliability_denominators_after": {
+          "coverage_total": 121,
+          "coverage_ai_relevant": 120,
+          "coverage_scored": 73,
+          "coverage_excluded_unclear": 47,
+          "coverage_not_ai_relevant": 1,
+          "event_total": 114,
+          "event_ai_relevant": 113,
+          "event_scored": 66,
+          "event_excluded_unclear": 47,
+          "event_not_ai_relevant": 1
+        },
+        "event_diagnostics_before": {
+          "singleton_share": 0.964602,
+          "multi_source_share": 0.035398,
+          "possible_duplicate_records": 4,
+          "same_event_recall_validated": false,
+          "longitudinal_event_memory_active": true,
+          "historical_pool_disclosed": true,
+          "longitudinal_reconciliation_status": "success",
+          "registry_snapshot_id": "registry_2a75a5df6d4e882a1cf1"
+        },
+        "event_diagnostics_after": {
+          "singleton_share": 0.964602,
+          "multi_source_share": 0.035398,
+          "possible_duplicate_records": 4,
+          "same_event_recall_validated": false,
+          "longitudinal_event_memory_active": true,
+          "historical_pool_disclosed": true,
+          "longitudinal_reconciliation_status": "success",
+          "registry_snapshot_id": "registry_ae7f1cd792a77a5c2ba0"
+        }
+      },
+      "reconciliation_run_id": "099bbe6a-ecbc-4a1d-adfc-2427b759f7ef"
     }
   ],
-  "previous_revision_path": "/data/releases/weekly/archive/2026-W33/revision-12.json",
+  "previous_revision_path": "/data/releases/weekly/archive/2026-W33/revision-13.json",
   "restatement_version": "release_restatement_v1.3"
 }

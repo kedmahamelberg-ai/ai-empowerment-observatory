@@ -2,10 +2,10 @@
   "schema_version": "aieo_public_release_v3.0",
   "release_id": "2026-W35",
   "release_type": "weekly",
-  "revision": 12,
+  "revision": 13,
   "period_start": "2026-08-24",
   "period_end": "2026-08-30",
-  "generated_at": "2026-10-26T11:13:08.299606Z",
+  "generated_at": "2026-11-02T02:13:12.494418Z",
   "public_label": "Evidence-based pilot release",
   "lineage": {
     "collection_run_id": "afa1afef-947d-4589-baae-e24a7dfcd2bc",
@@ -37,19 +37,19 @@
   },
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-10-26T10:58:56.920389+00:00",
-    "registry_snapshot_id": "registry_2a75a5df6d4e882a1cf1",
+    "considered_through": "2026-11-02T01:54:41.761056+00:00",
+    "registry_snapshot_id": "registry_ae7f1cd792a77a5c2ba0",
     "all_prior_events_considered": true,
     "disclosure": "First-time means the canonical development was not present in an earlier standardized AIEO weekly release. Collection retries do not turn a current-week development into a recurring one."
   },
   "reconciliation": {
-    "run_id": "ab0eddd1-3169-4aac-826d-9a48ec023745",
-    "run_key": "reconcile_20261026T110932Z",
+    "run_id": "099bbe6a-ecbc-4a1d-adfc-2427b759f7ef",
+    "run_key": "reconcile_20261102T020957Z",
     "mode": "weekly",
-    "completed_at": "2026-10-26T11:13:03.539152+00:00",
+    "completed_at": "2026-11-02T02:13:07.609907+00:00",
     "status": "success"
   },
-  "data_current_through": "2026-10-26T11:13:03.539152+00:00",
+  "data_current_through": "2026-11-02T02:13:07.609907+00:00",
   "counts": {
     "observed_article_records": 112,
     "ai_relevant_articles": 111,
@@ -67,7 +67,7 @@
     "extra_coverage_from_memberships": 1,
     "singleton_event_records": 109,
     "multi_source_event_records": 1,
-    "possible_duplicate_event_records": 3,
+    "possible_duplicate_event_records": 12,
     "unique_publications": 82,
     "unique_domains": 82
   },
@@ -311,7 +311,7 @@
     "precision_first": true,
     "event_count_is_provisional": true,
     "conservative_distinct_event_range": {
-      "minimum": 107,
+      "minimum": 98,
       "maximum": 110
     }
   },
@@ -1125,12 +1125,12 @@
     "event_diagnostics": {
       "singleton_share": 0.990909,
       "multi_source_share": 0.009091,
-      "possible_duplicate_records": 3,
+      "possible_duplicate_records": 12,
       "same_event_recall_validated": false,
       "longitudinal_event_memory_active": true,
       "historical_pool_disclosed": true,
       "longitudinal_reconciliation_status": "success",
-      "registry_snapshot_id": "registry_2a75a5df6d4e882a1cf1"
+      "registry_snapshot_id": "registry_ae7f1cd792a77a5c2ba0"
     },
     "denominators": {
       "coverage_total": 112,
@@ -1824,7 +1824,7 @@
         }
       ],
       "cluster_confidence": null,
-      "possible_duplicate_record": true,
+      "possible_duplicate_record": false,
       "possible_duplicate_reason": "possible longitudinal follow-on development",
       "appearance_types": [
         "same_event_new_coverage"
@@ -4626,8 +4626,8 @@
         }
       ],
       "cluster_confidence": null,
-      "possible_duplicate_record": false,
-      "possible_duplicate_reason": null,
+      "possible_duplicate_record": true,
+      "possible_duplicate_reason": "possible longitudinal same-event match",
       "appearance_types": [
         "first_event_coverage"
       ],
@@ -4812,8 +4812,8 @@
         }
       ],
       "cluster_confidence": null,
-      "possible_duplicate_record": false,
-      "possible_duplicate_reason": null,
+      "possible_duplicate_record": true,
+      "possible_duplicate_reason": "possible longitudinal same-event match",
       "appearance_types": [
         "first_event_coverage"
       ],
@@ -5742,8 +5742,8 @@
         }
       ],
       "cluster_confidence": null,
-      "possible_duplicate_record": false,
-      "possible_duplicate_reason": null,
+      "possible_duplicate_record": true,
+      "possible_duplicate_reason": "possible longitudinal follow-on development",
       "appearance_types": [
         "first_event_coverage"
       ],
@@ -6114,8 +6114,8 @@
         }
       ],
       "cluster_confidence": null,
-      "possible_duplicate_record": false,
-      "possible_duplicate_reason": null,
+      "possible_duplicate_record": true,
+      "possible_duplicate_reason": "possible longitudinal same-event match",
       "appearance_types": [
         "first_event_coverage"
       ],
@@ -7788,8 +7788,8 @@
         }
       ],
       "cluster_confidence": null,
-      "possible_duplicate_record": false,
-      "possible_duplicate_reason": null,
+      "possible_duplicate_record": true,
+      "possible_duplicate_reason": "possible longitudinal follow-on development",
       "appearance_types": [
         "first_event_coverage"
       ],
@@ -7974,8 +7974,8 @@
         }
       ],
       "cluster_confidence": null,
-      "possible_duplicate_record": false,
-      "possible_duplicate_reason": null,
+      "possible_duplicate_record": true,
+      "possible_duplicate_reason": "possible longitudinal follow-on development",
       "appearance_types": [
         "first_event_coverage"
       ],
@@ -8718,8 +8718,8 @@
         }
       ],
       "cluster_confidence": null,
-      "possible_duplicate_record": false,
-      "possible_duplicate_reason": null,
+      "possible_duplicate_record": true,
+      "possible_duplicate_reason": "possible longitudinal same-event match",
       "appearance_types": [
         "first_event_coverage"
       ],
@@ -9090,8 +9090,8 @@
         }
       ],
       "cluster_confidence": null,
-      "possible_duplicate_record": false,
-      "possible_duplicate_reason": null,
+      "possible_duplicate_record": true,
+      "possible_duplicate_reason": "possible longitudinal same-event match",
       "appearance_types": [
         "first_event_coverage"
       ],
@@ -10578,8 +10578,8 @@
         }
       ],
       "cluster_confidence": null,
-      "possible_duplicate_record": false,
-      "possible_duplicate_reason": null,
+      "possible_duplicate_record": true,
+      "possible_duplicate_reason": "possible longitudinal follow-on development",
       "appearance_types": [
         "first_event_coverage"
       ],
@@ -10950,8 +10950,8 @@
         }
       ],
       "cluster_confidence": null,
-      "possible_duplicate_record": false,
-      "possible_duplicate_reason": null,
+      "possible_duplicate_record": true,
+      "possible_duplicate_reason": "possible longitudinal same-event match",
       "appearance_types": [
         "first_event_coverage"
       ],
@@ -21159,7 +21159,7 @@
           }
         ],
         "cluster_confidence": null,
-        "possible_duplicate_record": true,
+        "possible_duplicate_record": false,
         "possible_duplicate_reason": "possible longitudinal follow-on development",
         "appearance_types": [
           "same_event_new_coverage"
@@ -23961,8 +23961,8 @@
           }
         ],
         "cluster_confidence": null,
-        "possible_duplicate_record": false,
-        "possible_duplicate_reason": null,
+        "possible_duplicate_record": true,
+        "possible_duplicate_reason": "possible longitudinal same-event match",
         "appearance_types": [
           "first_event_coverage"
         ],
@@ -24147,8 +24147,8 @@
           }
         ],
         "cluster_confidence": null,
-        "possible_duplicate_record": false,
-        "possible_duplicate_reason": null,
+        "possible_duplicate_record": true,
+        "possible_duplicate_reason": "possible longitudinal same-event match",
         "appearance_types": [
           "first_event_coverage"
         ],
@@ -25077,8 +25077,8 @@
           }
         ],
         "cluster_confidence": null,
-        "possible_duplicate_record": false,
-        "possible_duplicate_reason": null,
+        "possible_duplicate_record": true,
+        "possible_duplicate_reason": "possible longitudinal follow-on development",
         "appearance_types": [
           "first_event_coverage"
         ],
@@ -25449,8 +25449,8 @@
           }
         ],
         "cluster_confidence": null,
-        "possible_duplicate_record": false,
-        "possible_duplicate_reason": null,
+        "possible_duplicate_record": true,
+        "possible_duplicate_reason": "possible longitudinal same-event match",
         "appearance_types": [
           "first_event_coverage"
         ],
@@ -27123,8 +27123,8 @@
           }
         ],
         "cluster_confidence": null,
-        "possible_duplicate_record": false,
-        "possible_duplicate_reason": null,
+        "possible_duplicate_record": true,
+        "possible_duplicate_reason": "possible longitudinal follow-on development",
         "appearance_types": [
           "first_event_coverage"
         ],
@@ -27309,8 +27309,8 @@
           }
         ],
         "cluster_confidence": null,
-        "possible_duplicate_record": false,
-        "possible_duplicate_reason": null,
+        "possible_duplicate_record": true,
+        "possible_duplicate_reason": "possible longitudinal follow-on development",
         "appearance_types": [
           "first_event_coverage"
         ],
@@ -28053,8 +28053,8 @@
           }
         ],
         "cluster_confidence": null,
-        "possible_duplicate_record": false,
-        "possible_duplicate_reason": null,
+        "possible_duplicate_record": true,
+        "possible_duplicate_reason": "possible longitudinal same-event match",
         "appearance_types": [
           "first_event_coverage"
         ],
@@ -28425,8 +28425,8 @@
           }
         ],
         "cluster_confidence": null,
-        "possible_duplicate_record": false,
-        "possible_duplicate_reason": null,
+        "possible_duplicate_record": true,
+        "possible_duplicate_reason": "possible longitudinal same-event match",
         "appearance_types": [
           "first_event_coverage"
         ],
@@ -29913,8 +29913,8 @@
           }
         ],
         "cluster_confidence": null,
-        "possible_duplicate_record": false,
-        "possible_duplicate_reason": null,
+        "possible_duplicate_record": true,
+        "possible_duplicate_reason": "possible longitudinal follow-on development",
         "appearance_types": [
           "first_event_coverage"
         ],
@@ -30285,8 +30285,8 @@
           }
         ],
         "cluster_confidence": null,
-        "possible_duplicate_record": false,
-        "possible_duplicate_reason": null,
+        "possible_duplicate_record": true,
+        "possible_duplicate_reason": "possible longitudinal same-event match",
         "appearance_types": [
           "first_event_coverage"
         ],
@@ -31484,10 +31484,83 @@
         }
       },
       "reconciliation_run_id": "ab0eddd1-3169-4aac-826d-9a48ec023745"
+    },
+    {
+      "revision": 13,
+      "changed_at": "2026-11-02T02:13:12.494418Z",
+      "reason": "Longitudinal reconciliation changed new-versus-recurring assignments.",
+      "change_summary": {
+        "coverage_articles_reassigned": 0,
+        "event_records_before": 110,
+        "event_records_after": 110,
+        "event_record_change": 0,
+        "new_event_records_before": 107,
+        "new_event_records_after": 107,
+        "recurring_event_records_before": 0,
+        "recurring_event_records_after": 0,
+        "follow_on_event_records_after": 0,
+        "possible_historical_match_records_after": 3,
+        "merged_event_ids": [],
+        "effective_event_ids_added": [],
+        "follow_on_event_records_before": 0,
+        "possible_historical_match_records_before": 3,
+        "rediscovered_article_records_before": 3,
+        "rediscovered_article_records_after": 3,
+        "replication_lag_count_before": 0,
+        "replication_lag_count_after": 0,
+        "definitions_changed": false,
+        "reliability_denominators_changed": false,
+        "event_diagnostics_changed": true,
+        "reliability_denominators_before": {
+          "coverage_total": 112,
+          "coverage_ai_relevant": 111,
+          "coverage_scored": 80,
+          "coverage_excluded_unclear": 31,
+          "coverage_not_ai_relevant": 1,
+          "event_total": 111,
+          "event_ai_relevant": 110,
+          "event_scored": 107,
+          "event_excluded_unclear": 3,
+          "event_not_ai_relevant": 1
+        },
+        "reliability_denominators_after": {
+          "coverage_total": 112,
+          "coverage_ai_relevant": 111,
+          "coverage_scored": 80,
+          "coverage_excluded_unclear": 31,
+          "coverage_not_ai_relevant": 1,
+          "event_total": 111,
+          "event_ai_relevant": 110,
+          "event_scored": 107,
+          "event_excluded_unclear": 3,
+          "event_not_ai_relevant": 1
+        },
+        "event_diagnostics_before": {
+          "singleton_share": 0.990909,
+          "multi_source_share": 0.009091,
+          "possible_duplicate_records": 3,
+          "same_event_recall_validated": false,
+          "longitudinal_event_memory_active": true,
+          "historical_pool_disclosed": true,
+          "longitudinal_reconciliation_status": "success",
+          "registry_snapshot_id": "registry_2a75a5df6d4e882a1cf1"
+        },
+        "event_diagnostics_after": {
+          "singleton_share": 0.990909,
+          "multi_source_share": 0.009091,
+          "possible_duplicate_records": 12,
+          "same_event_recall_validated": false,
+          "longitudinal_event_memory_active": true,
+          "historical_pool_disclosed": true,
+          "longitudinal_reconciliation_status": "success",
+          "registry_snapshot_id": "registry_ae7f1cd792a77a5c2ba0"
+        }
+      },
+      "reconciliation_run_id": "099bbe6a-ecbc-4a1d-adfc-2427b759f7ef"
     }
   ],
-  "previous_revision_path": "/data/releases/weekly/archive/2026-W35/revision-11.json",
-  "content_sha256": "d1a613931f85566e3a3103e9a10ec58e7a10905b5eeed8820f300af6527e0f1d",
-  "restated_at": "2026-10-26T11:13:08.299606Z",
+  "previous_revision_path": "/data/releases/weekly/archive/2026-W35/revision-12.json",
+  "content_sha256": "a7851000a5e424d3272ee3647a2ad25e360a07075b3ae11d59ffa0a3f51bcf5f",
+  "restated_at": "2026-11-02T02:13:12.494418Z",
   "restatement_version": "release_restatement_v1.3"
 }
