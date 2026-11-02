@@ -7,17 +7,17 @@
   "period_end": "2026-08-31",
   "observed_week_start": "2026-08-10",
   "observed_week_end": "2026-08-30",
-  "generated_at": "2026-10-26T11:54:43.531079Z",
-  "revision": 12,
+  "generated_at": "2026-11-02T02:51:28.395304Z",
+  "revision": 13,
   "weekly_release_ids": [
     "2026-W33",
     "2026-W34",
     "2026-W35"
   ],
   "weekly_revisions": {
-    "2026-W33": 13,
-    "2026-W34": 11,
-    "2026-W35": 12
+    "2026-W33": 14,
+    "2026-W34": 12,
+    "2026-W35": 13
   },
   "reality": {
     "distinct_event_records": 346,
@@ -69,15 +69,15 @@
   },
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-10-26T10:58:56.920389+00:00",
+    "considered_through": "2026-11-02T01:54:41.761056+00:00",
     "scope": "All prior event records available to the included reconciliations."
   },
   "reconciliation": {
-    "current_through": "2026-10-26T11:13:03.539152+00:00",
+    "current_through": "2026-11-02T02:13:07.609907+00:00",
     "weekly_revisions_included": {
-      "2026-W33": 13,
-      "2026-W34": 11,
-      "2026-W35": 12
+      "2026-W33": 14,
+      "2026-W34": 12,
+      "2026-W35": 13
     },
     "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
   },
@@ -194,8 +194,18 @@
         "2026-W34": 11,
         "2026-W35": 12
       }
+    },
+    {
+      "revision": 13,
+      "changed_at": "2026-11-02T02:51:28.395304Z",
+      "reason": "An included weekly release was restated after longitudinal reconciliation.",
+      "weekly_revisions": {
+        "2026-W33": 14,
+        "2026-W34": 12,
+        "2026-W35": 13
+      }
     }
   ],
-  "previous_revision_path": "/data/releases/monthly/archive/2026-08/revision-11.json",
-  "content_sha256": "fa3b7db6f8bdbacd011335b15032d307424afdaffc3d6a12b0e6e66eeba96548"
+  "previous_revision_path": "/data/releases/monthly/archive/2026-08/revision-12.json",
+  "content_sha256": "e49378938bc47d4fe7aa39b242f92c7ab72c33340e8f83c4d55f99ab423aff7c"
 }

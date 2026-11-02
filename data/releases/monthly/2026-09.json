@@ -7,8 +7,8 @@
   "period_end": "2026-09-30",
   "observed_week_start": "2026-08-31",
   "observed_week_end": "2026-09-27",
-  "generated_at": "2026-10-26T11:54:43.533284Z",
-  "revision": 9,
+  "generated_at": "2026-11-02T02:51:28.397873Z",
+  "revision": 10,
   "weekly_release_ids": [
     "2026-W36",
     "2026-W37",
@@ -16,10 +16,10 @@
     "2026-W39"
   ],
   "weekly_revisions": {
-    "2026-W36": 8,
-    "2026-W37": 7,
-    "2026-W38": 6,
-    "2026-W39": 5
+    "2026-W36": 9,
+    "2026-W37": 8,
+    "2026-W38": 7,
+    "2026-W39": 6
   },
   "reality": {
     "distinct_event_records": 538,
@@ -73,16 +73,16 @@
   },
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-10-26T10:58:56.920389+00:00",
+    "considered_through": "2026-11-02T01:54:41.761056+00:00",
     "scope": "All prior event records available to the included reconciliations."
   },
   "reconciliation": {
-    "current_through": "2026-10-26T11:13:03.539152+00:00",
+    "current_through": "2026-11-02T02:13:07.609907+00:00",
     "weekly_revisions_included": {
-      "2026-W36": 8,
-      "2026-W37": 7,
-      "2026-W38": 6,
-      "2026-W39": 5
+      "2026-W36": 9,
+      "2026-W37": 8,
+      "2026-W38": 7,
+      "2026-W39": 6
     },
     "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
   },
@@ -174,8 +174,19 @@
         "2026-W38": 6,
         "2026-W39": 5
       }
+    },
+    {
+      "revision": 10,
+      "changed_at": "2026-11-02T02:51:28.397873Z",
+      "reason": "An included weekly release was restated after longitudinal reconciliation.",
+      "weekly_revisions": {
+        "2026-W36": 9,
+        "2026-W37": 8,
+        "2026-W38": 7,
+        "2026-W39": 6
+      }
     }
   ],
-  "previous_revision_path": "/data/releases/monthly/archive/2026-09/revision-8.json",
-  "content_sha256": "bc5a26291b4cf5cb277cb006324b63f8dbafb3105cb0aba297e88293f07bda2c"
+  "previous_revision_path": "/data/releases/monthly/archive/2026-09/revision-9.json",
+  "content_sha256": "4c54e0e1c035e8318d4fb84d121843b6f17ed0842a36885af138546bfa1037e7"
 }

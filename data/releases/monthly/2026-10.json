@@ -2,13 +2,13 @@
   "schema_version": "aieo_period_summary_v1.1",
   "period_id": "2026-10",
   "period_type": "monthly",
-  "status": "accumulating",
+  "status": "complete",
   "period_start": "2026-10-01",
   "period_end": "2026-10-31",
   "observed_week_start": "2026-09-28",
   "observed_week_end": "2026-10-25",
-  "generated_at": "2026-10-26T11:54:43.535440Z",
-  "revision": 4,
+  "generated_at": "2026-11-02T02:51:28.400636Z",
+  "revision": 5,
   "weekly_release_ids": [
     "2026-W40",
     "2026-W41",
@@ -16,10 +16,10 @@
     "2026-W43"
   ],
   "weekly_revisions": {
-    "2026-W40": 5,
-    "2026-W41": 3,
-    "2026-W42": 2,
-    "2026-W43": 1
+    "2026-W40": 6,
+    "2026-W41": 4,
+    "2026-W42": 3,
+    "2026-W43": 2
   },
   "reality": {
     "distinct_event_records": 569,
@@ -73,22 +73,22 @@
   },
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-10-26T10:58:56.920389+00:00",
+    "considered_through": "2026-11-02T01:54:41.761056+00:00",
     "scope": "All prior event records available to the included reconciliations."
   },
   "reconciliation": {
-    "current_through": "2026-10-26T11:13:03.539152+00:00",
+    "current_through": "2026-11-02T02:13:07.609907+00:00",
     "weekly_revisions_included": {
-      "2026-W40": 5,
-      "2026-W41": 3,
-      "2026-W42": 2,
-      "2026-W43": 1
+      "2026-W40": 6,
+      "2026-W41": 4,
+      "2026-W42": 3,
+      "2026-W43": 2
     },
     "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
   },
   "story": "AIEO observed 597 newly published AI-news articles. They represented 561 new developments and 5 appearances of developments already in memory.",
   "disclosure": "Distinct events are deduplicated across the full period by effective event ID. Recurring appearances remain in the Attention view and are not counted as new developments.",
-  "revision_reason": "A newly completed weekly release was added to this period.",
+  "revision_reason": "An included weekly release was restated after longitudinal reconciliation.",
   "revision_history": [
     {
       "revision": 2,
@@ -119,8 +119,19 @@
         "2026-W42": 2,
         "2026-W43": 1
       }
+    },
+    {
+      "revision": 5,
+      "changed_at": "2026-11-02T02:51:28.400636Z",
+      "reason": "An included weekly release was restated after longitudinal reconciliation.",
+      "weekly_revisions": {
+        "2026-W40": 6,
+        "2026-W41": 4,
+        "2026-W42": 3,
+        "2026-W43": 2
+      }
     }
   ],
-  "previous_revision_path": "/data/releases/monthly/archive/2026-10/revision-3.json",
-  "content_sha256": "43db3c45f6d9761cdad14d327ce4b94a927d864d6c55e9b23427f5640fbe575d"
+  "previous_revision_path": "/data/releases/monthly/archive/2026-10/revision-4.json",
+  "content_sha256": "b1fdb9267b05f22cb07579104c43ac88b50cd47ae7c77e5dffed226d0c6b1b93"
 }
