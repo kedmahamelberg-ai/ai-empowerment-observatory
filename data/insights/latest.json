@@ -1,18 +1,18 @@
 {
   "meta": {
     "version": "public_insights_v4_release_bound",
-    "generated_at": "2026-11-02T03:02:58.509102Z",
+    "generated_at": "2026-11-03T11:27:28.574629Z",
     "release_id": "2026-W44",
-    "release_revision": 1,
+    "release_revision": 2,
     "classification_run_id": "9b06ee43-cf8d-4169-9a9e-b00ba5a74397",
     "collection_run_id": "3b343527-c994-4e17-93a4-6500887b05d7",
     "observation_start": "2026-10-26",
     "observation_end": "2026-11-01",
     "source_of_truth": "/data/analysis/current.json",
-    "coverage_units": 61,
-    "event_units": 57,
+    "coverage_units": 62,
+    "event_units": 58,
     "extra_coverage": 7,
-    "first_time_event_records": 136,
+    "first_time_event_records": 133,
     "follow_on_event_records": 0,
     "recurring_event_records": 4,
     "source_method": "Publications and organisations are dynamically observed through the current discovery workflow; this is not a fixed journal whitelist.",
@@ -22,37 +22,37 @@
   "directional_summary": {
     "schema_version": "aieo_independent_directions_v2",
     "policy_version": "source_representations_independent_axes_2026_09",
-    "total": 57,
-    "evidence_complete": 57,
+    "total": 58,
+    "evidence_complete": 58,
     "human": {
       "gain": 35,
       "loss": 11,
       "mixed": 7,
-      "none": 4,
+      "none": 5,
       "unresolved": 0
     },
     "ai": {
       "gain": 29,
       "loss": 4,
       "mixed": 14,
-      "none": 10,
+      "none": 11,
       "unresolved": 0
     }
   },
   "complete_content": {
     "policy_version": "complete_content_2026_09_v1",
-    "content_sha256": "072caf3d15ad48f660aa9516f8b4ac0421292a70709b4c2d137cb8f96a0cd77d",
+    "content_sha256": "e7dddaf778589dbebf6afb5b322a0a81915497129ce5c020c92cf0d320e11112",
     "counts": {
       "collected_developments": 140,
       "collected_sources": 147,
-      "eligible_developments": 57,
-      "eligible_sources": 61,
-      "excluded_developments": 83,
-      "excluded_sources": 86
+      "eligible_developments": 58,
+      "eligible_sources": 62,
+      "excluded_developments": 82,
+      "excluded_sources": 85
     },
     "denominator": {
       "unit": "distinct_development",
-      "value": 57
+      "value": 58
     }
   },
   "collection_inventory": {
@@ -1208,5 +1208,5 @@
       }
     }
   },
-  "source_relationship_sha256": "641e0afbc854d5272f5c6500828f2a15e0e7c74291750341040d2960d1b7a68e"
+  "source_relationship_sha256": "a97913c64d1ad63bd6f162abb4ef6f6ef20a4eeddb98904c2ee12bb45d795390"
 }
