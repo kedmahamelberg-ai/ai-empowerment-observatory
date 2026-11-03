@@ -7,8 +7,8 @@
   "period_end": "2026-09-30",
   "observed_week_start": "2026-08-10",
   "observed_week_end": "2026-09-27",
-  "generated_at": "2026-11-02T02:51:28.404831Z",
-  "revision": 14,
+  "generated_at": "2026-11-03T11:26:42.827958Z",
+  "revision": 15,
   "weekly_release_ids": [
     "2026-W33",
     "2026-W34",
@@ -19,13 +19,13 @@
     "2026-W39"
   ],
   "weekly_revisions": {
-    "2026-W33": 14,
-    "2026-W34": 12,
-    "2026-W35": 13,
-    "2026-W36": 9,
-    "2026-W37": 8,
-    "2026-W38": 7,
-    "2026-W39": 6
+    "2026-W33": 15,
+    "2026-W34": 13,
+    "2026-W35": 14,
+    "2026-W36": 10,
+    "2026-W37": 9,
+    "2026-W38": 8,
+    "2026-W39": 7
   },
   "reality": {
     "distinct_event_records": 883,
@@ -83,15 +83,15 @@
     "scope": "All prior event records available to the included reconciliations."
   },
   "reconciliation": {
-    "current_through": "2026-11-02T02:13:07.609907+00:00",
+    "current_through": "2026-11-03T10:01:38.301492+00:00",
     "weekly_revisions_included": {
-      "2026-W33": 14,
-      "2026-W34": 12,
-      "2026-W35": 13,
-      "2026-W36": 9,
-      "2026-W37": 8,
-      "2026-W38": 7,
-      "2026-W39": 6
+      "2026-W33": 15,
+      "2026-W34": 13,
+      "2026-W35": 14,
+      "2026-W36": 10,
+      "2026-W37": 9,
+      "2026-W38": 8,
+      "2026-W39": 7
     },
     "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
   },
@@ -262,8 +262,22 @@
         "2026-W38": 7,
         "2026-W39": 6
       }
+    },
+    {
+      "revision": 15,
+      "changed_at": "2026-11-03T11:26:42.827958Z",
+      "reason": "An included weekly release was restated after longitudinal reconciliation.",
+      "weekly_revisions": {
+        "2026-W33": 15,
+        "2026-W34": 13,
+        "2026-W35": 14,
+        "2026-W36": 10,
+        "2026-W37": 9,
+        "2026-W38": 8,
+        "2026-W39": 7
+      }
     }
   ],
-  "previous_revision_path": "/data/releases/quarterly/archive/2026-Q3/revision-13.json",
-  "content_sha256": "c6ea9ccd737154a19a64dc1394723b81bfc21cbbc3f9bcb4d0fc8cce4a6c3595"
+  "previous_revision_path": "/data/releases/quarterly/archive/2026-Q3/revision-14.json",
+  "content_sha256": "7a917c93176f2f07b085cc395d544f2550eb2dde7df2ace7cb067d3840f54c79"
 }

@@ -7,17 +7,17 @@
   "period_end": "2026-08-31",
   "observed_week_start": "2026-08-10",
   "observed_week_end": "2026-08-30",
-  "generated_at": "2026-11-02T02:51:28.395304Z",
-  "revision": 13,
+  "generated_at": "2026-11-03T11:26:42.817166Z",
+  "revision": 14,
   "weekly_release_ids": [
     "2026-W33",
     "2026-W34",
     "2026-W35"
   ],
   "weekly_revisions": {
-    "2026-W33": 14,
-    "2026-W34": 12,
-    "2026-W35": 13
+    "2026-W33": 15,
+    "2026-W34": 13,
+    "2026-W35": 14
   },
   "reality": {
     "distinct_event_records": 346,
@@ -73,11 +73,11 @@
     "scope": "All prior event records available to the included reconciliations."
   },
   "reconciliation": {
-    "current_through": "2026-11-02T02:13:07.609907+00:00",
+    "current_through": "2026-11-03T10:01:38.301492+00:00",
     "weekly_revisions_included": {
-      "2026-W33": 14,
-      "2026-W34": 12,
-      "2026-W35": 13
+      "2026-W33": 15,
+      "2026-W34": 13,
+      "2026-W35": 14
     },
     "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
   },
@@ -204,8 +204,18 @@
         "2026-W34": 12,
         "2026-W35": 13
       }
+    },
+    {
+      "revision": 14,
+      "changed_at": "2026-11-03T11:26:42.817166Z",
+      "reason": "An included weekly release was restated after longitudinal reconciliation.",
+      "weekly_revisions": {
+        "2026-W33": 15,
+        "2026-W34": 13,
+        "2026-W35": 14
+      }
     }
   ],
-  "previous_revision_path": "/data/releases/monthly/archive/2026-08/revision-12.json",
-  "content_sha256": "e49378938bc47d4fe7aa39b242f92c7ab72c33340e8f83c4d55f99ab423aff7c"
+  "previous_revision_path": "/data/releases/monthly/archive/2026-08/revision-13.json",
+  "content_sha256": "d08fd1d47592d0c9ed97243a0951d52d52e45c78a3538e9b5f1a116e4a8962b9"
 }
