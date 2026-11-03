@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-11-02T03:03:01.036308Z",
+  "generated_at": "2026-11-03T11:27:31.612573Z",
   "system_status": "operational",
   "release_id": "2026-W44",
-  "release_revision": 1,
+  "release_revision": 2,
   "period_start": "2026-10-26",
   "period_end": "2026-11-01",
   "release_status": "provisional_automated",
@@ -12,16 +12,16 @@
   "source_of_truth": "/data/releases/current.json",
   "latest": {
     "release_id": "2026-W44",
-    "coverage_units": 61,
-    "event_units": 57,
-    "complete_content_cohort_sha256": "072caf3d15ad48f660aa9516f8b4ac0421292a70709b4c2d137cb8f96a0cd77d",
+    "coverage_units": 62,
+    "event_units": 58,
+    "complete_content_cohort_sha256": "e7dddaf778589dbebf6afb5b322a0a81915497129ce5c020c92cf0d320e11112",
     "collection_inventory": {
       "collected_developments": 140,
       "collected_sources": 147,
-      "eligible_developments": 57,
-      "eligible_sources": 61,
-      "excluded_developments": 83,
-      "excluded_sources": 86
+      "eligible_developments": 58,
+      "eligible_sources": 62,
+      "excluded_developments": 82,
+      "excluded_sources": 85
     },
     "review_queue_count": 88,
     "relationship_status": "current_evidence_reading"
