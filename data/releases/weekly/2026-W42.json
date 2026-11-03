@@ -2,10 +2,10 @@
   "schema_version": "aieo_public_release_v3.0",
   "release_id": "2026-W42",
   "release_type": "weekly",
-  "revision": 3,
+  "revision": 4,
   "period_start": "2026-10-12",
   "period_end": "2026-10-18",
-  "generated_at": "2026-11-02T02:13:18.848550Z",
+  "generated_at": "2026-11-03T10:01:49.002790Z",
   "public_label": "Evidence-based pilot release",
   "lineage": {
     "collection_run_id": "d362e266-38a5-4d22-98fe-20e32a82fcff",
@@ -38,18 +38,18 @@
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
     "considered_through": "2026-11-02T01:54:41.761056+00:00",
-    "registry_snapshot_id": "registry_ae7f1cd792a77a5c2ba0",
+    "registry_snapshot_id": "registry_a6f5230790ca57302b73",
     "all_prior_events_considered": true,
     "disclosure": "First-time means the canonical development was not present in an earlier standardized AIEO weekly release. Collection retries do not turn a current-week development into a recurring one."
   },
   "reconciliation": {
-    "run_id": "099bbe6a-ecbc-4a1d-adfc-2427b759f7ef",
-    "run_key": "reconcile_20261102T020957Z",
-    "mode": "weekly",
-    "completed_at": "2026-11-02T02:13:07.609907+00:00",
+    "run_id": "d8350fd6-da7d-4485-8886-1980b3026ca1",
+    "run_key": "reconcile_20261103T093012Z",
+    "mode": "monthly",
+    "completed_at": "2026-11-03T10:01:38.301492+00:00",
     "status": "success"
   },
-  "data_current_through": "2026-11-02T02:13:07.609907+00:00",
+  "data_current_through": "2026-11-03T10:01:38.301492+00:00",
   "counts": {
     "observed_article_records": 154,
     "ai_relevant_articles": 154,
@@ -1448,7 +1448,7 @@
       "longitudinal_event_memory_active": true,
       "historical_pool_disclosed": true,
       "longitudinal_reconciliation_status": "success",
-      "registry_snapshot_id": "registry_ae7f1cd792a77a5c2ba0"
+      "registry_snapshot_id": "registry_a6f5230790ca57302b73"
     },
     "denominators": {
       "coverage_total": 154,
@@ -42224,8 +42224,8 @@
       }
     ]
   },
-  "content_sha256": "3cec87b6cc9a27a2161efc7cc2a07d3d47fa56b169e442ab4448bfb0ba868cc1",
-  "restated_at": "2026-11-02T02:13:18.848550Z",
+  "content_sha256": "75d7d3e39cf8375292460bae47f258601e7014d534d35a835e6653bdf3cc3397",
+  "restated_at": "2026-11-03T10:01:49.002790Z",
   "revision_reason": "Longitudinal reconciliation changed new-versus-recurring assignments.",
   "revision_history": [
     {
@@ -42371,8 +42371,81 @@
         }
       },
       "reconciliation_run_id": "099bbe6a-ecbc-4a1d-adfc-2427b759f7ef"
+    },
+    {
+      "revision": 4,
+      "changed_at": "2026-11-03T10:01:49.002790Z",
+      "reason": "Longitudinal reconciliation changed new-versus-recurring assignments.",
+      "change_summary": {
+        "coverage_articles_reassigned": 0,
+        "event_records_before": 149,
+        "event_records_after": 149,
+        "event_record_change": 0,
+        "new_event_records_before": 148,
+        "new_event_records_after": 148,
+        "recurring_event_records_before": 1,
+        "recurring_event_records_after": 1,
+        "follow_on_event_records_after": 0,
+        "possible_historical_match_records_after": 0,
+        "merged_event_ids": [],
+        "effective_event_ids_added": [],
+        "follow_on_event_records_before": 0,
+        "possible_historical_match_records_before": 0,
+        "rediscovered_article_records_before": 1,
+        "rediscovered_article_records_after": 1,
+        "replication_lag_count_before": 0,
+        "replication_lag_count_after": 0,
+        "definitions_changed": false,
+        "reliability_denominators_changed": false,
+        "event_diagnostics_changed": true,
+        "reliability_denominators_before": {
+          "coverage_total": 154,
+          "coverage_ai_relevant": 154,
+          "coverage_scored": 92,
+          "coverage_excluded_unclear": 62,
+          "coverage_not_ai_relevant": 0,
+          "event_total": 149,
+          "event_ai_relevant": 149,
+          "event_scored": 143,
+          "event_excluded_unclear": 6,
+          "event_not_ai_relevant": 0
+        },
+        "reliability_denominators_after": {
+          "coverage_total": 154,
+          "coverage_ai_relevant": 154,
+          "coverage_scored": 92,
+          "coverage_excluded_unclear": 62,
+          "coverage_not_ai_relevant": 0,
+          "event_total": 149,
+          "event_ai_relevant": 149,
+          "event_scored": 143,
+          "event_excluded_unclear": 6,
+          "event_not_ai_relevant": 0
+        },
+        "event_diagnostics_before": {
+          "singleton_share": 0.973154,
+          "multi_source_share": 0.026846,
+          "possible_duplicate_records": 0,
+          "same_event_recall_validated": false,
+          "longitudinal_event_memory_active": true,
+          "historical_pool_disclosed": true,
+          "longitudinal_reconciliation_status": "success",
+          "registry_snapshot_id": "registry_ae7f1cd792a77a5c2ba0"
+        },
+        "event_diagnostics_after": {
+          "singleton_share": 0.973154,
+          "multi_source_share": 0.026846,
+          "possible_duplicate_records": 0,
+          "same_event_recall_validated": false,
+          "longitudinal_event_memory_active": true,
+          "historical_pool_disclosed": true,
+          "longitudinal_reconciliation_status": "success",
+          "registry_snapshot_id": "registry_a6f5230790ca57302b73"
+        }
+      },
+      "reconciliation_run_id": "d8350fd6-da7d-4485-8886-1980b3026ca1"
     }
   ],
-  "previous_revision_path": "/data/releases/weekly/archive/2026-W42/revision-2.json",
+  "previous_revision_path": "/data/releases/weekly/archive/2026-W42/revision-3.json",
   "restatement_version": "release_restatement_v1.3"
 }
