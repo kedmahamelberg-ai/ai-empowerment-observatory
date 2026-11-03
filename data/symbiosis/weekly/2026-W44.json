@@ -2,12 +2,12 @@
   "schema_version": "aieo_symbiosis_public_v2.0",
   "release_id": "2026-W44",
   "release_type": "weekly_relationship_lens",
-  "revision": 2,
+  "revision": 3,
   "period_start": "2026-10-26",
   "period_end": "2026-11-01",
-  "generated_at": "2026-11-02T02:51:12.649647Z",
+  "generated_at": "2026-11-03T11:27:24.153638Z",
   "codebook_version": "aieo_news_symbiosis_v0.1",
-  "source_release_sha256": "1ad622c7e44a1371877929dcd031b5d3d9298c80c365752f5077fbd8909b5791",
+  "source_release_sha256": "103bb5ebe840bcfbe36c1a477e7fab893e906f3fb6bd3d13ad3ac35c97724f4c",
   "public_status": "current_evidence_reading",
   "scope_note": "Readings of what sources report, claim or anticipate about people and AI. These are not measures of verified real-world impact.",
   "review": {
@@ -68,15 +68,15 @@
       "human_constraining_only": 3,
       "ai_enabling_only": 0,
       "ai_constraining_only": 1,
-      "no_clear_relational_signal": 2,
+      "no_clear_relational_signal": 3,
       "ambiguous_relational_signal": 18,
-      "insufficient_evidence": 80
+      "insufficient_evidence": 79
     },
     "display_complete_configuration_count": 31,
     "display_partial_signal_count": 9,
-    "display_no_clear_relational_signal_count": 2,
+    "display_no_clear_relational_signal_count": 3,
     "display_ambiguous_relational_signal_count": 18,
-    "display_insufficient_evidence_count": 80,
+    "display_insufficient_evidence_count": 79,
     "display_core_four_distribution": {
       "mutualism": 0.709677,
       "ai_benefiting_parasitism": 0.193548,
@@ -85,32 +85,32 @@
     },
     "denominator_note": "The weekly display reports the source evidence available for the current release. A development is kept separate when the available source evidence is not enough to show a clear people outcome.",
     "human_direction_counts": {
-      "unclear": 81,
-      "neutral": 5,
+      "unclear": 80,
+      "neutral": 6,
       "enabling": 36,
       "constraining": 11,
       "mixed": 7
     },
     "ai_direction_counts": {
-      "unclear": 81,
+      "unclear": 80,
       "mixed": 15,
       "enabling": 30,
       "constraining": 4,
-      "neutral": 10
+      "neutral": 11
     },
     "display_human_direction_counts": {
-      "unclear": 81,
-      "neutral": 5,
+      "unclear": 80,
+      "neutral": 6,
       "enabling": 36,
       "constraining": 11,
       "mixed": 7
     },
     "display_ai_direction_counts": {
-      "unclear": 81,
+      "unclear": 80,
       "mixed": 15,
       "enabling": 30,
       "constraining": 4,
-      "neutral": 10
+      "neutral": 11
     }
   },
   "people_signals": {
@@ -140,12 +140,12 @@
     "explicit_multi_label_units": 140,
     "distribution_coded_units": 140,
     "body_coverage_counts": {
-      "complete_written_source": 60,
-      "incomplete_written_source": 80
+      "complete_written_source": 61,
+      "incomplete_written_source": 79
     },
     "not_clear_breakdown": {
-      "not_enough_evidence": 81,
-      "no_directional_people_change": 5
+      "not_enough_evidence": 80,
+      "no_directional_people_change": 6
     },
     "overlap_note": "A development may contain more than one signal, so these counts do not have to add up to the weekly total.",
     "relationship_patterns_assessed": 140
@@ -196,15 +196,15 @@
       "human_constraining_only": 2,
       "ai_enabling_only": 2,
       "ai_constraining_only": 0,
-      "no_clear_relational_signal": 4,
+      "no_clear_relational_signal": 5,
       "ambiguous_relational_signal": 11,
-      "insufficient_evidence": 83
+      "insufficient_evidence": 82
     },
     "display_complete_configuration_count": 41,
     "display_partial_signal_count": 8,
-    "display_no_clear_relational_signal_count": 4,
+    "display_no_clear_relational_signal_count": 5,
     "display_ambiguous_relational_signal_count": 11,
-    "display_insufficient_evidence_count": 83,
+    "display_insufficient_evidence_count": 82,
     "display_core_four_distribution": {
       "ai_benefiting_parasitism": 0.04878,
       "competition": 0.097561,
@@ -6706,21 +6706,28 @@
     {
       "axes": {
         "ai": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "Policy-focused discourse on AI governance",
+          "direction": "none"
         },
         "human": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "Policy discussion; governance framing",
+          "direction": "none"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [],
+        "evidence_types": [
+          "source_representation"
+        ],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": false,
-        "unresolved_reason": "complete_written_source_unavailable"
+        "evidence_complete": true,
+        "unresolved_reason": ""
       },
-      "relationship_evidence": {},
+      "relationship_evidence": {
+        "mutualism": "",
+        "competition": "",
+        "ai_benefiting_parasitism": "",
+        "human_benefiting_parasitism": ""
+      },
       "relationship_pattern_status": "assessed",
       "event_id": "8bc502b4-4626-4ce1-b3e9-87119c09922a",
       "event_title": "High-level panel discussion on AI - Villa Europa",
@@ -6738,47 +6745,49 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "insufficient_evidence",
-      "plain_label": "There is not enough source evidence to classify the relationship",
-      "human_experience_type": "unclear",
-      "ai_expressive_role": "unclear",
-      "human_direction": "unclear",
-      "ai_direction": "unclear",
-      "evidence_status": "insufficient",
-      "content_basis": "not_available",
+      "configuration": "no_clear_relational_signal",
+      "plain_label": "No clear human-AI relationship is described",
+      "human_experience_type": "neutral",
+      "ai_expressive_role": "neutral",
+      "human_direction": "neutral",
+      "ai_direction": "neutral",
+      "evidence_status": "sufficient",
+      "content_basis": "full_text",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "no_full_body",
+        "body_coverage": "all_sources",
         "source_quality": {
           "e962d95d1ab9a3b761e40f77cafdaf11": {
-            "flags": [
-              "no_usable_complete_body"
-            ],
-            "usable_complete_body": false
+            "flags": [],
+            "scope": "written_page",
+            "characters": 1190,
+            "body_sha256": "dfe44caa023c877f32d1ff02b37301979934a90bc6ab9a92a512699c2c3d216c",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "source_fingerprints": {
-          "e962d95d1ab9a3b761e40f77cafdaf11": null
+          "e962d95d1ab9a3b761e40f77cafdaf11": "dfe44caa023c877f32d1ff02b37301979934a90bc6ab9a92a512699c2c3d216c"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 1,
+        "not_available_sources": 0,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": false,
-        "people_evidence": "",
-        "ai_evidence": "",
-        "flags": [
-          "incomplete_written_source"
-        ]
+        "source_reading_complete": true,
+        "people_evidence": "Policy discussion; governance framing",
+        "ai_evidence": "Policy-focused discourse on AI governance",
+        "flags": []
       },
       "story_country_iso3s": [],
-      "evidence_summary": "No full article body was available, so the source was not model-classified.",
-      "reasoning": "No full article body was available, so the source was not model-classified.",
+      "evidence_summary": "A global panel-discussion on AI governance and regulation emphasizes human-centric rules and international cooperation without describing direct impacts on people or AI capabilities.",
+      "reasoning": "A global panel-discussion on AI governance and regulation emphasizes human-centric rules and international cooperation without describing direct impacts on people or AI capabilities.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -6793,7 +6802,7 @@
         "not_clear_yet": true
       },
       "distribution_signal": "not_shown",
-      "public_takeaway": "",
+      "public_takeaway": "Policy discussion; governance framing",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -11132,7 +11141,7 @@
       "event_id": "cc6cb8da-35cf-49ce-a247-602de5af0abc",
       "event_title": "Artificial Intelligence: How Tech Giants Tighten Their Grip on the Economy",
       "event_date": "2026-10-28",
-      "novelty_status": "first_time",
+      "novelty_status": "possible_historical_match",
       "sources": [
         {
           "article_id": "4ade0349b98bc438984be33e846de3cc",
@@ -13877,7 +13886,7 @@
       "event_id": "edec87fa-1adc-426c-b55b-b6720d874ed0",
       "event_title": "Artificial Intelligence: The Presumption of Use of Cultural Content Examined by the National Assembly",
       "event_date": "2026-10-28",
-      "novelty_status": "first_time",
+      "novelty_status": "possible_historical_match",
       "sources": [
         {
           "article_id": "7ee9c184e84c9d2f70c920b91091ed82",
@@ -14728,7 +14737,7 @@
       "event_id": "fab0bac4-4447-4538-a576-c1e61a39fc7f",
       "event_title": "Why Should a Central Bank Be Interested in Artificial Intelligence? The Example of the French Bank",
       "event_date": "2026-10-27",
-      "novelty_status": "first_time",
+      "novelty_status": "possible_historical_match",
       "sources": [
         {
           "article_id": "33ec043569d5957ec1f790667b78fef8",
@@ -15028,26 +15037,26 @@
       "gain": 36,
       "loss": 11,
       "mixed": 7,
-      "none": 5,
-      "unresolved": 81
+      "none": 6,
+      "unresolved": 80
     },
     "ai": {
       "gain": 30,
       "loss": 4,
       "mixed": 15,
-      "none": 10,
-      "unresolved": 81
+      "none": 11,
+      "unresolved": 80
     },
-    "evidence_complete": 60,
+    "evidence_complete": 61,
     "counting_rule": "Each axis partitions the same records. Mixed is one category. The two axes are not added together."
   },
   "direction_policy_version": "source_representations_independent_axes_2026_09",
   "classification_scope": {
     "unit": "development",
     "total": 140,
-    "complete_written_sources": 60,
-    "incomplete_written_sources": 80,
+    "complete_written_sources": 61,
+    "incomplete_written_sources": 79,
     "legacy_configuration_note": "Legacy single-label fields are retained for compatibility; independent axis categories are authoritative under the current policy."
   },
-  "content_sha256": "641e0afbc854d5272f5c6500828f2a15e0e7c74291750341040d2960d1b7a68e"
+  "content_sha256": "a97913c64d1ad63bd6f162abb4ef6f6ef20a4eeddb98904c2ee12bb45d795390"
 }

@@ -1,6 +1,6 @@
 {
   "schema_version": "aieo_relationship_evidence_audit_v1",
-  "generated_at": "2026-11-02T03:02:54.256849Z",
+  "generated_at": "2026-11-03T11:27:24.383653Z",
   "release_id": "2026-W44",
   "period_start": "2026-10-26",
   "period_end": "2026-11-01",
@@ -20,21 +20,21 @@
       "benefit_shown": 36,
       "downside_shown": 11,
       "benefit_and_downside": 7,
-      "no_clear_people_change": 6,
-      "too_little_evidence": 80
+      "no_clear_people_change": 7,
+      "too_little_evidence": 79
     },
     "uneven_effect_count": 7,
     "body_coverage_counts": {
-      "all_sources": 58,
-      "no_full_body": 80,
+      "all_sources": 59,
+      "no_full_body": 79,
       "some_sources": 2
     },
     "reported_body_coverage_counts": {
-      "complete_written_source": 60,
-      "incomplete_written_source": 80
+      "complete_written_source": 61,
+      "incomplete_written_source": 79
     },
     "audit_flag_counts": {
-      "insufficient_evidence": 80
+      "insufficient_evidence": 79
     },
     "plain_language_note": "The five primary outcome counts add up to the weekly total. An uneven effect is a separate detail that can overlap with any outcome."
   },
@@ -3788,34 +3788,32 @@
       "event_id": "8bc502b4-4626-4ce1-b3e9-87119c09922a",
       "title": "High-level panel discussion on AI - Villa Europa",
       "date": "2026-10-30",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "no_clear_people_change",
+      "primary_outcome_label": "No clear change for people",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "no_clear_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "Policy discussion; governance framing",
+          "ai_evidence": "Policy-focused discourse on AI governance",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "GBR"
@@ -3834,9 +3832,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "50a85319-b6d1-4605-8925-db04b534f675",
