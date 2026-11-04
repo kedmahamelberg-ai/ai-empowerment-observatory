@@ -2,10 +2,10 @@
   "schema_version": "aieo_symbiosis_public_v2.0",
   "release_id": "2026-W44",
   "release_type": "weekly_relationship_lens",
-  "revision": 3,
+  "revision": 4,
   "period_start": "2026-10-26",
   "period_end": "2026-11-01",
-  "generated_at": "2026-11-03T11:27:24.153638Z",
+  "generated_at": "2026-11-04T11:39:48.783061Z",
   "codebook_version": "aieo_news_symbiosis_v0.1",
   "source_release_sha256": "103bb5ebe840bcfbe36c1a477e7fab893e906f3fb6bd3d13ad3ac35c97724f4c",
   "public_status": "current_evidence_reading",
@@ -69,14 +69,14 @@
       "ai_enabling_only": 0,
       "ai_constraining_only": 1,
       "no_clear_relational_signal": 3,
-      "ambiguous_relational_signal": 18,
-      "insufficient_evidence": 79
+      "ambiguous_relational_signal": 19,
+      "insufficient_evidence": 78
     },
     "display_complete_configuration_count": 31,
     "display_partial_signal_count": 9,
     "display_no_clear_relational_signal_count": 3,
-    "display_ambiguous_relational_signal_count": 18,
-    "display_insufficient_evidence_count": 79,
+    "display_ambiguous_relational_signal_count": 19,
+    "display_insufficient_evidence_count": 78,
     "display_core_four_distribution": {
       "mutualism": 0.709677,
       "ai_benefiting_parasitism": 0.193548,
@@ -85,29 +85,29 @@
     },
     "denominator_note": "The weekly display reports the source evidence available for the current release. A development is kept separate when the available source evidence is not enough to show a clear people outcome.",
     "human_direction_counts": {
-      "unclear": 80,
+      "unclear": 79,
       "neutral": 6,
       "enabling": 36,
       "constraining": 11,
-      "mixed": 7
+      "mixed": 8
     },
     "ai_direction_counts": {
-      "unclear": 80,
-      "mixed": 15,
+      "unclear": 79,
+      "mixed": 16,
       "enabling": 30,
       "constraining": 4,
       "neutral": 11
     },
     "display_human_direction_counts": {
-      "unclear": 80,
+      "unclear": 79,
       "neutral": 6,
       "enabling": 36,
       "constraining": 11,
-      "mixed": 7
+      "mixed": 8
     },
     "display_ai_direction_counts": {
-      "unclear": 80,
-      "mixed": 15,
+      "unclear": 79,
+      "mixed": 16,
       "enabling": 30,
       "constraining": 4,
       "neutral": 11
@@ -118,17 +118,17 @@
     "expected_units": 140,
     "classified_units": 140,
     "relationship_pattern_counts": {
-      "mutualism": 34,
+      "mutualism": 35,
       "ai_benefiting_parasitism": 8,
       "human_benefiting_parasitism": 3,
       "competition": 0
     },
     "people_signal_counts": {
-      "people_gaining": 43,
-      "people_losing_ground": 18,
-      "mixed_picture": 7,
+      "people_gaining": 44,
+      "people_losing_ground": 19,
+      "mixed_picture": 8,
       "not_everyone_benefits": 7,
-      "not_clear_yet": 86
+      "not_clear_yet": 85
     },
     "availability": {
       "people_gaining": true,
@@ -140,11 +140,11 @@
     "explicit_multi_label_units": 140,
     "distribution_coded_units": 140,
     "body_coverage_counts": {
-      "complete_written_source": 61,
-      "incomplete_written_source": 79
+      "complete_written_source": 62,
+      "incomplete_written_source": 78
     },
     "not_clear_breakdown": {
-      "not_enough_evidence": 80,
+      "not_enough_evidence": 79,
       "no_directional_people_change": 6
     },
     "overlap_note": "A development may contain more than one signal, so these counts do not have to add up to the weekly total.",
@@ -188,7 +188,7 @@
     "display_basis": "current_evidence_reading_with_reviewed_corrections",
     "display_classified_units": 147,
     "display_configuration_counts": {
-      "mutualism": 34,
+      "mutualism": 35,
       "ai_benefiting_parasitism": 2,
       "human_benefiting_parasitism": 1,
       "competition": 4,
@@ -198,18 +198,18 @@
       "ai_constraining_only": 0,
       "no_clear_relational_signal": 5,
       "ambiguous_relational_signal": 11,
-      "insufficient_evidence": 82
+      "insufficient_evidence": 81
     },
-    "display_complete_configuration_count": 41,
+    "display_complete_configuration_count": 42,
     "display_partial_signal_count": 8,
     "display_no_clear_relational_signal_count": 5,
     "display_ambiguous_relational_signal_count": 11,
-    "display_insufficient_evidence_count": 82,
+    "display_insufficient_evidence_count": 81,
     "display_core_four_distribution": {
-      "ai_benefiting_parasitism": 0.04878,
-      "competition": 0.097561,
-      "human_benefiting_parasitism": 0.02439,
-      "mutualism": 0.829268
+      "ai_benefiting_parasitism": 0.047619,
+      "competition": 0.095238,
+      "human_benefiting_parasitism": 0.02381,
+      "mutualism": 0.833333
     },
     "denominator_note": "The weekly display reports the source evidence available for the current release. A development is kept separate when the available source evidence is not enough to show a clear people outcome."
   },
@@ -10380,21 +10380,28 @@
     {
       "axes": {
         "ai": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "The discourse presents AI as producing outputs (biosurveillance, countermeasures) and enabling broader activity (public-private collaboration).",
+          "direction": "mixed"
         },
         "human": {
-          "evidence": "",
-          "direction": "unresolved"
+          "evidence": "The discourse frames AI as enabling advanced security and resilience, implying human expansion through new capabilities and collaboration.",
+          "direction": "mixed"
         },
         "evidence_scope": "written_source",
-        "evidence_types": [],
+        "evidence_types": [
+          "source_representation"
+        ],
         "policy_version": "source_representations_independent_axes_2026_09",
         "schema_version": "aieo_independent_directions_v2",
-        "evidence_complete": false,
-        "unresolved_reason": "complete_written_source_unavailable"
+        "evidence_complete": true,
+        "unresolved_reason": ""
       },
-      "relationship_evidence": {},
+      "relationship_evidence": {
+        "mutualism": "AI-enabled biosurveillance and collaboration amplify human security and capabilities.",
+        "competition": "",
+        "ai_benefiting_parasitism": "",
+        "human_benefiting_parasitism": ""
+      },
       "relationship_pattern_status": "assessed",
       "event_id": "c4dbe984-a106-44fb-8412-35ac0b228072",
       "event_title": "Biosecurity and Artificial Intelligence—Risk, Myths, and Opportunities",
@@ -10412,62 +10419,66 @@
       ],
       "reviewed": false,
       "review_status": "pending",
-      "configuration": "insufficient_evidence",
-      "plain_label": "There is not enough source evidence to classify the relationship",
+      "configuration": "ambiguous_relational_signal",
+      "plain_label": "A relationship is suggested, but its direction is unclear",
       "human_experience_type": "unclear",
       "ai_expressive_role": "unclear",
-      "human_direction": "unclear",
-      "ai_direction": "unclear",
-      "evidence_status": "insufficient",
-      "content_basis": "not_available",
+      "human_direction": "mixed",
+      "ai_direction": "mixed",
+      "evidence_status": "sufficient",
+      "content_basis": "full_text",
       "evidence_basis_summary": {
         "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "no_full_body",
+        "body_coverage": "all_sources",
         "source_quality": {
           "41fd2b6af94bbe979732a5f7edb6d6b7": {
-            "flags": [
-              "no_usable_complete_body"
-            ],
-            "usable_complete_body": false
+            "flags": [],
+            "scope": "written_page",
+            "characters": 1972,
+            "body_sha256": "3057ce0c160977fb9fae27e0bfed48b2a44cc78301570f6c1e074b32272cf919",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
           }
         },
         "snippet_sources": 0,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "source_fingerprints": {
-          "41fd2b6af94bbe979732a5f7edb6d6b7": null
+          "41fd2b6af94bbe979732a5f7edb6d6b7": "3057ce0c160977fb9fae27e0bfed48b2a44cc78301570f6c1e074b32272cf919"
         },
         "headline_only_sources": 0,
-        "not_available_sources": 1,
+        "not_available_sources": 0,
         "article_summary_sources": 0
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
-        "source_reading_complete": false,
-        "people_evidence": "",
-        "ai_evidence": "",
-        "flags": [
-          "incomplete_written_source"
-        ]
+        "source_reading_complete": true,
+        "people_evidence": "The discourse frames AI as enabling advanced security and resilience, implying human expansion through new capabilities and collaboration.",
+        "ai_evidence": "The discourse presents AI as producing outputs (biosurveillance, countermeasures) and enabling broader activity (public-private collaboration).",
+        "flags": []
       },
-      "story_country_iso3s": [],
-      "evidence_summary": "No full article body was available, so the source was not model-classified.",
-      "reasoning": "No full article body was available, so the source was not model-classified.",
+      "story_country_iso3s": [
+        "USA"
+      ],
+      "evidence_summary": "The event depicts AI as expanding and extending human capabilities in biosecurity through collaboration, with opportunities and safeguards discussed.",
+      "reasoning": "The event depicts AI as expanding and extending human capabilities in biosecurity through collaboration, with opportunities and safeguards discussed.",
       "relationship_patterns": {
-        "mutualism": false,
+        "mutualism": true,
         "ai_benefiting_parasitism": false,
         "human_benefiting_parasitism": false,
         "competition": false
       },
       "public_signals": {
-        "people_gaining": false,
-        "people_losing_ground": false,
-        "mixed_picture": false,
+        "people_gaining": true,
+        "people_losing_ground": true,
+        "mixed_picture": true,
         "not_everyone_benefits": false,
-        "not_clear_yet": true
+        "not_clear_yet": false
       },
-      "distribution_signal": "not_shown",
-      "public_takeaway": "",
+      "distribution_signal": "broadly_shared",
+      "public_takeaway": "The discourse frames AI as enabling advanced security and resilience, implying human expansion through new capabilities and collaboration.",
       "multi_label_available": true,
       "distribution_coded": true,
       "signal_provenance": "model_classification",
@@ -15036,27 +15047,27 @@
     "human": {
       "gain": 36,
       "loss": 11,
-      "mixed": 7,
+      "mixed": 8,
       "none": 6,
-      "unresolved": 80
+      "unresolved": 79
     },
     "ai": {
       "gain": 30,
       "loss": 4,
-      "mixed": 15,
+      "mixed": 16,
       "none": 11,
-      "unresolved": 80
+      "unresolved": 79
     },
-    "evidence_complete": 61,
+    "evidence_complete": 62,
     "counting_rule": "Each axis partitions the same records. Mixed is one category. The two axes are not added together."
   },
   "direction_policy_version": "source_representations_independent_axes_2026_09",
   "classification_scope": {
     "unit": "development",
     "total": 140,
-    "complete_written_sources": 61,
-    "incomplete_written_sources": 79,
+    "complete_written_sources": 62,
+    "incomplete_written_sources": 78,
     "legacy_configuration_note": "Legacy single-label fields are retained for compatibility; independent axis categories are authoritative under the current policy."
   },
-  "content_sha256": "a97913c64d1ad63bd6f162abb4ef6f6ef20a4eeddb98904c2ee12bb45d795390"
+  "content_sha256": "cd4d0e9ae8f82e419ee85c28aa12adabd7756b6c3fec747d46e805886dbd5369"
 }

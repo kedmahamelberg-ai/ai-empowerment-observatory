@@ -1,6 +1,6 @@
 {
   "schema_version": "aieo_relationship_evidence_audit_v1",
-  "generated_at": "2026-11-03T11:27:24.383653Z",
+  "generated_at": "2026-11-04T11:39:48.962738Z",
   "release_id": "2026-W44",
   "period_start": "2026-10-26",
   "period_end": "2026-11-01",
@@ -19,22 +19,22 @@
     "primary_outcome_counts": {
       "benefit_shown": 36,
       "downside_shown": 11,
-      "benefit_and_downside": 7,
+      "benefit_and_downside": 8,
       "no_clear_people_change": 7,
-      "too_little_evidence": 79
+      "too_little_evidence": 78
     },
     "uneven_effect_count": 7,
     "body_coverage_counts": {
-      "all_sources": 59,
-      "no_full_body": 79,
+      "all_sources": 60,
+      "no_full_body": 78,
       "some_sources": 2
     },
     "reported_body_coverage_counts": {
-      "complete_written_source": 61,
-      "incomplete_written_source": 79
+      "complete_written_source": 62,
+      "incomplete_written_source": 78
     },
     "audit_flag_counts": {
-      "insufficient_evidence": 79
+      "insufficient_evidence": 78
     },
     "plain_language_note": "The five primary outcome counts add up to the weekly total. An uneven effect is a separate detail that can overlap with any outcome."
   },
@@ -2175,39 +2175,39 @@
       "event_id": "c4dbe984-a106-44fb-8412-35ac0b228072",
       "title": "Biosecurity and Artificial Intelligence—Risk, Myths, and Opportunities",
       "date": "2026-10-31",
-      "primary_outcome": "too_little_evidence",
-      "primary_outcome_label": "Too little evidence",
+      "primary_outcome": "benefit_and_downside",
+      "primary_outcome_label": "Both benefit and downside shown",
       "uneven_effect_noted": false,
       "classification": {
-        "content_basis": "not_available",
-        "evidence_status": "insufficient",
+        "content_basis": "full_text",
+        "evidence_status": "sufficient",
         "reviewed": false,
         "review_status": "pending",
-        "configuration": "insufficient_evidence",
+        "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
-          "source_reading_complete": false,
-          "people_evidence": "",
-          "ai_evidence": "",
-          "flags": [
-            "incomplete_written_source"
-          ]
+          "source_reading_complete": true,
+          "people_evidence": "The discourse frames AI as enabling advanced security and resilience, implying human expansion through new capabilities and collaboration.",
+          "ai_evidence": "The discourse presents AI as producing outputs (biosurveillance, countermeasures) and enabling broader activity (public-private collaboration).",
+          "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article not available",
+        "label": "Full article used for every source",
         "source_count": 1,
-        "full_text_sources": 0,
+        "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "no_full_body"
+        "body_coverage": "all_sources"
       },
       "source_markets": [
         "USA"
       ],
-      "story_country_iso3s": [],
+      "story_country_iso3s": [
+        "USA"
+      ],
       "sources": [
         {
           "article_id": "41fd2b6af94bbe979732a5f7edb6d6b7",
@@ -2221,9 +2221,7 @@
           ]
         }
       ],
-      "audit_flags": [
-        "insufficient_evidence"
-      ]
+      "audit_flags": []
     },
     {
       "event_id": "8c745559-e8f0-4f49-81fd-0ff1d4243b2b",
