@@ -2,10 +2,10 @@
   "schema_version": "aieo_symbiosis_public_v2.0",
   "release_id": "2026-W45",
   "release_type": "weekly_relationship_lens",
-  "revision": 5,
+  "revision": 6,
   "period_start": "2026-11-02",
   "period_end": "2026-11-08",
-  "generated_at": "2026-11-09T09:51:39.369408Z",
+  "generated_at": "2026-11-09T10:46:53.274740Z",
   "codebook_version": "aieo_news_symbiosis_v0.1",
   "source_release_sha256": "2954ae2c0f18f4d71b578db7ae4b9e10f1ff64541e06903789cc16db483bfc43",
   "public_status": "current_evidence_reading",
@@ -60,7 +60,7 @@
     "display_basis": "current_evidence_reading_with_reviewed_corrections",
     "display_classified_units": 138,
     "display_configuration_counts": {
-      "mutualism": 34,
+      "mutualism": 33,
       "ai_benefiting_parasitism": 3,
       "human_benefiting_parasitism": 0,
       "competition": 3,
@@ -69,48 +69,48 @@
       "ai_enabling_only": 2,
       "ai_constraining_only": 1,
       "no_clear_relational_signal": 7,
-      "ambiguous_relational_signal": 22,
+      "ambiguous_relational_signal": 23,
       "insufficient_evidence": 62
     },
-    "display_complete_configuration_count": 40,
+    "display_complete_configuration_count": 39,
     "display_partial_signal_count": 7,
     "display_no_clear_relational_signal_count": 7,
-    "display_ambiguous_relational_signal_count": 22,
+    "display_ambiguous_relational_signal_count": 23,
     "display_insufficient_evidence_count": 62,
     "display_core_four_distribution": {
-      "mutualism": 0.85,
-      "ai_benefiting_parasitism": 0.075,
+      "mutualism": 0.846154,
+      "ai_benefiting_parasitism": 0.076923,
       "human_benefiting_parasitism": 0.0,
-      "competition": 0.075
+      "competition": 0.076923
     },
     "denominator_note": "The weekly display reports the source evidence available for the current release. A development is kept separate when the available source evidence is not enough to show a clear people outcome.",
     "human_direction_counts": {
-      "enabling": 42,
+      "enabling": 41,
       "unclear": 63,
       "neutral": 10,
       "constraining": 9,
-      "mixed": 14
+      "mixed": 15
     },
     "ai_direction_counts": {
       "mixed": 15,
       "unclear": 63,
-      "enabling": 44,
+      "enabling": 43,
       "constraining": 4,
-      "neutral": 12
+      "neutral": 13
     },
     "display_human_direction_counts": {
-      "enabling": 42,
+      "enabling": 41,
       "unclear": 63,
       "neutral": 10,
       "constraining": 9,
-      "mixed": 14
+      "mixed": 15
     },
     "display_ai_direction_counts": {
       "mixed": 15,
       "unclear": 63,
-      "enabling": 44,
+      "enabling": 43,
       "constraining": 4,
-      "neutral": 12
+      "neutral": 13
     }
   },
   "people_signals": {
@@ -118,15 +118,15 @@
     "expected_units": 138,
     "classified_units": 138,
     "relationship_pattern_counts": {
-      "mutualism": 50,
+      "mutualism": 49,
       "ai_benefiting_parasitism": 7,
       "human_benefiting_parasitism": 2,
       "competition": 2
     },
     "people_signal_counts": {
       "people_gaining": 56,
-      "people_losing_ground": 23,
-      "mixed_picture": 14,
+      "people_losing_ground": 24,
+      "mixed_picture": 15,
       "not_everyone_benefits": 7,
       "not_clear_yet": 73
     },
@@ -148,7 +148,7 @@
       "no_directional_people_change": 10
     },
     "overlap_note": "A development may contain more than one signal, so these counts do not have to add up to the weekly total.",
-    "relationship_patterns_assessed": 135
+    "relationship_patterns_assessed": 134
   },
   "source_body_qc": {
     "review_file": null,
@@ -5103,12 +5103,12 @@
     {
       "axes": {
         "ai": {
-          "evidence": "AI serves as a drafting tool, extending its operational reach in legal procedures.",
-          "direction": "gain"
+          "direction": "none",
+          "evidence": "The legal analysis reports no separate outcome for AI systems or their operators."
         },
         "human": {
-          "evidence": "The evidence shows humans can access and utilize AI-assisted drafting, extending their legal-writing capacity.",
-          "direction": "gain"
+          "direction": "mixed",
+          "evidence": "AI may ease drafting, while inadequate or abusive filings can lead to rejection and fines; no net access-to-justice outcome is measured."
         },
         "evidence_scope": "written_source",
         "evidence_types": [
@@ -5119,13 +5119,8 @@
         "evidence_complete": true,
         "unresolved_reason": ""
       },
-      "relationship_evidence": {
-        "mutualism": "The AI aids in drafting, potentially increasing human effectiveness while the AI system also expands its use through generated outputs.",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
-      "relationship_pattern_status": "assessed",
+      "relationship_evidence": {},
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
       "event_id": "5b24ae60-bccc-48c8-ba54-4996bb4b3f89",
       "event_title": "AI: Misuse of artificial intelligence can result in a fine for abusive recourse",
       "event_date": "2026-11-06",
@@ -5141,19 +5136,19 @@
         }
       ],
       "reviewed": false,
-      "review_status": "pending",
-      "configuration": "mutualism",
+      "review_status": "source_audit_correction",
+      "configuration": "ambiguous_relational_signal",
       "plain_label": "Both people and the AI side are represented as gaining",
       "human_experience_type": "extension",
       "ai_expressive_role": "ai_extension",
-      "human_direction": "enabling",
-      "ai_direction": "enabling",
+      "human_direction": "mixed",
+      "ai_direction": "neutral",
       "evidence_status": "sufficient",
       "content_basis": "full_text",
       "evidence_basis_summary": {
-        "input_policy": "full_article_body_required_v1",
+        "input_policy": "source_representations_independent_axes_2026_09",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "complete_written_source",
         "source_quality": {
           "c303465f1148a406fb76b1cba03462ee": {
             "flags": [],
@@ -5178,37 +5173,59 @@
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
         "source_reading_complete": true,
-        "people_evidence": "The evidence shows humans can access and utilize AI-assisted drafting, extending their legal-writing capacity.",
-        "ai_evidence": "AI serves as a drafting tool, extending its operational reach in legal procedures.",
+        "people_evidence": "AI may ease drafting, while inadequate or abusive filings can lead to rejection and fines; no net access-to-justice outcome is measured.",
+        "ai_evidence": "The legal analysis reports no separate outcome for AI systems or their operators.",
         "flags": []
       },
       "story_country_iso3s": [
         "FRA"
       ],
-      "evidence_summary": "AI-assisted drafting is expanding both human access to legal processes and the AI’s own use, with sanctions for abusive outputs.",
-      "reasoning": "AI-assisted drafting is expanding both human access to legal processes and the AI’s own use, with sanctions for abusive outputs.",
+      "evidence_summary": "AI may ease drafting, while inadequate or abusive filings can lead to rejection and fines; no net access-to-justice outcome is measured.",
+      "reasoning": "Eurojuris describes court sanctions for deficient filings, including some drafted with AI; it says AI use itself is not prohibited. Drafting convenience does not establish an AI/operator gain.",
       "relationship_patterns": {
-        "mutualism": true,
+        "mutualism": false,
         "ai_benefiting_parasitism": false,
         "human_benefiting_parasitism": false,
         "competition": false
       },
       "public_signals": {
         "people_gaining": true,
-        "people_losing_ground": false,
-        "mixed_picture": false,
+        "people_losing_ground": true,
+        "mixed_picture": true,
         "not_everyone_benefits": false,
         "not_clear_yet": false
       },
       "distribution_signal": "broadly_shared",
-      "public_takeaway": "The evidence shows humans can access and utilize AI-assisted drafting, extending their legal-writing capacity.",
+      "public_takeaway": "AI may ease drafting, while inadequate or abusive filings can lead to rejection and fines; no net access-to-justice outcome is measured.",
       "multi_label_available": true,
       "distribution_coded": true,
-      "signal_provenance": "model_classification",
+      "signal_provenance": "source_audit_correction",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
         "reasoning": null
+      },
+      "source_note": "Eurojuris describes court sanctions for deficient filings, including some drafted with AI; it says AI use itself is not prohibited. Drafting convenience does not establish an AI/operator gain.",
+      "display_scope": "",
+      "correction_provenance": {
+        "kind": "source_bound_owner_requested_correction",
+        "owner_gold": false,
+        "source_release_sha256": "2954ae2c0f18f4d71b578db7ae4b9e10f1ff64541e06903789cc16db483bfc43",
+        "stored_body_hashes": {
+          "c303465f1148a406fb76b1cba03462ee": "4819dbd48d46bfc90bc1c379a09955216e55842e30b28c13d16a22a55b2f7453"
+        },
+        "source_quality": {
+          "c303465f1148a406fb76b1cba03462ee": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 8002,
+            "body_sha256": "4819dbd48d46bfc90bc1c379a09955216e55842e30b28c13d16a22a55b2f7453",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
+        }
       }
     },
     {
@@ -14966,17 +14983,17 @@
     "policy_version": "source_representations_independent_axes_2026_09",
     "total": 138,
     "human": {
-      "gain": 42,
+      "gain": 41,
       "loss": 9,
-      "mixed": 14,
+      "mixed": 15,
       "none": 10,
       "unresolved": 63
     },
     "ai": {
-      "gain": 44,
+      "gain": 43,
       "loss": 4,
       "mixed": 15,
-      "none": 12,
+      "none": 13,
       "unresolved": 63
     },
     "evidence_complete": 76,
@@ -14990,5 +15007,5 @@
     "incomplete_written_sources": 62,
     "legacy_configuration_note": "Legacy single-label fields are retained for compatibility; independent axis categories are authoritative under the current policy."
   },
-  "content_sha256": "f6338bd2c2e3cd498b686ab30db07796040ac0dab90f0f97789947830bdf7270"
+  "content_sha256": "decd27409a61b845a3bff0a9b7b8c7a3cae435bfc423e615216629426126e406"
 }
