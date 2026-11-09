@@ -2,10 +2,10 @@
   "schema_version": "aieo_symbiosis_public_v2.0",
   "release_id": "2026-W45",
   "release_type": "weekly_relationship_lens",
-  "revision": 2,
+  "revision": 3,
   "period_start": "2026-11-02",
   "period_end": "2026-11-08",
-  "generated_at": "2026-11-09T04:37:47.601238Z",
+  "generated_at": "2026-11-09T09:12:17.846460Z",
   "codebook_version": "aieo_news_symbiosis_v0.1",
   "source_release_sha256": "2954ae2c0f18f4d71b578db7ae4b9e10f1ff64541e06903789cc16db483bfc43",
   "public_status": "current_evidence_reading",
@@ -60,11 +60,11 @@
     "display_basis": "current_evidence_reading_with_reviewed_corrections",
     "display_classified_units": 138,
     "display_configuration_counts": {
-      "mutualism": 36,
+      "mutualism": 35,
       "ai_benefiting_parasitism": 3,
       "human_benefiting_parasitism": 0,
       "competition": 3,
-      "human_enabling_only": 2,
+      "human_enabling_only": 3,
       "human_constraining_only": 1,
       "ai_enabling_only": 2,
       "ai_constraining_only": 1,
@@ -72,16 +72,16 @@
       "ambiguous_relational_signal": 21,
       "insufficient_evidence": 62
     },
-    "display_complete_configuration_count": 42,
-    "display_partial_signal_count": 6,
+    "display_complete_configuration_count": 41,
+    "display_partial_signal_count": 7,
     "display_no_clear_relational_signal_count": 7,
     "display_ambiguous_relational_signal_count": 21,
     "display_insufficient_evidence_count": 62,
     "display_core_four_distribution": {
-      "mutualism": 0.857143,
-      "ai_benefiting_parasitism": 0.071429,
+      "mutualism": 0.853659,
+      "ai_benefiting_parasitism": 0.073171,
       "human_benefiting_parasitism": 0.0,
-      "competition": 0.071429
+      "competition": 0.073171
     },
     "denominator_note": "The weekly display reports the source evidence available for the current release. A development is kept separate when the available source evidence is not enough to show a clear people outcome.",
     "human_direction_counts": {
@@ -94,9 +94,9 @@
     "ai_direction_counts": {
       "mixed": 15,
       "unclear": 63,
-      "enabling": 46,
+      "enabling": 44,
       "constraining": 4,
-      "neutral": 10
+      "neutral": 12
     },
     "display_human_direction_counts": {
       "enabling": 43,
@@ -108,9 +108,9 @@
     "display_ai_direction_counts": {
       "mixed": 15,
       "unclear": 63,
-      "enabling": 46,
+      "enabling": 44,
       "constraining": 4,
-      "neutral": 10
+      "neutral": 12
     }
   },
   "people_signals": {
@@ -118,8 +118,8 @@
     "expected_units": 138,
     "classified_units": 138,
     "relationship_pattern_counts": {
-      "mutualism": 52,
-      "ai_benefiting_parasitism": 8,
+      "mutualism": 51,
+      "ai_benefiting_parasitism": 7,
       "human_benefiting_parasitism": 2,
       "competition": 2
     },
@@ -148,7 +148,7 @@
       "no_directional_people_change": 10
     },
     "overlap_note": "A development may contain more than one signal, so these counts do not have to add up to the weekly total.",
-    "relationship_patterns_assessed": 138
+    "relationship_patterns_assessed": 136
   },
   "source_body_qc": {
     "review_file": null,
@@ -4761,12 +4761,12 @@
     {
       "axes": {
         "ai": {
-          "evidence": "no explicit trace of AI reasoning beyond described outputs and potential impacts AI is presented as performing or assisting with work that could replace human labor",
-          "direction": "gain"
+          "direction": "none",
+          "evidence": "The fictional dialogue does not report a separate gain or downside for AI systems or their operators."
         },
         "human": {
-          "evidence": "no explicit trace of internal reasoning beyond stated impacts; summarized as observed outcomes People are worried their jobs could be displaced as AI handles more tasks",
-          "direction": "mixed"
+          "direction": "mixed",
+          "evidence": "The satirical column contrasts possible time-saving uses with fictional characters’ worries about job displacement and retraining; it reports no measured employment outcome."
         },
         "evidence_scope": "written_source",
         "evidence_types": [
@@ -4777,13 +4777,8 @@
         "evidence_complete": true,
         "unresolved_reason": ""
       },
-      "relationship_evidence": {
-        "mutualism": "AI improves productivity and can enable people to take on more valuable work, creating a positive feedback loop for both sides.",
-        "competition": "Workers may compete with AI for jobs, risking reductions in livelihood",
-        "ai_benefiting_parasitism": "Automation and AI expansion can reduce demand for certain human tasks, potentially disadvantaging workers in those roles. AI adoption may advance and automate tasks while workers risk losing ground",
-        "human_benefiting_parasitism": ""
-      },
-      "relationship_pattern_status": "assessed",
+      "relationship_evidence": {},
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
       "event_id": "5977c536-b34d-40a0-92be-46e4c51b1a63",
       "event_title": "SATURDAY MORNING WITH CRANKY DON JOE | Artificial Intelligence Is Supposed to Make Life Easier. So Why Is Everybody Worried About Losing Their Jobs?",
       "event_date": "2026-11-07",
@@ -4799,53 +4794,34 @@
         }
       ],
       "reviewed": false,
-      "review_status": "pending",
+      "review_status": "source_audit_correction",
       "configuration": "ambiguous_relational_signal",
       "plain_label": "A relationship is suggested, but its direction is unclear",
       "human_experience_type": "unclear",
       "ai_expressive_role": "ai_extension",
       "human_direction": "mixed",
-      "ai_direction": "enabling",
+      "ai_direction": "neutral",
       "evidence_status": "sufficient",
       "content_basis": "full_text",
       "evidence_basis_summary": {
-        "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "all_sources",
-        "source_quality": {
-          "460617c4b54f40141579be733328377b": {
-            "flags": [],
-            "scope": "written_page",
-            "characters": 23996,
-            "body_sha256": "3b57cf937e3a136b0c6a2d28d4d556571c1216b7b7eea1dfe423330bb58c9b04",
-            "quality_version": "stored_source_quality_v2",
-            "source_language": "",
-            "usable_complete_body": true,
-            "automated_check_is_not_completeness_certification": true
-          }
-        },
-        "snippet_sources": 0,
         "full_text_sources": 1,
-        "source_fingerprints": {
-          "460617c4b54f40141579be733328377b": "3b57cf937e3a136b0c6a2d28d4d556571c1216b7b7eea1dfe423330bb58c9b04"
-        },
-        "headline_only_sources": 0,
-        "not_available_sources": 0,
-        "article_summary_sources": 0
+        "body_coverage": "complete_written_source",
+        "input_policy": "source_representations_independent_axes_2026_09"
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
         "source_reading_complete": true,
-        "people_evidence": "no explicit trace of internal reasoning beyond stated impacts; summarized as observed outcomes People are worried their jobs could be displaced as AI handles more tasks",
-        "ai_evidence": "no explicit trace of AI reasoning beyond described outputs and potential impacts AI is presented as performing or assisting with work that could replace human labor",
+        "people_evidence": "The satirical column contrasts possible time-saving uses with fictional characters’ worries about job displacement and retraining; it reports no measured employment outcome.",
+        "ai_evidence": "The fictional dialogue does not report a separate gain or downside for AI systems or their operators.",
         "flags": []
       },
       "story_country_iso3s": [],
-      "evidence_summary": "AI boosts productivity and introduces new opportunities for people, but can also displace workers and prompt retraining; the future balance depends on adoption, policy, and support.",
-      "reasoning": "AI boosts productivity and introduces new opportunities for people, but can also displace workers and prompt retraining; the future balance depends on adoption, policy, and support.",
+      "evidence_summary": "The satirical column contrasts possible time-saving uses with fictional characters’ worries about job displacement and retraining; it reports no measured employment outcome.",
+      "reasoning": "This is a fictional satirical column, not observational evidence about jobs. Possible AI use at work is not itself an operator gain.",
       "relationship_patterns": {
-        "mutualism": true,
-        "ai_benefiting_parasitism": true,
+        "mutualism": false,
+        "ai_benefiting_parasitism": false,
         "human_benefiting_parasitism": false,
         "competition": false
       },
@@ -4857,14 +4833,24 @@
         "not_clear_yet": false
       },
       "distribution_signal": "unequal",
-      "public_takeaway": "no explicit trace of internal reasoning beyond stated impacts; summarized as observed outcomes People are worried their jobs could be displaced as AI handles more tasks",
+      "public_takeaway": "The satirical column contrasts possible time-saving uses with fictional characters’ worries about job displacement and retraining; it reports no measured employment outcome.",
       "multi_label_available": true,
       "distribution_coded": true,
-      "signal_provenance": "model_classification",
+      "signal_provenance": "source_audit_correction",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
         "reasoning": null
+      },
+      "source_note": "This is a fictional satirical column, not observational evidence about jobs. Possible AI use at work is not itself an operator gain.",
+      "display_scope": "",
+      "correction_provenance": {
+        "kind": "source_bound_owner_requested_correction",
+        "owner_gold": false,
+        "source_release_sha256": "2954ae2c0f18f4d71b578db7ae4b9e10f1ff64541e06903789cc16db483bfc43",
+        "stored_body_hashes": {
+          "460617c4b54f40141579be733328377b": "3b57cf937e3a136b0c6a2d28d4d556571c1216b7b7eea1dfe423330bb58c9b04"
+        }
       }
     },
     {
@@ -7359,12 +7345,12 @@
     {
       "axes": {
         "ai": {
-          "evidence": "the AI/robotics education initiative extends the AI-enabled learning ecosystem to children",
-          "direction": "gain"
+          "direction": "none",
+          "evidence": "The report describes learning opportunities for children, without a distinct outcome for AI systems or their operators."
         },
         "human": {
-          "evidence": "the program expands children's access to AI/robotics learning and opportunities",
-          "direction": "gain"
+          "direction": "gain",
+          "evidence": "The foundation says its new program gives children access to introductory AI and robotics learning; long-term benefits have not been measured."
         },
         "evidence_scope": "written_source",
         "evidence_types": [
@@ -7375,13 +7361,8 @@
         "evidence_complete": true,
         "unresolved_reason": ""
       },
-      "relationship_evidence": {
-        "mutualism": "false",
-        "competition": "false",
-        "ai_benefiting_parasitism": "false",
-        "human_benefiting_parasitism": "false"
-      },
-      "relationship_pattern_status": "assessed",
+      "relationship_evidence": {},
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
       "event_id": "7f5ca246-99a6-4209-8914-478d532629f8",
       "event_title": "WASL Foundation launches an introduction program to artificial intelligence and robotics for children",
       "event_date": "2026-11-06",
@@ -7397,52 +7378,33 @@
         }
       ],
       "reviewed": false,
-      "review_status": "pending",
-      "configuration": "mutualism",
+      "review_status": "source_audit_correction",
+      "configuration": "human_enabling_only",
       "plain_label": "Both people and the AI side are represented as gaining",
       "human_experience_type": "extension",
       "ai_expressive_role": "ai_extension",
       "human_direction": "enabling",
-      "ai_direction": "enabling",
+      "ai_direction": "neutral",
       "evidence_status": "sufficient",
       "content_basis": "full_text",
       "evidence_basis_summary": {
-        "input_policy": "full_article_body_required_v1",
         "source_count": 1,
-        "body_coverage": "all_sources",
-        "source_quality": {
-          "8d89f34995502f6efdb83bbc1df128df": {
-            "flags": [],
-            "scope": "written_page",
-            "characters": 4141,
-            "body_sha256": "4b171c4f80adb5c6f9847684f75915629199f4a306a30b3640a7dec3cc2b028a",
-            "quality_version": "stored_source_quality_v2",
-            "source_language": "",
-            "usable_complete_body": true,
-            "automated_check_is_not_completeness_certification": true
-          }
-        },
-        "snippet_sources": 0,
         "full_text_sources": 1,
-        "source_fingerprints": {
-          "8d89f34995502f6efdb83bbc1df128df": "4b171c4f80adb5c6f9847684f75915629199f4a306a30b3640a7dec3cc2b028a"
-        },
-        "headline_only_sources": 0,
-        "not_available_sources": 0,
-        "article_summary_sources": 0
+        "body_coverage": "complete_written_source",
+        "input_policy": "source_representations_independent_axes_2026_09"
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
         "source_reading_complete": true,
-        "people_evidence": "the program expands children's access to AI/robotics learning and opportunities",
-        "ai_evidence": "the AI/robotics education initiative extends the AI-enabled learning ecosystem to children",
+        "people_evidence": "The foundation says its new program gives children access to introductory AI and robotics learning; long-term benefits have not been measured.",
+        "ai_evidence": "The report describes learning opportunities for children, without a distinct outcome for AI systems or their operators.",
         "flags": []
       },
       "story_country_iso3s": [
         "MAR"
       ],
-      "evidence_summary": "WASL Foundation's program expands children's capabilities in AI/robotics, extending access to education and opportunities via AI-enabled activities.",
-      "reasoning": "WASL Foundation's program expands children's capabilities in AI/robotics, extending access to education and opportunities via AI-enabled activities.",
+      "evidence_summary": "The foundation says its new program gives children access to introductory AI and robotics learning; long-term benefits have not been measured.",
+      "reasoning": "Children learning about AI is a people-side opportunity, not an AI/operator-side gain.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -7457,14 +7419,24 @@
         "not_clear_yet": false
       },
       "distribution_signal": "broadly_shared",
-      "public_takeaway": "the program expands children's access to AI/robotics learning and opportunities",
+      "public_takeaway": "The foundation says its new program gives children access to introductory AI and robotics learning; long-term benefits have not been measured.",
       "multi_label_available": true,
       "distribution_coded": true,
-      "signal_provenance": "model_classification",
+      "signal_provenance": "source_audit_correction",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
         "reasoning": null
+      },
+      "source_note": "Children learning about AI is a people-side opportunity, not an AI/operator-side gain.",
+      "display_scope": "",
+      "correction_provenance": {
+        "kind": "source_bound_owner_requested_correction",
+        "owner_gold": false,
+        "source_release_sha256": "2954ae2c0f18f4d71b578db7ae4b9e10f1ff64541e06903789cc16db483bfc43",
+        "stored_body_hashes": {
+          "8d89f34995502f6efdb83bbc1df128df": "4b171c4f80adb5c6f9847684f75915629199f4a306a30b3640a7dec3cc2b028a"
+        }
       }
     },
     {
@@ -14930,10 +14902,10 @@
       "unresolved": 63
     },
     "ai": {
-      "gain": 46,
+      "gain": 44,
       "loss": 4,
       "mixed": 15,
-      "none": 10,
+      "none": 12,
       "unresolved": 63
     },
     "evidence_complete": 76,
@@ -14947,5 +14919,5 @@
     "incomplete_written_sources": 62,
     "legacy_configuration_note": "Legacy single-label fields are retained for compatibility; independent axis categories are authoritative under the current policy."
   },
-  "content_sha256": "cbc7a09a840be77a75cf76abab022f1e5a77628ddb6fde9fd66a35240960acc8"
+  "content_sha256": "1bdd6e13f52347a7bdeabcefd277e1ba56374125713939a4ad6880368ad489fe"
 }

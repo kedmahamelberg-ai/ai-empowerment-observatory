@@ -1,6 +1,6 @@
 {
   "schema_version": "aieo_relationship_evidence_audit_v1",
-  "generated_at": "2026-11-09T04:43:44.345721Z",
+  "generated_at": "2026-11-09T09:12:17.991130Z",
   "release_id": "2026-W45",
   "period_start": "2026-11-02",
   "period_end": "2026-11-08",
@@ -25,7 +25,8 @@
     },
     "uneven_effect_count": 7,
     "body_coverage_counts": {
-      "all_sources": 75,
+      "all_sources": 73,
+      "complete_written_source": 2,
       "no_full_body": 62,
       "some_sources": 1
     },
@@ -5613,25 +5614,25 @@
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
-        "review_status": "pending",
+        "review_status": "source_audit_correction",
         "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "no explicit trace of internal reasoning beyond stated impacts; summarized as observed outcomes People are worried their jobs could be displaced as AI handles more tasks",
-          "ai_evidence": "no explicit trace of AI reasoning beyond described outputs and potential impacts AI is presented as performing or assisting with work that could replace human labor",
+          "people_evidence": "The satirical column contrasts possible time-saving uses with fictional characters’ worries about job displacement and retraining; it reports no measured employment outcome.",
+          "ai_evidence": "The fictional dialogue does not report a separate gain or downside for AI systems or their operators.",
           "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article used for every source",
+        "label": "Full article used with other source evidence",
         "source_count": 1,
         "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "all_sources"
+        "body_coverage": "complete_written_source"
       },
       "source_markets": [
         "USA"
@@ -6842,25 +6843,25 @@
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
-        "review_status": "pending",
-        "configuration": "mutualism",
+        "review_status": "source_audit_correction",
+        "configuration": "human_enabling_only",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "the program expands children's access to AI/robotics learning and opportunities",
-          "ai_evidence": "the AI/robotics education initiative extends the AI-enabled learning ecosystem to children",
+          "people_evidence": "The foundation says its new program gives children access to introductory AI and robotics learning; long-term benefits have not been measured.",
+          "ai_evidence": "The report describes learning opportunities for children, without a distinct outcome for AI systems or their operators.",
           "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article used for every source",
+        "label": "Full article used with other source evidence",
         "source_count": 1,
         "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "all_sources"
+        "body_coverage": "complete_written_source"
       },
       "source_markets": [
         "CAN"
