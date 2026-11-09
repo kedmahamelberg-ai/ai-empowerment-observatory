@@ -30,8 +30,11 @@ def release_corrections(release: dict[str, Any]) -> dict[str, dict[str, Any]]:
                    if row.get("classification", {}).get("ai_relevant") is not False}
     rows = manifest.get("records") or []
     ids = [row["event_id"] for row in rows]
-    if len(ids) != len(set(ids)) or set(ids) != set(source_rows):
-        raise ValueError("Correction manifest must cover the exact frozen development IDs once")
+    if len(ids) != len(set(ids)) or not set(ids) <= set(source_rows):
+        raise ValueError("Correction manifest has duplicate or foreign development IDs")
+    if set(ids) != set(source_rows):
+        if manifest.get("partial_corrections_allowed") is not True or manifest.get("source_audit_complete") is not False:
+            raise ValueError("Correction manifest must cover every frozen development ID unless an incomplete audit explicitly allows a subset")
     for row in rows:
         source_ids = {source["article_id"] for source in source_rows[row["event_id"]]["sources"]}
         if set(row.get("article_ids") or []) != source_ids:

@@ -1,0 +1,89 @@
+{
+  "schema_version": "aieo_release_corrections_v2",
+  "release_id": "2026-W45",
+  "source_release_sha256": "2954ae2c0f18f4d71b578db7ae4b9e10f1ff64541e06903789cc16db483bfc43",
+  "period_start": "2026-11-02",
+  "period_end": "2026-11-08",
+  "policy_version": "source_representations_independent_axes_2026_09",
+  "source_audit_complete": false,
+  "publication_scope": "Two identified misreadings corrected; the remaining developments retain their saved classifications pending source review.",
+  "records": [
+    {
+      "audit_id": "001",
+      "event_id": "5977c536-b34d-40a0-92be-46e4c51b1a63",
+      "article_ids": [
+        "460617c4b54f40141579be733328377b"
+      ],
+      "source_urls": [
+        "https://minneapolimedia.town.news/g/coon-rapids-mn/n/397519/saturday-morning-cranky-don-joe-artificial-intelligence-supposed-make"
+      ],
+      "axes": {
+        "ai": {
+          "direction": "none",
+          "evidence": "The fictional dialogue does not report a separate gain or downside for AI systems or their operators."
+        },
+        "human": {
+          "direction": "mixed",
+          "evidence": "The satirical column contrasts possible time-saving uses with fictional characters’ worries about job displacement and retraining; it reports no measured employment outcome."
+        },
+        "evidence_scope": "written_source",
+        "evidence_types": [
+          "source_representation"
+        ],
+        "policy_version": "source_representations_independent_axes_2026_09",
+        "schema_version": "aieo_independent_directions_v2",
+        "evidence_complete": true,
+        "unresolved_reason": ""
+      },
+      "source_note": "This is a fictional satirical column, not observational evidence about jobs. Possible AI use at work is not itself an operator gain.",
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
+      "provenance": {
+        "kind": "source_bound_owner_requested_correction",
+        "owner_gold": false,
+        "source_release_sha256": "2954ae2c0f18f4d71b578db7ae4b9e10f1ff64541e06903789cc16db483bfc43",
+        "stored_body_hashes": {
+          "460617c4b54f40141579be733328377b": "3b57cf937e3a136b0c6a2d28d4d556571c1216b7b7eea1dfe423330bb58c9b04"
+        }
+      }
+    },
+    {
+      "audit_id": "002",
+      "event_id": "7f5ca246-99a6-4209-8914-478d532629f8",
+      "article_ids": [
+        "8d89f34995502f6efdb83bbc1df128df"
+      ],
+      "source_urls": [
+        "https://www.maroc-hebdo.com/article/wasl-foundation-lance-un-programme-dinitiation-a-lintelligence-artificielle-et-a-la-robotique-destine-aux-enfants"
+      ],
+      "axes": {
+        "ai": {
+          "direction": "none",
+          "evidence": "The report describes learning opportunities for children, without a distinct outcome for AI systems or their operators."
+        },
+        "human": {
+          "direction": "gain",
+          "evidence": "The foundation says its new program gives children access to introductory AI and robotics learning; long-term benefits have not been measured."
+        },
+        "evidence_scope": "written_source",
+        "evidence_types": [
+          "source_representation"
+        ],
+        "policy_version": "source_representations_independent_axes_2026_09",
+        "schema_version": "aieo_independent_directions_v2",
+        "evidence_complete": true,
+        "unresolved_reason": ""
+      },
+      "source_note": "Children learning about AI is a people-side opportunity, not an AI/operator-side gain.",
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
+      "provenance": {
+        "kind": "source_bound_owner_requested_correction",
+        "owner_gold": false,
+        "source_release_sha256": "2954ae2c0f18f4d71b578db7ae4b9e10f1ff64541e06903789cc16db483bfc43",
+        "stored_body_hashes": {
+          "8d89f34995502f6efdb83bbc1df128df": "4b171c4f80adb5c6f9847684f75915629199f4a306a30b3640a7dec3cc2b028a"
+        }
+      }
+    }
+  ],
+  "partial_corrections_allowed": true
+}
