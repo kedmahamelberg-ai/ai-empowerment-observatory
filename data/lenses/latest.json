@@ -1,17 +1,17 @@
 {
   "meta": {
-    "stage": "7C.5a_full_body_required",
+    "stage": "7C.6_validated_whole_sources",
     "provisional": true,
-    "classification_run_id": "9b06ee43-cf8d-4169-9a9e-b00ba5a74397",
-    "run_key": "dual_lens_20261102T021433Z",
-    "confidence_calibrated": false,
-    "residual_normalized_count": 92,
-    "confidence_note": "Model self-confidence is excluded from index weighting and quality-review selection.",
+    "classification_run_id": "e7cf62fd-82d6-4281-a8cd-c1ab2abd141c",
+    "run_key": "dual_lens_20261109T033919Z",
+    "collection_run_key": "run_20261109T024141Z",
+    "codebook": "observatory_dual_lens_v1.1",
     "method": {
       "coverage_lens": "one weight per observed AI-relevant article",
       "event_lens": "one weight per unique active AI event",
       "empowerment_index": "mean deterministic unit score x 100",
       "directional_amplification_gap": "Coverage Empowerment Index - Event Empowerment Index",
+      "country_rule": "primary event country only in pilot country aggregation; global/multi-country metadata is retained separately",
       "country_signal_min_n": 3
     }
   },
@@ -20,37 +20,37 @@
       "lens": "coverage",
       "scope": "global",
       "country_iso3": null,
-      "unit_count_total": 161,
-      "unit_count_ai_relevant": 159,
-      "unit_count_scored": 72,
-      "review_required_count": 87,
-      "empowerment_index": 27.7778,
-      "mean_confidence": null,
+      "unit_count_total": 148,
+      "unit_count_ai_relevant": 148,
+      "unit_count_scored": 79,
+      "review_required_count": 77,
+      "empowerment_index": 28.692,
+      "mean_confidence": 0.3595,
       "status_distribution": {
-        "expanding": 0.1887,
-        "contracting": 0.0126,
-        "mixed": 0.1069,
-        "non_empowerment": 0.1447,
-        "unclear": 0.5472
+        "expanding": 0.223,
+        "contracting": 0.0,
+        "mixed": 0.1284,
+        "non_empowerment": 0.1824,
+        "unclear": 0.4662
       },
       "narrative_distribution": {
-        "opportunity": 0.195,
-        "threat": 0.0566,
-        "contested": 0.1195,
-        "descriptive_neutral": 0.1006,
-        "unclear": 0.5283
+        "opportunity": 0.25,
+        "threat": 0.0608,
+        "contested": 0.1554,
+        "descriptive_neutral": 0.1081,
+        "unclear": 0.4257
       },
       "breadth_distribution": {
-        "broad": 0.3019,
-        "targeted": 0.1321,
+        "broad": 0.3919,
+        "targeted": 0.1419,
         "concentrated": 0.0,
-        "unclear": 0.566
+        "unclear": 0.4662
       },
       "dimension_distribution": {
-        "agentic": 0.0629,
-        "creative": 0.044,
-        "normative": 0.1572,
-        "operational": 0.2138
+        "agentic": 0.0811,
+        "creative": 0.0811,
+        "normative": 0.2027,
+        "operational": 0.2838
       },
       "signal_ready": true
     },
@@ -58,90 +58,90 @@
       "lens": "event",
       "scope": "global",
       "country_iso3": null,
-      "unit_count_total": 154,
-      "unit_count_ai_relevant": 152,
-      "unit_count_scored": 148,
-      "review_required_count": 4,
-      "empowerment_index": 13.0631,
-      "mean_confidence": null,
+      "unit_count_total": 145,
+      "unit_count_ai_relevant": 145,
+      "unit_count_scored": 78,
+      "review_required_count": 75,
+      "empowerment_index": 30.7692,
+      "mean_confidence": 0.3572,
       "status_distribution": {
-        "expanding": 0.1908,
-        "contracting": 0.0066,
-        "mixed": 0.0987,
-        "non_empowerment": 0.6776,
-        "unclear": 0.0263
+        "expanding": 0.2414,
+        "contracting": 0.0,
+        "mixed": 0.1172,
+        "non_empowerment": 0.1793,
+        "unclear": 0.4621
       },
       "narrative_distribution": {
-        "opportunity": 0.1908,
-        "threat": 0.0592,
-        "contested": 0.1118,
-        "descriptive_neutral": 0.1053,
-        "unclear": 0.5329
+        "opportunity": 0.2483,
+        "threat": 0.0621,
+        "contested": 0.1586,
+        "descriptive_neutral": 0.1034,
+        "unclear": 0.4276
       },
       "breadth_distribution": {
-        "broad": 0.2961,
-        "targeted": 0.1316,
+        "broad": 0.4069,
+        "targeted": 0.131,
         "concentrated": 0.0,
-        "unclear": 0.5724
+        "unclear": 0.4621
       },
       "dimension_distribution": {
-        "agentic": 0.0592,
-        "creative": 0.0461,
-        "normative": 0.1447,
-        "operational": 0.2039
+        "agentic": 0.0897,
+        "creative": 0.0897,
+        "normative": 0.2069,
+        "operational": 0.2897
       },
       "signal_ready": true
     },
     "amplification": {
       "scope": "global",
       "country_iso3": null,
-      "coverage_index": 27.7778,
-      "event_index": 13.0631,
-      "directional_amplification_gap": 14.7147,
-      "coverage_unit_count": 159,
-      "event_unit_count": 152,
-      "coverage_event_ratio": 1.0461,
+      "coverage_index": 28.692,
+      "event_index": 30.7692,
+      "directional_amplification_gap": -2.0772,
+      "coverage_unit_count": 148,
+      "event_unit_count": 145,
+      "coverage_event_ratio": 1.0207,
       "coverage_narrative_distribution": {
-        "opportunity": 0.195,
-        "threat": 0.0566,
-        "contested": 0.1195,
-        "descriptive_neutral": 0.1006,
-        "unclear": 0.5283
+        "opportunity": 0.25,
+        "threat": 0.0608,
+        "contested": 0.1554,
+        "descriptive_neutral": 0.1081,
+        "unclear": 0.4257
       },
       "event_narrative_distribution": {
-        "opportunity": 0.1908,
-        "threat": 0.0592,
-        "contested": 0.1118,
-        "descriptive_neutral": 0.1053,
-        "unclear": 0.5329
+        "opportunity": 0.2483,
+        "threat": 0.0621,
+        "contested": 0.1586,
+        "descriptive_neutral": 0.1034,
+        "unclear": 0.4276
       },
       "signal_ready": true
     }
   },
   "countries": [
     {
-      "country_iso3": "ALB",
+      "country_iso3": "ARG",
       "coverage": {
         "lens": "coverage",
         "scope": "country",
-        "country_iso3": "ALB",
+        "country_iso3": "ARG",
         "unit_count_total": 1,
         "unit_count_ai_relevant": 1,
         "unit_count_scored": 1,
         "review_required_count": 0,
-        "empowerment_index": 0.0,
-        "mean_confidence": null,
+        "empowerment_index": 66.6667,
+        "mean_confidence": 0.85,
         "status_distribution": {
-          "expanding": 0.0,
+          "expanding": 1.0,
           "contracting": 0.0,
-          "mixed": 1.0,
+          "mixed": 0.0,
           "non_empowerment": 0.0,
           "unclear": 0.0
         },
         "narrative_distribution": {
-          "opportunity": 0.0,
+          "opportunity": 1.0,
           "threat": 0.0,
-          "contested": 1.0,
+          "contested": 0.0,
           "descriptive_neutral": 0.0,
           "unclear": 0.0
         },
@@ -162,24 +162,24 @@
       "event": {
         "lens": "event",
         "scope": "country",
-        "country_iso3": "ALB",
+        "country_iso3": "ARG",
         "unit_count_total": 1,
         "unit_count_ai_relevant": 1,
         "unit_count_scored": 1,
         "review_required_count": 0,
-        "empowerment_index": 0.0,
-        "mean_confidence": null,
+        "empowerment_index": 66.6667,
+        "mean_confidence": 0.85,
         "status_distribution": {
-          "expanding": 0.0,
+          "expanding": 1.0,
           "contracting": 0.0,
-          "mixed": 1.0,
+          "mixed": 0.0,
           "non_empowerment": 0.0,
           "unclear": 0.0
         },
         "narrative_distribution": {
-          "opportunity": 0.0,
+          "opportunity": 1.0,
           "threat": 0.0,
-          "contested": 1.0,
+          "contested": 0.0,
           "descriptive_neutral": 0.0,
           "unclear": 0.0
         },
@@ -199,9 +199,529 @@
       },
       "amplification": {
         "scope": "country",
-        "country_iso3": "ALB",
+        "country_iso3": "ARG",
+        "coverage_index": 66.6667,
+        "event_index": 66.6667,
+        "directional_amplification_gap": 0.0,
+        "coverage_unit_count": 1,
+        "event_unit_count": 1,
+        "coverage_event_ratio": 1.0,
+        "coverage_narrative_distribution": {
+          "opportunity": 1.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "event_narrative_distribution": {
+          "opportunity": 1.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "signal_ready": false
+      }
+    },
+    {
+      "country_iso3": "AUS",
+      "coverage": {
+        "lens": "coverage",
+        "scope": "country",
+        "country_iso3": "AUS",
+        "unit_count_total": 2,
+        "unit_count_ai_relevant": 2,
+        "unit_count_scored": 1,
+        "review_required_count": 1,
+        "empowerment_index": 0.0,
+        "mean_confidence": 0.575,
+        "status_distribution": {
+          "expanding": 0.0,
+          "contracting": 0.0,
+          "mixed": 0.0,
+          "non_empowerment": 0.5,
+          "unclear": 0.5
+        },
+        "narrative_distribution": {
+          "opportunity": 0.0,
+          "threat": 0.0,
+          "contested": 0.5,
+          "descriptive_neutral": 0.5,
+          "unclear": 0.0
+        },
+        "breadth_distribution": {
+          "broad": 0.5,
+          "targeted": 0.5,
+          "concentrated": 0.0,
+          "unclear": 0.0
+        },
+        "dimension_distribution": {
+          "agentic": 0.0,
+          "creative": 0.0,
+          "normative": 0.5,
+          "operational": 0.0
+        },
+        "signal_ready": false
+      },
+      "event": {
+        "lens": "event",
+        "scope": "country",
+        "country_iso3": "AUS",
+        "unit_count_total": 2,
+        "unit_count_ai_relevant": 2,
+        "unit_count_scored": 1,
+        "review_required_count": 1,
+        "empowerment_index": 0.0,
+        "mean_confidence": 0.575,
+        "status_distribution": {
+          "expanding": 0.0,
+          "contracting": 0.0,
+          "mixed": 0.0,
+          "non_empowerment": 0.5,
+          "unclear": 0.5
+        },
+        "narrative_distribution": {
+          "opportunity": 0.0,
+          "threat": 0.0,
+          "contested": 0.5,
+          "descriptive_neutral": 0.5,
+          "unclear": 0.0
+        },
+        "breadth_distribution": {
+          "broad": 0.5,
+          "targeted": 0.5,
+          "concentrated": 0.0,
+          "unclear": 0.0
+        },
+        "dimension_distribution": {
+          "agentic": 0.0,
+          "creative": 0.0,
+          "normative": 0.5,
+          "operational": 0.0
+        },
+        "signal_ready": false
+      },
+      "amplification": {
+        "scope": "country",
+        "country_iso3": "AUS",
         "coverage_index": 0.0,
         "event_index": 0.0,
+        "directional_amplification_gap": 0.0,
+        "coverage_unit_count": 2,
+        "event_unit_count": 2,
+        "coverage_event_ratio": 1.0,
+        "coverage_narrative_distribution": {
+          "opportunity": 0.0,
+          "threat": 0.0,
+          "contested": 0.5,
+          "descriptive_neutral": 0.5,
+          "unclear": 0.0
+        },
+        "event_narrative_distribution": {
+          "opportunity": 0.0,
+          "threat": 0.0,
+          "contested": 0.5,
+          "descriptive_neutral": 0.5,
+          "unclear": 0.0
+        },
+        "signal_ready": false
+      }
+    },
+    {
+      "country_iso3": "AZE",
+      "coverage": {
+        "lens": "coverage",
+        "scope": "country",
+        "country_iso3": "AZE",
+        "unit_count_total": 1,
+        "unit_count_ai_relevant": 1,
+        "unit_count_scored": 1,
+        "review_required_count": 0,
+        "empowerment_index": 0.0,
+        "mean_confidence": 0.6,
+        "status_distribution": {
+          "expanding": 0.0,
+          "contracting": 0.0,
+          "mixed": 0.0,
+          "non_empowerment": 1.0,
+          "unclear": 0.0
+        },
+        "narrative_distribution": {
+          "opportunity": 0.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 1.0,
+          "unclear": 0.0
+        },
+        "breadth_distribution": {
+          "broad": 1.0,
+          "targeted": 0.0,
+          "concentrated": 0.0,
+          "unclear": 0.0
+        },
+        "dimension_distribution": {
+          "agentic": 0.0,
+          "creative": 0.0,
+          "normative": 0.0,
+          "operational": 0.0
+        },
+        "signal_ready": false
+      },
+      "event": {
+        "lens": "event",
+        "scope": "country",
+        "country_iso3": "AZE",
+        "unit_count_total": 1,
+        "unit_count_ai_relevant": 1,
+        "unit_count_scored": 1,
+        "review_required_count": 0,
+        "empowerment_index": 0.0,
+        "mean_confidence": 0.6,
+        "status_distribution": {
+          "expanding": 0.0,
+          "contracting": 0.0,
+          "mixed": 0.0,
+          "non_empowerment": 1.0,
+          "unclear": 0.0
+        },
+        "narrative_distribution": {
+          "opportunity": 0.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 1.0,
+          "unclear": 0.0
+        },
+        "breadth_distribution": {
+          "broad": 1.0,
+          "targeted": 0.0,
+          "concentrated": 0.0,
+          "unclear": 0.0
+        },
+        "dimension_distribution": {
+          "agentic": 0.0,
+          "creative": 0.0,
+          "normative": 0.0,
+          "operational": 0.0
+        },
+        "signal_ready": false
+      },
+      "amplification": {
+        "scope": "country",
+        "country_iso3": "AZE",
+        "coverage_index": 0.0,
+        "event_index": 0.0,
+        "directional_amplification_gap": 0.0,
+        "coverage_unit_count": 1,
+        "event_unit_count": 1,
+        "coverage_event_ratio": 1.0,
+        "coverage_narrative_distribution": {
+          "opportunity": 0.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 1.0,
+          "unclear": 0.0
+        },
+        "event_narrative_distribution": {
+          "opportunity": 0.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 1.0,
+          "unclear": 0.0
+        },
+        "signal_ready": false
+      }
+    },
+    {
+      "country_iso3": "CAN",
+      "coverage": {
+        "lens": "coverage",
+        "scope": "country",
+        "country_iso3": "CAN",
+        "unit_count_total": 7,
+        "unit_count_ai_relevant": 7,
+        "unit_count_scored": 7,
+        "review_required_count": 0,
+        "empowerment_index": 19.0476,
+        "mean_confidence": 0.65,
+        "status_distribution": {
+          "expanding": 0.2857,
+          "contracting": 0.0,
+          "mixed": 0.5714,
+          "non_empowerment": 0.1429,
+          "unclear": 0.0
+        },
+        "narrative_distribution": {
+          "opportunity": 0.4286,
+          "threat": 0.1429,
+          "contested": 0.4286,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "breadth_distribution": {
+          "broad": 0.5714,
+          "targeted": 0.4286,
+          "concentrated": 0.0,
+          "unclear": 0.0
+        },
+        "dimension_distribution": {
+          "agentic": 0.0,
+          "creative": 0.1429,
+          "normative": 0.4286,
+          "operational": 0.4286
+        },
+        "signal_ready": true
+      },
+      "event": {
+        "lens": "event",
+        "scope": "country",
+        "country_iso3": "CAN",
+        "unit_count_total": 6,
+        "unit_count_ai_relevant": 6,
+        "unit_count_scored": 6,
+        "review_required_count": 0,
+        "empowerment_index": 22.2222,
+        "mean_confidence": 0.65,
+        "status_distribution": {
+          "expanding": 0.3333,
+          "contracting": 0.0,
+          "mixed": 0.5,
+          "non_empowerment": 0.1667,
+          "unclear": 0.0
+        },
+        "narrative_distribution": {
+          "opportunity": 0.3333,
+          "threat": 0.1667,
+          "contested": 0.5,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "breadth_distribution": {
+          "broad": 0.8333,
+          "targeted": 0.1667,
+          "concentrated": 0.0,
+          "unclear": 0.0
+        },
+        "dimension_distribution": {
+          "agentic": 0.0,
+          "creative": 0.1667,
+          "normative": 0.5,
+          "operational": 0.3333
+        },
+        "signal_ready": true
+      },
+      "amplification": {
+        "scope": "country",
+        "country_iso3": "CAN",
+        "coverage_index": 19.0476,
+        "event_index": 22.2222,
+        "directional_amplification_gap": -3.1746,
+        "coverage_unit_count": 7,
+        "event_unit_count": 6,
+        "coverage_event_ratio": 1.1667,
+        "coverage_narrative_distribution": {
+          "opportunity": 0.4286,
+          "threat": 0.1429,
+          "contested": 0.4286,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "event_narrative_distribution": {
+          "opportunity": 0.3333,
+          "threat": 0.1667,
+          "contested": 0.5,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "signal_ready": true
+      }
+    },
+    {
+      "country_iso3": "CHN",
+      "coverage": {
+        "lens": "coverage",
+        "scope": "country",
+        "country_iso3": "CHN",
+        "unit_count_total": 12,
+        "unit_count_ai_relevant": 12,
+        "unit_count_scored": 11,
+        "review_required_count": 1,
+        "empowerment_index": 42.4243,
+        "mean_confidence": 0.6292,
+        "status_distribution": {
+          "expanding": 0.5833,
+          "contracting": 0.0,
+          "mixed": 0.0833,
+          "non_empowerment": 0.25,
+          "unclear": 0.0833
+        },
+        "narrative_distribution": {
+          "opportunity": 0.6667,
+          "threat": 0.0,
+          "contested": 0.0833,
+          "descriptive_neutral": 0.25,
+          "unclear": 0.0
+        },
+        "breadth_distribution": {
+          "broad": 0.75,
+          "targeted": 0.1667,
+          "concentrated": 0.0,
+          "unclear": 0.0833
+        },
+        "dimension_distribution": {
+          "agentic": 0.0,
+          "creative": 0.0833,
+          "normative": 0.1667,
+          "operational": 0.5833
+        },
+        "signal_ready": true
+      },
+      "event": {
+        "lens": "event",
+        "scope": "country",
+        "country_iso3": "CHN",
+        "unit_count_total": 12,
+        "unit_count_ai_relevant": 12,
+        "unit_count_scored": 11,
+        "review_required_count": 1,
+        "empowerment_index": 42.4243,
+        "mean_confidence": 0.6292,
+        "status_distribution": {
+          "expanding": 0.5833,
+          "contracting": 0.0,
+          "mixed": 0.0833,
+          "non_empowerment": 0.25,
+          "unclear": 0.0833
+        },
+        "narrative_distribution": {
+          "opportunity": 0.6667,
+          "threat": 0.0,
+          "contested": 0.0833,
+          "descriptive_neutral": 0.25,
+          "unclear": 0.0
+        },
+        "breadth_distribution": {
+          "broad": 0.75,
+          "targeted": 0.1667,
+          "concentrated": 0.0,
+          "unclear": 0.0833
+        },
+        "dimension_distribution": {
+          "agentic": 0.0,
+          "creative": 0.0833,
+          "normative": 0.1667,
+          "operational": 0.5833
+        },
+        "signal_ready": true
+      },
+      "amplification": {
+        "scope": "country",
+        "country_iso3": "CHN",
+        "coverage_index": 42.4243,
+        "event_index": 42.4243,
+        "directional_amplification_gap": 0.0,
+        "coverage_unit_count": 12,
+        "event_unit_count": 12,
+        "coverage_event_ratio": 1.0,
+        "coverage_narrative_distribution": {
+          "opportunity": 0.6667,
+          "threat": 0.0,
+          "contested": 0.0833,
+          "descriptive_neutral": 0.25,
+          "unclear": 0.0
+        },
+        "event_narrative_distribution": {
+          "opportunity": 0.6667,
+          "threat": 0.0,
+          "contested": 0.0833,
+          "descriptive_neutral": 0.25,
+          "unclear": 0.0
+        },
+        "signal_ready": true
+      }
+    },
+    {
+      "country_iso3": "DEU",
+      "coverage": {
+        "lens": "coverage",
+        "scope": "country",
+        "country_iso3": "DEU",
+        "unit_count_total": 1,
+        "unit_count_ai_relevant": 1,
+        "unit_count_scored": 1,
+        "review_required_count": 0,
+        "empowerment_index": 66.6667,
+        "mean_confidence": 0.6,
+        "status_distribution": {
+          "expanding": 1.0,
+          "contracting": 0.0,
+          "mixed": 0.0,
+          "non_empowerment": 0.0,
+          "unclear": 0.0
+        },
+        "narrative_distribution": {
+          "opportunity": 0.0,
+          "threat": 0.0,
+          "contested": 1.0,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "breadth_distribution": {
+          "broad": 1.0,
+          "targeted": 0.0,
+          "concentrated": 0.0,
+          "unclear": 0.0
+        },
+        "dimension_distribution": {
+          "agentic": 1.0,
+          "creative": 1.0,
+          "normative": 1.0,
+          "operational": 1.0
+        },
+        "signal_ready": false
+      },
+      "event": {
+        "lens": "event",
+        "scope": "country",
+        "country_iso3": "DEU",
+        "unit_count_total": 1,
+        "unit_count_ai_relevant": 1,
+        "unit_count_scored": 1,
+        "review_required_count": 0,
+        "empowerment_index": 66.6667,
+        "mean_confidence": 0.6,
+        "status_distribution": {
+          "expanding": 1.0,
+          "contracting": 0.0,
+          "mixed": 0.0,
+          "non_empowerment": 0.0,
+          "unclear": 0.0
+        },
+        "narrative_distribution": {
+          "opportunity": 0.0,
+          "threat": 0.0,
+          "contested": 1.0,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "breadth_distribution": {
+          "broad": 1.0,
+          "targeted": 0.0,
+          "concentrated": 0.0,
+          "unclear": 0.0
+        },
+        "dimension_distribution": {
+          "agentic": 1.0,
+          "creative": 1.0,
+          "normative": 1.0,
+          "operational": 1.0
+        },
+        "signal_ready": false
+      },
+      "amplification": {
+        "scope": "country",
+        "country_iso3": "DEU",
+        "coverage_index": 66.6667,
+        "event_index": 66.6667,
         "directional_amplification_gap": 0.0,
         "coverage_unit_count": 1,
         "event_unit_count": 1,
@@ -224,17 +744,17 @@
       }
     },
     {
-      "country_iso3": "ARG",
+      "country_iso3": "FIN",
       "coverage": {
         "lens": "coverage",
         "scope": "country",
-        "country_iso3": "ARG",
+        "country_iso3": "FIN",
         "unit_count_total": 1,
         "unit_count_ai_relevant": 1,
         "unit_count_scored": 0,
         "review_required_count": 1,
         "empowerment_index": null,
-        "mean_confidence": null,
+        "mean_confidence": 0.5,
         "status_distribution": {
           "expanding": 0.0,
           "contracting": 0.0,
@@ -266,13 +786,13 @@
       "event": {
         "lens": "event",
         "scope": "country",
-        "country_iso3": "ARG",
+        "country_iso3": "FIN",
         "unit_count_total": 1,
         "unit_count_ai_relevant": 1,
         "unit_count_scored": 0,
         "review_required_count": 1,
         "empowerment_index": null,
-        "mean_confidence": null,
+        "mean_confidence": 0.5,
         "status_distribution": {
           "expanding": 0.0,
           "contracting": 0.0,
@@ -303,7 +823,7 @@
       },
       "amplification": {
         "scope": "country",
-        "country_iso3": "ARG",
+        "country_iso3": "FIN",
         "coverage_index": null,
         "event_index": null,
         "directional_amplification_gap": null,
@@ -328,41 +848,41 @@
       }
     },
     {
-      "country_iso3": "CAN",
+      "country_iso3": "FRA",
       "coverage": {
         "lens": "coverage",
         "scope": "country",
-        "country_iso3": "CAN",
-        "unit_count_total": 12,
-        "unit_count_ai_relevant": 12,
-        "unit_count_scored": 12,
-        "review_required_count": 0,
-        "empowerment_index": 50.0,
-        "mean_confidence": null,
+        "country_iso3": "FRA",
+        "unit_count_total": 9,
+        "unit_count_ai_relevant": 9,
+        "unit_count_scored": 8,
+        "review_required_count": 1,
+        "empowerment_index": 37.5,
+        "mean_confidence": 0.6444,
         "status_distribution": {
-          "expanding": 0.6667,
+          "expanding": 0.4444,
           "contracting": 0.0,
-          "mixed": 0.0833,
-          "non_empowerment": 0.25,
-          "unclear": 0.0
+          "mixed": 0.3333,
+          "non_empowerment": 0.1111,
+          "unclear": 0.1111
         },
         "narrative_distribution": {
-          "opportunity": 0.5,
-          "threat": 0.1667,
-          "contested": 0.1667,
-          "descriptive_neutral": 0.1667,
+          "opportunity": 0.2222,
+          "threat": 0.1111,
+          "contested": 0.4444,
+          "descriptive_neutral": 0.2222,
           "unclear": 0.0
         },
         "breadth_distribution": {
-          "broad": 0.4167,
-          "targeted": 0.5,
+          "broad": 0.5556,
+          "targeted": 0.4444,
           "concentrated": 0.0,
-          "unclear": 0.0833
+          "unclear": 0.0
         },
         "dimension_distribution": {
-          "agentic": 0.0833,
-          "creative": 0.0,
-          "normative": 0.25,
+          "agentic": 0.5556,
+          "creative": 0.2222,
+          "normative": 0.5556,
           "operational": 0.6667
         },
         "signal_ready": true
@@ -370,270 +890,62 @@
       "event": {
         "lens": "event",
         "scope": "country",
-        "country_iso3": "CAN",
-        "unit_count_total": 11,
-        "unit_count_ai_relevant": 11,
-        "unit_count_scored": 11,
-        "review_required_count": 0,
-        "empowerment_index": 42.4243,
-        "mean_confidence": null,
+        "country_iso3": "FRA",
+        "unit_count_total": 9,
+        "unit_count_ai_relevant": 9,
+        "unit_count_scored": 8,
+        "review_required_count": 1,
+        "empowerment_index": 45.8334,
+        "mean_confidence": 0.6278,
         "status_distribution": {
-          "expanding": 0.6364,
+          "expanding": 0.5556,
           "contracting": 0.0,
-          "mixed": 0.0909,
-          "non_empowerment": 0.2727,
-          "unclear": 0.0
+          "mixed": 0.2222,
+          "non_empowerment": 0.1111,
+          "unclear": 0.1111
         },
         "narrative_distribution": {
-          "opportunity": 0.4545,
-          "threat": 0.1818,
-          "contested": 0.1818,
-          "descriptive_neutral": 0.1818,
+          "opportunity": 0.2222,
+          "threat": 0.1111,
+          "contested": 0.4444,
+          "descriptive_neutral": 0.2222,
           "unclear": 0.0
         },
         "breadth_distribution": {
-          "broad": 0.3636,
-          "targeted": 0.5455,
+          "broad": 0.5556,
+          "targeted": 0.4444,
           "concentrated": 0.0,
-          "unclear": 0.0909
+          "unclear": 0.0
         },
         "dimension_distribution": {
-          "agentic": 0.0909,
-          "creative": 0.0,
-          "normative": 0.1818,
-          "operational": 0.5455
+          "agentic": 0.6667,
+          "creative": 0.2222,
+          "normative": 0.5556,
+          "operational": 0.6667
         },
         "signal_ready": true
       },
       "amplification": {
         "scope": "country",
-        "country_iso3": "CAN",
-        "coverage_index": 50.0,
-        "event_index": 42.4243,
-        "directional_amplification_gap": 7.5757,
-        "coverage_unit_count": 12,
-        "event_unit_count": 11,
-        "coverage_event_ratio": 1.0909,
-        "coverage_narrative_distribution": {
-          "opportunity": 0.5,
-          "threat": 0.1667,
-          "contested": 0.1667,
-          "descriptive_neutral": 0.1667,
-          "unclear": 0.0
-        },
-        "event_narrative_distribution": {
-          "opportunity": 0.4545,
-          "threat": 0.1818,
-          "contested": 0.1818,
-          "descriptive_neutral": 0.1818,
-          "unclear": 0.0
-        },
-        "signal_ready": true
-      }
-    },
-    {
-      "country_iso3": "CHN",
-      "coverage": {
-        "lens": "coverage",
-        "scope": "country",
-        "country_iso3": "CHN",
-        "unit_count_total": 17,
-        "unit_count_ai_relevant": 15,
-        "unit_count_scored": 14,
-        "review_required_count": 1,
-        "empowerment_index": 35.7143,
-        "mean_confidence": null,
-        "status_distribution": {
-          "expanding": 0.4667,
-          "contracting": 0.0,
-          "mixed": 0.2,
-          "non_empowerment": 0.2667,
-          "unclear": 0.0667
-        },
-        "narrative_distribution": {
-          "opportunity": 0.7333,
-          "threat": 0.0,
-          "contested": 0.1333,
-          "descriptive_neutral": 0.1333,
-          "unclear": 0.0
-        },
-        "breadth_distribution": {
-          "broad": 0.7333,
-          "targeted": 0.2667,
-          "concentrated": 0.0,
-          "unclear": 0.0
-        },
-        "dimension_distribution": {
-          "agentic": 0.1333,
-          "creative": 0.2667,
-          "normative": 0.2667,
-          "operational": 0.5333
-        },
-        "signal_ready": true
-      },
-      "event": {
-        "lens": "event",
-        "scope": "country",
-        "country_iso3": "CHN",
-        "unit_count_total": 17,
-        "unit_count_ai_relevant": 15,
-        "unit_count_scored": 14,
-        "review_required_count": 1,
-        "empowerment_index": 35.7143,
-        "mean_confidence": null,
-        "status_distribution": {
-          "expanding": 0.4667,
-          "contracting": 0.0,
-          "mixed": 0.2,
-          "non_empowerment": 0.2667,
-          "unclear": 0.0667
-        },
-        "narrative_distribution": {
-          "opportunity": 0.7333,
-          "threat": 0.0,
-          "contested": 0.1333,
-          "descriptive_neutral": 0.1333,
-          "unclear": 0.0
-        },
-        "breadth_distribution": {
-          "broad": 0.7333,
-          "targeted": 0.2667,
-          "concentrated": 0.0,
-          "unclear": 0.0
-        },
-        "dimension_distribution": {
-          "agentic": 0.1333,
-          "creative": 0.2667,
-          "normative": 0.2667,
-          "operational": 0.5333
-        },
-        "signal_ready": true
-      },
-      "amplification": {
-        "scope": "country",
-        "country_iso3": "CHN",
-        "coverage_index": 35.7143,
-        "event_index": 35.7143,
-        "directional_amplification_gap": 0.0,
-        "coverage_unit_count": 15,
-        "event_unit_count": 15,
+        "country_iso3": "FRA",
+        "coverage_index": 37.5,
+        "event_index": 45.8334,
+        "directional_amplification_gap": -8.3334,
+        "coverage_unit_count": 9,
+        "event_unit_count": 9,
         "coverage_event_ratio": 1.0,
         "coverage_narrative_distribution": {
-          "opportunity": 0.7333,
-          "threat": 0.0,
-          "contested": 0.1333,
-          "descriptive_neutral": 0.1333,
+          "opportunity": 0.2222,
+          "threat": 0.1111,
+          "contested": 0.4444,
+          "descriptive_neutral": 0.2222,
           "unclear": 0.0
         },
         "event_narrative_distribution": {
-          "opportunity": 0.7333,
-          "threat": 0.0,
-          "contested": 0.1333,
-          "descriptive_neutral": 0.1333,
-          "unclear": 0.0
-        },
-        "signal_ready": true
-      }
-    },
-    {
-      "country_iso3": "FRA",
-      "coverage": {
-        "lens": "coverage",
-        "scope": "country",
-        "country_iso3": "FRA",
-        "unit_count_total": 4,
-        "unit_count_ai_relevant": 4,
-        "unit_count_scored": 4,
-        "review_required_count": 0,
-        "empowerment_index": 25.0,
-        "mean_confidence": null,
-        "status_distribution": {
-          "expanding": 0.5,
-          "contracting": 0.0,
-          "mixed": 0.0,
-          "non_empowerment": 0.5,
-          "unclear": 0.0
-        },
-        "narrative_distribution": {
-          "opportunity": 0.25,
-          "threat": 0.0,
-          "contested": 0.25,
-          "descriptive_neutral": 0.5,
-          "unclear": 0.0
-        },
-        "breadth_distribution": {
-          "broad": 0.5,
-          "targeted": 0.25,
-          "concentrated": 0.0,
-          "unclear": 0.25
-        },
-        "dimension_distribution": {
-          "agentic": 0.0,
-          "creative": 0.0,
-          "normative": 0.5,
-          "operational": 0.0
-        },
-        "signal_ready": true
-      },
-      "event": {
-        "lens": "event",
-        "scope": "country",
-        "country_iso3": "FRA",
-        "unit_count_total": 5,
-        "unit_count_ai_relevant": 5,
-        "unit_count_scored": 5,
-        "review_required_count": 0,
-        "empowerment_index": 40.0,
-        "mean_confidence": null,
-        "status_distribution": {
-          "expanding": 0.6,
-          "contracting": 0.0,
-          "mixed": 0.0,
-          "non_empowerment": 0.4,
-          "unclear": 0.0
-        },
-        "narrative_distribution": {
-          "opportunity": 0.4,
-          "threat": 0.0,
-          "contested": 0.2,
-          "descriptive_neutral": 0.4,
-          "unclear": 0.0
-        },
-        "breadth_distribution": {
-          "broad": 0.6,
-          "targeted": 0.2,
-          "concentrated": 0.0,
-          "unclear": 0.2
-        },
-        "dimension_distribution": {
-          "agentic": 0.2,
-          "creative": 0.0,
-          "normative": 0.4,
-          "operational": 0.0
-        },
-        "signal_ready": true
-      },
-      "amplification": {
-        "scope": "country",
-        "country_iso3": "FRA",
-        "coverage_index": 25.0,
-        "event_index": 40.0,
-        "directional_amplification_gap": -15.0,
-        "coverage_unit_count": 4,
-        "event_unit_count": 5,
-        "coverage_event_ratio": 0.8,
-        "coverage_narrative_distribution": {
-          "opportunity": 0.25,
-          "threat": 0.0,
-          "contested": 0.25,
-          "descriptive_neutral": 0.5,
-          "unclear": 0.0
-        },
-        "event_narrative_distribution": {
-          "opportunity": 0.4,
-          "threat": 0.0,
-          "contested": 0.2,
-          "descriptive_neutral": 0.4,
+          "opportunity": 0.2222,
+          "threat": 0.1111,
+          "contested": 0.4444,
+          "descriptive_neutral": 0.2222,
           "unclear": 0.0
         },
         "signal_ready": true
@@ -645,29 +957,29 @@
         "lens": "coverage",
         "scope": "country",
         "country_iso3": "GBR",
-        "unit_count_total": 2,
-        "unit_count_ai_relevant": 2,
-        "unit_count_scored": 2,
+        "unit_count_total": 1,
+        "unit_count_ai_relevant": 1,
+        "unit_count_scored": 1,
         "review_required_count": 0,
-        "empowerment_index": 33.3334,
-        "mean_confidence": null,
+        "empowerment_index": 66.6667,
+        "mean_confidence": 0.75,
         "status_distribution": {
-          "expanding": 0.5,
+          "expanding": 1.0,
           "contracting": 0.0,
           "mixed": 0.0,
-          "non_empowerment": 0.5,
+          "non_empowerment": 0.0,
           "unclear": 0.0
         },
         "narrative_distribution": {
-          "opportunity": 0.5,
+          "opportunity": 1.0,
           "threat": 0.0,
           "contested": 0.0,
-          "descriptive_neutral": 0.5,
+          "descriptive_neutral": 0.0,
           "unclear": 0.0
         },
         "breadth_distribution": {
-          "broad": 0.0,
-          "targeted": 1.0,
+          "broad": 1.0,
+          "targeted": 0.0,
           "concentrated": 0.0,
           "unclear": 0.0
         },
@@ -675,7 +987,7 @@
           "agentic": 0.0,
           "creative": 0.0,
           "normative": 0.0,
-          "operational": 0.5
+          "operational": 1.0
         },
         "signal_ready": false
       },
@@ -683,29 +995,29 @@
         "lens": "event",
         "scope": "country",
         "country_iso3": "GBR",
-        "unit_count_total": 2,
-        "unit_count_ai_relevant": 2,
-        "unit_count_scored": 2,
+        "unit_count_total": 1,
+        "unit_count_ai_relevant": 1,
+        "unit_count_scored": 1,
         "review_required_count": 0,
-        "empowerment_index": 33.3334,
-        "mean_confidence": null,
+        "empowerment_index": 66.6667,
+        "mean_confidence": 0.75,
         "status_distribution": {
-          "expanding": 0.5,
+          "expanding": 1.0,
           "contracting": 0.0,
           "mixed": 0.0,
-          "non_empowerment": 0.5,
+          "non_empowerment": 0.0,
           "unclear": 0.0
         },
         "narrative_distribution": {
-          "opportunity": 0.5,
+          "opportunity": 1.0,
           "threat": 0.0,
           "contested": 0.0,
-          "descriptive_neutral": 0.5,
+          "descriptive_neutral": 0.0,
           "unclear": 0.0
         },
         "breadth_distribution": {
-          "broad": 0.0,
-          "targeted": 1.0,
+          "broad": 1.0,
+          "targeted": 0.0,
           "concentrated": 0.0,
           "unclear": 0.0
         },
@@ -713,90 +1025,52 @@
           "agentic": 0.0,
           "creative": 0.0,
           "normative": 0.0,
-          "operational": 0.5
+          "operational": 1.0
         },
         "signal_ready": false
       },
       "amplification": {
         "scope": "country",
         "country_iso3": "GBR",
-        "coverage_index": 33.3334,
-        "event_index": 33.3334,
+        "coverage_index": 66.6667,
+        "event_index": 66.6667,
         "directional_amplification_gap": 0.0,
-        "coverage_unit_count": 2,
-        "event_unit_count": 2,
+        "coverage_unit_count": 1,
+        "event_unit_count": 1,
         "coverage_event_ratio": 1.0,
         "coverage_narrative_distribution": {
-          "opportunity": 0.5,
+          "opportunity": 1.0,
           "threat": 0.0,
           "contested": 0.0,
-          "descriptive_neutral": 0.5,
+          "descriptive_neutral": 0.0,
           "unclear": 0.0
         },
         "event_narrative_distribution": {
-          "opportunity": 0.5,
+          "opportunity": 1.0,
           "threat": 0.0,
           "contested": 0.0,
-          "descriptive_neutral": 0.5,
+          "descriptive_neutral": 0.0,
           "unclear": 0.0
         },
         "signal_ready": false
       }
     },
     {
-      "country_iso3": "NLD",
+      "country_iso3": "HKG",
       "coverage": {
         "lens": "coverage",
         "scope": "country",
-        "country_iso3": "NLD",
-        "unit_count_total": 3,
-        "unit_count_ai_relevant": 3,
-        "unit_count_scored": 3,
+        "country_iso3": "HKG",
+        "unit_count_total": 1,
+        "unit_count_ai_relevant": 1,
+        "unit_count_scored": 1,
         "review_required_count": 0,
-        "empowerment_index": -44.4445,
-        "mean_confidence": null,
+        "empowerment_index": 0.0,
+        "mean_confidence": 0.75,
         "status_distribution": {
           "expanding": 0.0,
-          "contracting": 0.6667,
-          "mixed": 0.3333,
-          "non_empowerment": 0.0,
-          "unclear": 0.0
-        },
-        "narrative_distribution": {
-          "opportunity": 0.0,
-          "threat": 0.0,
-          "contested": 0.6667,
-          "descriptive_neutral": 0.3333,
-          "unclear": 0.0
-        },
-        "breadth_distribution": {
-          "broad": 0.3333,
-          "targeted": 0.6667,
-          "concentrated": 0.0,
-          "unclear": 0.0
-        },
-        "dimension_distribution": {
-          "agentic": 0.3333,
-          "creative": 0.0,
-          "normative": 0.6667,
-          "operational": 0.3333
-        },
-        "signal_ready": true
-      },
-      "event": {
-        "lens": "event",
-        "scope": "country",
-        "country_iso3": "NLD",
-        "unit_count_total": 2,
-        "unit_count_ai_relevant": 2,
-        "unit_count_scored": 2,
-        "review_required_count": 0,
-        "empowerment_index": -33.3334,
-        "mean_confidence": null,
-        "status_distribution": {
-          "expanding": 0.0,
-          "contracting": 0.5,
-          "mixed": 0.5,
+          "contracting": 0.0,
+          "mixed": 1.0,
           "non_empowerment": 0.0,
           "unclear": 0.0
         },
@@ -808,33 +1082,71 @@
           "unclear": 0.0
         },
         "breadth_distribution": {
-          "broad": 0.5,
-          "targeted": 0.5,
+          "broad": 0.0,
+          "targeted": 1.0,
           "concentrated": 0.0,
           "unclear": 0.0
         },
         "dimension_distribution": {
-          "agentic": 0.5,
+          "agentic": 0.0,
           "creative": 0.0,
-          "normative": 0.5,
-          "operational": 0.5
+          "normative": 0.0,
+          "operational": 1.0
+        },
+        "signal_ready": false
+      },
+      "event": {
+        "lens": "event",
+        "scope": "country",
+        "country_iso3": "HKG",
+        "unit_count_total": 1,
+        "unit_count_ai_relevant": 1,
+        "unit_count_scored": 1,
+        "review_required_count": 0,
+        "empowerment_index": 0.0,
+        "mean_confidence": 0.75,
+        "status_distribution": {
+          "expanding": 0.0,
+          "contracting": 0.0,
+          "mixed": 1.0,
+          "non_empowerment": 0.0,
+          "unclear": 0.0
+        },
+        "narrative_distribution": {
+          "opportunity": 0.0,
+          "threat": 0.0,
+          "contested": 1.0,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "breadth_distribution": {
+          "broad": 0.0,
+          "targeted": 1.0,
+          "concentrated": 0.0,
+          "unclear": 0.0
+        },
+        "dimension_distribution": {
+          "agentic": 0.0,
+          "creative": 0.0,
+          "normative": 0.0,
+          "operational": 1.0
         },
         "signal_ready": false
       },
       "amplification": {
         "scope": "country",
-        "country_iso3": "NLD",
-        "coverage_index": -44.4445,
-        "event_index": -33.3334,
-        "directional_amplification_gap": -11.1111,
-        "coverage_unit_count": 3,
-        "event_unit_count": 2,
-        "coverage_event_ratio": 1.5,
+        "country_iso3": "HKG",
+        "coverage_index": 0.0,
+        "event_index": 0.0,
+        "directional_amplification_gap": 0.0,
+        "coverage_unit_count": 1,
+        "event_unit_count": 1,
+        "coverage_event_ratio": 1.0,
         "coverage_narrative_distribution": {
           "opportunity": 0.0,
           "threat": 0.0,
-          "contested": 0.6667,
-          "descriptive_neutral": 0.3333,
+          "contested": 1.0,
+          "descriptive_neutral": 0.0,
           "unclear": 0.0
         },
         "event_narrative_distribution": {
@@ -842,6 +1154,318 @@
           "threat": 0.0,
           "contested": 1.0,
           "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "signal_ready": false
+      }
+    },
+    {
+      "country_iso3": "ISR",
+      "coverage": {
+        "lens": "coverage",
+        "scope": "country",
+        "country_iso3": "ISR",
+        "unit_count_total": 1,
+        "unit_count_ai_relevant": 1,
+        "unit_count_scored": 1,
+        "review_required_count": 0,
+        "empowerment_index": 0.0,
+        "mean_confidence": 0.75,
+        "status_distribution": {
+          "expanding": 0.0,
+          "contracting": 0.0,
+          "mixed": 1.0,
+          "non_empowerment": 0.0,
+          "unclear": 0.0
+        },
+        "narrative_distribution": {
+          "opportunity": 1.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "breadth_distribution": {
+          "broad": 0.0,
+          "targeted": 1.0,
+          "concentrated": 0.0,
+          "unclear": 0.0
+        },
+        "dimension_distribution": {
+          "agentic": 1.0,
+          "creative": 0.0,
+          "normative": 1.0,
+          "operational": 0.0
+        },
+        "signal_ready": false
+      },
+      "event": {
+        "lens": "event",
+        "scope": "country",
+        "country_iso3": "ISR",
+        "unit_count_total": 1,
+        "unit_count_ai_relevant": 1,
+        "unit_count_scored": 1,
+        "review_required_count": 0,
+        "empowerment_index": 0.0,
+        "mean_confidence": 0.75,
+        "status_distribution": {
+          "expanding": 0.0,
+          "contracting": 0.0,
+          "mixed": 1.0,
+          "non_empowerment": 0.0,
+          "unclear": 0.0
+        },
+        "narrative_distribution": {
+          "opportunity": 1.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "breadth_distribution": {
+          "broad": 0.0,
+          "targeted": 1.0,
+          "concentrated": 0.0,
+          "unclear": 0.0
+        },
+        "dimension_distribution": {
+          "agentic": 1.0,
+          "creative": 0.0,
+          "normative": 1.0,
+          "operational": 0.0
+        },
+        "signal_ready": false
+      },
+      "amplification": {
+        "scope": "country",
+        "country_iso3": "ISR",
+        "coverage_index": 0.0,
+        "event_index": 0.0,
+        "directional_amplification_gap": 0.0,
+        "coverage_unit_count": 1,
+        "event_unit_count": 1,
+        "coverage_event_ratio": 1.0,
+        "coverage_narrative_distribution": {
+          "opportunity": 1.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "event_narrative_distribution": {
+          "opportunity": 1.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "signal_ready": false
+      }
+    },
+    {
+      "country_iso3": "MAR",
+      "coverage": {
+        "lens": "coverage",
+        "scope": "country",
+        "country_iso3": "MAR",
+        "unit_count_total": 1,
+        "unit_count_ai_relevant": 1,
+        "unit_count_scored": 1,
+        "review_required_count": 0,
+        "empowerment_index": 66.6667,
+        "mean_confidence": 0.75,
+        "status_distribution": {
+          "expanding": 1.0,
+          "contracting": 0.0,
+          "mixed": 0.0,
+          "non_empowerment": 0.0,
+          "unclear": 0.0
+        },
+        "narrative_distribution": {
+          "opportunity": 1.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "breadth_distribution": {
+          "broad": 1.0,
+          "targeted": 0.0,
+          "concentrated": 0.0,
+          "unclear": 0.0
+        },
+        "dimension_distribution": {
+          "agentic": 1.0,
+          "creative": 1.0,
+          "normative": 1.0,
+          "operational": 1.0
+        },
+        "signal_ready": false
+      },
+      "event": {
+        "lens": "event",
+        "scope": "country",
+        "country_iso3": "MAR",
+        "unit_count_total": 1,
+        "unit_count_ai_relevant": 1,
+        "unit_count_scored": 1,
+        "review_required_count": 0,
+        "empowerment_index": 66.6667,
+        "mean_confidence": 0.75,
+        "status_distribution": {
+          "expanding": 1.0,
+          "contracting": 0.0,
+          "mixed": 0.0,
+          "non_empowerment": 0.0,
+          "unclear": 0.0
+        },
+        "narrative_distribution": {
+          "opportunity": 1.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "breadth_distribution": {
+          "broad": 1.0,
+          "targeted": 0.0,
+          "concentrated": 0.0,
+          "unclear": 0.0
+        },
+        "dimension_distribution": {
+          "agentic": 1.0,
+          "creative": 1.0,
+          "normative": 1.0,
+          "operational": 1.0
+        },
+        "signal_ready": false
+      },
+      "amplification": {
+        "scope": "country",
+        "country_iso3": "MAR",
+        "coverage_index": 66.6667,
+        "event_index": 66.6667,
+        "directional_amplification_gap": 0.0,
+        "coverage_unit_count": 1,
+        "event_unit_count": 1,
+        "coverage_event_ratio": 1.0,
+        "coverage_narrative_distribution": {
+          "opportunity": 1.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "event_narrative_distribution": {
+          "opportunity": 1.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "signal_ready": false
+      }
+    },
+    {
+      "country_iso3": "URY",
+      "coverage": {
+        "lens": "coverage",
+        "scope": "country",
+        "country_iso3": "URY",
+        "unit_count_total": 1,
+        "unit_count_ai_relevant": 1,
+        "unit_count_scored": 1,
+        "review_required_count": 0,
+        "empowerment_index": 0.0,
+        "mean_confidence": 0.6,
+        "status_distribution": {
+          "expanding": 0.0,
+          "contracting": 0.0,
+          "mixed": 0.0,
+          "non_empowerment": 1.0,
+          "unclear": 0.0
+        },
+        "narrative_distribution": {
+          "opportunity": 0.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 1.0,
+          "unclear": 0.0
+        },
+        "breadth_distribution": {
+          "broad": 0.0,
+          "targeted": 0.0,
+          "concentrated": 0.0,
+          "unclear": 1.0
+        },
+        "dimension_distribution": {
+          "agentic": 0.0,
+          "creative": 0.0,
+          "normative": 0.0,
+          "operational": 0.0
+        },
+        "signal_ready": false
+      },
+      "event": {
+        "lens": "event",
+        "scope": "country",
+        "country_iso3": "URY",
+        "unit_count_total": 1,
+        "unit_count_ai_relevant": 1,
+        "unit_count_scored": 1,
+        "review_required_count": 0,
+        "empowerment_index": 0.0,
+        "mean_confidence": 0.6,
+        "status_distribution": {
+          "expanding": 0.0,
+          "contracting": 0.0,
+          "mixed": 0.0,
+          "non_empowerment": 1.0,
+          "unclear": 0.0
+        },
+        "narrative_distribution": {
+          "opportunity": 0.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 1.0,
+          "unclear": 0.0
+        },
+        "breadth_distribution": {
+          "broad": 0.0,
+          "targeted": 0.0,
+          "concentrated": 0.0,
+          "unclear": 1.0
+        },
+        "dimension_distribution": {
+          "agentic": 0.0,
+          "creative": 0.0,
+          "normative": 0.0,
+          "operational": 0.0
+        },
+        "signal_ready": false
+      },
+      "amplification": {
+        "scope": "country",
+        "country_iso3": "URY",
+        "coverage_index": 0.0,
+        "event_index": 0.0,
+        "directional_amplification_gap": 0.0,
+        "coverage_unit_count": 1,
+        "event_unit_count": 1,
+        "coverage_event_ratio": 1.0,
+        "coverage_narrative_distribution": {
+          "opportunity": 0.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 1.0,
+          "unclear": 0.0
+        },
+        "event_narrative_distribution": {
+          "opportunity": 0.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 1.0,
           "unclear": 0.0
         },
         "signal_ready": false
@@ -853,37 +1477,37 @@
         "lens": "coverage",
         "scope": "country",
         "country_iso3": "USA",
-        "unit_count_total": 10,
-        "unit_count_ai_relevant": 10,
-        "unit_count_scored": 10,
-        "review_required_count": 0,
-        "empowerment_index": 20.0,
-        "mean_confidence": null,
+        "unit_count_total": 12,
+        "unit_count_ai_relevant": 12,
+        "unit_count_scored": 12,
+        "review_required_count": 2,
+        "empowerment_index": 5.5556,
+        "mean_confidence": 0.6167,
         "status_distribution": {
-          "expanding": 0.3,
+          "expanding": 0.0833,
           "contracting": 0.0,
-          "mixed": 0.3,
-          "non_empowerment": 0.4,
+          "mixed": 0.3333,
+          "non_empowerment": 0.5833,
           "unclear": 0.0
         },
         "narrative_distribution": {
-          "opportunity": 0.3,
-          "threat": 0.3,
-          "contested": 0.2,
-          "descriptive_neutral": 0.2,
+          "opportunity": 0.0833,
+          "threat": 0.0833,
+          "contested": 0.4167,
+          "descriptive_neutral": 0.4167,
           "unclear": 0.0
         },
         "breadth_distribution": {
-          "broad": 0.6,
-          "targeted": 0.3,
+          "broad": 0.5,
+          "targeted": 0.5,
           "concentrated": 0.0,
-          "unclear": 0.1
+          "unclear": 0.0
         },
         "dimension_distribution": {
-          "agentic": 0.1,
-          "creative": 0.1,
-          "normative": 0.2,
-          "operational": 0.4
+          "agentic": 0.1667,
+          "creative": 0.1667,
+          "normative": 0.25,
+          "operational": 0.3333
         },
         "signal_ready": true
       },
@@ -891,64 +1515,168 @@
         "lens": "event",
         "scope": "country",
         "country_iso3": "USA",
-        "unit_count_total": 10,
-        "unit_count_ai_relevant": 10,
-        "unit_count_scored": 10,
-        "review_required_count": 0,
-        "empowerment_index": 20.0,
-        "mean_confidence": null,
+        "unit_count_total": 12,
+        "unit_count_ai_relevant": 12,
+        "unit_count_scored": 12,
+        "review_required_count": 2,
+        "empowerment_index": 5.5556,
+        "mean_confidence": 0.6167,
         "status_distribution": {
-          "expanding": 0.3,
+          "expanding": 0.0833,
           "contracting": 0.0,
-          "mixed": 0.3,
-          "non_empowerment": 0.4,
+          "mixed": 0.3333,
+          "non_empowerment": 0.5833,
           "unclear": 0.0
         },
         "narrative_distribution": {
-          "opportunity": 0.3,
-          "threat": 0.3,
-          "contested": 0.2,
-          "descriptive_neutral": 0.2,
+          "opportunity": 0.0833,
+          "threat": 0.0833,
+          "contested": 0.4167,
+          "descriptive_neutral": 0.4167,
           "unclear": 0.0
         },
         "breadth_distribution": {
-          "broad": 0.6,
-          "targeted": 0.3,
+          "broad": 0.5,
+          "targeted": 0.5,
           "concentrated": 0.0,
-          "unclear": 0.1
+          "unclear": 0.0
         },
         "dimension_distribution": {
-          "agentic": 0.1,
-          "creative": 0.1,
-          "normative": 0.2,
-          "operational": 0.4
+          "agentic": 0.1667,
+          "creative": 0.1667,
+          "normative": 0.25,
+          "operational": 0.3333
         },
         "signal_ready": true
       },
       "amplification": {
         "scope": "country",
         "country_iso3": "USA",
-        "coverage_index": 20.0,
-        "event_index": 20.0,
+        "coverage_index": 5.5556,
+        "event_index": 5.5556,
         "directional_amplification_gap": 0.0,
-        "coverage_unit_count": 10,
-        "event_unit_count": 10,
+        "coverage_unit_count": 12,
+        "event_unit_count": 12,
         "coverage_event_ratio": 1.0,
         "coverage_narrative_distribution": {
-          "opportunity": 0.3,
-          "threat": 0.3,
-          "contested": 0.2,
-          "descriptive_neutral": 0.2,
+          "opportunity": 0.0833,
+          "threat": 0.0833,
+          "contested": 0.4167,
+          "descriptive_neutral": 0.4167,
           "unclear": 0.0
         },
         "event_narrative_distribution": {
-          "opportunity": 0.3,
-          "threat": 0.3,
-          "contested": 0.2,
-          "descriptive_neutral": 0.2,
+          "opportunity": 0.0833,
+          "threat": 0.0833,
+          "contested": 0.4167,
+          "descriptive_neutral": 0.4167,
           "unclear": 0.0
         },
         "signal_ready": true
+      }
+    },
+    {
+      "country_iso3": "VNM",
+      "coverage": {
+        "lens": "coverage",
+        "scope": "country",
+        "country_iso3": "VNM",
+        "unit_count_total": 1,
+        "unit_count_ai_relevant": 1,
+        "unit_count_scored": 1,
+        "review_required_count": 0,
+        "empowerment_index": 66.6667,
+        "mean_confidence": 0.6,
+        "status_distribution": {
+          "expanding": 1.0,
+          "contracting": 0.0,
+          "mixed": 0.0,
+          "non_empowerment": 0.0,
+          "unclear": 0.0
+        },
+        "narrative_distribution": {
+          "opportunity": 1.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "breadth_distribution": {
+          "broad": 1.0,
+          "targeted": 0.0,
+          "concentrated": 0.0,
+          "unclear": 0.0
+        },
+        "dimension_distribution": {
+          "agentic": 0.0,
+          "creative": 1.0,
+          "normative": 1.0,
+          "operational": 1.0
+        },
+        "signal_ready": false
+      },
+      "event": {
+        "lens": "event",
+        "scope": "country",
+        "country_iso3": "VNM",
+        "unit_count_total": 1,
+        "unit_count_ai_relevant": 1,
+        "unit_count_scored": 1,
+        "review_required_count": 0,
+        "empowerment_index": 66.6667,
+        "mean_confidence": 0.6,
+        "status_distribution": {
+          "expanding": 1.0,
+          "contracting": 0.0,
+          "mixed": 0.0,
+          "non_empowerment": 0.0,
+          "unclear": 0.0
+        },
+        "narrative_distribution": {
+          "opportunity": 1.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "breadth_distribution": {
+          "broad": 1.0,
+          "targeted": 0.0,
+          "concentrated": 0.0,
+          "unclear": 0.0
+        },
+        "dimension_distribution": {
+          "agentic": 0.0,
+          "creative": 1.0,
+          "normative": 1.0,
+          "operational": 1.0
+        },
+        "signal_ready": false
+      },
+      "amplification": {
+        "scope": "country",
+        "country_iso3": "VNM",
+        "coverage_index": 66.6667,
+        "event_index": 66.6667,
+        "directional_amplification_gap": 0.0,
+        "coverage_unit_count": 1,
+        "event_unit_count": 1,
+        "coverage_event_ratio": 1.0,
+        "coverage_narrative_distribution": {
+          "opportunity": 1.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "event_narrative_distribution": {
+          "opportunity": 1.0,
+          "threat": 0.0,
+          "contested": 0.0,
+          "descriptive_neutral": 0.0,
+          "unclear": 0.0
+        },
+        "signal_ready": false
       }
     }
   ]
