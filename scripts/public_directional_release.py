@@ -111,13 +111,22 @@ def build_directional_release(release: dict[str, Any], payload: dict[str, Any], 
             complete = row["axes"]["evidence_complete"]
             row["content_basis"] = "full_text" if complete else "not_available"
             basis = row.get("evidence_basis_summary") or {}
-            expected_hashes = (correction.get("provenance") or {}).get("stored_body_hashes") or {}
-            if expected_hashes and expected_hashes != basis.get("source_fingerprints"):
+            provenance = correction.get("provenance") or {}
+            expected_hashes = provenance.get("stored_body_hashes") or {}
+            current_hashes = basis.get("source_fingerprints") or {}
+            if current_hashes and expected_hashes and expected_hashes != current_hashes:
                 raise ValueError("Correction source-body fingerprints changed: " + event_id)
+            source_quality = basis.get("source_quality") or provenance.get("source_quality") or {}
+            if expected_hashes and any(source_quality.get(aid, {}).get("body_sha256") != sha
+                                       or source_quality[aid].get("usable_complete_body") is not True
+                                       for aid, sha in expected_hashes.items()):
+                raise ValueError("Correction full-body source proof is missing: " + event_id)
             # Keep the original full-body quality and fingerprints. The Brief
             # export must not drop a corrected story as lacking source proof.
             row["evidence_basis_summary"] = {
                 **basis,
+                "source_quality": source_quality,
+                "source_fingerprints": current_hashes or expected_hashes,
                 "source_count": len(correction["article_ids"]),
                 "full_text_sources": len(correction["article_ids"]) if complete else 0,
                 "body_coverage": "complete_written_source" if complete else "incomplete_written_source",
