@@ -6,31 +6,33 @@
   "period_start": "2026-11-01",
   "period_end": "2026-11-30",
   "observed_week_start": "2026-10-26",
-  "observed_week_end": "2026-11-01",
-  "generated_at": "2026-11-03T11:26:42.824551Z",
-  "revision": 2,
+  "observed_week_end": "2026-11-08",
+  "generated_at": "2026-11-09T04:38:04.693104Z",
+  "revision": 3,
   "weekly_release_ids": [
-    "2026-W44"
+    "2026-W44",
+    "2026-W45"
   ],
   "weekly_revisions": {
-    "2026-W44": 2
+    "2026-W44": 2,
+    "2026-W45": 1
   },
   "reality": {
-    "distinct_event_records": 140,
-    "new_developments": 133,
-    "first_time_event_records": 133,
+    "distinct_event_records": 277,
+    "new_developments": 269,
+    "first_time_event_records": 269,
     "follow_on_developments": 0,
     "active_story_families": 0
   },
   "attention": {
-    "published_coverage_articles": 147,
-    "coverage_episode_count": 147,
-    "recurring_event_appearances": 4,
+    "published_coverage_articles": 287,
+    "coverage_episode_count": 288,
+    "recurring_event_appearances": 6,
     "resurfaced_event_appearances": 0,
     "same_event_new_coverage_articles": 0,
-    "rediscovered_article_records": 158,
-    "unique_publications": 112,
-    "unique_domains": 113
+    "rediscovered_article_records": 163,
+    "unique_publications": 197,
+    "unique_domains": 200
   },
   "replication_delay": {
     "observed_recurrence_count": 0,
@@ -39,46 +41,48 @@
     "p90_days": null
   },
   "article_rediscovery_delay": {
-    "observed_rediscovery_count": 158,
+    "observed_rediscovery_count": 163,
     "median_days": 0.0,
     "p75_days": 0.0,
     "p90_days": 0.0
   },
   "distributions": {
     "topics": {
-      "other": 84,
-      "government_regulation": 14,
-      "education_research": 12,
-      "infrastructure_investment": 9,
-      "privacy_security": 6,
-      "creativity_ip": 6,
-      "work_employment": 4,
-      "healthcare": 3,
+      "other": 155,
+      "government_regulation": 30,
+      "infrastructure_investment": 20,
+      "education_research": 19,
+      "creativity_ip": 16,
+      "healthcare": 11,
+      "privacy_security": 10,
+      "business_productivity": 8,
+      "work_employment": 6,
       "consumer_services": 2
     },
     "empowerment_status": {
-      "non_empowerment": 98,
-      "expanding": 25,
-      "mixed": 13,
-      "unclear": 3,
+      "non_empowerment": 184,
+      "expanding": 57,
+      "mixed": 29,
+      "unclear": 6,
       "contracting": 1
     }
   },
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-11-02T01:54:41.761056+00:00",
+    "considered_through": "2026-11-09T03:19:31.803934+00:00",
     "scope": "All prior event records available to the included reconciliations."
   },
   "reconciliation": {
-    "current_through": "2026-11-03T10:01:38.301492+00:00",
+    "current_through": "2026-11-09T03:38:23.208034+00:00",
     "weekly_revisions_included": {
-      "2026-W44": 2
+      "2026-W44": 2,
+      "2026-W45": 1
     },
     "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
   },
-  "story": "AIEO observed 147 newly published AI-news articles. They represented 133 new developments and 4 appearances of developments already in memory.",
+  "story": "AIEO observed 287 newly published AI-news articles. They represented 269 new developments and 6 appearances of developments already in memory.",
   "disclosure": "Distinct events are deduplicated across the full period by effective event ID. Recurring appearances remain in the Attention view and are not counted as new developments.",
-  "revision_reason": "An included weekly release was restated after longitudinal reconciliation.",
+  "revision_reason": "A newly completed weekly release was added to this period.",
   "revision_history": [
     {
       "revision": 2,
@@ -87,8 +91,17 @@
       "weekly_revisions": {
         "2026-W44": 2
       }
+    },
+    {
+      "revision": 3,
+      "changed_at": "2026-11-09T04:38:04.693104Z",
+      "reason": "A newly completed weekly release was added to this period.",
+      "weekly_revisions": {
+        "2026-W44": 2,
+        "2026-W45": 1
+      }
     }
   ],
-  "previous_revision_path": "/data/releases/monthly/archive/2026-11/revision-1.json",
-  "content_sha256": "645c94e0439675d11ff1ad8a2c456de9de60bd8a34a9d2a0a4dc497782ff34f4"
+  "previous_revision_path": "/data/releases/monthly/archive/2026-11/revision-2.json",
+  "content_sha256": "bf7eef2eac10861d7c627e72075d3ebaac29f74c7a9f6a87134d7f8718614fec"
 }

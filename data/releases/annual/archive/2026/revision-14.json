@@ -1,0 +1,304 @@
+{
+  "schema_version": "aieo_period_summary_v1.1",
+  "period_id": "2026",
+  "period_type": "annual",
+  "status": "accumulating",
+  "period_start": "2026-01-01",
+  "period_end": "2026-12-31",
+  "observed_week_start": "2026-08-10",
+  "observed_week_end": "2026-11-01",
+  "generated_at": "2026-11-03T11:26:42.814055Z",
+  "revision": 14,
+  "weekly_release_ids": [
+    "2026-W33",
+    "2026-W34",
+    "2026-W35",
+    "2026-W36",
+    "2026-W37",
+    "2026-W38",
+    "2026-W39",
+    "2026-W40",
+    "2026-W41",
+    "2026-W42",
+    "2026-W43",
+    "2026-W44"
+  ],
+  "weekly_revisions": {
+    "2026-W33": 15,
+    "2026-W34": 13,
+    "2026-W35": 14,
+    "2026-W36": 10,
+    "2026-W37": 9,
+    "2026-W38": 8,
+    "2026-W39": 7,
+    "2026-W40": 7,
+    "2026-W41": 5,
+    "2026-W42": 4,
+    "2026-W43": 3,
+    "2026-W44": 2
+  },
+  "reality": {
+    "distinct_event_records": 1586,
+    "new_developments": 1543,
+    "first_time_event_records": 1542,
+    "follow_on_developments": 1,
+    "active_story_families": 1
+  },
+  "attention": {
+    "published_coverage_articles": 1670,
+    "coverage_episode_count": 1678,
+    "recurring_event_appearances": 11,
+    "resurfaced_event_appearances": 0,
+    "same_event_new_coverage_articles": 0,
+    "rediscovered_article_records": 478,
+    "unique_publications": 820,
+    "unique_domains": 773
+  },
+  "replication_delay": {
+    "observed_recurrence_count": 0,
+    "median_days": null,
+    "p75_days": null,
+    "p90_days": null
+  },
+  "article_rediscovery_delay": {
+    "observed_rediscovery_count": 328,
+    "median_days": 0.0,
+    "p75_days": 0.0,
+    "p90_days": 5.02
+  },
+  "distributions": {
+    "topics": {
+      "other": 821,
+      "government_regulation": 237,
+      "infrastructure_investment": 132,
+      "education_research": 125,
+      "creativity_ip": 63,
+      "healthcare": 59,
+      "work_employment": 50,
+      "privacy_security": 45,
+      "business_productivity": 33,
+      "consumer_services": 21
+    },
+    "empowerment_status": {
+      "non_empowerment": 997,
+      "expanding": 268,
+      "unclear": 160,
+      "mixed": 131,
+      "contracting": 30
+    }
+  },
+  "historical_pool": {
+    "starts_at": "2026-08-05T09:11:42.719519+00:00",
+    "considered_through": "2026-11-02T01:54:41.761056+00:00",
+    "scope": "All prior event records available to the included reconciliations."
+  },
+  "reconciliation": {
+    "current_through": "2026-11-03T10:01:38.301492+00:00",
+    "weekly_revisions_included": {
+      "2026-W33": 15,
+      "2026-W34": 13,
+      "2026-W35": 14,
+      "2026-W36": 10,
+      "2026-W37": 9,
+      "2026-W38": 8,
+      "2026-W39": 7,
+      "2026-W40": 7,
+      "2026-W41": 5,
+      "2026-W42": 4,
+      "2026-W43": 3,
+      "2026-W44": 2
+    },
+    "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
+  },
+  "story": "AIEO observed 1670 newly published AI-news articles. They represented 1543 new developments and 11 appearances of developments already in memory.",
+  "disclosure": "Distinct events are deduplicated across the full period by effective event ID. Recurring appearances remain in the Attention view and are not counted as new developments.",
+  "revision_reason": "An included weekly release was restated after longitudinal reconciliation.",
+  "revision_history": [
+    {
+      "revision": 2,
+      "changed_at": "2026-08-31T18:01:48.021387Z",
+      "reason": "A newly completed weekly release was added to this period.",
+      "weekly_revisions": {
+        "2026-W33": 4,
+        "2026-W34": 2,
+        "2026-W35": 1
+      }
+    },
+    {
+      "revision": 3,
+      "changed_at": "2026-08-31T19:26:28.552298Z",
+      "reason": "An included weekly release was restated after longitudinal reconciliation.",
+      "weekly_revisions": {
+        "2026-W33": 5,
+        "2026-W34": 3,
+        "2026-W35": 2
+      }
+    },
+    {
+      "revision": 4,
+      "changed_at": "2026-09-05T11:21:24.796058Z",
+      "reason": "An included weekly release was restated after longitudinal reconciliation.",
+      "weekly_revisions": {
+        "2026-W33": 5,
+        "2026-W34": 3,
+        "2026-W35": 4
+      }
+    },
+    {
+      "revision": 5,
+      "changed_at": "2026-09-08T03:30:03.994902Z",
+      "reason": "A newly completed weekly release was added to this period.",
+      "weekly_revisions": {
+        "2026-W33": 6,
+        "2026-W34": 4,
+        "2026-W35": 5,
+        "2026-W36": 1
+      }
+    },
+    {
+      "revision": 6,
+      "changed_at": "2026-09-14T11:23:33.674083Z",
+      "reason": "A newly completed weekly release was added to this period.",
+      "weekly_revisions": {
+        "2026-W33": 7,
+        "2026-W34": 5,
+        "2026-W35": 6,
+        "2026-W36": 2,
+        "2026-W37": 1
+      }
+    },
+    {
+      "revision": 7,
+      "changed_at": "2026-09-21T07:30:26.339534Z",
+      "reason": "A newly completed weekly release was added to this period.",
+      "weekly_revisions": {
+        "2026-W33": 8,
+        "2026-W34": 6,
+        "2026-W35": 7,
+        "2026-W36": 3,
+        "2026-W37": 2,
+        "2026-W38": 1
+      }
+    },
+    {
+      "revision": 8,
+      "changed_at": "2026-09-28T07:39:13.442131Z",
+      "reason": "A newly completed weekly release was added to this period.",
+      "weekly_revisions": {
+        "2026-W33": 9,
+        "2026-W34": 7,
+        "2026-W35": 8,
+        "2026-W36": 4,
+        "2026-W37": 3,
+        "2026-W38": 2,
+        "2026-W39": 1
+      }
+    },
+    {
+      "revision": 9,
+      "changed_at": "2026-10-05T12:35:31.520614Z",
+      "reason": "A newly completed weekly release was added to this period.",
+      "weekly_revisions": {
+        "2026-W33": 10,
+        "2026-W34": 8,
+        "2026-W35": 9,
+        "2026-W36": 5,
+        "2026-W37": 4,
+        "2026-W38": 3,
+        "2026-W39": 2,
+        "2026-W40": 1
+      }
+    },
+    {
+      "revision": 10,
+      "changed_at": "2026-10-12T03:07:10.007250Z",
+      "reason": "A newly completed weekly release was added to this period.",
+      "weekly_revisions": {
+        "2026-W33": 11,
+        "2026-W34": 9,
+        "2026-W35": 10,
+        "2026-W36": 6,
+        "2026-W37": 5,
+        "2026-W38": 4,
+        "2026-W39": 3,
+        "2026-W40": 3,
+        "2026-W41": 1
+      }
+    },
+    {
+      "revision": 11,
+      "changed_at": "2026-10-19T02:05:43.659460Z",
+      "reason": "A newly completed weekly release was added to this period.",
+      "weekly_revisions": {
+        "2026-W33": 12,
+        "2026-W34": 10,
+        "2026-W35": 11,
+        "2026-W36": 7,
+        "2026-W37": 6,
+        "2026-W38": 5,
+        "2026-W39": 4,
+        "2026-W40": 4,
+        "2026-W41": 2,
+        "2026-W42": 1
+      }
+    },
+    {
+      "revision": 12,
+      "changed_at": "2026-10-26T11:54:43.528937Z",
+      "reason": "A newly completed weekly release was added to this period.",
+      "weekly_revisions": {
+        "2026-W33": 13,
+        "2026-W34": 11,
+        "2026-W35": 12,
+        "2026-W36": 8,
+        "2026-W37": 7,
+        "2026-W38": 6,
+        "2026-W39": 5,
+        "2026-W40": 5,
+        "2026-W41": 3,
+        "2026-W42": 2,
+        "2026-W43": 1
+      }
+    },
+    {
+      "revision": 13,
+      "changed_at": "2026-11-02T02:51:28.392409Z",
+      "reason": "A newly completed weekly release was added to this period.",
+      "weekly_revisions": {
+        "2026-W33": 14,
+        "2026-W34": 12,
+        "2026-W35": 13,
+        "2026-W36": 9,
+        "2026-W37": 8,
+        "2026-W38": 7,
+        "2026-W39": 6,
+        "2026-W40": 6,
+        "2026-W41": 4,
+        "2026-W42": 3,
+        "2026-W43": 2,
+        "2026-W44": 1
+      }
+    },
+    {
+      "revision": 14,
+      "changed_at": "2026-11-03T11:26:42.814055Z",
+      "reason": "An included weekly release was restated after longitudinal reconciliation.",
+      "weekly_revisions": {
+        "2026-W33": 15,
+        "2026-W34": 13,
+        "2026-W35": 14,
+        "2026-W36": 10,
+        "2026-W37": 9,
+        "2026-W38": 8,
+        "2026-W39": 7,
+        "2026-W40": 7,
+        "2026-W41": 5,
+        "2026-W42": 4,
+        "2026-W43": 3,
+        "2026-W44": 2
+      }
+    }
+  ],
+  "previous_revision_path": "/data/releases/annual/archive/2026/revision-13.json",
+  "content_sha256": "cc23d02b0034fdd3b99d46b2ed85837b7f107555fe8d9c0137fbe9c9ee2106de"
+}
