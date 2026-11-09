@@ -2,10 +2,10 @@
   "schema_version": "aieo_symbiosis_public_v2.0",
   "release_id": "2026-W45",
   "release_type": "weekly_relationship_lens",
-  "revision": 3,
+  "revision": 4,
   "period_start": "2026-11-02",
   "period_end": "2026-11-08",
-  "generated_at": "2026-11-09T09:12:17.846460Z",
+  "generated_at": "2026-11-09T09:18:31.845867Z",
   "codebook_version": "aieo_news_symbiosis_v0.1",
   "source_release_sha256": "2954ae2c0f18f4d71b578db7ae4b9e10f1ff64541e06903789cc16db483bfc43",
   "public_status": "current_evidence_reading",
@@ -4807,7 +4807,22 @@
         "source_count": 1,
         "full_text_sources": 1,
         "body_coverage": "complete_written_source",
-        "input_policy": "source_representations_independent_axes_2026_09"
+        "input_policy": "source_representations_independent_axes_2026_09",
+        "source_quality": {
+          "460617c4b54f40141579be733328377b": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 23996,
+            "body_sha256": "3b57cf937e3a136b0c6a2d28d4d556571c1216b7b7eea1dfe423330bb58c9b04",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
+        },
+        "source_fingerprints": {
+          "460617c4b54f40141579be733328377b": "3b57cf937e3a136b0c6a2d28d4d556571c1216b7b7eea1dfe423330bb58c9b04"
+        }
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
@@ -4850,6 +4865,18 @@
         "source_release_sha256": "2954ae2c0f18f4d71b578db7ae4b9e10f1ff64541e06903789cc16db483bfc43",
         "stored_body_hashes": {
           "460617c4b54f40141579be733328377b": "3b57cf937e3a136b0c6a2d28d4d556571c1216b7b7eea1dfe423330bb58c9b04"
+        },
+        "source_quality": {
+          "460617c4b54f40141579be733328377b": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 23996,
+            "body_sha256": "3b57cf937e3a136b0c6a2d28d4d556571c1216b7b7eea1dfe423330bb58c9b04",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
         }
       }
     },
@@ -7391,7 +7418,22 @@
         "source_count": 1,
         "full_text_sources": 1,
         "body_coverage": "complete_written_source",
-        "input_policy": "source_representations_independent_axes_2026_09"
+        "input_policy": "source_representations_independent_axes_2026_09",
+        "source_quality": {
+          "8d89f34995502f6efdb83bbc1df128df": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 4141,
+            "body_sha256": "4b171c4f80adb5c6f9847684f75915629199f4a306a30b3640a7dec3cc2b028a",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
+        },
+        "source_fingerprints": {
+          "8d89f34995502f6efdb83bbc1df128df": "4b171c4f80adb5c6f9847684f75915629199f4a306a30b3640a7dec3cc2b028a"
+        }
       },
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
@@ -7436,6 +7478,18 @@
         "source_release_sha256": "2954ae2c0f18f4d71b578db7ae4b9e10f1ff64541e06903789cc16db483bfc43",
         "stored_body_hashes": {
           "8d89f34995502f6efdb83bbc1df128df": "4b171c4f80adb5c6f9847684f75915629199f4a306a30b3640a7dec3cc2b028a"
+        },
+        "source_quality": {
+          "8d89f34995502f6efdb83bbc1df128df": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 4141,
+            "body_sha256": "4b171c4f80adb5c6f9847684f75915629199f4a306a30b3640a7dec3cc2b028a",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
         }
       }
     },
@@ -14919,5 +14973,5 @@
     "incomplete_written_sources": 62,
     "legacy_configuration_note": "Legacy single-label fields are retained for compatibility; independent axis categories are authoritative under the current policy."
   },
-  "content_sha256": "1bdd6e13f52347a7bdeabcefd277e1ba56374125713939a4ad6880368ad489fe"
+  "content_sha256": "33d1a393b9c75a2d4de77fa6cb990d9c026c3e0717a0a66c66c484c341f254f2"
 }
