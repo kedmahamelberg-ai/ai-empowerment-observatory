@@ -6,7 +6,7 @@
   "period_end": "2026-11-08",
   "policy_version": "source_representations_independent_axes_2026_09",
   "source_audit_complete": false,
-  "publication_scope": "Three identified misreadings corrected with original full-source fingerprints retained; remaining developments keep their saved classifications pending source review.",
+  "publication_scope": "Four identified misreadings corrected with original full-source fingerprints retained; remaining developments keep their saved classifications pending source review.",
   "records": [
     {
       "audit_id": "001",
@@ -200,6 +200,56 @@
             "scope": "written_page",
             "characters": 8002,
             "body_sha256": "4819dbd48d46bfc90bc1c379a09955216e55842e30b28c13d16a22a55b2f7453",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
+        }
+      }
+    },
+    {
+      "audit_id": "005",
+      "event_id": "eab4592c-7b02-4e3a-9d56-b3f89fefdcf8",
+      "article_ids": [
+        "76ffc2f42d2d0fa955b50cbdc3dde225"
+      ],
+      "source_urls": [
+        "https://www.positivelynaperville.com/2026/11/04/little-friends-artificial-intelligence-and-human-services-a-lot-to-think-about/162345"
+      ],
+      "axes": {
+        "ai": {
+          "direction": "none",
+          "evidence": "The CEO's column discusses possible uses of AI in care work, but reports no separate outcome for AI systems or providers."
+        },
+        "human": {
+          "direction": "mixed",
+          "evidence": "The CEO hopes AI could free staff time for direct care while warning that human contact must remain central; no care improvement is measured."
+        },
+        "evidence_scope": "written_source",
+        "evidence_types": [
+          "source_representation"
+        ],
+        "policy_version": "source_representations_independent_axes_2026_09",
+        "schema_version": "aieo_independent_directions_v2",
+        "evidence_complete": true,
+        "unresolved_reason": ""
+      },
+      "source_note": "First-person column about possible AI adoption, not evidence that a care program has achieved gains.",
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
+      "provenance": {
+        "kind": "source_bound_owner_requested_correction",
+        "owner_gold": false,
+        "source_release_sha256": "2954ae2c0f18f4d71b578db7ae4b9e10f1ff64541e06903789cc16db483bfc43",
+        "stored_body_hashes": {
+          "76ffc2f42d2d0fa955b50cbdc3dde225": "a1442995a6e66c9729db41b27814d3c3338c71087e2c149d420b4bf04b28849f"
+        },
+        "source_quality": {
+          "76ffc2f42d2d0fa955b50cbdc3dde225": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 4974,
+            "body_sha256": "a1442995a6e66c9729db41b27814d3c3338c71087e2c149d420b4bf04b28849f",
             "quality_version": "stored_source_quality_v2",
             "source_language": "",
             "usable_complete_body": true,
