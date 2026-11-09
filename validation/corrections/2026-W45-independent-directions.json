@@ -6,7 +6,7 @@
   "period_end": "2026-11-08",
   "policy_version": "source_representations_independent_axes_2026_09",
   "source_audit_complete": false,
-  "publication_scope": "Three identified misreadings corrected against their sources; remaining developments retain their saved classifications pending source review.",
+  "publication_scope": "Three identified misreadings corrected with original full-source fingerprints retained; remaining developments keep their saved classifications pending source review.",
   "records": [
     {
       "audit_id": "001",
@@ -150,6 +150,56 @@
             "scope": "written_page",
             "characters": 4541,
             "body_sha256": "f4ef138955cbba23fbc3541f5e871cedfb5f778ce2273d495fc8c62b1f3119b8",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
+        }
+      }
+    },
+    {
+      "audit_id": "004",
+      "event_id": "5b24ae60-bccc-48c8-ba54-4996bb4b3f89",
+      "article_ids": [
+        "c303465f1148a406fb76b1cba03462ee"
+      ],
+      "source_urls": [
+        "https://www.eurojuris.fr/articles/redaction-requete-avec-ia-recours-abusif-amende-43825.htm"
+      ],
+      "axes": {
+        "ai": {
+          "direction": "none",
+          "evidence": "The legal analysis reports no separate outcome for AI systems or their operators."
+        },
+        "human": {
+          "direction": "mixed",
+          "evidence": "AI may ease drafting, while inadequate or abusive filings can lead to rejection and fines; no net access-to-justice outcome is measured."
+        },
+        "evidence_scope": "written_source",
+        "evidence_types": [
+          "source_representation"
+        ],
+        "policy_version": "source_representations_independent_axes_2026_09",
+        "schema_version": "aieo_independent_directions_v2",
+        "evidence_complete": true,
+        "unresolved_reason": ""
+      },
+      "source_note": "Eurojuris describes court sanctions for deficient filings, including some drafted with AI; it says AI use itself is not prohibited. Drafting convenience does not establish an AI/operator gain.",
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
+      "provenance": {
+        "kind": "source_bound_owner_requested_correction",
+        "owner_gold": false,
+        "source_release_sha256": "2954ae2c0f18f4d71b578db7ae4b9e10f1ff64541e06903789cc16db483bfc43",
+        "stored_body_hashes": {
+          "c303465f1148a406fb76b1cba03462ee": "4819dbd48d46bfc90bc1c379a09955216e55842e30b28c13d16a22a55b2f7453"
+        },
+        "source_quality": {
+          "c303465f1148a406fb76b1cba03462ee": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 8002,
+            "body_sha256": "4819dbd48d46bfc90bc1c379a09955216e55842e30b28c13d16a22a55b2f7453",
             "quality_version": "stored_source_quality_v2",
             "source_language": "",
             "usable_complete_body": true,
