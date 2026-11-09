@@ -2,10 +2,10 @@
   "schema_version": "aieo_symbiosis_public_v2.0",
   "release_id": "2026-W45",
   "release_type": "weekly_relationship_lens",
-  "revision": 4,
+  "revision": 5,
   "period_start": "2026-11-02",
   "period_end": "2026-11-08",
-  "generated_at": "2026-11-09T09:18:31.845867Z",
+  "generated_at": "2026-11-09T09:51:39.369408Z",
   "codebook_version": "aieo_news_symbiosis_v0.1",
   "source_release_sha256": "2954ae2c0f18f4d71b578db7ae4b9e10f1ff64541e06903789cc16db483bfc43",
   "public_status": "current_evidence_reading",
@@ -60,7 +60,7 @@
     "display_basis": "current_evidence_reading_with_reviewed_corrections",
     "display_classified_units": 138,
     "display_configuration_counts": {
-      "mutualism": 35,
+      "mutualism": 34,
       "ai_benefiting_parasitism": 3,
       "human_benefiting_parasitism": 0,
       "competition": 3,
@@ -69,27 +69,27 @@
       "ai_enabling_only": 2,
       "ai_constraining_only": 1,
       "no_clear_relational_signal": 7,
-      "ambiguous_relational_signal": 21,
+      "ambiguous_relational_signal": 22,
       "insufficient_evidence": 62
     },
-    "display_complete_configuration_count": 41,
+    "display_complete_configuration_count": 40,
     "display_partial_signal_count": 7,
     "display_no_clear_relational_signal_count": 7,
-    "display_ambiguous_relational_signal_count": 21,
+    "display_ambiguous_relational_signal_count": 22,
     "display_insufficient_evidence_count": 62,
     "display_core_four_distribution": {
-      "mutualism": 0.853659,
-      "ai_benefiting_parasitism": 0.073171,
+      "mutualism": 0.85,
+      "ai_benefiting_parasitism": 0.075,
       "human_benefiting_parasitism": 0.0,
-      "competition": 0.073171
+      "competition": 0.075
     },
     "denominator_note": "The weekly display reports the source evidence available for the current release. A development is kept separate when the available source evidence is not enough to show a clear people outcome.",
     "human_direction_counts": {
-      "enabling": 43,
+      "enabling": 42,
       "unclear": 63,
       "neutral": 10,
       "constraining": 9,
-      "mixed": 13
+      "mixed": 14
     },
     "ai_direction_counts": {
       "mixed": 15,
@@ -99,11 +99,11 @@
       "neutral": 12
     },
     "display_human_direction_counts": {
-      "enabling": 43,
+      "enabling": 42,
       "unclear": 63,
       "neutral": 10,
       "constraining": 9,
-      "mixed": 13
+      "mixed": 14
     },
     "display_ai_direction_counts": {
       "mixed": 15,
@@ -118,15 +118,15 @@
     "expected_units": 138,
     "classified_units": 138,
     "relationship_pattern_counts": {
-      "mutualism": 51,
+      "mutualism": 50,
       "ai_benefiting_parasitism": 7,
       "human_benefiting_parasitism": 2,
       "competition": 2
     },
     "people_signal_counts": {
       "people_gaining": 56,
-      "people_losing_ground": 22,
-      "mixed_picture": 13,
+      "people_losing_ground": 23,
+      "mixed_picture": 14,
       "not_everyone_benefits": 7,
       "not_clear_yet": 73
     },
@@ -148,7 +148,7 @@
       "no_directional_people_change": 10
     },
     "overlap_note": "A development may contain more than one signal, so these counts do not have to add up to the weekly total.",
-    "relationship_patterns_assessed": 136
+    "relationship_patterns_assessed": 135
   },
   "source_body_qc": {
     "review_file": null,
@@ -7707,12 +7707,12 @@
     {
       "axes": {
         "ai": {
-          "evidence": "AI enables mass idea production and output expansion in animation workflows",
-          "direction": "gain"
+          "direction": "gain",
+          "evidence": "The event notice says generative AI can produce visual ideas at scale; it reports no measured productivity result."
         },
         "human": {
-          "evidence": "creators seek to guide and add meaning as AI handles mass production",
-          "direction": "gain"
+          "direction": "mixed",
+          "evidence": "The event notice describes possible creative choices and raises concern about learning by trial and error. The January 2027 discussion has not yet taken place."
         },
         "evidence_scope": "written_source",
         "evidence_types": [
@@ -7723,13 +7723,8 @@
         "evidence_complete": true,
         "unresolved_reason": ""
       },
-      "relationship_evidence": {
-        "mutualism": "AI helps creators scale output while humans gain greater creative control",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
-      "relationship_pattern_status": "assessed",
+      "relationship_evidence": {},
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
       "event_id": "8520c0a7-7500-49b3-918d-ed09feb6f220",
       "event_title": "Conference \"Animation and Generative AI – A Creator's Perspective",
       "event_date": "2026-11-06",
@@ -7745,19 +7740,19 @@
         }
       ],
       "reviewed": false,
-      "review_status": "pending",
-      "configuration": "mutualism",
+      "review_status": "source_audit_correction",
+      "configuration": "ambiguous_relational_signal",
       "plain_label": "Both people and the AI side are represented as gaining",
       "human_experience_type": "extension",
       "ai_expressive_role": "ai_extension",
-      "human_direction": "enabling",
+      "human_direction": "mixed",
       "ai_direction": "enabling",
       "evidence_status": "sufficient",
       "content_basis": "full_text",
       "evidence_basis_summary": {
-        "input_policy": "full_article_body_required_v1",
+        "input_policy": "source_representations_independent_axes_2026_09",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "complete_written_source",
         "source_quality": {
           "40080099f7891fcdff1ac77a2ca8f714": {
             "flags": [],
@@ -7782,37 +7777,59 @@
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
         "source_reading_complete": true,
-        "people_evidence": "creators seek to guide and add meaning as AI handles mass production",
-        "ai_evidence": "AI enables mass idea production and output expansion in animation workflows",
+        "people_evidence": "The event notice describes possible creative choices and raises concern about learning by trial and error. The January 2027 discussion has not yet taken place.",
+        "ai_evidence": "The event notice says generative AI can produce visual ideas at scale; it reports no measured productivity result.",
         "flags": []
       },
       "story_country_iso3s": [
         "FRA"
       ],
-      "evidence_summary": "Generative AI is expanding both creator capabilities and AI-assisted output in animation, with creators increasingly guiding AI-generated content.",
-      "reasoning": "Generative AI is expanding both creator capabilities and AI-assisted output in animation, with creators increasingly guiding AI-generated content.",
+      "evidence_summary": "The event notice describes possible creative choices and raises concern about learning by trial and error. The January 2027 discussion has not yet taken place.",
+      "reasoning": "The Paris page is an announcement for a 14 January 2027 conference, not a report of a completed session.",
       "relationship_patterns": {
-        "mutualism": true,
+        "mutualism": false,
         "ai_benefiting_parasitism": false,
         "human_benefiting_parasitism": false,
         "competition": false
       },
       "public_signals": {
         "people_gaining": true,
-        "people_losing_ground": false,
-        "mixed_picture": false,
+        "people_losing_ground": true,
+        "mixed_picture": true,
         "not_everyone_benefits": false,
         "not_clear_yet": false
       },
       "distribution_signal": "broadly_shared",
-      "public_takeaway": "creators seek to guide and add meaning as AI handles mass production",
+      "public_takeaway": "The event notice describes possible creative choices and raises concern about learning by trial and error. The January 2027 discussion has not yet taken place.",
       "multi_label_available": true,
       "distribution_coded": true,
-      "signal_provenance": "model_classification",
+      "signal_provenance": "source_audit_correction",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
         "reasoning": null
+      },
+      "source_note": "The Paris page is an announcement for a 14 January 2027 conference, not a report of a completed session.",
+      "display_scope": "",
+      "correction_provenance": {
+        "kind": "source_bound_owner_requested_correction",
+        "owner_gold": false,
+        "source_release_sha256": "2954ae2c0f18f4d71b578db7ae4b9e10f1ff64541e06903789cc16db483bfc43",
+        "stored_body_hashes": {
+          "40080099f7891fcdff1ac77a2ca8f714": "f4ef138955cbba23fbc3541f5e871cedfb5f778ce2273d495fc8c62b1f3119b8"
+        },
+        "source_quality": {
+          "40080099f7891fcdff1ac77a2ca8f714": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 4541,
+            "body_sha256": "f4ef138955cbba23fbc3541f5e871cedfb5f778ce2273d495fc8c62b1f3119b8",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
+        }
       }
     },
     {
@@ -14949,9 +14966,9 @@
     "policy_version": "source_representations_independent_axes_2026_09",
     "total": 138,
     "human": {
-      "gain": 43,
+      "gain": 42,
       "loss": 9,
-      "mixed": 13,
+      "mixed": 14,
       "none": 10,
       "unresolved": 63
     },
@@ -14973,5 +14990,5 @@
     "incomplete_written_sources": 62,
     "legacy_configuration_note": "Legacy single-label fields are retained for compatibility; independent axis categories are authoritative under the current policy."
   },
-  "content_sha256": "33d1a393b9c75a2d4de77fa6cb990d9c026c3e0717a0a66c66c484c341f254f2"
+  "content_sha256": "f6338bd2c2e3cd498b686ab30db07796040ac0dab90f0f97789947830bdf7270"
 }

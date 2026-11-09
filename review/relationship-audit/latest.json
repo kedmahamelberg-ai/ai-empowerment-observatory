@@ -1,6 +1,6 @@
 {
   "schema_version": "aieo_relationship_evidence_audit_v1",
-  "generated_at": "2026-11-09T09:18:32.048705Z",
+  "generated_at": "2026-11-09T09:51:39.527968Z",
   "release_id": "2026-W45",
   "period_start": "2026-11-02",
   "period_end": "2026-11-08",
@@ -17,16 +17,16 @@
   "summary": {
     "development_count": 138,
     "primary_outcome_counts": {
-      "benefit_shown": 43,
+      "benefit_shown": 42,
       "downside_shown": 9,
-      "benefit_and_downside": 13,
+      "benefit_and_downside": 14,
       "no_clear_people_change": 11,
       "too_little_evidence": 62
     },
     "uneven_effect_count": 7,
     "body_coverage_counts": {
-      "all_sources": 73,
-      "complete_written_source": 2,
+      "all_sources": 72,
+      "complete_written_source": 3,
       "no_full_body": 62,
       "some_sources": 1
     },
@@ -2012,32 +2012,32 @@
       "event_id": "8520c0a7-7500-49b3-918d-ed09feb6f220",
       "title": "Conference \"Animation and Generative AI – A Creator's Perspective",
       "date": "2026-11-06",
-      "primary_outcome": "benefit_shown",
-      "primary_outcome_label": "Clear benefit shown",
+      "primary_outcome": "benefit_and_downside",
+      "primary_outcome_label": "Both benefit and downside shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
-        "review_status": "pending",
-        "configuration": "mutualism",
+        "review_status": "source_audit_correction",
+        "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "creators seek to guide and add meaning as AI handles mass production",
-          "ai_evidence": "AI enables mass idea production and output expansion in animation workflows",
+          "people_evidence": "The event notice describes possible creative choices and raises concern about learning by trial and error. The January 2027 discussion has not yet taken place.",
+          "ai_evidence": "The event notice says generative AI can produce visual ideas at scale; it reports no measured productivity result.",
           "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article used for every source",
+        "label": "Full article used with other source evidence",
         "source_count": 1,
         "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "all_sources"
+        "body_coverage": "complete_written_source"
       },
       "source_markets": [
         "FRA"
