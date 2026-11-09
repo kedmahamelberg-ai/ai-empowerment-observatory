@@ -1,16 +1,16 @@
 {
   "schema_version": "aieo_release_index_v3.0",
-  "updated_at": "2026-11-03T10:01:50.951013Z",
-  "release_count": 12,
-  "weekly_release_count": 12,
+  "updated_at": "2026-11-09T04:04:28.620972Z",
+  "release_count": 13,
+  "weekly_release_count": 13,
   "historical_snapshot_count": 1,
-  "publication_snapshot_count": 13,
-  "current_release_id": "2026-W44",
-  "current_revision": 2,
-  "data_current_through": "2026-11-03T10:01:38.301492+00:00",
+  "publication_snapshot_count": 14,
+  "current_release_id": "2026-W45",
+  "current_revision": 1,
+  "data_current_through": "2026-11-09T03:38:23.208034+00:00",
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-11-02T01:54:41.761056+00:00",
+    "considered_through": "2026-11-09T03:19:31.803934+00:00",
     "registry_snapshot_id": "registry_a6f5230790ca57302b73",
     "all_prior_events_considered": true,
     "disclosure": "First-time means the canonical development was not present in an earlier standardized AIEO weekly release. Collection retries do not turn a current-week development into a recurring one."
@@ -861,6 +861,30 @@
       "amplification_gap": 15.7915,
       "audit_status": "pending",
       "validation_status": "passed"
+    },
+    {
+      "release_id": "2026-W45",
+      "release_type": "weekly",
+      "period_start": "2026-11-02",
+      "period_end": "2026-11-08",
+      "generated_at": "2026-11-09T04:04:28.620972Z",
+      "articles": 141,
+      "event_records": 138,
+      "revision": 1,
+      "new_event_records": 136,
+      "first_time_event_records": 136,
+      "recurring_event_records": 2,
+      "resurfaced_event_records": 0,
+      "follow_on_event_records": 0,
+      "possible_historical_match_event_records": 0,
+      "unclassified_novelty_event_records": 0,
+      "rediscovered_article_records": 5,
+      "extra_coverage": 3,
+      "coverage_index": 27.5556,
+      "event_index": 16.2963,
+      "amplification_gap": 11.2593,
+      "audit_status": "pending",
+      "validation_status": "passed"
     }
   ],
   "display_series": [
@@ -1219,28 +1243,56 @@
       "label": "Week ending 2026-11-01",
       "comparable_to_weekly_series": true,
       "connect_to_previous": true
+    },
+    {
+      "release_id": "2026-W45",
+      "release_type": "weekly",
+      "period_start": "2026-11-02",
+      "period_end": "2026-11-08",
+      "generated_at": "2026-11-09T04:04:28.620972Z",
+      "articles": 141,
+      "event_records": 138,
+      "revision": 1,
+      "new_event_records": 136,
+      "first_time_event_records": 136,
+      "recurring_event_records": 2,
+      "resurfaced_event_records": 0,
+      "follow_on_event_records": 0,
+      "possible_historical_match_event_records": 0,
+      "unclassified_novelty_event_records": 0,
+      "rediscovered_article_records": 5,
+      "extra_coverage": 3,
+      "coverage_index": 27.5556,
+      "event_index": 16.2963,
+      "amplification_gap": 11.2593,
+      "audit_status": "pending",
+      "validation_status": "passed",
+      "series_kind": "weekly",
+      "label": "Week ending 2026-11-08",
+      "comparable_to_weekly_series": true,
+      "connect_to_previous": true
     }
   ],
   "cumulative_standardized_series": {
-    "distinct_articles": 1670,
-    "distinct_event_records": 1586,
-    "release_count": 12,
+    "distinct_articles": 1809,
+    "distinct_event_records": 1722,
+    "release_count": 13,
     "period_start": "2026-08-10",
-    "period_end": "2026-11-01"
+    "period_end": "2026-11-08"
   },
   "cumulative_since_launch": {
-    "distinct_articles": 1670,
-    "distinct_event_records": 1586,
-    "release_count": 12,
+    "distinct_articles": 1809,
+    "distinct_event_records": 1722,
+    "release_count": 13,
     "period_start": "2026-08-10",
-    "period_end": "2026-11-01",
+    "period_end": "2026-11-08",
     "scope": "standardized_weekly_releases_only",
     "historical_snapshots_excluded": 1
   },
   "month_to_date": {
     "month": "2026-11",
-    "distinct_articles": 16,
-    "distinct_event_records": 16
+    "distinct_articles": 156,
+    "distinct_event_records": 153
   },
   "comparison_rule": {
     "weekly_series": "Connect only consecutive, non-overlapping Monday-Sunday releases.",
