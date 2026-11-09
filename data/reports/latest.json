@@ -9,16 +9,16 @@
   "observation_window": "02 November - 08 November 2026",
   "source_of_truth": "/data/analysis/current.json",
   "source_release_sha256": "2954ae2c0f18f4d71b578db7ae4b9e10f1ff64541e06903789cc16db483bfc43",
-  "source_relationship_sha256": "33d1a393b9c75a2d4de77fa6cb990d9c026c3e0717a0a66c66c484c341f254f2",
+  "source_relationship_sha256": "f6338bd2c2e3cd498b686ab30db07796040ac0dab90f0f97789947830bdf7270",
   "directional_summary": {
     "schema_version": "aieo_independent_directions_v2",
     "policy_version": "source_representations_independent_axes_2026_09",
     "total": 74,
     "evidence_complete": 74,
     "human": {
-      "gain": 42,
+      "gain": 41,
       "loss": 9,
-      "mixed": 13,
+      "mixed": 14,
       "none": 10,
       "unresolved": 0
     },
@@ -44,7 +44,7 @@
   "coverage_event_ratio": 1.027027027027027,
   "complete_content": {
     "policy_version": "complete_content_2026_09_v1",
-    "content_sha256": "dc529a038d0a028c21cafa0a7ff3dd4faed3fc12d53b8468ec189e5ddb51b4f7",
+    "content_sha256": "7e386064908c76f76d6516135cd2778df4fad6b518237aa63b5f200868457242",
     "counts": {
       "collected_developments": 138,
       "collected_sources": 141,
@@ -60,6 +60,6 @@
   },
   "pages": 2,
   "schema_version": "aieo_public_brief_v2",
-  "pdf_sha256": "6adeb60b883ca206586ccdd826b3962d5406a55d31828de82d9f09df86175a1c",
-  "generated_at": "2026-11-09T09:18:37.705789+00:00"
+  "pdf_sha256": "60c6e936e0a1f47b61ed251e9cec3748f7bd2bace2afe8e817b059b6ec0816c1",
+  "generated_at": "2026-11-09T09:51:45.859393+00:00"
 }
