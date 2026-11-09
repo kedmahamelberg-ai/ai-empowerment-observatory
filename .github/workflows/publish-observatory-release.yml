@@ -12,6 +12,7 @@ on:
       - 'config/search-identity.json'
       - 'scripts/search_metadata.py'
       - 'scripts/build_public_site.py'
+      - 'scripts/public_directional_release.py'
       - 'index.html'
       - 'site.js'
       - 'public-data.js'
