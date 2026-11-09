@@ -2,10 +2,10 @@
   "schema_version": "aieo_symbiosis_public_v2.0",
   "release_id": "2026-W45",
   "release_type": "weekly_relationship_lens",
-  "revision": 6,
+  "revision": 7,
   "period_start": "2026-11-02",
   "period_end": "2026-11-08",
-  "generated_at": "2026-11-09T10:46:53.274740Z",
+  "generated_at": "2026-11-09T11:09:06.965174Z",
   "codebook_version": "aieo_news_symbiosis_v0.1",
   "source_release_sha256": "2954ae2c0f18f4d71b578db7ae4b9e10f1ff64541e06903789cc16db483bfc43",
   "public_status": "current_evidence_reading",
@@ -60,7 +60,7 @@
     "display_basis": "current_evidence_reading_with_reviewed_corrections",
     "display_classified_units": 138,
     "display_configuration_counts": {
-      "mutualism": 33,
+      "mutualism": 32,
       "ai_benefiting_parasitism": 3,
       "human_benefiting_parasitism": 0,
       "competition": 3,
@@ -69,48 +69,48 @@
       "ai_enabling_only": 2,
       "ai_constraining_only": 1,
       "no_clear_relational_signal": 7,
-      "ambiguous_relational_signal": 23,
+      "ambiguous_relational_signal": 24,
       "insufficient_evidence": 62
     },
-    "display_complete_configuration_count": 39,
+    "display_complete_configuration_count": 38,
     "display_partial_signal_count": 7,
     "display_no_clear_relational_signal_count": 7,
-    "display_ambiguous_relational_signal_count": 23,
+    "display_ambiguous_relational_signal_count": 24,
     "display_insufficient_evidence_count": 62,
     "display_core_four_distribution": {
-      "mutualism": 0.846154,
-      "ai_benefiting_parasitism": 0.076923,
+      "mutualism": 0.842105,
+      "ai_benefiting_parasitism": 0.078947,
       "human_benefiting_parasitism": 0.0,
-      "competition": 0.076923
+      "competition": 0.078947
     },
     "denominator_note": "The weekly display reports the source evidence available for the current release. A development is kept separate when the available source evidence is not enough to show a clear people outcome.",
     "human_direction_counts": {
-      "enabling": 41,
+      "enabling": 40,
       "unclear": 63,
       "neutral": 10,
       "constraining": 9,
-      "mixed": 15
+      "mixed": 16
     },
     "ai_direction_counts": {
       "mixed": 15,
       "unclear": 63,
-      "enabling": 43,
+      "enabling": 42,
       "constraining": 4,
-      "neutral": 13
+      "neutral": 14
     },
     "display_human_direction_counts": {
-      "enabling": 41,
+      "enabling": 40,
       "unclear": 63,
       "neutral": 10,
       "constraining": 9,
-      "mixed": 15
+      "mixed": 16
     },
     "display_ai_direction_counts": {
       "mixed": 15,
       "unclear": 63,
-      "enabling": 43,
+      "enabling": 42,
       "constraining": 4,
-      "neutral": 13
+      "neutral": 14
     }
   },
   "people_signals": {
@@ -118,15 +118,15 @@
     "expected_units": 138,
     "classified_units": 138,
     "relationship_pattern_counts": {
-      "mutualism": 49,
+      "mutualism": 48,
       "ai_benefiting_parasitism": 7,
       "human_benefiting_parasitism": 2,
       "competition": 2
     },
     "people_signal_counts": {
       "people_gaining": 56,
-      "people_losing_ground": 24,
-      "mixed_picture": 15,
+      "people_losing_ground": 25,
+      "mixed_picture": 16,
       "not_everyone_benefits": 7,
       "not_clear_yet": 73
     },
@@ -148,7 +148,7 @@
       "no_directional_people_change": 10
     },
     "overlap_note": "A development may contain more than one signal, so these counts do not have to add up to the weekly total.",
-    "relationship_patterns_assessed": 134
+    "relationship_patterns_assessed": 133
   },
   "source_body_qc": {
     "review_file": null,
@@ -13596,12 +13596,12 @@
     {
       "axes": {
         "ai": {
-          "evidence": "AI deployment aims to increase efficiency and care delivery",
-          "direction": "gain"
+          "direction": "none",
+          "evidence": "The CEO's column discusses possible uses of AI in care work, but reports no separate outcome for AI systems or providers."
         },
         "human": {
-          "evidence": "AI is used to amplify existing human caregiving capacity, not replace it",
-          "direction": "gain"
+          "direction": "mixed",
+          "evidence": "The CEO hopes AI could free staff time for direct care while warning that human contact must remain central; no care improvement is measured."
         },
         "evidence_scope": "written_source",
         "evidence_types": [
@@ -13612,13 +13612,8 @@
         "evidence_complete": true,
         "unresolved_reason": ""
       },
-      "relationship_evidence": {
-        "mutualism": "AI extends staff capacity and productivity, enabling more direct care for clients; humans gain by spending less time on admin tasks and more on care",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
-      "relationship_pattern_status": "assessed",
+      "relationship_evidence": {},
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
       "event_id": "eab4592c-7b02-4e3a-9d56-b3f89fefdcf8",
       "event_title": "Little Friends: Artificial Intelligence and Human Services… a Lot To Think About!",
       "event_date": "2026-11-04",
@@ -13634,19 +13629,19 @@
         }
       ],
       "reviewed": false,
-      "review_status": "pending",
-      "configuration": "mutualism",
+      "review_status": "source_audit_correction",
+      "configuration": "ambiguous_relational_signal",
       "plain_label": "Both people and the AI side are represented as gaining",
       "human_experience_type": "extension",
       "ai_expressive_role": "ai_extension",
-      "human_direction": "enabling",
-      "ai_direction": "enabling",
+      "human_direction": "mixed",
+      "ai_direction": "neutral",
       "evidence_status": "sufficient",
       "content_basis": "full_text",
       "evidence_basis_summary": {
-        "input_policy": "full_article_body_required_v1",
+        "input_policy": "source_representations_independent_axes_2026_09",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "complete_written_source",
         "source_quality": {
           "76ffc2f42d2d0fa955b50cbdc3dde225": {
             "flags": [],
@@ -13671,37 +13666,59 @@
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
         "source_reading_complete": true,
-        "people_evidence": "AI is used to amplify existing human caregiving capacity, not replace it",
-        "ai_evidence": "AI deployment aims to increase efficiency and care delivery",
+        "people_evidence": "The CEO hopes AI could free staff time for direct care while warning that human contact must remain central; no care improvement is measured.",
+        "ai_evidence": "The CEO's column discusses possible uses of AI in care work, but reports no separate outcome for AI systems or providers.",
         "flags": []
       },
       "story_country_iso3s": [
         "USA"
       ],
-      "evidence_summary": "AI extends human services by reducing admin tasks, enabling more time for care, benefiting both staff and clients.",
-      "reasoning": "AI extends human services by reducing admin tasks, enabling more time for care, benefiting both staff and clients.",
+      "evidence_summary": "The CEO hopes AI could free staff time for direct care while warning that human contact must remain central; no care improvement is measured.",
+      "reasoning": "First-person column about possible AI adoption, not evidence that a care program has achieved gains.",
       "relationship_patterns": {
-        "mutualism": true,
+        "mutualism": false,
         "ai_benefiting_parasitism": false,
         "human_benefiting_parasitism": false,
         "competition": false
       },
       "public_signals": {
         "people_gaining": true,
-        "people_losing_ground": false,
-        "mixed_picture": false,
+        "people_losing_ground": true,
+        "mixed_picture": true,
         "not_everyone_benefits": false,
         "not_clear_yet": false
       },
       "distribution_signal": "broadly_shared",
-      "public_takeaway": "AI is used to amplify existing human caregiving capacity, not replace it",
+      "public_takeaway": "The CEO hopes AI could free staff time for direct care while warning that human contact must remain central; no care improvement is measured.",
       "multi_label_available": true,
       "distribution_coded": true,
-      "signal_provenance": "model_classification",
+      "signal_provenance": "source_audit_correction",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
         "reasoning": null
+      },
+      "source_note": "First-person column about possible AI adoption, not evidence that a care program has achieved gains.",
+      "display_scope": "",
+      "correction_provenance": {
+        "kind": "source_bound_owner_requested_correction",
+        "owner_gold": false,
+        "source_release_sha256": "2954ae2c0f18f4d71b578db7ae4b9e10f1ff64541e06903789cc16db483bfc43",
+        "stored_body_hashes": {
+          "76ffc2f42d2d0fa955b50cbdc3dde225": "a1442995a6e66c9729db41b27814d3c3338c71087e2c149d420b4bf04b28849f"
+        },
+        "source_quality": {
+          "76ffc2f42d2d0fa955b50cbdc3dde225": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 4974,
+            "body_sha256": "a1442995a6e66c9729db41b27814d3c3338c71087e2c149d420b4bf04b28849f",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
+        }
       }
     },
     {
@@ -14983,17 +15000,17 @@
     "policy_version": "source_representations_independent_axes_2026_09",
     "total": 138,
     "human": {
-      "gain": 41,
+      "gain": 40,
       "loss": 9,
-      "mixed": 15,
+      "mixed": 16,
       "none": 10,
       "unresolved": 63
     },
     "ai": {
-      "gain": 43,
+      "gain": 42,
       "loss": 4,
       "mixed": 15,
-      "none": 13,
+      "none": 14,
       "unresolved": 63
     },
     "evidence_complete": 76,
@@ -15007,5 +15024,5 @@
     "incomplete_written_sources": 62,
     "legacy_configuration_note": "Legacy single-label fields are retained for compatibility; independent axis categories are authoritative under the current policy."
   },
-  "content_sha256": "decd27409a61b845a3bff0a9b7b8c7a3cae435bfc423e615216629426126e406"
+  "content_sha256": "e2814e5888f8d8f2cd1289b49c37e63664a6e89befa4f2f18352215253b22079"
 }

@@ -1,6 +1,6 @@
 {
   "schema_version": "aieo_relationship_evidence_audit_v1",
-  "generated_at": "2026-11-09T10:46:53.502262Z",
+  "generated_at": "2026-11-09T11:09:07.170431Z",
   "release_id": "2026-W45",
   "period_start": "2026-11-02",
   "period_end": "2026-11-08",
@@ -17,16 +17,16 @@
   "summary": {
     "development_count": 138,
     "primary_outcome_counts": {
-      "benefit_shown": 41,
+      "benefit_shown": 40,
       "downside_shown": 9,
-      "benefit_and_downside": 15,
+      "benefit_and_downside": 16,
       "no_clear_people_change": 11,
       "too_little_evidence": 62
     },
     "uneven_effect_count": 7,
     "body_coverage_counts": {
-      "all_sources": 71,
-      "complete_written_source": 4,
+      "all_sources": 70,
+      "complete_written_source": 5,
       "no_full_body": 62,
       "some_sources": 1
     },
@@ -4407,32 +4407,32 @@
       "event_id": "eab4592c-7b02-4e3a-9d56-b3f89fefdcf8",
       "title": "Little Friends: Artificial Intelligence and Human Services… a Lot To Think About!",
       "date": "2026-11-04",
-      "primary_outcome": "benefit_shown",
-      "primary_outcome_label": "Clear benefit shown",
+      "primary_outcome": "benefit_and_downside",
+      "primary_outcome_label": "Both benefit and downside shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
-        "review_status": "pending",
-        "configuration": "mutualism",
+        "review_status": "source_audit_correction",
+        "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "AI is used to amplify existing human caregiving capacity, not replace it",
-          "ai_evidence": "AI deployment aims to increase efficiency and care delivery",
+          "people_evidence": "The CEO hopes AI could free staff time for direct care while warning that human contact must remain central; no care improvement is measured.",
+          "ai_evidence": "The CEO's column discusses possible uses of AI in care work, but reports no separate outcome for AI systems or providers.",
           "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article used for every source",
+        "label": "Full article used with other source evidence",
         "source_count": 1,
         "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "all_sources"
+        "body_coverage": "complete_written_source"
       },
       "source_markets": [
         "USA"
