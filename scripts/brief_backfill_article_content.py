@@ -46,7 +46,7 @@ MIN_WORDS = MIN_FULL_BODY_EVIDENCE_UNITS
 FETCH_RETRY_ATTEMPTS = 3
 MAX_ALTERNATE_URLS = 6
 MAX_REDIRECTS = 4
-RECOVERY_STRATEGY_VERSION = "publisher_body_recovery_v8_policy_discovery_2026_09_08"
+RECOVERY_STRATEGY_VERSION = "publisher_body_recovery_v9_infographic_2026_11_15"
 MAX_RESPONSE_BYTES = 12_000_000
 _POLICY_CACHE = {}
 TRANSIENT_STATUS_CODES = {408, 425, 429, 500, 502, 503, 504}
@@ -812,7 +812,21 @@ def extract_html_result(html, result, *, consent_checked=False):
         return {**result, "outcome": "abstract_only"}
     picked = choose_best_extraction(html, result.get("final_url", ""))
     if picked["word_count"] < MIN_WORDS:
-        return {**result, "outcome": "too_little_extractable_text", "word_count": picked["word_count"]}
+        from article_infographic import image_article, ocr_image
+        image_url = image_article(html, result.get('final_url', ''), recovery.same_publisher)
+        if image_url and public_url(image_url):
+            image_robots, _, _ = robots_allowed(image_url)
+            image_tdm = tdmrep_for(image_url)
+            if image_robots is True and image_tdm.get('check_state') not in {'unavailable', 'invalid'} and image_tdm.get('reservation') != '1':
+                response, _, _ = public_get(image_url, timeout=ARTICLE_TIMEOUT, accept='image/png,image/jpeg')
+                if response is not None and response.status_code == 200 and html_tdm_signal(response, '')[0] != '1':
+                    language = 'zh' if re.search(r'[\u3400-\u9fff]', title) else 'en'
+                    body = ocr_image(response.content, language)
+                    if word_count(body) >= MIN_WORDS and assess_body({'body_text': body})['usable_complete_body']:
+                        picked = {'text': body, 'word_count': word_count(body), 'method': 'publisher_infographic_ocr', 'quality': .8}
+                        result = {**result, 'source_image_url': image_url}
+        if picked["word_count"] < MIN_WORDS:
+            return {**result, "outcome": "too_little_extractable_text", "word_count": picked["word_count"]}
     return {**result, "outcome": "stored", "paywall_detected": False,
         "body_text": picked["text"], "word_count": picked["word_count"],
         "extraction_method": picked["method"], "extraction_quality": picked["quality"],

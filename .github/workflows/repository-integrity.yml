@@ -145,10 +145,15 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install the full extraction dependency profile
-        run: python -m pip install -r requirements-extraction.txt
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y tesseract-ocr tesseract-ocr-chi-sim
+          python -m pip install -r requirements-extraction.txt
       - name: Verify extraction imports are available
         run: python -c "import bs4, trafilatura, tldextract, pypdf, supabase"
       - name: Exercise real database recovery helpers without network calls
-        run: python -m unittest discover -s tests -p 'test_article_database_recovery.py' -v
+        run: |
+          python -m unittest discover -s tests -p 'test_article_infographic.py' -v
+          python -m unittest discover -s tests -p 'test_article_database_recovery.py' -v
       - name: Exercise both dependency boundaries
         run: python -m unittest discover -s tests -p 'test_dependency_profiles.py' -v

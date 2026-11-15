@@ -118,7 +118,16 @@ class IndependentDirectionsTests(unittest.TestCase):
         self.assertEqual(release_corrections(release),{})
     def test_owner_mixed_reading_overrides_the_assistant_audit(self):
         release=self.audit['release'];pub=self.audit['public'];eid=pub['evidence'][0]['event_id']
-        out=build_directional_release(release,pub,corrections=release_corrections(release),owner_gold={eid:{'final':{'axes':axes('mixed','none')}}})
+        corrections=release_corrections(release)
+        # This frozen fixture predates the full-body quality contract. Supply
+        # synthetic proof for this precedence test; production still requires
+        # actual hash-bound source-quality records.
+        for row in pub['evidence']:
+            hashes=corrections.get(row['event_id'],{}).get('provenance',{}).get('stored_body_hashes',{})
+            if hashes:
+                row.setdefault('evidence_basis_summary',{})['source_quality']={
+                    aid:{'body_sha256':sha,'usable_complete_body':True} for aid,sha in hashes.items()}
+        out=build_directional_release(release,pub,corrections=corrections,owner_gold={eid:{'final':{'axes':axes('mixed','none')}}})
         row=next(r for r in out['evidence'] if r['event_id']==eid)
         self.assertEqual(row['axes']['human']['direction'],'mixed');self.assertTrue(row['reviewed'])
     def test_history_restatement_cannot_rebind_old_audit_or_relax_publication(self):
