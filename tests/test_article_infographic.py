@@ -1,7 +1,9 @@
-import sys,unittest
+import sys,unittest,importlib.util
 from pathlib import Path
 from unittest.mock import patch
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
+if any(importlib.util.find_spec(name) is None for name in ('bs4','trafilatura','tldextract')):
+ raise unittest.SkipTest('Infographic acquisition tests require the extraction dependency profile.')
 from article_infographic import image_article,ocr_image
 class InfographicTests(unittest.TestCase):
  def test_image_only_article_is_selected_without_logos_or_external_assets(self):
