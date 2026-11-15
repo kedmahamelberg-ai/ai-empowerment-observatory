@@ -72,6 +72,8 @@ jobs:
 
       - name: Install source extraction dependencies
         run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y tesseract-ocr tesseract-ocr-chi-sim
           python -m pip install -r requirements-extraction.txt
           python -m playwright install --with-deps chromium
       - name: Check article recovery before writing any snapshots
@@ -79,6 +81,7 @@ jobs:
           AIEO_TEST_BROWSER: "1"
           AIEO_REQUIRE_EXTRACTION_TESTS: "1"
         run: |
+          AIEO_AI_PROVIDER=local python -m unittest discover -s tests -p 'test_article_infographic.py' -v
           AIEO_AI_PROVIDER=local python -m unittest discover -s tests -p 'test_article_body_recovery.py' -v
           AIEO_AI_PROVIDER=local python -m unittest tests/test_article_database_recovery.py -v
           AIEO_AI_PROVIDER=local python -m unittest discover -s tests -p 'test_article_consent.py' -v
