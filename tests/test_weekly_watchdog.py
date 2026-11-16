@@ -1,4 +1,4 @@
-"""The missing-week fallback must not start a second active collection."""
+"""The weekly watchdog must distinguish a built week from a deployed week."""
 import sys
 import unittest
 from pathlib import Path
@@ -9,17 +9,26 @@ from plan_weekly_collection import needs_collection
 
 
 class WeeklyWatchdogTests(unittest.TestCase):
-    def test_published_week_is_complete(self):
-        self.assertEqual(decision('2026-W44', '2026-W44', []), 'already_published')
+    def test_deployed_week_is_complete(self):
+        self.assertEqual(decision('2026-W44', '2026-W44', '2026-W44', [], [], []),
+                         'already_published')
 
-    def test_active_or_queued_run_is_not_duplicated(self):
+    def test_built_but_unpublished_week_recovers_saved_work(self):
+        self.assertEqual(decision('2026-W44', '2026-W44', '2026-W43', [], [], []),
+                         'dispatch_saved_work_recovery')
+
+    def test_active_release_work_is_not_duplicated(self):
         for status in ('queued', 'in_progress', 'waiting', 'requested', 'pending'):
-            with self.subTest(status=status):
-                self.assertEqual(decision('2026-W43', '2026-W44', [{'status': status}]),
-                                 'weekly_run_active')
+            for position in range(3):
+                with self.subTest(status=status, position=position):
+                    runs = [[], [], []]
+                    runs[position] = [{'status': status}]
+                    self.assertEqual(decision('2026-W44', '2026-W44', '2026-W43', *runs),
+                                     'release_work_active')
 
     def test_failed_week_can_retry(self):
-        self.assertEqual(decision('2026-W43', '2026-W44', [{'status': 'completed', 'conclusion': 'failure'}]),
+        self.assertEqual(decision('2026-W43', '2026-W44', '2026-W43',
+                                  [{'status': 'completed', 'conclusion': 'failure'}], [], []),
                          'dispatch_missing_week')
 
     def test_delayed_duplicate_skips_collection_after_release_is_current(self):
