@@ -7,17 +7,17 @@
   "period_end": "2026-08-31",
   "observed_week_start": "2026-08-10",
   "observed_week_end": "2026-08-30",
-  "generated_at": "2026-11-03T11:26:42.817166Z",
-  "revision": 14,
+  "generated_at": "2026-11-16T07:41:29.821969Z",
+  "revision": 15,
   "weekly_release_ids": [
     "2026-W33",
     "2026-W34",
     "2026-W35"
   ],
   "weekly_revisions": {
-    "2026-W33": 15,
-    "2026-W34": 13,
-    "2026-W35": 14
+    "2026-W33": 16,
+    "2026-W34": 14,
+    "2026-W35": 15
   },
   "reality": {
     "distinct_event_records": 346,
@@ -69,15 +69,15 @@
   },
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-11-02T01:54:41.761056+00:00",
+    "considered_through": "2026-11-16T03:15:09.44877+00:00",
     "scope": "All prior event records available to the included reconciliations."
   },
   "reconciliation": {
-    "current_through": "2026-11-03T10:01:38.301492+00:00",
+    "current_through": "2026-11-16T03:30:52.229647+00:00",
     "weekly_revisions_included": {
-      "2026-W33": 15,
-      "2026-W34": 13,
-      "2026-W35": 14
+      "2026-W33": 16,
+      "2026-W34": 14,
+      "2026-W35": 15
     },
     "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
   },
@@ -214,8 +214,18 @@
         "2026-W34": 13,
         "2026-W35": 14
       }
+    },
+    {
+      "revision": 15,
+      "changed_at": "2026-11-16T07:41:29.821969Z",
+      "reason": "An included weekly release was restated after longitudinal reconciliation.",
+      "weekly_revisions": {
+        "2026-W33": 16,
+        "2026-W34": 14,
+        "2026-W35": 15
+      }
     }
   ],
-  "previous_revision_path": "/data/releases/monthly/archive/2026-08/revision-13.json",
-  "content_sha256": "d08fd1d47592d0c9ed97243a0951d52d52e45c78a3538e9b5f1a116e4a8962b9"
+  "previous_revision_path": "/data/releases/monthly/archive/2026-08/revision-14.json",
+  "content_sha256": "f5e1ac00bfb64cc5401574348e15a11d7a8992639c20409dadde0d15de00cb10"
 }

@@ -7,8 +7,8 @@
   "period_end": "2026-10-31",
   "observed_week_start": "2026-09-28",
   "observed_week_end": "2026-10-25",
-  "generated_at": "2026-11-03T11:26:42.822970Z",
-  "revision": 6,
+  "generated_at": "2026-11-16T07:41:29.827805Z",
+  "revision": 7,
   "weekly_release_ids": [
     "2026-W40",
     "2026-W41",
@@ -16,10 +16,10 @@
     "2026-W43"
   ],
   "weekly_revisions": {
-    "2026-W40": 7,
-    "2026-W41": 5,
-    "2026-W42": 4,
-    "2026-W43": 3
+    "2026-W40": 8,
+    "2026-W41": 6,
+    "2026-W42": 5,
+    "2026-W43": 4
   },
   "reality": {
     "distinct_event_records": 569,
@@ -73,16 +73,16 @@
   },
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-11-02T01:54:41.761056+00:00",
+    "considered_through": "2026-11-16T03:15:09.44877+00:00",
     "scope": "All prior event records available to the included reconciliations."
   },
   "reconciliation": {
-    "current_through": "2026-11-03T10:01:38.301492+00:00",
+    "current_through": "2026-11-16T03:30:52.229647+00:00",
     "weekly_revisions_included": {
-      "2026-W40": 7,
-      "2026-W41": 5,
-      "2026-W42": 4,
-      "2026-W43": 3
+      "2026-W40": 8,
+      "2026-W41": 6,
+      "2026-W42": 5,
+      "2026-W43": 4
     },
     "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
   },
@@ -141,8 +141,19 @@
         "2026-W42": 4,
         "2026-W43": 3
       }
+    },
+    {
+      "revision": 7,
+      "changed_at": "2026-11-16T07:41:29.827805Z",
+      "reason": "An included weekly release was restated after longitudinal reconciliation.",
+      "weekly_revisions": {
+        "2026-W40": 8,
+        "2026-W41": 6,
+        "2026-W42": 5,
+        "2026-W43": 4
+      }
     }
   ],
-  "previous_revision_path": "/data/releases/monthly/archive/2026-10/revision-5.json",
-  "content_sha256": "253bb177ad9cf198d99bcde7ffa25b844a97ab5341ffb2167602d875a441c25c"
+  "previous_revision_path": "/data/releases/monthly/archive/2026-10/revision-6.json",
+  "content_sha256": "973fcd9f8aab366a0ca85d772f827dcc22532569a6c4727e9c901d494bb6366c"
 }

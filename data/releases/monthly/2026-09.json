@@ -7,8 +7,8 @@
   "period_end": "2026-09-30",
   "observed_week_start": "2026-08-31",
   "observed_week_end": "2026-09-27",
-  "generated_at": "2026-11-03T11:26:42.820046Z",
-  "revision": 11,
+  "generated_at": "2026-11-16T07:41:29.824817Z",
+  "revision": 12,
   "weekly_release_ids": [
     "2026-W36",
     "2026-W37",
@@ -16,10 +16,10 @@
     "2026-W39"
   ],
   "weekly_revisions": {
-    "2026-W36": 10,
-    "2026-W37": 9,
-    "2026-W38": 8,
-    "2026-W39": 7
+    "2026-W36": 11,
+    "2026-W37": 10,
+    "2026-W38": 9,
+    "2026-W39": 8
   },
   "reality": {
     "distinct_event_records": 538,
@@ -73,16 +73,16 @@
   },
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-11-02T01:54:41.761056+00:00",
+    "considered_through": "2026-11-16T03:15:09.44877+00:00",
     "scope": "All prior event records available to the included reconciliations."
   },
   "reconciliation": {
-    "current_through": "2026-11-03T10:01:38.301492+00:00",
+    "current_through": "2026-11-16T03:30:52.229647+00:00",
     "weekly_revisions_included": {
-      "2026-W36": 10,
-      "2026-W37": 9,
-      "2026-W38": 8,
-      "2026-W39": 7
+      "2026-W36": 11,
+      "2026-W37": 10,
+      "2026-W38": 9,
+      "2026-W39": 8
     },
     "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
   },
@@ -196,8 +196,19 @@
         "2026-W38": 8,
         "2026-W39": 7
       }
+    },
+    {
+      "revision": 12,
+      "changed_at": "2026-11-16T07:41:29.824817Z",
+      "reason": "An included weekly release was restated after longitudinal reconciliation.",
+      "weekly_revisions": {
+        "2026-W36": 11,
+        "2026-W37": 10,
+        "2026-W38": 9,
+        "2026-W39": 8
+      }
     }
   ],
-  "previous_revision_path": "/data/releases/monthly/archive/2026-09/revision-10.json",
-  "content_sha256": "16b32e1df61696cefbd68a754d46f0c6e2a320705dc5aba0a5264404fa3e7620"
+  "previous_revision_path": "/data/releases/monthly/archive/2026-09/revision-11.json",
+  "content_sha256": "1ba7ef136699106b1c0127c32d03db7b220c10405ec7ff54a15aa0828049970e"
 }
