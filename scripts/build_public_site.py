@@ -25,6 +25,7 @@ SITE = ROOT / "_site"
 
 ROOT_FILES = [
     "index.html",
+    "ads.txt",
     "site.css",
     "site.js",
     "public-data.js",
@@ -45,6 +46,7 @@ ROOT_FILES = [
 
 PUBLIC_DIRS = [
     "about",
+    "contact",
     "edu",
     "pro",
     "report",
