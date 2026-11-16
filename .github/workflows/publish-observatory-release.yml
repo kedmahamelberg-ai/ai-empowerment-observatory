@@ -6,9 +6,11 @@ on:
   push:
     branches: [main]
     paths:
+      - 'ads.txt'
       - 'analytics.js'
       - 'assets/fonts/**'
       - 'about/**'
+      - 'contact/**'
       - 'config/search-identity.json'
       - 'scripts/search_metadata.py'
       - 'scripts/build_public_site.py'
