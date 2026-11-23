@@ -2,9 +2,9 @@ name: Weekly Observatory Pipeline
 
 on:
   schedule:
-    # Just after Sunday closes: 00:17 Monday in the Netherlands, year-round.
-    # The non-zero minute avoids the busiest scheduled-run boundary.
-    - cron: "17 0 * * 1"
+    # Two near-midnight starts protect against one delayed or dropped schedule.
+    # The planner and concurrency group skip a duplicate completed week.
+    - cron: "7,22 0 * * 1"
       timezone: "Europe/Amsterdam"
   workflow_dispatch:
     inputs:

@@ -161,7 +161,7 @@ class IndependentDirectionsTests(unittest.TestCase):
         self.assertEqual(public_json(value),{'axes':axes(),'nested':[{'title':'public'}]})
     def test_next_week_runs_collection_and_bodies_before_classifiers(self):
         config=yaml.safe_load((ROOT/'.github/workflows/weekly-observatory.yml').read_text())
-        self.assertEqual(config[True]['schedule'][0]['cron'],'17 0 * * 1')
+        self.assertEqual(config[True]['schedule'][0]['cron'],'7,22 0 * * 1')
         self.assertEqual(config[True]['schedule'][0]['timezone'],'Europe/Amsterdam')
         self.assertIn('enrich-article-bodies',config['jobs']['classify-dual-lenses']['needs'])
         enrichment=yaml.safe_load((ROOT/'.github/workflows/enrich-new-brief-article-bodies.yml').read_text())
