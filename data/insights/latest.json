@@ -1,20 +1,20 @@
 {
   "meta": {
     "version": "public_insights_v4_release_bound",
-    "generated_at": "2026-11-20T12:13:24.665429Z",
-    "release_id": "2026-W46",
+    "generated_at": "2026-11-23T02:19:24.576032Z",
+    "release_id": "2026-W47",
     "release_revision": 1,
-    "classification_run_id": "16cce826-1a57-48b1-8bed-8c30bf3766b5",
-    "collection_run_id": "852692b4-3e0a-4e69-baa2-a3afd26d73da",
-    "observation_start": "2026-11-09",
-    "observation_end": "2026-11-15",
+    "classification_run_id": "bce0255c-38aa-4a67-9864-65fba31a95b6",
+    "collection_run_id": "9223cdeb-578b-4616-a19e-68ad0bc02207",
+    "observation_start": "2026-11-16",
+    "observation_end": "2026-11-22",
     "source_of_truth": "/data/analysis/current.json",
-    "coverage_units": 69,
-    "event_units": 67,
-    "extra_coverage": 7,
-    "first_time_event_records": 117,
+    "coverage_units": 85,
+    "event_units": 85,
+    "extra_coverage": 1,
+    "first_time_event_records": 128,
     "follow_on_event_records": 0,
-    "recurring_event_records": 3,
+    "recurring_event_records": 5,
     "source_method": "Publications and organisations are dynamically observed through the current discovery workflow; this is not a fixed journal whitelist.",
     "theme_method": "Descriptive themes are a separate navigation layer. They do not affect the empowerment index.",
     "population": "complete_content_developments"
@@ -22,73 +22,73 @@
   "directional_summary": {
     "schema_version": "aieo_independent_directions_v2",
     "policy_version": "source_representations_independent_axes_2026_09",
-    "total": 67,
-    "evidence_complete": 67,
+    "total": 85,
+    "evidence_complete": 85,
     "human": {
-      "gain": 38,
-      "loss": 4,
-      "mixed": 17,
-      "none": 8,
+      "gain": 60,
+      "loss": 9,
+      "mixed": 5,
+      "none": 11,
       "unresolved": 0
     },
     "ai": {
-      "gain": 35,
-      "loss": 7,
-      "mixed": 19,
-      "none": 6,
+      "gain": 52,
+      "loss": 8,
+      "mixed": 15,
+      "none": 10,
       "unresolved": 0
     }
   },
   "complete_content": {
     "policy_version": "complete_content_2026_09_v1",
-    "content_sha256": "f1902bd5a24eb8189c2d9deea7b00ef06f26b5eff2bfda86f09e8bfe4156d87f",
+    "content_sha256": "981b68f4873b4345f99b8c401d31e3e7efc1115593239bfc267b669ef3cc3c34",
     "counts": {
-      "collected_developments": 120,
-      "collected_sources": 127,
-      "eligible_developments": 67,
-      "eligible_sources": 69,
-      "excluded_developments": 53,
-      "excluded_sources": 58
+      "collected_developments": 133,
+      "collected_sources": 134,
+      "eligible_developments": 85,
+      "eligible_sources": 85,
+      "excluded_developments": 48,
+      "excluded_sources": 49
     },
     "denominator": {
       "unit": "distinct_development",
-      "value": 67
+      "value": 85
     }
   },
   "collection_inventory": {
-    "coverage_units": 127,
-    "event_units": 120,
+    "coverage_units": 134,
+    "event_units": 133,
     "scope": "Collection inventory; excluded from complete-content findings.",
     "legacy_distributions": {
       "discovery_markets": [
         {
           "country_iso3": "CAN",
           "name": "Canada",
-          "article_count": 57,
-          "unique_publishers": 48,
+          "article_count": 59,
+          "unique_publishers": 41,
           "languages": [
             "en",
             "fr"
           ],
           "top_publishers": [
             {
-              "publisher": "Radio-Canada",
-              "article_count": 6
-            },
-            {
-              "publisher": "Le Journal de Montréal",
-              "article_count": 2
-            },
-            {
-              "publisher": "International Labour Organization",
-              "article_count": 2
-            },
-            {
               "publisher": "Le Devoir",
+              "article_count": 8
+            },
+            {
+              "publisher": "The Globe and Mail",
+              "article_count": 4
+            },
+            {
+              "publisher": "Radio-Canada",
+              "article_count": 3
+            },
+            {
+              "publisher": "Britannica",
               "article_count": 2
             },
             {
-              "publisher": "98.5 Montréal",
+              "publisher": "Le Soleil",
               "article_count": 2
             }
           ],
@@ -97,30 +97,30 @@
         {
           "country_iso3": "FRA",
           "name": "France",
-          "article_count": 29,
-          "unique_publishers": 28,
+          "article_count": 30,
+          "unique_publishers": 26,
           "languages": [
             "fr"
           ],
           "top_publishers": [
             {
+              "publisher": "La Croix",
+              "article_count": 2
+            },
+            {
               "publisher": "franceinfo",
               "article_count": 2
             },
             {
-              "publisher": "International Labour Organization",
-              "article_count": 1
+              "publisher": "it social",
+              "article_count": 2
             },
             {
-              "publisher": "Aleteia",
-              "article_count": 1
+              "publisher": "France Travail.org",
+              "article_count": 2
             },
             {
-              "publisher": "La Gazette des Communes",
-              "article_count": 1
-            },
-            {
-              "publisher": "Sortir à Besançon",
+              "publisher": "Cerema",
               "article_count": 1
             }
           ],
@@ -129,30 +129,30 @@
         {
           "country_iso3": "USA",
           "name": "United States",
-          "article_count": 29,
-          "unique_publishers": 26,
+          "article_count": 30,
+          "unique_publishers": 27,
           "languages": [
             "en"
           ],
           "top_publishers": [
             {
-              "publisher": "The Pennsylvania State University",
+              "publisher": "Amazon Web Services",
+              "article_count": 3
+            },
+            {
+              "publisher": "Britannica",
               "article_count": 2
             },
             {
               "publisher": "Amazon Web Services (AWS)",
-              "article_count": 2
-            },
-            {
-              "publisher": "Center for a New American Security | CNAS",
-              "article_count": 2
-            },
-            {
-              "publisher": "Microsoft",
               "article_count": 1
             },
             {
-              "publisher": "STAT",
+              "publisher": "U.S. Government Accountability Office (.gov)",
+              "article_count": 1
+            },
+            {
+              "publisher": "Yale Daily News",
               "article_count": 1
             }
           ],
@@ -161,30 +161,30 @@
         {
           "country_iso3": "GBR",
           "name": "United Kingdom",
-          "article_count": 28,
-          "unique_publishers": 26,
+          "article_count": 29,
+          "unique_publishers": 27,
           "languages": [
             "en"
           ],
           "top_publishers": [
             {
-              "publisher": "Center for a New American Security | CNAS",
+              "publisher": "Britannica",
               "article_count": 2
             },
             {
-              "publisher": "The Guardian",
+              "publisher": "Amazon Web Services",
               "article_count": 2
             },
             {
-              "publisher": "Nippon.com",
+              "publisher": "Amazon Web Services (AWS)",
               "article_count": 1
             },
             {
-              "publisher": "Microsoft",
+              "publisher": "Yale Daily News",
               "article_count": 1
             },
             {
-              "publisher": "Marcus on AI | Substack",
+              "publisher": "Beatportal",
               "article_count": 1
             }
           ],
@@ -193,30 +193,30 @@
         {
           "country_iso3": "CHN",
           "name": "China",
-          "article_count": 19,
-          "unique_publishers": 10,
+          "article_count": 27,
+          "unique_publishers": 21,
           "languages": [
             "zh-cn"
           ],
           "top_publishers": [
             {
-              "publisher": "新华网",
-              "article_count": 7
-            },
-            {
-              "publisher": "J.P. Morgan Private Bank",
+              "publisher": "UN News",
               "article_count": 4
             },
             {
-              "publisher": "复旦发展研究院",
+              "publisher": "BBC",
+              "article_count": 3
+            },
+            {
+              "publisher": "华东师范大学",
+              "article_count": 2
+            },
+            {
+              "publisher": "国际科技创新中心",
               "article_count": 1
             },
             {
-              "publisher": "上观新闻",
-              "article_count": 1
-            },
-            {
-              "publisher": "南京信息工程大学",
+              "publisher": "江苏网信办",
               "article_count": 1
             }
           ],
@@ -227,32 +227,47 @@
         "unique_publishers": 104,
         "rows": [
           {
-            "publisher": "新华网",
-            "article_count": 7,
-            "unique_event_count": 7
+            "publisher": "Le Devoir",
+            "article_count": 8,
+            "unique_event_count": 8
           },
           {
-            "publisher": "Radio-Canada",
-            "article_count": 6,
-            "unique_event_count": 6
-          },
-          {
-            "publisher": "J.P. Morgan Private Bank",
+            "publisher": "The Globe and Mail",
             "article_count": 4,
             "unique_event_count": 4
           },
           {
-            "publisher": "98.5 Montréal",
+            "publisher": "UN News",
+            "article_count": 4,
+            "unique_event_count": 4
+          },
+          {
+            "publisher": "Amazon Web Services",
+            "article_count": 3,
+            "unique_event_count": 3
+          },
+          {
+            "publisher": "BBC",
+            "article_count": 3,
+            "unique_event_count": 3
+          },
+          {
+            "publisher": "Radio-Canada",
+            "article_count": 3,
+            "unique_event_count": 3
+          },
+          {
+            "publisher": "Britannica",
             "article_count": 2,
             "unique_event_count": 2
           },
           {
-            "publisher": "Amazon Web Services (AWS)",
+            "publisher": "CBC",
             "article_count": 2,
             "unique_event_count": 2
           },
           {
-            "publisher": "Center for a New American Security | CNAS",
+            "publisher": "France Travail.org",
             "article_count": 2,
             "unique_event_count": 2
           },
@@ -262,187 +277,147 @@
             "unique_event_count": 2
           },
           {
-            "publisher": "Le Devoir",
+            "publisher": "it social",
             "article_count": 2,
             "unique_event_count": 2
           },
           {
-            "publisher": "Le Journal de Montréal",
+            "publisher": "La Croix",
             "article_count": 2,
             "unique_event_count": 2
           },
           {
-            "publisher": "The Guardian",
+            "publisher": "Le Soleil",
             "article_count": 2,
             "unique_event_count": 2
           },
           {
-            "publisher": "The Pennsylvania State University",
+            "publisher": "Legal 500",
             "article_count": 2,
             "unique_event_count": 2
           },
           {
-            "publisher": "International Labour Organization",
+            "publisher": "The Conversation",
             "article_count": 2,
-            "unique_event_count": 1
+            "unique_event_count": 2
           },
           {
-            "publisher": "A&O Shearman",
+            "publisher": "UNESCO",
+            "article_count": 2,
+            "unique_event_count": 2
+          },
+          {
+            "publisher": "华东师范大学",
+            "article_count": 2,
+            "unique_event_count": 2
+          },
+          {
+            "publisher": "ActuIA",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Acteurs Publics",
+            "publisher": "Allianz Commercial",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Aftermath",
+            "publisher": "Amazon Web Services (AWS)",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "AIMultiple",
+            "publisher": "American Compass",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Air&Cosmos",
+            "publisher": "American Psychological Association (APA)",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Aleteia",
+            "publisher": "Anadolu Ajansı",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "American Medical Association | AMA",
+            "publisher": "Arcom.fr",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Animation Magazine",
+            "publisher": "Bank of England",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Archimag",
+            "publisher": "Beatportal",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Arte.tv",
+            "publisher": "BeInCrypto",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Atalayar",
+            "publisher": "CalMatters",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Baron Mag",
+            "publisher": "Cerema",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "BBC",
+            "publisher": "Clemson News",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "BFM",
+            "publisher": "CNBC",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "BNN Bloomberg",
+            "publisher": "Coursera",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Cal Poly Pomona",
+            "publisher": "DW.com",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Carnegie Endowment for International Peace",
+            "publisher": "Engadget",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Cato Institute",
+            "publisher": "Faculty Focus",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "CBA National Magazine",
+            "publisher": "Federal News Network",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "CBC",
+            "publisher": "Gossement AVOCATS",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Centre for International Governance Innovation",
+            "publisher": "Governor Kathy Hochul (.gov)",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "CEPR",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "Co-operative News",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "Concordia University",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "Cornell David A. Duffield College of Engineering",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "Daily Nous",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "Department of Energy (.gov)",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "eJewishPhilanthropy",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "EnergyNow",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "EPFL",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "France 24",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "GOV.UK",
+            "publisher": "Gènéthique",
             "article_count": 1,
             "unique_event_count": 1
           },
@@ -452,47 +427,32 @@
             "unique_event_count": 1
           },
           {
-            "publisher": "IBM",
+            "publisher": "Hit West",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "IDC | Trusted Tech Intelligence",
+            "publisher": "Hong Kong Monetary Authority",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "IFPMA",
+            "publisher": "Institut du Cerveau",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Indie Shorts Mag",
+            "publisher": "International Atomic Energy Agency",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Inria",
+            "publisher": "KCUR",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Institut des hautes études de défense nationale",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "Investment Executive",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "JDN",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "Jurist.org",
+            "publisher": "L'Argus de l'assurance",
             "article_count": 1,
             "unique_event_count": 1
           },
@@ -502,27 +462,37 @@
             "unique_event_count": 1
           },
           {
-            "publisher": "La Gazette des Communes",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
             "publisher": "La Presse",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Le Figaro",
+            "publisher": "La Sacem",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Le Soleil",
+            "publisher": "Lawfare",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Le Temps",
+            "publisher": "Le Canada Français",
+            "article_count": 1,
+            "unique_event_count": 1
+          },
+          {
+            "publisher": "Le Media Social",
+            "article_count": 1,
+            "unique_event_count": 1
+          },
+          {
+            "publisher": "Le Monde.fr",
+            "article_count": 1,
+            "unique_event_count": 1
+          },
+          {
+            "publisher": "Le Réveil",
             "article_count": 1,
             "unique_event_count": 1
           },
@@ -532,87 +502,72 @@
             "unique_event_count": 1
           },
           {
-            "publisher": "Libération",
+            "publisher": "Les Echos",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Marcus on AI | Substack",
+            "publisher": "London School of Business and Research (LSBR)",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Microsoft",
+            "publisher": "Louisville Public Media",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Microsoft Source",
+            "publisher": "L’actualité",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Ministère des Armées",
+            "publisher": "MIT Sloan",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "MIT News",
+            "publisher": "Mon Carnet – de l'actualité numérique",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Métropole Européenne de Lille (MEL)",
+            "publisher": "Nature",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "National Post",
+            "publisher": "ONFR",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Nippon.com",
+            "publisher": "Pan American Health Organization (PAHO)",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Noovo Info",
+            "publisher": "Phys.org",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Opseu",
+            "publisher": "Politico",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Ouest-France",
+            "publisher": "RED FM Canada",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Premium Beauty News",
+            "publisher": "Retail Insider",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "RAND",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "RFI",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "Santé Mentale",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "SiliconANGLE",
+            "publisher": "Sifted",
             "article_count": 1,
             "unique_event_count": 1
           },
@@ -622,52 +577,12 @@
             "unique_event_count": 1
           },
           {
-            "publisher": "Skwigly",
+            "publisher": "The Economist",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Sortir à Besançon",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "STAT",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "Sud Ouest",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "Teacher Magazine",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "The Boar",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "The Conversation",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "The Globe and Mail",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "The London School of Economics and Political Science",
-            "article_count": 1,
-            "unique_event_count": 1
-          },
-          {
-            "publisher": "The Motley Fool",
+            "publisher": "The Independent",
             "article_count": 1,
             "unique_event_count": 1
           },
@@ -677,7 +592,17 @@
             "unique_event_count": 1
           },
           {
-            "publisher": "The Pew Charitable Trusts",
+            "publisher": "The Washington Post",
+            "article_count": 1,
+            "unique_event_count": 1
+          },
+          {
+            "publisher": "Time Magazine",
+            "article_count": 1,
+            "unique_event_count": 1
+          },
+          {
+            "publisher": "U.S. Government Accountability Office (.gov)",
             "article_count": 1,
             "unique_event_count": 1
           },
@@ -687,22 +612,62 @@
             "unique_event_count": 1
           },
           {
-            "publisher": "University of Aberdeen",
+            "publisher": "University World News",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Université de Montpellier",
+            "publisher": "Université de Bordeaux",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "Valdosta State University",
+            "publisher": "Université Paris Cité",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "WSJ",
+            "publisher": "UVA Today",
+            "article_count": 1,
+            "unique_event_count": 1
+          },
+          {
+            "publisher": "Vert Le média",
+            "article_count": 1,
+            "unique_event_count": 1
+          },
+          {
+            "publisher": "VIDAL",
+            "article_count": 1,
+            "unique_event_count": 1
+          },
+          {
+            "publisher": "WHO | Regional Office for Africa",
+            "article_count": 1,
+            "unique_event_count": 1
+          },
+          {
+            "publisher": "Yahoo Finance France",
+            "article_count": 1,
+            "unique_event_count": 1
+          },
+          {
+            "publisher": "Yahoo News UK",
+            "article_count": 1,
+            "unique_event_count": 1
+          },
+          {
+            "publisher": "Yale Daily News",
+            "article_count": 1,
+            "unique_event_count": 1
+          },
+          {
+            "publisher": "| Grenier aux nouvelles",
+            "article_count": 1,
+            "unique_event_count": 1
+          },
+          {
+            "publisher": "École d'art | Université Laval",
             "article_count": 1,
             "unique_event_count": 1
           },
@@ -712,12 +677,17 @@
             "unique_event_count": 1
           },
           {
-            "publisher": "上观新闻",
+            "publisher": "中国工业互联网研究院",
             "article_count": 1,
             "unique_event_count": 1
           },
           {
-            "publisher": "中国经济网",
+            "publisher": "中国科大新闻网",
+            "article_count": 1,
+            "unique_event_count": 1
+          },
+          {
+            "publisher": "人民日报",
             "article_count": 1,
             "unique_event_count": 1
           },
@@ -732,7 +702,7 @@
             "unique_event_count": 1
           },
           {
-            "publisher": "国务院港澳事务办公室",
+            "publisher": "国际科技创新中心",
             "article_count": 1,
             "unique_event_count": 1
           },
@@ -742,7 +712,37 @@
             "unique_event_count": 1
           },
           {
-            "publisher": "求是",
+            "publisher": "新华网",
+            "article_count": 1,
+            "unique_event_count": 1
+          },
+          {
+            "publisher": "江苏网信办",
+            "article_count": 1,
+            "unique_event_count": 1
+          },
+          {
+            "publisher": "湖北省经济和信息化厅",
+            "article_count": 1,
+            "unique_event_count": 1
+          },
+          {
+            "publisher": "湖南师范大学",
+            "article_count": 1,
+            "unique_event_count": 1
+          },
+          {
+            "publisher": "西交利物浦大学",
+            "article_count": 1,
+            "unique_event_count": 1
+          },
+          {
+            "publisher": "观察者网",
+            "article_count": 1,
+            "unique_event_count": 1
+          },
+          {
+            "publisher": "麻省理工科技评论",
             "article_count": 1,
             "unique_event_count": 1
           }
@@ -751,286 +751,276 @@
       "coverage": {
         "themes": [
           {
-            "label": "Other AI developments",
-            "count": 28,
-            "share": 0.2205
+            "label": "Government & rules",
+            "count": 22,
+            "share": 0.1642
           },
           {
-            "label": "Government & rules",
-            "count": 18,
-            "share": 0.1417
+            "label": "Other AI developments",
+            "count": 22,
+            "share": 0.1642
           },
           {
             "label": "Education & research",
-            "count": 14,
-            "share": 0.1102
+            "count": 18,
+            "share": 0.1343
           },
           {
             "label": "Infrastructure & investment",
-            "count": 12,
-            "share": 0.0945
-          },
-          {
-            "label": "Creativity & intellectual property",
-            "count": 10,
-            "share": 0.0787
+            "count": 13,
+            "share": 0.097
           },
           {
             "label": "Business, markets & investment",
-            "count": 7,
-            "share": 0.0551
-          },
-          {
-            "label": "Work, jobs & skills",
-            "count": 7,
-            "share": 0.0551
+            "count": 10,
+            "share": 0.0746
           },
           {
             "label": "Government, rights & regulation",
-            "count": 6,
-            "share": 0.0472
-          },
-          {
-            "label": "Privacy & security",
-            "count": 4,
-            "share": 0.0315
-          },
-          {
-            "label": "Safety, security & misinformation",
-            "count": 4,
-            "share": 0.0315
-          },
-          {
-            "label": "Business & productivity",
-            "count": 3,
-            "share": 0.0236
+            "count": 9,
+            "share": 0.0672
           },
           {
             "label": "Work & jobs",
-            "count": 3,
-            "share": 0.0236
+            "count": 8,
+            "share": 0.0597
+          },
+          {
+            "label": "Healthcare",
+            "count": 5,
+            "share": 0.0373
+          },
+          {
+            "label": "Privacy & security",
+            "count": 5,
+            "share": 0.0373
+          },
+          {
+            "label": "Safety, security & misinformation",
+            "count": 5,
+            "share": 0.0373
+          },
+          {
+            "label": "Business & productivity",
+            "count": 4,
+            "share": 0.0299
+          },
+          {
+            "label": "Creativity & intellectual property",
+            "count": 4,
+            "share": 0.0299
           },
           {
             "label": "AI products & model releases",
             "count": 2,
-            "share": 0.0157
-          },
-          {
-            "label": "Events & ecosystem",
-            "count": 2,
-            "share": 0.0157
-          },
-          {
-            "label": "Health & medicine",
-            "count": 2,
-            "share": 0.0157
-          },
-          {
-            "label": "Healthcare",
-            "count": 2,
-            "share": 0.0157
+            "share": 0.0149
           },
           {
             "label": "Consumer services",
-            "count": 1,
-            "share": 0.0079
+            "count": 2,
+            "share": 0.0149
           },
           {
-            "label": "Creativity, media & culture",
-            "count": 1,
-            "share": 0.0079
+            "label": "Work, jobs & skills",
+            "count": 2,
+            "share": 0.0149
           },
           {
-            "label": "Education & learning",
+            "label": "Health & medicine",
             "count": 1,
-            "share": 0.0079
+            "share": 0.0075
+          },
+          {
+            "label": "Infrastructure, chips & energy",
+            "count": 1,
+            "share": 0.0075
+          },
+          {
+            "label": "Science & research",
+            "count": 1,
+            "share": 0.0075
           }
         ],
         "by_status": {
           "contracting": {
-            "count": 1,
-            "share": 0.0079
+            "count": 3,
+            "share": 0.0224
           },
           "expanding": {
-            "count": 29,
-            "share": 0.2283
+            "count": 38,
+            "share": 0.2836
           },
           "mixed": {
-            "count": 20,
-            "share": 0.1575
+            "count": 18,
+            "share": 0.1343
           },
           "non_empowerment": {
             "count": 21,
-            "share": 0.1654
+            "share": 0.1567
           },
           "unclear": {
-            "count": 56,
-            "share": 0.4409
+            "count": 54,
+            "share": 0.403
           }
         },
         "by_narrative": {
           "contested": {
-            "count": 17,
-            "share": 0.1339
+            "count": 21,
+            "share": 0.1567
           },
           "descriptive_neutral": {
             "count": 13,
-            "share": 0.1024
+            "share": 0.097
           },
           "opportunity": {
-            "count": 38,
-            "share": 0.2992
+            "count": 40,
+            "share": 0.2985
           },
           "threat": {
-            "count": 6,
-            "share": 0.0472
+            "count": 11,
+            "share": 0.0821
           },
           "unclear": {
-            "count": 53,
-            "share": 0.4173
+            "count": 49,
+            "share": 0.3657
           }
         }
       },
       "event": {
         "themes": [
           {
-            "label": "Other AI developments",
-            "count": 28,
-            "share": 0.2333
+            "label": "Government & rules",
+            "count": 22,
+            "share": 0.1654
           },
           {
-            "label": "Government & rules",
-            "count": 17,
-            "share": 0.1417
+            "label": "Other AI developments",
+            "count": 21,
+            "share": 0.1579
           },
           {
             "label": "Education & research",
-            "count": 14,
-            "share": 0.1167
+            "count": 18,
+            "share": 0.1353
           },
           {
             "label": "Infrastructure & investment",
             "count": 13,
-            "share": 0.1083
-          },
-          {
-            "label": "Creativity & intellectual property",
-            "count": 9,
-            "share": 0.075
+            "share": 0.0977
           },
           {
             "label": "Business, markets & investment",
-            "count": 7,
-            "share": 0.0583
+            "count": 10,
+            "share": 0.0752
           },
           {
             "label": "Government, rights & regulation",
+            "count": 9,
+            "share": 0.0677
+          },
+          {
+            "label": "Work & jobs",
+            "count": 8,
+            "share": 0.0602
+          },
+          {
+            "label": "Healthcare",
             "count": 5,
-            "share": 0.0417
+            "share": 0.0376
           },
           {
             "label": "Privacy & security",
-            "count": 4,
-            "share": 0.0333
-          },
-          {
-            "label": "Work, jobs & skills",
-            "count": 4,
-            "share": 0.0333
-          },
-          {
-            "label": "Business & productivity",
-            "count": 3,
-            "share": 0.025
+            "count": 5,
+            "share": 0.0376
           },
           {
             "label": "Safety, security & misinformation",
-            "count": 3,
-            "share": 0.025
+            "count": 5,
+            "share": 0.0376
+          },
+          {
+            "label": "Business & productivity",
+            "count": 4,
+            "share": 0.0301
+          },
+          {
+            "label": "Creativity & intellectual property",
+            "count": 4,
+            "share": 0.0301
           },
           {
             "label": "AI products & model releases",
             "count": 2,
-            "share": 0.0167
-          },
-          {
-            "label": "Events & ecosystem",
-            "count": 2,
-            "share": 0.0167
-          },
-          {
-            "label": "Health & medicine",
-            "count": 2,
-            "share": 0.0167
-          },
-          {
-            "label": "Healthcare",
-            "count": 2,
-            "share": 0.0167
-          },
-          {
-            "label": "Work & jobs",
-            "count": 2,
-            "share": 0.0167
+            "share": 0.015
           },
           {
             "label": "Consumer services",
-            "count": 1,
-            "share": 0.0083
+            "count": 2,
+            "share": 0.015
           },
           {
-            "label": "Creativity, media & culture",
-            "count": 1,
-            "share": 0.0083
+            "label": "Work, jobs & skills",
+            "count": 2,
+            "share": 0.015
           },
           {
-            "label": "Education & learning",
+            "label": "Health & medicine",
             "count": 1,
-            "share": 0.0083
+            "share": 0.0075
+          },
+          {
+            "label": "Infrastructure, chips & energy",
+            "count": 1,
+            "share": 0.0075
+          },
+          {
+            "label": "Science & research",
+            "count": 1,
+            "share": 0.0075
           }
         ],
         "by_status": {
           "contracting": {
-            "count": 1,
-            "share": 0.0083
+            "count": 3,
+            "share": 0.0226
           },
           "expanding": {
-            "count": 29,
-            "share": 0.2417
+            "count": 38,
+            "share": 0.2857
           },
           "mixed": {
-            "count": 19,
-            "share": 0.1583
+            "count": 18,
+            "share": 0.1353
           },
           "non_empowerment": {
-            "count": 69,
-            "share": 0.575
+            "count": 68,
+            "share": 0.5113
           },
           "unclear": {
-            "count": 2,
-            "share": 0.0167
+            "count": 6,
+            "share": 0.0451
           }
         },
         "by_narrative": {
           "contested": {
-            "count": 18,
-            "share": 0.15
+            "count": 21,
+            "share": 0.1579
           },
           "descriptive_neutral": {
-            "count": 12,
-            "share": 0.1
+            "count": 13,
+            "share": 0.0977
           },
           "opportunity": {
-            "count": 37,
-            "share": 0.3083
+            "count": 40,
+            "share": 0.3008
           },
           "threat": {
-            "count": 5,
-            "share": 0.0417
+            "count": 11,
+            "share": 0.0827
           },
           "unclear": {
             "count": 48,
-            "share": 0.4
+            "share": 0.3609
           }
         }
       },
@@ -1039,134 +1029,119 @@
           "unit_count": 21,
           "themes": [
             {
-              "label": "Creativity & intellectual property",
-              "count": 5,
-              "share": 0.2381
-            },
-            {
-              "label": "Other AI developments",
-              "count": 4,
-              "share": 0.1905
-            },
-            {
-              "label": "Education & research",
-              "count": 3,
-              "share": 0.1429
-            },
-            {
               "label": "Government & rules",
-              "count": 3,
-              "share": 0.1429
+              "count": 7,
+              "share": 0.3333
             },
             {
               "label": "Infrastructure & investment",
-              "count": 2,
-              "share": 0.0952
-            },
-            {
-              "label": "Privacy & security",
-              "count": 2,
-              "share": 0.0952
+              "count": 6,
+              "share": 0.2857
             },
             {
               "label": "Business, markets & investment",
+              "count": 3,
+              "share": 0.1429
+            },
+            {
+              "label": "Education & research",
+              "count": 2,
+              "share": 0.0952
+            },
+            {
+              "label": "Creativity & intellectual property",
               "count": 1,
               "share": 0.0476
             },
             {
-              "label": "Work & jobs",
+              "label": "Other AI developments",
+              "count": 1,
+              "share": 0.0476
+            },
+            {
+              "label": "Privacy & security",
               "count": 1,
               "share": 0.0476
             }
           ]
         },
         "event": {
-          "unit_count": 69,
+          "unit_count": 68,
           "themes": [
             {
               "label": "Other AI developments",
-              "count": 27,
-              "share": 0.3913
+              "count": 21,
+              "share": 0.3088
             },
             {
               "label": "Business, markets & investment",
-              "count": 7,
-              "share": 0.1014
-            },
-            {
-              "label": "Creativity & intellectual property",
-              "count": 5,
-              "share": 0.0725
+              "count": 10,
+              "share": 0.1471
             },
             {
               "label": "Government, rights & regulation",
-              "count": 5,
-              "share": 0.0725
-            },
-            {
-              "label": "Education & research",
-              "count": 3,
-              "share": 0.0435
+              "count": 9,
+              "share": 0.1324
             },
             {
               "label": "Government & rules",
-              "count": 3,
-              "share": 0.0435
+              "count": 7,
+              "share": 0.1029
+            },
+            {
+              "label": "Infrastructure & investment",
+              "count": 5,
+              "share": 0.0735
             },
             {
               "label": "Safety, security & misinformation",
-              "count": 3,
-              "share": 0.0435
-            },
-            {
-              "label": "Work, jobs & skills",
-              "count": 3,
-              "share": 0.0435
+              "count": 5,
+              "share": 0.0735
             },
             {
               "label": "AI products & model releases",
               "count": 2,
-              "share": 0.029
+              "share": 0.0294
             },
             {
-              "label": "Events & ecosystem",
+              "label": "Education & research",
               "count": 2,
-              "share": 0.029
+              "share": 0.0294
+            },
+            {
+              "label": "Work, jobs & skills",
+              "count": 2,
+              "share": 0.0294
+            },
+            {
+              "label": "Creativity & intellectual property",
+              "count": 1,
+              "share": 0.0147
             },
             {
               "label": "Health & medicine",
-              "count": 2,
-              "share": 0.029
+              "count": 1,
+              "share": 0.0147
             },
             {
-              "label": "Infrastructure & investment",
-              "count": 2,
-              "share": 0.029
+              "label": "Infrastructure, chips & energy",
+              "count": 1,
+              "share": 0.0147
             },
             {
               "label": "Privacy & security",
-              "count": 2,
-              "share": 0.029
+              "count": 1,
+              "share": 0.0147
             },
             {
-              "label": "Creativity, media & culture",
+              "label": "Science & research",
               "count": 1,
-              "share": 0.0145
-            },
-            {
-              "label": "Education & learning",
-              "count": 1,
-              "share": 0.0145
-            },
-            {
-              "label": "Work & jobs",
-              "count": 1,
-              "share": 0.0145
+              "share": 0.0147
             }
           ]
         }
       }
     }
   },
-  "source_relationship_sha256": "4bb1ed798a38de0683a1893aee6596327714aacff76b70bf29f56aad7daae7db"
+  "source_relationship_sha256": "a7c40ea34a6749ead29cd297b835c5fdf47b394b5396463ea7eaf139d344b9e6"
 }
