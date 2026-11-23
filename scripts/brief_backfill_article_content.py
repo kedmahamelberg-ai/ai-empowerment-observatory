@@ -575,6 +575,19 @@ def extraction_quality(text: str, method: str) -> float:
         score += 0.05
     return round(min(score, 1.0), 3)
 
+TRAILING_RECOMMENDATIONS = re.compile(
+    r"(?im)^\s*(?:ARTICLES SIMILAIRES|PLUS DE L['’]AUTEUR|Derniers articles de fond|Ailleurs sur le site)\s*$"
+)
+
+
+def trim_recommendation_tail(text: str) -> str:
+    """Keep the signed article; omit publisher recommendation rails below it."""
+    for match in TRAILING_RECOMMENDATIONS.finditer(text):
+        main = text[:match.start()].rstrip()
+        if match.start() >= len(text) * .35 and word_count(main) >= MIN_WORDS:
+            return main
+    return text
+
 def choose_best_extraction(html: str, url: str = ""):
     candidates = list(recovery.embedded_bodies(html, url))
     soup = BeautifulSoup(html, "html.parser")
@@ -591,6 +604,7 @@ def choose_best_extraction(html: str, url: str = ""):
             continue
     accepted = []
     for method, text in candidates:
+        text = trim_recommendation_tail(text)
         if word_count(text) < MIN_WORDS or not assess_body({"body_text": text})["usable_complete_body"]:
             continue
         # Prefer article-specific structure; never pick generic app JSON or page text.

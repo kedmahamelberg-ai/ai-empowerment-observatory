@@ -1,0 +1,319 @@
+{
+  "schema_version": "aieo_release_corrections_v2",
+  "release_id": "2026-W47",
+  "source_release_sha256": "e41ff521b7fe0c814ab05b5c5ad5aa2b44264f8d1b3e6894764b82c7e0f0d786",
+  "period_start": "2026-11-16",
+  "period_end": "2026-11-22",
+  "policy_version": "source_representations_independent_axes_2026_09",
+  "source_audit_complete": false,
+  "publication_scope": "Six source-reviewed W47 readings corrected. The 85-source identity and stored-body audit is recorded separately; publisher access and the remaining semantic readings are not certified.",
+  "partial_corrections_allowed": true,
+  "records": [
+    {
+      "audit_id": "001",
+      "event_id": "35a46e1e-5a40-4552-81a7-334daa103fc5",
+      "article_ids": [
+        "6728ab5448c93c9a0f6731c28710b090"
+      ],
+      "source_urls": [
+        "https://aws.amazon.com/blogs/machine-learning/announcing-amazon-textract-insights-verifiable-generative-ai-for-documents"
+      ],
+      "axes": {
+        "ai": {
+          "direction": "gain",
+          "evidence": "AWS says the generally available API adds natural-language field definitions, document splitting, and grounded structured results."
+        },
+        "human": {
+          "direction": "gain",
+          "evidence": "AWS says its new Textract Insights API can extract fields from mixed document packets with confidence scores and page grounding, leaving lower-confidence values for human review."
+        },
+        "evidence_scope": "written_source",
+        "evidence_types": [
+          "source_representation"
+        ],
+        "policy_version": "source_representations_independent_axes_2026_09",
+        "schema_version": "aieo_independent_directions_v2",
+        "evidence_complete": true,
+        "unresolved_reason": ""
+      },
+      "source_note": "Company announcement: benefits are product claims, not independently measured effects.",
+      "display_scope": "Company announcement: benefits are product claims, not independently measured effects.",
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
+      "provenance": {
+        "kind": "source_bound_editorial_audit_correction",
+        "owner_gold": false,
+        "source_release_sha256": "e41ff521b7fe0c814ab05b5c5ad5aa2b44264f8d1b3e6894764b82c7e0f0d786",
+        "stored_body_hashes": {
+          "6728ab5448c93c9a0f6731c28710b090": "c360d7cc7381e6847678f165d34334f60c344f903bebf58219b8f958bff7794c"
+        },
+        "source_quality": {
+          "6728ab5448c93c9a0f6731c28710b090": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 9567,
+            "body_sha256": "c360d7cc7381e6847678f165d34334f60c344f903bebf58219b8f958bff7794c",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
+        }
+      }
+    },
+    {
+      "audit_id": "002",
+      "event_id": "29546d1d-0d34-45ca-8216-32cee160fb5f",
+      "article_ids": [
+        "11502aee89712720a78f52f738192330"
+      ],
+      "source_urls": [
+        "https://www.jswx.gov.cn/fwhd/tzgg/202611/t20261118_1373147.shtml"
+      ],
+      "axes": {
+        "ai": {
+          "direction": "loss",
+          "evidence": "Already launched generative AI applications must display the registered model name and filing number and label generated content."
+        },
+        "human": {
+          "direction": "none",
+          "evidence": "The notice reports 13 newly filed generative AI services, bringing Jiangsu’s total to 125; it gives no measured effect on users."
+        },
+        "evidence_scope": "written_source",
+        "evidence_types": [
+          "source_representation"
+        ],
+        "policy_version": "source_representations_independent_axes_2026_09",
+        "schema_version": "aieo_independent_directions_v2",
+        "evidence_complete": true,
+        "unresolved_reason": ""
+      },
+      "source_note": "The notice records filings and disclosure duties. It does not state that the province has restricted deployment.",
+      "display_scope": "The notice records filings and disclosure duties. It does not state that the province has restricted deployment.",
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
+      "provenance": {
+        "kind": "source_bound_editorial_audit_correction",
+        "owner_gold": false,
+        "source_release_sha256": "e41ff521b7fe0c814ab05b5c5ad5aa2b44264f8d1b3e6894764b82c7e0f0d786",
+        "stored_body_hashes": {
+          "11502aee89712720a78f52f738192330": "920bcb84834f8a986f40e188d057169189ce58162b493359e7705aeb88cf3c72"
+        },
+        "source_quality": {
+          "11502aee89712720a78f52f738192330": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 293,
+            "body_sha256": "920bcb84834f8a986f40e188d057169189ce58162b493359e7705aeb88cf3c72",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
+        }
+      }
+    },
+    {
+      "audit_id": "003",
+      "event_id": "f42455d6-f67d-4c6a-a78f-0d57269138ff",
+      "article_ids": [
+        "657a0f7f3d45e202121a8729db59e832"
+      ],
+      "source_urls": [
+        "https://itsocial.fr/contenus/tribunes/fraude-documentaire-lintelligence-artificielle-change-lechelle-de-la-menace"
+      ],
+      "axes": {
+        "ai": {
+          "direction": "gain",
+          "evidence": "The opinion describes AI being used both to create convincing forged documents and to automate checks for manipulation; these are attributed claims."
+        },
+        "human": {
+          "direction": "mixed",
+          "evidence": "The Finovox chief executive says generative AI makes forged documents more convincing, while AI-based checks can help detect anomalies alongside human review."
+        },
+        "evidence_scope": "written_source",
+        "evidence_types": [
+          "source_representation"
+        ],
+        "policy_version": "source_representations_independent_axes_2026_09",
+        "schema_version": "aieo_independent_directions_v2",
+        "evidence_complete": true,
+        "unresolved_reason": ""
+      },
+      "source_note": "Only the signed Finovox opinion through its author credit supports this reading. The saved HTML extraction also contains unrelated recommendation links after the article.",
+      "display_scope": "Only the signed Finovox opinion through its author credit supports this reading. The saved HTML extraction also contains unrelated recommendation links after the article.",
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
+      "provenance": {
+        "kind": "source_bound_editorial_audit_correction",
+        "owner_gold": false,
+        "source_release_sha256": "e41ff521b7fe0c814ab05b5c5ad5aa2b44264f8d1b3e6894764b82c7e0f0d786",
+        "stored_body_hashes": {
+          "657a0f7f3d45e202121a8729db59e832": "1405663e5cb33f573071d1d19d985bbd05f1c3187725bce1435cb0b438273ba1"
+        },
+        "source_quality": {
+          "657a0f7f3d45e202121a8729db59e832": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 5696,
+            "body_sha256": "1405663e5cb33f573071d1d19d985bbd05f1c3187725bce1435cb0b438273ba1",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
+        }
+      }
+    },
+    {
+      "audit_id": "004",
+      "event_id": "8060eacf-bf5f-4de6-a1a3-ae085c544eb4",
+      "article_ids": [
+        "82d85f422a48cee4055cd7d708c341e0"
+      ],
+      "source_urls": [
+        "https://www.beijing.gov.cn/fuwu/bmfw/sy/jrts/202611/t20261118_4951085.html"
+      ],
+      "axes": {
+        "ai": {
+          "direction": "none",
+          "evidence": "The report describes training and proposed workplace uses, without a separate stated effect on AI systems or operators."
+        },
+        "human": {
+          "direction": "gain",
+          "evidence": "Beijing and Tsinghua trained 30 skilled workers in practical AI exercises; workplace applications described by participants are plans."
+        },
+        "evidence_scope": "written_source",
+        "evidence_types": [
+          "source_representation"
+        ],
+        "policy_version": "source_representations_independent_axes_2026_09",
+        "schema_version": "aieo_independent_directions_v2",
+        "evidence_complete": true,
+        "unresolved_reason": ""
+      },
+      "source_note": "The course ran 2–13 November. Do not present participants’ intended workplace uses as completed deployment.",
+      "display_scope": "The course ran 2–13 November. Do not present participants’ intended workplace uses as completed deployment.",
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
+      "provenance": {
+        "kind": "source_bound_editorial_audit_correction",
+        "owner_gold": false,
+        "source_release_sha256": "e41ff521b7fe0c814ab05b5c5ad5aa2b44264f8d1b3e6894764b82c7e0f0d786",
+        "stored_body_hashes": {
+          "82d85f422a48cee4055cd7d708c341e0": "7b4baf1cc1005dafde3b28d462946710b8edf08f3b122d5adfe731df3b606996"
+        },
+        "source_quality": {
+          "82d85f422a48cee4055cd7d708c341e0": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 1339,
+            "body_sha256": "7b4baf1cc1005dafde3b28d462946710b8edf08f3b122d5adfe731df3b606996",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
+        }
+      }
+    },
+    {
+      "audit_id": "005",
+      "event_id": "5c1cc939-3881-4dde-80de-ef9ec1a33cdd",
+      "article_ids": [
+        "91e178c577106a7285d9a1d446dfe5be"
+      ],
+      "source_urls": [
+        "https://www.francetravail.org/statistiques-analyses/entreprises/metiers/l-intelligence-artificielle-et-les-metiers-a-5-ans-la-vision-des-employeurs.html?type=article"
+      ],
+      "axes": {
+        "ai": {
+          "direction": "gain",
+          "evidence": "Employers anticipate AI augmenting tasks in some occupations; the page reports expectations rather than observed productivity."
+        },
+        "human": {
+          "direction": "gain",
+          "evidence": "France Travail reports that more than one-third of surveyed employers expect AI to save time; this is a forecast, not a measured worker outcome."
+        },
+        "evidence_scope": "written_source",
+        "evidence_types": [
+          "source_representation"
+        ],
+        "policy_version": "source_representations_independent_axes_2026_09",
+        "schema_version": "aieo_independent_directions_v2",
+        "evidence_complete": true,
+        "unresolved_reason": ""
+      },
+      "source_note": "The cited web page is a short overview of a linked PDF report. The reading is limited to the overview page.",
+      "display_scope": "The cited web page is a short overview of a linked PDF report. The reading is limited to the overview page.",
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
+      "provenance": {
+        "kind": "source_bound_editorial_audit_correction",
+        "owner_gold": false,
+        "source_release_sha256": "e41ff521b7fe0c814ab05b5c5ad5aa2b44264f8d1b3e6894764b82c7e0f0d786",
+        "stored_body_hashes": {
+          "91e178c577106a7285d9a1d446dfe5be": "5b762447b90f10ea863d7e8f34d86e50780122e3caf1beab97f9e563ed478c92"
+        },
+        "source_quality": {
+          "91e178c577106a7285d9a1d446dfe5be": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 1373,
+            "body_sha256": "5b762447b90f10ea863d7e8f34d86e50780122e3caf1beab97f9e563ed478c92",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
+        }
+      }
+    },
+    {
+      "audit_id": "006",
+      "event_id": "0ab86c8d-d3e8-4f31-88d8-b65ce024987b",
+      "article_ids": [
+        "b075ea35851eee57663b1e833baca8c7"
+      ],
+      "source_urls": [
+        "https://theconversation.com/what-ai-regulation-could-learn-from-the-most-hazardous-industries-in-the-world-295475"
+      ],
+      "axes": {
+        "ai": {
+          "direction": "none",
+          "evidence": "The opinion proposes governance for AI but does not establish a change in AI systems’ capability, reach or operating conditions."
+        },
+        "human": {
+          "direction": "gain",
+          "evidence": "The author proposes multinational assurance rules modeled on high-risk industries to help people oversee AI development."
+        },
+        "evidence_scope": "written_source",
+        "evidence_types": [
+          "source_representation"
+        ],
+        "policy_version": "source_representations_independent_axes_2026_09",
+        "schema_version": "aieo_independent_directions_v2",
+        "evidence_complete": true,
+        "unresolved_reason": ""
+      },
+      "source_note": "This is the author’s governance proposal, not a demonstrated result or an AI-enabled governance tool.",
+      "display_scope": "This is the author’s governance proposal, not a demonstrated result or an AI-enabled governance tool.",
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
+      "provenance": {
+        "kind": "source_bound_editorial_audit_correction",
+        "owner_gold": false,
+        "source_release_sha256": "e41ff521b7fe0c814ab05b5c5ad5aa2b44264f8d1b3e6894764b82c7e0f0d786",
+        "stored_body_hashes": {
+          "b075ea35851eee57663b1e833baca8c7": "af482558ac75e3a2a46ada40693f8380f3ce78f338ce7289207170d401054070"
+        },
+        "source_quality": {
+          "b075ea35851eee57663b1e833baca8c7": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 7586,
+            "body_sha256": "af482558ac75e3a2a46ada40693f8380f3ce78f338ce7289207170d401054070",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
+        }
+      }
+    }
+  ]
+}

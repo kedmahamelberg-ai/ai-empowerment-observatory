@@ -130,6 +130,14 @@ class AcquisitionTests(unittest.TestCase):
         self.assertIn('Final evidence contradicts', picked['text'])
         self.assertNotIn('<p>', picked['text'])
 
+    def test_article_recommendations_do_not_become_source_evidence(self):
+        main = BODY + '\n\nMarc de Beaucorps, CEO chez Finovox.'
+        rail = '\n\nARTICLES SIMILAIRES\n\n' + ('Unrelated AI story and navigation.\n\n' * 60)
+        picked = base.choose_best_extraction(page(main + rail), URL)
+        self.assertIn('Marc de Beaucorps', picked['text'])
+        self.assertNotIn('ARTICLES SIMILAIRES', picked['text'])
+        self.assertNotIn('Unrelated AI story', picked['text'])
+
     def test_publisher_siblings_and_private_suffixes(self):
         self.assertTrue(base.same_publisher_site('https://news.arizona.edu/story', 'https://research.arizona.edu/story'))
         self.assertFalse(base.same_publisher_site('https://evil.co.uk/story', 'https://news.co.uk/story'))
