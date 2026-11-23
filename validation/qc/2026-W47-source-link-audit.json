@@ -267,7 +267,9 @@
       "source_http_status_in_this_audit": 200,
       "stored_body_excerpts_found_on_live_page": "4/4",
       "source_identity_check": "body_excerpts_match_live_source",
-      "follow_up_flags": []
+      "follow_up_flags": [
+        "snapshot_trailing_page_chrome"
+      ]
     },
     {
       "event_id": "3e3d934c-6a2a-4d96-bfb5-43c9ba7ecb97",
@@ -875,7 +877,9 @@
       "source_http_status_in_this_audit": 200,
       "stored_body_excerpts_found_on_live_page": "4/4",
       "source_identity_check": "body_excerpts_match_live_source",
-      "follow_up_flags": []
+      "follow_up_flags": [
+        "snapshot_leading_membership_prompt"
+      ]
     },
     {
       "event_id": "e30a5b93-37e3-4b09-abdf-9cc4cc5bda19",

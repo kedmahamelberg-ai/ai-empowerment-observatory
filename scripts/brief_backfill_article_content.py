@@ -578,14 +578,34 @@ def extraction_quality(text: str, method: str) -> float:
 TRAILING_RECOMMENDATIONS = re.compile(
     r"(?im)^\s*(?:ARTICLES SIMILAIRES|PLUS DE L['’]AUTEUR|Derniers articles de fond|Ailleurs sur le site)\s*$"
 )
+GENERIC_RECOMMENDATIONS = re.compile(r"(?im)^\s*Similaire\s*$")
+INDEPENDENT_MEMBERSHIP_PREFIX = re.compile(
+    r"(?is)Become an Independent member to bookmark this article\s+"
+    r"Want to bookmark your favourite articles and stories to read or reference later\?\s+"
+    r"Start your Independent Membership today\.\s+Join today\s+"
+    r"Already a member\?\s+Log in\s+"
+)
 
 
 def trim_recommendation_tail(text: str) -> str:
     """Keep the signed article; omit publisher recommendation rails below it."""
-    for match in TRAILING_RECOMMENDATIONS.finditer(text):
-        main = text[:match.start()].rstrip()
-        if match.start() >= len(text) * .35 and word_count(main) >= MIN_WORDS:
-            return main
+    for pattern, minimum_fraction in ((TRAILING_RECOMMENDATIONS, .35),
+                                      (GENERIC_RECOMMENDATIONS, .7)):
+        for match in pattern.finditer(text):
+            main = text[:match.start()].rstrip()
+            if match.start() >= len(text) * minimum_fraction and word_count(main) >= MIN_WORDS:
+                return main
+    return text
+
+
+def trim_page_chrome(text: str) -> str:
+    """Remove only known publisher UI when substantial article text remains."""
+    text = trim_recommendation_tail(text)
+    match = INDEPENDENT_MEMBERSHIP_PREFIX.search(text)
+    heading = text[:match.start()].strip() if match else ""
+    if (match and match.start() < 250 and len(heading) < 200 and
+            "\n" not in heading and word_count(text[match.end():]) >= MIN_WORDS):
+        return (heading + "\n\n" if heading else "") + text[match.end():].lstrip()
     return text
 
 def choose_best_extraction(html: str, url: str = ""):
@@ -604,7 +624,7 @@ def choose_best_extraction(html: str, url: str = ""):
             continue
     accepted = []
     for method, text in candidates:
-        text = trim_recommendation_tail(text)
+        text = trim_page_chrome(text)
         if word_count(text) < MIN_WORDS or not assess_body({"body_text": text})["usable_complete_body"]:
             continue
         # Prefer article-specific structure; never pick generic app JSON or page text.
