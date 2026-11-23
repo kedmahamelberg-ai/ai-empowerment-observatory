@@ -7,8 +7,8 @@
   "period_end": "2026-09-30",
   "observed_week_start": "2026-08-10",
   "observed_week_end": "2026-09-27",
-  "generated_at": "2026-11-16T07:41:29.833872Z",
-  "revision": 16,
+  "generated_at": "2026-11-23T02:19:09.849633Z",
+  "revision": 17,
   "weekly_release_ids": [
     "2026-W33",
     "2026-W34",
@@ -19,13 +19,13 @@
     "2026-W39"
   ],
   "weekly_revisions": {
-    "2026-W33": 16,
-    "2026-W34": 14,
-    "2026-W35": 15,
-    "2026-W36": 11,
-    "2026-W37": 10,
-    "2026-W38": 9,
-    "2026-W39": 8
+    "2026-W33": 17,
+    "2026-W34": 15,
+    "2026-W35": 16,
+    "2026-W36": 12,
+    "2026-W37": 11,
+    "2026-W38": 10,
+    "2026-W39": 9
   },
   "reality": {
     "distinct_event_records": 883,
@@ -79,19 +79,19 @@
   },
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-11-16T03:15:09.44877+00:00",
+    "considered_through": "2026-11-23T01:22:13.46889+00:00",
     "scope": "All prior event records available to the included reconciliations."
   },
   "reconciliation": {
-    "current_through": "2026-11-16T03:30:52.229647+00:00",
+    "current_through": "2026-11-23T01:41:38.566996+00:00",
     "weekly_revisions_included": {
-      "2026-W33": 16,
-      "2026-W34": 14,
-      "2026-W35": 15,
-      "2026-W36": 11,
-      "2026-W37": 10,
-      "2026-W38": 9,
-      "2026-W39": 8
+      "2026-W33": 17,
+      "2026-W34": 15,
+      "2026-W35": 16,
+      "2026-W36": 12,
+      "2026-W37": 11,
+      "2026-W38": 10,
+      "2026-W39": 9
     },
     "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
   },
@@ -290,8 +290,22 @@
         "2026-W38": 9,
         "2026-W39": 8
       }
+    },
+    {
+      "revision": 17,
+      "changed_at": "2026-11-23T02:19:09.849633Z",
+      "reason": "An included weekly release was restated after longitudinal reconciliation.",
+      "weekly_revisions": {
+        "2026-W33": 17,
+        "2026-W34": 15,
+        "2026-W35": 16,
+        "2026-W36": 12,
+        "2026-W37": 11,
+        "2026-W38": 10,
+        "2026-W39": 9
+      }
     }
   ],
-  "previous_revision_path": "/data/releases/quarterly/archive/2026-Q3/revision-15.json",
-  "content_sha256": "b3b4a8b057d7cec69858803135976aaa91a719472d6390ffb2e31a834541ca5e"
+  "previous_revision_path": "/data/releases/quarterly/archive/2026-Q3/revision-16.json",
+  "content_sha256": "4594874ffe3bbd77fa36c964a149a2f6eee2f1eda2d385dab21c98d9f3f2250a"
 }

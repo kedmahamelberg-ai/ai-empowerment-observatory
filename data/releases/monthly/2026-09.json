@@ -7,8 +7,8 @@
   "period_end": "2026-09-30",
   "observed_week_start": "2026-08-31",
   "observed_week_end": "2026-09-27",
-  "generated_at": "2026-11-16T07:41:29.824817Z",
-  "revision": 12,
+  "generated_at": "2026-11-23T02:19:09.839571Z",
+  "revision": 13,
   "weekly_release_ids": [
     "2026-W36",
     "2026-W37",
@@ -16,10 +16,10 @@
     "2026-W39"
   ],
   "weekly_revisions": {
-    "2026-W36": 11,
-    "2026-W37": 10,
-    "2026-W38": 9,
-    "2026-W39": 8
+    "2026-W36": 12,
+    "2026-W37": 11,
+    "2026-W38": 10,
+    "2026-W39": 9
   },
   "reality": {
     "distinct_event_records": 538,
@@ -73,16 +73,16 @@
   },
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-11-16T03:15:09.44877+00:00",
+    "considered_through": "2026-11-23T01:22:13.46889+00:00",
     "scope": "All prior event records available to the included reconciliations."
   },
   "reconciliation": {
-    "current_through": "2026-11-16T03:30:52.229647+00:00",
+    "current_through": "2026-11-23T01:41:38.566996+00:00",
     "weekly_revisions_included": {
-      "2026-W36": 11,
-      "2026-W37": 10,
-      "2026-W38": 9,
-      "2026-W39": 8
+      "2026-W36": 12,
+      "2026-W37": 11,
+      "2026-W38": 10,
+      "2026-W39": 9
     },
     "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
   },
@@ -207,8 +207,19 @@
         "2026-W38": 9,
         "2026-W39": 8
       }
+    },
+    {
+      "revision": 13,
+      "changed_at": "2026-11-23T02:19:09.839571Z",
+      "reason": "An included weekly release was restated after longitudinal reconciliation.",
+      "weekly_revisions": {
+        "2026-W36": 12,
+        "2026-W37": 11,
+        "2026-W38": 10,
+        "2026-W39": 9
+      }
     }
   ],
-  "previous_revision_path": "/data/releases/monthly/archive/2026-09/revision-11.json",
-  "content_sha256": "1ba7ef136699106b1c0127c32d03db7b220c10405ec7ff54a15aa0828049970e"
+  "previous_revision_path": "/data/releases/monthly/archive/2026-09/revision-12.json",
+  "content_sha256": "5b3795ba7df1b42978bd29eb832e317356b6eff982c52675cb73702f3c159448"
 }

@@ -7,8 +7,8 @@
   "period_end": "2026-10-31",
   "observed_week_start": "2026-09-28",
   "observed_week_end": "2026-10-25",
-  "generated_at": "2026-11-16T07:41:29.827805Z",
-  "revision": 7,
+  "generated_at": "2026-11-23T02:19:09.842709Z",
+  "revision": 8,
   "weekly_release_ids": [
     "2026-W40",
     "2026-W41",
@@ -16,10 +16,10 @@
     "2026-W43"
   ],
   "weekly_revisions": {
-    "2026-W40": 8,
-    "2026-W41": 6,
-    "2026-W42": 5,
-    "2026-W43": 4
+    "2026-W40": 9,
+    "2026-W41": 7,
+    "2026-W42": 6,
+    "2026-W43": 5
   },
   "reality": {
     "distinct_event_records": 569,
@@ -73,16 +73,16 @@
   },
   "historical_pool": {
     "starts_at": "2026-08-05T09:11:42.719519+00:00",
-    "considered_through": "2026-11-16T03:15:09.44877+00:00",
+    "considered_through": "2026-11-23T01:22:13.46889+00:00",
     "scope": "All prior event records available to the included reconciliations."
   },
   "reconciliation": {
-    "current_through": "2026-11-16T03:30:52.229647+00:00",
+    "current_through": "2026-11-23T01:41:38.566996+00:00",
     "weekly_revisions_included": {
-      "2026-W40": 8,
-      "2026-W41": 6,
-      "2026-W42": 5,
-      "2026-W43": 4
+      "2026-W40": 9,
+      "2026-W41": 7,
+      "2026-W42": 6,
+      "2026-W43": 5
     },
     "revision_policy": "Original weekly revisions remain accessible; this summary uses the latest accepted restatement."
   },
@@ -152,8 +152,19 @@
         "2026-W42": 5,
         "2026-W43": 4
       }
+    },
+    {
+      "revision": 8,
+      "changed_at": "2026-11-23T02:19:09.842709Z",
+      "reason": "An included weekly release was restated after longitudinal reconciliation.",
+      "weekly_revisions": {
+        "2026-W40": 9,
+        "2026-W41": 7,
+        "2026-W42": 6,
+        "2026-W43": 5
+      }
     }
   ],
-  "previous_revision_path": "/data/releases/monthly/archive/2026-10/revision-6.json",
-  "content_sha256": "973fcd9f8aab366a0ca85d772f827dcc22532569a6c4727e9c901d494bb6366c"
+  "previous_revision_path": "/data/releases/monthly/archive/2026-10/revision-7.json",
+  "content_sha256": "d2cfbac6fbdaa363c8c6c64f04113f3fb4f32bde91553263a1eb1c420e7a939e"
 }
