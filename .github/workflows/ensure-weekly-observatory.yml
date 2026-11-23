@@ -1,10 +1,21 @@
 name: Ensure Weekly Observatory Collection
 
 on:
+  # Recheck immediately when the weekly schedule or this watchdog changes.
+  # This also recovers the missing week when this fix reaches main.
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/weekly-observatory.yml'
+      - '.github/workflows/ensure-weekly-observatory.yml'
   schedule:
-    # The main weekly pipeline starts Monday 00:17 Amsterdam time.
-    # Check again for missed collection or stalled publication, including after rate limits reset.
-    - cron: '17 1,2,7,10 * * 1'
+    # UTC fallbacks cover 00:32 and 00:47 Monday in both Dutch seasons.
+    # Early Sunday checks in winter are harmless: the planner still targets
+    # only the most recently completed Amsterdam week.
+    - cron: '32,47 22,23 * * 0'
+    - cron: '32,47 0 * * 1'
+    # Later checks recover stalled publication and rate-limit interruptions.
+    - cron: '17 2,7,10 * * 1'
       timezone: Europe/Amsterdam
   workflow_dispatch:
 
