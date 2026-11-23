@@ -9,7 +9,7 @@
   "observation_window": "16 November - 22 November 2026",
   "source_of_truth": "/data/analysis/current.json",
   "source_release_sha256": "e41ff521b7fe0c814ab05b5c5ad5aa2b44264f8d1b3e6894764b82c7e0f0d786",
-  "source_relationship_sha256": "a7c40ea34a6749ead29cd297b835c5fdf47b394b5396463ea7eaf139d344b9e6",
+  "source_relationship_sha256": "9bcd1fccdd02ea12a7f633319822c3feef3ac6cbef0f99930297c744ce089ce2",
   "directional_summary": {
     "schema_version": "aieo_independent_directions_v2",
     "policy_version": "source_representations_independent_axes_2026_09",
@@ -18,15 +18,15 @@
     "human": {
       "gain": 60,
       "loss": 9,
-      "mixed": 5,
-      "none": 11,
+      "mixed": 6,
+      "none": 10,
       "unresolved": 0
     },
     "ai": {
-      "gain": 52,
+      "gain": 51,
       "loss": 8,
       "mixed": 15,
-      "none": 10,
+      "none": 11,
       "unresolved": 0
     }
   },
@@ -44,7 +44,7 @@
   "coverage_event_ratio": 1.0,
   "complete_content": {
     "policy_version": "complete_content_2026_09_v1",
-    "content_sha256": "981b68f4873b4345f99b8c401d31e3e7efc1115593239bfc267b669ef3cc3c34",
+    "content_sha256": "74246a39ef633f1a6a10354e5990a8efa17983becceacd3c0d8416ff66435cc1",
     "counts": {
       "collected_developments": 133,
       "collected_sources": 134,
@@ -60,6 +60,6 @@
   },
   "pages": 2,
   "schema_version": "aieo_public_brief_v2",
-  "pdf_sha256": "96b3d0667d3a09ef127871d7f9584d578fe9da76e395d91d6f72515f734a1775",
-  "generated_at": "2026-11-23T02:20:33.917383+00:00"
+  "pdf_sha256": "ba9cd2103a37461e7fa6188339e247446fb2972f1972bfccd954f7d1439141d4",
+  "generated_at": "2026-11-23T10:17:45.809465+00:00"
 }
