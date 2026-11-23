@@ -5,8 +5,8 @@
   "scope": "All 85 source-linked W47 Brief news records and corresponding Observatory saved article bodies",
   "method": "Read the original URL and compare four spaced passages from each private saved body to the current public page. HTTP blocks and dynamic-page mismatches require manual source review. This check does not certify editorial meaning, full extraction boundaries, or headline accuracy.",
   "source_identity_counts": {
-    "body_excerpts_match_live_source": 76,
-    "manual_body_review_required": 1,
+    "body_excerpts_match_live_source": 77,
+    "manual_body_review_required": 0,
     "publisher_fetch_inconclusive": 8
   },
   "brief_editorial_complete_at_audit": 7,
@@ -96,12 +96,10 @@
       "brief_story_url": "https://brief.hamelberg-ai.com/story/global-ai-innovation-governance-oecd-ai-governance-logic/",
       "brief_editorial_complete_at_audit": false,
       "source_http_status_in_this_audit": 200,
-      "stored_body_excerpts_found_on_live_page": "1/4",
-      "source_identity_check": "manual_body_review_required",
-      "follow_up_flags": [
-        "snapshot_live_body_mismatch",
-        "live_heading_missing"
-      ]
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": [],
+      "verification_note": "Rechecked the exact article ID and saved body hash against the UTF-8 publisher page on 2026-11-23; four spaced body excerpts and the title match. The earlier live comparison decoded this page incorrectly."
     },
     {
       "event_id": "180985af-7cc7-4e9d-ae3a-c9d01b1c2eb2",
