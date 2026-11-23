@@ -2,10 +2,10 @@
   "schema_version": "aieo_symbiosis_public_v2.0",
   "release_id": "2026-W47",
   "release_type": "weekly_relationship_lens",
-  "revision": 2,
+  "revision": 3,
   "period_start": "2026-11-16",
   "period_end": "2026-11-22",
-  "generated_at": "2026-11-23T02:18:53.602797Z",
+  "generated_at": "2026-11-23T09:59:14.779450Z",
   "codebook_version": "aieo_news_symbiosis_v0.1",
   "source_release_sha256": "e41ff521b7fe0c814ab05b5c5ad5aa2b44264f8d1b3e6894764b82c7e0f0d786",
   "public_status": "current_evidence_reading",
@@ -60,56 +60,56 @@
     "display_basis": "current_evidence_reading_with_reviewed_corrections",
     "display_classified_units": 133,
     "display_configuration_counts": {
-      "mutualism": 40,
+      "mutualism": 39,
       "ai_benefiting_parasitism": 7,
       "human_benefiting_parasitism": 4,
       "competition": 2,
-      "human_enabling_only": 5,
+      "human_enabling_only": 6,
       "human_constraining_only": 0,
-      "ai_enabling_only": 3,
+      "ai_enabling_only": 2,
       "ai_constraining_only": 2,
       "no_clear_relational_signal": 5,
-      "ambiguous_relational_signal": 17,
+      "ambiguous_relational_signal": 18,
       "insufficient_evidence": 48
     },
-    "display_complete_configuration_count": 53,
+    "display_complete_configuration_count": 52,
     "display_partial_signal_count": 10,
     "display_no_clear_relational_signal_count": 5,
-    "display_ambiguous_relational_signal_count": 17,
+    "display_ambiguous_relational_signal_count": 18,
     "display_insufficient_evidence_count": 48,
     "display_core_four_distribution": {
-      "mutualism": 0.754717,
-      "ai_benefiting_parasitism": 0.132075,
-      "human_benefiting_parasitism": 0.075472,
-      "competition": 0.037736
+      "mutualism": 0.75,
+      "ai_benefiting_parasitism": 0.134615,
+      "human_benefiting_parasitism": 0.076923,
+      "competition": 0.038462
     },
     "denominator_note": "The weekly display reports the source evidence available for the current release. A development is kept separate when the available source evidence is not enough to show a clear people outcome.",
     "human_direction_counts": {
       "unclear": 48,
       "enabling": 60,
       "constraining": 9,
-      "neutral": 11,
-      "mixed": 5
+      "neutral": 10,
+      "mixed": 6
     },
     "ai_direction_counts": {
       "unclear": 48,
-      "enabling": 52,
+      "enabling": 51,
+      "neutral": 11,
       "mixed": 15,
-      "neutral": 10,
       "constraining": 8
     },
     "display_human_direction_counts": {
       "unclear": 48,
       "enabling": 60,
       "constraining": 9,
-      "neutral": 11,
-      "mixed": 5
+      "neutral": 10,
+      "mixed": 6
     },
     "display_ai_direction_counts": {
       "unclear": 48,
-      "enabling": 52,
+      "enabling": 51,
+      "neutral": 11,
       "mixed": 15,
-      "neutral": 10,
       "constraining": 8
     }
   },
@@ -118,17 +118,17 @@
     "expected_units": 133,
     "classified_units": 133,
     "relationship_pattern_counts": {
-      "mutualism": 55,
+      "mutualism": 52,
       "ai_benefiting_parasitism": 9,
       "human_benefiting_parasitism": 3,
       "competition": 1
     },
     "people_signal_counts": {
-      "people_gaining": 65,
-      "people_losing_ground": 14,
-      "mixed_picture": 5,
+      "people_gaining": 66,
+      "people_losing_ground": 15,
+      "mixed_picture": 6,
       "not_everyone_benefits": 4,
-      "not_clear_yet": 59
+      "not_clear_yet": 58
     },
     "availability": {
       "people_gaining": true,
@@ -145,10 +145,10 @@
     },
     "not_clear_breakdown": {
       "not_enough_evidence": 48,
-      "no_directional_people_change": 11
+      "no_directional_people_change": 10
     },
     "overlap_note": "A development may contain more than one signal, so these counts do not have to add up to the weekly total.",
-    "relationship_patterns_assessed": 133
+    "relationship_patterns_assessed": 127
   },
   "source_body_qc": {
     "review_file": null,
@@ -892,12 +892,12 @@
     {
       "axes": {
         "ai": {
-          "evidence": "Discussion of frontier AI, assurance, and high-reliability practices implies AI-enabled governance and safer deployment.\"",
-          "direction": "gain"
+          "direction": "none",
+          "evidence": "The opinion proposes governance for AI but does not establish a change in AI systems’ capability, reach or operating conditions."
         },
         "human": {
-          "evidence": "Governance and assurance norms suggest humans can extend their capacity to manage AI systems.",
-          "direction": "gain"
+          "direction": "gain",
+          "evidence": "The author proposes multinational assurance rules modeled on high-risk industries to help people oversee AI development."
         },
         "evidence_scope": "written_source",
         "evidence_types": [
@@ -908,13 +908,8 @@
         "evidence_complete": true,
         "unresolved_reason": ""
       },
-      "relationship_evidence": {
-        "mutualism": "AI governance frameworks enable safer AI deployment while improving human capacity to regulate and oversee AI systems; evidence points to shared benefit from safety assurance and high-reliability practices.",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
-      "relationship_pattern_status": "assessed",
+      "relationship_evidence": {},
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
       "event_id": "0ab86c8d-d3e8-4f31-88d8-b65ce024987b",
       "event_title": "What AI regulation could learn from the most hazardous industries in the world",
       "event_date": "2026-11-17",
@@ -930,19 +925,19 @@
         }
       ],
       "reviewed": false,
-      "review_status": "pending",
-      "configuration": "mutualism",
+      "review_status": "source_audit_correction",
+      "configuration": "human_enabling_only",
       "plain_label": "Both people and the AI side are represented as gaining",
       "human_experience_type": "extension",
       "ai_expressive_role": "ai_extension",
       "human_direction": "enabling",
-      "ai_direction": "enabling",
+      "ai_direction": "neutral",
       "evidence_status": "sufficient",
       "content_basis": "full_text",
       "evidence_basis_summary": {
-        "input_policy": "full_article_body_required_v1",
+        "input_policy": "source_representations_independent_axes_2026_09",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "complete_written_source",
         "source_quality": {
           "b075ea35851eee57663b1e833baca8c7": {
             "flags": [],
@@ -967,15 +962,15 @@
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
         "source_reading_complete": true,
-        "people_evidence": "Governance and assurance norms suggest humans can extend their capacity to manage AI systems.",
-        "ai_evidence": "Discussion of frontier AI, assurance, and high-reliability practices implies AI-enabled governance and safer deployment.\"",
+        "people_evidence": "The author proposes multinational assurance rules modeled on high-risk industries to help people oversee AI development.",
+        "ai_evidence": "The opinion proposes governance for AI but does not establish a change in AI systems’ capability, reach or operating conditions.",
         "flags": []
       },
       "story_country_iso3s": [],
-      "evidence_summary": "The piece argues for a multinational, assurance-driven governance framework drawing on high reliability to govern frontier AI, enabling safer AI deployment and enhancing human capacity to regulate and oversee AI systems.",
-      "reasoning": "The piece argues for a multinational, assurance-driven governance framework drawing on high reliability to govern frontier AI, enabling safer AI deployment and enhancing human capacity to regulate and oversee AI systems.",
+      "evidence_summary": "The author proposes multinational assurance rules modeled on high-risk industries to help people oversee AI development.",
+      "reasoning": "This is the author’s governance proposal, not a demonstrated result or an AI-enabled governance tool.",
       "relationship_patterns": {
-        "mutualism": true,
+        "mutualism": false,
         "ai_benefiting_parasitism": false,
         "human_benefiting_parasitism": false,
         "competition": false
@@ -988,14 +983,36 @@
         "not_clear_yet": false
       },
       "distribution_signal": "broadly_shared",
-      "public_takeaway": "Governance and assurance norms suggest humans can extend their capacity to manage AI systems.",
+      "public_takeaway": "The author proposes multinational assurance rules modeled on high-risk industries to help people oversee AI development.",
       "multi_label_available": true,
       "distribution_coded": true,
-      "signal_provenance": "model_classification",
+      "signal_provenance": "source_audit_correction",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
         "reasoning": null
+      },
+      "source_note": "This is the author’s governance proposal, not a demonstrated result or an AI-enabled governance tool.",
+      "display_scope": "This is the author’s governance proposal, not a demonstrated result or an AI-enabled governance tool.",
+      "correction_provenance": {
+        "kind": "source_bound_editorial_audit_correction",
+        "owner_gold": false,
+        "source_release_sha256": "e41ff521b7fe0c814ab05b5c5ad5aa2b44264f8d1b3e6894764b82c7e0f0d786",
+        "stored_body_hashes": {
+          "b075ea35851eee57663b1e833baca8c7": "af482558ac75e3a2a46ada40693f8380f3ce78f338ce7289207170d401054070"
+        },
+        "source_quality": {
+          "b075ea35851eee57663b1e833baca8c7": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 7586,
+            "body_sha256": "af482558ac75e3a2a46ada40693f8380f3ce78f338ce7289207170d401054070",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
+        }
       }
     },
     {
@@ -2704,12 +2721,12 @@
     {
       "axes": {
         "ai": {
-          "evidence": "Governance measures restrict AI service deployment and require disclosures.",
-          "direction": "loss"
+          "direction": "loss",
+          "evidence": "Already launched generative AI applications must display the registered model name and filing number and label generated content."
         },
         "human": {
-          "evidence": "Regulatory actions constrain AI deployment rather than expanding human activities.",
-          "direction": "none"
+          "direction": "none",
+          "evidence": "The notice reports 13 newly filed generative AI services, bringing Jiangsu’s total to 125; it gives no measured effect on users."
         },
         "evidence_scope": "written_source",
         "evidence_types": [
@@ -2720,13 +2737,8 @@
         "evidence_complete": true,
         "unresolved_reason": ""
       },
-      "relationship_evidence": {
-        "mutualism": "",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
-      "relationship_pattern_status": "assessed",
+      "relationship_evidence": {},
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
       "event_id": "29546d1d-0d34-45ca-8216-32cee160fb5f",
       "event_title": "Announcement on Registered Information of Generative Artificial Intelligence Services in Jiangsu Province (November 18, 2026)",
       "event_date": "2026-11-18",
@@ -2742,7 +2754,7 @@
         }
       ],
       "reviewed": false,
-      "review_status": "pending",
+      "review_status": "source_audit_correction",
       "configuration": "ai_constraining_only",
       "plain_label": "An AI-side constraint is visible; the human side is not established",
       "human_experience_type": "neutral",
@@ -2752,9 +2764,9 @@
       "evidence_status": "sufficient",
       "content_basis": "full_text",
       "evidence_basis_summary": {
-        "input_policy": "full_article_body_required_v1",
+        "input_policy": "source_representations_independent_axes_2026_09",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "complete_written_source",
         "source_quality": {
           "11502aee89712720a78f52f738192330": {
             "flags": [],
@@ -2779,15 +2791,15 @@
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
         "source_reading_complete": true,
-        "people_evidence": "Regulatory actions constrain AI deployment rather than expanding human activities.",
-        "ai_evidence": "Governance measures restrict AI service deployment and require disclosures.",
+        "people_evidence": "The notice reports 13 newly filed generative AI services, bringing Jiangsu’s total to 125; it gives no measured effect on users.",
+        "ai_evidence": "Already launched generative AI applications must display the registered model name and filing number and label generated content.",
         "flags": []
       },
       "story_country_iso3s": [
         "CHN"
       ],
-      "evidence_summary": "Provincial governance actions restrict AI deployment, with no explicit human gains shown.",
-      "reasoning": "Provincial governance actions restrict AI deployment, with no explicit human gains shown.",
+      "evidence_summary": "The notice reports 13 newly filed generative AI services, bringing Jiangsu’s total to 125; it gives no measured effect on users.",
+      "reasoning": "The notice records filings and disclosure duties. It does not state that the province has restricted deployment.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -2802,14 +2814,36 @@
         "not_clear_yet": true
       },
       "distribution_signal": "not_shown",
-      "public_takeaway": "Regulatory actions constrain AI deployment rather than expanding human activities.",
+      "public_takeaway": "The notice reports 13 newly filed generative AI services, bringing Jiangsu’s total to 125; it gives no measured effect on users.",
       "multi_label_available": true,
       "distribution_coded": true,
-      "signal_provenance": "model_classification",
+      "signal_provenance": "source_audit_correction",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
         "reasoning": null
+      },
+      "source_note": "The notice records filings and disclosure duties. It does not state that the province has restricted deployment.",
+      "display_scope": "The notice records filings and disclosure duties. It does not state that the province has restricted deployment.",
+      "correction_provenance": {
+        "kind": "source_bound_editorial_audit_correction",
+        "owner_gold": false,
+        "source_release_sha256": "e41ff521b7fe0c814ab05b5c5ad5aa2b44264f8d1b3e6894764b82c7e0f0d786",
+        "stored_body_hashes": {
+          "11502aee89712720a78f52f738192330": "920bcb84834f8a986f40e188d057169189ce58162b493359e7705aeb88cf3c72"
+        },
+        "source_quality": {
+          "11502aee89712720a78f52f738192330": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 293,
+            "body_sha256": "920bcb84834f8a986f40e188d057169189ce58162b493359e7705aeb88cf3c72",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
+        }
       }
     },
     {
@@ -3457,12 +3491,12 @@
     {
       "axes": {
         "ai": {
-          "evidence": "Textract Insights provides structured, auditable outputs with confidence scores and grounding, extending AI-assisted document processing.",
-          "direction": "gain"
+          "direction": "gain",
+          "evidence": "AWS says the generally available API adds natural-language field definitions, document splitting, and grounded structured results."
         },
         "human": {
-          "evidence": "People gain capacity to automate and audit complex documents while retaining critical review; they are empowered to scale processing with human oversight where needed.",
-          "direction": "gain"
+          "direction": "gain",
+          "evidence": "AWS says its new Textract Insights API can extract fields from mixed document packets with confidence scores and page grounding, leaving lower-confidence values for human review."
         },
         "evidence_scope": "written_source",
         "evidence_types": [
@@ -3473,13 +3507,8 @@
         "evidence_complete": true,
         "unresolved_reason": ""
       },
-      "relationship_evidence": {
-        "mutualism": "AI automates data extraction while people focus review on low-confidence fields, enabling broader, auditable automation with human-involved judgment",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
-      "relationship_pattern_status": "assessed",
+      "relationship_evidence": {},
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
       "event_id": "35a46e1e-5a40-4552-81a7-334daa103fc5",
       "event_title": "Announcing Amazon Textract Insights: Verifiable generative AI for documents | Amazon Web Services",
       "event_date": "2026-11-20",
@@ -3495,7 +3524,7 @@
         }
       ],
       "reviewed": false,
-      "review_status": "pending",
+      "review_status": "source_audit_correction",
       "configuration": "mutualism",
       "plain_label": "Both people and the AI side are represented as gaining",
       "human_experience_type": "extension",
@@ -3505,9 +3534,9 @@
       "evidence_status": "sufficient",
       "content_basis": "full_text",
       "evidence_basis_summary": {
-        "input_policy": "full_article_body_required_v1",
+        "input_policy": "source_representations_independent_axes_2026_09",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "complete_written_source",
         "source_quality": {
           "6728ab5448c93c9a0f6731c28710b090": {
             "flags": [],
@@ -3532,15 +3561,15 @@
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
         "source_reading_complete": true,
-        "people_evidence": "People gain capacity to automate and audit complex documents while retaining critical review; they are empowered to scale processing with human oversight where needed.",
-        "ai_evidence": "Textract Insights provides structured, auditable outputs with confidence scores and grounding, extending AI-assisted document processing.",
+        "people_evidence": "AWS says its new Textract Insights API can extract fields from mixed document packets with confidence scores and page grounding, leaving lower-confidence values for human review.",
+        "ai_evidence": "AWS says the generally available API adds natural-language field definitions, document splitting, and grounded structured results.",
         "flags": []
       },
       "story_country_iso3s": [],
-      "evidence_summary": "AI enables automated, auditable document processing with human-in-the-loop review, expanding both automation reach and human capability.",
-      "reasoning": "AI enables automated, auditable document processing with human-in-the-loop review, expanding both automation reach and human capability.",
+      "evidence_summary": "AWS says its new Textract Insights API can extract fields from mixed document packets with confidence scores and page grounding, leaving lower-confidence values for human review.",
+      "reasoning": "Company announcement: benefits are product claims, not independently measured effects.",
       "relationship_patterns": {
-        "mutualism": true,
+        "mutualism": false,
         "ai_benefiting_parasitism": false,
         "human_benefiting_parasitism": false,
         "competition": false
@@ -3553,14 +3582,36 @@
         "not_clear_yet": false
       },
       "distribution_signal": "broadly_shared",
-      "public_takeaway": "People gain capacity to automate and audit complex documents while retaining critical review; they are empowered to scale processing with human oversight where needed.",
+      "public_takeaway": "AWS says its new Textract Insights API can extract fields from mixed document packets with confidence scores and page grounding, leaving lower-confidence values for human review.",
       "multi_label_available": true,
       "distribution_coded": true,
-      "signal_provenance": "model_classification",
+      "signal_provenance": "source_audit_correction",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
         "reasoning": null
+      },
+      "source_note": "Company announcement: benefits are product claims, not independently measured effects.",
+      "display_scope": "Company announcement: benefits are product claims, not independently measured effects.",
+      "correction_provenance": {
+        "kind": "source_bound_editorial_audit_correction",
+        "owner_gold": false,
+        "source_release_sha256": "e41ff521b7fe0c814ab05b5c5ad5aa2b44264f8d1b3e6894764b82c7e0f0d786",
+        "stored_body_hashes": {
+          "6728ab5448c93c9a0f6731c28710b090": "c360d7cc7381e6847678f165d34334f60c344f903bebf58219b8f958bff7794c"
+        },
+        "source_quality": {
+          "6728ab5448c93c9a0f6731c28710b090": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 9567,
+            "body_sha256": "c360d7cc7381e6847678f165d34334f60c344f903bebf58219b8f958bff7794c",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
+        }
       }
     },
     {
@@ -5811,12 +5862,12 @@
     {
       "axes": {
         "ai": {
-          "evidence": "AI acts as a productivity amplifier enabling faster task completion.",
-          "direction": "gain"
+          "direction": "gain",
+          "evidence": "Employers anticipate AI augmenting tasks in some occupations; the page reports expectations rather than observed productivity."
         },
         "human": {
-          "evidence": "Workers gain time and efficiency through AI-enabled tasks.",
-          "direction": "gain"
+          "direction": "gain",
+          "evidence": "France Travail reports that more than one-third of surveyed employers expect AI to save time; this is a forecast, not a measured worker outcome."
         },
         "evidence_scope": "written_source",
         "evidence_types": [
@@ -5827,13 +5878,8 @@
         "evidence_complete": true,
         "unresolved_reason": ""
       },
-      "relationship_evidence": {
-        "mutualism": "AI automation and time-gain enable workers to complete tasks more efficiently, benefiting people.",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
-      "relationship_pattern_status": "assessed",
+      "relationship_evidence": {},
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
       "event_id": "5c1cc939-3881-4dde-80de-ef9ec1a33cdd",
       "event_title": "AI and 5-Year Jobs: Employers' Vision",
       "event_date": "2026-11-17",
@@ -5849,7 +5895,7 @@
         }
       ],
       "reviewed": false,
-      "review_status": "pending",
+      "review_status": "source_audit_correction",
       "configuration": "mutualism",
       "plain_label": "Both people and the AI side are represented as gaining",
       "human_experience_type": "extension",
@@ -5859,9 +5905,9 @@
       "evidence_status": "sufficient",
       "content_basis": "full_text",
       "evidence_basis_summary": {
-        "input_policy": "full_article_body_required_v1",
+        "input_policy": "source_representations_independent_axes_2026_09",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "complete_written_source",
         "source_quality": {
           "91e178c577106a7285d9a1d446dfe5be": {
             "flags": [],
@@ -5886,17 +5932,17 @@
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
         "source_reading_complete": true,
-        "people_evidence": "Workers gain time and efficiency through AI-enabled tasks.",
-        "ai_evidence": "AI acts as a productivity amplifier enabling faster task completion.",
+        "people_evidence": "France Travail reports that more than one-third of surveyed employers expect AI to save time; this is a forecast, not a measured worker outcome.",
+        "ai_evidence": "Employers anticipate AI augmenting tasks in some occupations; the page reports expectations rather than observed productivity.",
         "flags": []
       },
       "story_country_iso3s": [
         "FRA"
       ],
-      "evidence_summary": "AI is described as boosting worker productivity and time savings, expanding human capabilities.",
-      "reasoning": "AI is described as boosting worker productivity and time savings, expanding human capabilities.",
+      "evidence_summary": "France Travail reports that more than one-third of surveyed employers expect AI to save time; this is a forecast, not a measured worker outcome.",
+      "reasoning": "The cited web page is a short overview of a linked PDF report. The reading is limited to the overview page.",
       "relationship_patterns": {
-        "mutualism": true,
+        "mutualism": false,
         "ai_benefiting_parasitism": false,
         "human_benefiting_parasitism": false,
         "competition": false
@@ -5909,14 +5955,36 @@
         "not_clear_yet": false
       },
       "distribution_signal": "unequal",
-      "public_takeaway": "Workers gain time and efficiency through AI-enabled tasks.",
+      "public_takeaway": "France Travail reports that more than one-third of surveyed employers expect AI to save time; this is a forecast, not a measured worker outcome.",
       "multi_label_available": true,
       "distribution_coded": true,
-      "signal_provenance": "model_classification",
+      "signal_provenance": "source_audit_correction",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
         "reasoning": null
+      },
+      "source_note": "The cited web page is a short overview of a linked PDF report. The reading is limited to the overview page.",
+      "display_scope": "The cited web page is a short overview of a linked PDF report. The reading is limited to the overview page.",
+      "correction_provenance": {
+        "kind": "source_bound_editorial_audit_correction",
+        "owner_gold": false,
+        "source_release_sha256": "e41ff521b7fe0c814ab05b5c5ad5aa2b44264f8d1b3e6894764b82c7e0f0d786",
+        "stored_body_hashes": {
+          "91e178c577106a7285d9a1d446dfe5be": "5b762447b90f10ea863d7e8f34d86e50780122e3caf1beab97f9e563ed478c92"
+        },
+        "source_quality": {
+          "91e178c577106a7285d9a1d446dfe5be": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 1373,
+            "body_sha256": "5b762447b90f10ea863d7e8f34d86e50780122e3caf1beab97f9e563ed478c92",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
+        }
       }
     },
     {
@@ -7428,12 +7496,12 @@
     {
       "axes": {
         "ai": {
-          "evidence": "not stated",
-          "direction": "none"
+          "direction": "none",
+          "evidence": "The report describes training and proposed workplace uses, without a separate stated effect on AI systems or operators."
         },
         "human": {
-          "evidence": "the initiative extends workers' existing skills by integrating AI tools into their workflow",
-          "direction": "gain"
+          "direction": "gain",
+          "evidence": "Beijing and Tsinghua trained 30 skilled workers in practical AI exercises; workplace applications described by participants are plans."
         },
         "evidence_scope": "written_source",
         "evidence_types": [
@@ -7444,13 +7512,8 @@
         "evidence_complete": true,
         "unresolved_reason": ""
       },
-      "relationship_evidence": {
-        "mutualism": "AI enables workers to read data and apply AI in real manufacturing tasks; workers gain capacity to use AI in production",
-        "competition": "",
-        "ai_benefiting_parasitism": "",
-        "human_benefiting_parasitism": ""
-      },
-      "relationship_pattern_status": "assessed",
+      "relationship_evidence": {},
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
       "event_id": "8060eacf-bf5f-4de6-a1a3-ae085c544eb4",
       "event_title": "Beijing high-skilled talent group goes to Tsinghua to study AI",
       "event_date": "2026-11-18",
@@ -7466,7 +7529,7 @@
         }
       ],
       "reviewed": false,
-      "review_status": "pending",
+      "review_status": "source_audit_correction",
       "configuration": "human_enabling_only",
       "plain_label": "A human-side gain is visible; the AI side is not established",
       "human_experience_type": "extension",
@@ -7476,9 +7539,9 @@
       "evidence_status": "sufficient",
       "content_basis": "full_text",
       "evidence_basis_summary": {
-        "input_policy": "full_article_body_required_v1",
+        "input_policy": "source_representations_independent_axes_2026_09",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "complete_written_source",
         "source_quality": {
           "82d85f422a48cee4055cd7d708c341e0": {
             "flags": [],
@@ -7503,15 +7566,15 @@
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
         "source_reading_complete": true,
-        "people_evidence": "the initiative extends workers' existing skills by integrating AI tools into their workflow",
-        "ai_evidence": "not stated",
+        "people_evidence": "Beijing and Tsinghua trained 30 skilled workers in practical AI exercises; workplace applications described by participants are plans.",
+        "ai_evidence": "The report describes training and proposed workplace uses, without a separate stated effect on AI systems or operators.",
         "flags": []
       },
       "story_country_iso3s": [
         "CHN"
       ],
-      "evidence_summary": "Beijing trains 30 high-skilled workers to understand and apply AI in modern industrial contexts, extending human capabilities with AI tools.",
-      "reasoning": "Beijing trains 30 high-skilled workers to understand and apply AI in modern industrial contexts, extending human capabilities with AI tools.",
+      "evidence_summary": "Beijing and Tsinghua trained 30 skilled workers in practical AI exercises; workplace applications described by participants are plans.",
+      "reasoning": "The course ran 2–13 November. Do not present participants’ intended workplace uses as completed deployment.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -7526,14 +7589,36 @@
         "not_clear_yet": false
       },
       "distribution_signal": "broadly_shared",
-      "public_takeaway": "the initiative extends workers' existing skills by integrating AI tools into their workflow",
+      "public_takeaway": "Beijing and Tsinghua trained 30 skilled workers in practical AI exercises; workplace applications described by participants are plans.",
       "multi_label_available": true,
       "distribution_coded": true,
-      "signal_provenance": "model_classification",
+      "signal_provenance": "source_audit_correction",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
         "reasoning": null
+      },
+      "source_note": "The course ran 2–13 November. Do not present participants’ intended workplace uses as completed deployment.",
+      "display_scope": "The course ran 2–13 November. Do not present participants’ intended workplace uses as completed deployment.",
+      "correction_provenance": {
+        "kind": "source_bound_editorial_audit_correction",
+        "owner_gold": false,
+        "source_release_sha256": "e41ff521b7fe0c814ab05b5c5ad5aa2b44264f8d1b3e6894764b82c7e0f0d786",
+        "stored_body_hashes": {
+          "82d85f422a48cee4055cd7d708c341e0": "7b4baf1cc1005dafde3b28d462946710b8edf08f3b122d5adfe731df3b606996"
+        },
+        "source_quality": {
+          "82d85f422a48cee4055cd7d708c341e0": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 1339,
+            "body_sha256": "7b4baf1cc1005dafde3b28d462946710b8edf08f3b122d5adfe731df3b606996",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
+        }
       }
     },
     {
@@ -13798,12 +13883,12 @@
     {
       "axes": {
         "ai": {
-          "evidence": "The article portrays AI as enabling new detection and analysis capabilities, increasing its operational reach.",
-          "direction": "gain"
+          "direction": "gain",
+          "evidence": "The opinion describes AI being used both to create convincing forged documents and to automate checks for manipulation; these are attributed claims."
         },
         "human": {
-          "evidence": "The piece describes how AI extends current capabilities in fraud detection and risk management for humans.",
-          "direction": "none"
+          "direction": "mixed",
+          "evidence": "The Finovox chief executive says generative AI makes forged documents more convincing, while AI-based checks can help detect anomalies alongside human review."
         },
         "evidence_scope": "written_source",
         "evidence_types": [
@@ -13814,13 +13899,8 @@
         "evidence_complete": true,
         "unresolved_reason": ""
       },
-      "relationship_evidence": {
-        "mutualism": "",
-        "competition": "",
-        "ai_benefiting_parasitism": "true",
-        "human_benefiting_parasitism": ""
-      },
-      "relationship_pattern_status": "assessed",
+      "relationship_evidence": {},
+      "relationship_pattern_status": "not_assessed_at_linked_claim_level",
       "event_id": "f42455d6-f67d-4c6a-a78f-0d57269138ff",
       "event_title": "Artificial Intelligence Changes the Scale of the Document Fraud Threat",
       "event_date": "2026-11-19",
@@ -13836,19 +13916,19 @@
         }
       ],
       "reviewed": false,
-      "review_status": "pending",
-      "configuration": "ai_enabling_only",
+      "review_status": "source_audit_correction",
+      "configuration": "ambiguous_relational_signal",
       "plain_label": "An AI-side gain is visible; the human side is not established",
       "human_experience_type": "neutral",
       "ai_expressive_role": "ai_extension",
-      "human_direction": "neutral",
+      "human_direction": "mixed",
       "ai_direction": "enabling",
       "evidence_status": "sufficient",
       "content_basis": "full_text",
       "evidence_basis_summary": {
-        "input_policy": "full_article_body_required_v1",
+        "input_policy": "source_representations_independent_axes_2026_09",
         "source_count": 1,
-        "body_coverage": "all_sources",
+        "body_coverage": "complete_written_source",
         "source_quality": {
           "657a0f7f3d45e202121a8729db59e832": {
             "flags": [],
@@ -13873,13 +13953,13 @@
       "classification_audit": {
         "schema_version": "aieo_directional_evidence_audit_v2",
         "source_reading_complete": true,
-        "people_evidence": "The piece describes how AI extends current capabilities in fraud detection and risk management for humans.",
-        "ai_evidence": "The article portrays AI as enabling new detection and analysis capabilities, increasing its operational reach.",
+        "people_evidence": "The Finovox chief executive says generative AI makes forged documents more convincing, while AI-based checks can help detect anomalies alongside human review.",
+        "ai_evidence": "The opinion describes AI being used both to create convincing forged documents and to automate checks for manipulation; these are attributed claims.",
         "flags": []
       },
       "story_country_iso3s": [],
-      "evidence_summary": "AI changes the scale of document fraud by both expanding fraudulent capabilities and enabling humans to detect and counter them.",
-      "reasoning": "AI changes the scale of document fraud by both expanding fraudulent capabilities and enabling humans to detect and counter them.",
+      "evidence_summary": "The Finovox chief executive says generative AI makes forged documents more convincing, while AI-based checks can help detect anomalies alongside human review.",
+      "reasoning": "Only the signed Finovox opinion through its author credit supports this reading. The saved HTML extraction also contains unrelated recommendation links after the article.",
       "relationship_patterns": {
         "mutualism": false,
         "ai_benefiting_parasitism": false,
@@ -13887,21 +13967,43 @@
         "competition": false
       },
       "public_signals": {
-        "people_gaining": false,
-        "people_losing_ground": false,
-        "mixed_picture": false,
+        "people_gaining": true,
+        "people_losing_ground": true,
+        "mixed_picture": true,
         "not_everyone_benefits": false,
-        "not_clear_yet": true
+        "not_clear_yet": false
       },
       "distribution_signal": "broadly_shared",
-      "public_takeaway": "The piece describes how AI extends current capabilities in fraud detection and risk management for humans.",
+      "public_takeaway": "The Finovox chief executive says generative AI makes forged documents more convincing, while AI-based checks can help detect anomalies alongside human review.",
       "multi_label_available": true,
       "distribution_coded": true,
-      "signal_provenance": "model_classification",
+      "signal_provenance": "source_audit_correction",
       "empowerment_secondary": {
         "status": null,
         "degree": null,
         "reasoning": null
+      },
+      "source_note": "Only the signed Finovox opinion through its author credit supports this reading. The saved HTML extraction also contains unrelated recommendation links after the article.",
+      "display_scope": "Only the signed Finovox opinion through its author credit supports this reading. The saved HTML extraction also contains unrelated recommendation links after the article.",
+      "correction_provenance": {
+        "kind": "source_bound_editorial_audit_correction",
+        "owner_gold": false,
+        "source_release_sha256": "e41ff521b7fe0c814ab05b5c5ad5aa2b44264f8d1b3e6894764b82c7e0f0d786",
+        "stored_body_hashes": {
+          "657a0f7f3d45e202121a8729db59e832": "1405663e5cb33f573071d1d19d985bbd05f1c3187725bce1435cb0b438273ba1"
+        },
+        "source_quality": {
+          "657a0f7f3d45e202121a8729db59e832": {
+            "flags": [],
+            "scope": "written_page",
+            "characters": 5696,
+            "body_sha256": "1405663e5cb33f573071d1d19d985bbd05f1c3187725bce1435cb0b438273ba1",
+            "quality_version": "stored_source_quality_v2",
+            "source_language": "",
+            "usable_complete_body": true,
+            "automated_check_is_not_completeness_certification": true
+          }
+        }
       }
     },
     {
@@ -14443,15 +14545,15 @@
     "human": {
       "gain": 60,
       "loss": 9,
-      "mixed": 5,
-      "none": 11,
+      "mixed": 6,
+      "none": 10,
       "unresolved": 48
     },
     "ai": {
-      "gain": 52,
+      "gain": 51,
       "loss": 8,
       "mixed": 15,
-      "none": 10,
+      "none": 11,
       "unresolved": 48
     },
     "evidence_complete": 85,
@@ -14465,5 +14567,5 @@
     "incomplete_written_sources": 48,
     "legacy_configuration_note": "Legacy single-label fields are retained for compatibility; independent axis categories are authoritative under the current policy."
   },
-  "content_sha256": "a7c40ea34a6749ead29cd297b835c5fdf47b394b5396463ea7eaf139d344b9e6"
+  "content_sha256": "9bcd1fccdd02ea12a7f633319822c3feef3ac6cbef0f99930297c744ce089ce2"
 }

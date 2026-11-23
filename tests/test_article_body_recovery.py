@@ -130,6 +130,29 @@ class AcquisitionTests(unittest.TestCase):
         self.assertIn('Final evidence contradicts', picked['text'])
         self.assertNotIn('<p>', picked['text'])
 
+    def test_article_recommendations_do_not_become_source_evidence(self):
+        main = BODY + '\n\nMarc de Beaucorps, CEO chez Finovox.'
+        rail = '\n\nARTICLES SIMILAIRES\n\n' + ('Unrelated AI story and navigation.\n\n' * 60)
+        picked = base.choose_best_extraction(page(main + rail), URL)
+        self.assertIn('Marc de Beaucorps', picked['text'])
+        self.assertNotIn('ARTICLES SIMILAIRES', picked['text'])
+        self.assertNotIn('Unrelated AI story', picked['text'])
+
+    def test_generic_similar_footer_after_article_is_removed(self):
+        rail = '\n\nSimilaire\n\nEn savoir plus sur Mon Carnet\nSubscribe to get the latest posts.'
+        picked = base.choose_best_extraction(page(BODY + rail), URL)
+        self.assertNotIn('Similaire', picked['text'])
+        self.assertNotIn('Subscribe to get', picked['text'])
+
+    def test_independent_membership_prompt_before_article_is_removed(self):
+        prompt = ('Become an Independent member to bookmark this article\n\n'
+                  'Want to bookmark your favourite articles and stories to read or reference later? '
+                  'Start your Independent Membership today.\n\nJoin today\n\n'
+                  'Already a member? Log in\n\n')
+        picked = base.choose_best_extraction(page(prompt + BODY), URL)
+        self.assertNotIn('Become an Independent member', picked['text'])
+        self.assertIn(BODY[:80], picked['text'])
+
     def test_publisher_siblings_and_private_suffixes(self):
         self.assertTrue(base.same_publisher_site('https://news.arizona.edu/story', 'https://research.arizona.edu/story'))
         self.assertFalse(base.same_publisher_site('https://evil.co.uk/story', 'https://news.co.uk/story'))

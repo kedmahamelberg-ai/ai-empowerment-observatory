@@ -1,0 +1,1001 @@
+{
+  "schema_version": "aieo_weekly_source_link_audit_v1",
+  "release_id": "2026-W47",
+  "audited_utc": "2026-11-23T09:55:00Z",
+  "scope": "All 85 source-linked W47 Brief news records and corresponding Observatory saved article bodies",
+  "method": "Read the original URL and compare four spaced passages from each private saved body to the current public page. HTTP blocks and dynamic-page mismatches require manual source review. This check does not certify editorial meaning, full extraction boundaries, or headline accuracy.",
+  "source_identity_counts": {
+    "body_excerpts_match_live_source": 76,
+    "manual_body_review_required": 1,
+    "publisher_fetch_inconclusive": 8
+  },
+  "brief_editorial_complete_at_audit": 7,
+  "semantic_review_complete": false,
+  "items": [
+    {
+      "event_id": "043fcc16-9866-4fa7-ba06-80dc0b5e0f94",
+      "article_id": "7cedfd958b6d7a17aac27279cf924c6c",
+      "original_source_url": "https://aws.amazon.com/blogs/machine-learning/meta-ads-is-now-available-in-aws-quick",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/aws-quick-adds-ai-tools-meta-account-changes/",
+      "brief_editorial_complete_at_audit": true,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "04f6e4a6-6691-4077-ba1b-f32dd9e7edc9",
+      "article_id": "54e09b89b915a4beed552f3a77a1225b",
+      "original_source_url": "https://www.xjtlu.edu.cn/zh/news/2026/11/rengongzhinengqudongzhiliaoxuezhuoyueyanjiuzhongxin",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/xipu-establishes-excellence-research-center-ai-driven-jiaotong-liverpool-university/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "06a841a2-e600-4d79-804a-c1bcd883b543",
+      "article_id": "f52d2d33455d576698576271af669660",
+      "original_source_url": "https://www.facultyfocus.com/articles/teaching-with-technology-articles/be-the-driver-keeping-generative-ai-in-the-backseat-by-supporting-students-use-of-ai",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/driver-keeping-generative-ai-backseat-supporting-use-ai/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "0ab86c8d-d3e8-4f31-88d8-b65ce024987b",
+      "article_id": "b075ea35851eee57663b1e833baca8c7",
+      "original_source_url": "https://theconversation.com/what-ai-regulation-could-learn-from-the-most-hazardous-industries-in-the-world-295475",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/what-ai-regulation-could-learn-most-industries-world/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "3/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "0c7be4b3-e947-4db2-8b37-c4902c82c6b1",
+      "article_id": "8fb59e30f8238b6f2b0a22f6fb1a90d2",
+      "original_source_url": "https://www.news.cn/liangzi/20261116/7acf1009b28a478b8afa3ca45fa38110/c.html",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/artificial-intelligence-innovation-ecosystem-focused-torch/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "0e01070c-cf93-4e6d-b914-6a49cc7f4d18",
+      "article_id": "384b38c3a2cad6eac0cab0ed627cfbd9",
+      "original_source_url": "https://u-paris.fr/lintelligence-artificielle-au-service-de-la-lutte-contre-les-maladies-infectieuses-emergentes",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/development-0e01070c-cf93-4e6d-b914-6a49cc7f4d18/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "0f3509f1-ecae-41d7-9079-0d2de7f2784c",
+      "article_id": "3384f33bb848bb61a5a85f6b8c57cd2d",
+      "original_source_url": "https://www.lesoleil.com/chroniques/karine-tremblay/2026/11/16/lauteur-patrick-nicol-diffame-par-lintelligence-artificielle-3ODAI2Y33ZBJBEXDMWRWBWS6AI",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/author-patrick-nicol-defamed-artificial-intelligence/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "17a3a71b-552a-4beb-9364-59624afda4f2",
+      "article_id": "dc20696d4e44f8aaacf9f838daf21f3e",
+      "original_source_url": "https://fddi.fudan.edu.cn/34/87/c21253a799879/page.htm",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/global-ai-innovation-governance-oecd-ai-governance-logic/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "1/4",
+      "source_identity_check": "manual_body_review_required",
+      "follow_up_flags": [
+        "snapshot_live_body_mismatch",
+        "live_heading_missing"
+      ]
+    },
+    {
+      "event_id": "180985af-7cc7-4e9d-ae3a-c9d01b1c2eb2",
+      "article_id": "c27e03b91be6cfb464ba90ccff4b106e",
+      "original_source_url": "http://paper.people.com.cn/rmrb/pc/content/202611/21/content_30192380.html",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/domestic-large-models-lead-global-open-source-intelligent-economy/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "22206268-0909-49c6-8f90-87467ab9839b",
+      "article_id": "1e6ae6641148564935cea3e45b227619",
+      "original_source_url": "https://www.ledevoir.com/economie/1026584/geants-ia-ont-perdu-3500-milliards-dollars-capitalisation-six-semaines",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/ai-giants-lost-35-billion-market-six-weeks/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "25768084-84d4-452a-ae9a-ce86ad15477d",
+      "article_id": "2dbc5050fcaf05b6e8841832f72af304",
+      "original_source_url": "https://www.guancha.cn/GuoJi%C2%B7ZhanLue/2026_11_22_909480.shtml",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/how-does-anthropic-researchs-ai-repent-about-you/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": [
+        "live_heading_missing"
+      ]
+    },
+    {
+      "event_id": "278616e0-b13f-4958-a628-695ddc4d0ceb",
+      "article_id": "087e5f0ef2c6afe1d9117abc814a0a77",
+      "original_source_url": "https://www.gao.gov/products/gao-27-108814",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/artificial-intelligence-covert-testing-used-common-attack-plans/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 403,
+      "stored_body_excerpts_found_on_live_page": null,
+      "source_identity_check": "publisher_fetch_inconclusive",
+      "follow_up_flags": [
+        "source_http_error"
+      ]
+    },
+    {
+      "event_id": "28432dfe-88c5-4756-9119-922551fef330",
+      "article_id": "ca4eff3adf03e9efe21792fdadcf5bfd",
+      "original_source_url": "https://phys.org/news/2026-11-mushrooms-ai-potential-crop-stress.html",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/tested-mushrooms-ai-model-shows-potential-fewer-computations/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 403,
+      "stored_body_excerpts_found_on_live_page": null,
+      "source_identity_check": "publisher_fetch_inconclusive",
+      "follow_up_flags": [
+        "source_http_error"
+      ]
+    },
+    {
+      "event_id": "28fe3fcf-8953-405c-b41e-9c622dc31e9f",
+      "article_id": "331da66f4e4f34b238853a6e5a97cc8b",
+      "original_source_url": "https://mitsloan.mit.edu/press/generative-ai-can-empower-entrepreneurs-also-entrap-them",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/generative-ai-can-empower-entrepreneurs-but-entrap-them/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "29546d1d-0d34-45ca-8216-32cee160fb5f",
+      "article_id": "11502aee89712720a78f52f738192330",
+      "original_source_url": "https://www.jswx.gov.cn/fwhd/tzgg/202611/t20261118_1373147.shtml",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/announcement-registered-information-generative-artificial-intelligence-18-2026/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": [
+        "live_heading_missing"
+      ]
+    },
+    {
+      "event_id": "29bd534b-53e9-4001-96cf-b41fb85cc50f",
+      "article_id": "9ec30b16374865d0d09fcc51681a6298",
+      "original_source_url": "https://retail-insider.com/retail-insider/2026/11/ai-sovereignty-in-canada-who-will-benefit-from-the-economic-value-of-artificial-intelligence",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/ai-sovereignty-canada-who-will-benefit-artificial-intelligence/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "2a62dbc6-b819-4027-b67d-5804f7ddb2f3",
+      "article_id": "45024ed35bd3e4640f56a82def0e439b",
+      "original_source_url": "https://time.com/article/2026/11/16/how-to-build-an-artificial-intelligence-revolution-for-all",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/how-build-artificial-intelligence-revolution-all/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 406,
+      "stored_body_excerpts_found_on_live_page": null,
+      "source_identity_check": "publisher_fetch_inconclusive",
+      "follow_up_flags": [
+        "source_http_error"
+      ]
+    },
+    {
+      "event_id": "2fe4fcc4-580e-4f55-9a46-3c078b2c68a3",
+      "article_id": "0f955178cd724e26399465c0cc24fb51",
+      "original_source_url": "https://federalnewsnetwork.com/workforce/2026/11/building-better-artificial-intelligence-requires-people-willing-to-do-meticulous-work-at-scale",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/building-better-artificial-intelligence-requires-people-work-scale/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "317f8ea0-9de0-4b1d-8e80-a5479803b779",
+      "article_id": "2583a46d0d65226026c093df5787b539",
+      "original_source_url": "https://www.dw.com/zh/%E7%89%B9%E6%9C%97%E6%99%AE%E6%94%BF%E5%BA%9C%E8%80%83%E8%99%91%E5%BC%BA%E5%88%B6%E7%BE%8E%E4%BC%81%E6%8A%AB%E9%9C%B2%E4%B8%AD%E5%9B%BDai%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5/a-79982497",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/could-ai-used-u-s-companies-ai-models/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": [
+        "source_title_identity_review"
+      ]
+    },
+    {
+      "event_id": "35a46e1e-5a40-4552-81a7-334daa103fc5",
+      "article_id": "6728ab5448c93c9a0f6731c28710b090",
+      "original_source_url": "https://aws.amazon.com/blogs/machine-learning/announcing-amazon-textract-insights-verifiable-generative-ai-for-documents",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/announcing-amazon-textract-insights-verifiable-generative-web-services/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "373cbbb2-eac7-40fb-96c9-a963d060e98d",
+      "article_id": "d158e56f3602de6da11b2a3bfcb57dff",
+      "original_source_url": "https://www.coursera.org/articles/what-is-generative-ai",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/what-generative-ai-how-works-examples-benefits-limitations/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "3/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "3a0e76f8-73c8-49c2-a00f-8545451206bc",
+      "article_id": "3f87308f2e024f864cf2c717494c1535",
+      "original_source_url": "https://moncarnet.com/2026/11/21/apec-2026-shenzhen-vitrine-de-lintelligence-artificielle-chinoise",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/apec-2026-shenzhen-chinese-ai-showcase/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": [
+        "snapshot_trailing_page_chrome"
+      ]
+    },
+    {
+      "event_id": "3e3d934c-6a2a-4d96-bfb5-43c9ba7ecb97",
+      "article_id": "b8891628df8b074abe127ff18cc0fecd",
+      "original_source_url": "https://www.paho.org/en/news/20-11-2026-artificial-intelligence-health-new-paho-publication-examines-opportunities-and",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/artificial-intelligence-health-new-paho-publication-reinforcement-learning/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "433fed67-abe4-488b-b63c-5ac8415b2a62",
+      "article_id": "aeb2fdf85643a60ed3c796ba95447b52",
+      "original_source_url": "https://institutducerveau.org/actualites/intelligence-artificielle-et-science-donnees-deux-jeunes-chercheurs-internationaux-rejoignent-linstitut-cerveau",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/artificial-intelligence-data-science-two-international-brain-institute/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "4348948e-e08c-4699-9c74-9f13199c4a72",
+      "article_id": "39bdb7e6685e22b58954585ade9b9d3c",
+      "original_source_url": "https://siecledigital.fr/2026/11/20/donald-trump-refuse-toute-reglementation-mondiale-de-lintelligence-artificielle",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/donald-trump-refuses-all-global-regulation-artificial-intelligence/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "44c7e7ef-f5ad-451a-86c9-1ff1fbe5532a",
+      "article_id": "c7724430425535295ec54a4312c8a502",
+      "original_source_url": "https://news.nuist.edu.cn/info/1006/132122.htm",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/academy-member-european-academy-sciences-moncef-large-models/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": [
+        "live_heading_missing"
+      ]
+    },
+    {
+      "event_id": "4514e006-c634-4a92-999a-72e8e096b9bf",
+      "article_id": "b1b2c48d9da65f2740f292b32b265012",
+      "original_source_url": "https://www.hunnu.edu.cn/info/1012/33298.htm",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/development-4514e006-c634-4a92-999a-72e8e096b9bf/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 403,
+      "stored_body_excerpts_found_on_live_page": null,
+      "source_identity_check": "publisher_fetch_inconclusive",
+      "follow_up_flags": [
+        "source_http_error"
+      ]
+    },
+    {
+      "event_id": "455ba041-c633-46c8-b1e3-de9cddd86ab0",
+      "article_id": "06c4b078af9afbf94329295a4c8751d8",
+      "original_source_url": "https://www.cerema.fr/fr/actualites/liattoral-intelligence-artificielle-digitaliser-sentier-du",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/liattoral-ai-digitalize-coastal-path-using-images-drones/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "45afe116-7fb6-4d34-b5a0-eb549c6ab0f5",
+      "article_id": "1cd5d7fda91a1b6b54fc5784bb9fc9f8",
+      "original_source_url": "https://www.ledevoir.com/actualites/education/1026209/jusqu-ou-ecole-doit-elle-preparer-jeunes-monde-travail",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/how-far-should-schools-prepare-young-world-work/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "46a2de14-cf97-4c5a-89e9-53c850f38580",
+      "article_id": "e5ce56ad5ec62bac28fd0ad49a59ddb9",
+      "original_source_url": "https://www.bbc.com/zhongwen/articles/crgj360lnqv6o/simp",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/china-welcomes-leaders-various-countries-ai-dont-see/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "3/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "4c81ddeb-df62-41fe-85e8-af5dffd6d4b3",
+      "article_id": "9254b429e5bbb448235bafce0b194f78",
+      "original_source_url": "https://www.weka.fr/actualite/administration/article/intelligence-artificielle-les-collectivites-consolident-leurs-projets-selon-le-barometre-data-publica-230423",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/artificial-intelligence-local-authorities-strengthen-projects-publica-barometer/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "4d309e47-d6ef-4d60-b4fb-8ee4ecbc829d",
+      "article_id": "9935dd0ae88afdd379d2b0cb142abb8b",
+      "original_source_url": "https://news.un.org/zh/story/2026/11/1143210",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/artificial-intelligence-basically-accurate-answering-climate-suit-questioner/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "4f5b3e04-d85e-4dad-9cc8-99f81d76a6fc",
+      "article_id": "272dce54d56d23a27237949f69346414",
+      "original_source_url": "https://www.ledevoir.com/actualites/societe/1026257/charges-cours-uqo-veulent-encadrement-utilisation-ia",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/uqo-course-instructors-want-oversight-ai-use/",
+      "brief_editorial_complete_at_audit": true,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "55630d16-a18b-4be4-8593-b843ffe9d50e",
+      "article_id": "36f37f95fbba7bffede0bcc2b4b9ac43",
+      "original_source_url": "https://www.hkma.gov.hk/gb_chi/news-and-media/press-releases/2026/11/20261117-3",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/hong-kong-monetary-authority-report-assistance-services-industry/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "5c1cc939-3881-4dde-80de-ef9ec1a33cdd",
+      "article_id": "91e178c577106a7285d9a1d446dfe5be",
+      "original_source_url": "https://www.francetravail.org/statistiques-analyses/entreprises/metiers/l-intelligence-artificielle-et-les-metiers-a-5-ans-la-vision-des-employeurs.html?type=article",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/ai-5-year-jobs-employers-vision/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "3/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "64fdf05e-e92f-496f-8de9-f22812d8f922",
+      "article_id": "282c02a5767ce55a971c43d725d135eb",
+      "original_source_url": "https://fr.beincrypto.com/solana-2027-feuille-route-sol-impact-prix",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/solana-unveils-2027-roadmap-on-chain-artificial-faster-blocks/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 403,
+      "stored_body_excerpts_found_on_live_page": null,
+      "source_identity_check": "publisher_fetch_inconclusive",
+      "follow_up_flags": [
+        "event_source_date_differ",
+        "source_http_error"
+      ]
+    },
+    {
+      "event_id": "68be8c2d-bd95-4d23-aeab-c5b7bd598d1c",
+      "article_id": "38e619eb22a9fb9bae19a21a3e514812",
+      "original_source_url": "https://uk.news.yahoo.com/generative-ai-mis-adventures-cliff-234500619.html",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/if-theres-generative-ai-mis-adventures-cliff-finchers-used/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": [
+        "event_source_date_differ"
+      ]
+    },
+    {
+      "event_id": "6978c347-7602-4170-9952-de17119f12ed",
+      "article_id": "d2cd9dad605022dccbb8d4b59644d958",
+      "original_source_url": "https://www.lsbr.uk/news/ai-artificial-intelligence",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/ai-artificial-intelligence/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "7190761b-d6dd-45d1-82fa-2765351df780",
+      "article_id": "57e8eb05bc36237bcd7809418a04bd6d",
+      "original_source_url": "https://calmatters.org/commentary/2026/11/artificial-intelligence-california-election-advertising",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/opinion-artificial-intelligence-flourished-california-election-divided-voters/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "72189e20-1d25-4443-b53f-fcb1a97a3063",
+      "article_id": "a874dfcc506284ba2ce516e5ab7726c8",
+      "original_source_url": "https://news.virginia.edu/content/uva-president-scott-beardsley-charts-universitys-future-artificial-intelligence",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/uva-president-scott-beardsley-outlines-university-artificial-intelligence/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "7450df34-5bd4-48ed-97ee-266a65ad2ce9",
+      "article_id": "d5f31cca9bba734bdb7a5da38fdd5582",
+      "original_source_url": "https://redfm.ca/en-ca/vancouver/news-articles/niki-sharma-calls-for-stronger-ai-regulation-following-tumbler-ridge-shooting-report",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/niki-sharma-calls-stronger-ai-regulation-shooting-report/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "78fca880-7284-4830-b4e0-95389601f7ed",
+      "article_id": "b3d449bbd4d7877f6c266aa6538216fa",
+      "original_source_url": "https://www.governor.ny.gov/news/governor-hochul-breaks-ground-permanent-empire-ai-supercomputing-center-marking-major",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/governor-hochul-breaks-ground-permanent-empire-public-good/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "7ad0085e-dc67-49ba-9405-a41760e00f5b",
+      "article_id": "cb396c50618868bbdfa00cef83779aef",
+      "original_source_url": "https://www.bbc.com/zhongwen/articles/cw7v2zlle4v4o/simp",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/can-anthropics-record-breaking-ipo-prevent-ai-bubble-bursting/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "7fa326d4-8d74-4965-a5e3-89a1853c573c",
+      "article_id": "e08b261b63d207720a4625103ba89290",
+      "original_source_url": "https://www.afro.who.int/fr/news/comment-lintelligence-artificielle-contribue-renforcer-la-surveillance-de-la-poliomyelite-en",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/how-artificial-intelligence-contributes-strengthening-polio-surveillance-africa/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "8060eacf-bf5f-4de6-a1a3-ae085c544eb4",
+      "article_id": "82d85f422a48cee4055cd7d708c341e0",
+      "original_source_url": "https://www.beijing.gov.cn/fuwu/bmfw/sy/jrts/202611/t20261118_4951085.html",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/beijing-high-skilled-talent-group-goes-tsinghua-study-ai/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "84c3d6af-dc2c-485c-98b0-b70192fa72c3",
+      "article_id": "73b2737dfb37b5c459811982ddfac084",
+      "original_source_url": "https://news.un.org/zh/story/2026/11/1143248",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/independent-scientific-group-countries-should-not-intelligence-capabilities/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "87166cd7-31e5-4e38-972b-a2fcf69ddf3f",
+      "article_id": "1481ef07ccab090be4735a754b8cbf7e",
+      "original_source_url": "https://www.ledevoir.com/economie/techno/1026464/ia-absente-debats-cop31-mais-bien-representee",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/ai-absent-debates-cop31-but-well-represented/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": [
+        "event_source_date_differ"
+      ]
+    },
+    {
+      "event_id": "8a6de44e-24bd-4115-9797-f0a5abdfb215",
+      "article_id": "56c1ab70b7f4aee7964ffeb9b268f8a3",
+      "original_source_url": "https://www.grenier.qc.ca/actualites/59515/noel-2026-lintelligence-artificielle-sinvite-dans-les-emplettes-des-canadiennes",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/noel-2026-artificial-intelligence-invites-itself-canadian-women/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": [
+        "live_heading_missing"
+      ]
+    },
+    {
+      "event_id": "8d949e3e-ff9c-4d8b-8fed-07db47b8ae63",
+      "article_id": "3fa84863303fa17ae7dd523fa086d081",
+      "original_source_url": "https://www.lawfaremedia.org/article/access-to-generative-ai--privilege-or-right",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/access-generative-ai-privilege-right/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "91a3e3cb-d7c3-4247-b5ee-a4cd749a6294",
+      "article_id": "421cba3e9e73143810a84f90528126eb",
+      "original_source_url": "https://hitwest.ouest-france.fr/rennes-va-accueillir-le-centre-international-pour-l-ia-de-defense-european-cyber-week-cybersecurite",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/international-excellence-center-rennes-dedicated-artificial-defense-established/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": [
+        "event_source_date_differ"
+      ]
+    },
+    {
+      "event_id": "93b31c5a-f003-4ca9-822c-4d856065055d",
+      "article_id": "6b8ea925eea588f99ae70f18aeae2f28",
+      "original_source_url": "https://theconversation.com/demain-lintelligence-artificielle-assistera-le-chirurgien-mais-qui-decidera-296871",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/tomorrow-artificial-intelligence-will-assist-surgeon-will-decide/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "9a41f56e-1b5c-4633-b22a-68c47ea6a559",
+      "article_id": "368b5c455d57b2909bcb3e5fe1758656",
+      "original_source_url": "https://www.u-bordeaux.fr/evenements/hack1robo-2026-le-hackathon-sciences-cognitives-et-intelligence-artificielle",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/hack1robo-2026-cognitive-sciences-artificial-intelligence-hackathon/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "9bd24aa2-2b5d-4000-be6f-07054671f1b4",
+      "article_id": "580d0224b0416bddff0265f30079a24f",
+      "original_source_url": "https://www.arcom.fr/actualites/les-enjeux-lies-lintelligence-artificielle-en-periode-electorale",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/issues-related-artificial-intelligence-during-election-period/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "9e31d92d-0e24-4aae-9914-d53069eeb6ad",
+      "article_id": "fb0117cbcf0e24c7c7764b83b1ac52c8",
+      "original_source_url": "https://aws.amazon.com/blogs/machine-learning/how-standard-bank-group-automates-ai-risk-assessment-for-generative-ai",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/how-standard-bank-group-automates-ai-artificial-intelligence/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "a40c956f-1af2-4e85-b240-7f54dd9c6402",
+      "article_id": "33f3bb6a6b4d9afce462a40129c291e0",
+      "original_source_url": "https://www.ecnu.edu.cn/info/1094/73789.htm",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/opening-ceremony-fifth-ai-capability-building-normal-university/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": [
+        "live_heading_missing"
+      ]
+    },
+    {
+      "event_id": "a6069bf9-57ea-419b-8276-f56ab8a5afb4",
+      "article_id": "ecf1fe7b98830bb42a85d8a38474d86c",
+      "original_source_url": "http://jxt.hubei.gov.cn/bmdt/rdjj/202611/t20261116_6123055.shtml",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/focus-ai-security-shennong-technologys-central-located-wuhan/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 412,
+      "stored_body_excerpts_found_on_live_page": null,
+      "source_identity_check": "publisher_fetch_inconclusive",
+      "follow_up_flags": [
+        "source_http_error"
+      ]
+    },
+    {
+      "event_id": "a720f4f6-cfc1-4ea2-89db-10efab3479aa",
+      "article_id": "ee71235e5b79c2d7d9de81e26fed4602",
+      "original_source_url": "https://www.lesoleil.com/actualites/justice-et-faits-divers/2026/11/17/qui-est-responsable-quand-lintelligence-artificielle-diffame-B5S73AO5QVFCHPROQBEMR2HS2M",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/who-responsible-when-artificial-intelligence-defames/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "a8b732ae-dc0c-4ba2-b6bf-b587e26a7d34",
+      "article_id": "dfd0a7d5075ecdeac216630c743bc7da",
+      "original_source_url": "https://art.faaad.ulaval.ca/actualites/jocelyn-robert-participe-a-une-discussion-sur-lintelligence-artificielle-et-la-creation-artistique",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/jocelyn-robert-participates-discussion-artificial-intelligence-artistic-creation/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "b0cb507c-5398-436b-a133-93d34b86db0f",
+      "article_id": "ebcf19600ba73dc407f40c5f4d5f3cde",
+      "original_source_url": "https://vert.eco/label-vert/mistral-vibe-euria-apertus-quelle-ia-generative-choisir-pour-se-liberer-de-chatgpt-et-gemini",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/which-generative-ai-choose-escape-chatgpt-gemini/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "b38eaddd-792a-4579-853f-20b21d996e5f",
+      "article_id": "51e04392a60bfd88daf401fae61feafa",
+      "original_source_url": "https://news.un.org/zh/story/2026/11/1143231",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/united-nations-warns-artificial-intelligence-used-exploit-children/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "b4532a7f-ee8f-4975-ab02-96357c06db85",
+      "article_id": "d8359c6ef1bf497a1fc6d770ec4bf280",
+      "original_source_url": "https://www.china-aii.com/jgdt/7141930.jhtml",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/china-industrial-internet-research-institute-launches-consulting-services/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": [
+        "live_heading_missing"
+      ]
+    },
+    {
+      "event_id": "bce5fd42-72e3-4129-a12d-9bea073215f8",
+      "article_id": "83515ae8a02de507b5c2eca017088665",
+      "original_source_url": "https://news.clemson.edu/clemson-university-to-launch-three-new-degree-programs-in-artificial-intelligence",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/clemson-university-launch-three-new-degree-artificial-intelligence/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "c33a3668-6245-4137-b107-8c9737781bbc",
+      "article_id": "99464a22d98f7b90dfe4d2169131dc46",
+      "original_source_url": "https://www.francetravail.org/statistiques-analyses/entreprises/metiers/l-intelligence-artificielle-dans-les-entreprises-et-les-metiers-recours-a-l-ia-competences-demandees-et-formation.html?type=article",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/artificial-intelligence-businesses-professions-use-ai-skills-training/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "3/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "c3ecda02-5cf1-4e9d-9146-eab99969466b",
+      "article_id": "f8a63eabebe44dc3f50573c2269b463c",
+      "original_source_url": "https://www.lapresse.ca/affaires/techno/2026-11-17/intelligence-artificielle/openai-recrute-un-quebecois-et-s-immisce-dans-le-voyage.php",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/artificial-intelligence-openai-hires-quebecer-infiltrates-journey/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 405,
+      "stored_body_excerpts_found_on_live_page": null,
+      "source_identity_check": "publisher_fetch_inconclusive",
+      "follow_up_flags": [
+        "source_http_error"
+      ]
+    },
+    {
+      "event_id": "c4d5152c-624e-4f93-a1f4-b64050e11719",
+      "article_id": "3252a2db18ac62ca0c0245000d70c70b",
+      "original_source_url": "https://www.lpm.org/press-releases/2026-11-20/a-statement-from-lpm-on-artificial-intelligence",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/statement-lpm-artificial-intelligence/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "c5613143-19fb-44c8-9533-a40772a60b39",
+      "article_id": "2c099b05912a811b1b637e7646b0f8d3",
+      "original_source_url": "https://www.vidal.fr/actualites/38601-ia-generative-des-experts-pointent-le-risque-de-dependance-et-d-affaiblissement-cognitif-des-jeunes.html",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/generative-ai-experts-warn-dependency-cognitive-young-people/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "ce99432a-bbe0-428e-b588-e3f9b13c7918",
+      "article_id": "52d3ccde861eaf2846b302f7f6de9b28",
+      "original_source_url": "https://aa.com.tr/en/europe/london-protest-calls-for-stricter-ai-regulation-amid-growing-safety-concerns/4133213",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/london-protest-calls-stricter-ai-regulation-safety-concerns/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "cf6b5626-8441-4caa-897d-ab97d829a0e0",
+      "article_id": "5d4bb90191c6972578201fd8400d3c48",
+      "original_source_url": "https://www.actuia.com/actualite/styliser-son-raisonnement-rend-un-modele-dia-moins-surveillable",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/style-reasoning-makes-ai-model-less-observable/",
+      "brief_editorial_complete_at_audit": true,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "d48225e7-5b18-4525-a6a3-8a9164183226",
+      "article_id": "1e3318157dedff87c0eaee85d782969e",
+      "original_source_url": "https://news.ustc.edu.cn/info/1056/96947.htm",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/hefei-daily-ai-expert-wu-kan-science-technology/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": [
+        "live_heading_missing"
+      ]
+    },
+    {
+      "event_id": "d7c525c8-acce-419a-8eb1-9dacb5d9e3d7",
+      "article_id": "0e0d61b56c288cd9336d1755fde33c74",
+      "original_source_url": "https://www.beatportal.com/articles/1726074-dance-spirit-on-cosmic-intellect-artificial-intelligence-and-the-human-experience",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/dance-spirit-cosmic-intellect-artificial-intelligence-human-experience/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "dd560e0a-b4f0-495f-ba92-61fba5876346",
+      "article_id": "7a04ccfe5e8ae98cf6359b72463af675",
+      "original_source_url": "https://www.ledevoir.com/opinion/chroniques/1025735/dernier-avertissement",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/journal-jean-francois-lisee-last-warning-regarding-artificial-intelligence/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "dd5c4b7f-22b7-4120-b0c9-79e7ba01116e",
+      "article_id": "1674d78d1c06c33716e082b15d951da9",
+      "original_source_url": "https://www.engadget.com/2321318/canva-will-let-users-switch-off-most-generative-ai",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/canva-will-allow-users-disable-most-generative-ai/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "3/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "debe38c1-18d5-4b39-9eb5-98a52226b71f",
+      "article_id": "f8e0b70b5762ebf304af9eec058070e3",
+      "original_source_url": "https://www.ledevoir.com/actualites/science/1026719/ia-fait-bondir-nombre-publications-scientifiques-soumises",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/mila-team-ai-review-tool-matched-conference-paper-test/",
+      "brief_editorial_complete_at_audit": true,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "e05b0a25-5bc0-4d77-a7aa-8ee8b7733f80",
+      "article_id": "03d123f8370c458b94d4cccf1a1233f7",
+      "original_source_url": "https://aws.amazon.com/blogs/machine-learning/how-arisglobal-scaled-generative-ai-inference-on-amazon-bedrock",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/arisglobal-scaled-generative-ai-inference-amazon-bedrock/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "e09167e1-9bba-4fb4-b1b0-f87c59218970",
+      "article_id": "cd7b9e72fed6f056b8e74e91cdb00869",
+      "original_source_url": "https://www.independent.co.uk/tech/anthropic-wall-street-stocks-slip-ai-ipo-b3088959.html",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/anthropic-stock-plummets-wall-street-debut-fears-rise/",
+      "brief_editorial_complete_at_audit": true,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": [
+        "snapshot_leading_membership_prompt"
+      ]
+    },
+    {
+      "event_id": "e30a5b93-37e3-4b09-abdf-9cc4cc5bda19",
+      "article_id": "04cca32d38155c576aa271b1ea14025e",
+      "original_source_url": "https://www.ncsti.gov.cn/kjdt/xwjj/202611/t20261120_264744.html",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/many-universities-beijing-offer-free-computing-innovation-applications/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "e468da4c-6375-4b66-8e67-72c5ed4ba6fc",
+      "article_id": "9edfdb7f427f9844da77fcb833516721",
+      "original_source_url": "https://www.ledevoir.com/economie/1026614/ia-fait-nouveau-derailler-bourses-mondiales",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/ai-causes-another-selloff-global-stock-markets/",
+      "brief_editorial_complete_at_audit": true,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "e8775758-5205-4ee7-bfa9-1401f5c83f89",
+      "article_id": "f75bd3f482a37e8495a5719da2b3cd8f",
+      "original_source_url": "https://www.universityworldnews.com/post.php?story=20261120113656202",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/how-generative-ai-can-help-fill-university-classrooms/",
+      "brief_editorial_complete_at_audit": true,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "e9c85927-adb4-4d34-8bc1-2061863b891c",
+      "article_id": "54ff3eed15907b41f61a30d9924c0648",
+      "original_source_url": "https://www.bbc.com/zhongwen/articles/cmdx1eqdl9vpo/simp",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/ai-act-spiritual-mentor-issue-rulings-different-opinions/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "eceaed8f-016e-468f-aeba-e0ca33f5d9db",
+      "article_id": "6baef4c1f3223d44248c4c1efd02f753",
+      "original_source_url": "https://www.mittrchina.com/news/detail/17277",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/development-eceaed8f-016e-468f-aeba-e0ca33f5d9db/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 403,
+      "stored_body_excerpts_found_on_live_page": null,
+      "source_identity_check": "publisher_fetch_inconclusive",
+      "follow_up_flags": [
+        "source_http_error"
+      ]
+    },
+    {
+      "event_id": "f04af8dc-c8e2-4063-ba2d-013fae2f63de",
+      "article_id": "98f435ae49d55f00babbcc44ac781793",
+      "original_source_url": "https://www.ledevoir.com/culture/1026008/ere-ia-dictionnaire-cambridge-sacre-human-mot-annee",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/age-ai-cambridge-dictionary-names-human-word-year/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "f42455d6-f67d-4c6a-a78f-0d57269138ff",
+      "article_id": "657a0f7f3d45e202121a8729db59e832",
+      "original_source_url": "https://itsocial.fr/contenus/tribunes/fraude-documentaire-lintelligence-artificielle-change-lechelle-de-la-menace",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/artificial-intelligence-changes-scale-document-fraud-threat/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "3/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": [
+        "snapshot_trailing_page_chrome"
+      ]
+    },
+    {
+      "event_id": "f73a5d7d-d4e9-4996-81dc-54946f6316ce",
+      "article_id": "a40aa0edb4efde7fcf27a7889a30512c",
+      "original_source_url": "https://www.kcur.org/education/2026-11-22/missouri-s-t-will-soon-offer-the-states-first-undergraduate-degree-in-artificial-intelligence",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/missouri-s-t-will-soon-offer-artificial-intelligence/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "fbf911dd-3b8e-4c41-8ae6-5b3feb760d19",
+      "article_id": "a30fec025f8eb7912413f205aff6380b",
+      "original_source_url": "https://news.un.org/zh/story/2026/11/1143226",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/imf-president-artificial-intelligence-will-become-economic-growth/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": []
+    },
+    {
+      "event_id": "fcdb6abc-5fba-422e-9520-87887fccfed9",
+      "article_id": "416f0205a8f02e03585f28f9d7f08281",
+      "original_source_url": "https://www.gossement-avocats.com/blog/ia-lusage-abusif-de-lintelligence-artificielle-peut-mener-a-une-amende-pour-recours-abusif-tribunal-administratif-de-rennes-19-aout-2026-n2508168",
+      "brief_story_url": "https://brief.hamelberg-ai.com/story/ai-misuse-artificial-intelligence-may-result-judicial-practice/",
+      "brief_editorial_complete_at_audit": false,
+      "source_http_status_in_this_audit": 200,
+      "stored_body_excerpts_found_on_live_page": "4/4",
+      "source_identity_check": "body_excerpts_match_live_source",
+      "follow_up_flags": [
+        "event_source_date_differ"
+      ]
+    }
+  ]
+}

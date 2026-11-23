@@ -1,6 +1,6 @@
 {
   "schema_version": "aieo_relationship_evidence_audit_v1",
-  "generated_at": "2026-11-23T02:20:27.946686Z",
+  "generated_at": "2026-11-23T10:12:10.129245Z",
   "release_id": "2026-W47",
   "period_start": "2026-11-16",
   "period_end": "2026-11-22",
@@ -19,13 +19,14 @@
     "primary_outcome_counts": {
       "benefit_shown": 60,
       "downside_shown": 9,
-      "benefit_and_downside": 5,
-      "no_clear_people_change": 11,
+      "benefit_and_downside": 6,
+      "no_clear_people_change": 10,
       "too_little_evidence": 48
     },
     "uneven_effect_count": 4,
     "body_coverage_counts": {
-      "all_sources": 84,
+      "all_sources": 78,
+      "complete_written_source": 6,
       "no_full_body": 48,
       "some_sources": 1
     },
@@ -518,25 +519,25 @@
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
-        "review_status": "pending",
+        "review_status": "source_audit_correction",
         "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "Workers gain time and efficiency through AI-enabled tasks.",
-          "ai_evidence": "AI acts as a productivity amplifier enabling faster task completion.",
+          "people_evidence": "France Travail reports that more than one-third of surveyed employers expect AI to save time; this is a forecast, not a measured worker outcome.",
+          "ai_evidence": "Employers anticipate AI augmenting tasks in some occupations; the page reports expectations rather than observed productivity.",
           "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article used for every source",
+        "label": "Full article used with other source evidence",
         "source_count": 1,
         "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "all_sources"
+        "body_coverage": "complete_written_source"
       },
       "source_markets": [
         "FRA"
@@ -1055,25 +1056,25 @@
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
-        "review_status": "pending",
+        "review_status": "source_audit_correction",
         "configuration": "ai_constraining_only",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "Regulatory actions constrain AI deployment rather than expanding human activities.",
-          "ai_evidence": "Governance measures restrict AI service deployment and require disclosures.",
+          "people_evidence": "The notice reports 13 newly filed generative AI services, bringing Jiangsu’s total to 125; it gives no measured effect on users.",
+          "ai_evidence": "Already launched generative AI applications must display the registered model name and filing number and label generated content.",
           "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article used for every source",
+        "label": "Full article used with other source evidence",
         "source_count": 1,
         "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "all_sources"
+        "body_coverage": "complete_written_source"
       },
       "source_markets": [
         "CHN"
@@ -1107,25 +1108,25 @@
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
-        "review_status": "pending",
+        "review_status": "source_audit_correction",
         "configuration": "mutualism",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "People gain capacity to automate and audit complex documents while retaining critical review; they are empowered to scale processing with human oversight where needed.",
-          "ai_evidence": "Textract Insights provides structured, auditable outputs with confidence scores and grounding, extending AI-assisted document processing.",
+          "people_evidence": "AWS says its new Textract Insights API can extract fields from mixed document packets with confidence scores and page grounding, leaving lower-confidence values for human review.",
+          "ai_evidence": "AWS says the generally available API adds natural-language field definitions, document splitting, and grounded structured results.",
           "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article used for every source",
+        "label": "Full article used with other source evidence",
         "source_count": 1,
         "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "all_sources"
+        "body_coverage": "complete_written_source"
       },
       "source_markets": [
         "CAN",
@@ -1258,32 +1259,32 @@
       "event_id": "f42455d6-f67d-4c6a-a78f-0d57269138ff",
       "title": "Artificial Intelligence Changes the Scale of the Document Fraud Threat",
       "date": "2026-11-19",
-      "primary_outcome": "no_clear_people_change",
-      "primary_outcome_label": "No clear change for people",
+      "primary_outcome": "benefit_and_downside",
+      "primary_outcome_label": "Both benefit and downside shown",
       "uneven_effect_noted": false,
       "classification": {
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
-        "review_status": "pending",
-        "configuration": "ai_enabling_only",
+        "review_status": "source_audit_correction",
+        "configuration": "ambiguous_relational_signal",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "The piece describes how AI extends current capabilities in fraud detection and risk management for humans.",
-          "ai_evidence": "The article portrays AI as enabling new detection and analysis capabilities, increasing its operational reach.",
+          "people_evidence": "The Finovox chief executive says generative AI makes forged documents more convincing, while AI-based checks can help detect anomalies alongside human review.",
+          "ai_evidence": "The opinion describes AI being used both to create convincing forged documents and to automate checks for manipulation; these are attributed claims.",
           "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article used for every source",
+        "label": "Full article used with other source evidence",
         "source_count": 1,
         "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "all_sources"
+        "body_coverage": "complete_written_source"
       },
       "source_markets": [
         "FRA"
@@ -2503,25 +2504,25 @@
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
-        "review_status": "pending",
+        "review_status": "source_audit_correction",
         "configuration": "human_enabling_only",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "the initiative extends workers' existing skills by integrating AI tools into their workflow",
-          "ai_evidence": "not stated",
+          "people_evidence": "Beijing and Tsinghua trained 30 skilled workers in practical AI exercises; workplace applications described by participants are plans.",
+          "ai_evidence": "The report describes training and proposed workplace uses, without a separate stated effect on AI systems or operators.",
           "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article used for every source",
+        "label": "Full article used with other source evidence",
         "source_count": 1,
         "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "all_sources"
+        "body_coverage": "complete_written_source"
       },
       "source_markets": [
         "CHN"
@@ -6503,25 +6504,25 @@
         "content_basis": "full_text",
         "evidence_status": "sufficient",
         "reviewed": false,
-        "review_status": "pending",
-        "configuration": "mutualism",
+        "review_status": "source_audit_correction",
+        "configuration": "human_enabling_only",
         "model_confidence": null,
         "classification_audit": {
           "schema_version": "aieo_directional_evidence_audit_v2",
           "source_reading_complete": true,
-          "people_evidence": "Governance and assurance norms suggest humans can extend their capacity to manage AI systems.",
-          "ai_evidence": "Discussion of frontier AI, assurance, and high-reliability practices implies AI-enabled governance and safer deployment.\"",
+          "people_evidence": "The author proposes multinational assurance rules modeled on high-risk industries to help people oversee AI development.",
+          "ai_evidence": "The opinion proposes governance for AI but does not establish a change in AI systems’ capability, reach or operating conditions.",
           "flags": []
         }
       },
       "body_evidence": {
-        "label": "Full article used for every source",
+        "label": "Full article used with other source evidence",
         "source_count": 1,
         "full_text_sources": 1,
         "summary_sources": 0,
         "snippet_sources": 0,
         "headline_only_sources": 0,
-        "body_coverage": "all_sources"
+        "body_coverage": "complete_written_source"
       },
       "source_markets": [
         "CAN",
