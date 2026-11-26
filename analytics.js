@@ -1,108 +1,111 @@
 (() => {
   "use strict";
 
-  const MEASUREMENT_ID = "G-QC9205V7V7";
-  const REPORT_PATH_PATTERN = /\/reports\/.*\.pdf(?:$|\?)/i;
+  const site = "https://observatory.hamelberg-ai.com";
+  if (location.origin !== site ||
+      /bot\b|spider|crawler|headless|ChatGPT-User|Claude-User/i.test(navigator.userAgent)) return;
 
-  let analyticsLoaded = false;
+  const pages = new Set([
+    "/", "/about/", "/contact/", "/edu/", "/methodology/", "/privacy/",
+    "/pro/", "/report/", "/reports/", "/status/"
+  ]);
+  const pagePath = location.pathname.replace(/\/index\.html$/, "/");
+  if (!pages.has(pagePath)) return;
 
-  function loadGoogleAnalytics() {
-    if (analyticsLoaded) return;
-    analyticsLoaded = true;
+  const namedSources = new Map([
+    ["google", "google"], ["google.com", "google"],
+    ["chatgpt", "chatgpt"], ["chatgpt.com", "chatgpt"], ["chat.openai.com", "chatgpt"],
+    ["claude", "claude"], ["claude.ai", "claude"], ["claude.com", "claude"]
+  ]);
+  const measurementId = "G-QC9205V7V7";
+  const reportPathPattern = /^\/reports\/(?:.*\/)?([a-z0-9_-]+)\.pdf$/i;
+  const permittedEvents = new Set([
+    "quarterly_report_download", "newsletter_signup_click",
+    "organisation_enquiry_click", "pro_interest_click"
+  ]);
+  const pageFields = { page_location: site + pagePath, page_referrer: "", page_path: pagePath };
+  let recorded = false;
 
+  function arrivalSource() {
+    let host = "";
+    try {
+      const referrer = new URL(document.referrer);
+      if (referrer.protocol === "http:" || referrer.protocol === "https:") host = referrer.hostname;
+    } catch {}
+    if (host === location.hostname) return "internal";
+    const domain = host.replace(/^www\./, "");
+    if (/^google\.(?:com|[a-z]{2,3}|(?:co|com)\.[a-z]{2})$/.test(domain)) return "google";
+    const provider = namedSources.get(domain);
+    if (provider) return provider;
+    const tag = new URLSearchParams(location.search).get("utm_source")?.trim().toLowerCase();
+    return namedSources.get(tag) || (host ? "other_referral" : "direct_or_unknown");
+  }
+
+  function trackEvent(name, params = {}) {
+    if (!recorded || !permittedEvents.has(name)) return;
+    const fields = { ...pageFields };
+    if (name === "quarterly_report_download" && /^[a-z0-9_-]{1,80}$/i.test(params.report_id)) {
+      fields.report_id = params.report_id;
+    }
+    window.gtag("event", name, fields);
+  }
+
+  function startGoogleAnalytics() {
     window.dataLayer = window.dataLayer || [];
     window.gtag = function () {
       window.dataLayer.push(arguments);
     };
-
+    window.gtag("consent", "default", {
+      analytics_storage: "denied",
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied"
+    });
+    window.gtag("js", new Date());
+    window.gtag("config", measurementId, {
+      ...pageFields,
+      send_page_view: false,
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false
+    });
+    window.gtag("event", "page_view", pageFields);
     const script = document.createElement("script");
     script.async = true;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(MEASUREMENT_ID)}`;
+    script.referrerPolicy = "no-referrer";
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
     document.head.appendChild(script);
-
-    window.gtag("js", new Date());
-    window.gtag("config", MEASUREMENT_ID, {
-      anonymize_ip: true
-    });
-
-    attachCustomTracking();
   }
 
-  function trackEvent(name, params = {}) {
-    if (!analyticsLoaded || typeof window.gtag !== "function") return;
-
-    window.gtag("event", name, {
-      ...params,
-      page_location: window.location.href,
-      page_path: window.location.pathname
-    });
+  function recordVisiblePage() {
+    if (recorded || document.visibilityState !== "visible") return;
+    recorded = true;
+    document.removeEventListener("visibilitychange", recordVisiblePage);
+    fetch("https://tricsbvxamjzfeckivhz.supabase.co/rest/v1/rpc/observatory_record_page_view", {
+      method: "POST",
+      credentials: "omit",
+      referrerPolicy: "no-referrer",
+      keepalive: true,
+      headers: { apikey: "sb_publishable_MZIVSCpa5w6JAhSptPIqrQ_vTmzhbfF", "Content-Type": "application/json" },
+      body: JSON.stringify({ p_path: pagePath, p_source: arrivalSource() })
+    }).catch(() => {});
+    startGoogleAnalytics();
   }
 
-  function reportIdFromHref(href) {
-    try {
-      const url = new URL(href, window.location.href);
-      const filename = url.pathname.split("/").pop() || "unknown-report";
-      return filename.replace(/\.pdf$/i, "");
-    } catch {
-      return "unknown-report";
-    }
-  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest?.("a[href]");
+    if (!link) return;
+    const url = new URL(link.href, site);
+    const report = url.origin === site && reportPathPattern.exec(url.pathname);
+    if (report) trackEvent("quarterly_report_download", { report_id: report[1] });
+    const clickEvent = {
+      "newsletter-signup": "newsletter_signup_click",
+      "organisation-enquiry": "organisation_enquiry_click",
+      "pro-interest": "pro_interest_click"
+    }[link.closest("[data-analytics]")?.dataset.analytics];
+    if (clickEvent) trackEvent(clickEvent);
+  }, { passive: true });
 
-  function attachCustomTracking() {
-    document.addEventListener(
-      "click",
-      (event) => {
-        const link = event.target.closest("a[href]");
-        if (!link) return;
-
-        const href = link.getAttribute("href") || "";
-
-        if (REPORT_PATH_PATTERN.test(href)) {
-          trackEvent("quarterly_report_download", {
-            report_id: reportIdFromHref(href),
-            link_url: new URL(href, window.location.href).href,
-            link_text: (link.textContent || "").trim().slice(0, 120)
-          });
-        }
-
-        if (
-          link.matches("[data-analytics='newsletter-signup']") ||
-          link.closest("[data-analytics='newsletter-signup']")
-        ) {
-          trackEvent("newsletter_signup_click", {
-            link_url: new URL(href, window.location.href).href
-          });
-        }
-
-        if (
-          link.matches("[data-analytics='organisation-enquiry']") ||
-          link.closest("[data-analytics='organisation-enquiry']")
-        ) {
-          trackEvent("organisation_enquiry_click", {
-            link_url: new URL(href, window.location.href).href
-          });
-        }
-
-        if (
-          link.matches("[data-analytics='pro-interest']") ||
-          link.closest("[data-analytics='pro-interest']")
-        ) {
-          trackEvent("pro_interest_click", {
-            link_url: new URL(href, window.location.href).href
-          });
-        }
-      },
-      { passive: true }
-    );
-  }
-
-  window.AIEOAnalytics = {
-    trackEvent
-  };
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", loadGoogleAnalytics);
-  } else {
-    loadGoogleAnalytics();
-  }
+  window.AIEOAnalytics = { trackEvent };
+  document.addEventListener("visibilitychange", recordVisiblePage);
+  recordVisiblePage();
 })();
