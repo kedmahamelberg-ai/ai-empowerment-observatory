@@ -25,6 +25,8 @@
   ]);
   const pageFields = { page_location: site + pagePath, page_referrer: "", page_path: pagePath };
   let recorded = false;
+  let tagStarted = false;
+  let restored = false;
 
   function arrivalSource() {
     let host = "";
@@ -68,7 +70,6 @@
       allow_google_signals: false,
       allow_ad_personalization_signals: false
     });
-    window.gtag("event", "page_view", pageFields);
     const script = document.createElement("script");
     script.async = true;
     script.referrerPolicy = "no-referrer";
@@ -79,16 +80,19 @@
   function recordVisiblePage() {
     if (recorded || document.visibilityState !== "visible") return;
     recorded = true;
-    document.removeEventListener("visibilitychange", recordVisiblePage);
     fetch("https://tricsbvxamjzfeckivhz.supabase.co/rest/v1/rpc/observatory_record_page_view", {
       method: "POST",
       credentials: "omit",
       referrerPolicy: "no-referrer",
       keepalive: true,
       headers: { apikey: "sb_publishable_MZIVSCpa5w6JAhSptPIqrQ_vTmzhbfF", "Content-Type": "application/json" },
-      body: JSON.stringify({ p_path: pagePath, p_source: arrivalSource() })
+      body: JSON.stringify({ p_path: pagePath, p_source: restored ? "direct_or_unknown" : arrivalSource() })
     }).catch(() => {});
-    startGoogleAnalytics();
+    if (!tagStarted) {
+      startGoogleAnalytics();
+      tagStarted = true;
+    }
+    window.gtag("event", "page_view", pageFields);
   }
 
   document.addEventListener("click", (event) => {
@@ -106,6 +110,12 @@
   }, { passive: true });
 
   window.AIEOAnalytics = { trackEvent };
+  window.addEventListener("pageshow", event => {
+    if (!event.persisted) return;
+    restored = true;
+    recorded = false;
+    recordVisiblePage();
+  });
   document.addEventListener("visibilitychange", recordVisiblePage);
   recordVisiblePage();
 })();

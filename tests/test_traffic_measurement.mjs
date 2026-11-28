@@ -10,7 +10,7 @@ function openPage({ url = site + '/edu/', referrer = '', hidden = false, userAge
   const requests = [];
   const listeners = new Map();
   const scripts = [];
-  const window = {};
+  const window = {addEventListener: (name, callback) => listeners.set(name, callback)};
   const document = {
     referrer,
     visibilityState: hidden ? 'hidden' : 'visible',
@@ -27,7 +27,7 @@ function openPage({ url = site + '/edu/', referrer = '', hidden = false, userAge
     }
   });
   return {
-    requests, scripts, window,
+    requests, scripts, window, document, restore: persisted => listeners.get('pageshow')({persisted}),
     show() {
       document.visibilityState = 'visible';
       listeners.get('visibilitychange')?.();
@@ -81,4 +81,17 @@ test('Google storage is denied before configuration and custom events omit URLs'
   page.window.AIEOAnalytics.trackEvent('quarterly_report_download', { report_id: '2026-q3', link_url: 'https://other.example/private' });
   page.window.AIEOAnalytics.trackEvent('newsletter_signup_click', { email: 'private@example.com' });
   assert.doesNotMatch(JSON.stringify(page.window.dataLayer), /private|utm_source|link_url/);
+});
+
+test('counts a cached return once in both systems using the existing tag', () => {
+  const page = openPage({referrer: 'https://www.google.nl/'});
+  page.restore(false);
+  page.document.visibilityState = 'hidden';
+  page.restore(true);
+  assert.equal(page.requests.length, 1);
+  page.show();
+  page.show();
+  assert.deepEqual(page.requests.map(r => JSON.parse(r.options.body).p_source), ['google', 'direct_or_unknown']);
+  assert.equal(page.window.dataLayer.filter(call => call[1] === 'page_view').length, 2);
+  assert.equal(page.scripts.length, 1);
 });
